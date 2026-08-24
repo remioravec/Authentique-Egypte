@@ -320,6 +320,16 @@ p{margin:0 0 1em}
 .devis__act{display:grid;gap:12px}
 .devis__act small{color:#B0CCD9;font-size:.81rem;text-align:center;font-family:"Manrope",sans-serif}
 
+.aremplir{background:var(--or-fond);border:1px dashed var(--or);color:#7A5605;font-size:.8rem;
+  padding:.1em .5em;border-radius:6px;font-weight:700;font-family:"Manrope",sans-serif;white-space:nowrap}
+.jeton .aremplir{background:rgba(255,255,255,.16);border-color:var(--or);color:var(--or-clair)}
+
+/* Signalé par la cliente le 24/08/2026 : visible en mode Maillage. */
+body.mm [data-photo]{outline:3px solid #B4402A;outline-offset:-3px}
+body.mm [data-photo]::after{content:attr(data-photo);position:absolute;left:12px;bottom:12px;z-index:3;
+  background:#B4402A;color:#fff;font-family:"Manrope",sans-serif;font-size:.68rem;font-weight:700;
+  letter-spacing:.06em;padding:5px 11px;border-radius:var(--r-pill);max-width:calc(100% - 24px)}
+
 /* ---------- calque d'annotation MAILLAGE ---------- */
 .mm-btn{position:fixed;right:16px;bottom:16px;z-index:90;background:var(--nuit);color:#fff;
   border:0;border-radius:var(--r-pill);padding:11px 18px;font-family:"Manrope",sans-serif;
@@ -471,15 +481,14 @@ body.mm .mm-legende{display:block}
     <h1>L'Égypte construite <em>avec vous</em>, pas vendue en catalogue</h1>
     <p class="hero__lede">Vous nous dites ce qui vous attire et à quel rythme vous voulez avancer. Nos égyptologues francophones écrivent l'itinéraire, réservent tout et restent joignables sur place.</p>
     <div class="hero__preuves">
-      <span class="jeton">★★★★★ <b>4,9/5</b> sur 217 avis</span>
-      <span class="jeton"><b>1 400</b> voyageurs accompagnés</span>
-      <span class="jeton">Devis en <b>24 h</b>, gratuit et sans engagement</span>
+      <span class="jeton">★★★★★ <b class="aremplir">note</b> sur <b class="aremplir">N</b> avis Google</span>
+      <span class="jeton"><b class="aremplir">N</b> voyageurs accompagnés</span>
     </div>
 
     <div class="compo">
       <div class="compo__t">
         <h2>Composez votre Égypte</h2>
-        <p>trois réponses suffisent</p>
+        <p>plusieurs choix possibles par colonne</p>
       </div>
       <div class="compo__l">
         <div class="champ" data-filtre="qui">
@@ -613,7 +622,7 @@ body.mm .mm-legende{display:block}
       </article>
 
       <article class="carte" data-qui="famille couple" data-envie="croisiere mer" data-duree="long">
-        <div class="carte__img"><img src="https://authentiquegypte.com/wp-content/uploads/2025/05/Destination-033.jpg" alt="Pyramides de Gizeh à dos de dromadaire" loading="lazy" decoding="async"><span class="carte__tag">Familles</span></div>
+        <div class="carte__img" data-photo="Photo à remplacer — ne correspond pas à l'itinéraire"><img src="https://authentiquegypte.com/wp-content/uploads/2025/05/Destination-033.jpg" alt="Pyramides de Gizeh à dos de dromadaire" loading="lazy" decoding="async"><span class="carte__tag">Familles</span></div>
         <div class="carte__corps">
           <h3><a href="https://authentiquegypte.com/programs/mer-rouge/">Pyramides, croisière et mer Rouge</a></h3>
           <p class="carte__route">Le Caire <b>→</b> Louxor <b>→</b> Hurghada</p>
@@ -652,10 +661,10 @@ body.mm .mm-legende{display:block}
       </article>
 
       <article class="carte" data-qui="couple solo" data-envie="culturel" data-duree="court">
-        <div class="carte__img"><img src="https://authentiquegypte.com/wp-content/uploads/2025/07/Voyage-au-Mont-Sinai.png" alt="Mont Sinaï au lever du jour" loading="lazy" decoding="async"></div>
+        <div class="carte__img" data-photo="Photo à remplacer — ne correspond pas à l'itinéraire"><img src="https://authentiquegypte.com/wp-content/uploads/2025/07/Voyage-au-Mont-Sinai.png" alt="Mont Sinaï au lever du jour" loading="lazy" decoding="async"></div>
         <div class="carte__corps">
           <h3><a href="https://authentiquegypte.com/programs/sainte-catherine/">Lever du soleil à Sainte-Catherine</a></h3>
-          <p class="carte__route">Charm el-Cheikh <b>→</b> Mont Moïse</p>
+          <p class="carte__route">Charm el-Cheikh <b>→</b> Mont Moïse <b>→</b> Sainte-Catherine</p>
           <div class="carte__meta"><span class="puce">3 jours</span><span class="puce">Ascension de nuit</span><span class="puce">Monastère</span></div>
           <div class="carte__pied">
             <span class="prix"><small>À partir de</small><b>390 €</b> <i>/ pers.</i></span>
@@ -665,7 +674,7 @@ body.mm .mm-legende{display:block}
       </article>
 
       <article class="carte" data-qui="famille couple" data-envie="mer culturel" data-duree="long">
-        <div class="carte__img"><img src="https://authentiquegypte.com/wp-content/uploads/2025/07/peggy-anke-YxpoB3bvlZQ-unsplash.jpg" alt="Littoral de la mer Rouge" loading="lazy" decoding="async"></div>
+        <div class="carte__img" data-photo="Photo à remplacer + programme à mettre à jour"><img src="https://authentiquegypte.com/wp-content/uploads/2025/07/peggy-anke-YxpoB3bvlZQ-unsplash.jpg" alt="Littoral de la mer Rouge" loading="lazy" decoding="async"></div>
         <div class="carte__corps">
           <h3><a href="https://authentiquegypte.com/programs/itineraire-sinai-sainte-catherine-mont-moise-et-mer-rouge/">De la mer Rouge aux montagnes du Sinaï</a></h3>
           <p class="carte__route">Hurghada <b>→</b> Dahab <b>→</b> Sainte-Catherine</p>
@@ -755,7 +764,7 @@ body.mm .mm-legende{display:block}
 <section class="section">
   <div class="wrap">
     <p class="eyebrow">Ce qu'en disent les voyageurs</p>
-    <h2 style="margin-bottom:34px">217 avis, note moyenne 4,9/5</h2>
+    <h2 style="margin-bottom:34px"><span class="aremplir">N</span> avis Google, note moyenne <span class="aremplir">note</span></h2>
     <div class="avis">
       <article>
         <p class="et" aria-label="5 étoiles sur 5">★★★★★</p>
@@ -773,7 +782,7 @@ body.mm .mm-legende{display:block}
         <footer><span class="ini">SL</span><span><b>Sophie L.</b>Lac Nasser · novembre 2025</span></footer>
       </article>
     </div>
-    <p style="margin-top:22px;font-size:.86rem;color:var(--gris-clair)">⚠ Chiffres et avis à remplacer par les données réelles avant mise en ligne.</p>
+    <p style="margin-top:22px;font-size:.86rem;color:var(--gris-clair)">⚠ Note, nombre d'avis et voyageurs accompagnés : chiffres réels à fournir par l'agence (retour cliente du 24/08/2026). Les trois témoignages sont des exemples, à remplacer par de vrais avis Google.</p>
   </div>
 </section>
 
@@ -842,7 +851,7 @@ body.mm .mm-legende{display:block}
       <details><summary>Réservez-vous les vols internationaux&nbsp;?</summary>
         <div class="faq__c"><p>Non, vous les réservez vous-même : cela vous laisse le contrôle des dates et du prix. Nous vous indiquons les créneaux d'arrivée compatibles avec l'itinéraire, et nous réservons les vols internes (Le Caire–Assouan, Louxor–Hurghada).</p></div></details>
       <details><summary>Faut-il un visa, et comment l'obtenir&nbsp;?</summary>
-        <div class="faq__c"><p>Oui. Deux options : l'e-visa en ligne avant le départ, ou le visa à l'arrivée dans la plupart des aéroports (25 € en espèces ou par carte). Passeport valable 6 mois après l'arrivée. La procédure complète est dans le <a href="https://authentiquegypte.com/passeport-egypte/" class="lien-txt">guide passeport et visa pour l'Égypte</a>.</p></div></details>
+        <div class="faq__c"><p>Oui. Deux options : l'e-visa en ligne avant le départ, ou le visa à l'arrivée dans la plupart des aéroports (30 € en espèces ou par carte). Passeport valable 6 mois après l'arrivée. La procédure complète est dans le <a href="https://authentiquegypte.com/passeport-egypte/" class="lien-txt">guide passeport et visa pour l'Égypte</a>.</p></div></details>
       <details><summary>Que se passe-t-il si je dois annuler&nbsp;?</summary>
         <div class="faq__c"><p>Nous cherchons d'abord à reporter le séjour. Si l'annulation est définitive, des frais s'appliquent selon le délai et les prestataires déjà réservés. C'est la raison pour laquelle nous recommandons une assurance annulation dès la validation.</p></div></details>
     </div>
@@ -913,7 +922,7 @@ body.mm .mm-legende{display:block}
 {"@type":"Question","name":"Est-ce sûr de voyager en Égypte en ce moment ?","acceptedAnswer":{"@type":"Answer","text":"Oui pour les zones où nous opérons : Le Caire, Louxor, Assouan, la vallée du Nil et la mer Rouge. Nous n'organisons pas de séjour dans le Sinaï nord ni près de la frontière libyenne. Votre guide reste avec vous sur chaque site."}},
 {"@type":"Question","name":"Combien coûte réellement un voyage de deux semaines en Égypte ?","acceptedAnswer":{"@type":"Answer","text":"Comptez 1 400 à 2 200 € par personne hors vols internationaux pour 12 à 14 jours, en hôtels 4★ et 5★ avec guide privatif. Le prix varie selon la saison, le nombre de voyageurs et le niveau d'hébergement."}},
 {"@type":"Question","name":"Réservez-vous les vols internationaux ?","acceptedAnswer":{"@type":"Answer","text":"Non, vous les réservez vous-même, ce qui vous laisse le contrôle des dates et du prix. Nous indiquons les créneaux d'arrivée compatibles et réservons les vols internes."}},
-{"@type":"Question","name":"Faut-il un visa pour l'Égypte, et comment l'obtenir ?","acceptedAnswer":{"@type":"Answer","text":"Oui. Deux options : l'e-visa en ligne avant le départ, ou le visa à l'arrivée dans la plupart des aéroports (25 €). Le passeport doit être valable 6 mois après l'arrivée."}},
+{"@type":"Question","name":"Faut-il un visa pour l'Égypte, et comment l'obtenir ?","acceptedAnswer":{"@type":"Answer","text":"Oui. Deux options : l'e-visa en ligne avant le départ, ou le visa à l'arrivée dans la plupart des aéroports (30 €). Le passeport doit être valable 6 mois après l'arrivée."}},
 {"@type":"Question","name":"Que se passe-t-il si je dois annuler mon voyage ?","acceptedAnswer":{"@type":"Answer","text":"Nous cherchons d'abord à reporter le séjour. Si l'annulation est définitive, des frais s'appliquent selon le délai et les prestataires déjà réservés. Nous recommandons une assurance annulation dès la validation."}}]}
 </script>
 
@@ -933,7 +942,7 @@ document.querySelector('.burger')?.addEventListener('click',e=>{
 <script>
 /* composeur */
 (function(){
-  const etat={qui:null,envie:null,duree:null};
+  const etat={qui:[],envie:[],duree:[]};
   const cartes=[...document.querySelectorAll('#liste .carte')];
   const phrase=document.getElementById('phrase');
   const titre=document.getElementById('titre-res');
@@ -942,16 +951,24 @@ document.querySelector('.burger')?.addEventListener('click',e=>{
     croisiere:'le Nil',culturel:'les temples',desert:'le désert',mer:'la mer Rouge',
     court:'3 à 5 jours',moyen:'6 à 8 jours',long:'9 jours et plus'};
 
+  /* Plusieurs choix par catégorie : OU à l'intérieur d'une colonne,
+     ET entre les colonnes. « En famille ou en couple », « le Nil ou le
+     désert » : c'est la combinaison que demandait la sélection unique. */
+  function correspond(carte,cle){
+    const choisis=etat[cle];
+    if(!choisis.length)return true;
+    const valeurs=carte.dataset[cle].split(' ');
+    return choisis.some(v=>valeurs.includes(v));
+  }
+
   function appliquer(){
     let n=0;
     cartes.forEach(c=>{
-      const ok=(!etat.qui||c.dataset.qui.includes(etat.qui))
-             &&(!etat.envie||c.dataset.envie.includes(etat.envie))
-             &&(!etat.duree||c.dataset.duree.includes(etat.duree));
+      const ok=correspond(c,'qui')&&correspond(c,'envie')&&correspond(c,'duree');
       c.hidden=!ok; if(ok)n++;
     });
     vide.hidden=n>0;
-    const bits=[etat.qui,etat.envie,etat.duree].filter(Boolean).map(v=>'<mark>'+lib[v]+'</mark>');
+    const bits=[...etat.qui,...etat.envie,...etat.duree].map(v=>'<mark>'+lib[v]+'</mark>');
     document.querySelector('.compo').classList.toggle('a-choix',bits.length>0);
     if(!bits.length){
       phrase.innerHTML='Aucun critère : <b>8 séjours</b> disponibles. Choisissez pour affiner.';
@@ -968,15 +985,16 @@ document.querySelector('.burger')?.addEventListener('click',e=>{
     champ.querySelectorAll('.opt').forEach(b=>{
       b.addEventListener('click',()=>{
         const actif=b.getAttribute('aria-pressed')==='true';
-        champ.querySelectorAll('.opt').forEach(o=>o.setAttribute('aria-pressed','false'));
         b.setAttribute('aria-pressed',actif?'false':'true');
-        etat[cle]=actif?null:b.dataset.val;
+        etat[cle]=actif
+          ? etat[cle].filter(v=>v!==b.dataset.val)
+          : [...etat[cle],b.dataset.val];
         appliquer();
       });
     });
   });
   document.getElementById('raz').addEventListener('click',()=>{
-    Object.keys(etat).forEach(k=>etat[k]=null);
+    Object.keys(etat).forEach(k=>etat[k]=[]);
     document.querySelectorAll('.opt').forEach(o=>o.setAttribute('aria-pressed','false'));
     appliquer();
   });

@@ -210,6 +210,23 @@ p{margin:0 0 1em}
   .fig figcaption{margin-inline:36px}
 }
 
+/* ---------- bande de photos ---------- */
+.bande{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:26px 0 12px}
+.bande a{display:block;position:relative;overflow:hidden;border-radius:var(--r-m)}
+.bande img{width:100%;aspect-ratio:4/5;object-fit:cover;transition:transform .6s var(--ease)}
+.bande a:hover img{transform:scale(1.05)}
+.bande a::after{content:"";position:absolute;inset:0;
+  background:linear-gradient(180deg,rgba(11,81,112,0) 45%,rgba(11,81,112,.72) 100%)}
+.bande b{position:absolute;left:14px;right:14px;bottom:12px;z-index:2;color:#fff;
+  font-family:"Manrope",sans-serif;font-size:.82rem;font-weight:700;line-height:1.35;
+  text-shadow:0 2px 12px rgba(11,81,112,.9)}
+.bande b span{display:block;font-weight:600;font-size:.74rem;color:var(--or-clair);margin-top:3px}
+@media (max-width:600px){
+  .bande{grid-template-columns:1fr 1fr;gap:6px}
+  .bande a:last-child{grid-column:1 / -1}
+  .bande img{aspect-ratio:16/10}
+}
+
 /* ---------- encart ---------- */
 .encart{background:var(--or-fond);border-radius:var(--r-l);padding:24px 26px;margin:34px 0}
 .encart h3{margin-bottom:10px}
@@ -493,6 +510,20 @@ body.mm .mm-legende{display:block}
       <p style="font-size:.87rem;color:var(--gris-clair)">Valeurs reprises du tableau de la page actuelle. <span class="aremplir">Source et date des normales à préciser</span></p>
 
 
+      <div class="bande" data-dec="Nouveau">
+        <a href="https://authentiquegypte.com/wp-content/uploads/2025/06/Voyage-sur-mesure-au-Caire-en-Egypte.png">
+          <img src="https://authentiquegypte.com/wp-content/uploads/2025/06/Voyage-sur-mesure-au-Caire-en-Egypte.png" alt="Les pyramides de Gizeh et le plateau du Caire" loading="lazy" decoding="async">
+          <b>Le Caire<span>Novembre à mars</span></b></a>
+        <a href="https://authentiquegypte.com/wp-content/uploads/2025/06/Voyage-sur-mesure-a-Assouan-en-Egypte.png">
+          <img src="https://authentiquegypte.com/wp-content/uploads/2025/06/Voyage-sur-mesure-a-Assouan-en-Egypte.png" alt="Le Nil à Assouan et les felouques à la voile" loading="lazy" decoding="async">
+          <b>Assouan<span>Octobre à avril</span></b></a>
+        <a href="https://authentiquegypte.com/wp-content/uploads/2023/11/Oasis-de-siwa.png">
+          <img src="https://authentiquegypte.com/wp-content/uploads/2023/11/Oasis-de-siwa.png" alt="Lac salé de l'oasis de Siwa dans le désert occidental" loading="lazy" decoding="async">
+          <b>Siwa et les oasis<span>Octobre à mars</span></b></a>
+      </div>
+      <p style="font-size:.87rem;color:var(--gris-clair)">Trois régions, trois fenêtres différentes : c'est ce décalage qui décide de la date de départ.</p>
+
+
       <figure class="fig" data-dec="Nouveau">
         <a href="https://authentiquegypte.com/wp-content/uploads/2023/11/axp-photography-4-26QyIOyVg-unsplash-scaled.jpg"><img src="https://authentiquegypte.com/wp-content/uploads/2023/11/axp-photography-4-26QyIOyVg-unsplash-scaled.jpg" alt="Dahabeya à la voile sur le Nil au coucher du soleil" loading="lazy" decoding="async">
           <span class="fig__sur"><i></i>Croisière sur le Nil</span></a>
@@ -532,6 +563,11 @@ body.mm .mm-legende{display:block}
         </tbody>
       </table>
 
+      <figure class="fig" data-dec="Nouveau">
+        <a href="https://authentiquegypte.com/wp-content/uploads/2023/11/pyramides-1024x683.jpg"><img src="https://authentiquegypte.com/wp-content/uploads/2023/11/pyramides-1024x683.jpg" alt="Les pyramides de Gizeh sous la lumière d'hiver" loading="lazy" decoding="async">
+          <span class="fig__sur"><i></i>Gizeh, Le Caire</span></a>
+        <figcaption>En ville, la fenêtre est la plus large du pays : <b>novembre à mars</b>, sans la chaleur qui rend les sites pénibles à midi.</figcaption>
+      </figure>
       <div class="encart" data-dec="Conservé">
         <h3>Combiner plusieurs régions en 10 à 12 jours</h3>
         <p>Un itinéraire classique combine Le Caire, une <a href="categorie.html">croisière sur le Nil</a> jusqu'à Louxor et Assouan, et 2 à 3 jours de détente en <a href="https://authentiquegypte.com/nos-sejours-egypte/mer-rouge/">mer Rouge</a>.</p>
@@ -543,6 +579,11 @@ body.mm .mm-legende{display:block}
         <a href="https://authentiquegypte.com/wp-content/uploads/2023/11/Desert-blanc-dEgypte.png"><img src="https://authentiquegypte.com/wp-content/uploads/2023/11/Desert-blanc-dEgypte.png" alt="Formations de craie du désert Blanc au crépuscule" loading="lazy" decoding="async">
           <span class="fig__sur"><i></i>Désert Blanc</span></a>
         <figcaption>Dans le désert, la fenêtre est plus courte encore : <b>octobre à mars</b>, journées supportables et nuits fraîches.</figcaption>
+      </figure>
+      <figure class="fig" data-dec="Nouveau">
+        <a href="https://authentiquegypte.com/wp-content/uploads/2023/10/lake-nasser-1024x683-1.jpg"><img src="https://authentiquegypte.com/wp-content/uploads/2023/10/lake-nasser-1024x683-1.jpg" alt="Temples nubiens au bord du lac Nasser" loading="lazy" decoding="async">
+          <span class="fig__sur"><i></i>Lac Nasser</span></a>
+        <figcaption>Plus au sud, la chaleur arrive plus tôt : à Abou Simbel, la saison confortable se referme dès <b>fin mars</b>.</figcaption>
       </figure>
       <h2 id="faq">Questions fréquentes</h2>
       <div class="faq" data-dec="Conservé">
