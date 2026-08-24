@@ -51,6 +51,21 @@ function abo_init() {
 add_action( 'plugins_loaded', 'abo_init' );
 
 /**
+ * La feuille de style commune, enregistrée une fois pour toutes.
+ *
+ * Elle était auparavant déclarée par l'écran « Contenus », qui s'en
+ * servait le premier. « Demandes » partageait le fichier sans le
+ * déclarer : l'écran s'affichait donc entièrement nu dès qu'on
+ * l'ouvrait sans être passé par l'autre. Un fichier partagé
+ * s'enregistre au démarrage, et chaque écran demande ce dont il a
+ * besoin — jamais l'inverse.
+ */
+function abo_enregistrer_styles() {
+	wp_register_style( 'abo-admin', ABO_URL . 'assets/css/admin.css', array(), ABO_VERSION );
+}
+add_action( 'admin_enqueue_scripts', 'abo_enregistrer_styles', 5 );
+
+/**
  * Activation : on range une première fois tout le contenu existant.
  * L'opération est en lecture seule côté contenu — elle n'écrit qu'une
  * méta de classement.

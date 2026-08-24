@@ -210,6 +210,7 @@ class ABO_Demandes {
 		if ( false === strpos( (string) $page, self::MENU ) ) {
 			return;
 		}
+		wp_enqueue_style( 'abo-admin' );
 		wp_enqueue_script( 'abo-demandes', ABO_URL . 'assets/js/demandes.js', array(), ABO_VERSION, true );
 		wp_localize_script( 'abo-demandes', 'ABO_DEMANDES', array(
 			'ajax'    => admin_url( 'admin-ajax.php' ),

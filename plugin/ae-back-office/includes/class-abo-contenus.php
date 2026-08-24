@@ -42,7 +42,7 @@ class ABO_Contenus {
 		if ( false === strpos( (string) $page, self::MENU ) ) {
 			return;
 		}
-		wp_enqueue_style( 'abo-admin', ABO_URL . 'assets/css/admin.css', array(), ABO_VERSION );
+		wp_enqueue_style( 'abo-admin' );
 	}
 
 	/* ---------------------------------------------------------------- */
