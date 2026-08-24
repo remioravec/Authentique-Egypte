@@ -48,28 +48,114 @@
   .abo-choix select{max-width:150px}
 }
 
-/* ---------- écran Demandes ---------- */
-.abo-demande{background:#fff;border:1px solid #dcdcde;border-left:4px solid #dcdcde;
-  border-radius:4px;padding:20px 22px;margin:0 0 16px}
-.abo-demande--nouvelle{border-left-color:#dba617;background:#fffdf6}
-.abo-demande--en_cours{border-left-color:#2271b1}
-.abo-demande--traitee{border-left-color:#1d6b34}
-.abo-demande--archivee{border-left-color:#c3c4c7;opacity:.72}
-.abo-demande>header{margin:0 0 14px}
-.abo-demande h2{display:flex;align-items:center;gap:12px;flex-wrap:wrap;font-size:16px;margin:0 0 4px}
-.abo-demande>header p{margin:0;color:#646970;font-size:13px}
 
-.abo-champs{display:grid;grid-template-columns:repeat(2,1fr);gap:12px 26px;margin:0 0 16px}
-.abo-champs dt{font-size:12px;font-weight:600;color:#646970;margin:0 0 2px}
-.abo-champs dd{margin:0;font-size:14px;color:#2c3338;line-height:1.5}
-.abo-champs div:has(dd:only-of-type) dd{word-break:break-word}
+/* ============================================================
+   ÉCRAN DEMANDES — tableau à colonnes, façon CRM.
+   Les fiches se glissent d'une colonne à l'autre ; un clic ouvre
+   le tiroir de détail. Le sélecteur de colonne dans la fiche est
+   le chemin au clavier, pas un doublon.
+   ============================================================ */
 
-.abo-demande>footer{display:flex;align-items:center;gap:12px;flex-wrap:wrap;
-  padding-top:14px;border-top:1px solid #f0f0f1}
-.abo-demande>footer form{margin:0}
-.abo-suppr{color:#b32d2e;text-decoration:none}
-.abo-suppr:hover{color:#8a2424;text-decoration:underline}
+.abo-crm .abo-intro{max-width:80ch}
 
+.abo-kanban{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(240px,1fr));
+  gap:14px;
+  margin:18px 0 0;
+  align-items:start;
+}
+
+.abo-col{background:#f0f0f1;border-radius:10px;padding:12px;min-height:180px}
+.abo-col>header{display:flex;align-items:center;gap:9px;margin:0 0 11px;padding:0 2px}
+.abo-col h2{font-size:13px;font-weight:700;margin:0;color:#1d2327;
+  letter-spacing:.02em;text-transform:uppercase}
+.abo-n{background:#fff;border-radius:999px;padding:1px 9px;font-size:11px;
+  font-weight:700;color:#646970;margin-left:auto}
+
+.abo-pile{display:flex;flex-direction:column;gap:10px;min-height:110px;
+  border-radius:8px;transition:background .15s ease,box-shadow .15s ease}
+.abo-pile.abo-survol{background:#e4eef5;box-shadow:inset 0 0 0 2px #2271b1}
+
+.abo-fiche{
+  background:#fff;border:1px solid #dcdcde;border-left:3px solid #dcdcde;
+  border-radius:8px;padding:12px 13px;cursor:pointer;
+  box-shadow:0 1px 2px rgba(0,0,0,.05);
+  transition:box-shadow .15s ease,transform .1s ease;
+}
+.abo-fiche:hover{box-shadow:0 3px 10px rgba(0,0,0,.12);transform:translateY(-1px)}
+.abo-fiche.abo-vol{opacity:.45;transform:rotate(1.5deg)}
+.abo-fiche h3{font-size:13.5px;font-weight:600;margin:0 0 4px;line-height:1.35;color:#1d2327}
+.abo-meta{margin:0 0 7px;font-size:11.5px;color:#787c82;line-height:1.4}
+.abo-resume{margin:0 0 9px;font-size:12.5px;color:#3c434a;line-height:1.5}
+.abo-fiche footer{display:flex;gap:6px;flex-wrap:wrap}
+.abo-puces{background:#f0f0f1;border-radius:999px;padding:2px 8px;font-size:11px;color:#646970}
+
+.abo-col[data-statut="nouvelle"] .abo-fiche{border-left-color:#dba617}
+.abo-col[data-statut="en_cours"] .abo-fiche{border-left-color:#2271b1}
+.abo-col[data-statut="traitee"] .abo-fiche{border-left-color:#1d6b34}
+.abo-col[data-statut="archivee"] .abo-fiche{border-left-color:#c3c4c7;opacity:.72}
+
+.abo-col-vide{margin:0;padding:16px 10px;text-align:center;font-size:12px;
+  color:#a7aaad;border:1px dashed #c3c4c7;border-radius:8px;display:none}
+.abo-col--vide .abo-col-vide{display:block}
+.abo-pile.abo-survol .abo-col-vide{display:block;border-color:#2271b1;color:#2271b1}
+
+.abo-rgpd{margin-top:22px;max-width:74ch}
+
+/* ---------- tiroir de fiche ---------- */
+.abo-tiroir[hidden]{display:none}
+.abo-tiroir{position:fixed;inset:0;z-index:100050}
+.abo-voile{position:absolute;inset:0;background:rgba(29,35,39,.42)}
+.abo-panneau{
+  position:absolute;top:0;right:0;bottom:0;width:min(460px,100vw);
+  background:#fff;box-shadow:-14px 0 40px rgba(0,0,0,.2);
+  overflow-y:auto;padding:0 24px 28px;
+}
+body.abo-tiroir-ouvert{overflow:hidden}
+
+.abo-fiche-tete{display:flex;align-items:flex-start;gap:12px;
+  padding:20px 0 12px;position:sticky;top:0;background:#fff;
+  border-bottom:1px solid #f0f0f1;z-index:2}
+.abo-fiche-tete h2{font-size:17px;margin:0;line-height:1.35;flex:1}
+.abo-fermer{width:30px;height:30px;border:0;background:#f0f0f1;border-radius:6px;
+  font-size:14px;color:#646970;cursor:pointer;flex:0 0 auto}
+.abo-fermer:hover{background:#dcdcde;color:#1d2327}
+
+.abo-fiche-meta{margin:12px 0 0;font-size:12.5px;color:#787c82}
+
+.abo-fiche-statut{display:flex;align-items:center;gap:10px;margin:14px 0 0;
+  padding:11px 13px;background:#f6f7f7;border-radius:8px}
+.abo-fiche-statut label{font-size:12px;font-weight:600;color:#646970}
+.abo-fiche-statut select{margin-left:auto;font-size:13px}
+
+.abo-fiche-champs{margin:18px 0 0;display:grid;gap:13px}
+.abo-fiche-champs dt{font-size:11.5px;font-weight:600;color:#787c82;
+  text-transform:uppercase;letter-spacing:.04em;margin:0 0 3px}
+.abo-fiche-champs dd{margin:0;font-size:14px;color:#1d2327;line-height:1.55;
+  white-space:pre-wrap;word-break:break-word}
+
+.abo-fiche-origine{margin:16px 0 0;font-size:12.5px}
+.abo-fiche-actions{display:flex;gap:9px;margin:20px 0 0;padding:16px 0 0;
+  border-top:1px solid #f0f0f1;flex-wrap:wrap}
+.abo-suppr{color:#b32d2e !important;border-color:#e6bfc0 !important}
+.abo-suppr:hover{background:#fcf0f1 !important;border-color:#b32d2e !important}
+
+.abo-fiche-titre{font-size:12px;text-transform:uppercase;letter-spacing:.06em;
+  color:#787c82;margin:24px 0 10px}
+.abo-journal{display:grid;gap:9px}
+.abo-journal-vide{margin:0;font-size:13px;color:#a7aaad}
+.abo-journal-ligne{margin:0;font-size:13px;line-height:1.5;color:#3c434a;
+  border-left:2px solid #dcdcde;padding-left:11px}
+.abo-journal-date{display:block;font-size:11px;color:#a7aaad;margin-top:2px}
+
+.abo-note{display:flex;gap:8px;align-items:flex-start;margin:14px 0 0}
+.abo-note textarea{flex:1;font-size:13px;min-height:56px;resize:vertical}
+
+@media (max-width:1400px){
+  .abo-kanban{grid-template-columns:repeat(2,minmax(240px,1fr))}
+}
 @media (max-width:782px){
-  .abo-champs{grid-template-columns:1fr}
+  .abo-kanban{grid-template-columns:1fr}
+  .abo-panneau{width:100vw}
 }

@@ -5,12 +5,12 @@
 
 | État | Nombre |
 |---|---:|
-| ✅ Fait | 12 |
-| 🔵 En cours | 4 |
+| ✅ Fait | 14 |
+| 🔵 En cours | 3 |
 | 🟠 À arbitrer | 6 |
 | ⬜ À produire | 1 |
 | 🟡 En attente cliente | 6 |
-| **Total** | **29** |
+| **Total** | **30** |
 
 ## Process et non-régression
 
@@ -58,11 +58,11 @@
 
 ### D1 — Polices non adaptées au mobile
 
-**🔵 En cours** · porteur : Rémi
+**✅ Fait** · porteur : Rémi
 
 *Demande :* « Les polices ne sont pas adaptées à la version mobile. »
 
-*Où on en est :* Plancher typographique mobile posé dans la charte partagée : corps à 17 px, plus rien sous 15 px, cibles tactiles à 44 px, titres resserrés. Appliqué aux quatre nouveaux gabarits. Reste à confirmer par Mélanie sur son propre téléphone, et à étendre aux quatre maquettes de la première salve.
+*Où on en est :* Mesuré au navigateur sur les quatre maquettes, à 375, 390, 412, 768 et 1024 px. Constat de départ : aucun débordement horizontal, mais 18 à 22 éléments de texte sous 14 px — jusqu'à 11,2 px — et 5 à 6 cibles tactiles sous 40 px. Trois passes de correction, chacune vérifiée à la mesure. Deux découvertes en cours de route : le seuil devait monter à 900 px (une tablette en portrait gardait les tailles du bureau), et dix notes de production portaient leur taille en style en ligne, qu'aucune feuille ne peut battre — elles ont reçu une classe. État final : zéro texte sous le seuil, zéro débordement, tablettes propres. Restent les liens en ligne dans les phrases, à 17-18 px : les agrandir casserait l'interligne, et la règle des cibles tactiles les excepte. Le bloc est généré par outils/mobile.py, identique dans les quatre fichiers et regénérable.
 
 ### D2 — Couleurs à revoir
 
@@ -206,7 +206,7 @@
 
 *Demande :* « Laisser WPForms, pour voir les demandes clients. »
 
-*Où on en est :* WPForms Lite n'enregistre pas les soumissions : son écran Entries est une page de vente, les demandes partent uniquement par courriel. Garder le menu ne montrait donc rien. L'extension écoute désormais wpforms_process_complete — action présente aussi sur la version gratuite — et conserve chaque soumission en base : tous les champs, le formulaire d'origine, la page de départ, un bouton Répondre et un état (nouvelle / en cours / traitée / archivée), avec pastille de compte dans le menu. L'envoi du courriel continue normalement. Captation testée sur une soumission simulée : détection du nom et du courriel, cases à cocher aplaties, champs vides ignorés, balise injectée neutralisée. Durée de conservation réglable, sans purge par défaut.
+*Où on en est :* WPForms Lite n'enregistre pas les soumissions : son écran Entries est une page de vente, les demandes partent uniquement par courriel. Garder le menu ne montrait donc rien. L'extension écoute désormais wpforms_process_complete — action présente aussi sur la version gratuite — et conserve chaque soumission en base : tous les champs, le formulaire d'origine, la page de départ, un bouton Répondre et un état (nouvelle / en cours / traitée / archivée), avec pastille de compte dans le menu. L'envoi du courriel continue normalement. Captation testée sur une soumission simulée : détection du nom et du courriel, cases à cocher aplaties, champs vides ignorés, balise injectée neutralisée. Durée de conservation réglable, sans purge par défaut. Écran refait en tableau à colonnes façon CRM : quatre colonnes, fiches déplaçables au glisser-déposer, tiroir de détail au clic avec tous les champs, bouton Répondre, journal de suivi interne et sélecteur de colonne au clavier. Le déplacement est optimiste — il s'annule si le serveur refuse. La captation est désormais enveloppée dans un try/catch : une erreur de notre côté ne peut plus interrompre l'affichage de la confirmation après un envoi réussi.
 
 ### B3 — Le calque de commentaires refait sur le bon modèle
 
@@ -215,6 +215,14 @@
 *Demande :* « Le plugin demandé n'est pas bon. Cela doit être comme sur Google Docs, Figma ou autres. Sur chaque page, pouvoir naviguer et activer l'aspect commentaire. La personne clique sur l'élément à changer et peut écrire un commentaire + mettre une image si souhait. Claude doit pouvoir le lire derrière moi également. »
 
 *Où on en est :* La première version était un formulaire de ticket — on choisissait un type (texte, couleur, image) avant d'écrire — et elle ne fonctionnait que sur les huit maquettes servies depuis les fichiers du plugin. Reprise de zéro sous le nom ae-commentaires. Le geste est celui de Figma : bouton ou touche C, survol qui souligne l'élément, clic, une bulle avec un simple champ de texte, image collée depuis le presse-papiers ou déposée, Ctrl+Entrée pour envoyer. Épingle numérotée, fil au clic, réponses, résolution, réouverture en répondant. Panneau latéral filtrable et navigateur de pages. Actif sur TOUTE page du site pour un compte connecté ayant aec_commenter ; un visiteur ne reçoit ni script ni donnée. Lecture à distance par /wp-json/ae-commentaires/v1/tout?format=md, qui rend un digest groupé par page. Parcours complet vérifié au navigateur sur un banc d'essai : activation, survol, clic, envoi, épingle, fil, réponse, image collée, résolution, panneau, filtres, Échap — zéro erreur JS.
+
+### B4 — Boutons du calque écrasés par le CSS d'Elementor
+
+**✅ Fait** · porteur : Rémi
+
+*Demande :* « Améliore le rendu des boutons du plugin commentaire » — capture à l'appui.
+
+*Où on en est :* Diagnostic : le kit Elementor du site émet .elementor-kit-4658 button, qui vaut 0-1-1 et écrase toute règle de composant en 0-1-0, quel que soit l'ordre de chargement. Résultat mesuré : fond teal, rayon 3 px, majuscules, 61 px de haut, bulle débordée. Panne reproduite d'abord dans un banc d'essai avec un hôte hostile, puis corrigée : chaque règle préfixée par .aec (0-2-0) et une armure en !important sur les propriétés que les thèmes posent systématiquement sur button, input et textarea. Dessin revu au passage : icône carrée discrète, « Annuler » en bouton texte, « Commenter » seul à porter du poids visuel.
 
 ## Dette relevée de notre côté
 

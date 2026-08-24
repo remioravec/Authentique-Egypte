@@ -49,6 +49,9 @@ class ABO_Demandes {
 		add_action( 'admin_menu', array( __CLASS__, 'menu' ), 9 );
 		add_action( 'admin_post_abo_demande_statut', array( __CLASS__, 'action_statut' ) );
 		add_action( 'admin_post_abo_demande_suppr', array( __CLASS__, 'action_supprimer' ) );
+		add_action( 'wp_ajax_abo_deplacer', array( __CLASS__, 'ajax_deplacer' ) );
+		add_action( 'wp_ajax_abo_note', array( __CLASS__, 'ajax_note' ) );
+		add_action( 'admin_enqueue_scripts', array( __CLASS__, 'assets' ) );
 		add_action( 'abo_purge_quotidienne', array( __CLASS__, 'purger' ) );
 
 		if ( ! wp_next_scheduled( 'abo_purge_quotidienne' ) ) {
@@ -93,6 +96,22 @@ class ABO_Demandes {
 	 * @param int   $entree_id  Identifiant d'entrée (0 sur la version gratuite).
 	 */
 	public static function capter( $champs, $soumission, $formulaire, $entree_id = 0 ) {
+		// Ce greffon s'exécute APRÈS que WPForms a validé la soumission et
+		// envoyé ses notifications : `wpforms_process_complete` est une
+		// action, pas un filtre, et rien de ce qu'on fait ici ne remonte à
+		// WPForms. Le formulaire et le courriel sont donc intacts.
+		//
+		// Reste le cas d'une erreur de notre côté : elle interromprait
+		// l'affichage de la confirmation, après un envoi pourtant réussi.
+		// On l'attrape et on la journalise plutôt que de la laisser passer.
+		try {
+			self::capter_vraiment( $champs, $soumission, $formulaire, $entree_id );
+		} catch ( Throwable $e ) {
+			error_log( '[ae-back-office] captation de la demande impossible : ' . $e->getMessage() );
+		}
+	}
+
+	private static function capter_vraiment( $champs, $soumission, $formulaire, $entree_id ) {
 		if ( ! is_array( $champs ) ) {
 			return;
 		}
@@ -187,6 +206,82 @@ class ABO_Demandes {
 		);
 	}
 
+	public static function assets( $page ) {
+		if ( false === strpos( (string) $page, self::MENU ) ) {
+			return;
+		}
+		wp_enqueue_script( 'abo-demandes', ABO_URL . 'assets/js/demandes.js', array(), ABO_VERSION, true );
+		wp_localize_script( 'abo-demandes', 'ABO_DEMANDES', array(
+			'ajax'    => admin_url( 'admin-ajax.php' ),
+			'nonce'   => wp_create_nonce( 'abo_demandes' ),
+			'statuts' => self::STATUTS,
+		) );
+	}
+
+	/** Déplacement d'une fiche d'une colonne à l'autre. */
+	public static function ajax_deplacer() {
+		check_ajax_referer( 'abo_demandes', 'nonce' );
+
+		$id     = isset( $_POST['demande'] ) ? (int) $_POST['demande'] : 0;
+		$statut = isset( $_POST['statut'] ) ? sanitize_key( wp_unslash( $_POST['statut'] ) ) : '';
+
+		if ( ! current_user_can( 'edit_posts' ) || self::TYPE !== get_post_type( $id ) ) {
+			wp_send_json_error( array( 'message' => 'Action non autorisée.' ), 403 );
+		}
+		if ( ! isset( self::STATUTS[ $statut ] ) ) {
+			wp_send_json_error( array( 'message' => 'Colonne inconnue.' ), 400 );
+		}
+
+		update_post_meta( $id, '_abo_statut', $statut );
+		self::journaliser( $id, sprintf( 'déplacée en « %s »', self::STATUTS[ $statut ] ) );
+
+		wp_send_json_success( array( 'id' => $id, 'statut' => $statut ) );
+	}
+
+	/** Ajout d'une note interne sur une fiche. */
+	public static function ajax_note() {
+		check_ajax_referer( 'abo_demandes', 'nonce' );
+
+		$id      = isset( $_POST['demande'] ) ? (int) $_POST['demande'] : 0;
+		$message = isset( $_POST['message'] ) ? sanitize_textarea_field( wp_unslash( $_POST['message'] ) ) : '';
+
+		if ( ! current_user_can( 'edit_posts' ) || self::TYPE !== get_post_type( $id ) ) {
+			wp_send_json_error( array( 'message' => 'Action non autorisée.' ), 403 );
+		}
+		if ( '' === trim( $message ) ) {
+			wp_send_json_error( array( 'message' => 'Note vide.' ), 400 );
+		}
+
+		$note = self::journaliser( $id, $message );
+		wp_send_json_success( $note );
+	}
+
+	/**
+	 * Ajoute une ligne au journal d'une fiche.
+	 *
+	 * @param int    $id
+	 * @param string $message
+	 * @return array
+	 */
+	private static function journaliser( $id, $message ) {
+		$journal = get_post_meta( $id, '_abo_journal', true );
+		if ( ! is_array( $journal ) ) {
+			$journal = array();
+		}
+
+		$utilisateur = wp_get_current_user();
+		$ligne = array(
+			'auteur'  => $utilisateur->display_name,
+			'message' => $message,
+			'date'    => current_time( 'mysql' ),
+		);
+
+		$journal[] = $ligne;
+		update_post_meta( $id, '_abo_journal', $journal );
+
+		return $ligne;
+	}
+
 	public static function compter( $statut = '' ) {
 		$args = array(
 			'post_type'      => self::TYPE,
@@ -207,141 +302,133 @@ class ABO_Demandes {
 	}
 
 	public static function ecran() {
-		$filtre = isset( $_GET['statut'] ) ? sanitize_key( wp_unslash( $_GET['statut'] ) ) : '';
-
-		$args = array(
+		$demandes = get_posts( array(
 			'post_type'      => self::TYPE,
 			'post_status'    => 'publish',
-			'posts_per_page' => 100,
+			'posts_per_page' => 300,
 			'orderby'        => 'date',
 			'order'          => 'DESC',
-		);
-		if ( $filtre && isset( self::STATUTS[ $filtre ] ) ) {
-			$args['meta_query'] = array(
-				array(
-					'key'   => '_abo_statut',
-					'value' => $filtre,
+		) );
+
+		// Toutes les fiches partent au navigateur : l'ouverture d'une fiche
+		// et le glisser-déposer se font sans aller-retour serveur.
+		$fiches = array();
+		$colonnes = array_fill_keys( array_keys( self::STATUTS ), array() );
+
+		foreach ( $demandes as $demande ) {
+			$champs  = get_post_meta( $demande->ID, '_abo_champs', true );
+			$journal = get_post_meta( $demande->ID, '_abo_journal', true );
+			$statut  = get_post_meta( $demande->ID, '_abo_statut', true ) ?: 'nouvelle';
+			if ( ! isset( self::STATUTS[ $statut ] ) ) {
+				$statut = 'nouvelle';
+			}
+			$media = (int) get_post_meta( $demande->ID, '_abo_image', true );
+
+			$fiche = array(
+				'id'         => $demande->ID,
+				'titre'      => $demande->post_title,
+				'statut'     => $statut,
+				'formulaire' => get_post_meta( $demande->ID, '_abo_formulaire', true ),
+				'courriel'   => get_post_meta( $demande->ID, '_abo_courriel', true ),
+				'page'       => get_post_meta( $demande->ID, '_abo_page', true ),
+				'date'       => get_the_date( 'j M Y, H:i', $demande ),
+				'depuis'     => human_time_diff( get_post_time( 'U', true, $demande ) ),
+				'champs'     => is_array( $champs ) ? $champs : array(),
+				'journal'    => is_array( $journal ) ? $journal : array(),
+				'suppr'      => wp_nonce_url(
+					admin_url( 'admin-post.php?action=abo_demande_suppr&demande=' . $demande->ID ),
+					'abo_demande_' . $demande->ID
 				),
 			);
+
+			$colonnes[ $statut ][] = $fiche;
+			$fiches[ $demande->ID ] = $fiche;
 		}
 
-		$demandes = get_posts( $args );
-		$wpforms  = defined( 'WPFORMS_VERSION' );
-		$pro      = $wpforms && class_exists( 'WPForms_Pro' );
+		$wpforms = defined( 'WPFORMS_VERSION' );
+		$pro     = $wpforms && class_exists( 'WPForms_Pro' );
 		?>
-		<div class="wrap abo">
-			<h1>Demandes</h1>
+		<div class="wrap abo abo-crm">
+			<h1 class="wp-heading-inline">Demandes</h1>
+			<hr class="wp-header-end">
 
 			<?php if ( ! $wpforms ) : ?>
-				<div class="notice notice-warning"><p>
+				<div class="notice notice-warning inline"><p>
 					WPForms n'est pas actif : aucune demande ne peut être captée.
 				</p></div>
 			<?php elseif ( ! $pro ) : ?>
 				<p class="abo-intro">
 					WPForms <strong>Lite</strong> n'enregistre pas les soumissions — son écran
-					« Entries » est une page de vente, et les demandes partent uniquement par
-					courriel. Cet écran les conserve en base au moment où le formulaire est
-					validé : un courriel classé en indésirable ne fait plus perdre une demande.
-					L'envoi du courriel, lui, continue normalement.
+					« Entries » est une page de vente. Cet écran les conserve au moment où le
+					formulaire est validé. <strong>Le formulaire et l'envoi du courriel ne sont
+					pas modifiés</strong> : la captation se greffe après, en lecture seule.
 				</p>
 			<?php endif; ?>
 
-			<div class="abo-onglets">
-				<a class="abo-onglet <?php echo '' === $filtre ? 'actif' : ''; ?>"
-					href="<?php echo esc_url( admin_url( 'admin.php?page=' . self::MENU ) ); ?>">
-					Toutes <span><?php echo (int) self::compter(); ?></span>
-				</a>
+			<div class="abo-kanban" id="abo-kanban">
 				<?php foreach ( self::STATUTS as $cle => $libelle ) : ?>
-					<a class="abo-onglet <?php echo $filtre === $cle ? 'actif' : ''; ?>"
-						href="<?php echo esc_url( admin_url( 'admin.php?page=' . self::MENU . '&statut=' . $cle ) ); ?>">
-						<?php echo esc_html( $libelle ); ?> <span><?php echo (int) self::compter( $cle ); ?></span>
-					</a>
+					<section class="abo-col" data-statut="<?php echo esc_attr( $cle ); ?>">
+						<header>
+							<h2><?php echo esc_html( $libelle ); ?></h2>
+							<span class="abo-n"><?php echo count( $colonnes[ $cle ] ); ?></span>
+						</header>
+						<div class="abo-pile" data-statut="<?php echo esc_attr( $cle ); ?>">
+							<?php foreach ( $colonnes[ $cle ] as $fiche ) : ?>
+								<article class="abo-fiche" draggable="true" data-id="<?php echo esc_attr( $fiche['id'] ); ?>">
+									<h3><?php echo esc_html( $fiche['titre'] ); ?></h3>
+									<p class="abo-meta">
+										<?php echo esc_html( $fiche['formulaire'] ); ?> ·
+										il y a <?php echo esc_html( $fiche['depuis'] ); ?>
+									</p>
+									<?php
+									$resume = '';
+									foreach ( $fiche['champs'] as $champ ) {
+										if ( in_array( $champ['type'], array( 'textarea', 'text' ), true )
+											&& mb_strlen( $champ['valeur'] ) > 20 ) {
+											$resume = $champ['valeur'];
+											break;
+										}
+									}
+									?>
+									<?php if ( $resume ) : ?>
+										<p class="abo-resume"><?php echo esc_html( wp_trim_words( $resume, 16, '…' ) ); ?></p>
+									<?php endif; ?>
+									<footer>
+										<span class="abo-puces"><?php echo count( $fiche['champs'] ); ?> champs</span>
+										<?php if ( $fiche['journal'] ) : ?>
+											<span class="abo-puces"><?php echo count( $fiche['journal'] ); ?> note<?php echo count( $fiche['journal'] ) > 1 ? 's' : ''; ?></span>
+										<?php endif; ?>
+									</footer>
+								</article>
+							<?php endforeach; ?>
+							<p class="abo-col-vide">Déposez une fiche ici</p>
+						</div>
+					</section>
 				<?php endforeach; ?>
 			</div>
 
-			<?php if ( empty( $demandes ) ) : ?>
-				<p>Aucune demande <?php echo $filtre ? 'dans cet état' : 'pour l\'instant'; ?>.</p>
-			<?php endif; ?>
-
-			<?php foreach ( $demandes as $demande ) : ?>
-				<?php
-				$champs   = get_post_meta( $demande->ID, '_abo_champs', true );
-				$statut   = get_post_meta( $demande->ID, '_abo_statut', true ) ?: 'nouvelle';
-				$courriel = get_post_meta( $demande->ID, '_abo_courriel', true );
-				$origine  = get_post_meta( $demande->ID, '_abo_page', true );
-				?>
-				<section class="abo-demande abo-demande--<?php echo esc_attr( $statut ); ?>">
-					<header>
-						<h2>
-							<?php echo esc_html( $demande->post_title ); ?>
-							<span class="abo-etat abo-etat--<?php echo esc_attr( 'nouvelle' === $statut ? 'draft' : 'publish' ); ?>">
-								<?php echo esc_html( self::STATUTS[ $statut ] ?? $statut ); ?>
-							</span>
-						</h2>
-						<p>
-							<?php echo esc_html( get_post_meta( $demande->ID, '_abo_formulaire', true ) ); ?>
-							· <?php echo esc_html( get_the_date( 'j M Y, H:i', $demande ) ); ?>
-							<?php if ( $origine ) : ?>
-								· <a href="<?php echo esc_url( $origine ); ?>" target="_blank" rel="noreferrer">page d'origine</a>
-							<?php endif; ?>
-						</p>
-					</header>
-
-					<?php if ( is_array( $champs ) ) : ?>
-						<dl class="abo-champs">
-							<?php foreach ( $champs as $champ ) : ?>
-								<div>
-									<dt><?php echo esc_html( $champ['nom'] ); ?></dt>
-									<dd><?php echo nl2br( esc_html( $champ['valeur'] ) ); ?></dd>
-								</div>
-							<?php endforeach; ?>
-						</dl>
-					<?php endif; ?>
-
-					<footer>
-						<?php if ( $courriel ) : ?>
-							<a class="button button-primary"
-								href="<?php echo esc_url( 'mailto:' . $courriel . '?subject=' . rawurlencode( 'Votre voyage en Égypte' ) ); ?>">
-								Répondre
-							</a>
-						<?php endif; ?>
-
-						<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>">
-							<?php wp_nonce_field( 'abo_demande_' . $demande->ID ); ?>
-							<input type="hidden" name="action" value="abo_demande_statut">
-							<input type="hidden" name="demande" value="<?php echo esc_attr( $demande->ID ); ?>">
-							<select name="statut" onchange="this.form.submit()">
-								<?php foreach ( self::STATUTS as $cle => $libelle ) : ?>
-									<option value="<?php echo esc_attr( $cle ); ?>" <?php selected( $statut, $cle ); ?>>
-										<?php echo esc_html( $libelle ); ?>
-									</option>
-								<?php endforeach; ?>
-							</select>
-						</form>
-
-						<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>"
-							onsubmit="return confirm('Supprimer définitivement cette demande ?')">
-							<?php wp_nonce_field( 'abo_demande_' . $demande->ID ); ?>
-							<input type="hidden" name="action" value="abo_demande_suppr">
-							<input type="hidden" name="demande" value="<?php echo esc_attr( $demande->ID ); ?>">
-							<button class="button-link abo-suppr">Supprimer</button>
-						</form>
-					</footer>
-				</section>
-			<?php endforeach; ?>
-
 			<?php $purge = (int) get_option( self::OPTION_PURGE, 0 ); ?>
-			<p class="description" style="margin-top:26px;max-width:70ch">
-				Ces enregistrements contiennent des données personnelles. Ils vivent dans un type de
-				contenu privé, invisible du site public.
+			<p class="description abo-rgpd">
+				Ces fiches contiennent des données personnelles, dans un type de contenu privé
+				invisible du site public.
 				<?php if ( $purge ) : ?>
 					Purge automatique après <strong><?php echo (int) $purge; ?> jours</strong>.
 				<?php else : ?>
-					<strong>Aucune purge automatique n'est réglée</strong> — à définir dans
-					<a href="<?php echo esc_url( admin_url( 'options-general.php?page=abo-reglages' ) ); ?>">Réglages → Back-office simplifié</a>.
+					<strong>Aucune purge automatique n'est réglée</strong> —
+					<a href="<?php echo esc_url( admin_url( 'options-general.php?page=abo-reglages' ) ); ?>">à définir dans les réglages</a>.
 				<?php endif; ?>
 			</p>
 		</div>
+
+		<!-- Tiroir de fiche, rempli côté navigateur -->
+		<div class="abo-tiroir" id="abo-tiroir" hidden>
+			<div class="abo-voile" data-fermer></div>
+			<aside class="abo-panneau" role="dialog" aria-modal="true" aria-label="Fiche de demande"></aside>
+		</div>
+
+		<script type="application/json" id="abo-fiches"><?php
+			echo wp_json_encode( array_values( $fiches ) );
+		?></script>
 		<?php
 	}
 
