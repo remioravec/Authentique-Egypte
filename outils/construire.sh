@@ -4,6 +4,7 @@
 #   ./outils/construire.sh
 #     → dist/ae-commentaires.zip   relecture façon Google Docs
 #     → dist/ae-back-office.zip    contenus rangés par gabarit
+#     → dist/ae-crm.zip            les demandes reçues, en pipeline
 
 set -euo pipefail
 
@@ -27,12 +28,18 @@ for fichier in "$racine"/plugin/ae-back-office/includes/class-abo-*.php; do
     manque=1
   fi
 done
+for fichier in "$racine"/plugin/ae-crm/includes/class-aecrm-*.php; do
+  if grep -q 'class="wrap crm' "$fichier" && ! grep -q "wp_enqueue_style(" "$fichier"; then
+    echo "  ✗ $(basename "$fichier") affiche un écran sans demander sa feuille"
+    manque=1
+  fi
+done
 [ "$manque" -eq 0 ] || { echo "Feuille de style manquante."; exit 1; }
 
 echo "→ Fabrication des ZIP"
 rm -rf "$dist"
 mkdir -p "$dist"
-for extension in ae-commentaires ae-back-office; do
+for extension in ae-commentaires ae-back-office ae-crm; do
   ( cd "$racine/plugin" && zip -qr "$dist/$extension.zip" "$extension" -x '*.DS_Store' )
   printf "✓ %s (%s)\n" "$dist/$extension.zip" "$(du -h "$dist/$extension.zip" | cut -f1)"
 done

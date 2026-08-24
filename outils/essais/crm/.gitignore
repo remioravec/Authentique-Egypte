@@ -1,4 +1,12 @@
 index.html
-admin.css
-demandes.js
+crm.css
+crm.js
+common.css
+forms.css
+buttons.css
+admin-menu.css
+dashboard.css
+edit.css
+list-tables.css
+dashicons.css
 *.png

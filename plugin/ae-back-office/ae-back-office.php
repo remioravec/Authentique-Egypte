@@ -2,7 +2,7 @@
 /**
  * Plugin Name:       AE Back-office — contenus rangés par gabarit
  * Plugin URI:        https://github.com/remioravec/Authentique-Egypte
- * Description:       Remplace « Articles » et « Pages » par un écran unique « Contenus », rangé par gabarit (accueil, catégorie, voyage, destination, guide, devis, agence…). Conserve les demandes reçues par formulaire, que WPForms Lite n'enregistre pas. Masque les entrées de menu inutiles pour ne laisser que l'essentiel : contenus, demandes, voyages, médiathèque, WPForms, apparence, extensions, comptes, réglages.
+ * Description:       Remplace « Articles » et « Pages » par un écran unique « Contenus », rangé par gabarit (accueil, catégorie, voyage, destination, guide, devis, agence…). Masque les entrées de menu inutiles pour ne laisser que l'essentiel : contenus, demandes, voyages, médiathèque, WPForms, apparence, extensions, comptes, réglages.
  * Version:           0.1.0
  * Requires at least: 6.0
  * Requires PHP:      7.4
@@ -22,6 +22,9 @@
  * verrouillé. Un interrupteur « Tout afficher » est présent en
  * permanence dans la barre d'administration.
  *
+ * Les demandes reçues par formulaire sont gérées par une extension
+ * distincte — « AE CRM » —, qui fonctionne sans celle-ci.
+ *
  * Désactiver le plugin restitue le back-office d'origine à
  * l'identique. Le rangement par gabarit est conservé en base
  * (méta `_ae_gabarit`) et se recalcule tout seul si besoin.
@@ -39,13 +42,11 @@ define( 'ABO_URL', plugin_dir_url( __FILE__ ) );
 
 require_once ABO_DIR . 'includes/class-abo-gabarits.php';
 require_once ABO_DIR . 'includes/class-abo-contenus.php';
-require_once ABO_DIR . 'includes/class-abo-demandes.php';
 require_once ABO_DIR . 'includes/class-abo-menu.php';
 
 function abo_init() {
 	ABO_Gabarits::init();
 	ABO_Contenus::init();
-	ABO_Demandes::init();
 	ABO_Menu::init();
 }
 add_action( 'plugins_loaded', 'abo_init' );
@@ -71,13 +72,12 @@ add_action( 'admin_enqueue_scripts', 'abo_enregistrer_styles', 5 );
  * méta de classement.
  */
 function abo_activation() {
-	ABO_Demandes::enregistrer_type();
 	ABO_Gabarits::ranger_tout();
 }
 
 /**
- * Désactivation : on retire la tâche de purge. Les demandes déjà
- * enregistrées sont conservées.
+ * Désactivation : on retire l'ancienne tâche de purge des demandes,
+ * au cas où une version précédente l'aurait laissée derrière elle.
  */
 function abo_desactivation() {
 	$prochaine = wp_next_scheduled( 'abo_purge_quotidienne' );

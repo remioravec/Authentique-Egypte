@@ -1,16 +1,30 @@
 <?php
 /**
  * Rend l'écran réel du plugin hors de WordPress, avec des doublures
- * pour les quelques fonctions du cœur qu'il appelle. Le HTML testé est
- * donc celui que la cliente verra, pas une copie faite à la main.
+ * pour les fonctions du cœur qu'il appelle, ET les vraies feuilles de
+ * style de l'admin WordPress du site. Ce sont elles qui écrasent les
+ * styles d'un plugin : les ignorer, c'est tester dans le vide.
  */
 define( 'ABSPATH', __DIR__ );
 define( 'HOUR_IN_SECONDS', 3600 );
+define( 'AECRM_VERSION', '1.0.0' );
+define( 'AECRM_DIR', __DIR__ . '/../../../plugin/ae-crm/' );
+define( 'AECRM_URL', './' );
+define( 'WPFORMS_VERSION', '1.8.9' );
 
 $JEU = json_decode( file_get_contents( __DIR__ . '/jeu.json' ), true );
 
 function get_posts( $a ) {
 	global $JEU;
+	if ( ! empty( $a['fields'] ) && 'ids' === $a['fields'] ) {
+		$ids = array();
+		foreach ( $JEU as $f ) {
+			if ( empty( $a['meta_query'] ) || $f['statut'] === $a['meta_query'][0]['value'] ) {
+				$ids[] = $f['id'];
+			}
+		}
+		return $ids;
+	}
 	$sortie = array();
 	foreach ( $JEU as $f ) {
 		$sortie[] = (object) array( 'ID' => $f['id'], 'post_title' => $f['titre'] );
@@ -24,7 +38,7 @@ function get_post_meta( $id, $cle, $u = false ) {
 		$carte = array(
 			'_abo_champs' => $f['champs'], '_abo_journal' => $f['journal'],
 			'_abo_statut' => $f['statut'], '_abo_formulaire' => $f['formulaire'],
-			'_abo_courriel' => $f['courriel'], '_abo_page' => $f['page'], '_abo_image' => 0,
+			'_abo_courriel' => $f['courriel'], '_abo_page' => $f['page'],
 		);
 		return isset( $carte[ $cle ] ) ? $carte[ $cle ] : '';
 	}
@@ -33,7 +47,7 @@ function get_post_meta( $id, $cle, $u = false ) {
 function get_the_date( $f, $p ) { global $JEU; foreach ( $JEU as $x ) { if ( $x['id'] == $p->ID ) return $x['date']; } return ''; }
 function get_post_time( $f, $g, $p ) { return $p->ID; }
 function human_time_diff( $u ) { global $JEU; foreach ( $JEU as $x ) { if ( $x['id'] == $u ) return $x['depuis']; } return ''; }
-function wp_nonce_url( $u, $a ) { return '#'; }
+function wp_nonce_url( $u, $a ) { return $u . '&_wpnonce=essai'; }
 function admin_url( $c = '' ) { return '/wp-admin/' . $c; }
 function get_option( $c, $d = false ) { return 0; }
 function esc_attr( $v ) { return htmlspecialchars( (string) $v, ENT_QUOTES, 'UTF-8' ); }
@@ -44,32 +58,42 @@ function wp_trim_words( $t, $n, $plus ) {
 	$m = preg_split( '/\s+/u', trim( (string) $t ), -1, PREG_SPLIT_NO_EMPTY );
 	return count( $m ) <= $n ? implode( ' ', $m ) : implode( ' ', array_slice( $m, 0, $n ) ) . $plus;
 }
-function add_action() {} function wp_next_scheduled() { return true; } function wp_schedule_event() {}
+function add_action() {} function add_submenu_page() {} function register_setting() {}
+function wp_next_scheduled() { return true; } function wp_schedule_event() {}
+function is_admin() { return true; }
 
-require __DIR__ . '/../../../plugin/ae-back-office/includes/class-abo-demandes.php';
+require AECRM_DIR . 'includes/class-aecrm-demandes.php';
+require AECRM_DIR . 'includes/class-aecrm-ecran.php';
+require AECRM_DIR . 'includes/class-aecrm-reglages.php';
 
 ob_start();
-ABO_Demandes::ecran();
+AECRM_Ecran::afficher();
 $corps = ob_get_clean();
 
+// Les vraies feuilles de l'admin WordPress du site, dans l'ordre où
+// WordPress les charge — donc AVANT celle du plugin.
+$coeur = '';
+foreach ( array( 'dashicons', 'buttons', 'common', 'forms', 'edit', 'list-tables' ) as $f ) {
+	if ( file_exists( __DIR__ . "/$f.css" ) ) {
+		$coeur .= '<link rel="stylesheet" href="' . $f . '.css">';
+	}
+}
+
 $page = '<!DOCTYPE html><html lang="fr"><head><meta charset="utf-8">'
-. '<link rel="stylesheet" href="admin.css">'
-. '<style>body{font-family:-apple-system,system-ui,sans-serif;background:#f0f0f1;margin:0}'
-. '.wrap{padding:20px 24px}h1{font-size:23px;font-weight:400;margin:0 0 12px}'
-. 'hr.wp-header-end{display:none}.notice{display:none}'
-. '.button{display:inline-block;padding:6px 12px;border:1px solid #2271b1;border-radius:3px;'
-. 'background:#f6f7f7;color:#2271b1;text-decoration:none;font-size:13px;cursor:pointer}'
-. '.button-primary{background:#2271b1;color:#fff;border-color:#2271b1}'
-. 'textarea,select{font-family:inherit}.description{color:#646970;font-size:13px}</style></head><body>'
+. $coeur
+. '<link rel="stylesheet" href="crm.css">'
+. '<style>body{background:#f0f0f1;margin:0;font-family:-apple-system,"Segoe UI",Roboto,sans-serif;font-size:13px}'
+. '.wrap{margin:10px 20px 0 2px;padding:20px 24px 0}</style></head>'
+. '<body class="wp-admin wp-core-ui">'
 . $corps
-. '<script>window.ABO_DEMANDES={ajax:"/ajax",nonce:"n",statuts:'
-. json_encode( ABO_Demandes::STATUTS, JSON_UNESCAPED_UNICODE ) . '};'
+. '<script>window.AE_CRM={ajax:"/ajax",nonce:"n",statuts:'
+. json_encode( AECRM_Demandes::STATUTS, JSON_UNESCAPED_UNICODE ) . '};'
 . 'window.__appels=[];'
 . 'window.fetch=function(u,o){var b=new URLSearchParams(o.body);'
 . 'window.__appels.push(b.get("action")+":"+b.get("demande")+"→"+(b.get("statut")||b.get("message")));'
 . 'return Promise.resolve({json:function(){return Promise.resolve({success:true,'
 . 'data:{auteur:"Rémi",message:b.get("message")||"",date:"maintenant"}});}});};'
-. '</script><script src="demandes.js"></script></body></html>';
+. '</script><script src="crm.js"></script></body></html>';
 
 file_put_contents( __DIR__ . '/index.html', $page );
 echo "index.html régénéré depuis le plugin (" . strlen( $page ) . " octets)\n";

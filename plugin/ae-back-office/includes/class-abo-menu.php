@@ -205,11 +205,6 @@ class ABO_Menu {
 	}
 
 	public static function enregistrer_reglages() {
-		register_setting(
-			'abo',
-			ABO_Demandes::OPTION_PURGE,
-			array( 'sanitize_callback' => 'absint' )
-		);
 
 		register_setting(
 			'abo',
@@ -248,21 +243,6 @@ class ABO_Menu {
 			<form method="post" action="options.php">
 				<?php settings_fields( 'abo' ); ?>
 				<table class="form-table">
-					<tr>
-						<th scope="row"><label for="abo-purge">Conservation des demandes</label></th>
-						<td>
-							<input type="number" id="abo-purge" min="0" max="3650" class="small-text"
-								name="<?php echo esc_attr( ABO_Demandes::OPTION_PURGE ); ?>"
-								value="<?php echo (int) get_option( ABO_Demandes::OPTION_PURGE, 0 ); ?>"> jours
-							<p class="description">
-								Les demandes reçues par formulaire contiennent des données personnelles.
-								Passé ce délai, elles sont supprimées automatiquement.
-								<strong>0 = aucune purge</strong> : rien n'est supprimé tant qu'un délai
-								n'a pas été choisi, une suppression silencieuse par défaut serait pire
-								que pas de purge du tout.
-							</p>
-						</td>
-					</tr>
 					<tr>
 						<th scope="row"><label for="abo-gardes">Entrées gardées</label></th>
 						<td>
