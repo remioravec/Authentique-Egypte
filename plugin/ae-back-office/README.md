@@ -66,7 +66,7 @@ défaut serait pire que pas de purge du tout.
 ## Le menu simplifié
 
 Restent visibles par défaut : **Tableau de bord · Contenus · Demandes · Voyages ·
-Médiathèque · Refonte · WPForms · Apparence · Extensions · Comptes · Réglages ·
+Médiathèque · Relecture · WPForms · Apparence · Extensions · Comptes · Réglages ·
 Yoast SEO · Elementor · Modèles Elementor**. Tout le reste est masqué.
 
 Une entrée gardée qui se termine par `*` vaut pour tout ce qui commence ainsi :

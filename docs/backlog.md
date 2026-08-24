@@ -5,12 +5,12 @@
 
 | État | Nombre |
 |---|---:|
-| ✅ Fait | 11 |
+| ✅ Fait | 12 |
 | 🔵 En cours | 4 |
 | 🟠 À arbitrer | 6 |
 | ⬜ À produire | 1 |
 | 🟡 En attente cliente | 6 |
-| **Total** | **28** |
+| **Total** | **29** |
 
 ## Process et non-régression
 
@@ -198,7 +198,7 @@
 
 *Demande :* Masquer l'inutile de WordPress, réunir pages et articles, ranger par gabarit, garder médiathèque, extensions, thèmes et administration.
 
-*Où on en est :* Extension ae-back-office. Écran unique « Contenus » qui réunit pages, guides et voyages, rangés par gabarit avec le vocabulaire des maquettes. Classement déduit automatiquement : relevé sur le contenu réel du site, 61 contenus classés, 0 non rangé. Un classement posé à la main devient définitif. Menu réduit à Tableau de bord, Contenus, Médiathèque, Refonte, Apparence, Extensions, Comptes, Réglages, Yoast et Elementor. Le masquage est cosmétique — aucune capacité retirée — et un interrupteur « Menu simplifié / complet » vit en permanence dans la barre du haut, réglable compte par compte. Ajouté à la demande : WPForms, Voyages et Comptes restent dans le menu (les gardes acceptent un joker, `wpforms*` couvrant tous ses sous-écrans).
+*Où on en est :* Extension ae-back-office. Écran unique « Contenus » qui réunit pages, guides et voyages, rangés par gabarit avec le vocabulaire des maquettes. Classement déduit automatiquement : relevé sur le contenu réel du site, 61 contenus classés, 0 non rangé. Un classement posé à la main devient définitif. Menu réduit à Tableau de bord, Contenus, Médiathèque, Relecture, Apparence, Extensions, Comptes, Réglages, Yoast et Elementor. Le masquage est cosmétique — aucune capacité retirée — et un interrupteur « Menu simplifié / complet » vit en permanence dans la barre du haut, réglable compte par compte. Ajouté à la demande : WPForms, Voyages et Comptes restent dans le menu (les gardes acceptent un joker, `wpforms*` couvrant tous ses sous-écrans).
 
 ### B2 — Voir les demandes clientes malgré WPForms Lite
 
@@ -207,6 +207,14 @@
 *Demande :* « Laisser WPForms, pour voir les demandes clients. »
 
 *Où on en est :* WPForms Lite n'enregistre pas les soumissions : son écran Entries est une page de vente, les demandes partent uniquement par courriel. Garder le menu ne montrait donc rien. L'extension écoute désormais wpforms_process_complete — action présente aussi sur la version gratuite — et conserve chaque soumission en base : tous les champs, le formulaire d'origine, la page de départ, un bouton Répondre et un état (nouvelle / en cours / traitée / archivée), avec pastille de compte dans le menu. L'envoi du courriel continue normalement. Captation testée sur une soumission simulée : détection du nom et du courriel, cases à cocher aplaties, champs vides ignorés, balise injectée neutralisée. Durée de conservation réglable, sans purge par défaut.
+
+### B3 — Le calque de commentaires refait sur le bon modèle
+
+**✅ Fait** · porteur : Rémi
+
+*Demande :* « Le plugin demandé n'est pas bon. Cela doit être comme sur Google Docs, Figma ou autres. Sur chaque page, pouvoir naviguer et activer l'aspect commentaire. La personne clique sur l'élément à changer et peut écrire un commentaire + mettre une image si souhait. Claude doit pouvoir le lire derrière moi également. »
+
+*Où on en est :* La première version était un formulaire de ticket — on choisissait un type (texte, couleur, image) avant d'écrire — et elle ne fonctionnait que sur les huit maquettes servies depuis les fichiers du plugin. Reprise de zéro sous le nom ae-commentaires. Le geste est celui de Figma : bouton ou touche C, survol qui souligne l'élément, clic, une bulle avec un simple champ de texte, image collée depuis le presse-papiers ou déposée, Ctrl+Entrée pour envoyer. Épingle numérotée, fil au clic, réponses, résolution, réouverture en répondant. Panneau latéral filtrable et navigateur de pages. Actif sur TOUTE page du site pour un compte connecté ayant aec_commenter ; un visiteur ne reçoit ni script ni donnée. Lecture à distance par /wp-json/ae-commentaires/v1/tout?format=md, qui rend un digest groupé par page. Parcours complet vérifié au navigateur sur un banc d'essai : activation, survol, clic, envoi, épingle, fil, réponse, image collée, résolution, panneau, filtres, Échap — zéro erreur JS.
 
 ## Dette relevée de notre côté
 

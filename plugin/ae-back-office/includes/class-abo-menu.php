@@ -10,7 +10,7 @@
  *
  * Ce qui reste par défaut :
  *   Tableau de bord · Contenus · Demandes · Voyages · Médiathèque
- *   Refonte · WPForms · Apparence · Extensions · Comptes · Réglages
+ *   Relecture · WPForms · Apparence · Extensions · Comptes · Réglages
  *   Yoast SEO · Elementor
  */
 
@@ -33,7 +33,7 @@ class ABO_Menu {
 		'ae-demandes',                          // les demandes reçues par formulaire
 		'edit.php?post_type=programs',          // les voyages, dans leur écran natif
 		'upload.php',                           // Médiathèque
-		'ae-refonte',                           // plugin de relecture
+		'ae-commentaires',                      // extension de relecture
 		'wpforms*',                             // WPForms et tous ses sous-écrans
 		'themes.php',                           // Apparence
 		'plugins.php',                          // Extensions
