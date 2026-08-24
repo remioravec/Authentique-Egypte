@@ -9,8 +9,9 @@
  * personne : il n'impose rien aux autres comptes.
  *
  * Ce qui reste par défaut :
- *   Tableau de bord · Contenus · Médiathèque · Refonte · Apparence
- *   Extensions · Comptes · Réglages · Yoast SEO · Elementor
+ *   Tableau de bord · Contenus · Demandes · Voyages · Médiathèque
+ *   Refonte · WPForms · Apparence · Extensions · Comptes · Réglages
+ *   Yoast SEO · Elementor
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -27,16 +28,19 @@ class ABO_Menu {
 	 * Tout ce qui n'est pas dans cette liste est masqué.
 	 */
 	const GARDES_DEFAUT = array(
-		'index.php',                    // Tableau de bord
-		'ae-contenus',                  // notre écran unifié
-		'upload.php',                   // Médiathèque
-		'ae-refonte',                   // plugin de relecture
-		'themes.php',                   // Apparence
-		'plugins.php',                  // Extensions
-		'users.php',                    // Comptes
-		'options-general.php',          // Réglages
-		'wpseo_dashboard',              // Yoast SEO
-		'elementor',                    // Elementor
+		'index.php',                            // Tableau de bord
+		'ae-contenus',                          // notre écran unifié
+		'ae-demandes',                          // les demandes reçues par formulaire
+		'edit.php?post_type=programs',          // les voyages, dans leur écran natif
+		'upload.php',                           // Médiathèque
+		'ae-refonte',                           // plugin de relecture
+		'wpforms*',                             // WPForms et tous ses sous-écrans
+		'themes.php',                           // Apparence
+		'plugins.php',                          // Extensions
+		'users.php',                            // Comptes
+		'options-general.php',                  // Réglages
+		'wpseo*',                               // Yoast SEO
+		'elementor',                            // Elementor
 		'edit.php?post_type=elementor_library', // Modèles Elementor
 	);
 
@@ -77,6 +81,34 @@ class ABO_Menu {
 		return apply_filters( 'abo_menus_gardes', $gardes );
 	}
 
+	/**
+	 * Une entrée est-elle gardée ?
+	 *
+	 * Une garde qui se termine par « * » vaut pour tout ce qui commence
+	 * ainsi : `wpforms*` garde l'écran principal et ses sous-écrans, sans
+	 * qu'il faille les énumérer ni deviner comment l'extension les nomme
+	 * d'une version à l'autre.
+	 *
+	 * @param string   $identifiant
+	 * @param string[] $gardes
+	 * @return bool
+	 */
+	public static function est_garde( $identifiant, $gardes ) {
+		foreach ( $gardes as $garde ) {
+			if ( '*' === substr( $garde, -1 ) ) {
+				if ( 0 === strpos( $identifiant, substr( $garde, 0, -1 ) ) ) {
+					return true;
+				}
+				continue;
+			}
+			if ( $identifiant === $garde ) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	public static function nettoyer() {
 		if ( self::tout_voir() ) {
 			return;
@@ -97,7 +129,7 @@ class ABO_Menu {
 			if ( 0 === strpos( $identifiant, 'separator' ) ) {
 				continue;
 			}
-			if ( in_array( $identifiant, $gardes, true ) ) {
+			if ( self::est_garde( $identifiant, $gardes ) ) {
 				continue;
 			}
 			remove_menu_page( $identifiant );
@@ -175,6 +207,12 @@ class ABO_Menu {
 	public static function enregistrer_reglages() {
 		register_setting(
 			'abo',
+			ABO_Demandes::OPTION_PURGE,
+			array( 'sanitize_callback' => 'absint' )
+		);
+
+		register_setting(
+			'abo',
 			self::OPTION_GARDES,
 			array(
 				'sanitize_callback' => static function ( $valeur ) {
@@ -211,13 +249,32 @@ class ABO_Menu {
 				<?php settings_fields( 'abo' ); ?>
 				<table class="form-table">
 					<tr>
+						<th scope="row"><label for="abo-purge">Conservation des demandes</label></th>
+						<td>
+							<input type="number" id="abo-purge" min="0" max="3650" class="small-text"
+								name="<?php echo esc_attr( ABO_Demandes::OPTION_PURGE ); ?>"
+								value="<?php echo (int) get_option( ABO_Demandes::OPTION_PURGE, 0 ); ?>"> jours
+							<p class="description">
+								Les demandes reçues par formulaire contiennent des données personnelles.
+								Passé ce délai, elles sont supprimées automatiquement.
+								<strong>0 = aucune purge</strong> : rien n'est supprimé tant qu'un délai
+								n'a pas été choisi, une suppression silencieuse par défaut serait pire
+								que pas de purge du tout.
+							</p>
+						</td>
+					</tr>
+					<tr>
 						<th scope="row"><label for="abo-gardes">Entrées gardées</label></th>
 						<td>
 							<textarea id="abo-gardes" name="<?php echo esc_attr( self::OPTION_GARDES ); ?>"
 								rows="12" cols="50" class="large-text code"><?php
 								echo esc_textarea( implode( "\n", $gardes ) );
 							?></textarea>
-							<p class="description">Un identifiant par ligne. Videz le champ pour revenir à la liste par défaut.</p>
+							<p class="description">
+					Un identifiant par ligne. Une ligne qui se termine par <code>*</code> vaut pour
+					tout ce qui commence ainsi — <code>wpforms*</code> garde l'écran principal et
+					ses sous-écrans. Videz le champ pour revenir à la liste par défaut.
+				</p>
 						</td>
 					</tr>
 				</table>
@@ -241,7 +298,7 @@ class ABO_Menu {
 					<tr>
 						<td><?php echo esc_html( $nom ); ?></td>
 						<td><code><?php echo esc_html( $identifiant ); ?></code></td>
-						<td><?php echo in_array( $identifiant, $gardes, true ) ? '✅' : '—'; ?></td>
+						<td><?php echo self::est_garde( $identifiant, $gardes ) ? '✅' : '—'; ?></td>
 					</tr>
 				<?php endforeach; ?>
 				</tbody>

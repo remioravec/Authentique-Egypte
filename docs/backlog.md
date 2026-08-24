@@ -5,12 +5,12 @@
 
 | État | Nombre |
 |---|---:|
-| ✅ Fait | 10 |
+| ✅ Fait | 11 |
 | 🔵 En cours | 4 |
 | 🟠 À arbitrer | 6 |
 | ⬜ À produire | 1 |
 | 🟡 En attente cliente | 6 |
-| **Total** | **27** |
+| **Total** | **28** |
 
 ## Process et non-régression
 
@@ -198,7 +198,15 @@
 
 *Demande :* Masquer l'inutile de WordPress, réunir pages et articles, ranger par gabarit, garder médiathèque, extensions, thèmes et administration.
 
-*Où on en est :* Extension ae-back-office. Écran unique « Contenus » qui réunit pages, guides et voyages, rangés par gabarit avec le vocabulaire des maquettes. Classement déduit automatiquement : relevé sur le contenu réel du site, 61 contenus classés, 0 non rangé. Un classement posé à la main devient définitif. Menu réduit à Tableau de bord, Contenus, Médiathèque, Refonte, Apparence, Extensions, Comptes, Réglages, Yoast et Elementor. Le masquage est cosmétique — aucune capacité retirée — et un interrupteur « Menu simplifié / complet » vit en permanence dans la barre du haut, réglable compte par compte.
+*Où on en est :* Extension ae-back-office. Écran unique « Contenus » qui réunit pages, guides et voyages, rangés par gabarit avec le vocabulaire des maquettes. Classement déduit automatiquement : relevé sur le contenu réel du site, 61 contenus classés, 0 non rangé. Un classement posé à la main devient définitif. Menu réduit à Tableau de bord, Contenus, Médiathèque, Refonte, Apparence, Extensions, Comptes, Réglages, Yoast et Elementor. Le masquage est cosmétique — aucune capacité retirée — et un interrupteur « Menu simplifié / complet » vit en permanence dans la barre du haut, réglable compte par compte. Ajouté à la demande : WPForms, Voyages et Comptes restent dans le menu (les gardes acceptent un joker, `wpforms*` couvrant tous ses sous-écrans).
+
+### B2 — Voir les demandes clientes malgré WPForms Lite
+
+**✅ Fait** · porteur : Rémi
+
+*Demande :* « Laisser WPForms, pour voir les demandes clients. »
+
+*Où on en est :* WPForms Lite n'enregistre pas les soumissions : son écran Entries est une page de vente, les demandes partent uniquement par courriel. Garder le menu ne montrait donc rien. L'extension écoute désormais wpforms_process_complete — action présente aussi sur la version gratuite — et conserve chaque soumission en base : tous les champs, le formulaire d'origine, la page de départ, un bouton Répondre et un état (nouvelle / en cours / traitée / archivée), avec pastille de compte dans le menu. L'envoi du courriel continue normalement. Captation testée sur une soumission simulée : détection du nom et du courriel, cases à cocher aplaties, champs vides ignorés, balise injectée neutralisée. Durée de conservation réglable, sans purge par défaut.
 
 ## Dette relevée de notre côté
 

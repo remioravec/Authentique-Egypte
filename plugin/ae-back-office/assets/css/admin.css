@@ -47,3 +47,29 @@
   .abo-table th:nth-child(4),.abo-table td:nth-child(4){display:none}
   .abo-choix select{max-width:150px}
 }
+
+/* ---------- écran Demandes ---------- */
+.abo-demande{background:#fff;border:1px solid #dcdcde;border-left:4px solid #dcdcde;
+  border-radius:4px;padding:20px 22px;margin:0 0 16px}
+.abo-demande--nouvelle{border-left-color:#dba617;background:#fffdf6}
+.abo-demande--en_cours{border-left-color:#2271b1}
+.abo-demande--traitee{border-left-color:#1d6b34}
+.abo-demande--archivee{border-left-color:#c3c4c7;opacity:.72}
+.abo-demande>header{margin:0 0 14px}
+.abo-demande h2{display:flex;align-items:center;gap:12px;flex-wrap:wrap;font-size:16px;margin:0 0 4px}
+.abo-demande>header p{margin:0;color:#646970;font-size:13px}
+
+.abo-champs{display:grid;grid-template-columns:repeat(2,1fr);gap:12px 26px;margin:0 0 16px}
+.abo-champs dt{font-size:12px;font-weight:600;color:#646970;margin:0 0 2px}
+.abo-champs dd{margin:0;font-size:14px;color:#2c3338;line-height:1.5}
+.abo-champs div:has(dd:only-of-type) dd{word-break:break-word}
+
+.abo-demande>footer{display:flex;align-items:center;gap:12px;flex-wrap:wrap;
+  padding-top:14px;border-top:1px solid #f0f0f1}
+.abo-demande>footer form{margin:0}
+.abo-suppr{color:#b32d2e;text-decoration:none}
+.abo-suppr:hover{color:#8a2424;text-decoration:underline}
+
+@media (max-width:782px){
+  .abo-champs{grid-template-columns:1fr}
+}

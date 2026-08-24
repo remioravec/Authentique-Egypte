@@ -41,11 +41,37 @@ le contenu réel du site au 24/08/2026 : **61 contenus classés, 0 non rangé.**
 Un classement posé à la main (✋) devient définitif : le recalcul ne l'écrase
 jamais.
 
+## Les demandes clientes
+
+**WPForms Lite n'enregistre pas les soumissions.** Son écran « Entries » est une
+page de vente vers la version payante : les demandes partent uniquement par
+courriel. Un courriel classé en indésirable, un envoi bloqué par l'hébergeur, et
+la demande est perdue sans laisser de trace.
+
+L'écran **Demandes** écoute `wpforms_process_complete` — une action qui se
+déclenche aussi sur la version gratuite — et conserve chaque soumission en base.
+Il ne remplace pas l'envoi du courriel, il s'y ajoute comme filet.
+
+Chaque demande affiche tous les champs remplis, le formulaire d'origine, la page
+depuis laquelle elle a été envoyée, un bouton **Répondre** qui ouvre le courriel
+prérempli, et un état : *Nouvelle · En cours · Traitée · Archivée*. Le nombre de
+nouvelles demandes s'affiche en pastille dans le menu.
+
+**Données personnelles.** Ces enregistrements contiennent noms, adresses et
+numéros. Ils vivent dans un type de contenu privé, invisible du site public. Une
+durée de conservation est réglable dans Réglages → Back-office simplifié ; tant
+qu'elle n'est pas choisie, **rien n'est supprimé** — une purge silencieuse par
+défaut serait pire que pas de purge du tout.
+
 ## Le menu simplifié
 
-Restent visibles par défaut : **Tableau de bord · Contenus · Médiathèque ·
-Refonte · Apparence · Extensions · Comptes · Réglages · Yoast SEO · Elementor ·
-Modèles Elementor**. Tout le reste est masqué.
+Restent visibles par défaut : **Tableau de bord · Contenus · Demandes · Voyages ·
+Médiathèque · Refonte · WPForms · Apparence · Extensions · Comptes · Réglages ·
+Yoast SEO · Elementor · Modèles Elementor**. Tout le reste est masqué.
+
+Une entrée gardée qui se termine par `*` vaut pour tout ce qui commence ainsi :
+`wpforms*` garde l'écran principal et ses sous-écrans, sans qu'il faille les
+énumérer ni deviner comment l'extension les nomme d'une version à l'autre.
 
 Trois garde-fous, parce qu'un back-office amputé se retourne toujours contre
 celui qui l'a amputé :
