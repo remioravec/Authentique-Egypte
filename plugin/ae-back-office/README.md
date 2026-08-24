@@ -52,10 +52,29 @@ L'écran **Demandes** écoute `wpforms_process_complete` — une action qui se
 déclenche aussi sur la version gratuite — et conserve chaque soumission en base.
 Il ne remplace pas l'envoi du courriel, il s'y ajoute comme filet.
 
-Chaque demande affiche tous les champs remplis, le formulaire d'origine, la page
-depuis laquelle elle a été envoyée, un bouton **Répondre** qui ouvre le courriel
-prérempli, et un état : *Nouvelle · En cours · Traitée · Archivée*. Le nombre de
-nouvelles demandes s'affiche en pastille dans le menu.
+L'écran se lit comme un CRM : quatre colonnes — *Nouvelle · En cours · Traitée ·
+Archivée* — et une carte par demande, qu'on **fait glisser d'une colonne à
+l'autre**. Le déplacement est enregistré aussitôt ; si le serveur refuse, la
+carte revient d'où elle vient plutôt que de mentir sur son état.
+
+Une carte porte l'essentiel sans qu'on l'ouvre : la personne, le formulaire
+d'origine, le renseignement le plus parlant qu'elle a laissé — budget, nombre de
+voyageurs, durée, dates — son adresse, et l'ancienneté de la demande. La couleur
+de pastille est calculée à partir du nom : la même personne garde la sienne d'une
+colonne à l'autre et d'un jour à l'autre.
+
+**Au clic — ou à Entrée, les cartes sont focalisables — la fiche client s'ouvre**
+dans un tiroir latéral : tous les champs remplis, la page d'origine, un bouton
+**Répondre** qui ouvre le courriel prérempli, un sélecteur de colonne (le chemin
+clavier, et le seul praticable sur téléphone où le glisser-déposer natif
+n'existe pas), et un journal de suivi interne où l'agence note ses relances.
+Échap referme.
+
+Le nombre de nouvelles demandes s'affiche en pastille dans le menu.
+
+Sur un écran étroit les quatre colonnes restent côte à côte et le tableau défile
+horizontalement — un pipeline se lit d'un coup d'œil ; en dessous de 960 px, on
+empile.
 
 **Données personnelles.** Ces enregistrements contiennent noms, adresses et
 numéros. Ils vivent dans un type de contenu privé, invisible du site public. Une

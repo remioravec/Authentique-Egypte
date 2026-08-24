@@ -129,7 +129,17 @@
     panneau.innerHTML = '';
 
     var tete = el('header', 'abo-fiche-tete');
-    tete.appendChild(el('h2', '', fiche.titre));
+
+    // La même pastille que sur la carte : on reconnaît la personne
+    // sans avoir à relire son nom.
+    var carteSource = kanban.querySelector('.abo-fiche[data-id="' + id + '"] .abo-ava');
+    var ava = el('span', 'abo-ava', carteSource ? carteSource.textContent.trim() : '?');
+    if (carteSource) {
+      ava.style.background = carteSource.style.background;
+      ava.style.color = carteSource.style.color;
+    }
+    tete.appendChild(ava);
+    tete.appendChild(el('h2', '', fiche.titre.replace(/\s*—.*$/, '')));
     var fermer = el('button', 'abo-fermer', '✕');
     fermer.type = 'button';
     fermer.setAttribute('aria-label', 'Fermer la fiche');
@@ -138,7 +148,14 @@
     panneau.appendChild(tete);
 
     var meta = el('p', 'abo-fiche-meta');
-    meta.textContent = fiche.formulaire + ' · ' + fiche.date;
+    var etiquette = el('span', 'abo-tag', fiche.formulaire);
+    var tagSource = kanban.querySelector('.abo-fiche[data-id="' + id + '"] .abo-tag');
+    if (tagSource) {
+      etiquette.style.background = tagSource.style.background;
+      etiquette.style.color = tagSource.style.color;
+    }
+    meta.appendChild(etiquette);
+    meta.appendChild(document.createTextNode(fiche.date));
     panneau.appendChild(meta);
 
     // Statut : le chemin clavier, en plus du glisser-déposer.
@@ -169,6 +186,7 @@
     panneau.appendChild(ligne);
 
     // Les champs remplis.
+    panneau.appendChild(el('h3', 'abo-fiche-titre', 'La demande'));
     var liste = el('dl', 'abo-fiche-champs');
     fiche.champs.forEach(function (champ) {
       var bloc = el('div');
@@ -281,6 +299,15 @@
   kanban.addEventListener('click', function (ev) {
     var fiche = ev.target.closest('.abo-fiche');
     if (fiche) { ouvrir(fiche.dataset.id); }
+  });
+
+  // Les cartes sont focalisables : Entrée et Espace les ouvrent aussi.
+  kanban.addEventListener('keydown', function (ev) {
+    if (ev.key !== 'Enter' && ev.key !== ' ') { return; }
+    var fiche = ev.target.closest('.abo-fiche');
+    if (!fiche) { return; }
+    ev.preventDefault();
+    ouvrir(fiche.dataset.id);
   });
 
   tiroir.addEventListener('click', function (ev) {

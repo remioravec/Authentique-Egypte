@@ -301,6 +301,76 @@ class ABO_Demandes {
 		return count( get_posts( $args ) );
 	}
 
+	/* ---------------------------------------------------------------- */
+	/* Présentation                                                      */
+	/* ---------------------------------------------------------------- */
+
+	/** Icônes en ligne, au trait, sur une grille de 15. */
+	private static function icone( $nom ) {
+		$traits = array(
+			'dossier'  => '<path d="M2.5 5.5A1.5 1.5 0 0 1 4 4h7a1.5 1.5 0 0 1 1.5 1.5v6A1.5 1.5 0 0 1 11 13H4a1.5 1.5 0 0 1-1.5-1.5v-6Z"/><path d="M5.5 4V3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v1"/>',
+			'diese'    => '<path d="M6 2.5 4.5 13M10.5 2.5 9 13M2.5 5.5h11M2 10h11"/>',
+			'personne' => '<circle cx="7.5" cy="5" r="2.5"/><path d="M2.5 13.5a5 5 0 0 1 10 0"/>',
+			'horloge'  => '<circle cx="7.5" cy="7.5" r="5.5"/><path d="M7.5 4.5v3.2l2.2 1.3"/>',
+			'bulle'    => '<path d="M13 8.5A2.5 2.5 0 0 1 10.5 11H5l-2.5 2V4a1.5 1.5 0 0 1 1.5-1.5h6.5A2.5 2.5 0 0 1 13 5v3.5Z"/>',
+		);
+
+		if ( empty( $traits[ $nom ] ) ) {
+			return '';
+		}
+
+		return '<svg class="abo-i" viewBox="0 0 15 15" fill="none" stroke="currentColor" '
+			. 'stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'
+			. $traits[ $nom ] . '</svg>';
+	}
+
+	/** Initiales d'un intitulé, pour la pastille. */
+	public static function initiales( $texte ) {
+		$texte  = trim( preg_replace( '/[\x{2014}\x{2013}<>@].*/u', '', (string) $texte ) );
+		$mots   = preg_split( '/[\s._-]+/u', $texte, -1, PREG_SPLIT_NO_EMPTY );
+		$sortie = '';
+		foreach ( array_slice( $mots, 0, 2 ) as $mot ) {
+			$sortie .= mb_strtoupper( mb_substr( $mot, 0, 1 ) );
+		}
+
+		return $sortie ?: '?';
+	}
+
+	/**
+	 * Couleur de pastille, déduite de l'intitulé.
+	 *
+	 * Toujours la même pour le même nom : la personne reste
+	 * reconnaissable d'une colonne à l'autre, et d'un jour à l'autre.
+	 */
+	public static function teinte( $texte ) {
+		$fonds  = array( '#E8F2FB', '#FDF0E4', '#FBEAF0', '#EAF6EE', '#F0EDFB', '#E6F5F5', '#FBF3E0' );
+		$encres = array( '#0A4B78', '#8A5700', '#9B2C55', '#1D6B34', '#4A3B96', '#0F6E73', '#7A5605' );
+		$index  = abs( crc32( (string) $texte ) ) % count( $fonds );
+
+		return array( $fonds[ $index ], $encres[ $index ] );
+	}
+
+	/**
+	 * La ligne « chiffre » d'une carte.
+	 *
+	 * On cherche le champ le plus parlant pour l'agence — budget,
+	 * voyageurs, durée, dates — plutôt qu'un compte de champs, qui ne
+	 * dit rien à personne.
+	 */
+	public static function chiffre( $champs ) {
+		$pistes = '/budget|montant|prix|personne|voyageur|adulte|enfant|dur[\x{e9}e]e|jour|date|p[\x{e9}e]riode/iu';
+
+		foreach ( $champs as $champ ) {
+			if ( preg_match( $pistes, $champ['nom'] ) ) {
+				return wp_trim_words( $champ['valeur'], 8, '…' );
+			}
+		}
+
+		$n = count( $champs );
+
+		return $n . ' champ' . ( $n > 1 ? 's' : '' );
+	}
+
 	public static function ecran() {
 		$demandes = get_posts( array(
 			'post_type'      => self::TYPE,
@@ -369,36 +439,58 @@ class ABO_Demandes {
 				<?php foreach ( self::STATUTS as $cle => $libelle ) : ?>
 					<section class="abo-col" data-statut="<?php echo esc_attr( $cle ); ?>">
 						<header>
-							<h2><?php echo esc_html( $libelle ); ?></h2>
+							<span class="abo-pastille"><?php echo esc_html( $libelle ); ?></span>
 							<span class="abo-n"><?php echo count( $colonnes[ $cle ] ); ?></span>
 						</header>
 						<div class="abo-pile" data-statut="<?php echo esc_attr( $cle ); ?>">
 							<?php foreach ( $colonnes[ $cle ] as $fiche ) : ?>
-								<article class="abo-fiche" draggable="true" data-id="<?php echo esc_attr( $fiche['id'] ); ?>">
-									<h3><?php echo esc_html( $fiche['titre'] ); ?></h3>
-									<p class="abo-meta">
-										<?php echo esc_html( $fiche['formulaire'] ); ?> ·
-										il y a <?php echo esc_html( $fiche['depuis'] ); ?>
-									</p>
-									<?php
-									$resume = '';
-									foreach ( $fiche['champs'] as $champ ) {
-										if ( in_array( $champ['type'], array( 'textarea', 'text' ), true )
-											&& mb_strlen( $champ['valeur'] ) > 20 ) {
-											$resume = $champ['valeur'];
-											break;
-										}
-									}
-									?>
-									<?php if ( $resume ) : ?>
-										<p class="abo-resume"><?php echo esc_html( wp_trim_words( $resume, 16, '…' ) ); ?></p>
-									<?php endif; ?>
-									<footer>
-										<span class="abo-puces"><?php echo count( $fiche['champs'] ); ?> champs</span>
+								<?php
+								list( $fond, $encre )   = self::teinte( $fiche['titre'] );
+								list( $ffond, $fencre ) = self::teinte( $fiche['formulaire'] );
+								$nom = trim( preg_replace( '/\s*\x{2014}.*$/u', '', $fiche['titre'] ) );
+								?>
+								<article class="abo-fiche" draggable="true" tabindex="0" role="button"
+									data-id="<?php echo esc_attr( $fiche['id'] ); ?>"
+									aria-label="Ouvrir la fiche de <?php echo esc_attr( $nom ); ?>">
+									<header>
+										<span class="abo-ava" style="background:<?php echo esc_attr( $fond ); ?>;color:<?php echo esc_attr( $encre ); ?>"><?php
+											echo esc_html( self::initiales( $fiche['titre'] ) );
+										?></span>
+										<h3><?php echo esc_html( $nom ); ?></h3>
 										<?php if ( $fiche['journal'] ) : ?>
-											<span class="abo-puces"><?php echo count( $fiche['journal'] ); ?> note<?php echo count( $fiche['journal'] ) > 1 ? 's' : ''; ?></span>
+											<span class="abo-cpt" title="Notes de suivi"><?php
+												echo self::icone( 'bulle' ); // phpcs:ignore WordPress.Security.EscapingOutput
+												echo esc_html( count( $fiche['journal'] ) );
+											?></span>
 										<?php endif; ?>
-									</footer>
+									</header>
+									<div class="abo-lignes">
+										<p class="abo-ligne">
+											<?php echo self::icone( 'dossier' ); // phpcs:ignore WordPress.Security.EscapingOutput ?>
+											<span class="abo-tag" style="background:<?php echo esc_attr( $ffond ); ?>;color:<?php echo esc_attr( $fencre ); ?>"><?php
+												echo esc_html( $fiche['formulaire'] );
+											?></span>
+										</p>
+										<p class="abo-ligne">
+											<?php echo self::icone( 'diese' ); // phpcs:ignore WordPress.Security.EscapingOutput ?>
+											<span><?php echo esc_html( self::chiffre( $fiche['champs'] ) ); ?></span>
+										</p>
+										<?php if ( $fiche['courriel'] ) : ?>
+											<p class="abo-ligne">
+												<?php echo self::icone( 'personne' ); // phpcs:ignore WordPress.Security.EscapingOutput ?>
+												<span class="abo-chip"><span class="abo-ava abo-ava--mini"
+													style="background:<?php echo esc_attr( $fond ); ?>;color:<?php echo esc_attr( $encre ); ?>"><?php
+													echo esc_html( self::initiales( $fiche['titre'] ) );
+												?></span><span class="abo-chip-txt"><?php
+													echo esc_html( $fiche['courriel'] );
+												?></span></span>
+											</p>
+										<?php endif; ?>
+										<p class="abo-ligne">
+											<?php echo self::icone( 'horloge' ); // phpcs:ignore WordPress.Security.EscapingOutput ?>
+											<span>il y a <?php echo esc_html( $fiche['depuis'] ); ?></span>
+										</p>
+									</div>
 								</article>
 							<?php endforeach; ?>
 							<p class="abo-col-vide">Déposez une fiche ici</p>
