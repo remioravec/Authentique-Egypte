@@ -20,6 +20,7 @@ LOTS = {
     'fonctionnel': 'Fonctionnel',
     'contenu': 'Contenu',
     'photos': 'Photos',
+    'back-office': 'Back-office',
     'dette': 'Dette relevée de notre côté',
 }
 

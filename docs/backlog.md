@@ -5,12 +5,12 @@
 
 | État | Nombre |
 |---|---:|
-| ✅ Fait | 4 |
-| 🔵 En cours | 3 |
+| ✅ Fait | 10 |
+| 🔵 En cours | 4 |
 | 🟠 À arbitrer | 6 |
-| ⬜ À produire | 4 |
+| ⬜ À produire | 1 |
 | 🟡 En attente cliente | 6 |
-| **Total** | **23** |
+| **Total** | **27** |
 
 ## Process et non-régression
 
@@ -38,15 +38,31 @@
 
 *Où on en est :* Balayage des 60 URL publiques (pages, articles, programmes) : toutes en 200, aucune erreur. Une seule anomalie relevée : /programs/oasis-de-daklha/ redirige en 301 vers la catégorie désert, alors que ce séjour est listé comme une offre. Il nous faut la liste précise des pages concernées : « ne fonctionne plus » peut vouloir dire mise en page cassée, formulaire muet ou lenteur, ce qu'un contrôle de code HTTP ne voit pas.
 
+### T1 — Charte partagée entre les gabarits
+
+**✅ Fait** · porteur : Rémi
+
+*Demande :* Relevé de notre côté.
+
+*Où on en est :* Les quatre premières maquettes embarquaient chacune une copie de la charte : « les couleurs sont à revoir » aurait voulu dire huit modifications. La charte vit maintenant dans maquettes/assets/charte.css, chargée par les nouveaux gabarits. Reste à y ramener les quatre premières maquettes.
+
+### T2 — Ramener les 4 premières maquettes sur la charte partagée
+
+**⬜ À produire** · porteur : Rémi
+
+*Demande :* Suite de T1.
+
+*Où on en est :* index, categorie-desert, produit-siwa et article-quand-partir gardent leur CSS en propre. À migrer, avec contrôle visuel avant/après — elles sont déployées et validées, on ne les touche pas à l'aveugle.
+
 ## Design
 
 ### D1 — Polices non adaptées au mobile
 
-**🟠 À arbitrer** · porteur : Mélanie
+**🔵 En cours** · porteur : Rémi
 
 *Demande :* « Les polices ne sont pas adaptées à la version mobile. »
 
-*Où on en est :* Besoin de savoir sur quelle page et à quelle taille d'écran. L'outil d'annotation enregistre la largeur de l'écran au moment de la remarque : une fois installé, la réponse vient toute seule.
+*Où on en est :* Plancher typographique mobile posé dans la charte partagée : corps à 17 px, plus rien sous 15 px, cibles tactiles à 44 px, titres resserrés. Appliqué aux quatre nouveaux gabarits. Reste à confirmer par Mélanie sur son propre téléphone, et à étendre aux quatre maquettes de la première salve.
 
 ### D2 — Couleurs à revoir
 
@@ -58,35 +74,35 @@
 
 ### D3 — Page de demande de devis : design différent
 
-**⬜ À produire** · porteur : Rémi
+**✅ Fait** · porteur : Rémi
 
 *Demande :* « La page de demande de devis ne me convient pas et devrait avoir un design différent. »
 
-*Où on en est :* Maquette non produite à ce jour. À faire, avec une direction à valider à l'appel.
+*Où on en est :* Gabarit produit. Le formulaire unique devient quatre écrans courts avec barre d'avancement ; le courriel n'est demandé qu'en dernier, une fois trois écrans investis. Une phrase de récapitulation se réécrit à chaque choix. Un panneau collant répond à « qu'est-ce qui se passe si j'envoie ? », question que la page en ligne laisse sans réponse. Validation et confirmation testées.
 
 ### D4 — Pages Destinations : design à revoir
 
-**⬜ À produire** · porteur : Rémi
+**✅ Fait** · porteur : Rémi
 
 *Demande :* « Les pages Destinations sont également à revoir au niveau du design. »
 
-*Où on en est :* Aucune page destination n'est maquettée. Le gabarit reste à créer.
+*Où on en est :* Gabarit destination produit (Voyage au Caire). Réponse en tête sur le nombre de jours, sites classés par temps de visite, tableau 2/3/4 jours, ruban de saison, cinq liens de corps vers les destinations voisines — la page en ligne n'en avait aucun. Le bloc d'offres est au milieu, pas en pied.
 
 ### D5 — Page Qui sommes-nous : style différent du reste
 
-**⬜ À produire** · porteur : Rémi
+**✅ Fait** · porteur : Rémi
 
 *Demande :* « La page Qui sommes-nous a un style assez différent du reste du site. »
 
-*Où on en est :* Non produite, la cliente le supposait à juste titre. À maquetter.
+*Où on en est :* Gabarit produit, et le fond du reproche est traité : la page utilise désormais la charte partagée, les mêmes cartes et le même bloc devis que le reste du site. Ajouté un bloc « ce que nous ne faisons pas », qui manque au site. Dix-neuf marqueurs jaunes signalent ce qui doit venir de l'agence : bios, photos de l'équipe, chiffres réels, récit.
 
 ### D6 — Pages du blog
 
-**⬜ À produire** · porteur : Rémi
+**✅ Fait** · porteur : Rémi
 
 *Demande :* « Même chose pour les pages du blog. »
 
-*Où on en est :* Un seul gabarit d'article existe (Quand partir en Égypte). Le hub Guides pratiques reste à maquetter.
+*Où on en est :* Hub des guides produit. Classement par moment de préparation (je choisis / je réserve / ma valise / sur place) au lieu de l'antichronologie par défaut de WordPress. Filtre à quatre entrées, compteurs calculés, trois parcours de lecture. Trois cases vides signalent trois guides très demandés qui n'existent pas : budget, pourboires, eau.
 
 ### D7 — Plus de photos dans l'article de test
 
@@ -140,6 +156,14 @@
 
 *Où on en est :* Les chiffres de la maquette étaient inventés (4,9/5 sur 217 avis, 1 400 voyageurs) : remplacés par des marqueurs jaunes « à remplir » pour qu'aucun chiffre faux ne parte en ligne. Les trois témoignages affichés sont eux aussi des exemples. Chiffres réels attendus.
 
+### C5 — Trois guides très demandés qui n’existent pas
+
+**🟠 À arbitrer** · porteur : les deux
+
+*Demande :* Relevé en construisant le hub.
+
+*Où on en est :* Budget réel d'un voyage, pourboires et argent liquide, manger et boire sans mauvaise surprise. Les trois reviennent dans presque chaque demande de devis et aucune page du site n'y répond. Emplacements réservés dans le hub.
+
 ## Photos
 
 ### PH1 — Pyramides, croisière et mer Rouge : photo de couverture
@@ -165,6 +189,16 @@
 *Demande :* « L'itinéraire Charm el-Cheikh → Mont Moïse → Sainte-Catherine ne correspond pas à la photo actuelle. »
 
 *Où on en est :* L'itinéraire affiché sur la carte est corrigé et mentionne bien Sainte-Catherine. La photo est marquée, remplacement attendu.
+
+## Back-office
+
+### B1 — Back-office simplifié, contenus rangés par gabarit
+
+**✅ Fait** · porteur : Rémi
+
+*Demande :* Masquer l'inutile de WordPress, réunir pages et articles, ranger par gabarit, garder médiathèque, extensions, thèmes et administration.
+
+*Où on en est :* Extension ae-back-office. Écran unique « Contenus » qui réunit pages, guides et voyages, rangés par gabarit avec le vocabulaire des maquettes. Classement déduit automatiquement : relevé sur le contenu réel du site, 61 contenus classés, 0 non rangé. Un classement posé à la main devient définitif. Menu réduit à Tableau de bord, Contenus, Médiathèque, Refonte, Apparence, Extensions, Comptes, Réglages, Yoast et Elementor. Le masquage est cosmétique — aucune capacité retirée — et un interrupteur « Menu simplifié / complet » vit en permanence dans la barre du haut, réglable compte par compte.
 
 ## Dette relevée de notre côté
 

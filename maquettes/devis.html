@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="icon" href="https://authentiquegypte.com/wp-content/uploads/2023/10/cropped-Screenshot_20231015_082741_Instagram-removebg-preview-1.webp">
+<title>Demander un devis pour un voyage sur mesure en Égypte</title>
+<meta name="description" content="Décrivez votre projet en quatre étapes : nous vous répondons avec un itinéraire chiffré, jour par jour. Gratuit, sans engagement, sans carte bancaire.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;500;600;700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/charte.css">
+<style>
+/* ============================================================
+   GABARIT DEVIS — refonte demandée le 24/08/2026.
+
+   Ce que la page en ligne faisait : un formulaire unique, long,
+   posé sous un grand visuel, sans dire ce qui se passe après
+   l'envoi. On demandait beaucoup avant d'avoir rien promis.
+
+   Ce que fait ce gabarit :
+   – pas de grand visuel : on est dans un tunnel, pas dans une
+     page de découverte. La photo distrait, elle ne rassure pas ;
+   – quatre étapes courtes, avec une barre d'avancement. On
+     commence par ce qui est agréable à répondre (où, avec qui)
+     et on ne demande le courriel qu'en dernier, une fois que la
+     personne a investi trois écrans ;
+   – une phrase de récapitulation qui se réécrit à chaque choix :
+     la personne voit son voyage se formuler ;
+   – un panneau collant qui répond à la seule question qui compte
+     à cet instant — « qu'est-ce qui se passe si j'envoie ? » ;
+   – WhatsApp offert en permanence : beaucoup préfèrent écrire.
+   ============================================================ */
+
+.tunnel{display:grid;grid-template-columns:1fr 360px;gap:44px;align-items:start;
+  padding:clamp(28px,3.5vw,44px) 0 clamp(48px,6vw,80px)}
+.tunnel>aside{position:sticky;top:96px}
+
+/* ---------- avancement ---------- */
+.avance{margin:0 0 28px}
+.avance__barre{height:5px;background:var(--ligne);border-radius:999px;overflow:hidden}
+.avance__jauge{height:100%;width:25%;background:linear-gradient(90deg,var(--or),var(--or-clair));
+  border-radius:999px;transition:width .4s var(--ease)}
+.avance__pas{display:flex;gap:6px;margin-top:14px;font-family:"Manrope",sans-serif;font-size:.84rem;
+  flex-wrap:wrap}
+.avance__pas span{display:inline-flex;align-items:center;gap:8px;padding:6px 13px;border-radius:999px;
+  color:var(--gris);font-weight:600;background:var(--fond)}
+.avance__pas span[data-etat="courant"]{background:var(--nuit-900);color:#fff;font-weight:700}
+.avance__pas span[data-etat="fait"]{background:var(--vert-fond);color:var(--vert)}
+.avance__pas i{font-style:normal;font-size:.78rem;opacity:.85}
+
+/* ---------- écrans ---------- */
+.ecran[hidden]{display:none}
+.ecran h2{margin:0 0 8px}
+.ecran>p.intro{margin:0 0 24px;color:var(--gris);font-size:1rem}
+
+.groupe{margin:0 0 26px}
+.groupe>legend,.groupe>.titre{font-family:"Manrope",sans-serif;font-size:.86rem;font-weight:700;
+  letter-spacing:.04em;color:var(--noir);margin:0 0 4px;padding:0;display:block}
+.groupe>.aide{font-size:.9rem;color:var(--gris);margin:0 0 12px}
+.groupe{border:0;padding:0}
+
+.choix{display:flex;gap:9px;flex-wrap:wrap}
+.choix button{font-family:"Manrope",sans-serif;font-size:.95rem;font-weight:600;
+  padding:11px 17px;border:1.5px solid var(--ligne);border-radius:var(--r-pill);background:#fff;
+  color:var(--nuit);display:inline-flex;align-items:center;gap:9px;transition:all .18s var(--ease)}
+.choix button:hover{border-color:var(--nuit);background:var(--fond-2)}
+.choix button[aria-pressed="true"]{background:var(--nuit);border-color:var(--nuit);color:#fff}
+.choix button[aria-pressed="true"]::before{content:"✓";font-weight:700}
+.choix em{font-style:normal;font-size:1.05rem}
+
+/* cartes de choix illustrées, pour la première étape */
+.envies{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.envie{position:relative;border:1.5px solid var(--ligne);border-radius:var(--r-l);overflow:hidden;
+  background:#fff;text-align:left;padding:0;transition:all .2s var(--ease)}
+.envie img{width:100%;aspect-ratio:16/9;object-fit:cover}
+.envie span{display:block;padding:13px 15px}
+.envie b{display:block;font-family:"Archivo",sans-serif;font-size:1.03rem;font-weight:600;
+  color:var(--noir);letter-spacing:-.3px}
+.envie small{display:block;font-family:"Manrope",sans-serif;font-size:.86rem;color:var(--gris);
+  margin-top:3px;line-height:1.45}
+.envie:hover{border-color:var(--nuit);transform:translateY(-3px);box-shadow:var(--ombre)}
+.envie[aria-pressed="true"]{border-color:var(--or);box-shadow:0 0 0 3px rgba(251,181,14,.3)}
+.envie[aria-pressed="true"]::after{content:"✓";position:absolute;top:10px;right:10px;z-index:2;
+  width:28px;height:28px;border-radius:50%;background:var(--or);color:#3D2B00;
+  font-family:"Manrope",sans-serif;font-weight:700;display:grid;place-items:center}
+
+/* compteurs */
+.compteurs{display:flex;gap:26px;flex-wrap:wrap}
+.compteur{display:flex;align-items:center;gap:12px}
+.compteur label{font-family:"Manrope",sans-serif;font-size:.95rem;font-weight:600;color:var(--noir);
+  min-width:104px}
+.compteur label small{display:block;font-weight:400;font-size:.84rem;color:var(--gris)}
+.compteur div{display:flex;align-items:center;gap:4px;border:1.5px solid var(--ligne);
+  border-radius:var(--r-pill);padding:4px}
+.compteur button{width:38px;height:38px;border-radius:50%;border:0;background:var(--fond);
+  color:var(--nuit);font-size:1.15rem;font-weight:700;line-height:1;display:grid;place-items:center}
+.compteur button:hover:not(:disabled){background:var(--or-fond)}
+.compteur button:disabled{opacity:.35;cursor:default}
+.compteur output{min-width:34px;text-align:center;font-family:"Manrope",sans-serif;font-weight:700;
+  font-size:1.05rem;color:var(--noir)}
+
+/* champs classiques */
+.champs{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.champ label{display:block;font-family:"Manrope",sans-serif;font-size:.88rem;font-weight:700;
+  color:var(--noir);margin-bottom:6px}
+.champ label span{font-weight:400;color:var(--gris)}
+.champ input,.champ textarea,.champ select{font:inherit;font-size:1rem;width:100%;padding:12px 14px;
+  border:1.5px solid var(--ligne);border-radius:var(--r-m);background:#fff;color:var(--noir);
+  transition:border-color .18s}
+.champ input:focus,.champ textarea:focus,.champ select:focus{border-color:var(--nuit);outline:none}
+.champ textarea{min-height:120px;resize:vertical;line-height:1.6}
+.champ--large{grid-column:1 / -1}
+.champ .erreur{color:var(--rouge);font-family:"Manrope",sans-serif;font-size:.86rem;font-weight:700;
+  margin:6px 0 0;display:none}
+.champ[data-invalide="1"] input,.champ[data-invalide="1"] textarea{border-color:var(--rouge)}
+.champ[data-invalide="1"] .erreur{display:block}
+
+/* récapitulation vivante */
+.recap{background:var(--or-fond);border-left:4px solid var(--or);border-radius:0 var(--r-m) var(--r-m) 0;
+  padding:16px 20px;margin:0 0 26px;font-size:1.02rem;color:#5C4204;line-height:1.6}
+.recap b{color:#3D2B00;font-weight:700}
+.recap .vide{color:#8A6A18;font-style:italic}
+
+.nav-tunnel{display:flex;align-items:center;gap:12px;margin-top:30px;padding-top:22px;
+  border-top:1px solid var(--ligne)}
+.nav-tunnel .retour{background:none;border:0;font-family:"Manrope",sans-serif;font-weight:700;
+  font-size:.95rem;color:var(--gris);text-decoration:underline;text-underline-offset:3px}
+.nav-tunnel .retour:hover{color:var(--nuit)}
+.nav-tunnel .btn{margin-left:auto}
+
+/* ---------- panneau collant ---------- */
+.pan{background:#fff;border:1px solid var(--ligne);border-radius:var(--r-l);padding:24px;
+  position:relative;overflow:hidden;box-shadow:var(--ombre)}
+.pan::before{content:"";position:absolute;top:0;left:0;right:0;height:4px;
+  background:linear-gradient(90deg,var(--or),var(--or-clair))}
+.pan h3{font-size:1.08rem;margin:0 0 16px}
+.suite{list-style:none;margin:0 0 20px;padding:0;counter-reset:s}
+.suite li{counter-increment:s;position:relative;padding:0 0 18px 42px;font-size:.95rem;line-height:1.55}
+.suite li:last-child{padding-bottom:0}
+.suite li::before{content:counter(s);position:absolute;left:0;top:-2px;width:28px;height:28px;
+  border-radius:50%;background:var(--nuit-900);color:#fff;font-family:"Manrope",sans-serif;
+  font-size:.85rem;font-weight:700;display:grid;place-items:center}
+.suite li::after{content:"";position:absolute;left:13px;top:28px;bottom:6px;width:2px;background:var(--ligne)}
+.suite li:last-child::after{display:none}
+.suite b{display:block;color:var(--noir);font-family:"Archivo",sans-serif;font-weight:600;font-size:1rem}
+.suite span{color:var(--gris);font-family:"Manrope",sans-serif;font-size:.86rem}
+.suite em{font-style:normal;display:inline-block;margin-top:5px;background:var(--teal-fond);
+  color:var(--teal-txt);font-family:"Manrope",sans-serif;font-size:.8rem;font-weight:700;
+  padding:3px 10px;border-radius:999px}
+
+.rassure{list-style:none;margin:0;padding:18px 0 0;border-top:1px solid var(--ligne-2);
+  display:grid;gap:10px;font-family:"Manrope",sans-serif;font-size:.9rem}
+.rassure li{display:flex;gap:10px;align-items:flex-start;color:var(--nuit-900);line-height:1.5}
+.rassure svg{flex:0 0 auto;margin-top:3px}
+
+.pan--wa{background:var(--nuit-900);border-color:var(--nuit-900);color:#C3D5DA;margin-top:16px}
+.pan--wa::before{display:none}
+.pan--wa h3{color:#fff}
+.pan--wa p{font-size:.92rem;margin-bottom:14px}
+
+/* ---------- confirmation ---------- */
+.merci{text-align:center;padding:48px 24px;border:1px solid var(--ligne);border-radius:var(--r-l);
+  background:var(--vert-fond)}
+.merci .rond{width:64px;height:64px;border-radius:50%;background:var(--vert);color:#fff;
+  display:grid;place-items:center;margin:0 auto 20px;font-size:1.9rem}
+.merci h2{margin-bottom:10px}
+.merci p{max-width:52ch;margin-inline:auto}
+
+/* ---------- barre mobile du tunnel ---------- */
+.barre-tunnel{display:none;position:fixed;left:0;right:0;bottom:0;z-index:72;background:#fff;
+  border-top:1px solid var(--ligne);box-shadow:0 -6px 20px rgba(11,81,112,.14);
+  padding:10px 16px calc(10px + env(safe-area-inset-bottom));align-items:center;gap:12px}
+.barre-tunnel .etat{font-family:"Manrope",sans-serif;font-size:.88rem;font-weight:700;color:var(--gris)}
+.barre-tunnel .btn{margin-left:auto}
+
+@media (max-width:1024px){
+  .tunnel{grid-template-columns:1fr;gap:30px}
+  .tunnel>aside{position:static;order:2}
+  .envies{grid-template-columns:1fr 1fr}
+}
+@media (max-width:860px){
+  .barre-mob{display:none}
+  .barre-tunnel{display:flex}
+  .nav-tunnel{display:none}
+  .champs{grid-template-columns:1fr}
+  .envies{grid-template-columns:1fr}
+  .compteurs{gap:14px}
+  .compteur{width:100%;justify-content:space-between}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation-duration:.01ms !important;transition-duration:.01ms !important;scroll-behavior:auto !important}
+}
+</style>
+</head>
+<body>
+
+<div class="bandeau">
+  <div class="wrap">
+    <span>Agence locale basée au Caire · <strong>Une personne de l'équipe vous répond</strong></span>
+    <span style="display:flex;gap:20px;flex-wrap:wrap">
+      <a href="mailto:contact@authentiquegypte.com">✉ contact@authentiquegypte.com</a>
+      <a href="https://wa.me/201066619098">WhatsApp +20 106 661 9098</a>
+    </span>
+  </div>
+</div>
+
+<header class="entete">
+  <div class="wrap">
+    <a href="index.html" class="logo" aria-label="Authentique Égypte, accueil">
+      <img src="https://authentiquegypte.com/wp-content/uploads/2023/10/cropped-Screenshot_20231015_082741_Instagram-removebg-preview-1.webp" alt="Authentique Égypte" width="510" height="170">
+    </a>
+    <nav class="nav" data-mm="Navigation · poids 0,25">
+      <a href="index.html">Accueil</a>
+      <div class="menu">
+        <button aria-expanded="false">Nos séjours
+          <svg width="11" height="7" viewBox="0 0 11 7" fill="none" aria-hidden="true"><path d="M1 1l4.5 4.5L10 1" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+        </button>
+        <div class="menu__pan">
+          <a href="categorie.html"><i>⛵</i><span>Croisière sur le Nil<small>Dahabeya, felouque, bateau 5★</small></span></a>
+          <a href="categorie-desert.html"><i>🏜</i><span>Voyage dans le désert en Égypte<small>Siwa, désert Blanc, Fayoum, Dakhla</small></span></a>
+          <a href="https://authentiquegypte.com/nos-sejours-egypte/voyage-culturel-en-egypte/"><i>🏛</i><span>Voyage culturel en Égypte<small>Le Caire, Louxor, Abou Simbel</small></span></a>
+          <a href="https://authentiquegypte.com/nos-sejours-egypte/mer-rouge/"><i>🐠</i><span>Séjour en mer Rouge<small>Hurghada, Marsa Alam, plongée</small></span></a>
+          <a href="https://authentiquegypte.com/nos-sejours-egypte/sinai-moise-et-saint-catherine/"><i>⛰</i><span>Sinaï et Sainte-Catherine<small>Mont Moïse, monastère, bivouac</small></span></a>
+        </div>
+      </div>
+      <div class="menu">
+        <button aria-expanded="false">Destinations
+          <svg width="11" height="7" viewBox="0 0 11 7" fill="none" aria-hidden="true"><path d="M1 1l4.5 4.5L10 1" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+        </button>
+        <div class="menu__pan" style="min-width:300px">
+          <a href="destination.html"><i>🔺</i><span>Voyage au Caire<small>Gizeh, Saqqara, Grand Musée</small></span></a>
+          <a href="https://authentiquegypte.com/voyage-a-louxor/"><i>🏺</i><span>Voyage à Louxor<small>Karnak, vallée des Rois</small></span></a>
+          <a href="https://authentiquegypte.com/voyage-a-assouan/"><i>🌊</i><span>Voyage à Assouan<small>Philae, Abou Simbel</small></span></a>
+          <a href="https://authentiquegypte.com/voyage-a-alexandrie/"><i>🏛</i><span>Voyage à Alexandrie<small>Méditerranée, catacombes</small></span></a>
+          <a href="https://authentiquegypte.com/desert-blanc/"><i>🤍</i><span>Désert Blanc<small>Bivouac, formations de craie</small></span></a>
+          <a href="https://authentiquegypte.com/lac-nasser/"><i>⛵</i><span>Lac Nasser<small>Temples nubiens, sans la foule</small></span></a>
+        </div>
+      </div>
+      <div class="menu">
+        <button aria-expanded="false">Qui part&nbsp;?
+          <svg width="11" height="7" viewBox="0 0 11 7" fill="none" aria-hidden="true"><path d="M1 1l4.5 4.5L10 1" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+        </button>
+        <div class="menu__pan" style="min-width:290px">
+          <a href="https://authentiquegypte.com/voyage-en-famille-en-egypte/"><i>👨‍👩‍👧</i><span>Voyage en famille en Égypte<small>Rythme adapté, enfants bienvenus</small></span></a>
+          <a href="https://authentiquegypte.com/voyage-en-couple-en-egypte/"><i>💛</i><span>Voyage en couple en Égypte<small>Dahabeya privée, dîners sur le Nil</small></span></a>
+          <a href="https://authentiquegypte.com/voyage-solo-en-egypte/"><i>🎒</i><span>Voyage en solo en Égypte<small>Guide privatif, sécurité assurée</small></span></a>
+          <a href="https://authentiquegypte.com/voyage-pmr-en-egypte/"><i>♿</i><span>Voyage PMR en Égypte<small>Sites accessibles, véhicule adapté</small></span></a>
+        </div>
+      </div>
+      <a href="blog.html">Guides</a>
+      <a href="qui-sommes-nous.html">L'agence</a>
+      <a href="devis.html" class="btn btn--or btn--sm" style="margin-left:10px" aria-current="page">Obtenir mon devis</a>
+    </nav>
+    <button class="burger" aria-label="Ouvrir le menu">☰ Menu</button>
+  </div>
+</header>
+
+<main>
+<div class="wrap">
+  <nav class="ariane" aria-label="Fil d'Ariane" data-mm="Fil d'Ariane · l'arbre">
+    <ol>
+      <li><a href="index.html">Accueil</a></li>
+      <li><span aria-current="page">Demander un devis</span></li>
+    </ol>
+  </nav>
+
+  <div class="tunnel">
+    <div>
+      <h1 style="max-width:20ch">Dites-nous où vous voulez aller</h1>
+      <p class="lede" style="margin:14px 0 30px">
+        Quatre questions courtes. Nous revenons vers vous avec un itinéraire chiffré,
+        jour par jour, hébergements nommés. Gratuit, sans engagement, sans carte bancaire.
+      </p>
+
+      <!-- avancement -->
+      <div class="avance" data-mm="Barre d'avancement · nouveau">
+        <div class="avance__barre"><div class="avance__jauge" id="jauge"></div></div>
+        <div class="avance__pas" id="pas">
+          <span data-etat="courant"><i>1</i> Votre voyage</span>
+          <span><i>2</i> Qui part</span>
+          <span><i>3</i> Votre style</span>
+          <span><i>4</i> Vous joindre</span>
+        </div>
+      </div>
+
+      <!-- récapitulation vivante -->
+      <p class="recap" id="recap" data-mm="Récapitulation vivante · nouveau">
+        <span class="vide">Votre voyage se résume ici au fur et à mesure de vos réponses.</span>
+      </p>
+
+      <form id="devis" novalidate>
+
+        <!-- ÉTAPE 1 ------------------------------------------------ -->
+        <section class="ecran" data-ecran="1">
+          <h2>Ce qui vous attire en Égypte</h2>
+          <p class="intro">Plusieurs réponses possibles — la plupart des voyages en combinent deux.</p>
+
+          <fieldset class="groupe">
+            <legend class="titre">Vos envies</legend>
+            <p class="aide">Choisissez-en autant que vous voulez.</p>
+            <div class="envies" data-groupe="envie" data-multi="1">
+              <button type="button" class="envie" aria-pressed="false" data-val="croisiere" data-lib="une croisière sur le Nil">
+                <img src="https://authentiquegypte.com/wp-content/uploads/2023/11/axp-photography-4-26QyIOyVg-unsplash-scaled.jpg" alt="Dahabeya à la voile sur le Nil" loading="lazy" decoding="async">
+                <span><b>Une croisière sur le Nil</b><small>Dahabeya, felouque ou bateau 5★, d'Esna à Assouan</small></span>
+              </button>
+              <button type="button" class="envie" aria-pressed="false" data-val="temples" data-lib="les temples et les pyramides">
+                <img src="https://authentiquegypte.com/wp-content/uploads/2023/11/pyramides-1024x683.jpg" alt="Les pyramides de Gizeh" loading="lazy" decoding="async">
+                <span><b>Les temples et les pyramides</b><small>Gizeh, Karnak, la vallée des Rois, Abou Simbel</small></span>
+              </button>
+              <button type="button" class="envie" aria-pressed="false" data-val="desert" data-lib="le désert et les oasis">
+                <img src="https://authentiquegypte.com/wp-content/uploads/2023/11/Desert-blanc-dEgypte.png" alt="Formations de craie du désert Blanc" loading="lazy" decoding="async">
+                <span><b>Le désert et les oasis</b><small>Désert Blanc, Siwa, Fayoum — bivouac ou écolodge</small></span>
+              </button>
+              <button type="button" class="envie" aria-pressed="false" data-val="mer" data-lib="la mer Rouge">
+                <img src="https://authentiquegypte.com/wp-content/uploads/2025/07/peggy-anke-YxpoB3bvlZQ-unsplash.jpg" alt="Lagon de la mer Rouge à Dahab" loading="lazy" decoding="async">
+                <span><b>La mer Rouge</b><small>Plongée, snorkeling, quelques jours de repos</small></span>
+              </button>
+            </div>
+          </fieldset>
+
+          <fieldset class="groupe">
+            <legend class="titre">Vous savez déjà quand&nbsp;?</legend>
+            <p class="aide">Une période approximative suffit. Si vous hésitez, notre <a href="article-quand-partir.html" class="lien-txt">guide mois par mois</a> peut aider.</p>
+            <div class="choix" data-groupe="periode">
+              <button type="button" aria-pressed="false" data-val="hiver" data-lib="en hiver">Nov. → févr.</button>
+              <button type="button" aria-pressed="false" data-val="printemps" data-lib="au printemps">Mars → mai</button>
+              <button type="button" aria-pressed="false" data-val="ete" data-lib="en été">Juin → août</button>
+              <button type="button" aria-pressed="false" data-val="automne" data-lib="à l'automne">Sept. → oct.</button>
+              <button type="button" aria-pressed="false" data-val="flexible" data-lib="à dates flexibles">Je suis flexible</button>
+            </div>
+          </fieldset>
+        </section>
+
+        <!-- ÉTAPE 2 ------------------------------------------------ -->
+        <section class="ecran" data-ecran="2" hidden>
+          <h2>Qui part, et combien de temps</h2>
+          <p class="intro">C'est ce qui fixe le rythme de l'itinéraire, bien plus que le budget.</p>
+
+          <fieldset class="groupe">
+            <legend class="titre">Nombre de voyageurs</legend>
+            <div class="compteurs" data-groupe="voyageurs">
+              <div class="compteur">
+                <label for="c-adultes">Adultes<small>12 ans et plus</small></label>
+                <div>
+                  <button type="button" data-pas="-1" aria-label="Un adulte de moins">−</button>
+                  <output id="c-adultes" data-cle="adultes">2</output>
+                  <button type="button" data-pas="1" aria-label="Un adulte de plus">+</button>
+                </div>
+              </div>
+              <div class="compteur">
+                <label for="c-enfants">Enfants<small>Moins de 12 ans</small></label>
+                <div>
+                  <button type="button" data-pas="-1" aria-label="Un enfant de moins">−</button>
+                  <output id="c-enfants" data-cle="enfants">0</output>
+                  <button type="button" data-pas="1" aria-label="Un enfant de plus">+</button>
+                </div>
+              </div>
+            </div>
+          </fieldset>
+
+          <fieldset class="groupe">
+            <legend class="titre">Durée du séjour</legend>
+            <div class="choix" data-groupe="duree">
+              <button type="button" aria-pressed="false" data-val="court" data-lib="sur 4 à 6 jours">4 à 6 jours</button>
+              <button type="button" aria-pressed="false" data-val="semaine" data-lib="sur une semaine">7 à 9 jours</button>
+              <button type="button" aria-pressed="false" data-val="long" data-lib="sur dix à quinze jours">10 à 15 jours</button>
+              <button type="button" aria-pressed="false" data-val="tres-long" data-lib="sur plus de deux semaines">Plus de 15 jours</button>
+            </div>
+          </fieldset>
+
+          <fieldset class="groupe">
+            <legend class="titre">Une contrainte à connaître&nbsp;?</legend>
+            <div class="choix" data-groupe="contrainte" data-multi="1">
+              <button type="button" aria-pressed="false" data-val="pmr" data-lib="avec un besoin d'accessibilité"><em>♿</em> Mobilité réduite</button>
+              <button type="button" aria-pressed="false" data-val="rythme" data-lib="à rythme doux"><em>🕊</em> Rythme doux</button>
+              <button type="button" aria-pressed="false" data-val="alim" data-lib="avec un régime particulier"><em>🥗</em> Régime alimentaire</button>
+              <button type="button" aria-pressed="false" data-val="aucune" data-lib="">Aucune</button>
+            </div>
+          </fieldset>
+        </section>
+
+        <!-- ÉTAPE 3 ------------------------------------------------ -->
+        <section class="ecran" data-ecran="3" hidden>
+          <h2>Votre façon de voyager</h2>
+          <p class="intro">Nous chiffrons systématiquement deux versions pour que vous voyiez l'écart.</p>
+
+          <fieldset class="groupe">
+            <legend class="titre">Hébergement</legend>
+            <div class="choix" data-groupe="hebergement">
+              <button type="button" aria-pressed="false" data-val="simple" data-lib="en hébergements simples">Simple et local</button>
+              <button type="button" aria-pressed="false" data-val="confort" data-lib="en 4★">Confortable, 4★</button>
+              <button type="button" aria-pressed="false" data-val="haut" data-lib="en 5★">Haut de gamme, 5★</button>
+              <button type="button" aria-pressed="false" data-val="mixte" data-lib="en mélangeant les niveaux">Un mélange</button>
+            </div>
+          </fieldset>
+
+          <fieldset class="groupe">
+            <legend class="titre">Budget par personne</legend>
+            <p class="aide">Hors vols internationaux, que vous réservez vous-même. Une fourchette large convient.</p>
+            <div class="choix" data-groupe="budget">
+              <button type="button" aria-pressed="false" data-val="a" data-lib="autour de 800 €">Moins de 1 000 €</button>
+              <button type="button" aria-pressed="false" data-val="b" data-lib="entre 1 000 et 1 800 €">1 000 à 1 800 €</button>
+              <button type="button" aria-pressed="false" data-val="c" data-lib="entre 1 800 et 2 800 €">1 800 à 2 800 €</button>
+              <button type="button" aria-pressed="false" data-val="d" data-lib="au-delà de 2 800 €">Plus de 2 800 €</button>
+              <button type="button" aria-pressed="false" data-val="?" data-lib="sans budget arrêté">Je ne sais pas encore</button>
+            </div>
+          </fieldset>
+
+          <div class="champ champ--large">
+            <label for="libre">Ce que vous voulez absolument voir, ou éviter <span>— facultatif</span></label>
+            <textarea id="libre" name="libre" placeholder="Exemple : ma mère marche difficilement, on aimerait deux nuits à Assouan, et surtout pas de lever à 4 h du matin."></textarea>
+          </div>
+        </section>
+
+        <!-- ÉTAPE 4 ------------------------------------------------ -->
+        <section class="ecran" data-ecran="4" hidden>
+          <h2>Où vous joindre</h2>
+          <p class="intro">Une seule personne de l'équipe suivra votre dossier, du premier échange à votre retour.</p>
+
+          <div class="champs">
+            <div class="champ" data-champ="prenom">
+              <label for="prenom">Prénom</label>
+              <input type="text" id="prenom" name="prenom" autocomplete="given-name" required>
+              <p class="erreur">Merci d'indiquer votre prénom.</p>
+            </div>
+            <div class="champ" data-champ="nom">
+              <label for="nom">Nom <span>— facultatif</span></label>
+              <input type="text" id="nom" name="nom" autocomplete="family-name">
+            </div>
+            <div class="champ champ--large" data-champ="courriel">
+              <label for="courriel">Adresse électronique</label>
+              <input type="email" id="courriel" name="courriel" autocomplete="email" required
+                placeholder="pour recevoir votre itinéraire chiffré">
+              <p class="erreur">Cette adresse ne semble pas valide.</p>
+            </div>
+            <div class="champ" data-champ="tel">
+              <label for="tel">Téléphone <span>— facultatif</span></label>
+              <input type="tel" id="tel" name="tel" autocomplete="tel" placeholder="+33…">
+            </div>
+            <div class="champ">
+              <label for="canal">Vous préférez qu'on vous réponde</label>
+              <select id="canal" name="canal">
+                <option value="mail">Par courriel</option>
+                <option value="whatsapp">Sur WhatsApp</option>
+                <option value="tel">Par téléphone</option>
+              </select>
+            </div>
+          </div>
+
+          <p style="font-size:.9rem;color:var(--gris);margin-top:18px">
+            Vos réponses servent uniquement à préparer votre devis. Aucune donnée n'est revendue.
+            <span class="aremplir">Lien vers la politique de confidentialité à poser</span>
+          </p>
+        </section>
+
+        <div class="nav-tunnel">
+          <button type="button" class="retour" id="retour" hidden>‹ Revenir</button>
+          <button type="button" class="btn btn--or" id="suivant">Continuer</button>
+        </div>
+      </form>
+
+      <!-- confirmation ------------------------------------------- -->
+      <div class="merci" id="merci" hidden>
+        <div class="rond">✓</div>
+        <h2>C'est envoyé</h2>
+        <p class="lede" style="margin-inline:auto">
+          <b id="merci-nom">Nous</b> revenons vers vous avec un itinéraire chiffré, jour par jour.
+          Si quelque chose manque pour bien vous répondre, nous vous écrirons d'abord.
+        </p>
+        <p style="margin-top:20px">
+          <a href="index.html" class="btn btn--fantome btn--sm">Revenir à l'accueil</a>
+          <a href="blog.html" class="btn btn--fantome btn--sm">Lire nos guides pratiques</a>
+        </p>
+        <p style="margin-top:16px;font-size:.9rem;color:var(--gris)">
+          <span class="aremplir">Maquette : aucun envoi réel. À brancher sur WPForms.</span>
+        </p>
+      </div>
+
+      <div class="mm-legende">
+        <b>Ce qui change par rapport à la page en ligne</b> — le formulaire unique et long devient
+        quatre écrans courts. On demande le courriel <b>en dernier</b>, une fois que la personne a
+        investi trois écrans : c'est là que le taux d'abandon se joue. La colonne de droite répond à
+        la seule question qui se pose au moment d'envoyer — « qu'est-ce qui se passe ensuite ? » —
+        que la page actuelle laisse sans réponse.
+      </div>
+    </div>
+
+    <!-- PANNEAU COLLANT -->
+    <aside>
+      <div class="pan" data-mm="Ce qui se passe ensuite · nouveau">
+        <h3>Ce qui se passe ensuite</h3>
+        <ol class="suite">
+          <li><b>On vous lit</b><span>Une personne, pas un formulaire automatique.</span><em class="aremplir">délai à confirmer</em></li>
+          <li><b>On vous écrit</b><span>Un itinéraire jour par jour, hébergements nommés, prix ferme.</span></li>
+          <li><b>On ajuste</b><span>Autant d'allers-retours que nécessaire. On enlève, on ajoute, on ralentit.</span><em>Illimité</em></li>
+          <li><b>Vous décidez</b><span>Acompte seulement une fois l'itinéraire validé.</span></li>
+        </ol>
+        <ul class="rassure">
+          <li><svg width="17" height="17" viewBox="0 0 17 17" fill="none" aria-hidden="true"><path d="M3 8.8l3.6 3.6L14 5" stroke="#0F6E73" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Devis gratuit et sans engagement</li>
+          <li><svg width="17" height="17" viewBox="0 0 17 17" fill="none" aria-hidden="true"><path d="M3 8.8l3.6 3.6L14 5" stroke="#0F6E73" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Aucune carte bancaire demandée à cette étape</li>
+          <li><svg width="17" height="17" viewBox="0 0 17 17" fill="none" aria-hidden="true"><path d="M3 8.8l3.6 3.6L14 5" stroke="#0F6E73" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Nous ne réservons pas vos vols internationaux : vous gardez la main sur les dates et le prix</li>
+        </ul>
+      </div>
+
+      <div class="pan pan--wa">
+        <h3>Vous préférez écrire&nbsp;?</h3>
+        <p>Certaines choses se disent mieux en deux messages qu'en quatre écrans. On répond aussi sur WhatsApp.</p>
+        <a href="https://wa.me/201066619098" class="btn btn--wa btn--bloc btn--sm">Écrire sur WhatsApp</a>
+      </div>
+    </aside>
+  </div>
+</div>
+
+<!-- AVIS — après le tunnel, jamais avant : ils ne doivent pas retarder l'envoi -->
+<section class="section section--fond">
+  <div class="wrap">
+    <p class="eyebrow">Ce qu'en disent les voyageurs</p>
+    <h2 style="margin-bottom:26px"><span class="aremplir">N</span> avis Google, note moyenne <span class="aremplir">note</span></h2>
+    <div class="avis">
+      <article>
+        <p class="et" aria-label="5 étoiles sur 5">★★★★★</p>
+        <blockquote>Très beau séjour parfaitement organisé. Interlocuteurs agréables et toujours prêts à rendre service. Je recommande !</blockquote>
+        <footer><span class="ini">GG</span><span><b>Gislaine G.</b>Avis Google</span></footer>
+      </article>
+      <article>
+        <p class="et" aria-label="5 étoiles sur 5">★★★★★</p>
+        <blockquote>Le voyage a été très bien organisé par l'agence. Nous avons été accompagnés par un guide francophone très sympathique. Tous les intervenants étaient très professionnels.</blockquote>
+        <footer><span class="ini">DH</span><span><b>Daniel H.</b>Avis Google</span></footer>
+      </article>
+      <article>
+        <p class="et" aria-label="5 étoiles sur 5">★★★★★</p>
+        <blockquote>Une agence à l'écoute, organisation parfaite. Une équipe efficace et réactive.</blockquote>
+        <footer><span class="ini">BR</span><span><b>Brigitte R.</b>Avis Google</span></footer>
+      </article>
+    </div>
+    <p style="margin-top:18px;font-size:.9rem;color:var(--gris-clair)">
+      Avis repris du widget Google du site. <span class="aremplir">Note, nombre d'avis et sélection à confirmer par l'agence</span>
+    </p>
+  </div>
+</section>
+</main>
+
+<footer class="pied">
+  <div class="wrap">
+    <div class="pied__g">
+      <div>
+        <img src="https://authentiquegypte.com/wp-content/uploads/2023/10/cropped-Screenshot_20231015_082741_Instagram-removebg-preview-1.webp" alt="Authentique Égypte" width="510" height="170" loading="lazy">
+        <p style="max-width:34ch">Agence locale basée au Caire. Guides égyptologues francophones, chauffeurs privatifs, itinéraires construits avec vous.</p>
+        <p style="margin-top:16px">
+          <a href="mailto:contact@authentiquegypte.com">contact@authentiquegypte.com</a><br>
+          <a href="https://wa.me/201066619098">WhatsApp +20 106 661 9098</a>
+        </p>
+      </div>
+      <div>
+        <h4>Nos séjours</h4>
+        <ul>
+          <li><a href="categorie.html">Croisière sur le Nil</a></li>
+          <li><a href="https://authentiquegypte.com/nos-sejours-egypte/voyage-culturel-en-egypte/">Voyage culturel en Égypte</a></li>
+          <li><a href="categorie-desert.html">Voyage dans le désert en Égypte</a></li>
+          <li><a href="https://authentiquegypte.com/nos-sejours-egypte/mer-rouge/">Séjour en mer Rouge</a></li>
+          <li><a href="https://authentiquegypte.com/nos-sejours-egypte/sinai-moise-et-saint-catherine/">Sinaï et Sainte-Catherine</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Destinations</h4>
+        <ul>
+          <li><a href="destination.html">Voyage au Caire</a></li>
+          <li><a href="https://authentiquegypte.com/voyage-a-louxor/">Voyage à Louxor</a></li>
+          <li><a href="https://authentiquegypte.com/voyage-a-assouan/">Voyage à Assouan</a></li>
+          <li><a href="https://authentiquegypte.com/desert-blanc/">Désert Blanc</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>L'agence</h4>
+        <ul>
+          <li><a href="qui-sommes-nous.html">Qui sommes-nous</a></li>
+          <li><a href="blog.html">Guides pratiques</a></li>
+          <li><a href="devis.html">Demander un devis</a></li>
+          <li><a href="https://authentiquegypte.com/mentions-legales-agence-voyage-egypte/">Mentions légales</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="pied__bas">
+      <span>© 2026 Authentique Égypte — Maquette de refonte, charte relevée le 21/08/2026</span>
+      <span>Agence locale · Le Caire, Égypte</span>
+    </div>
+  </div>
+</footer>
+
+<div class="barre-tunnel">
+  <span class="etat" id="etat-mob">Étape 1 sur 4</span>
+  <button type="button" class="btn btn--or" id="suivant-mob">Continuer</button>
+</div>
+
+<button class="mm-btn" id="mm-btn" type="button" aria-pressed="false">Maillage <b>OFF</b></button>
+
+<script>
+document.querySelector('.burger')?.addEventListener('click',e=>{
+  const n=document.querySelector('.nav');
+  const o=getComputedStyle(n).display!=='none';
+  n.style.display=o?'none':'flex';
+  n.style.position='absolute';n.style.top='72px';n.style.left='20px';n.style.right='20px';
+  n.style.flexDirection='column';n.style.alignItems='stretch';n.style.background='#fff';
+  n.style.border='1px solid var(--ligne)';n.style.borderRadius='20px';n.style.padding='12px';
+  n.style.boxShadow='var(--ombre-f)';
+  e.currentTarget.setAttribute('aria-expanded',String(!o));
+});
+</script>
+<script>
+/* ------------------------------------------------------------------
+   Le tunnel. Quatre écrans, un état, une phrase qui se réécrit.
+   ------------------------------------------------------------------ */
+(function(){
+  const TOTAL=4;
+  let etape=1;
+
+  const etat={envie:[],periode:null,duree:null,contrainte:[],hebergement:null,budget:null,
+              adultes:2,enfants:0};
+
+  const jauge=document.getElementById('jauge');
+  const pas=document.getElementById('pas');
+  const recap=document.getElementById('recap');
+  const ecrans=[...document.querySelectorAll('.ecran')];
+  const suivant=document.getElementById('suivant');
+  const suivantMob=document.getElementById('suivant-mob');
+  const retour=document.getElementById('retour');
+  const etatMob=document.getElementById('etat-mob');
+
+  /* --- groupes de boutons, simples ou multiples --- */
+  document.querySelectorAll('[data-groupe]').forEach(groupe=>{
+    const cle=groupe.dataset.groupe;
+    const multi=groupe.dataset.multi==='1';
+    groupe.querySelectorAll('button[data-val]').forEach(b=>{
+      b.addEventListener('click',()=>{
+        const actif=b.getAttribute('aria-pressed')==='true';
+        if(multi){
+          b.setAttribute('aria-pressed',actif?'false':'true');
+          // « Aucune » est exclusif des autres réponses du groupe
+          if(!actif&&b.dataset.val==='aucune'){
+            groupe.querySelectorAll('button[data-val]').forEach(o=>{
+              if(o!==b)o.setAttribute('aria-pressed','false');
+            });
+          } else if(!actif){
+            const rien=groupe.querySelector('button[data-val="aucune"]');
+            if(rien)rien.setAttribute('aria-pressed','false');
+          }
+          etat[cle]=[...groupe.querySelectorAll('button[aria-pressed="true"]')].map(o=>o.dataset.val);
+        }else{
+          groupe.querySelectorAll('button[data-val]').forEach(o=>o.setAttribute('aria-pressed','false'));
+          b.setAttribute('aria-pressed',actif?'false':'true');
+          etat[cle]=actif?null:b.dataset.val;
+        }
+        ecrire();
+      });
+    });
+  });
+
+  /* --- compteurs de voyageurs --- */
+  document.querySelectorAll('.compteur').forEach(c=>{
+    const sortie=c.querySelector('output');
+    const cle=sortie.dataset.cle;
+    const mini=cle==='adultes'?1:0;
+    c.querySelectorAll('button').forEach(b=>{
+      b.addEventListener('click',()=>{
+        etat[cle]=Math.max(mini,Math.min(16,etat[cle]+Number(b.dataset.pas)));
+        sortie.textContent=etat[cle];
+        c.querySelectorAll('button')[0].disabled=etat[cle]<=mini;
+        ecrire();
+      });
+    });
+    c.querySelectorAll('button')[0].disabled=etat[cle]<=mini;
+  });
+
+  /* --- la phrase qui se réécrit --- */
+  function libelle(groupe,valeur){
+    const b=document.querySelector(`[data-groupe="${groupe}"] button[data-val="${valeur}"]`);
+    return b?b.dataset.lib:'';
+  }
+  function liste(mots){
+    if(mots.length<2)return mots[0]||'';
+    // Si un des éléments contient déjà « et », on sépare tout par des
+    // virgules : « le Nil et le désert et les oasis » se lit mal.
+    if(mots.some(m=>/\bet\b/.test(m)))return mots.join(', ');
+    return mots.slice(0,-1).join(', ')+' et '+mots[mots.length-1];
+  }
+
+  function ecrire(){
+    const bouts=[];
+    const gens=[];
+    if(etat.adultes)gens.push(etat.adultes+(etat.adultes>1?' adultes':' adulte'));
+    if(etat.enfants)gens.push(etat.enfants+(etat.enfants>1?' enfants':' enfant'));
+    bouts.push('<b>'+liste(gens)+'</b>');
+
+    const envies=etat.envie.map(v=>libelle('envie',v)).filter(Boolean);
+    if(envies.length)bouts.push('pour <b>'+liste(envies)+'</b>');
+
+    if(etat.duree)bouts.push('<b>'+libelle('duree',etat.duree)+'</b>');
+    if(etat.periode)bouts.push('<b>'+libelle('periode',etat.periode)+'</b>');
+    if(etat.hebergement)bouts.push('<b>'+libelle('hebergement',etat.hebergement)+'</b>');
+    if(etat.budget)bouts.push('<b>'+libelle('budget',etat.budget)+'</b>');
+
+    const contraintes=etat.contrainte.map(v=>libelle('contrainte',v)).filter(Boolean);
+    if(contraintes.length)bouts.push('<b>'+liste(contraintes)+'</b>');
+
+    recap.innerHTML=bouts.length>1
+      ? 'Votre voyage : '+bouts.join(', ')+'.'
+      : '<span class="vide">Votre voyage se résume ici au fur et à mesure de vos réponses.</span>';
+  }
+
+  /* --- navigation --- */
+  function afficher(n){
+    etape=Math.min(TOTAL,Math.max(1,n));
+    ecrans.forEach(e=>e.hidden=Number(e.dataset.ecran)!==etape);
+    jauge.style.width=(etape/TOTAL*100)+'%';
+    [...pas.children].forEach((s,i)=>{
+      s.dataset.etat = i+1===etape ? 'courant' : (i+1<etape ? 'fait' : '');
+      if(!s.dataset.etat)s.removeAttribute('data-etat');
+    });
+    retour.hidden=etape===1;
+    const dernier=etape===TOTAL;
+    suivant.textContent=dernier?'Envoyer ma demande':'Continuer';
+    suivantMob.textContent=dernier?'Envoyer':'Continuer';
+    etatMob.textContent='Étape '+etape+' sur '+TOTAL;
+    document.querySelector('.tunnel').scrollIntoView({block:'start',behavior:'smooth'});
+  }
+
+  function valider(){
+    if(etape!==TOTAL)return true;
+    let bon=true;
+    const prenom=document.querySelector('[data-champ="prenom"]');
+    const courriel=document.querySelector('[data-champ="courriel"]');
+    prenom.dataset.invalide = prenom.querySelector('input').value.trim() ? '0' : '1';
+    const v=courriel.querySelector('input').value.trim();
+    courriel.dataset.invalide = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v) ? '0' : '1';
+    if(prenom.dataset.invalide==='1'){bon=false;prenom.querySelector('input').focus();}
+    else if(courriel.dataset.invalide==='1'){bon=false;courriel.querySelector('input').focus();}
+    return bon;
+  }
+
+  function avancer(){
+    if(!valider())return;
+    if(etape<TOTAL){afficher(etape+1);return;}
+    // Maquette : on montre la confirmation, rien n'est envoyé.
+    const prenom=document.getElementById('prenom').value.trim();
+    document.getElementById('merci-nom').textContent = prenom ? prenom+', nous' : 'Nous';
+    document.getElementById('devis').hidden=true;
+    document.querySelector('.avance').hidden=true;
+    recap.hidden=true;
+    document.querySelector('.barre-tunnel').style.display='none';
+    document.getElementById('merci').hidden=false;
+    document.querySelector('.tunnel').scrollIntoView({block:'start',behavior:'smooth'});
+  }
+
+  suivant.addEventListener('click',avancer);
+  suivantMob.addEventListener('click',avancer);
+  retour.addEventListener('click',()=>afficher(etape-1));
+  [...pas.children].forEach((s,i)=>{
+    s.style.cursor='pointer';
+    s.addEventListener('click',()=>{ if(i+1<etape)afficher(i+1); });
+  });
+
+  afficher(1);
+  ecrire();
+})();
+</script>
+<script>
+(function(){
+  const b=document.getElementById('mm-btn');
+  b.addEventListener('click',()=>{
+    const on=document.body.classList.toggle('mm');
+    b.setAttribute('aria-pressed',String(on));
+    b.innerHTML='Maillage <b>'+(on?'ON':'OFF')+'</b>';
+  });
+})();
+</script>
+</body>
+</html>

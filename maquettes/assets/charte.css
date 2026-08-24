@@ -1,0 +1,322 @@
+/* ============================================================
+   CHARTE AUTHENTIQUE ÉGYPTE — socle partagé
+   Relevée le 21/08/2026 sur authentiquegypte.com (kit Elementor
+   post-4658) et contrôlée à l'œil sur le logo doré.
+
+   or #FBB50E ...... accent, CTA
+   bleu #167FA4 .... bleu de marque (aplats moyens)
+   bleu profond #0B5170 . même teinte assombrie, pour les fonds
+                          porteurs de texte : l'or ne donne que
+                          2,5:1 sur #167FA4, contre 4,8:1 ici
+   noir #000000 .... titres · texte #5D5D5D
+   crème #FEEDDC ... fond de section chaud
+   teal #21B0B7 .... secondaire (#0F6E73 en texte, AA)
+   Archivo (titres + corps) · Manrope (accents)
+
+   Ce fichier porte tout ce qui est commun à plusieurs gabarits.
+   Le spécifique d'une page reste dans la page.
+   ============================================================ */
+
+:root{
+  --nuit:#167FA4; --nuit-900:#0B5170; --nuit-700:#1C93BC;
+  --or:#FBB50E; --or-clair:#FFD958; --or-fond:#FEEDDC;
+  --teal:#21B0B7; --teal-txt:#0F6E73; --teal-fond:#E8F7F8;
+  --papier:#FFFFFF; --fond:#F9F9FB; --fond-2:#F6FAFE;
+  --noir:#000000; --texte:#5D5D5D; --gris:#6E7680; --gris-clair:#88929C;
+  --ligne:#E4E4EA; --ligne-2:#F1F1F5;
+  --vert:#2F7D4F; --vert-fond:#EAF5EE;
+  --rouge:#B4402A; --rouge-fond:#FBEAE5;
+  --r-s:8px; --r-m:14px; --r-l:20px; --r-pill:999px;
+  --ombre:0 1px 2px rgba(11,81,112,.06),0 8px 24px rgba(11,81,112,.08);
+  --ombre-f:0 2px 6px rgba(11,81,112,.10),0 18px 44px rgba(11,81,112,.16);
+  --max:1200px;
+  --ease:cubic-bezier(.22,.61,.36,1);
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:110px}
+body{margin:0;background:var(--papier);color:var(--texte);
+  font-family:"Archivo",system-ui,-apple-system,"Segoe UI",sans-serif;
+  font-size:17px;font-weight:300;line-height:1.75;letter-spacing:.2px;-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block;background:var(--fond)}
+[hidden]{display:none !important}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;cursor:pointer}
+h1,h2,h3,h4{font-family:"Archivo",Georgia,serif;font-weight:600;line-height:1.25;margin:0;color:var(--noir);letter-spacing:-.8px}
+h1{font-size:clamp(2.05rem,4.1vw,3rem);letter-spacing:-1.5px;line-height:1.14}
+h2{font-size:clamp(1.6rem,3vw,2.3rem)}
+h3{font-size:clamp(1.1rem,1.7vw,1.3rem);letter-spacing:-.5px}
+h4{font-size:1.02rem}
+p{margin:0 0 1em}
+:focus-visible{outline:3px solid var(--or);outline-offset:3px;border-radius:4px}
+
+.wrap{width:min(100% - 40px,var(--max));margin-inline:auto}
+.section{padding:clamp(50px,6vw,88px) 0}
+.section--fond{background:var(--fond)}
+.section--creme{background:var(--or-fond)}
+.section--nuit{background:var(--nuit-900);color:#DCE6EA}
+.section--nuit h2,.section--nuit h3,.section--nuit h4{color:#fff}
+.section--nuit .lede{color:#C7DEE8}
+.lede{font-size:clamp(1rem,1.3vw,1.1rem);color:var(--texte);max-width:62ch}
+.eyebrow{font-family:"Manrope",sans-serif;font-size:.78rem;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--teal-txt);font-weight:700;margin:0 0 14px}
+.eyebrow--clair{color:var(--or)}
+.lien-txt{color:var(--teal-txt);font-weight:600;text-decoration:underline;text-underline-offset:3px}
+.lien-fl{display:inline-flex;align-items:center;gap:7px;font-family:"Manrope",sans-serif;
+  font-weight:700;font-size:.9rem;color:var(--teal-txt)}
+.lien-fl svg{transition:transform .2s}
+.lien-fl:hover svg{transform:translateX(4px)}
+
+/* ---------- boutons ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;
+  font-family:"Manrope",sans-serif;padding:14px 26px;border-radius:var(--r-pill);
+  border:1.5px solid transparent;font-weight:700;font-size:.95rem;letter-spacing:.2px;
+  transition:all .22s var(--ease);white-space:nowrap}
+.btn--or{background:var(--or);color:var(--nuit-900);border-color:var(--or)}
+.btn--or:hover{background:var(--or-clair);border-color:var(--or-clair);transform:translateY(-2px);
+  box-shadow:0 10px 24px rgba(251,181,14,.38)}
+.btn--nuit{background:var(--nuit);color:#fff;border-color:var(--nuit)}
+.btn--nuit:hover{background:var(--nuit-700);transform:translateY(-2px)}
+.btn--fantome{background:transparent;color:var(--nuit);border-color:var(--ligne)}
+.btn--fantome:hover{border-color:var(--nuit);background:#fff}
+.btn--clair{background:rgba(255,255,255,.08);color:#fff;border-color:rgba(255,255,255,.36)}
+.btn--clair:hover{background:rgba(255,255,255,.18);border-color:#fff}
+.btn--wa{background:#25D366;color:#06341A;border-color:#25D366}
+.btn--wa:hover{background:#1FBF5A;transform:translateY(-2px)}
+.btn--bloc{width:100%}
+.btn--sm{padding:11px 19px;font-size:.88rem}
+.btn:disabled{opacity:.45;cursor:default;transform:none;box-shadow:none}
+
+/* ---------- bandeau + en-tête ---------- */
+.bandeau{background:var(--nuit-900);color:#C0D8E2;font-size:.85rem;font-family:"Manrope",sans-serif}
+.bandeau .wrap{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:9px 0;flex-wrap:wrap}
+.bandeau a{display:inline-flex;align-items:center;gap:7px}
+.bandeau a:hover{color:var(--or-clair)}
+.bandeau strong{color:var(--or-clair);font-weight:700}
+
+.entete{position:sticky;top:0;z-index:60;background:rgba(255,255,255,.95);
+  backdrop-filter:blur(14px);border-bottom:1px solid var(--ligne-2)}
+.entete .wrap{display:flex;align-items:center;gap:24px;padding:11px 0;min-height:72px}
+.logo{flex:0 0 auto;display:block}
+.logo img{height:40px;width:auto}
+.nav{display:flex;gap:2px;margin-left:auto;align-items:center;font-family:"Manrope",sans-serif}
+.nav>a,.nav>.menu>button{display:inline-flex;align-items:center;gap:6px;padding:10px 13px;
+  border-radius:var(--r-pill);font-size:.93rem;font-weight:600;color:var(--nuit);background:none;border:0;
+  transition:background .18s}
+.nav>a:hover,.nav>.menu>button:hover{background:var(--fond)}
+.nav>a[aria-current],.nav>.menu>button[aria-current]{background:var(--or-fond);font-weight:700;color:var(--noir)}
+.menu{position:relative}
+.menu__pan{position:absolute;top:calc(100% + 10px);left:50%;transform:translateX(-50%) translateY(-6px);
+  background:#fff;border:1px solid var(--ligne);border-radius:var(--r-l);box-shadow:var(--ombre-f);
+  padding:12px;min-width:340px;opacity:0;visibility:hidden;transition:all .2s var(--ease)}
+.menu:hover .menu__pan,.menu:focus-within .menu__pan{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0)}
+.menu__pan a{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:var(--r-m);
+  font-size:.92rem;font-weight:600;color:var(--nuit)}
+.menu__pan a:hover{background:var(--or-fond)}
+.menu__pan a[aria-current]{background:var(--or-fond);outline:1.5px solid var(--or)}
+.menu__pan i{width:34px;height:34px;border-radius:10px;background:var(--fond);display:grid;
+  place-items:center;font-style:normal;font-size:1rem;flex:0 0 auto}
+.menu__pan small{display:block;color:var(--gris);font-size:.8rem;line-height:1.4;font-weight:400}
+.burger{display:none;margin-left:auto;background:none;border:1px solid var(--ligne);
+  border-radius:var(--r-pill);padding:9px 14px;font-weight:700;font-family:"Manrope",sans-serif}
+
+/* ---------- fil d'ariane ---------- */
+.ariane{padding:16px 0;font-size:.85rem;color:var(--gris);font-family:"Manrope",sans-serif}
+.ariane ol{display:flex;flex-wrap:wrap;gap:8px;list-style:none;margin:0;padding:0}
+.ariane li::after{content:"›";margin-left:8px;color:var(--gris-clair)}
+.ariane li:last-child::after{content:""}
+.ariane a{font-weight:600;color:var(--teal-txt)}
+.ariane a:hover{text-decoration:underline}
+.ariane [aria-current]{color:var(--noir);font-weight:700}
+
+/* ---------- chapeau illustré ---------- */
+.chapeau{position:relative;background:var(--nuit-900);color:#fff;overflow:hidden;
+  padding:24px 0 clamp(38px,4.5vw,56px)}
+.chapeau__bg{position:absolute;inset:0}
+.chapeau__bg img{width:100%;height:100%;object-fit:cover}
+.chapeau__bg::after{content:"";position:absolute;inset:0;background:
+  linear-gradient(100deg,rgba(11,81,112,.94) 0%,rgba(11,81,112,.86) 40%,rgba(22,127,164,.56) 72%,rgba(22,127,164,.3) 100%),
+  linear-gradient(180deg,rgba(11,81,112,.5) 0%,rgba(11,81,112,0) 34%,rgba(11,81,112,.55) 100%)}
+.chapeau .wrap{position:relative}
+.chapeau .ariane{color:#B7D2DE;padding-top:0}
+.chapeau .ariane a{color:var(--or)}
+.chapeau .ariane li::after{color:rgba(255,255,255,.4)}
+.chapeau .ariane [aria-current]{color:#fff}
+.chapeau h1{color:#fff;max-width:22ch}
+.chapeau p.sous{color:#C3D5DA;max-width:64ch;margin-top:15px;font-size:1.06rem}
+.chapeau__st{display:flex;gap:28px;flex-wrap:wrap;margin-top:26px;font-family:"Manrope",sans-serif;
+  font-size:.88rem;color:#B7D2DE}
+.chapeau__st b{display:block;font-size:1.4rem;color:var(--or);font-weight:700;letter-spacing:-.6px}
+
+/* ---------- cartes séjour ---------- */
+.grille{display:grid;gap:24px}
+.g-2{grid-template-columns:repeat(2,1fr)}
+.g-3{grid-template-columns:repeat(3,1fr)}
+.g-4{grid-template-columns:repeat(4,1fr)}
+.carte{background:#fff;border:1px solid var(--ligne);border-radius:var(--r-l);overflow:hidden;
+  display:flex;flex-direction:column;transition:transform .25s var(--ease),box-shadow .25s var(--ease)}
+.carte:hover{transform:translateY(-4px);box-shadow:var(--ombre-f)}
+.carte__img{position:relative;aspect-ratio:4/3;overflow:hidden;background:var(--fond)}
+.carte__img img{width:100%;height:100%;object-fit:cover;transition:transform .5s var(--ease)}
+.carte:hover .carte__img img{transform:scale(1.05)}
+.carte__tag{position:absolute;top:12px;left:12px;background:var(--or);color:var(--nuit-900);
+  font-family:"Manrope",sans-serif;font-size:.75rem;font-weight:700;letter-spacing:.04em;
+  padding:6px 12px;border-radius:var(--r-pill)}
+.carte__corps{padding:20px 20px 22px;display:flex;flex-direction:column;flex:1;gap:12px}
+.carte h3{font-size:1.14rem;line-height:1.3}
+.carte h3 a:hover{color:var(--teal-txt)}
+.carte__route{display:flex;align-items:center;gap:7px;font-size:.86rem;color:var(--gris);flex-wrap:wrap;
+  font-family:"Manrope",sans-serif;line-height:1.5;margin:0}
+.carte__route b{font-weight:700;color:var(--noir)}
+.carte__meta{display:flex;flex-wrap:wrap;gap:7px}
+.puce{display:inline-flex;align-items:center;gap:6px;background:var(--fond);border-radius:var(--r-pill);
+  padding:5px 12px;font-size:.8rem;font-weight:600;color:var(--nuit);font-family:"Manrope",sans-serif}
+.puce--teal{background:var(--teal-fond);color:var(--teal-txt)}
+.puce--or{background:var(--or-fond);color:#7A5605}
+.carte__pied{margin-top:auto;padding-top:14px;border-top:1px solid var(--ligne-2);
+  display:flex;align-items:flex-end;justify-content:space-between;gap:12px}
+.prix{line-height:1.2;font-family:"Manrope",sans-serif}
+.prix small{display:block;font-size:.74rem;color:var(--gris);letter-spacing:.04em}
+.prix b{font-size:1.5rem;font-weight:700;color:var(--noir);letter-spacing:-.8px}
+.prix i{font-style:normal;font-size:.8rem;color:var(--gris)}
+
+/* ---------- FAQ ---------- */
+.faq{border-top:1px solid var(--ligne)}
+.faq details{border-bottom:1px solid var(--ligne)}
+.faq summary{padding:19px 44px 19px 0;font-weight:600;font-size:1.04rem;cursor:pointer;color:var(--noir);
+  position:relative;list-style:none;display:block;font-family:"Archivo",sans-serif;letter-spacing:-.3px}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";position:absolute;right:8px;top:50%;transform:translateY(-50%);
+  font-size:1.6rem;color:var(--or);font-weight:400;transition:transform .25s var(--ease)}
+.faq details[open] summary::after{transform:translateY(-50%) rotate(45deg)}
+.faq summary:hover{color:var(--teal-txt)}
+.faq__c{padding:0 44px 20px 0;color:var(--texte);max-width:75ch}
+.faq__c :last-child{margin-bottom:0}
+
+/* ---------- avis ---------- */
+.avis{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.avis article{background:#fff;border:1px solid var(--ligne);border-radius:var(--r-l);padding:24px}
+.avis .et{color:var(--or);letter-spacing:.14em;font-size:.95rem;margin-bottom:12px}
+.avis blockquote{margin:0 0 16px;font-size:.98rem;line-height:1.65;color:var(--texte)}
+.avis footer{display:flex;align-items:center;gap:12px;font-family:"Manrope",sans-serif;font-size:.85rem;
+  color:var(--gris);border-top:1px solid var(--ligne-2);padding-top:14px}
+.avis footer b{color:var(--noir);display:block;font-weight:700}
+.ini{width:38px;height:38px;border-radius:50%;background:var(--nuit);color:#fff;display:grid;
+  place-items:center;font-weight:700;font-size:.85rem;flex:0 0 auto}
+
+/* ---------- bloc devis en pied de page ---------- */
+.devis{background:var(--nuit-900);color:#fff;border-radius:24px;padding:clamp(32px,5vw,54px);
+  display:grid;grid-template-columns:1.1fr .9fr;gap:44px;align-items:center}
+.devis h2{color:#fff}
+.devis ul{list-style:none;padding:0;margin:22px 0 0;display:grid;gap:11px;font-size:.97rem;color:#C3D5DA}
+.devis li{display:flex;gap:11px;align-items:flex-start}
+.devis li svg{flex:0 0 auto;margin-top:5px}
+.devis__act{display:grid;gap:12px}
+.devis__act small{color:#B0CCD9;font-size:.83rem;text-align:center;font-family:"Manrope",sans-serif}
+
+/* ---------- pied de page ---------- */
+.pied{background:var(--nuit-900);color:#C0D8E2;padding:58px 0 26px;font-size:.92rem}
+.pied h4{font-family:"Manrope",sans-serif;font-size:.76rem;letter-spacing:.15em;text-transform:uppercase;
+  color:var(--or);font-weight:700;margin:0 0 16px}
+.pied__g{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:40px}
+.pied ul{list-style:none;margin:0;padding:0;display:grid;gap:9px}
+.pied a:hover{color:#fff;text-decoration:underline}
+.pied img{height:38px;width:auto;margin-bottom:16px}
+.pied__bas{margin-top:38px;padding-top:22px;border-top:1px solid rgba(255,255,255,.12);
+  display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:.85rem;color:#9BBCCB}
+
+/* ---------- barre mobile ---------- */
+.barre-mob{display:none;position:fixed;bottom:0;left:0;right:0;z-index:70;background:#fff;
+  border-top:1px solid var(--ligne);padding:10px 16px calc(10px + env(safe-area-inset-bottom));
+  gap:10px;align-items:center;box-shadow:0 -6px 20px rgba(11,81,112,.14)}
+
+/* ---------- marqueur « à remplir » ---------- */
+.aremplir{background:var(--or-fond);border:1px dashed var(--or);color:#7A5605;font-size:.84rem;
+  padding:.1em .5em;border-radius:6px;font-weight:700;font-family:"Manrope",sans-serif}
+
+/* ---------- calque d'annotation maillage ---------- */
+.mm-btn{position:fixed;right:16px;bottom:16px;z-index:90;background:var(--nuit);color:#fff;
+  border:0;border-radius:var(--r-pill);padding:11px 18px;font-family:"Manrope",sans-serif;
+  font-size:.84rem;font-weight:700;box-shadow:var(--ombre-f);display:inline-flex;align-items:center;gap:8px}
+.mm-btn b{color:var(--or)}
+body.mm [data-mm]{outline:2px dashed var(--teal-txt);outline-offset:10px;border-radius:4px;position:relative}
+body.mm [data-mm]::before{content:attr(data-mm);position:absolute;top:-16px;left:0;z-index:40;
+  background:var(--teal-txt);color:#fff;font-family:"Manrope",sans-serif;font-size:.7rem;font-weight:700;
+  letter-spacing:.08em;text-transform:uppercase;padding:5px 11px;border-radius:var(--r-pill);white-space:nowrap}
+body.mm [data-mm="Navigation · poids 0,25"]::before{background:var(--gris-clair)}
+body.mm [data-dec]{position:relative}
+body.mm [data-dec]::after{content:attr(data-dec);position:absolute;top:-16px;right:0;z-index:40;
+  font-family:"Manrope",sans-serif;font-size:.7rem;font-weight:700;letter-spacing:.08em;
+  padding:5px 11px;border-radius:var(--r-pill);white-space:nowrap;background:var(--gris-clair);color:#fff}
+body.mm [data-dec="Conservé"]::after{background:var(--vert)}
+body.mm [data-dec="Nouveau"]::after{background:var(--nuit)}
+body.mm [data-dec="À trancher"]::after{background:var(--rouge)}
+body.mm .mm-legende{display:block}
+.mm-legende{display:none;background:var(--nuit);color:#D5E3E7;border-radius:var(--r-l);padding:20px 24px;
+  margin-top:26px;font-family:"Manrope",sans-serif;font-size:.88rem;line-height:1.7}
+.mm-legende b{color:var(--or)}
+
+/* ---------- révélation au défilement ---------- */
+[data-rev]{opacity:0;transform:translateY(18px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+[data-rev].vu{opacity:1;transform:none}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width:1024px){
+  .g-4,.g-3{grid-template-columns:repeat(2,1fr)}
+  .avis{grid-template-columns:1fr}
+  .devis{grid-template-columns:1fr;gap:28px}
+  .pied__g{grid-template-columns:1fr 1fr}
+}
+@media (max-width:860px){
+  .nav{display:none}
+  .burger{display:inline-flex}
+  .barre-mob{display:flex}
+  body{padding-bottom:78px}
+  .g-2,.g-3,.g-4{grid-template-columns:1fr}
+  .pied__g{grid-template-columns:1fr}
+  .bandeau .wrap{justify-content:center;text-align:center}
+  .mm-btn{right:12px;bottom:86px;padding:9px 14px;font-size:.78rem}
+  .chapeau__bg::after{background:
+    linear-gradient(180deg,rgba(11,81,112,.72) 0%,rgba(11,81,112,.60) 45%,rgba(11,81,112,.88) 100%)}
+  .chapeau h1,.chapeau p.sous,.chapeau .ariane,.chapeau__st{text-shadow:0 2px 14px rgba(11,81,112,.85)}
+}
+
+/* ------------------------------------------------------------
+   PLANCHER TYPOGRAPHIQUE MOBILE
+   Retour cliente du 24/08/2026 : « les polices ne sont pas
+   adaptées à la version mobile ».
+
+   Le corps était déjà à 17 px, mais les éléments d'accroche
+   descendaient à .72–.78rem, soit 12 à 13 px sur un téléphone —
+   sous le seuil de confort de lecture. On relève le plancher à
+   15 px pour tout ce qui porte du texte, sans toucher aux
+   proportions du bureau. Les titres sont légèrement resserrés
+   pour compenser la largeur.
+   ------------------------------------------------------------ */
+@media (max-width:600px){
+  body{font-size:17px;line-height:1.7}
+  h1{font-size:clamp(1.85rem,7.4vw,2.3rem);letter-spacing:-1px;line-height:1.18}
+  h2{font-size:clamp(1.45rem,5.8vw,1.85rem);letter-spacing:-.6px}
+  h3{font-size:1.12rem}
+
+  .eyebrow{font-size:.82rem;letter-spacing:.12em}
+  .lede,.chapeau p.sous{font-size:1.04rem}
+  .bandeau{font-size:.88rem}
+  .ariane{font-size:.88rem}
+
+  .puce,.carte__route,.carte__tag,.prix small,.prix i,
+  .avis footer,.pied,.pied__bas,.mm-legende,.aremplir{font-size:.94rem}
+  .pied h4{font-size:.82rem}
+  .chapeau__st{font-size:.94rem;gap:20px}
+
+  .btn{font-size:1rem;padding:15px 24px}
+  .btn--sm{font-size:.94rem;padding:12px 20px}
+
+  .faq summary{font-size:1.06rem;padding-right:40px}
+  .faq__c{padding-right:0}
+
+  /* Cibles tactiles : 44 px de haut au minimum. */
+  .nav>a,.menu__pan a,.pied li a,.burger{min-height:44px;display:flex;align-items:center}
+}

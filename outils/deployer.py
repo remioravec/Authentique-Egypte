@@ -63,6 +63,30 @@ PARCOURS = [
         'titre': 'Refonte · Guide — Quand partir en Égypte',
         'cible': SITE + '/quand-partir-en-egypte/',
     },
+    {
+        'fichier': 'blog.html',
+        'slug': 'hub-guides-pratiques',
+        'titre': 'Refonte · Hub — Guides pratiques',
+        'cible': SITE + '/notre-blog/',
+    },
+    {
+        'fichier': 'destination.html',
+        'slug': 'destination-le-caire',
+        'titre': 'Refonte · Destination — Voyage au Caire',
+        'cible': SITE + '/voyage-au-caire/',
+    },
+    {
+        'fichier': 'qui-sommes-nous.html',
+        'slug': 'agence-qui-sommes-nous',
+        'titre': 'Refonte · Agence — Qui sommes-nous',
+        'cible': SITE + '/qui-sommes-nous/',
+    },
+    {
+        'fichier': 'devis.html',
+        'slug': 'demande-de-devis',
+        'titre': 'Refonte · Devis — Demande de devis',
+        'cible': SITE + '/sur-mesure/',
+    },
 ]
 
 PARENT_SLUG = 'refonte-2026'
@@ -157,7 +181,7 @@ def main():
     for etape in PARCOURS:
         chemin = os.path.join(RACINE, 'maquettes', etape['fichier'])
         with open(chemin, encoding='utf-8') as f:
-            contenu = _vers.convertir(f.read())
+            contenu = _vers.convertir(f.read(), os.path.join(RACINE, 'maquettes'))
 
         for fichier, url in liens.items():
             contenu = contenu.replace('href="%s"' % fichier, 'href="%s"' % url)

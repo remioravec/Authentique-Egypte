@@ -115,6 +115,33 @@ class AE_Refonte_Rendu {
 	}
 
 	/**
+	 * Ramène les ressources locales des maquettes à leur URL réelle.
+	 *
+	 * Les maquettes pointent vers `assets/charte.css`, chemin valable
+	 * quand on ouvre le fichier dans un navigateur mais pas depuis
+	 * /refonte/<slug>/. On le remplace par l'URL servie par le plugin.
+	 *
+	 * @param string $html
+	 * @return string
+	 */
+	private static function reecrire_ressources( $html ) {
+		$base = AE_REFONTE_URL . 'maquettes/';
+
+		return preg_replace_callback(
+			'/\b(href|src)=(["\'])(?!https?:|\/\/|data:|#)([^"\']+)\2/i',
+			static function ( $m ) use ( $base ) {
+				// Les liens vers une autre maquette ont déjà été traités.
+				if ( preg_match( '/\.html($|[?#])/i', $m[3] ) ) {
+					return $m[0];
+				}
+
+				return $m[1] . '="' . esc_url( $base . ltrim( $m[3], './' ) ) . '"';
+			},
+			$html
+		);
+	}
+
+	/**
 	 * Le bloc de configuration lu par le calque de relecture.
 	 *
 	 * @param WP_Post $maquette
@@ -194,6 +221,7 @@ class AE_Refonte_Rendu {
 
 		$html = file_get_contents( $chemin ); // phpcs:ignore WordPress.WP.AlternativeFunctions
 		$html = self::reecrire_liens( $html );
+		$html = self::reecrire_ressources( $html );
 
 		$tete = '<meta name="robots" content="noindex,nofollow,noarchive">';
 		$html = preg_replace( '/<head(\s[^>]*)?>/i', '$0' . $tete, $html, 1 );

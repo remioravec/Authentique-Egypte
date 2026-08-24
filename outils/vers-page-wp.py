@@ -20,6 +20,7 @@ Usage :
     ./outils/vers-page-wp.py maquettes/index.html > contenu.html
 """
 
+import os
 import re
 import sys
 
@@ -161,10 +162,23 @@ def dépouiller_css(css: str) -> str:
     return re.sub(r'/\*.*?\*/', '', css, flags=re.S)
 
 
-def convertir(html: str) -> str:
+def convertir(html: str, dossier: str = '') -> str:
     """Extrait de la maquette ce qui doit vivre dans le contenu de la page."""
+    # Les feuilles locales — la charte partagée — sont rapatriées dans le
+    # HTML : le contenu d'une page WordPress ne peut pas dépendre d'un
+    # fichier posé à côté de la maquette.
+    locales = []
+    for balise in re.findall(r'<link[^>]+rel=["\']stylesheet["\'][^>]*>', html, re.I):
+        cible = re.search(r'href=["\']([^"\']+)["\']', balise)
+        if not cible or '//' in cible.group(1):
+            continue
+        chemin = os.path.join(dossier or '.', cible.group(1))
+        if os.path.exists(chemin):
+            with open(chemin, encoding='utf-8') as f:
+                locales.append(f.read())
+
     # La feuille de style de la maquette, préfixée.
-    styles = re.findall(r'<style[^>]*>(.*?)</style>', html, re.S | re.I)
+    styles = locales + re.findall(r'<style[^>]*>(.*?)</style>', html, re.S | re.I)
     css = '\n'.join(prefixer_css(dépouiller_css(bloc)) for bloc in styles)
 
     # Les polices Google, à recharger dans le corps (les navigateurs
@@ -214,4 +228,4 @@ if __name__ == '__main__':
     if len(sys.argv) != 2:
         sys.exit('usage : vers-page-wp.py <maquette.html>')
     with open(sys.argv[1], encoding='utf-8') as f:
-        sys.stdout.write(convertir(f.read()))
+        sys.stdout.write(convertir(f.read(), os.path.dirname(sys.argv[1])))

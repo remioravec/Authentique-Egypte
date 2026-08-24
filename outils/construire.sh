@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
-# Fabrique le ZIP du plugin, maquettes incluses.
+# Fabrique les ZIP des extensions.
 #
-#   ./outils/construire.sh          → dist/ae-refonte-review.zip
+#   ./outils/construire.sh
+#     → dist/ae-refonte-review.zip   relecture et annotations client
+#     → dist/ae-back-office.zip      contenus rangés par gabarit
 #
 # Les fichiers de maquette vivent dans /maquettes à la racine du dépôt :
 # c'est la source unique. Ce script les recopie dans le plugin au moment
@@ -14,19 +16,22 @@ plugin="$racine/plugin/ae-refonte-review"
 dist="$racine/dist"
 
 echo "→ Contrôle de la syntaxe PHP"
-find "$plugin" -name '*.php' -print0 | xargs -0 -n1 php -l >/dev/null
+find "$racine/plugin" -name '*.php' -print0 | xargs -0 -n1 php -l >/dev/null
 
 echo "→ Contrôle de la syntaxe JS"
 node --check "$plugin/assets/js/calque.js"
 
 echo "→ Copie des maquettes"
 rm -f "$plugin/maquettes/"*.html
+rm -rf "$plugin/maquettes/assets"
 cp "$racine/maquettes/"*.html "$plugin/maquettes/"
+cp -r "$racine/maquettes/assets" "$plugin/maquettes/assets"
 ls -1 "$plugin/maquettes/" | sed 's/^/   /'
 
-echo "→ Fabrication du ZIP"
+echo "→ Fabrication des ZIP"
 rm -rf "$dist"
 mkdir -p "$dist"
-( cd "$racine/plugin" && zip -qr "$dist/ae-refonte-review.zip" ae-refonte-review -x '*.DS_Store' )
-
-echo "✓ $dist/ae-refonte-review.zip"
+for extension in ae-refonte-review ae-back-office; do
+  ( cd "$racine/plugin" && zip -qr "$dist/$extension.zip" "$extension" -x '*.DS_Store' )
+  printf "✓ %s (%s)\n" "$dist/$extension.zip" "$(du -h "$dist/$extension.zip" | cut -f1)"
+done

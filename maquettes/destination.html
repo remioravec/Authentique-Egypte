@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="icon" href="https://authentiquegypte.com/wp-content/uploads/2023/10/cropped-Screenshot_20231015_082741_Instagram-removebg-preview-1.webp">
+<title>Voyage au Caire : combien de jours, quand partir, que voir</title>
+<meta name="description" content="Voyage au Caire : les sites qui valent le détour, le nombre de jours à prévoir, la meilleure période et les séjours qui passent par la capitale. Par une agence locale.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;500;600;700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/charte.css">
+<style>
+/* ============================================================
+   GABARIT DESTINATION — refonte demandée le 24/08/2026.
+
+   Une page destination n'est pas une page catégorie. La catégorie
+   vend une famille de séjours ; la destination répond à « est-ce
+   que ça vaut le coup, et combien de temps j'y reste ». Elle doit
+   donc trancher, puis renvoyer vers l'offre.
+
+   Ce que fait ce gabarit :
+   – une réponse en tête : le nombre de jours, tout de suite.
+     C'est la question réelle, et la page en ligne ne la traite pas ;
+   – les sites classés par temps de visite, pas par ordre
+     alphabétique : c'est ce qui permet de composer sa journée ;
+   – un tableau « 2, 3 ou 4 jours » qui montre ce qu'on perd à
+     rester moins longtemps ;
+   – le bloc d'offres au milieu et non en pied : la destination
+     n'existe que pour amener au séjour ;
+   – les destinations voisines en dernier, après le CTA.
+   ============================================================ */
+
+/* ---------- réponse en tête ---------- */
+.reponse{background:var(--or-fond);border-left:4px solid var(--or);border-radius:0 var(--r-m) var(--r-m) 0;
+  padding:22px 26px;margin:0 0 34px;font-size:1.06rem;color:#5C4204}
+.reponse p:last-child{margin-bottom:0}
+.reponse b{color:#3D2B00;font-weight:700}
+
+/* ---------- deux colonnes ---------- */
+.colonnes{display:grid;grid-template-columns:1fr 320px;gap:44px;align-items:start;
+  padding:clamp(32px,4vw,52px) 0 0}
+.colonnes>aside{position:sticky;top:96px}
+.corps{max-width:min(74ch,100%);min-width:0}
+.colonnes>*{min-width:0}
+.corps h2{margin:46px 0 14px;scroll-margin-top:110px}
+.corps h2:first-of-type{margin-top:0}
+.corps a:not(.btn):not(.lien-fl){color:var(--teal-txt);font-weight:600;
+  text-decoration:underline;text-underline-offset:3px}
+
+/* ---------- les sites ---------- */
+.sites{display:grid;gap:14px;margin:22px 0 8px}
+.site{display:grid;grid-template-columns:132px 1fr;gap:18px;align-items:center;
+  border:1px solid var(--ligne);border-radius:var(--r-l);overflow:hidden;background:#fff;
+  transition:transform .22s var(--ease),box-shadow .22s var(--ease)}
+.site:hover{transform:translateY(-3px);box-shadow:var(--ombre)}
+.site img{width:100%;height:100%;min-height:118px;object-fit:cover}
+.site__t{padding:16px 18px 16px 0}
+.site h3{font-size:1.08rem;margin:0 0 5px}
+.site p{margin:0 0 9px;font-size:.94rem;line-height:1.55}
+.site__meta{display:flex;gap:7px;flex-wrap:wrap}
+.duree{display:inline-flex;align-items:center;gap:6px;background:var(--teal-fond);color:var(--teal-txt);
+  border-radius:var(--r-pill);padding:4px 11px;font-family:"Manrope",sans-serif;
+  font-size:.82rem;font-weight:700}
+.duree--long{background:var(--or-fond);color:#7A5605}
+
+/* ---------- tableau de durée ---------- */
+.jours{width:100%;border-collapse:separate;border-spacing:0;font-size:.95rem;
+  border:1px solid var(--ligne);border-radius:var(--r-l);overflow:hidden;background:#fff;margin:20px 0 10px}
+.jours th,.jours td{padding:15px 17px;text-align:left;border-bottom:1px solid var(--ligne-2);vertical-align:top}
+.jours thead th{background:var(--nuit-900);color:#fff;font-family:"Archivo",sans-serif;font-weight:600;
+  border-bottom:0;font-size:.98rem;letter-spacing:-.2px}
+.jours tbody th{font-family:"Manrope",sans-serif;font-weight:700;color:var(--noir);width:110px;
+  background:var(--fond)}
+.jours tr:last-child th,.jours tr:last-child td{border-bottom:0}
+.jours .ok{color:var(--vert);font-weight:600}
+.jours .non{color:var(--gris-clair)}
+
+/* ---------- ruban de saison ---------- */
+.saison{display:grid;grid-template-columns:repeat(12,1fr);gap:4px;margin:20px 0 10px}
+.saison span{display:block;text-align:center;padding:11px 2px 9px;border-radius:var(--r-s);
+  font-family:"Manrope",sans-serif;font-size:.8rem;font-weight:700}
+.saison .ex{background:var(--teal-fond);color:var(--teal-txt)}
+.saison .bon{background:var(--vert-fond);color:var(--vert)}
+.saison .ch{background:#FFF3D6;color:#B07A00}
+.saison .br{background:var(--rouge-fond);color:var(--rouge)}
+.saison b{display:block;font-size:.74rem;font-weight:600;opacity:.8;margin-top:3px}
+
+/* ---------- panneau latéral ---------- */
+.lat{display:grid;gap:16px}
+.lat__b{background:#fff;border:1px solid var(--ligne);border-radius:var(--r-l);padding:22px;
+  position:relative;overflow:hidden}
+.lat__b h4{font-family:"Archivo",sans-serif;font-size:1.05rem;font-weight:600;margin:0 0 13px;
+  letter-spacing:-.4px}
+.lat__b dl{margin:0;font-family:"Manrope",sans-serif;font-size:.92rem;display:grid;gap:11px}
+.lat__b dt{color:var(--gris);font-size:.84rem;font-weight:600}
+.lat__b dd{margin:2px 0 0;color:var(--noir);font-weight:700}
+.lat__b ul{list-style:none;margin:0;padding:0;font-family:"Manrope",sans-serif;font-size:.92rem}
+.lat__b li a{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:11px 0;
+  border-bottom:1px solid var(--ligne-2);color:var(--nuit-900);font-weight:600}
+.lat__b li:last-child a{border-bottom:0}
+.lat__b li a:hover{color:var(--teal-txt)}
+.lat--devis{background:var(--nuit-900);border-color:var(--nuit-900);color:#C3D5DA}
+.lat--devis::before{content:"";position:absolute;top:0;left:0;right:0;height:4px;
+  background:linear-gradient(90deg,var(--or),var(--or-clair))}
+.lat--devis h4{color:#fff}
+.lat--devis p{font-size:.92rem;margin-bottom:16px}
+
+/* ---------- carte simplifiée ---------- */
+.reperes{border:1px solid var(--ligne);border-radius:var(--r-l);background:#fff;padding:22px;margin:22px 0}
+.reperes ol{list-style:none;margin:0;padding:0;display:grid;gap:0}
+.reperes li{display:grid;grid-template-columns:88px 1fr;gap:16px;align-items:baseline;
+  padding:11px 0;border-bottom:1px solid var(--ligne-2);font-size:.95rem}
+.reperes li:last-child{border-bottom:0}
+.reperes .km{font-family:"Manrope",sans-serif;font-weight:700;color:var(--teal-txt);font-size:.88rem}
+.reperes b{color:var(--noir);font-weight:700}
+
+@media (max-width:1024px){
+  .colonnes{grid-template-columns:1fr;gap:30px}
+  .colonnes>aside{position:static}
+  .saison{grid-template-columns:repeat(6,1fr)}
+}
+@media (max-width:700px){
+  .site{grid-template-columns:1fr}
+  .site img{min-height:0;aspect-ratio:16/9}
+  .site__t{padding:0 18px 18px}
+  .saison{grid-template-columns:repeat(4,1fr)}
+  .jours{display:block;overflow-x:auto;white-space:nowrap}
+  .reperes li{grid-template-columns:1fr;gap:2px}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation-duration:.01ms !important;transition-duration:.01ms !important;scroll-behavior:auto !important}
+}
+</style>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[
+{"@type":"BreadcrumbList","itemListElement":[
+{"@type":"ListItem","position":1,"name":"Accueil","item":"https://authentiquegypte.com/"},
+{"@type":"ListItem","position":2,"name":"Destinations","item":"https://authentiquegypte.com/nos-sejours-egypte/"},
+{"@type":"ListItem","position":3,"name":"Voyage au Caire","item":"https://authentiquegypte.com/voyage-au-caire/"}]},
+{"@type":"TouristDestination","name":"Le Caire","description":"La capitale égyptienne : plateau de Gizeh, nécropole de Saqqara, Grand Musée égyptien, Caire copte et islamique.","touristType":"Voyageur culturel",
+"includesAttraction":[
+{"@type":"TouristAttraction","name":"Plateau de Gizeh"},
+{"@type":"TouristAttraction","name":"Grand Musée égyptien"},
+{"@type":"TouristAttraction","name":"Nécropole de Saqqara"},
+{"@type":"TouristAttraction","name":"Khan el-Khalili"}]}]}</script>
+</head>
+<body>
+
+<div class="bandeau">
+  <div class="wrap">
+    <span>Agence locale basée au Caire · <strong>Une personne de l'équipe vous répond</strong></span>
+    <span style="display:flex;gap:20px;flex-wrap:wrap">
+      <a href="mailto:contact@authentiquegypte.com">✉ contact@authentiquegypte.com</a>
+      <a href="https://wa.me/201066619098">WhatsApp +20 106 661 9098</a>
+    </span>
+  </div>
+</div>
+
+<header class="entete">
+  <div class="wrap">
+    <a href="index.html" class="logo" aria-label="Authentique Égypte, accueil">
+      <img src="https://authentiquegypte.com/wp-content/uploads/2023/10/cropped-Screenshot_20231015_082741_Instagram-removebg-preview-1.webp" alt="Authentique Égypte" width="510" height="170">
+    </a>
+    <nav class="nav" data-mm="Navigation · poids 0,25">
+      <a href="index.html">Accueil</a>
+      <div class="menu">
+        <button aria-expanded="false">Nos séjours
+          <svg width="11" height="7" viewBox="0 0 11 7" fill="none" aria-hidden="true"><path d="M1 1l4.5 4.5L10 1" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+        </button>
+        <div class="menu__pan">
+          <a href="categorie.html"><i>⛵</i><span>Croisière sur le Nil<small>Dahabeya, felouque, bateau 5★</small></span></a>
+          <a href="categorie-desert.html"><i>🏜</i><span>Voyage dans le désert en Égypte<small>Siwa, désert Blanc, Fayoum, Dakhla</small></span></a>
+          <a href="https://authentiquegypte.com/nos-sejours-egypte/voyage-culturel-en-egypte/"><i>🏛</i><span>Voyage culturel en Égypte<small>Le Caire, Louxor, Abou Simbel</small></span></a>
+          <a href="https://authentiquegypte.com/nos-sejours-egypte/mer-rouge/"><i>🐠</i><span>Séjour en mer Rouge<small>Hurghada, Marsa Alam, plongée</small></span></a>
+          <a href="https://authentiquegypte.com/nos-sejours-egypte/sinai-moise-et-saint-catherine/"><i>⛰</i><span>Sinaï et Sainte-Catherine<small>Mont Moïse, monastère, bivouac</small></span></a>
+        </div>
+      </div>
+      <div class="menu">
+        <button aria-expanded="false">Destinations
+          <svg width="11" height="7" viewBox="0 0 11 7" fill="none" aria-hidden="true"><path d="M1 1l4.5 4.5L10 1" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+        </button>
+        <div class="menu__pan" style="min-width:300px">
+          <a href="destination.html" aria-current="page"><i>🔺</i><span>Voyage au Caire<small>Gizeh, Saqqara, Grand Musée</small></span></a>
+          <a href="https://authentiquegypte.com/voyage-a-louxor/"><i>🏺</i><span>Voyage à Louxor<small>Karnak, vallée des Rois</small></span></a>
+          <a href="https://authentiquegypte.com/voyage-a-assouan/"><i>🌊</i><span>Voyage à Assouan<small>Philae, Abou Simbel</small></span></a>
+          <a href="https://authentiquegypte.com/voyage-a-alexandrie/"><i>🏛</i><span>Voyage à Alexandrie<small>Méditerranée, catacombes</small></span></a>
+          <a href="https://authentiquegypte.com/desert-blanc/"><i>🤍</i><span>Désert Blanc<small>Bivouac, formations de craie</small></span></a>
+          <a href="https://authentiquegypte.com/lac-nasser/"><i>⛵</i><span>Lac Nasser<small>Temples nubiens, sans la foule</small></span></a>
+        </div>
+      </div>
+      <div class="menu">
+        <button aria-expanded="false">Qui part&nbsp;?
+          <svg width="11" height="7" viewBox="0 0 11 7" fill="none" aria-hidden="true"><path d="M1 1l4.5 4.5L10 1" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+        </button>
+        <div class="menu__pan" style="min-width:290px">
+          <a href="https://authentiquegypte.com/voyage-en-famille-en-egypte/"><i>👨‍👩‍👧</i><span>Voyage en famille en Égypte<small>Rythme adapté, enfants bienvenus</small></span></a>
+          <a href="https://authentiquegypte.com/voyage-en-couple-en-egypte/"><i>💛</i><span>Voyage en couple en Égypte<small>Dahabeya privée, dîners sur le Nil</small></span></a>
+          <a href="https://authentiquegypte.com/voyage-solo-en-egypte/"><i>🎒</i><span>Voyage en solo en Égypte<small>Guide privatif, sécurité assurée</small></span></a>
+          <a href="https://authentiquegypte.com/voyage-pmr-en-egypte/"><i>♿</i><span>Voyage PMR en Égypte<small>Sites accessibles, véhicule adapté</small></span></a>
+        </div>
+      </div>
+      <a href="blog.html">Guides</a>
+      <a href="qui-sommes-nous.html">L'agence</a>
+      <a href="devis.html" class="btn btn--or btn--sm" style="margin-left:10px">Obtenir mon devis</a>
+    </nav>
+    <button class="burger" aria-label="Ouvrir le menu">☰ Menu</button>
+  </div>
+</header>
+
+<main>
+<section class="chapeau">
+  <div class="chapeau__bg"><img src="https://authentiquegypte.com/wp-content/uploads/2025/06/Voyage-sur-mesure-au-Caire-en-Egypte.png" alt="" fetchpriority="high" decoding="async"></div>
+  <div class="wrap">
+    <nav class="ariane" aria-label="Fil d'Ariane" data-mm="Fil d'Ariane · l'arbre">
+      <ol>
+        <li><a href="index.html">Accueil</a></li>
+        <li><a href="index.html#destinations">Destinations</a></li>
+        <li><span aria-current="page">Voyage au Caire</span></li>
+      </ol>
+    </nav>
+    <h1>Voyage au Caire</h1>
+    <p class="sous">Vingt millions d'habitants, quatre mille ans d'histoire et un musée qui vient d'ouvrir.
+      La vraie question n'est pas s'il faut y aller, mais combien de jours y rester.</p>
+    <div class="chapeau__st">
+      <span><b>3 jours</b> conseillés</span>
+      <span><b>Nov. → mars</b> meilleure période</span>
+      <span><b>4 h 30</b> de vol depuis Paris</span>
+      <span><b>7 séjours</b> passent par Le Caire</span>
+    </div>
+  </div>
+</section>
+
+<div class="wrap">
+  <div class="colonnes">
+    <article class="corps">
+
+      <div class="reponse" data-mm="Réponse en tête · nouveau">
+        <p><b>Comptez trois jours pleins.</b> Deux suffisent pour Gizeh et le Grand Musée,
+          mais vous repartirez sans avoir vu Saqqara ni le vieux Caire — et c'est justement
+          là que la ville cesse d'être une carte postale.</p>
+        <p>Quatre jours si vous voulez souffler, ou si vous voyagez avec des enfants.</p>
+      </div>
+
+      <h2 id="voir">Ce qui vaut vraiment le détour</h2>
+      <p>Classés par temps de visite, pas par notoriété : c'est ce qui permet de composer
+        une journée qui tienne debout.</p>
+
+      <div class="sites" data-mm="Les sites · corps">
+        <article class="site">
+          <img src="https://authentiquegypte.com/wp-content/uploads/2023/11/pyramides-1024x683.jpg" alt="Les pyramides de Gizeh et le Sphinx" loading="lazy" decoding="async">
+          <div class="site__t">
+            <h3>Le plateau de Gizeh</h3>
+            <p>Les trois pyramides, le Sphinx, et la barque solaire de Khéops. Le plateau se
+              visite à pied ou à dos de dromadaire ; l'intérieur de la grande pyramide se
+              paie en supplément et se réserve tôt le matin.</p>
+            <div class="site__meta"><span class="duree">Une demi-journée</span><span class="puce">Tôt le matin</span></div>
+          </div>
+        </article>
+
+        <article class="site">
+          <img src="https://authentiquegypte.com/wp-content/uploads/2025/05/Destination-033.jpg" alt="Salle du Grand Musée égyptien" loading="lazy" decoding="async">
+          <div class="site__t">
+            <h3>Le Grand Musée égyptien</h3>
+            <p>Cent mille pièces, dont la totalité du trésor de Toutânkhamon réuni pour la
+              première fois. Il remplace l'ancien musée de la place Tahrir, et il est
+              nettement plus grand qu'on ne l'imagine.</p>
+            <div class="site__meta"><span class="duree duree--long">Une demi-journée au minimum</span><span class="puce">Billet à réserver</span></div>
+          </div>
+        </article>
+
+        <article class="site">
+          <img src="https://authentiquegypte.com/wp-content/uploads/2023/11/axp-photography-RfyqNPEU2RQ-unsplash.jpg" alt="Colonnes et pyramide à degrés de Saqqara" loading="lazy" decoding="async">
+          <div class="site__t">
+            <h3>Saqqara et Memphis</h3>
+            <p>La pyramide à degrés de Djéser, la plus ancienne construction en pierre de
+              taille au monde, et les mastabas décorés qu'on visite presque seul. À 40 minutes
+              du plateau de Gizeh : les deux se combinent dans la journée.</p>
+            <div class="site__meta"><span class="duree">3 à 4 heures</span><span class="puce">Peu de monde</span></div>
+          </div>
+        </article>
+
+        <article class="site">
+          <img src="https://authentiquegypte.com/wp-content/uploads/2023/11/kristina-tamasauskaite-bVRArO7LwB0-unsplash.jpg" alt="Ruelle couverte du souk de Khan el-Khalili" loading="lazy" decoding="async">
+          <div class="site__t">
+            <h3>Le Caire islamique et Khan el-Khalili</h3>
+            <p>La citadelle de Saladin, la mosquée Ibn Touloun, puis le souk. C'est le
+              moment de la journée où l'on cesse de visiter et où l'on regarde la ville
+              vivre — de préférence en fin d'après-midi.</p>
+            <div class="site__meta"><span class="duree">Une demi-journée</span><span class="puce">Fin de journée</span></div>
+          </div>
+        </article>
+
+        <article class="site">
+          <img src="https://authentiquegypte.com/wp-content/uploads/2023/11/e235bfb4-54a3-41cf-9f55-f2ca30fc8a91-1.jpg" alt="Église suspendue du Caire copte" loading="lazy" decoding="async">
+          <div class="site__t">
+            <h3>Le Caire copte</h3>
+            <p>L'église suspendue, la synagogue Ben Ezra et le musée copte, dans un
+              quartier piéton qu'on traverse en une matinée. Le contrepoint utile aux
+              pyramides : l'Égypte n'a pas commencé et fini avec les pharaons.</p>
+            <div class="site__meta"><span class="duree">2 à 3 heures</span></div>
+          </div>
+        </article>
+      </div>
+      <p style="font-size:.9rem;color:var(--gris-clair)">
+        <span class="aremplir">Photos et durées à confirmer par l'équipe sur place</span>
+      </p>
+
+      <h2 id="duree">Deux, trois ou quatre jours&nbsp;?</h2>
+      <p>Ce que vous gagnez, et ce que vous laissez de côté.</p>
+      <table class="jours" data-mm="Aide à la décision · corps">
+        <thead><tr><th scope="col">Durée</th><th scope="col">Ce que vous voyez</th><th scope="col">Ce que vous manquez</th><th scope="col">Pour qui</th></tr></thead>
+        <tbody>
+          <tr>
+            <th scope="row">2 jours</th>
+            <td class="ok">Gizeh, le Grand Musée</td>
+            <td class="non">Saqqara, le vieux Caire, le souk</td>
+            <td>Escale avant une croisière</td>
+          </tr>
+          <tr>
+            <th scope="row">3 jours</th>
+            <td class="ok">+ Saqqara et Memphis, le Caire islamique</td>
+            <td class="non">Le Caire copte, le musée d'art islamique</td>
+            <td>La durée conseillée</td>
+          </tr>
+          <tr>
+            <th scope="row">4 jours</th>
+            <td class="ok">+ Le Caire copte, une soirée sur le Nil, du temps libre</td>
+            <td class="non">—</td>
+            <td>Familles, rythme doux, premier voyage</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2 id="quand">Quand y aller</h2>
+      <p>En ville, la chaleur se supporte moins bien qu'au bord du Nil : l'ombre manque et
+        les sites se visitent debout, en plein soleil.</p>
+      <div class="saison" aria-hidden="true">
+        <span class="ex">Jan<b>15-22°</b></span><span class="ex">Fév<b>16-24°</b></span>
+        <span class="bon">Mar<b>19-27°</b></span><span class="ch">Avr<b>23-32°</b></span>
+        <span class="ch">Mai<b>26-36°</b></span><span class="br">Juin<b>29-39°</b></span>
+        <span class="br">Juil<b>31-41°</b></span><span class="br">Août<b>30-40°</b></span>
+        <span class="ch">Sep<b>27-37°</b></span><span class="bon">Oct<b>24-32°</b></span>
+        <span class="ex">Nov<b>20-28°</b></span><span class="bon">Déc<b>17-25°</b></span>
+      </div>
+      <p><b>Novembre à mars</b> pour la ville. Le détail mois par mois, pour tout le pays,
+        est dans notre guide <a href="article-quand-partir.html">quand partir en Égypte</a>.</p>
+
+      <h2 id="autour">Ce qu'il y a autour</h2>
+      <p>Le Caire sert de point de départ à presque tout le reste du pays.</p>
+      <div class="reperes" data-mm="Chaîne des destinations · corps · poids 1">
+        <ol>
+          <li><span class="km">1 h 30 de route</span><span><a href="https://authentiquegypte.com/voyage-a-fayoum/"><b>L'oasis de Fayoum</b></a> — le lac Qarun et la vallée des Baleines, en aller-retour dans la journée</span></li>
+          <li><span class="km">3 h de route</span><span><a href="https://authentiquegypte.com/voyage-a-alexandrie/"><b>Alexandrie</b></a> — la Méditerranée, les catacombes, la bibliothèque</span></li>
+          <li><span class="km">4 h 30 de route</span><span><a href="https://authentiquegypte.com/desert-blanc/"><b>Le désert Blanc</b></a> — bivouac sous les étoiles, via Bahariya</span></li>
+          <li><span class="km">1 h de vol</span><span><a href="https://authentiquegypte.com/voyage-a-louxor/"><b>Louxor</b></a> — Karnak et la vallée des Rois, départ des croisières</span></li>
+          <li><span class="km">1 h 30 de vol</span><span><a href="https://authentiquegypte.com/voyage-a-assouan/"><b>Assouan</b></a> — Philae, la Nubie, Abou Simbel</span></li>
+        </ol>
+      </div>
+
+      <div class="mm-legende">
+        <b>Cinq liens de corps vers les destinations voisines</b> — la page en ligne n'en a aucun.
+        Une page destination sans sortie géographique est un cul-de-sac : le visiteur qui hésite
+        entre Le Caire et Louxor repart au lieu de comparer.
+      </div>
+
+      <h2 id="faq">Questions fréquentes</h2>
+      <div class="faq">
+        <details open><summary>Peut-on visiter Le Caire sans guide&nbsp;?</summary><div class="faq__c">
+          <p>Matériellement oui, mais vous perdrez l'essentiel. Sur le plateau de Gizeh, un guide
+            égyptologue vous évite les rabatteurs et vous raconte ce que les panneaux ne disent pas.
+            Tous nos séjours incluent un guide francophone et un chauffeur privatif.</p></div></details>
+        <details><summary>Le Grand Musée remplace-t-il l'ancien musée du Caire&nbsp;?</summary><div class="faq__c">
+          <p><span class="aremplir">Réponse à valider par l'équipe : quelles collections sont désormais où, et l'ancien musée vaut-il encore une visite.</span></p></div></details>
+        <details><summary>Combien de temps faut-il pour aller de l'aéroport au centre&nbsp;?</summary><div class="faq__c">
+          <p><span class="aremplir">À confirmer par l'équipe — la réponse dépend beaucoup de l'heure.</span></p></div></details>
+        <details><summary>Est-ce que Le Caire est adapté aux enfants&nbsp;?</summary><div class="faq__c">
+          <p>Oui, à condition d'alléger les matinées et de garder les visites longues pour le
+            début de journée. Voir nos <a href="https://authentiquegypte.com/voyage-en-famille-en-egypte/">voyages en famille en Égypte</a>.</p></div></details>
+        <details><summary>Les sites sont-ils accessibles en fauteuil&nbsp;?</summary><div class="faq__c">
+          <p>Le plateau de Gizeh et le Grand Musée le sont ; Saqqara et le souk beaucoup moins.
+            Nous adaptons l'itinéraire et le véhicule — voir <a href="https://authentiquegypte.com/voyage-pmr-en-egypte/">voyage PMR en Égypte</a>.</p></div></details>
+      </div>
+    </article>
+
+    <aside>
+      <div class="lat">
+        <div class="lat__b lat--devis" data-mm="Bloc de conversion · collant">
+          <h4>Le Caire, à votre rythme</h4>
+          <p>Dites-nous combien de jours vous avez : nous vous disons ce qui tient dedans, et ce qui n'y tient pas.</p>
+          <a href="devis.html" class="btn btn--or btn--bloc btn--sm">Demander mon devis</a>
+          <a href="https://wa.me/201066619098" class="btn btn--clair btn--bloc btn--sm" style="margin-top:9px">WhatsApp</a>
+        </div>
+        <div class="lat__b">
+          <h4>Le Caire en bref</h4>
+          <dl>
+            <div><dt>Durée conseillée</dt><dd>3 jours pleins</dd></div>
+            <div><dt>Meilleure période</dt><dd>Novembre à mars</dd></div>
+            <div><dt>Vol depuis Paris</dt><dd>4 h 30, direct</dd></div>
+            <div><dt>Décalage horaire</dt><dd><span class="aremplir">à confirmer</span></dd></div>
+            <div><dt>Se combine avec</dt><dd>Louxor, le désert Blanc, Alexandrie</dd></div>
+          </dl>
+        </div>
+        <div class="lat__b">
+          <h4>Autres destinations</h4>
+          <ul>
+            <li><a href="https://authentiquegypte.com/voyage-a-louxor/">Voyage à Louxor <svg width="15" height="11" viewBox="0 0 15 11" fill="none" aria-hidden="true"><path d="M1 5.5h12M9 1.5l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></a></li>
+            <li><a href="https://authentiquegypte.com/voyage-a-assouan/">Voyage à Assouan <svg width="15" height="11" viewBox="0 0 15 11" fill="none" aria-hidden="true"><path d="M1 5.5h12M9 1.5l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></a></li>
+            <li><a href="https://authentiquegypte.com/voyage-a-alexandrie/">Voyage à Alexandrie <svg width="15" height="11" viewBox="0 0 15 11" fill="none" aria-hidden="true"><path d="M1 5.5h12M9 1.5l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></a></li>
+            <li><a href="https://authentiquegypte.com/desert-blanc/">Désert Blanc <svg width="15" height="11" viewBox="0 0 15 11" fill="none" aria-hidden="true"><path d="M1 5.5h12M9 1.5l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></a></li>
+          </ul>
+        </div>
+      </div>
+    </aside>
+  </div>
+</div>
+
+<!-- LES SÉJOURS — au milieu de la page, pas en pied : c'est l'unité d'achat -->
+<section class="section section--fond" style="margin-top:clamp(40px,5vw,64px)">
+  <div class="wrap">
+    <p class="eyebrow">Passer du guide au voyage</p>
+    <h2 style="margin-bottom:14px">Les séjours qui passent par Le Caire</h2>
+    <p class="lede" style="margin-bottom:30px">Tous personnalisables : la durée sur place s'ajuste à ce que vous voulez voir.</p>
+    <div class="grille g-3" data-mm="Bloc d'offres · corps · poids 1">
+      <article class="carte">
+        <div class="carte__img"><img src="https://authentiquegypte.com/wp-content/uploads/2023/11/pyramides-1024x683.jpg" alt="Les pyramides de Gizeh" loading="lazy" decoding="async"><span class="carte__tag">Le plus demandé</span></div>
+        <div class="carte__corps">
+          <h3><a href="produit.html">Pyramides et croisière sur le Nil</a></h3>
+          <p class="carte__route">Le Caire <b>→</b> Assouan <b>→</b> Louxor <b>→</b> Hurghada</p>
+          <div class="carte__meta"><span class="puce">8 jours</span><span class="puce puce--teal">3 jours au Caire</span></div>
+          <div class="carte__pied">
+            <span class="prix"><small>À partir de</small><b>1 175 €</b> <i>/ pers.</i></span>
+            <a href="produit.html" class="lien-fl">Le jour par jour <svg width="15" height="11" viewBox="0 0 15 11" fill="none" aria-hidden="true"><path d="M1 5.5h12M9 1.5l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          </div>
+        </div>
+      </article>
+      <article class="carte">
+        <div class="carte__img"><img src="https://authentiquegypte.com/wp-content/uploads/2023/11/axp-photography-4-26QyIOyVg-unsplash-scaled.jpg" alt="Dahabeya sur le Nil" loading="lazy" decoding="async"><span class="carte__tag">Dahabeya</span></div>
+        <div class="carte__corps">
+          <h3><a href="https://authentiquegypte.com/programs/le-caire-et-croisiere-sur-un-bateau-a-voile/">Le Caire et croisière sur un bateau à voile</a></h3>
+          <p class="carte__route">Le Caire <b>→</b> Esna <b>→</b> Assouan</p>
+          <div class="carte__meta"><span class="puce">7 jours</span><span class="puce puce--teal">2 jours au Caire</span></div>
+          <div class="carte__pied">
+            <span class="prix"><small>À partir de</small><b>1 290 €</b> <i>/ pers.</i></span>
+            <a href="https://authentiquegypte.com/programs/le-caire-et-croisiere-sur-un-bateau-a-voile/" class="lien-fl">Le jour par jour <svg width="15" height="11" viewBox="0 0 15 11" fill="none" aria-hidden="true"><path d="M1 5.5h12M9 1.5l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          </div>
+        </div>
+      </article>
+      <article class="carte">
+        <div class="carte__img"><img src="https://authentiquegypte.com/wp-content/uploads/2023/11/Desert-blanc-dEgypte.png" alt="Désert Blanc" loading="lazy" decoding="async"><span class="carte__tag">4 h 30 du Caire</span></div>
+        <div class="carte__corps">
+          <h3><a href="https://authentiquegypte.com/programs/excursion-dans-le-desert-blanc/">Désert Blanc — bivouac sous les étoiles</a></h3>
+          <p class="carte__route">Le Caire <b>→</b> Bahariya <b>→</b> Désert Blanc</p>
+          <div class="carte__meta"><span class="puce">2 jours</span><span class="puce puce--or">S'ajoute à un séjour</span></div>
+          <div class="carte__pied">
+            <span class="prix"><small>À partir de</small><b>460 €</b> <i>/ pers.</i></span>
+            <a href="https://authentiquegypte.com/programs/excursion-dans-le-desert-blanc/" class="lien-fl">Le jour par jour <svg width="15" height="11" viewBox="0 0 15 11" fill="none" aria-hidden="true"><path d="M1 5.5h12M9 1.5l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          </div>
+        </div>
+      </article>
+    </div>
+    <p style="margin-top:20px;font-size:.9rem;color:var(--gris-clair)">
+      <span class="aremplir">7 séjours passent par Le Caire — les 4 autres restent à rattacher</span>
+    </p>
+    <div class="mm-legende">
+      <b>Le bloc d'offres est au milieu, pas en pied</b> — une page destination n'existe que pour
+      amener au séjour. Placé après la FAQ, il n'est vu que par ceux qui déroulent la page entière.
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="devis">
+      <div>
+        <p class="eyebrow eyebrow--clair">Votre projet</p>
+        <h2>Combien de jours au Caire, dans votre voyage&nbsp;?</h2>
+        <ul>
+          <li><svg width="17" height="17" viewBox="0 0 17 17" fill="none" aria-hidden="true"><path d="M3 8.8l3.6 3.6L14 5" stroke="#FBB50E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Devis gratuit, détaillé jour par jour, sans engagement</li>
+          <li><svg width="17" height="17" viewBox="0 0 17 17" fill="none" aria-hidden="true"><path d="M3 8.8l3.6 3.6L14 5" stroke="#FBB50E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Guide égyptologue francophone et chauffeur privatif</li>
+          <li><svg width="17" height="17" viewBox="0 0 17 17" fill="none" aria-hidden="true"><path d="M3 8.8l3.6 3.6L14 5" stroke="#FBB50E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Acompte seulement une fois l'itinéraire validé</li>
+        </ul>
+      </div>
+      <div class="devis__act">
+        <a href="devis.html" class="btn btn--or btn--bloc">Demander mon devis</a>
+        <a href="https://wa.me/201066619098" class="btn btn--wa btn--bloc">Poser une question sur WhatsApp</a>
+        <small>Aucune carte bancaire demandée à cette étape.</small>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SŒURS — après le CTA -->
+<section class="section" style="padding-top:0">
+  <div class="wrap">
+    <p class="eyebrow">Autres destinations</p>
+    <h2 style="margin-bottom:26px">Le Caire se combine bien</h2>
+    <div class="grille g-3" data-mm="Bloc de sœurs · après le CTA · poids 0,25">
+      <a class="carte" href="https://authentiquegypte.com/voyage-a-louxor/">
+        <div class="carte__img"><img src="https://authentiquegypte.com/wp-content/uploads/2025/06/Voyage-sur-mesure-a-Louxor-en-Egypte.png" alt="Karnak à Louxor" loading="lazy" decoding="async"></div>
+        <div class="carte__corps"><h3>Voyage à Louxor</h3><p class="carte__route">Karnak, vallée des Rois — 1 h de vol</p>
+          <div class="carte__pied"><span class="puce">3 jours conseillés</span><span class="lien-fl">Découvrir <svg width="15" height="11" viewBox="0 0 15 11" fill="none" aria-hidden="true"><path d="M1 5.5h12M9 1.5l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div></div>
+      </a>
+      <a class="carte" href="https://authentiquegypte.com/voyage-a-alexandrie/">
+        <div class="carte__img"><img src="https://authentiquegypte.com/wp-content/uploads/2025/06/Voyage-sur-mesure-a-Alexandrie-en-Egypte.png" alt="Le front de mer d'Alexandrie" loading="lazy" decoding="async"></div>
+        <div class="carte__corps"><h3>Voyage à Alexandrie</h3><p class="carte__route">Méditerranée, catacombes — 3 h de route</p>
+          <div class="carte__pied"><span class="puce">1 à 2 jours</span><span class="lien-fl">Découvrir <svg width="15" height="11" viewBox="0 0 15 11" fill="none" aria-hidden="true"><path d="M1 5.5h12M9 1.5l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div></div>
+      </a>
+      <a class="carte" href="https://authentiquegypte.com/voyage-a-fayoum/">
+        <div class="carte__img"><img src="https://authentiquegypte.com/wp-content/uploads/2025/06/Voyage-sur-mesure-a-Fayoum-en-Egypte.png" alt="Lac Qarun dans l'oasis de Fayoum" loading="lazy" decoding="async"></div>
+        <div class="carte__corps"><h3>Voyage à Fayoum</h3><p class="carte__route">Wadi El Rayan, lac Qarun — 1 h 30</p>
+          <div class="carte__pied"><span class="puce">1 journée</span><span class="lien-fl">Découvrir <svg width="15" height="11" viewBox="0 0 15 11" fill="none" aria-hidden="true"><path d="M1 5.5h12M9 1.5l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div></div>
+      </a>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="pied">
+  <div class="wrap">
+    <div class="pied__g">
+      <div>
+        <img src="https://authentiquegypte.com/wp-content/uploads/2023/10/cropped-Screenshot_20231015_082741_Instagram-removebg-preview-1.webp" alt="Authentique Égypte" width="510" height="170" loading="lazy">
+        <p style="max-width:34ch">Agence locale basée au Caire. Guides égyptologues francophones, chauffeurs privatifs, itinéraires construits avec vous.</p>
+        <p style="margin-top:16px">
+          <a href="mailto:contact@authentiquegypte.com">contact@authentiquegypte.com</a><br>
+          <a href="https://wa.me/201066619098">WhatsApp +20 106 661 9098</a>
+        </p>
+      </div>
+      <div>
+        <h4>Nos séjours</h4>
+        <ul>
+          <li><a href="categorie.html">Croisière sur le Nil</a></li>
+          <li><a href="https://authentiquegypte.com/nos-sejours-egypte/voyage-culturel-en-egypte/">Voyage culturel en Égypte</a></li>
+          <li><a href="categorie-desert.html">Voyage dans le désert en Égypte</a></li>
+          <li><a href="https://authentiquegypte.com/nos-sejours-egypte/mer-rouge/">Séjour en mer Rouge</a></li>
+          <li><a href="https://authentiquegypte.com/nos-sejours-egypte/sinai-moise-et-saint-catherine/">Sinaï et Sainte-Catherine</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Destinations</h4>
+        <ul>
+          <li><a href="destination.html">Voyage au Caire</a></li>
+          <li><a href="https://authentiquegypte.com/voyage-a-louxor/">Voyage à Louxor</a></li>
+          <li><a href="https://authentiquegypte.com/voyage-a-assouan/">Voyage à Assouan</a></li>
+          <li><a href="https://authentiquegypte.com/desert-blanc/">Désert Blanc</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>L'agence</h4>
+        <ul>
+          <li><a href="qui-sommes-nous.html">Qui sommes-nous</a></li>
+          <li><a href="blog.html">Guides pratiques</a></li>
+          <li><a href="devis.html">Demander un devis</a></li>
+          <li><a href="https://authentiquegypte.com/mentions-legales-agence-voyage-egypte/">Mentions légales</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="pied__bas">
+      <span>© 2026 Authentique Égypte — Maquette de refonte, charte relevée le 21/08/2026</span>
+      <span>Agence locale · Le Caire, Égypte</span>
+    </div>
+  </div>
+</footer>
+
+<div class="barre-mob">
+  <a href="https://wa.me/201066619098" class="btn btn--fantome btn--sm" style="flex:0 0 auto">WhatsApp</a>
+  <a href="devis.html" class="btn btn--or" style="flex:1">Demander mon devis</a>
+</div>
+
+<button class="mm-btn" id="mm-btn" type="button" aria-pressed="false">Maillage <b>OFF</b></button>
+
+<script>
+document.querySelector('.burger')?.addEventListener('click',e=>{
+  const n=document.querySelector('.nav');
+  const o=getComputedStyle(n).display!=='none';
+  n.style.display=o?'none':'flex';
+  n.style.position='absolute';n.style.top='72px';n.style.left='20px';n.style.right='20px';
+  n.style.flexDirection='column';n.style.alignItems='stretch';n.style.background='#fff';
+  n.style.border='1px solid var(--ligne)';n.style.borderRadius='20px';n.style.padding='12px';
+  n.style.boxShadow='var(--ombre-f)';
+  e.currentTarget.setAttribute('aria-expanded',String(!o));
+});
+</script>
+<script>
+(function(){
+  if(!('IntersectionObserver' in window))return;
+  const cibles=document.querySelectorAll('.site,.carte,.reperes,.jours,.section .eyebrow,.section h2');
+  const io=new IntersectionObserver(es=>{
+    es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('vu'); io.unobserve(e.target); } });
+  },{threshold:.06,rootMargin:'0px 0px -40px 0px'});
+  cibles.forEach((el,n)=>{ el.setAttribute('data-rev','');
+    el.style.transitionDelay=(Math.min(n%4,3)*60)+'ms'; io.observe(el); });
+})();
+</script>
+<script>
+(function(){
+  const b=document.getElementById('mm-btn');
+  b.addEventListener('click',()=>{
+    const on=document.body.classList.toggle('mm');
+    b.setAttribute('aria-pressed',String(on));
+    b.innerHTML='Maillage <b>'+(on?'ON':'OFF')+'</b>';
+  });
+})();
+</script>
+</body>
+</html>
