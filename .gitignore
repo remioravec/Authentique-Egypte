@@ -1,0 +1,7 @@
+dist/
+node_modules/
+.DS_Store
+
+# Les maquettes ont une seule source : /maquettes.
+# outils/construire.sh les recopie ici au moment du build.
+plugin/ae-refonte-review/maquettes/*.html
