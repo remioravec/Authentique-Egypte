@@ -252,10 +252,10 @@
     champFichier.accept = 'image/*';
     champFichier.style.display = 'none';
 
-    var btnImage = el('button', 'aec-icone');
+    var btnImage = el('button', 'aec-btn aec-btn--vide aec-btn--image');
     btnImage.type = 'button';
-    btnImage.innerHTML = ICONE_IMAGE;
-    btnImage.title = 'Joindre une image — ou collez-en une directement';
+    btnImage.innerHTML = ICONE_IMAGE + '<span>Joindre une image</span>';
+    btnImage.title = 'Choisir un fichier — ou collez une capture d’écran (Ctrl + V)';
     btnImage.addEventListener('click', function () { champFichier.click(); });
 
     var droite = el('div', 'aec-droite');
@@ -292,10 +292,40 @@
 
     zone.addEventListener('input', function () { autoHauteur(); majBouton(); });
 
+    /**
+     * Le fichier collé n'a pas toujours de type MIME.
+     *
+     * Une capture collée depuis l'outil de capture de Windows arrive
+     * parfois avec `type` vide et sans nom. La version précédente la
+     * rejetait en silence : la cliente croyait avoir joint une image,
+     * et rien ne partait. On retombe sur l'extension, et si tout
+     * manque on suppose une capture PNG — le serveur revérifie de
+     * toute façon.
+     */
+    function nomDeFichier(fichier) {
+      var nom = (fichier && fichier.name) || '';
+      if (/\.(jpe?g|png|webp|gif|avif)$/i.test(nom)) { return nom; }
+      var type = (fichier && fichier.type) || '';
+      var ext = { 'image/jpeg': 'jpg', 'image/png': 'png', 'image/webp': 'webp',
+                  'image/gif': 'gif', 'image/avif': 'avif' }[type] || 'png';
+      return 'capture-' + Date.now() + '.' + ext;
+    }
+
+    function estUneImage(fichier) {
+      if (!fichier) { return false; }
+      if (fichier.type && fichier.type.indexOf('image/') === 0) { return true; }
+      if (fichier.type) { return false; }
+      return /\.(jpe?g|png|webp|gif|avif)$/i.test(fichier.name || '') || fichier.size > 0;
+    }
+
     function televerser(fichier) {
-      if (!fichier || !/^image\//.test(fichier.type)) { return; }
+      if (!fichier) { return; }
+      if (!estUneImage(fichier)) {
+        erreur.textContent = 'Ce fichier n’est pas une image. Formats acceptés : JPG, PNG, WEBP, GIF, AVIF.';
+        return;
+      }
       var donnees = new FormData();
-      donnees.append('fichier', fichier, fichier.name || 'capture.png');
+      donnees.append('fichier', fichier, nomDeFichier(fichier));
       erreur.textContent = '';
       btnEnvoyer.disabled = true;
       btnEnvoyer.textContent = 'Envoi de l’image…';
@@ -315,11 +345,17 @@
             apercu.innerHTML = '';
             majBouton();
           });
-          apercu.appendChild(img);
-          apercu.appendChild(retirer);
+          var cadre = el('div', 'aec-apercu__cadre');
+          cadre.appendChild(img);
+          cadre.appendChild(retirer);
+          apercu.appendChild(cadre);
+          apercu.appendChild(el('span', 'aec-apercu__ok', 'Image jointe — elle partira avec votre commentaire'));
           apercu.style.display = 'block';
         })
-        .catch(function (e) { erreur.textContent = e.message; })
+        .catch(function (e) {
+          imageId = 0;
+          erreur.textContent = 'L’image n’a pas pu être envoyée : ' + e.message;
+        })
         .then(function () {
           btnEnvoyer.textContent = options.envoi || 'Commenter';
           majBouton();
@@ -330,17 +366,78 @@
       if (champFichier.files && champFichier.files[0]) { televerser(champFichier.files[0]); }
     });
 
-    // Coller une capture d'écran, comme dans Figma.
-    zone.addEventListener('paste', function (ev) {
-      var items = (ev.clipboardData || {}).items || [];
-      for (var i = 0; i < items.length; i++) {
-        if (items[i].type && items[i].type.indexOf('image/') === 0) {
-          ev.preventDefault();
-          televerser(items[i].getAsFile());
-          return;
+    /**
+     * Coller une capture d'écran, comme dans Figma.
+     *
+     * Trois corrections par rapport à la version précédente, chacune
+     * correspondant à un cas où la cliente croyait avoir joint une
+     * image alors que rien ne partait :
+     *
+     *  1. l'écoute était posée sur la zone de texte seule. Un Ctrl+V
+     *     fait sans avoir cliqué DANS le champ ne déclenchait rien ;
+     *  2. `items` ignore les fichiers que certains navigateurs ne
+     *     présentent que dans `clipboardData.files` ;
+     *  3. une image copiée depuis Word, un mail ou Google Docs n'arrive
+     *     pas comme fichier mais comme HTML contenant une balise
+     *     <img>. On va la chercher là aussi.
+     */
+    function imageDuPressePapier(dt) {
+      if (!dt) { return null; }
+
+      var fichiers = dt.files || [];
+      for (var i = 0; i < fichiers.length; i++) {
+        if (estUneImage(fichiers[i])) { return fichiers[i]; }
+      }
+
+      var items = dt.items || [];
+      for (var j = 0; j < items.length; j++) {
+        if (items[j].kind === 'file') {
+          var f = items[j].getAsFile();
+          if (estUneImage(f)) { return f; }
         }
       }
-    });
+      return null;
+    }
+
+    /** Une image collée en HTML : <img src="data:image/png;base64,…">. */
+    function imageDuHtml(dt) {
+      if (!dt || !dt.getData) { return null; }
+      var html = '';
+      try { html = dt.getData('text/html') || ''; } catch (e) { return null; }
+      var trouve = html.match(/<img[^>]+src=["'](data:image\/[a-z+]+;base64,[^"']+)["']/i);
+      if (!trouve) { return null; }
+      try {
+        var partie = trouve[1].split(',');
+        var type = partie[0].slice(5).split(';')[0];
+        var binaire = atob(partie[1]);
+        var octets = new Uint8Array(binaire.length);
+        for (var k = 0; k < binaire.length; k++) { octets[k] = binaire.charCodeAt(k); }
+        return new Blob([octets], { type: type });
+      } catch (e) { return null; }
+    }
+
+    function surCollage(ev) {
+      var dt = ev.clipboardData || window.clipboardData;
+      var image = imageDuPressePapier(dt) || imageDuHtml(dt);
+      if (!image) { return; }
+      ev.preventDefault();
+      televerser(image);
+    }
+
+    // Sur tout le bloc, pas seulement dans la zone de texte.
+    bloc.addEventListener('paste', surCollage);
+
+    // Et sur la page entière tant que ce champ est à l'écran : c'est le
+    // geste naturel — on ouvre la bulle, on colle, sans cliquer d'abord.
+    function collageGlobal(ev) {
+      if (!bloc.isConnected) {
+        document.removeEventListener('paste', collageGlobal, true);
+        return;
+      }
+      if (bloc.contains(ev.target)) { return; } // déjà traité au-dessus
+      surCollage(ev);
+    }
+    document.addEventListener('paste', collageGlobal, true);
 
     // Déposer un fichier.
     ['dragover', 'drop'].forEach(function (nom) {

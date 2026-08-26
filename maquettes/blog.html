@@ -112,6 +112,10 @@
 }
 
 
+/* (17)(18)(12) Mélanie : l'appel au devis du menu doit ressortir. Or foncé,
+   réservé à ce bouton — le reste du site garde l'or de la charte. */
+header .nav>a.btn--or,header .nav>a.btn--or[aria-current]{background:#E08A00;border-color:#E08A00;color:#fff}
+header .nav>a.btn--or:hover{background:#C87700;border-color:#C87700;box-shadow:0 10px 24px rgba(224,138,0,.42)}
 </style>
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[
 {"@type":"BreadcrumbList","itemListElement":[
@@ -145,11 +149,11 @@
           <svg width="11" height="7" viewBox="0 0 11 7" fill="none" aria-hidden="true"><path d="M1 1l4.5 4.5L10 1" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
         </button>
         <div class="menu__pan">
-          <a href="categorie.html"><i>⛵</i><span>Croisière sur le Nil<small>Dahabeya, felouque, bateau 5★</small></span></a>
-          <a href="categorie-desert.html"><i>🏜</i><span>Voyage dans le désert en Égypte<small>Siwa, désert Blanc, Fayoum, Dakhla</small></span></a>
-          <a href="https://authentiquegypte.com/nos-sejours-egypte/voyage-culturel-en-egypte/"><i>🏛</i><span>Voyage culturel en Égypte<small>Le Caire, Louxor, Abou Simbel</small></span></a>
-          <a href="https://authentiquegypte.com/nos-sejours-egypte/mer-rouge/"><i>🐠</i><span>Séjour en mer Rouge<small>Hurghada, Marsa Alam, plongée</small></span></a>
-          <a href="https://authentiquegypte.com/nos-sejours-egypte/sinai-moise-et-saint-catherine/"><i>⛰</i><span>Sinaï et Sainte-Catherine<small>Mont Moïse, monastère, bivouac</small></span></a>
+          <a href="categorie.html"><span>Croisière sur le Nil<small>Dahabeya, felouque, bateau 5★</small></span></a>
+          <a href="categorie-desert.html"><span>Voyage dans le désert en Égypte<small>Siwa, désert Blanc, Fayoum, Dakhla</small></span></a>
+          <a href="https://authentiquegypte.com/nos-sejours-egypte/voyage-culturel-en-egypte/"><span>Voyage culturel en Égypte<small>Le Caire, Louxor, Abou Simbel</small></span></a>
+          <a href="https://authentiquegypte.com/nos-sejours-egypte/mer-rouge/"><span>Séjour en mer Rouge<small>Hurghada, Marsa Alam, plongée</small></span></a>
+          <a href="https://authentiquegypte.com/nos-sejours-egypte/sinai-moise-et-saint-catherine/"><span>Sinaï et Sainte-Catherine<small>Mont Moïse, monastère, bivouac</small></span></a>
         </div>
       </div>
       <div class="menu">
@@ -157,12 +161,12 @@
           <svg width="11" height="7" viewBox="0 0 11 7" fill="none" aria-hidden="true"><path d="M1 1l4.5 4.5L10 1" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
         </button>
         <div class="menu__pan" style="min-width:300px">
-          <a href="destination.html"><i>🔺</i><span>Voyage au Caire<small>Gizeh, Saqqara, Grand Musée</small></span></a>
-          <a href="https://authentiquegypte.com/voyage-a-louxor/"><i>🏺</i><span>Voyage à Louxor<small>Karnak, vallée des Rois</small></span></a>
-          <a href="https://authentiquegypte.com/voyage-a-assouan/"><i>🌊</i><span>Voyage à Assouan<small>Philae, Abou Simbel</small></span></a>
-          <a href="https://authentiquegypte.com/voyage-a-alexandrie/"><i>🏛</i><span>Voyage à Alexandrie<small>Méditerranée, catacombes</small></span></a>
-          <a href="https://authentiquegypte.com/desert-blanc/"><i>🤍</i><span>Désert Blanc<small>Bivouac, formations de craie</small></span></a>
-          <a href="https://authentiquegypte.com/lac-nasser/"><i>⛵</i><span>Lac Nasser<small>Temples nubiens, sans la foule</small></span></a>
+          <a href="destination.html"><span>Voyage au Caire<small>Gizeh, Saqqara, Grand Musée</small></span></a>
+          <a href="https://authentiquegypte.com/voyage-a-louxor/"><span>Voyage à Louxor<small>Karnak, vallée des Rois</small></span></a>
+          <a href="https://authentiquegypte.com/voyage-a-assouan/"><span>Voyage à Assouan<small>Philae, Abou Simbel</small></span></a>
+          <a href="https://authentiquegypte.com/voyage-a-alexandrie/"><span>Voyage à Alexandrie<small>Méditerranée, catacombes</small></span></a>
+          <a href="https://authentiquegypte.com/desert-blanc/"><span>Désert Blanc<small>Bivouac, formations de craie</small></span></a>
+          <a href="https://authentiquegypte.com/lac-nasser/"><span>Lac Nasser<small>Temples nubiens, sans la foule</small></span></a>
         </div>
       </div>
       <div class="menu">
@@ -170,10 +174,10 @@
           <svg width="11" height="7" viewBox="0 0 11 7" fill="none" aria-hidden="true"><path d="M1 1l4.5 4.5L10 1" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
         </button>
         <div class="menu__pan" style="min-width:290px">
-          <a href="https://authentiquegypte.com/voyage-en-famille-en-egypte/"><i>👨‍👩‍👧</i><span>Voyage en famille en Égypte<small>Rythme adapté, enfants bienvenus</small></span></a>
-          <a href="https://authentiquegypte.com/voyage-en-couple-en-egypte/"><i>💛</i><span>Voyage en couple en Égypte<small>Dahabeya privée, dîners sur le Nil</small></span></a>
-          <a href="https://authentiquegypte.com/voyage-solo-en-egypte/"><i>🎒</i><span>Voyage en solo en Égypte<small>Guide privatif, sécurité assurée</small></span></a>
-          <a href="https://authentiquegypte.com/voyage-pmr-en-egypte/"><i>♿</i><span>Voyage PMR en Égypte<small>Sites accessibles, véhicule adapté</small></span></a>
+          <a href="https://authentiquegypte.com/voyage-en-famille-en-egypte/"><span>Voyage en famille en Égypte<small>Rythme adapté, enfants bienvenus</small></span></a>
+          <a href="https://authentiquegypte.com/voyage-en-couple-en-egypte/"><span>Voyage en couple en Égypte<small>Dahabeya privée, dîners sur le Nil</small></span></a>
+          <a href="https://authentiquegypte.com/voyage-solo-en-egypte/"><span>Voyage en solo en Égypte<small>Guide privatif, sécurité assurée</small></span></a>
+          <a href="https://authentiquegypte.com/voyage-pmr-en-egypte/"><span>Voyage PMR en Égypte<small>Sites accessibles, véhicule adapté</small></span></a>
         </div>
       </div>
       <a href="blog.html" aria-current="page">Guides</a>
@@ -475,7 +479,7 @@
     </div>
     <div class="pied__bas">
       <span>© 2026 Authentique Égypte — Maquette de refonte, charte relevée le 21/08/2026</span>
-      <span>Agence locale · Le Caire, Égypte</span>
+      
     </div>
   </div>
 </footer>

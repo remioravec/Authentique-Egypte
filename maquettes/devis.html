@@ -106,9 +106,10 @@
   color:var(--noir);margin-bottom:6px}
 .champ label span{font-weight:400;color:var(--gris)}
 .champ input,.champ textarea,.champ select{font:inherit;font-size:1rem;width:100%;padding:12px 14px;
-  border:1.5px solid var(--ligne);border-radius:var(--r-m);background:#fff;color:var(--noir);
+  border:1.5px solid #B9C4C8;border-radius:var(--r-m);background:#fff;color:var(--noir);
   transition:border-color .18s}
-.champ input:focus,.champ textarea:focus,.champ select:focus{border-color:var(--nuit);outline:none}
+.champ input:focus,.champ textarea:focus,.champ select:focus{border-color:var(--nuit);
+  outline:none;box-shadow:0 0 0 3px rgba(22,127,164,.16)}
 .champ textarea{min-height:120px;resize:vertical;line-height:1.6}
 .champ--large{grid-column:1 / -1}
 .champ .erreur{color:var(--rouge);font-family:"Manrope",sans-serif;font-size:.86rem;font-weight:700;
@@ -193,6 +194,20 @@
 }
 
 
+/* --- (4)(7)(22)(25) champs ajoutés à la demande de Mélanie --- */
+.dates{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:16px}
+.dates input{width:100%}
+[data-si][hidden]{display:none}
+[data-groupe="bateau"]{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px}
+[data-groupe="bateau"] button{display:block;text-align:left;height:auto;padding:14px 16px;line-height:1.45}
+[data-groupe="bateau"] button b{display:block;font-size:1rem;margin-bottom:5px}
+[data-groupe="bateau"] button small{display:block;font-weight:400;font-size:.85rem;color:var(--gris);white-space:normal}
+[data-groupe="bateau"] button[aria-pressed="true"] small{color:inherit;opacity:.85}
+@media (max-width:560px){ .dates{grid-template-columns:1fr} }
+/* (17)(18)(12) Mélanie : l'appel au devis du menu doit ressortir. Or foncé,
+   réservé à ce bouton — le reste du site garde l'or de la charte. */
+header .nav>a.btn--or,header .nav>a.btn--or[aria-current]{background:#E08A00;border-color:#E08A00;color:#fff}
+header .nav>a.btn--or:hover{background:#C87700;border-color:#C87700;box-shadow:0 10px 24px rgba(224,138,0,.42)}
 </style>
 </head>
 <body>
@@ -219,11 +234,11 @@
           <svg width="11" height="7" viewBox="0 0 11 7" fill="none" aria-hidden="true"><path d="M1 1l4.5 4.5L10 1" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
         </button>
         <div class="menu__pan">
-          <a href="categorie.html"><i>⛵</i><span>Croisière sur le Nil<small>Dahabeya, felouque, bateau 5★</small></span></a>
-          <a href="categorie-desert.html"><i>🏜</i><span>Voyage dans le désert en Égypte<small>Siwa, désert Blanc, Fayoum, Dakhla</small></span></a>
-          <a href="https://authentiquegypte.com/nos-sejours-egypte/voyage-culturel-en-egypte/"><i>🏛</i><span>Voyage culturel en Égypte<small>Le Caire, Louxor, Abou Simbel</small></span></a>
-          <a href="https://authentiquegypte.com/nos-sejours-egypte/mer-rouge/"><i>🐠</i><span>Séjour en mer Rouge<small>Hurghada, Marsa Alam, plongée</small></span></a>
-          <a href="https://authentiquegypte.com/nos-sejours-egypte/sinai-moise-et-saint-catherine/"><i>⛰</i><span>Sinaï et Sainte-Catherine<small>Mont Moïse, monastère, bivouac</small></span></a>
+          <a href="categorie.html"><span>Croisière sur le Nil<small>Dahabeya, felouque, bateau 5★</small></span></a>
+          <a href="categorie-desert.html"><span>Voyage dans le désert en Égypte<small>Siwa, désert Blanc, Fayoum, Dakhla</small></span></a>
+          <a href="https://authentiquegypte.com/nos-sejours-egypte/voyage-culturel-en-egypte/"><span>Voyage culturel en Égypte<small>Le Caire, Louxor, Abou Simbel</small></span></a>
+          <a href="https://authentiquegypte.com/nos-sejours-egypte/mer-rouge/"><span>Séjour en mer Rouge<small>Hurghada, Marsa Alam, plongée</small></span></a>
+          <a href="https://authentiquegypte.com/nos-sejours-egypte/sinai-moise-et-saint-catherine/"><span>Sinaï et Sainte-Catherine<small>Mont Moïse, monastère, bivouac</small></span></a>
         </div>
       </div>
       <div class="menu">
@@ -231,12 +246,12 @@
           <svg width="11" height="7" viewBox="0 0 11 7" fill="none" aria-hidden="true"><path d="M1 1l4.5 4.5L10 1" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
         </button>
         <div class="menu__pan" style="min-width:300px">
-          <a href="destination.html"><i>🔺</i><span>Voyage au Caire<small>Gizeh, Saqqara, Grand Musée</small></span></a>
-          <a href="https://authentiquegypte.com/voyage-a-louxor/"><i>🏺</i><span>Voyage à Louxor<small>Karnak, vallée des Rois</small></span></a>
-          <a href="https://authentiquegypte.com/voyage-a-assouan/"><i>🌊</i><span>Voyage à Assouan<small>Philae, Abou Simbel</small></span></a>
-          <a href="https://authentiquegypte.com/voyage-a-alexandrie/"><i>🏛</i><span>Voyage à Alexandrie<small>Méditerranée, catacombes</small></span></a>
-          <a href="https://authentiquegypte.com/desert-blanc/"><i>🤍</i><span>Désert Blanc<small>Bivouac, formations de craie</small></span></a>
-          <a href="https://authentiquegypte.com/lac-nasser/"><i>⛵</i><span>Lac Nasser<small>Temples nubiens, sans la foule</small></span></a>
+          <a href="destination.html"><span>Voyage au Caire<small>Gizeh, Saqqara, Grand Musée</small></span></a>
+          <a href="https://authentiquegypte.com/voyage-a-louxor/"><span>Voyage à Louxor<small>Karnak, vallée des Rois</small></span></a>
+          <a href="https://authentiquegypte.com/voyage-a-assouan/"><span>Voyage à Assouan<small>Philae, Abou Simbel</small></span></a>
+          <a href="https://authentiquegypte.com/voyage-a-alexandrie/"><span>Voyage à Alexandrie<small>Méditerranée, catacombes</small></span></a>
+          <a href="https://authentiquegypte.com/desert-blanc/"><span>Désert Blanc<small>Bivouac, formations de craie</small></span></a>
+          <a href="https://authentiquegypte.com/lac-nasser/"><span>Lac Nasser<small>Temples nubiens, sans la foule</small></span></a>
         </div>
       </div>
       <div class="menu">
@@ -244,10 +259,10 @@
           <svg width="11" height="7" viewBox="0 0 11 7" fill="none" aria-hidden="true"><path d="M1 1l4.5 4.5L10 1" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
         </button>
         <div class="menu__pan" style="min-width:290px">
-          <a href="https://authentiquegypte.com/voyage-en-famille-en-egypte/"><i>👨‍👩‍👧</i><span>Voyage en famille en Égypte<small>Rythme adapté, enfants bienvenus</small></span></a>
-          <a href="https://authentiquegypte.com/voyage-en-couple-en-egypte/"><i>💛</i><span>Voyage en couple en Égypte<small>Dahabeya privée, dîners sur le Nil</small></span></a>
-          <a href="https://authentiquegypte.com/voyage-solo-en-egypte/"><i>🎒</i><span>Voyage en solo en Égypte<small>Guide privatif, sécurité assurée</small></span></a>
-          <a href="https://authentiquegypte.com/voyage-pmr-en-egypte/"><i>♿</i><span>Voyage PMR en Égypte<small>Sites accessibles, véhicule adapté</small></span></a>
+          <a href="https://authentiquegypte.com/voyage-en-famille-en-egypte/"><span>Voyage en famille en Égypte<small>Rythme adapté, enfants bienvenus</small></span></a>
+          <a href="https://authentiquegypte.com/voyage-en-couple-en-egypte/"><span>Voyage en couple en Égypte<small>Dahabeya privée, dîners sur le Nil</small></span></a>
+          <a href="https://authentiquegypte.com/voyage-solo-en-egypte/"><span>Voyage en solo en Égypte<small>Guide privatif, sécurité assurée</small></span></a>
+          <a href="https://authentiquegypte.com/voyage-pmr-en-egypte/"><span>Voyage PMR en Égypte<small>Sites accessibles, véhicule adapté</small></span></a>
         </div>
       </div>
       <a href="blog.html">Guides</a>
@@ -269,9 +284,9 @@
 
   <div class="tunnel">
     <div>
-      <h1 style="max-width:20ch">Dites-nous où vous voulez aller</h1>
+      <h1 style="max-width:20ch">Demande de devis</h1>
       <p class="lede" style="margin:14px 0 30px">
-        Quatre questions courtes. Nous revenons vers vous avec un itinéraire chiffré,
+        Quelques questions, le temps d'un café. Nous revenons vers vous avec un itinéraire chiffré,
         jour par jour, hébergements nommés. Gratuit, sans engagement, sans carte bancaire.
       </p>
 
@@ -321,6 +336,17 @@
             </div>
           </fieldset>
 
+          <fieldset class="groupe" data-si="croisiere" hidden>
+            <legend class="titre">Quel bateau vous attire&nbsp;?</legend>
+            <p class="aide">Trois façons très différentes de descendre le Nil. Si vous hésitez, nous en reparlons au téléphone.</p>
+            <div class="choix" data-groupe="bateau">
+              <button type="button" aria-pressed="false" data-val="dahabeya" data-lib="en dahabeya"><b>Dahabeya</b><small>Voilier de 6 à 12 cabines, sans moteur la plupart du temps. Le plus lent, le plus calme, escales là où les grands bateaux ne passent pas.</small></button>
+              <button type="button" aria-pressed="false" data-val="bateau5" data-lib="en bateau 5★"><b>Bateau 5★</b><small>Une centaine de cabines, piscine sur le pont, restaurant. Confort d'hôtel, rythme soutenu, sites classiques.</small></button>
+              <button type="button" aria-pressed="false" data-val="felouque" data-lib="en felouque"><b>Felouque</b><small>Petite voile traditionnelle, une à deux nuits à bord, sans cabine ni sanitaires. Le plus simple et le plus proche de l'eau.</small></button>
+              <button type="button" aria-pressed="false" data-val="conseil" data-lib="sans idée arrêtée sur le bateau"><b>Conseillez-moi</b><small>Vous nous dites ce que vous cherchez, nous proposons.</small></button>
+            </div>
+          </fieldset>
+
           <fieldset class="groupe">
             <legend class="titre">Vous savez déjà quand&nbsp;?</legend>
             <p class="aide">Une période approximative suffit. Si vous hésitez, notre <a href="article-quand-partir.html" class="lien-txt">guide mois par mois</a> peut aider.</p>
@@ -329,7 +355,24 @@
               <button type="button" aria-pressed="false" data-val="printemps" data-lib="au printemps">Mars → mai</button>
               <button type="button" aria-pressed="false" data-val="ete" data-lib="en été">Juin → août</button>
               <button type="button" aria-pressed="false" data-val="automne" data-lib="à l'automne">Sept. → oct.</button>
-              <button type="button" aria-pressed="false" data-val="flexible" data-lib="à dates flexibles">Je suis flexible</button>
+              <button type="button" aria-pressed="false" data-val="flexible" data-lib="à dates flexibles">Je ne sais pas encore</button>
+            </div>
+
+            <div class="dates">
+              <div class="champ">
+                <label for="date-depart">Date de départ souhaitée</label>
+                <input type="date" id="date-depart" name="date_depart" autocomplete="off">
+              </div>
+              <div class="champ">
+                <label for="date-retour">Date de retour</label>
+                <input type="date" id="date-retour" name="date_retour" autocomplete="off">
+              </div>
+            </div>
+            <p class="aide" style="margin-top:14px;font-weight:600;color:var(--nuit-900)">Ces dates sont-elles souples&nbsp;?</p>
+            <div class="choix" data-groupe="souplesse">
+              <button type="button" aria-pressed="false" data-val="fixe" data-lib="à dates fixes">Non, elles sont fixes</button>
+              <button type="button" aria-pressed="false" data-val="qq-jours" data-lib="à quelques jours près">À quelques jours près</button>
+              <button type="button" aria-pressed="false" data-val="souple" data-lib="à dates souples">Très souples</button>
             </div>
           </fieldset>
         </section>
@@ -377,7 +420,12 @@
               <button type="button" aria-pressed="false" data-val="pmr" data-lib="avec un besoin d'accessibilité"><em>♿</em> Mobilité réduite</button>
               <button type="button" aria-pressed="false" data-val="rythme" data-lib="à rythme doux"><em>🕊</em> Rythme doux</button>
               <button type="button" aria-pressed="false" data-val="alim" data-lib="avec un régime particulier"><em>🥗</em> Régime alimentaire</button>
+              <button type="button" aria-pressed="false" data-val="autre" data-lib="avec une autre contrainte">Autre</button>
               <button type="button" aria-pressed="false" data-val="aucune" data-lib="">Aucune</button>
+            </div>
+            <div class="champ" data-si="autre" hidden>
+              <label for="contrainte-autre">Laquelle&nbsp;?</label>
+              <input type="text" id="contrainte-autre" name="contrainte_autre" autocomplete="off">
             </div>
           </fieldset>
         </section>
@@ -391,6 +439,7 @@
             <legend class="titre">Hébergement</legend>
             <div class="choix" data-groupe="hebergement">
               <button type="button" aria-pressed="false" data-val="simple" data-lib="en hébergements simples">Simple et local</button>
+              <button type="button" aria-pressed="false" data-val="charme" data-lib="en maison d'hôtes ou hôtel de charme">Maison d'hôtes ou hôtel de charme</button>
               <button type="button" aria-pressed="false" data-val="confort" data-lib="en 4★">Confortable, 4★</button>
               <button type="button" aria-pressed="false" data-val="haut" data-lib="en 5★">Haut de gamme, 5★</button>
               <button type="button" aria-pressed="false" data-val="mixte" data-lib="en mélangeant les niveaux">Un mélange</button>
@@ -406,6 +455,11 @@
               <button type="button" aria-pressed="false" data-val="c" data-lib="entre 1 800 et 2 800 €">1 800 à 2 800 €</button>
               <button type="button" aria-pressed="false" data-val="d" data-lib="au-delà de 2 800 €">Plus de 2 800 €</button>
               <button type="button" aria-pressed="false" data-val="?" data-lib="sans budget arrêté">Je ne sais pas encore</button>
+              <button type="button" aria-pressed="false" data-val="libre" data-lib="avec un budget précis">Autre montant</button>
+            </div>
+            <div class="champ" data-si="libre" hidden>
+              <label for="budget-libre">Votre budget par personne</label>
+              <input type="text" id="budget-libre" name="budget_libre" inputmode="numeric" placeholder="par exemple 2 400 €" autocomplete="off">
             </div>
           </fieldset>
 
@@ -452,7 +506,7 @@
 
           <p style="font-size:.9rem;color:var(--gris);margin-top:18px">
             Vos réponses servent uniquement à préparer votre devis. Aucune donnée n'est revendue.
-            <span class="aremplir">Lien vers la politique de confidentialité à poser</span>
+            <a href="https://authentiquegypte.com/mentions-legales-agence-voyage-egypte/" class="lien-txt">politique de confidentialité</a>
           </p>
         </section>
 
@@ -467,8 +521,9 @@
         <div class="rond">✓</div>
         <h2>C'est envoyé</h2>
         <p class="lede" style="margin-inline:auto">
-          <b id="merci-nom">Nous</b> revenons vers vous avec un itinéraire chiffré, jour par jour.
-          Si quelque chose manque pour bien vous répondre, nous vous écrirons d'abord.
+          <b id="merci-nom">Nous</b> vous recontactons sous 48 h, hors vendredi et samedi, pour convenir
+          d'un rendez-vous téléphonique et échanger sur votre voyage. Vous recevez ensuite
+          un itinéraire chiffré, jour par jour.
         </p>
         <p style="margin-top:20px">
           <a href="index.html" class="btn btn--fantome btn--sm">Revenir à l'accueil</a>
@@ -493,10 +548,10 @@
       <div class="pan" data-mm="Ce qui se passe ensuite · nouveau">
         <h3>Ce qui se passe ensuite</h3>
         <ol class="suite">
-          <li><b>On vous lit</b><span>Une personne, pas un formulaire automatique.</span><em class="aremplir">délai à confirmer</em></li>
-          <li><b>On vous écrit</b><span>Un itinéraire jour par jour, hébergements nommés, prix ferme.</span></li>
+          <li><b>On vous lit</b><span>Une personne, pas un formulaire automatique.</span><em>Sous 48 h, hors vendredi et samedi</em></li>
+          <li><b>On vous appelle</b><span>Un rendez-vous téléphonique pour échanger sur votre voyage, puis un itinéraire jour par jour, hébergements nommés, prix ferme.</span></li>
           <li><b>On ajuste</b><span>Autant d'allers-retours que nécessaire. On enlève, on ajoute, on ralentit.</span><em>Illimité</em></li>
-          <li><b>Vous décidez</b><span>Acompte seulement une fois l'itinéraire validé.</span></li>
+          <li><b>Vous décidez</b><span>Nous vérifions les disponibilités du programme, puis vous réservez. Acompte seulement une fois l'itinéraire validé.</span></li>
         </ol>
         <ul class="rassure">
           <li><svg width="17" height="17" viewBox="0 0 17 17" fill="none" aria-hidden="true"><path d="M3 8.8l3.6 3.6L14 5" stroke="#0F6E73" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Devis gratuit et sans engagement</li>
@@ -507,7 +562,7 @@
 
       <div class="pan pan--wa">
         <h3>Vous préférez écrire&nbsp;?</h3>
-        <p>Certaines choses se disent mieux en deux messages qu'en quatre écrans. On répond aussi sur WhatsApp.</p>
+        <p>Certaines choses se disent mieux en deux messages qu'en quatre écrans. Contactez-nous sur WhatsApp.</p>
         <a href="https://wa.me/201066619098" class="btn btn--wa btn--bloc btn--sm">Écrire sur WhatsApp</a>
       </div>
     </aside>
@@ -518,7 +573,7 @@
 <section class="section section--fond">
   <div class="wrap">
     <p class="eyebrow">Ce qu'en disent les voyageurs</p>
-    <h2 style="margin-bottom:26px"><span class="aremplir">N</span> avis Google, note moyenne <span class="aremplir">note</span></h2>
+    <h2 style="margin-bottom:26px">23 avis Google, note moyenne <span class="aremplir">5,0 — à confirmer</span></h2>
     <div class="avis">
       <article>
         <p class="et" aria-label="5 étoiles sur 5">★★★★★</p>
@@ -537,7 +592,7 @@
       </article>
     </div>
     <p style="margin-top:18px;font-size:.9rem;color:var(--gris-clair)">
-      Avis repris du widget Google du site. <span class="aremplir">Note, nombre d'avis et sélection à confirmer par l'agence</span>
+      Avis repris du widget Google du site — 23 avis à ce jour. <span class="aremplir">À remplacer par le widget TrustIndex déjà installé, pour que la note se mette à jour toute seule</span>
     </p>
   </div>
 </section>
@@ -585,7 +640,7 @@
     </div>
     <div class="pied__bas">
       <span>© 2026 Authentique Égypte — Maquette de refonte, charte relevée le 21/08/2026</span>
-      <span>Agence locale · Le Caire, Égypte</span>
+      
     </div>
   </div>
 </footer>
@@ -653,10 +708,28 @@ document.querySelector('.burger')?.addEventListener('click',e=>{
           b.setAttribute('aria-pressed',actif?'false':'true');
           etat[cle]=actif?null:b.dataset.val;
         }
+        revelerConditionnels();
         ecrire();
       });
     });
   });
+
+  /* --- blocs conditionnels ---------------------------------------
+     Un bloc [data-si="x"] n'apparaît que si la réponse « x » est
+     cochée. La question du bateau n'a de sens que pour qui veut une
+     croisière ; « Laquelle ? » n'a de sens qu'après avoir coché
+     « Autre ». Poser toutes les questions à tout le monde, c'est la
+     raison pour laquelle un formulaire paraît long.
+  ----------------------------------------------------------------- */
+  function revelerConditionnels(){
+    document.querySelectorAll('[data-si]').forEach(bloc=>{
+      const val=bloc.dataset.si;
+      const coche=!!document.querySelector(`button[data-val="${val}"][aria-pressed="true"]`);
+      bloc.hidden=!coche;
+      if(!coche){ bloc.querySelectorAll('input').forEach(i=>{ i.value=''; }); }
+    });
+  }
+  revelerConditionnels();
 
   /* --- compteurs de voyageurs --- */
   document.querySelectorAll('.compteur').forEach(c=>{

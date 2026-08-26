@@ -251,11 +251,19 @@ body.aec-mode .aec textarea { cursor: text !important; }
 .aec .aec-saisie textarea:focus { border-color: var(--aec-bleu) !important; }
 
 .aec .aec-apercu { position: relative; margin: 10px 0 0; }
+.aec .aec-apercu__cadre { position: relative; display: inline-block; max-width: 100%; }
+/* On dit noir sur blanc que l'image partira : la vignette seule laissait
+   un doute, et c'est ce doute qui fait qu'on renonce à joindre. */
+.aec .aec-apercu__ok {
+  display: block !important; margin: 7px 0 0 !important;
+  font-size: 11.5px !important; font-weight: 600 !important;
+  color: var(--aec-vert, #1D6B34) !important;
+}
 .aec .aec-apercu img {
   max-width: 100% !important; max-height: 132px; border-radius: 9px;
   display: block; border: 1px solid var(--aec-ligne);
 }
-.aec .aec-apercu button {
+.aec .aec-apercu__cadre button {
   position: absolute; top: 7px; right: 7px;
   width: 26px !important; height: 26px !important;
   padding: 0 !important;
@@ -264,10 +272,13 @@ body.aec-mode .aec textarea { cursor: text !important; }
   font-size: 13px !important; cursor: pointer;
   display: flex !important; align-items: center; justify-content: center;
 }
-.aec .aec-apercu button:hover { background: rgba(17,24,28,.86) !important; }
+.aec .aec-apercu__cadre button:hover { background: rgba(17,24,28,.86) !important; }
 
 /* ---------- rangée d'actions ---------- */
-.aec .aec-actions { display: flex; align-items: center; gap: 8px; margin: 11px 0 0; }
+.aec .aec-actions { display: flex; align-items: center; gap: 8px; margin: 11px 0 0; flex-wrap: wrap; }
+/* Aucun de ces boutons ne doit se laisser comprimer : la bulle est
+   étroite, et un libellé rogné vaut moins qu'un retour à la ligne. */
+.aec .aec-actions > * { flex: 0 0 auto; }
 .aec .aec-actions .aec-droite { margin-left: auto; display: flex; align-items: center; gap: 4px; }
 
 /* Bouton d'image : carré discret, pas un bouton de plus dans la file. */
@@ -298,15 +309,25 @@ body.aec-mode .aec textarea { cursor: text !important; }
   font-weight: 600 !important;
   cursor: pointer;
   white-space: nowrap;
+  line-height: 1 !important;
+  letter-spacing: .005em !important;
+  transition: background .16s ease, border-color .16s ease, box-shadow .16s ease, transform .08s ease;
 }
+.aec .aec-btn:focus-visible {
+  outline: none !important;
+  box-shadow: 0 0 0 3px rgba(22,127,164,.30) !important;
+}
+.aec .aec-btn:active:not(:disabled) { transform: translateY(1px); }
 .aec .aec-btn--plein {
   background: var(--aec-nuit) !important;
   color: #FFFFFF !important;
   border-color: var(--aec-nuit) !important;
+  box-shadow: 0 1px 2px rgba(11,81,112,.24) !important;
 }
 .aec .aec-btn--plein:hover:not(:disabled) {
   background: var(--aec-nuit-clair) !important;
   border-color: var(--aec-nuit-clair) !important;
+  box-shadow: 0 4px 12px rgba(11,81,112,.26) !important;
 }
 /* « Annuler » ne mérite pas un bouton plein : c'est une sortie, pas un choix. */
 .aec .aec-btn--vide {
@@ -317,8 +338,32 @@ body.aec-mode .aec textarea { cursor: text !important; }
 }
 .aec .aec-btn--vide:hover { background: var(--aec-fond) !important; color: var(--aec-encre) !important; }
 
-.aec .aec-btn:disabled { opacity: .4; cursor: default; }
-.aec .aec-btn:disabled:hover { background: var(--aec-nuit) !important; }
+/* Bouton « Joindre une image ». Il portait une icône seule, sans texte :
+   personne ne devine ce que fait un carré gris. Il est nommé, encadré,
+   et il tient le regard sans voler la vedette au bouton d'envoi. */
+.aec .aec-btn--image {
+  gap: 7px;
+  padding: 0 14px !important;
+  color: var(--aec-encre) !important;
+  border-color: var(--aec-ligne) !important;
+  background: #FFFFFF !important;
+}
+.aec .aec-btn--image svg { display: block; flex: 0 0 auto; color: var(--aec-gris); }
+.aec .aec-btn--image span { font-weight: 600; }
+.aec .aec-btn--image:hover {
+  background: #F6FAFD !important;
+  border-color: var(--aec-bleu) !important;
+  color: var(--aec-bleu) !important;
+}
+.aec .aec-btn--image:hover svg { color: var(--aec-bleu); }
+
+
+.aec .aec-btn:disabled {
+  opacity: 1 !important; cursor: not-allowed !important;
+  background: #E8ECEF !important; color: #9AA5AC !important;
+  border-color: #E8ECEF !important; box-shadow: none !important;
+}
+.aec .aec-btn:disabled:hover { background: #E8ECEF !important; transform: none; }
 
 .aec .aec-liens { display: flex; align-items: center; gap: 14px; padding: 10px 16px; border-top: 1px solid var(--aec-ligne-2); background: #FBFCFD; }
 .aec .aec-liens button {

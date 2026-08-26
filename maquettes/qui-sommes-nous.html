@@ -107,6 +107,10 @@
 }
 
 
+/* (17)(18)(12) Mélanie : l'appel au devis du menu doit ressortir. Or foncé,
+   réservé à ce bouton — le reste du site garde l'or de la charte. */
+header .nav>a.btn--or,header .nav>a.btn--or[aria-current]{background:#E08A00;border-color:#E08A00;color:#fff}
+header .nav>a.btn--or:hover{background:#C87700;border-color:#C87700;box-shadow:0 10px 24px rgba(224,138,0,.42)}
 </style>
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[
 {"@type":"BreadcrumbList","itemListElement":[
@@ -142,11 +146,11 @@
           <svg width="11" height="7" viewBox="0 0 11 7" fill="none" aria-hidden="true"><path d="M1 1l4.5 4.5L10 1" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
         </button>
         <div class="menu__pan">
-          <a href="categorie.html"><i>⛵</i><span>Croisière sur le Nil<small>Dahabeya, felouque, bateau 5★</small></span></a>
-          <a href="categorie-desert.html"><i>🏜</i><span>Voyage dans le désert en Égypte<small>Siwa, désert Blanc, Fayoum, Dakhla</small></span></a>
-          <a href="https://authentiquegypte.com/nos-sejours-egypte/voyage-culturel-en-egypte/"><i>🏛</i><span>Voyage culturel en Égypte<small>Le Caire, Louxor, Abou Simbel</small></span></a>
-          <a href="https://authentiquegypte.com/nos-sejours-egypte/mer-rouge/"><i>🐠</i><span>Séjour en mer Rouge<small>Hurghada, Marsa Alam, plongée</small></span></a>
-          <a href="https://authentiquegypte.com/nos-sejours-egypte/sinai-moise-et-saint-catherine/"><i>⛰</i><span>Sinaï et Sainte-Catherine<small>Mont Moïse, monastère, bivouac</small></span></a>
+          <a href="categorie.html"><span>Croisière sur le Nil<small>Dahabeya, felouque, bateau 5★</small></span></a>
+          <a href="categorie-desert.html"><span>Voyage dans le désert en Égypte<small>Siwa, désert Blanc, Fayoum, Dakhla</small></span></a>
+          <a href="https://authentiquegypte.com/nos-sejours-egypte/voyage-culturel-en-egypte/"><span>Voyage culturel en Égypte<small>Le Caire, Louxor, Abou Simbel</small></span></a>
+          <a href="https://authentiquegypte.com/nos-sejours-egypte/mer-rouge/"><span>Séjour en mer Rouge<small>Hurghada, Marsa Alam, plongée</small></span></a>
+          <a href="https://authentiquegypte.com/nos-sejours-egypte/sinai-moise-et-saint-catherine/"><span>Sinaï et Sainte-Catherine<small>Mont Moïse, monastère, bivouac</small></span></a>
         </div>
       </div>
       <div class="menu">
@@ -154,12 +158,12 @@
           <svg width="11" height="7" viewBox="0 0 11 7" fill="none" aria-hidden="true"><path d="M1 1l4.5 4.5L10 1" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
         </button>
         <div class="menu__pan" style="min-width:300px">
-          <a href="destination.html"><i>🔺</i><span>Voyage au Caire<small>Gizeh, Saqqara, Grand Musée</small></span></a>
-          <a href="https://authentiquegypte.com/voyage-a-louxor/"><i>🏺</i><span>Voyage à Louxor<small>Karnak, vallée des Rois</small></span></a>
-          <a href="https://authentiquegypte.com/voyage-a-assouan/"><i>🌊</i><span>Voyage à Assouan<small>Philae, Abou Simbel</small></span></a>
-          <a href="https://authentiquegypte.com/voyage-a-alexandrie/"><i>🏛</i><span>Voyage à Alexandrie<small>Méditerranée, catacombes</small></span></a>
-          <a href="https://authentiquegypte.com/desert-blanc/"><i>🤍</i><span>Désert Blanc<small>Bivouac, formations de craie</small></span></a>
-          <a href="https://authentiquegypte.com/lac-nasser/"><i>⛵</i><span>Lac Nasser<small>Temples nubiens, sans la foule</small></span></a>
+          <a href="destination.html"><span>Voyage au Caire<small>Gizeh, Saqqara, Grand Musée</small></span></a>
+          <a href="https://authentiquegypte.com/voyage-a-louxor/"><span>Voyage à Louxor<small>Karnak, vallée des Rois</small></span></a>
+          <a href="https://authentiquegypte.com/voyage-a-assouan/"><span>Voyage à Assouan<small>Philae, Abou Simbel</small></span></a>
+          <a href="https://authentiquegypte.com/voyage-a-alexandrie/"><span>Voyage à Alexandrie<small>Méditerranée, catacombes</small></span></a>
+          <a href="https://authentiquegypte.com/desert-blanc/"><span>Désert Blanc<small>Bivouac, formations de craie</small></span></a>
+          <a href="https://authentiquegypte.com/lac-nasser/"><span>Lac Nasser<small>Temples nubiens, sans la foule</small></span></a>
         </div>
       </div>
       <div class="menu">
@@ -167,10 +171,10 @@
           <svg width="11" height="7" viewBox="0 0 11 7" fill="none" aria-hidden="true"><path d="M1 1l4.5 4.5L10 1" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
         </button>
         <div class="menu__pan" style="min-width:290px">
-          <a href="https://authentiquegypte.com/voyage-en-famille-en-egypte/"><i>👨‍👩‍👧</i><span>Voyage en famille en Égypte<small>Rythme adapté, enfants bienvenus</small></span></a>
-          <a href="https://authentiquegypte.com/voyage-en-couple-en-egypte/"><i>💛</i><span>Voyage en couple en Égypte<small>Dahabeya privée, dîners sur le Nil</small></span></a>
-          <a href="https://authentiquegypte.com/voyage-solo-en-egypte/"><i>🎒</i><span>Voyage en solo en Égypte<small>Guide privatif, sécurité assurée</small></span></a>
-          <a href="https://authentiquegypte.com/voyage-pmr-en-egypte/"><i>♿</i><span>Voyage PMR en Égypte<small>Sites accessibles, véhicule adapté</small></span></a>
+          <a href="https://authentiquegypte.com/voyage-en-famille-en-egypte/"><span>Voyage en famille en Égypte<small>Rythme adapté, enfants bienvenus</small></span></a>
+          <a href="https://authentiquegypte.com/voyage-en-couple-en-egypte/"><span>Voyage en couple en Égypte<small>Dahabeya privée, dîners sur le Nil</small></span></a>
+          <a href="https://authentiquegypte.com/voyage-solo-en-egypte/"><span>Voyage en solo en Égypte<small>Guide privatif, sécurité assurée</small></span></a>
+          <a href="https://authentiquegypte.com/voyage-pmr-en-egypte/"><span>Voyage PMR en Égypte<small>Sites accessibles, véhicule adapté</small></span></a>
         </div>
       </div>
       <a href="blog.html">Guides</a>
@@ -191,51 +195,20 @@
         <li><span aria-current="page">Qui sommes-nous</span></li>
       </ol>
     </nav>
-    <h1>Une agence au Caire, pas un catalogue en ligne</h1>
-    <p class="sous">Nous vivons en Égypte. Nous connaissons les guides parce que nous travaillons
-      avec eux depuis des années, et les hôtels parce que nous y dormons. C'est toute la différence
-      entre construire un voyage et le revendre.</p>
+    <h1>Une agence francophone en Égypte</h1>
+    <p class="sous">Notre structure franco-égyptienne s'appuie sur des années de terrain, de
+      rencontres et de passion commune pour ce pays. Enregistrée en France, elle travaille avec
+      une agence titulaire d'une licence touristique officielle en Égypte&nbsp;: vous avez un
+      interlocuteur en France, et une équipe sur place.</p>
     <div class="chapeau__st">
       <span><b class="aremplir">année</b> de création</span>
       <span><b class="aremplir">N</b> voyageurs accompagnés</span>
-      <span><b class="aremplir">note</b> sur <span class="aremplir">N</span> avis Google</span>
+      <span><b class="aremplir">5,0</b> sur <b>23</b> avis Google</span>
       <span><b>Le Caire</b> notre bureau</span>
     </div>
   </div>
 </section>
 
-<!-- CE QUE VEUT DIRE « AGENCE LOCALE » -->
-<section class="section">
-  <div class="wrap">
-    <p class="eyebrow">Ce que ça change</p>
-    <h2 style="margin-bottom:14px">« Agence locale », concrètement</h2>
-    <p class="lede" style="margin-bottom:32px">L'expression est sur tous les sites. Voici ce qu'elle
-      recouvre chez nous — trois choses vérifiables, pas trois promesses.</p>
-    <div class="preuves">
-      <div class="preuve">
-        <span class="num">1</span>
-        <h3>Nous sommes sur place</h3>
-        <p>Le bureau est au Caire. Quand un vol intérieur est annulé un dimanche soir, c'est
-          quelqu'un qui est dans le pays qui décroche et qui règle le problème — pas un
-          service client à six fuseaux horaires.</p>
-      </div>
-      <div class="preuve">
-        <span class="num">2</span>
-        <h3>Nos guides sont nos guides</h3>
-        <p>Ce sont des égyptologues diplômés, francophones, avec qui nous travaillons à
-          l'année. Ils ne sont pas attribués au hasard le matin même par un prestataire :
-          nous savons lequel convient à un groupe d'enfants et lequel à des passionnés.</p>
-      </div>
-      <div class="preuve">
-        <span class="num">3</span>
-        <h3>Il n'y a pas d'intermédiaire</h3>
-        <p>Nous réservons directement les hôtels, les bateaux et les entrées. Ce qui vous
-          est facturé correspond à ce qui est payé sur place, plus notre travail.
-          <span class="aremplir">Formulation à valider avec l'agence</span></p>
-      </div>
-    </div>
-  </div>
-</section>
 
 <!-- L'ÉQUIPE -->
 <section class="section section--fond">
@@ -296,12 +269,17 @@
       <div>
         <p class="eyebrow">Notre histoire</p>
         <h2>Pourquoi nous avons monté cette agence</h2>
-        <p><span class="aremplir">Récit à écrire avec l'agence, en trois paragraphes.</span> Ce bloc est
-          le seul endroit du site où l'on peut dire « nous » sans parler d'offre. Il vaut mieux une
-          histoire vraie et courte qu'un texte d'entreprise.</p>
-        <p>Trois questions pour l'écrire : qu'est-ce qui vous a décidés à monter l'agence, qu'est-ce
-          qui vous agaçait dans les voyages organisés que vous voyiez passer, et qu'est-ce qui n'a
-          pas changé depuis le premier voyage que vous avez monté&nbsp;?</p>
+        <p><i>« Une aventure née d'un regard curieux sur l'Égypte authentique. »</i></p>
+        <p>Tout commence quand Mélanie, alors installée en Inde, tombe sous le charme de
+          l'Égypte lors d'un premier voyage. Elle décide de s'entourer de professionnels
+          égyptiens passionnés pour développer une approche humaine du voyage.</p>
+        <p>De là est née une structure franco-égyptienne&nbsp;: une équipe basée au Caire, un
+          réseau de guides francophones, de chauffeurs et de spécialistes logistiques, et des
+          partenaires locaux choisis un par un. Nous collaborons avec l'ONG Planeterra pour des
+          expériences à faible impact environnemental.</p>
+        <p>Ce qui n'a pas changé&nbsp;: les hébergements à taille humaine, les déplacements en
+          dahabieh ou en felouque, les ateliers de cuisine et de hiéroglyphes, les rencontres
+          avec les artisans et les familles, et le temps passé dans les oasis.</p>
         <p style="margin-top:20px"><a href="blog.html" class="lien-fl">Lire nos guides pratiques
           <svg width="15" height="11" viewBox="0 0 15 11" fill="none" aria-hidden="true"><path d="M1 5.5h12M9 1.5l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></a></p>
       </div>
@@ -332,16 +310,19 @@
       </div>
       <div>
         <div>
-          <h3>Un interlocuteur unique, identifié</h3>
-          <p>La personne qui vous écrit le devis est celle qui suit votre dossier
-            pendant le voyage. Vous avez son nom et son numéro.</p>
+          <h3>Un interlocuteur en France, une équipe sur place</h3>
+          <p>Avant le départ, un conseiller en France vous accompagne dans la préparation.
+            Sur place, un représentant local reste joignable, avec un numéro d'urgence
+            24&nbsp;h/24 pendant tout le séjour.</p>
         </div>
       </div>
       <div>
         <div>
           <h3>Un acompte seulement après validation</h3>
           <p>Le solde est réglé 45 jours avant le départ.
-            <span class="aremplir">Conditions d'annulation à préciser ici — c'est la question qui bloque le plus</span></p>
+            En cas d'annulation selon nos CGV, les remboursements sont traités avec notre
+            partenaire local et validés par notre structure française.
+            <span class="aremplir">Renvoyer ici vers les CGV</span></p>
         </div>
       </div>
     </div>
@@ -390,7 +371,7 @@
     <h2 style="margin-bottom:32px">Ce que nous pouvons prouver</h2>
     <div class="chiffres">
       <div><b class="aremplir">N</b><span>voyageurs accompagnés</span></div>
-      <div><b class="aremplir">note</b><span>sur <span class="aremplir">N</span> avis Google</span></div>
+      <div><b class="aremplir">5,0</b><span>sur <b>23</b> avis Google</span></div>
       <div><b class="aremplir">N</b><span>guides égyptologues francophones</span></div>
       <div><b class="aremplir">année</b><span>première année d'activité</span></div>
     </div>
@@ -406,7 +387,7 @@
 <section class="section">
   <div class="wrap">
     <p class="eyebrow">Ce qu'en disent les voyageurs</p>
-    <h2 style="margin-bottom:26px"><span class="aremplir">N</span> avis Google, note moyenne <span class="aremplir">note</span></h2>
+    <h2 style="margin-bottom:26px">23 avis Google, note moyenne <span class="aremplir">5,0 — à confirmer</span></h2>
     <div class="avis">
       <article>
         <p class="et" aria-label="5 étoiles sur 5">★★★★★</p>
@@ -491,7 +472,7 @@
     </div>
     <div class="pied__bas">
       <span>© 2026 Authentique Égypte — Maquette de refonte, charte relevée le 21/08/2026</span>
-      <span>Agence locale · Le Caire, Égypte</span>
+      
     </div>
   </div>
 </footer>

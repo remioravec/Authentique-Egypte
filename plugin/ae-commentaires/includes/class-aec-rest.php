@@ -361,7 +361,23 @@ class AEC_Rest {
 		return rest_ensure_response( array( 'supprime' => (int) $r['id'] ) );
 	}
 
+	/**
+	 * Rattache une image téléversée à un fil.
+	 *
+	 * Un refus était silencieux : le commentaire partait sans son
+	 * image et personne ne l'apprenait — ni la relectrice, qui avait vu
+	 * sa vignette, ni nous à la relecture. On journalise désormais.
+	 */
 	private static function attacher_image( $post_id, $image_id ) {
+		if ( $image_id > 0 && 'attachment' !== get_post_type( $image_id ) ) {
+			error_log( sprintf(
+				'[ae-commentaires] image %d refusée sur le fil %d : ce n\'est pas une pièce jointe (%s).',
+				$image_id,
+				$post_id,
+				get_post_type( $image_id ) ? get_post_type( $image_id ) : 'introuvable'
+			) );
+		}
+
 		if ( $image_id > 0 && 'attachment' === get_post_type( $image_id ) ) {
 			update_post_meta( $post_id, '_aec_image', $image_id );
 		}
