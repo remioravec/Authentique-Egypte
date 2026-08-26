@@ -181,6 +181,15 @@ def convertir(html: str, dossier: str = '') -> str:
     styles = locales + re.findall(r'<style[^>]*>(.*?)</style>', html, re.S | re.I)
     css = '\n'.join(prefixer_css(dépouiller_css(bloc)) for bloc in styles)
 
+    # `position: sticky` meurt dès qu'un ancêtre porte un overflow autre
+    # que visible ou clip — et les thèmes posent volontiers un
+    # `overflow-x: hidden` sur <body> pour étouffer les débordements.
+    # `clip` rend le même service sans créer de conteneur de défilement :
+    # les panneaux collants (devis, fiche séjour, destination) survivent.
+    css += ('\nbody.elementor-template-canvas{overflow-x:clip !important}'
+            '\n.elementor-template-canvas .page-content,'
+            '.elementor-template-canvas main{overflow:visible !important}')
+
     # Les polices Google, à recharger dans le corps (les navigateurs
     # acceptent un <link rel=stylesheet> hors du head).
     polices = re.findall(

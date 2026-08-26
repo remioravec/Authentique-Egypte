@@ -110,6 +110,8 @@ def paragraphes(blocs, classe='lede'):
     for b in blocs:
         if b['type'] == 'p':
             out.append('<p class="%s">%s</p>' % (classe, e(b['texte'])))
+        elif b['type'] == 'titre_etape':
+            out.append('<h4>%s</h4>' % e(b['texte']))
         elif b['type'] == 'liste':
             out.append('<ul>%s</ul>' % ''.join('<li>%s</li>' % e(i) for i in b['items']))
         elif b['type'] == 'tableau':

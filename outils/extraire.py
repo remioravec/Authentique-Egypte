@@ -32,6 +32,8 @@ BRUIT = (
     'experts locaux', 'guides égyptologues', 'véhicule sécurisé et chauffeur certifiés',
     'voyage 100% sur mesure', 'nous contacter', 'demander un devis', 'réserver',
     'en savoir plus', 'lire la suite', 'partager', 'newsletter',
+    'éditer article', 'découvrir le voyage', 'voir le détail', 'aller plus loin',
+    'à explorer également :', 'faq', 'nos séjours', 'personnaliser ce séjour',
 )
 
 PRIX = re.compile(r'(?:à\s*partir\s*de\s*)?([\d\s ]{2,7})\s*€\s*(?:/\s*(?:pers|personne)\w*)?', re.I)
@@ -51,6 +53,12 @@ class Decoupeur(HTMLParser):
         self.tampon = []
         self.ignore = 0
         self.liste = None
+        # Le site — un HTML aplati par Elementor — laisse du texte NU
+        # entre les balises (`</p>Un véhicule privé…`) et met les titres
+        # d'étapes dans des <a tabindex="0"> d'accordéon. Sans ces deux
+        # rattrapages, toute la chair des itinéraires disparaissait.
+        self.libre = []
+        self.titre_a = None
         # Les tableaux : ils étaient purement et simplement jetés. Le
         # calendrier mois par mois de « quand partir », qui est le cœur
         # de la page, disparaissait avec eux.
@@ -58,12 +66,35 @@ class Decoupeur(HTMLParser):
         self.ligne = None
         self.entete = False
 
+    BLOCS_FLUX = {'p', 'div', 'section', 'article', 'ul', 'ol', 'table',
+                  'h1', 'h2', 'h3', 'h4', 'h5', 'iframe', 'figure', 'br'}
+
+    def flux(self):
+        """Verse le texte nu accumulé comme un paragraphe à part entière."""
+        texte = re.sub(r'\s+', ' ', ''.join(self.libre)).strip()
+        self.libre = []
+        if len(texte) <= 2 or texte.lower() in BRUIT:
+            return
+        # Le chrome du site n'est pas du contenu : l'état des accordéons
+        # (« ▼ 02 »), les crochets de shortcode, les libellés de bouton.
+        if '▼' in texte or re.fullmatch(r'\[[^\]]+\]', texte):
+            return
+        if re.match(r'^composer mon voyage', texte, re.I):
+            return
+        self.blocs.append({'type': 'p', 'texte': texte})
+
     def handle_starttag(self, balise, attrs):
         a = dict(attrs)
         if balise in self.IGNORE:
             self.ignore += 1
             return
         if self.ignore:
+            return
+        if balise in self.BLOCS_FLUX:
+            self.flux()
+        if balise == 'a' and 'tabindex' in a:
+            self.flux()
+            self.titre_a = []
             return
         if balise == 'img':
             src = a.get('src', '')
@@ -92,6 +123,14 @@ class Decoupeur(HTMLParser):
             return
         if self.ignore:
             return
+        if balise == 'a' and self.titre_a is not None:
+            texte = re.sub(r'\s+', ' ', ''.join(self.titre_a)).strip()
+            self.titre_a = None
+            if texte and texte.lower() not in BRUIT:
+                self.blocs.append({'type': 'titre_etape', 'texte': texte})
+            return
+        if balise in self.BLOCS_FLUX:
+            self.flux()
         if balise in ('ul', 'ol'):
             self.vider()
             items = [x for x in (self.liste or []) if x]
@@ -125,8 +164,15 @@ class Decoupeur(HTMLParser):
             self.pile.pop()
 
     def handle_data(self, texte):
-        if not self.ignore and self.pile:
+        if self.ignore:
+            return
+        if self.titre_a is not None:
+            self.titre_a.append(texte)
+            return
+        if self.pile:
             self.tampon.append(texte)
+        elif self.liste is None and self.tableau is None:
+            self.libre.append(texte)
 
     def vider(self):
         if not self.pile or not self.tampon:
@@ -223,6 +269,7 @@ def extraire(item, type_wp):
     brut = item.get('content', {}).get('raw', '') or ''
     d = Decoupeur()
     d.feed(brut)
+    d.flux()
     blocs = nettoyer(d.blocs)
 
     titre = re.sub(r'\s+', ' ', re.sub(r'<[^>]+>', '', item.get('title', {}).get('raw', ''))).strip()

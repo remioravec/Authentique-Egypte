@@ -76,6 +76,18 @@ def main():
         dossiers[gabarit] = pages_dossier[titre]
 
     # Les fichiers générés, dans l'ordre des dossiers.
+    # La carte des liens : chaque fichier de maquette vers son brouillon.
+    liens = {}
+    for etape in dep.PARCOURS:
+        page_maquette = dep.trouver_page(etape['slug'])
+        if page_maquette:
+            liens[etape['fichier']] = '%s/?page_id=%d' % (dep.SITE, page_maquette['id'])
+    # « categorie.html » — la catégorie croisières — n'a pas de maquette
+    # dessinée ; le lien va vers la page reprise du site.
+    croisieres = dep.trouver_page('refonte-categorie-croisieres-en-egypte')
+    if croisieres:
+        liens['categorie.html'] = '%s/?page_id=%d' % (dep.SITE, croisieres['id'])
+
     print('→ Pages')
     faits, octets = 0, 0
     for gabarit, _ in DOSSIERS:
@@ -88,6 +100,13 @@ def main():
                 continue
             with open(fichier, encoding='utf-8') as f:
                 contenu = conv.convertir(f.read(), os.path.dirname(fichier))
+            # L'entête et le pied viennent des maquettes : leurs liens
+            # relatifs (index.html, devis.html…) ne mènent nulle part
+            # une fois la page dans WordPress. On les réécrit vers les
+            # brouillons correspondants, comme le fait deployer.py.
+            for fichier_liens, url in liens.items():
+                contenu = contenu.replace('href="%s"' % fichier_liens, 'href="%s"' % url)
+                contenu = contenu.replace('href="../%s"' % fichier_liens, 'href="%s"' % url)
             # Le gabarit entre dans le slug : « mer-rouge » existe deux
             # fois sur le site, une fois comme catégorie et une fois
             # comme séjour. Sans lui, la seconde écrase la première.
