@@ -5,3 +5,7 @@ node_modules/
 # Les maquettes ont une seule source : /maquettes.
 # outils/construire.sh les recopie ici au moment du build.
 plugin/ae-refonte-review/maquettes/*.html
+docs/contenus.json
+docs/extraits.json
+
+outils/__pycache__/
