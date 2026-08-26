@@ -864,10 +864,15 @@ document.querySelector('.burger')?.addEventListener('click',e=>{
 (function(){
   const etat={lieu:[],duree:[],budget:[],qui:[]};
   const liste=document.getElementById('liste');
-  const cartes=[...liste.querySelectorAll('.carte')];
   const compte=document.getElementById('compte');
   const actifs=document.getElementById('actifs');
   const vide=document.getElementById('vide');
+  const tri=document.getElementById('tri');
+  // Toutes les pages de ce gabarit ne portent pas le filtre de séjours.
+  // Sans ce garde, le script s'arrêtait sur une erreur et emportait avec
+  // lui tout ce qui suit dans le même bloc.
+  if(!liste||!compte||!actifs||!vide||!tri){ return; }
+  const cartes=[...liste.querySelectorAll('.carte')];
   const lib={blanc:'Désert Blanc',siwa:'Oasis de Siwa',fayoum:'Oasis de Fayoum',dakhla:'Dakhla et Kharga',
     court:'2 à 3 jours',moyen:'4 à 6 jours',long:'7 jours et plus',
     a:'Moins de 600 €',b:'600 à 900 €',c:'Plus de 900 €',
@@ -916,7 +921,7 @@ document.querySelector('.burger')?.addEventListener('click',e=>{
       maj();
     });
   });
-  document.getElementById('tri').addEventListener('change',e=>{
+  tri.addEventListener('change',e=>{
     const v=e.target.value;
     [...cartes].sort((a,b)=>{
       const n=(el,c)=>Number(el.dataset[c]);

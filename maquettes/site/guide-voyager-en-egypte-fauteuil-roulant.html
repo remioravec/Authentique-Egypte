@@ -2,64 +2,505 @@
 <html lang="fr">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="icon" href="https://authentiquegypte.com/wp-content/uploads/2026/08/authentique-egypte-logo-transparent.webp">
 <title>Voyager en Égypte en fauteuil roulant : est-ce possible ? Le guide complet 2025 — Authentique Égypte</title>
-<meta name="description" content="Nous organisons des voyages sur mesure 100% accessibles aux personnes à mobilité réduite. Grâce à nos partenaires locaux et à une logistique adaptée, vous pouvez découvrir…">
 <meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Nous organisons des voyages sur mesure 100% accessibles aux personnes à mobilité réduite. Grâce à nos partenaires locaux et à une logistique adaptée, vous pouvez découvrir…">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../assets/charte.css">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;500;600;700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-/* Repères propres aux pages reprises du site. */
-.chapeau + .section{padding-top:38px}
-.src{margin:0 0 26px;padding:11px 15px;background:var(--or-fond);border-radius:var(--r-s);
-  font-size:.86rem;color:#7A5605;line-height:1.5}
-.src a{color:inherit}
-.corps{max-width:74ch}
-.corps h2{font-size:clamp(1.4rem,2.4vw,1.85rem);margin:44px 0 14px}
-.corps h3{font-size:1.16rem;margin:30px 0 10px}
-.corps p{margin:0 0 16px;line-height:1.75}
-.corps ul{margin:0 0 18px;padding-left:1.1rem}
-.corps li{margin:0 0 8px;line-height:1.65}
-.corps figure{margin:26px 0}
-.corps figure img{width:100%;border-radius:var(--r-m);display:block}
-.corps figcaption{margin-top:9px;font-size:.86rem;color:var(--gris)}
-.sommaire{background:var(--fond-2);border:1px solid var(--ligne);border-radius:var(--r-m);
-  padding:20px 24px;margin:0 0 34px}
-.sommaire b{display:block;font-size:.78rem;text-transform:uppercase;letter-spacing:.08em;
-  color:var(--gris);margin-bottom:10px}
-.sommaire ol{margin:0;padding-left:1.1rem}
-.sommaire li{margin:0 0 6px}
-.deux{display:grid;grid-template-columns:1fr 340px;gap:44px;align-items:start}
-.flanc{position:sticky;top:88px;display:grid;gap:18px}
-.encart{background:#fff;border:1px solid var(--ligne);border-radius:var(--r-m);padding:22px 24px;
-  box-shadow:var(--ombre)}
-.encart h3{margin:0 0 12px;font-size:1.02rem}
-.encart ul{margin:0;padding-left:1.05rem;font-size:.94rem;color:var(--texte)}
-.encart li{margin:0 0 7px}
-.tab-cadre{overflow-x:auto;margin:26px 0;-webkit-overflow-scrolling:touch}
-.tab{width:100%;border-collapse:collapse;font-size:.95rem;min-width:520px}
-.tab th,.tab td{padding:11px 14px;border-bottom:1px solid var(--ligne);text-align:left;vertical-align:top}
-.tab thead th{background:var(--fond-2);font-size:.8rem;text-transform:uppercase;
-  letter-spacing:.06em;color:var(--gris);border-bottom:2px solid var(--ligne)}
-.tab tbody th{font-weight:700;color:var(--noir)}
-.tab tbody tr:last-child th,.tab tbody tr:last-child td{border-bottom:0}
-.galerie{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:14px;margin:26px 0}
-.galerie img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:var(--r-m);display:block}
-.chiffres{display:flex;flex-wrap:wrap;gap:10px;margin:0 0 26px}
-.chiffres span{background:var(--teal-fond);color:var(--teal-txt);border-radius:var(--r-pill);
-  padding:7px 15px;font-size:.9rem;font-weight:600}
-@media (max-width:900px){
-  .deux{grid-template-columns:1fr;gap:30px}
-  .flanc{position:static}
-  .corps p,.corps li{font-size:1rem}
+/* ============================================================
+   CHARTE — relevée le 21/08/2026 sur authentiquegypte.com
+   or #FBB50E · bleu #167FA4 · bleu profond #0B5170 (fonds à texte)
+   noir #000000 · texte #5D5D5D · crème #FEEDDC
+   Archivo (titres + corps) · Manrope (accents)
+
+   CONTENU : repris de /quand-partir-en-egypte/ relevée le 21/08/2026.
+   Les trois tableaux et la FAQ sont ceux du client, valeur par valeur.
+   ============================================================ */
+:root{
+  --nuit:#167FA4; --nuit-900:#0B5170; --nuit-700:#1C93BC;
+  --or:#FBB50E; --or-clair:#FFD958; --or-fond:#FEEDDC;
+  --teal:#21B0B7; --teal-txt:#0F6E73; --teal-fond:#E8F7F8;
+  --chaud:#B07A00; --chaud-fond:#FFF3D6;
+  --brulant:#B4402A; --brulant-fond:#FBEAE5;
+  --papier:#FFFFFF; --fond:#F9F9FB; --fond-2:#F6FAFE;
+  --noir:#000000; --texte:#5D5D5D; --gris:#6E7680; --gris-clair:#88929C;
+  --ligne:#E4E4EA; --ligne-2:#F1F1F5;
+  --r-s:8px; --r-m:14px; --r-l:20px; --r-pill:999px;
+  --ombre:0 1px 2px rgba(11,81,112,.06),0 8px 24px rgba(11,81,112,.08);
+  --ombre-f:0 2px 6px rgba(11,81,112,.10),0 18px 44px rgba(11,81,112,.16);
+  --max:1200px;
+  --ease:cubic-bezier(.22,.61,.36,1);
 }
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:110px}
+body{margin:0;background:var(--papier);color:var(--texte);
+  font-family:"Archivo",system-ui,-apple-system,"Segoe UI",sans-serif;
+  font-size:17px;font-weight:300;line-height:1.75;letter-spacing:.2px;-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block;background:var(--fond)}
+[hidden]{display:none !important}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;cursor:pointer}
+h1,h2,h3,h4{font-family:"Archivo",Georgia,serif;font-weight:600;line-height:1.25;margin:0;color:var(--noir);letter-spacing:-.8px}
+h1{font-size:clamp(2rem,3.8vw,3rem);letter-spacing:-1.4px;line-height:1.16}
+h2{font-size:clamp(1.45rem,2.4vw,1.95rem)}
+h3{font-size:clamp(1.05rem,1.6vw,1.2rem);letter-spacing:-.4px}
+p{margin:0 0 1em}
+:focus-visible{outline:3px solid var(--or);outline-offset:3px;border-radius:4px}
+.wrap{width:min(100% - 40px,var(--max));margin-inline:auto}
+.eyebrow{font-family:"Manrope",sans-serif;font-size:.74rem;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--teal-txt);font-weight:700;margin:0 0 12px;display:flex;align-items:center;gap:12px}
+.eyebrow::before{content:"";width:28px;height:2px;background:var(--or);flex:0 0 auto;border-radius:2px}
+.eyebrow--clair{color:var(--or)}
+.section{padding:clamp(40px,5vw,64px) 0}
+.section--fond{background:var(--fond)}
+.lede{font-size:clamp(1rem,1.3vw,1.08rem);color:var(--texte)}
+.lien-txt{color:var(--teal-txt);font-weight:600;text-decoration:underline;text-underline-offset:3px}
+
+/* ---------- boutons ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;
+  font-family:"Manrope",sans-serif;padding:14px 26px;border-radius:var(--r-pill);
+  border:1.5px solid transparent;font-weight:700;font-size:.94rem;letter-spacing:.2px;
+  transition:all .22s var(--ease);white-space:nowrap}
+.btn--or{background:var(--or);color:#3D2B00;border-color:var(--or)}
+.btn--or:hover{background:var(--or-clair);border-color:var(--or-clair);transform:translateY(-2px);
+  box-shadow:0 10px 24px rgba(251,181,14,.38)}
+.btn--nuit{background:var(--nuit);color:#fff;border-color:var(--nuit)}
+.btn--nuit:hover{background:var(--nuit-700);transform:translateY(-2px)}
+.btn--fantome{background:transparent;color:var(--nuit);border-color:var(--ligne)}
+.btn--fantome:hover{border-color:var(--nuit);background:#fff}
+.btn--clair{background:rgba(255,255,255,.10);color:#fff;border-color:rgba(255,255,255,.4)}
+.btn--clair:hover{background:rgba(255,255,255,.2);border-color:#fff}
+.btn--wa{background:#25D366;color:#06341A;border-color:#25D366}
+.btn--wa:hover{background:#1FBF5A;transform:translateY(-2px)}
+.btn--bloc{width:100%}
+.btn--sm{padding:10px 18px;font-size:.86rem}
+
+/* ---------- header ---------- */
+.bandeau{background:var(--nuit-900);color:#C0D8E2;font-size:.82rem;font-family:"Manrope",sans-serif}
+.bandeau .wrap{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:9px 0;flex-wrap:wrap}
+.bandeau a:hover{color:var(--or-clair)}
+.bandeau strong{color:var(--or-clair);font-weight:700}
+.entete{position:sticky;top:0;z-index:60;background:rgba(255,255,255,.95);
+  backdrop-filter:blur(14px);border-bottom:1px solid var(--ligne-2)}
+.entete .wrap{display:flex;align-items:center;gap:24px;padding:10px 0;min-height:66px}
+.logo{flex:0 0 auto;display:block}
+.logo img{height:38px;width:auto}
+.nav{display:flex;gap:2px;margin-left:auto;align-items:center;font-family:"Manrope",sans-serif}
+.nav>a,.nav>.menu>button{display:inline-flex;align-items:center;gap:6px;padding:10px 13px;
+  border-radius:var(--r-pill);font-size:.92rem;font-weight:600;color:var(--nuit);background:none;border:0;
+  transition:background .18s}
+.nav>a:hover,.nav>.menu>button:hover{background:var(--fond)}
+.nav>a[aria-current]{background:var(--or-fond);font-weight:700;color:var(--noir)}
+.menu{position:relative}
+.menu__pan{position:absolute;top:calc(100% + 10px);left:50%;transform:translateX(-50%) translateY(-6px);
+  background:#fff;border:1px solid var(--ligne);border-radius:var(--r-l);box-shadow:var(--ombre-f);
+  padding:12px;min-width:340px;opacity:0;visibility:hidden;transition:all .2s var(--ease)}
+.menu:hover .menu__pan,.menu:focus-within .menu__pan{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0)}
+.menu__pan a{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:var(--r-m);
+  font-size:.91rem;font-weight:600;color:var(--nuit)}
+.menu__pan a:hover{background:var(--or-fond)}
+.menu__pan i{width:34px;height:34px;border-radius:10px;background:var(--fond);display:grid;
+  place-items:center;font-style:normal;font-size:1rem;flex:0 0 auto}
+.menu__pan small{display:block;color:var(--gris);font-size:.78rem;line-height:1.4;font-weight:400}
+.burger{display:none;margin-left:auto;background:none;border:1px solid var(--ligne);
+  border-radius:var(--r-pill);padding:9px 14px;font-weight:700;font-family:"Manrope",sans-serif}
+
+/* ---------- chapeau illustré ---------- */
+.chapeau{position:relative;background:var(--nuit-900);color:#fff;overflow:hidden;
+  padding:clamp(26px,3vw,38px) 0 clamp(38px,4.5vw,56px)}
+.chapeau__bg{position:absolute;inset:0}
+.chapeau__bg img{width:100%;height:100%;object-fit:cover;animation:derive 30s ease-in-out infinite alternate}
+@keyframes derive{from{transform:scale(1)}to{transform:scale(1.07)}}
+.chapeau__bg::after{content:"";position:absolute;inset:0;background:
+  linear-gradient(100deg,rgba(11,81,112,.94) 0%,rgba(11,81,112,.86) 40%,rgba(22,127,164,.56) 72%,rgba(22,127,164,.3) 100%),
+  linear-gradient(180deg,rgba(11,81,112,.5) 0%,rgba(11,81,112,0) 34%,rgba(11,81,112,.55) 100%)}
+.chapeau .wrap{position:relative}
+.chapeau h1{color:#fff;max-width:22ch}
+.chapeau .sous{color:#C3D5DA;max-width:62ch;margin-top:14px;font-size:1.06rem}
+.ariane{padding:0 0 14px;font-size:.83rem;color:#B7D2DE;font-family:"Manrope",sans-serif}
+.ariane ol{display:flex;flex-wrap:wrap;gap:8px;list-style:none;margin:0;padding:0}
+.ariane li::after{content:"›";margin-left:8px;color:rgba(255,255,255,.4)}
+.ariane li:last-child::after{content:""}
+.ariane a{font-weight:600;color:var(--or)}
+.ariane a:hover{text-decoration:underline}
+.ariane [aria-current]{color:#fff;font-weight:700}
+.chapeau__meta{display:flex;align-items:center;gap:12px;margin-top:22px;
+  font-family:"Manrope",sans-serif;font-size:.86rem;color:#B7D2DE}
+.chapeau__meta .med{width:42px;height:42px;border-radius:50%;background:var(--or);color:#3D2B00;
+  display:grid;place-items:center;font-family:"Archivo",sans-serif;font-weight:600;flex:0 0 auto}
+.chapeau__meta b{color:#fff;display:block;font-weight:700}
+
+/* ---------- trois colonnes ---------- */
+.art{display:grid;grid-template-columns:222px 1fr 300px;gap:44px;align-items:start;
+  padding:clamp(36px,4.5vw,56px) 0 clamp(44px,5.5vw,72px)}
+.som{position:sticky;top:88px;font-family:"Manrope",sans-serif;font-size:.88rem}
+.som h4{font-size:.72rem;letter-spacing:.15em;text-transform:uppercase;color:var(--gris);
+  font-weight:700;margin:0 0 14px;font-family:"Manrope",sans-serif}
+.som ol{list-style:none;margin:0;padding:0;display:grid;gap:2px;border-left:2px solid var(--ligne)}
+.som a{display:block;padding:8px 0 8px 15px;margin-left:-2px;border-left:2px solid transparent;
+  color:var(--gris);line-height:1.35;font-weight:500}
+.som a:hover{color:var(--nuit-900)}
+.som a[aria-current]{color:var(--nuit-900);font-weight:700;border-left-color:var(--or)}
+.corps{max-width:min(72ch,100%);min-width:0}
+.art>*{min-width:0}
+.corps h2{margin:52px 0 14px;scroll-margin-top:110px}
+.corps h2:first-of-type{margin-top:0}
+.corps h3{margin:30px 0 10px}
+.corps a:not(.btn){color:var(--teal-txt);font-weight:600;text-decoration:underline;text-underline-offset:3px}
+
+/* ---------- réponse en tête ---------- */
+.reponse{background:var(--or-fond);border-left:4px solid var(--or);border-radius:0 var(--r-m) var(--r-m) 0;
+  padding:22px 26px;margin-bottom:36px;font-size:1.06rem;color:#5C4204}
+.reponse p:last-child{margin-bottom:0}
+.reponse b{color:#3D2B00;font-weight:700}
+
+/* ---------- ruban des 12 mois ---------- */
+.ruban{display:grid;grid-template-columns:repeat(12,1fr);gap:4px;margin:24px 0 10px}
+.ruban a{display:block;text-align:center;padding:12px 2px 10px;border-radius:var(--r-s);
+  font-family:"Manrope",sans-serif;font-size:.74rem;font-weight:700;letter-spacing:.02em;
+  transition:transform .2s var(--ease),box-shadow .2s var(--ease);position:relative}
+.ruban a:hover{transform:translateY(-3px);box-shadow:var(--ombre)}
+.ruban a span{display:block;font-size:.66rem;font-weight:600;opacity:.75;margin-top:3px}
+.ruban .ex{background:var(--teal-fond);color:var(--teal-txt)}
+.ruban .bon{background:#EAF5EE;color:#2F7D4F}
+.ruban .ch{background:var(--chaud-fond);color:var(--chaud)}
+.ruban .br{background:var(--brulant-fond);color:var(--brulant)}
+.legende{display:flex;gap:16px;flex-wrap:wrap;font-family:"Manrope",sans-serif;font-size:.79rem;
+  color:var(--gris);margin-bottom:26px}
+.legende span{display:inline-flex;align-items:center;gap:7px}
+.legende i{width:12px;height:12px;border-radius:3px;display:block}
+
+/* ---------- tableaux ---------- */
+.tab{width:100%;border-collapse:separate;border-spacing:0;font-size:.92rem;margin:0 0 12px;
+  border:1px solid var(--ligne);border-radius:var(--r-l);overflow:hidden;background:#fff}
+.tab th,.tab td{padding:13px 15px;text-align:left;border-bottom:1px solid var(--ligne-2);vertical-align:top}
+.tab thead th{background:var(--nuit-900);color:#fff;font-family:"Archivo",sans-serif;font-weight:600;
+  border-bottom:0;font-size:.92rem;letter-spacing:-.2px}
+.tab tbody th{font-family:"Manrope",sans-serif;font-weight:700;color:var(--noir);width:118px;scroll-margin-top:120px}
+.tab tr:last-child th,.tab tr:last-child td{border-bottom:0}
+.tab tbody tr:hover{background:var(--fond-2)}
+.tab .t{font-family:"Manrope",sans-serif;font-weight:700;white-space:nowrap}
+.et{display:inline-flex;align-items:center;gap:6px;border-radius:var(--r-pill);padding:4px 11px;
+  font-family:"Manrope",sans-serif;font-size:.77rem;font-weight:700;white-space:nowrap}
+.et--ex{background:var(--teal-fond);color:var(--teal-txt)}
+.et--bon{background:#EAF5EE;color:#2F7D4F}
+.et--ch{background:var(--chaud-fond);color:var(--chaud)}
+.et--br{background:var(--brulant-fond);color:var(--brulant)}
+.et--n{background:var(--fond);color:var(--gris)}
+
+/* ---------- images de respiration entre les sections ---------- */
+.fig{margin:40px 0 44px;position:relative}
+.fig a{display:block;overflow:hidden;border-radius:var(--r-l);position:relative}
+.fig img{width:100%;aspect-ratio:16/9;object-fit:cover;transition:transform .7s var(--ease)}
+.fig a:hover img{transform:scale(1.04)}
+.fig a::after{content:"";position:absolute;inset:0;
+  background:linear-gradient(180deg,rgba(11,81,112,0) 55%,rgba(11,81,112,.55) 100%)}
+.fig__sur{position:absolute;left:20px;bottom:16px;z-index:2;color:#fff;font-family:"Manrope",sans-serif;
+  font-size:.84rem;font-weight:700;letter-spacing:.02em;text-shadow:0 2px 12px rgba(11,81,112,.9);
+  display:flex;align-items:center;gap:10px}
+.fig__sur i{width:22px;height:2px;background:var(--or);display:block;border-radius:2px;flex:0 0 auto}
+.fig figcaption{margin-top:12px;font-family:"Manrope",sans-serif;font-size:.85rem;color:var(--gris);
+  line-height:1.6;padding-left:14px;border-left:2px solid var(--or)}
+.fig figcaption b{color:var(--noir);font-weight:700}
+@media (min-width:1025px){
+  .fig{margin-inline:-36px}
+  .fig figcaption{margin-inline:36px}
+}
+
+/* ---------- bande de photos ---------- */
+.bande{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:26px 0 12px}
+.bande a{display:block;position:relative;overflow:hidden;border-radius:var(--r-m)}
+.bande img{width:100%;aspect-ratio:4/5;object-fit:cover;transition:transform .6s var(--ease)}
+.bande a:hover img{transform:scale(1.05)}
+.bande a::after{content:"";position:absolute;inset:0;
+  background:linear-gradient(180deg,rgba(11,81,112,0) 45%,rgba(11,81,112,.72) 100%)}
+.bande b{position:absolute;left:14px;right:14px;bottom:12px;z-index:2;color:#fff;
+  font-family:"Manrope",sans-serif;font-size:.82rem;font-weight:700;line-height:1.35;
+  text-shadow:0 2px 12px rgba(11,81,112,.9)}
+.bande b span{display:block;font-weight:600;font-size:.74rem;color:var(--or-clair);margin-top:3px}
+@media (max-width:600px){
+  .bande{grid-template-columns:1fr 1fr;gap:6px}
+  .bande a:last-child{grid-column:1 / -1}
+  .bande img{aspect-ratio:16/10}
+}
+
+/* ---------- encart ---------- */
+.encart{background:var(--or-fond);border-radius:var(--r-l);padding:24px 26px;margin:34px 0}
+.encart h3{margin-bottom:10px}
+.encart p:last-child{margin-bottom:0}
+
+/* ---------- FAQ ---------- */
+.faq{border-top:1px solid var(--ligne);margin-top:18px}
+.faq details{border-bottom:1px solid var(--ligne)}
+.faq summary{padding:17px 44px 17px 0;font-weight:600;font-size:1rem;cursor:pointer;color:var(--noir);
+  position:relative;list-style:none;display:block;font-family:"Archivo",sans-serif;letter-spacing:-.3px}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";position:absolute;right:8px;top:50%;transform:translateY(-50%);
+  font-size:1.6rem;color:var(--or);font-weight:400;transition:transform .25s var(--ease)}
+.faq details[open] summary::after{transform:translateY(-50%) rotate(45deg)}
+.faq summary:hover{color:var(--teal-txt)}
+.faq__c{padding:0 44px 18px 0;color:var(--texte)}
+.faq__c :last-child{margin-bottom:0}
+
+/* ---------- colonne latérale collante ---------- */
+.art>aside{position:sticky;top:88px}
+.lat{display:grid;gap:16px}
+.lat__b{background:#fff;border:1px solid var(--ligne);border-radius:var(--r-l);padding:22px;
+  position:relative;overflow:hidden}
+.lat__b h4{font-family:"Archivo",sans-serif;font-size:1.04rem;font-weight:600;margin:0 0 12px;letter-spacing:-.4px}
+.lat__b ul{list-style:none;margin:0;padding:0;display:grid;font-family:"Manrope",sans-serif;font-size:.89rem}
+.lat__b li a{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 0;
+  border-bottom:1px solid var(--ligne-2);color:var(--nuit-900);font-weight:600}
+.lat__b li:last-child a{border-bottom:0}
+.lat__b li a:hover{color:var(--teal-txt)}
+.lat__b li a svg{flex:0 0 auto;transition:transform .2s}
+.lat__b li a:hover svg{transform:translateX(3px)}
+.lat--devis{background:var(--nuit-900);border-color:var(--nuit-900);color:#C3D5DA}
+.lat--devis::before{content:"";position:absolute;top:0;left:0;right:0;height:4px;
+  background:linear-gradient(90deg,var(--or),var(--or-clair))}
+.lat--devis h4{color:#fff}
+.lat--devis p{font-size:.9rem;margin-bottom:16px}
+
+/* ---------- cartes guides ---------- */
+.guides{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.guide{display:flex;gap:16px;align-items:center;background:#fff;border:1px solid var(--ligne);
+  border-radius:var(--r-l);padding:14px;transition:transform .25s var(--ease),box-shadow .25s var(--ease)}
+.guide:hover{transform:translateY(-4px);box-shadow:var(--ombre-f)}
+.guide img{width:92px;height:92px;flex:0 0 auto;border-radius:var(--r-m);object-fit:cover}
+.guide b{display:block;font-family:"Archivo",sans-serif;font-size:1rem;font-weight:600;
+  color:var(--noir);letter-spacing:-.4px;margin-bottom:5px}
+.guide span{font-family:"Manrope",sans-serif;font-size:.82rem;color:var(--gris);line-height:1.5}
+
+/* ---------- pied de page ---------- */
+.pied{background:var(--nuit-900);color:#C0D8E2;padding:56px 0 24px;font-size:.9rem}
+.pied h4{font-family:"Manrope",sans-serif;font-size:.73rem;letter-spacing:.15em;text-transform:uppercase;
+  color:var(--or);font-weight:700;margin:0 0 16px}
+.pied__g{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:40px}
+.pied ul{list-style:none;margin:0;padding:0;display:grid;gap:9px}
+.pied a:hover{color:#fff;text-decoration:underline}
+.pied img{height:36px;width:auto;margin-bottom:16px}
+.pied__bas{margin-top:36px;padding-top:20px;border-top:1px solid rgba(255,255,255,.12);
+  display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:.82rem;color:#9BBCCB}
+
+.barre-mob{display:none;position:fixed;bottom:0;left:0;right:0;z-index:75;background:#fff;
+  border-top:1px solid var(--ligne);padding:10px 16px calc(10px + env(safe-area-inset-bottom));
+  gap:10px;align-items:center;box-shadow:0 -6px 20px rgba(11,81,112,.14)}
+
+.aremplir{background:var(--or-fond);border:1px dashed var(--or);color:#7A5605;font-size:.8rem;
+  padding:.1em .5em;border-radius:6px;font-weight:700;font-family:"Manrope",sans-serif}
+
+/* ---------- calque d'annotation ---------- */
+.mm-btn{position:fixed;right:16px;bottom:16px;z-index:90;background:var(--nuit-900);color:#fff;
+  border:0;border-radius:var(--r-pill);padding:11px 18px;font-family:"Manrope",sans-serif;
+  font-size:.82rem;font-weight:700;box-shadow:var(--ombre-f);display:inline-flex;align-items:center;gap:8px}
+.mm-btn b{color:var(--or)}
+body.mm [data-mm]{outline:2px dashed var(--teal-txt);outline-offset:10px;border-radius:4px;position:relative}
+body.mm [data-mm]::before{content:attr(data-mm);position:absolute;top:-16px;left:0;z-index:40;
+  background:var(--teal-txt);color:#fff;font-family:"Manrope",sans-serif;font-size:.68rem;font-weight:700;
+  letter-spacing:.08em;text-transform:uppercase;padding:5px 11px;border-radius:var(--r-pill);white-space:nowrap}
+body.mm [data-mm="Navigation · poids 0,25"]::before{background:var(--gris-clair)}
+body.mm [data-dec]{position:relative}
+body.mm [data-dec]::after{content:attr(data-dec);position:absolute;top:-16px;right:0;z-index:40;
+  font-family:"Manrope",sans-serif;font-size:.68rem;font-weight:700;letter-spacing:.08em;
+  padding:5px 11px;border-radius:var(--r-pill);white-space:nowrap;background:var(--gris-clair);color:#fff}
+body.mm [data-dec="Conservé"]::after{background:#2F7D4F}
+body.mm [data-dec="Nouveau"]::after{background:var(--nuit)}
+body.mm [data-dec="À trancher"]::after{background:#B4402A}
+body.mm .mm-legende{display:block}
+.mm-legende{display:none;background:var(--nuit-900);color:#D5E3E7;border-radius:var(--r-l);padding:18px 22px;
+  margin-top:22px;font-family:"Manrope",sans-serif;font-size:.85rem;line-height:1.7}
+.mm-legende b{color:var(--or)}
+
+[data-rev]{opacity:0;transform:translateY(18px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+[data-rev].vu{opacity:1;transform:none}
+
+@media (max-width:1200px){
+  .art{grid-template-columns:1fr 300px}
+  .som{display:none}
+}
+@media (max-width:1024px){
+  .art{grid-template-columns:1fr;gap:34px}
+  .art>aside{position:static}
+  .guides{grid-template-columns:1fr}
+  .pied__g{grid-template-columns:1fr 1fr}
+  .ruban{grid-template-columns:repeat(6,1fr)}
+}
+@media (max-width:860px){
+  .nav{display:none}
+  .burger{display:inline-flex}
+  .barre-mob{display:flex}
+  body{padding-bottom:80px}
+  .pied__g{grid-template-columns:1fr}
+  .bandeau .wrap{justify-content:center}
+  .eyebrow{display:block}
+  .eyebrow::before{display:block;margin-bottom:8px}
+  .ruban{grid-template-columns:repeat(4,1fr)}
+  .tab{display:block;overflow-x:auto;white-space:nowrap}
+  .mm-btn{right:12px;bottom:88px;padding:9px 14px;font-size:.76rem}
+}
+@media (prefers-reduced-motion:reduce){
+  [data-rev]{opacity:1 !important;transform:none !important}
+  *{animation-duration:.01ms !important;transition-duration:.01ms !important;scroll-behavior:auto !important}
+}
+
+/* ===== AE-MOBILE : début du bloc généré — ne pas éditer à la main ===== */
+/* ------------------------------------------------------------------
+   NOTES DE PRODUCTION
+   Les paragraphes d'avertissement portaient leur taille en style en
+   ligne (font-size:.86rem), qu'aucune feuille ne peut battre. La taille
+   est passée dans cette classe ; l'attribut ne garde que la couleur.
+   ------------------------------------------------------------------ */
+.note{font-size:.9rem;line-height:1.6}
+
+/* ------------------------------------------------------------------
+   PLANCHER MOBILE
+   Retour cliente du 24/08/2026, mesuré au navigateur à 375/390/412 px.
+
+   Trois choses, et rien d'autre :
+   1. plus aucun texte sous 15 px — ils descendaient à 11,2 px ;
+   2. toute cible tactile isolée fait au moins 44 px de haut ;
+   3. la barre fixe du bas ne recouvre plus la fin de la page.
+
+   Le seuil est à 900 px, pas 700 : mesuré, une tablette en portrait
+   (768 px) gardait les tailles du bureau, jusqu'à 11,5 px.
+
+   Les liens en ligne dans un paragraphe gardent leur hauteur : les
+   agrandir casserait l'interligne, et la règle des 44 px ne s'applique
+   pas à eux.
+   ------------------------------------------------------------------ */
+@media (max-width:900px){
+
+  /* 1 ─ Texte ------------------------------------------------------ */
+  body{font-size:17px;line-height:1.7}
+
+  h1{font-size:clamp(1.85rem,7.2vw,2.3rem);letter-spacing:-1px;line-height:1.18}
+  h2{font-size:clamp(1.42rem,5.6vw,1.8rem);letter-spacing:-.5px}
+  h3{font-size:1.12rem}
+  h4{font-size:1.02rem}
+
+  .eyebrow{font-size:.88rem;letter-spacing:.12em}
+  .lede,.chapeau p,.chapeau .sous,.reponse,.encart,.alerte{font-size:1.04rem}
+
+  /* Tout ce qui descendait sous 15 px remonte au même palier. */
+  .bandeau,.ariane,.compte,.legende,.legende span,
+  .pied,.pied__bas,.pied ul,.mm-legende,.aremplir,
+  .carte__route,.carte__meta,.carte__tag,.puce,.prix,.prix small,.prix i,
+  .fille__nb,.fille__txt span,.guide span,.guide b,
+  .gens span,.avis footer,.avis blockquote,.avis .et,
+  .chapeau__st,.chapeau__meta,
+  .tab,.tab th,.tab td,.et,.jours,.choix,.choix th,.choix td,
+  .tag-a,.fbtn,.fbtn .n,.filtres__d,.fpan label,.fpan label span,
+  .route span,.route em,.route b,
+  .som,.som a,.som h4,.lat__b,.lat__b ul,.lat__b li a,.lat__b p,
+  .resa,.resa ul,.resa li,.resa .prix small,.resa .prix i,
+  .incl,.incl ul,.incl li,.jour p,.etape p,.etape h4,
+  .fig figcaption,.galerie__leg,.galerie__plus,
+  .faq__c,.moment,.duree,.site p,.site__meta,
+  .compo__phrase,.compo__t p,.champ>span,.opts,
+  .ruban a,.ruban a span,
+  small,.lien-fl,.lien-txt,
+  /* Ces trois-là gagnent contre `h4` seul : leur règle porte une classe. */
+  .som h4,.pied h4,.lat__b h4,.incl h3,
+  .quand,.etape .quand,.fig__sur,.mm-btn,
+  .choix tbody th,.choix thead th,.tab tbody th,.tab thead th,
+  .jours tbody th,.jours thead th,
+  .prix i,.resa .prix i,.resa .prix small,
+  .carte__pied,.filtres label,.compo__res,
+  .galerie a:first-child .galerie__leg,
+  .avis .et,.reperes .km,.site h3,
+  /* Derniers relevés à la sonde, à 375 et 768 px. */
+  .note,.jeton,.ini,.opt,.vers,.etape .vers,.vign span,.vign b,
+  .devis__act small,.resa-mob .p small,.resa-mob .p i,
+  .bande b,.bande b span,.figcaption,.fig figcaption b,
+  .som h4,.compte,.chapeau__meta span{font-size:.95rem}
+
+  /* Le ruban des douze mois est le seul endroit où l'on peut serrer :
+     il est décoratif, et le tableau qui suit dit la même chose en clair. */
+  .ruban a{font-size:.95rem;padding:13px 2px 11px}
+  .ruban a span{font-size:.9rem}
+
+  .faq summary{font-size:1.06rem;padding-right:42px}
+  .faq__c{padding-right:0}
+
+  /* 2 ─ Cibles tactiles -------------------------------------------- */
+  /* 44 px : la hauteur d'un doigt. On ne l'applique qu'aux cibles
+     isolées — un lien au milieu d'une phrase garde sa hauteur. */
+  .btn{font-size:1rem;padding:15px 24px;min-height:48px}
+  .btn--sm{font-size:.95rem;padding:13px 20px;min-height:46px}
+
+  .nav>a,.menu__pan a,.burger,
+  .pied li a,.lat__b li a,.som a,
+  .filtres button,.fbtn,.fpan label,.filtres__d select,
+  .opt,.mm-btn,.tri,#tri,
+  .lien-fl,.vers,.remonte,.carte .lien-fl,
+  .faq summary,.guide,.carte h3 a{
+    min-height:44px;
+    display:flex;
+    align-items:center;
+  }
+  .som a,.pied li a,.lat__b li a{padding-top:9px;padding-bottom:9px}
+  .opt{padding:11px 16px;justify-content:center}
+  .fpan label{padding:11px 10px}
+  .mm-btn{padding:11px 16px}
+  .carte h3 a,.guide{display:block} /* ces deux-là englobent déjà leur cible */
+  .faq summary{display:block;padding-top:19px;padding-bottom:19px}
+
+  /* Les cartes entières sont cliquables : rien à agrandir dedans. */
+  a.carte,a.guide,a.fille,a.une{min-height:0}
+
+  /* Le logo doit rester une cible confortable. */
+  .logo img{height:44px}
+}
+
+/* 3 ─ Barre fixe du bas ---------------------------------------------
+   Elle n'apparaît qu'en dessous de 860 px : le rembourrage ne vaut
+   que là, sinon il ajoute du vide en bas de page sur tablette. */
+@media (max-width:860px){
+  body{padding-bottom:calc(96px + env(safe-area-inset-bottom))}
+}
+
+/* Écrans très étroits : on desserre les gouttières avant le texte. */
+@media (max-width:380px){
+  .wrap{width:calc(100% - 28px)}
+  .btn{padding:15px 18px}
+}
+/* ===== AE-MOBILE : fin du bloc généré ===== */
+/* (17)(18)(12) Mélanie : l'appel au devis du menu doit ressortir. Or foncé,
+   réservé à ce bouton — le reste du site garde l'or de la charte. */
 header .nav>a.btn--or,header .nav>a.btn--or[aria-current]{background:#E08A00;border-color:#E08A00;color:#fff}
-header .nav>a.btn--or:hover{background:#C87700;border-color:#C87700}
+header .nav>a.btn--or:hover{background:#C87700;border-color:#C87700;box-shadow:0 10px 24px rgba(224,138,0,.42)}
+
+.src{margin:0 0 24px;padding:11px 15px;background:var(--or-fond);border-radius:var(--r-s);font-size:.86rem;color:#7A5605;line-height:1.5}
+.src a{color:inherit}
 </style>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[
+{"@type":"BreadcrumbList","itemListElement":[
+{"@type":"ListItem","position":1,"name":"Accueil","item":"https://authentiquegypte.com/"},
+{"@type":"ListItem","position":2,"name":"Guides pratiques","item":"https://authentiquegypte.com/notre-blog/"},
+{"@type":"ListItem","position":3,"name":"Quand partir en Égypte","item":"https://authentiquegypte.com/quand-partir-en-egypte/"}]},
+{"@type":"Article","headline":"Quand partir en Égypte ? Météo et périodes idéales selon vos envies","description":"Mois par mois : conditions météo, régions à privilégier et périodes à éviter pour organiser votre voyage en Égypte.","author":{"@type":"Organization","name":"Authentique Égypte","url":"https://authentiquegypte.com/qui-sommes-nous/"},"publisher":{"@type":"TravelAgency","name":"Authentique Égypte","url":"https://authentiquegypte.com/"}},
+{"@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"Quelle est la meilleure période globale pour visiter l'Égypte ?","acceptedAnswer":{"@type":"Answer","text":"La période idéale se situe entre octobre et avril : températures douces, climat agréable et rythme adapté pour les visites."}},
+{"@type":"Question","name":"Quand éviter la foule en Égypte ?","acceptedAnswer":{"@type":"Answer","text":"Janvier, février et novembre sont les mois les plus calmes, hors vacances scolaires."}},
+{"@type":"Question","name":"Est-ce possible de voyager en Égypte en été ?","acceptedAnswer":{"@type":"Answer","text":"Oui. Nous privilégions la mer Rouge : la plongée est possible toute l'année avec une combinaison, tandis que le snorkeling et le farniente sont plus agréables d'avril à novembre. Et si vous tenez au Caire, à Louxor ou à Assouan, nous adaptons les visites — tôt le matin et en fin de journée — pour que la chaleur reste tenable."}},
+{"@type":"Question","name":"Quelle période privilégier pour un voyage en famille en Égypte ?","acceptedAnswer":{"@type":"Answer","text":"Février, avril, octobre et décembre correspondent aux vacances scolaires et offrent de bonnes conditions climatiques, mais il faut anticiper car l'affluence est forte. En février et en décembre, évitez la mer Rouge : l'eau est trop fraîche pour la baignade."}},
+{"@type":"Question","name":"Peut-on combiner plusieurs régions en 10 à 12 jours ?","acceptedAnswer":{"@type":"Answer","text":"Oui : un itinéraire classique combine Le Caire, une croisière sur le Nil (Louxor et Assouan) et 2 à 3 jours de détente en mer Rouge."}}]}]}</script>
 </head>
 <body>
+
+<div class="bandeau">
+  <div class="wrap">
+    <span>Agence locale basée au Caire · <strong>Réponse sous 48 h</strong> <small>(hors vendredi et samedi)</small></span>
+    <span style="display:flex;gap:20px;flex-wrap:wrap">
+      <a href="mailto:contact@authentiquegypte.com">✉ contact@authentiquegypte.com</a>
+      <a href="https://wa.me/201066619098">WhatsApp +20 106 661 9098</a>
+    </span>
+  </div>
+</div>
 
 <header class="entete">
   <div class="wrap">
@@ -106,7 +547,7 @@ header .nav>a.btn--or:hover{background:#C87700;border-color:#C87700}
           <a href="https://authentiquegypte.com/voyage-pmr-en-egypte/"><span>Voyage PMR en Égypte<small>Sites accessibles, véhicule adapté</small></span></a>
         </div>
       </div>
-      <a href="blog.html">Guides</a>
+      <a href="blog.html" aria-current="page">Guides</a>
       <a href="qui-sommes-nous.html">L'agence</a>
       <a href="devis.html" class="btn btn--or btn--sm" style="margin-left:10px">Obtenir mon devis</a>
     </nav>
@@ -115,72 +556,79 @@ header .nav>a.btn--or:hover{background:#C87700;border-color:#C87700}
 </header>
 
 <main>
-
 <section class="chapeau">
-  
-  <div class="wrap">
-    <nav class="ariane" aria-label="Fil d'Ariane"><ol>
-      <li><a href="../index.html">Accueil</a></li>
-      <li><span aria-current="page">Voyager en Égypte en fauteuil roulant…</span></li>
-    </ol></nav>
-    <p class="eyebrow eyebrow--clair">Guide pratique</p>
-    <h1>Voyager en Égypte en fauteuil roulant : est-ce possible ? Le guide complet 2025</h1>
-    <p class="sous">Nous organisons des voyages sur mesure 100% accessibles aux personnes à mobilité réduite. Grâce à nos partenaires locaux et à une logistique adaptée, vous pouvez découvrir temples, musées et paysages égyptiens dans des conditions confortables et sécurisées.</p>
-    
-  </div>
+
+<div class="wrap">
+<nav class="ariane" aria-label="Fil d'Ariane"><ol>
+<li><a href="../index.html">Accueil</a></li>
+<li><a href="https://authentiquegypte.com/notre-blog/">Guides pratiques</a></li>
+<li><span aria-current="page">Voyager en Égypte en fauteuil roulant…</span></li>
+</ol></nav>
+<h1>Voyager en Égypte en fauteuil roulant : est-ce possible ? Le guide complet 2025</h1>
+<p class="sous">Nous organisons des voyages sur mesure 100% accessibles aux personnes à mobilité réduite. Grâce à nos partenaires locaux et à une logistique adaptée, vous pouvez découvrir temples, musées et paysages égyptiens dans des conditions confortables et sécurisées.</p>
+</div>
 </section>
-<section class="section">
-  <div class="wrap">
-    <p class="src">Contenu repris de <a href="https://authentiquegypte.com/voyager-en-egypte-fauteuil-roulant/">https://authentiquegypte.com/voyager-en-egypte-fauteuil-roulant/</a>, sans réécriture. Seule la mise en page change.</p>
-    <div class="deux">
-      <div class="corps">
-        <nav class="sommaire" aria-label="Sommaire"><b>Sur cette page</b><ol><li><a href="#s1">Sites accessibles</a></li><li><a href="#s2">Expériences adaptées</a></li><li><a href="#s3">Hébergements accessibles</a></li><li><a href="#s4">Transport recommandé</a></li><li><a href="#s5">Accompagnement humain</a></li><li><a href="#s6">Sécurité et assistance 24h/24</a></li><li><a href="#s7">En résumé</a></li></ol></nav>
-        <p>Nous organisons des voyages sur mesure 100% accessibles aux personnes à mobilité réduite. Grâce à nos partenaires locaux et à une logistique adaptée, vous pouvez découvrir temples, musées et paysages égyptiens dans des conditions confortables et sécurisées.</p>
+
+<div class="wrap">
+<div class="art">
+<nav class="som" aria-label="Sommaire"><h4>Sur cette page</h4><ol><li><a href="#s1">Sites accessibles</a></li><li><a href="#s2">Expériences adaptées</a></li><li><a href="#s3">Hébergements accessibles</a></li><li><a href="#s4">Transport recommandé</a></li><li><a href="#s5">Accompagnement humain</a></li><li><a href="#s6">Sécurité et assistance 24h/24</a></li><li><a href="#s7">En résumé</a></li></ol></nav>
+<article class="corps">
+<p class="src">Contenu repris de <a href="https://authentiquegypte.com/voyager-en-egypte-fauteuil-roulant/">https://authentiquegypte.com/voyager-en-egypte-fauteuil-roulant/</a>, sans réécriture&nbsp;: seule la mise en page change.</p>
+<p class="lede">Nous organisons des voyages sur mesure 100% accessibles aux personnes à mobilité réduite. Grâce à nos partenaires locaux et à une logistique adaptée, vous pouvez découvrir temples, musées et paysages égyptiens dans des conditions confortables et sécurisées.</p>
 <h2 id="s1">Sites accessibles</h2>
-<p>De nombreux sites historiques et culturels peuvent être intégrés à votre programme :</p>
+<p class="">De nombreux sites historiques et culturels peuvent être intégrés à votre programme :</p>
 <ul><li>Pyramides de Gizeh (esplanade avec assistance)</li><li>Musée national de la civilisation égyptienne (Caire)</li><li>Musée égyptien (salles principales accessibles)</li><li>Temples de Louxor et Karnak (rampe et accompagnement)</li><li>Temple de Philae à Assouan (zones accessibles en bateau adapté)</li><li>Promenades urbaines au Caire, à Louxor ou à Assouan</li><li>Souks comme Khan el-Khalili (zones principales accessibles)</li></ul>
 <h2 id="s2">Expériences adaptées</h2>
-<p>Nous proposons des activités accessibles et confortables, adaptées aux voyageurs en fauteuil roulant :</p>
+<p class="">Nous proposons des activités accessibles et confortables, adaptées aux voyageurs en fauteuil roulant :</p>
 <ul><li>Croisières sur le Nil avec cabines aménagées PMR</li><li>Séjours en Mer Rouge avec accès tiralo pour la baignade</li><li>Ateliers culturels (hiéroglyphes, artisanat, cuisine locale)</li><li>Spectacles Son &amp; Lumières aux pyramides ou dans les temples</li></ul>
-<p>⚠️ Certaines expériences restent difficiles d’accès : désert en 4x4, felouque traditionnelle (possible en version aménagée ou dîner au quai).</p>
+<p class="">⚠️ Certaines expériences restent difficiles d’accès : désert en 4x4, felouque traditionnelle (possible en version aménagée ou dîner au quai).</p>
 <h2 id="s3">Hébergements accessibles</h2>
-<p>Nous sélectionnons soigneusement vos hébergements et bateaux :</p>
+<p class="">Nous sélectionnons soigneusement vos hébergements et bateaux :</p>
 <ul><li>Chambres et cabines PMR avec rampe ou ascenseur</li><li>Salles de bain adaptées avec barres d’appui</li><li>Accès direct aux restaurants, piscines et espaces communs</li></ul>
 <h2 id="s4">Transport recommandé</h2>
-<p>L’option la plus confortable et sécurisée reste le voyage par la route avec chauffeur privé et guide francophone.</p>
+<p class="">L’option la plus confortable et sécurisée reste le voyage par la route avec chauffeur privé et guide francophone.</p>
 <ul><li>Véhicules équipés de rampes disponibles sur demande</li><li>Trains et bateaux locaux : accessibilité très limitée, donc déconseillés</li></ul>
 <h2 id="s5">Accompagnement humain</h2>
-<p>Nous distinguons deux rôles essentiels :</p>
+<p class="">Nous distinguons deux rôles essentiels :</p>
 <ul><li>Le guide francophone : pour les explications culturelles et les visites</li><li>L’accompagnant aidant : pour l’aide pratique (déplacements, transferts, assistance quotidienne)</li></ul>
 <h2 id="s6">Sécurité et assistance 24h/24</h2>
-<p>Votre tranquillité d’esprit est notre priorité :</p>
+<p class="">Votre tranquillité d’esprit est notre priorité :</p>
 <ul><li>Présence de représentants dans chaque destination</li><li>Accès direct à des médecins et pharmacies locales</li><li>Assistance disponible 24h/24 pendant tout le séjour</li></ul>
 <h3 id="s7">En résumé</h3>
-<p>Un voyage PMR en Égypte demande une organisation rigoureuse. Avec nos équipes locales, des hébergements et transports adaptés, ainsi qu’un accompagnement humain dédié, vous voyagez l’esprit libre et profitez pleinement de chaque étape.</p>
-      </div>
-      <aside class="flanc">
-        <div class="encart">
-          <h3>Un projet de voyage&nbsp;?</h3>
-          <p style="font-size:.94rem;color:var(--texte);margin:0 0 16px">Nous construisons
-            l'itinéraire avec vous, selon vos dates et votre rythme.</p>
-          <a href="https://authentiquegypte.com/sur-mesure/" class="btn btn--or btn--bloc btn--sm">Demander mon devis</a>
-        </div>
-        <div class="encart">
-          <h3>À lire aussi</h3>
-          <ul><li><a href="../blog.html" class="lien-txt">Tous nos guides pratiques</a></li></ul>
-        </div>
-      </aside>
+<p class="">Un voyage PMR en Égypte demande une organisation rigoureuse. Avec nos équipes locales, des hébergements et transports adaptés, ainsi qu’un accompagnement humain dédié, vous voyagez l’esprit libre et profitez pleinement de chaque étape.</p>
+<div class="encart">
+<h3>Envie de partir&nbsp;?</h3>
+<p>Nous construisons l'itinéraire avec vous, selon vos dates et votre rythme. Réponse sous 48&nbsp;h, hors vendredi et samedi.</p>
+<p style="margin-top:14px"><a href="https://authentiquegypte.com/sur-mesure/" class="btn btn--nuit btn--sm">Demander mon devis</a></p>
+</div>
+</article>
+</div>
+</div>
+
+<!-- QUESTIONS SŒURS — après le bloc de conversion -->
+<section class="section section--fond">
+  <div class="wrap">
+    <p class="eyebrow">À lire aussi</p>
+    <h2 style="margin-bottom:14px">Les autres guides avant de partir</h2>
+    <p class="lede" style="margin-bottom:28px;max-width:62ch">Écrits par l'équipe au Caire, dans la même série.</p>
+    <div class="guides" data-mm="Questions sœurs · après le CTA · poids 0,25">
+      <a class="guide" href="https://authentiquegypte.com/comment-shabiller-en-egypte/">
+        <img src="https://authentiquegypte.com/wp-content/uploads/2023/11/kristina-tamasauskaite-bVRArO7LwB0-unsplash.jpg" alt="" loading="lazy" decoding="async">
+        <span><b>Comment s'habiller en Égypte</b><span>Ce qu'il faut dans la valise selon la saison et les sites visités.</span></span></a>
+      <a class="guide" href="https://authentiquegypte.com/securite-en-egypte-en-2026/">
+        <img src="https://authentiquegypte.com/wp-content/uploads/2023/11/e235bfb4-54a3-41cf-9f55-f2ca30fc8a91-1.jpg" alt="" loading="lazy" decoding="async">
+        <span><b>La sécurité en Égypte en 2026</b><span>Les zones surveillées, et celles que nous n'organisons pas.</span></span></a>
+      <a class="guide" href="https://authentiquegypte.com/passeport-egypte/">
+        <img src="https://authentiquegypte.com/wp-content/uploads/2023/11/flying-carpet-Si1MFhSLNWY-unsplash.jpg" alt="" loading="lazy" decoding="async">
+        <span><b>Passeport et visa pour l'Égypte</b><span>E-visa ou visa à l'arrivée : la marche à suivre, étape par étape.</span></span></a>
+    </div>
+    <p style="margin-top:22px"><a href="https://authentiquegypte.com/notre-blog/" class="lien-txt">Voir tous les guides pratiques</a></p>
+    <div class="mm-legende">
+      <b>Questions sœurs placées après le bloc de conversion</b> — le guide renvoie d'abord vers l'offre, ensuite seulement vers d'autres lectures.
+      Le lien remontant vers le hub <i>Guides pratiques</i> est porté par le fil d'Ariane, absent de la page actuelle.
     </div>
   </div>
 </section>
-<section class="section section--nuit">
-  <div class="wrap" style="text-align:center">
-    <h2 style="color:#fff;margin-bottom:14px">Prêt à partir ?</h2>
-    <p class="lede" style="color:#C3D5DA;max-width:58ch;margin:0 auto 26px">Un conseiller vous répond sous 48 h, hors vendredi et samedi.</p>
-    <a href="https://authentiquegypte.com/sur-mesure/" class="btn btn--or">Demander mon devis</a>
-  </div>
-</section>
-
 </main>
 
 <footer class="pied">
@@ -232,5 +680,62 @@ header .nav>a.btn--or:hover{background:#C87700;border-color:#C87700}
     </div>
   </div>
 </footer>
+
+<div class="barre-mob">
+  <a href="https://wa.me/201066619098" class="btn btn--fantome btn--sm" style="flex:0 0 auto">WhatsApp</a>
+  <a href="https://authentiquegypte.com/sur-mesure/" class="btn btn--or" style="flex:1">Demander mon devis</a>
+</div>
+
+<button class="mm-btn" id="mm-btn" type="button" aria-pressed="false">Annotations <b>OFF</b></button>
+
+<script>
+document.querySelector('.burger')?.addEventListener('click',e=>{
+  const n=document.querySelector('.nav');
+  const o=getComputedStyle(n).display!=='none';
+  n.style.display=o?'none':'flex';
+  n.style.position='absolute';n.style.top='66px';n.style.left='20px';n.style.right='20px';
+  n.style.flexDirection='column';n.style.alignItems='stretch';n.style.background='#fff';
+  n.style.border='1px solid var(--ligne)';n.style.borderRadius='20px';n.style.padding='12px';
+  n.style.boxShadow='var(--ombre-f)';
+  e.currentTarget.setAttribute('aria-expanded',String(!o));
+});
+</script>
+<script>
+/* sommaire : mise en avant de la section lue */
+(function(){
+  const liens=[...document.querySelectorAll('.som a')];
+  const cibles=liens.map(a=>document.querySelector(a.getAttribute('href'))).filter(Boolean);
+  if(!cibles.length)return;
+  function maj(){
+    let actif=null;
+    for(const c of cibles){ if(c.getBoundingClientRect().top<=150) actif=c; }
+    liens.forEach(a=>a.removeAttribute('aria-current'));
+    if(actif){ const l=liens.find(a=>a.getAttribute('href')==='#'+actif.id); if(l)l.setAttribute('aria-current','true'); }
+  }
+  window.addEventListener('scroll',maj,{passive:true}); maj();
+})();
+</script>
+<script>
+/* révélation au défilement */
+(function(){
+  if(!('IntersectionObserver' in window))return;
+  const cibles=document.querySelectorAll('.corps>*,.ruban,.legende,.lat__b,.guide,.section .eyebrow,.section h2');
+  const io=new IntersectionObserver(es=>{
+    es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('vu'); io.unobserve(e.target); } });
+  },{threshold:.06,rootMargin:'0px 0px -40px 0px'});
+  cibles.forEach((el,n)=>{ el.setAttribute('data-rev','');
+    el.style.transitionDelay=(Math.min(n%4,3)*60)+'ms'; io.observe(el); });
+})();
+</script>
+<script>
+(function(){
+  const b=document.getElementById('mm-btn');
+  b.addEventListener('click',()=>{
+    const on=document.body.classList.toggle('mm');
+    b.setAttribute('aria-pressed',String(on));
+    b.innerHTML='Annotations <b>'+(on?'ON':'OFF')+'</b>';
+  });
+})();
+</script>
 </body>
 </html>

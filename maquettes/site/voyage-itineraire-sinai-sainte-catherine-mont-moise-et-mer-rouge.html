@@ -2,64 +2,499 @@
 <html lang="fr">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="icon" href="https://authentiquegypte.com/wp-content/uploads/2026/08/authentique-egypte-logo-transparent.webp">
 <title>Du littoral de la mer Rouge aux montagnes du Sinaï — Authentique Égypte</title>
-<meta name="description" content="Dans cette excursion de 8 jours, découvrez la variété des paysages qu’offre le Sinaï à ceux qui s’y aventurent. Des coraux multicolores de la mer Rouge…">
 <meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Dans cette excursion de 8 jours, découvrez la variété des paysages qu’offre le Sinaï à ceux qui s’y aventurent. Des coraux multicolores de la mer Rouge…">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../assets/charte.css">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;500;600;700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-/* Repères propres aux pages reprises du site. */
-.chapeau + .section{padding-top:38px}
-.src{margin:0 0 26px;padding:11px 15px;background:var(--or-fond);border-radius:var(--r-s);
-  font-size:.86rem;color:#7A5605;line-height:1.5}
-.src a{color:inherit}
-.corps{max-width:74ch}
-.corps h2{font-size:clamp(1.4rem,2.4vw,1.85rem);margin:44px 0 14px}
-.corps h3{font-size:1.16rem;margin:30px 0 10px}
-.corps p{margin:0 0 16px;line-height:1.75}
-.corps ul{margin:0 0 18px;padding-left:1.1rem}
-.corps li{margin:0 0 8px;line-height:1.65}
-.corps figure{margin:26px 0}
-.corps figure img{width:100%;border-radius:var(--r-m);display:block}
-.corps figcaption{margin-top:9px;font-size:.86rem;color:var(--gris)}
-.sommaire{background:var(--fond-2);border:1px solid var(--ligne);border-radius:var(--r-m);
-  padding:20px 24px;margin:0 0 34px}
-.sommaire b{display:block;font-size:.78rem;text-transform:uppercase;letter-spacing:.08em;
-  color:var(--gris);margin-bottom:10px}
-.sommaire ol{margin:0;padding-left:1.1rem}
-.sommaire li{margin:0 0 6px}
-.deux{display:grid;grid-template-columns:1fr 340px;gap:44px;align-items:start}
-.flanc{position:sticky;top:88px;display:grid;gap:18px}
-.encart{background:#fff;border:1px solid var(--ligne);border-radius:var(--r-m);padding:22px 24px;
-  box-shadow:var(--ombre)}
-.encart h3{margin:0 0 12px;font-size:1.02rem}
-.encart ul{margin:0;padding-left:1.05rem;font-size:.94rem;color:var(--texte)}
-.encart li{margin:0 0 7px}
-.tab-cadre{overflow-x:auto;margin:26px 0;-webkit-overflow-scrolling:touch}
-.tab{width:100%;border-collapse:collapse;font-size:.95rem;min-width:520px}
-.tab th,.tab td{padding:11px 14px;border-bottom:1px solid var(--ligne);text-align:left;vertical-align:top}
-.tab thead th{background:var(--fond-2);font-size:.8rem;text-transform:uppercase;
-  letter-spacing:.06em;color:var(--gris);border-bottom:2px solid var(--ligne)}
-.tab tbody th{font-weight:700;color:var(--noir)}
-.tab tbody tr:last-child th,.tab tbody tr:last-child td{border-bottom:0}
-.galerie{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:14px;margin:26px 0}
-.galerie img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:var(--r-m);display:block}
-.chiffres{display:flex;flex-wrap:wrap;gap:10px;margin:0 0 26px}
-.chiffres span{background:var(--teal-fond);color:var(--teal-txt);border-radius:var(--r-pill);
-  padding:7px 15px;font-size:.9rem;font-weight:600}
-@media (max-width:900px){
-  .deux{grid-template-columns:1fr;gap:30px}
-  .flanc{position:static}
-  .corps p,.corps li{font-size:1rem}
+/* ============================================================
+   CHARTE — relevée le 21/08/2026 sur authentiquegypte.com
+   or #FBB50E · bleu #167FA4 · bleu profond #0B5170 (fonds à texte)
+   noir #000000 · texte #5D5D5D · crème #FEEDDC
+   Archivo (titres + corps) · Manrope (accents)
+
+   CONTENU : repris à l'identique de la page
+   /programs/excursion-a-loasis-de-siwa/ relevée le 21/08/2026.
+   Rien n'est réécrit ; les manques sont signalés en jaune.
+   ============================================================ */
+:root{
+  --nuit:#167FA4; --nuit-900:#0B5170; --nuit-700:#1C93BC;
+  --or:#FBB50E; --or-clair:#FFD958; --or-fond:#FEEDDC;
+  --teal:#21B0B7; --teal-txt:#0F6E73; --teal-fond:#E8F7F8;
+  --papier:#FFFFFF; --fond:#F9F9FB; --fond-2:#F6FAFE;
+  --noir:#000000; --texte:#5D5D5D; --gris:#6E7680; --gris-clair:#88929C;
+  --ligne:#E4E4EA; --ligne-2:#F1F1F5;
+  --r-s:8px; --r-m:14px; --r-l:20px; --r-pill:999px;
+  --ombre:0 1px 2px rgba(11,81,112,.06),0 8px 24px rgba(11,81,112,.08);
+  --ombre-f:0 2px 6px rgba(11,81,112,.10),0 18px 44px rgba(11,81,112,.16);
+  --max:1200px;
+  --ease:cubic-bezier(.22,.61,.36,1);
 }
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:100px}
+body{margin:0;background:var(--papier);color:var(--texte);
+  font-family:"Archivo",system-ui,-apple-system,"Segoe UI",sans-serif;
+  font-size:17px;font-weight:300;line-height:1.75;letter-spacing:.2px;-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block;background:var(--fond)}
+[hidden]{display:none !important}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;cursor:pointer}
+h1,h2,h3,h4{font-family:"Archivo",Georgia,serif;font-weight:600;line-height:1.25;margin:0;color:var(--noir);letter-spacing:-.8px}
+h1{font-size:clamp(1.9rem,3.4vw,2.6rem);letter-spacing:-1.3px;line-height:1.18}
+h2{font-size:clamp(1.45rem,2.4vw,1.9rem)}
+h3{font-size:clamp(1.05rem,1.6vw,1.2rem);letter-spacing:-.4px}
+h4{font-size:1.02rem}
+p{margin:0 0 1em}
+:focus-visible{outline:3px solid var(--or);outline-offset:3px;border-radius:4px}
+.wrap{width:min(100% - 40px,var(--max));margin-inline:auto}
+.eyebrow{font-family:"Manrope",sans-serif;font-size:.74rem;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--teal-txt);font-weight:700;margin:0 0 12px;display:flex;align-items:center;gap:12px}
+.eyebrow::before{content:"";width:28px;height:2px;background:var(--or);flex:0 0 auto;border-radius:2px}
+.eyebrow--clair{color:var(--or)}
+.lede{font-size:clamp(1rem,1.3vw,1.08rem);color:var(--texte)}
+.lien-txt{color:var(--teal-txt);font-weight:600;text-decoration:underline;text-underline-offset:3px}
+.bloc-t{margin-top:52px}
+
+/* ---------- boutons ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;
+  font-family:"Manrope",sans-serif;padding:14px 26px;border-radius:var(--r-pill);
+  border:1.5px solid transparent;font-weight:700;font-size:.94rem;letter-spacing:.2px;
+  transition:all .22s var(--ease);white-space:nowrap}
+.btn--or{background:var(--or);color:#3D2B00;border-color:var(--or)}
+.btn--or:hover{background:var(--or-clair);border-color:var(--or-clair);transform:translateY(-2px);
+  box-shadow:0 10px 24px rgba(251,181,14,.38)}
+.btn--fantome{background:transparent;color:var(--nuit);border-color:var(--ligne)}
+.btn--fantome:hover{border-color:var(--nuit);background:#fff}
+.btn--wa{background:#25D366;color:#06341A;border-color:#25D366}
+.btn--wa:hover{background:#1FBF5A;transform:translateY(-2px)}
+.btn--bloc{width:100%}
+.btn--sm{padding:10px 18px;font-size:.86rem}
+
+/* ---------- header ---------- */
+.bandeau{background:var(--nuit-900);color:#C0D8E2;font-size:.82rem;font-family:"Manrope",sans-serif}
+.bandeau .wrap{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:9px 0;flex-wrap:wrap}
+.bandeau a:hover{color:var(--or-clair)}
+.bandeau strong{color:var(--or-clair);font-weight:700}
+.entete{position:sticky;top:0;z-index:60;background:rgba(255,255,255,.95);
+  backdrop-filter:blur(14px);border-bottom:1px solid var(--ligne-2)}
+.entete .wrap{display:flex;align-items:center;gap:24px;padding:10px 0;min-height:66px}
+.logo{flex:0 0 auto;display:block}
+.logo img{height:38px;width:auto}
+.nav{display:flex;gap:2px;margin-left:auto;align-items:center;font-family:"Manrope",sans-serif}
+.nav>a,.nav>.menu>button{display:inline-flex;align-items:center;gap:6px;padding:10px 13px;
+  border-radius:var(--r-pill);font-size:.92rem;font-weight:600;color:var(--nuit);background:none;border:0;
+  transition:background .18s}
+.nav>a:hover,.nav>.menu>button:hover{background:var(--fond)}
+.nav>.menu>button[aria-current]{background:var(--or-fond);font-weight:700;color:var(--noir)}
+.menu{position:relative}
+.menu__pan{position:absolute;top:calc(100% + 10px);left:50%;transform:translateX(-50%) translateY(-6px);
+  background:#fff;border:1px solid var(--ligne);border-radius:var(--r-l);box-shadow:var(--ombre-f);
+  padding:12px;min-width:340px;opacity:0;visibility:hidden;transition:all .2s var(--ease)}
+.menu:hover .menu__pan,.menu:focus-within .menu__pan{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0)}
+.menu__pan a{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:var(--r-m);
+  font-size:.91rem;font-weight:600;color:var(--nuit)}
+.menu__pan a:hover{background:var(--or-fond)}
+.menu__pan a[aria-current]{background:var(--or-fond);outline:1.5px solid var(--or)}
+.menu__pan i{width:34px;height:34px;border-radius:10px;background:var(--fond);display:grid;
+  place-items:center;font-style:normal;font-size:1rem;flex:0 0 auto}
+.menu__pan small{display:block;color:var(--gris);font-size:.78rem;line-height:1.4;font-weight:400}
+.burger{display:none;margin-left:auto;background:none;border:1px solid var(--ligne);
+  border-radius:var(--r-pill);padding:9px 14px;font-weight:700;font-family:"Manrope",sans-serif}
+
+/* ---------- fil d'ariane ---------- */
+.ariane{padding:14px 0 0;font-size:.83rem;color:var(--gris);font-family:"Manrope",sans-serif}
+.ariane ol{display:flex;flex-wrap:wrap;gap:8px;list-style:none;margin:0;padding:0}
+.ariane li::after{content:"›";margin-left:8px;color:var(--gris-clair)}
+.ariane li:last-child::after{content:""}
+.ariane a{font-weight:600;color:var(--teal-txt)}
+.ariane a:hover{text-decoration:underline}
+.ariane [aria-current]{color:var(--noir);font-weight:700}
+
+/* ---------- titre ---------- */
+.tete{margin:18px 0 26px;max-width:60ch}
+.tete h1{font-size:clamp(2.1rem,4vw,3.1rem)}
+.tete p{margin:12px 0 0;font-size:1.12rem;color:var(--gris);font-weight:300}
+
+/* ---------- GALERIE EN TÊTE ---------- */
+.galerie{display:grid;grid-template-columns:2fr 1fr 1fr;grid-template-rows:1fr 1fr;gap:6px;
+  height:clamp(360px,44vw,560px);overflow:hidden;margin:0 0 44px;
+  width:100vw;margin-left:calc(50% - 50vw)}
+.galerie a{display:block;overflow:hidden;position:relative;background:var(--fond)}
+.galerie a:first-child{grid-row:1 / 3}
+.galerie img{width:100%;height:100%;object-fit:cover;transition:transform .8s var(--ease)}
+.galerie a:first-child img{animation:derive 26s ease-in-out infinite alternate}
+@keyframes derive{from{transform:scale(1)}to{transform:scale(1.08)}}
+.galerie a:hover img{transform:scale(1.06)}
+.galerie a::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(11,81,112,0) 55%,rgba(11,81,112,.45) 100%);
+  opacity:0;transition:opacity .3s var(--ease)}
+.galerie a:hover::after{opacity:1}
+.galerie a:first-child .galerie__leg{position:absolute;left:24px;bottom:20px;z-index:2;color:#fff;
+  font-family:"Manrope",sans-serif;font-size:.86rem;font-weight:600;letter-spacing:.02em;
+  text-shadow:0 2px 14px rgba(11,81,112,.9);display:flex;align-items:center;gap:10px}
+.galerie a:first-child::after{opacity:1;background:linear-gradient(180deg,rgba(11,81,112,0) 55%,rgba(11,81,112,.62) 100%)}
+.galerie__plus{position:absolute;right:14px;top:14px;z-index:2;background:rgba(255,255,255,.94);color:var(--nuit-900);
+  font-family:"Manrope",sans-serif;font-size:.79rem;font-weight:700;padding:9px 16px;border-radius:var(--r-pill);
+  display:flex;align-items:center;gap:8px;box-shadow:0 4px 14px rgba(11,81,112,.24)}
+
+/* visionneuse plein écran */
+.lb{position:fixed;inset:0;z-index:120;background:rgba(6,44,60,.95);display:none;
+  align-items:center;justify-content:center;padding:40px 70px}
+.lb[data-on="1"]{display:flex}
+.lb img{max-width:100%;max-height:100%;object-fit:contain;border-radius:var(--r-m);
+  box-shadow:0 30px 80px rgba(0,0,0,.5)}
+.lb button{position:absolute;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.3);
+  color:#fff;width:46px;height:46px;border-radius:50%;display:grid;place-items:center;font-size:1.2rem;
+  transition:background .2s}
+.lb button:hover{background:rgba(255,255,255,.3)}
+.lb .prec{left:16px;top:50%;transform:translateY(-50%)}
+.lb .suiv{right:16px;top:50%;transform:translateY(-50%)}
+.lb .fermer{right:16px;top:16px}
+.lb .cpt{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);color:#fff;
+  font-family:"Manrope",sans-serif;font-size:.84rem;font-weight:600;letter-spacing:.06em}
+
+/* ---------- deux colonnes + panneau collant ---------- */
+.colonnes{display:grid;grid-template-columns:1fr 340px;gap:44px;align-items:start;
+  padding-bottom:clamp(44px,5.5vw,72px)}
+.colonnes>aside{position:sticky;top:84px}
+.resa{background:#fff;border:1px solid var(--ligne);border-radius:var(--r-l);
+  box-shadow:var(--ombre);padding:22px;position:relative;overflow:hidden}
+.resa::before{content:"";position:absolute;top:0;left:0;right:0;height:4px;
+  background:linear-gradient(90deg,var(--or),var(--or-clair))}
+.resa .prix b{font-size:2.4rem}
+.resa .prix{font-family:"Manrope",sans-serif;line-height:1.2}
+.resa .prix small{display:block;font-size:.74rem;color:var(--gris);letter-spacing:.04em}
+.resa .prix b{font-size:2rem;font-weight:700;color:var(--noir);letter-spacing:-1.2px}
+.resa .prix i{font-style:normal;font-size:.82rem;color:var(--gris)}
+.resa ul{list-style:none;margin:16px 0;padding:14px 0;border-top:1px solid var(--ligne-2);
+  border-bottom:1px solid var(--ligne-2);font-family:"Manrope",sans-serif;font-size:.88rem;display:grid;gap:9px}
+.resa li{display:flex;gap:10px;align-items:flex-start;color:var(--nuit-900);line-height:1.5}
+.resa li svg{flex:0 0 auto;margin-top:3px}
+.resa .act{display:grid;gap:9px}
+
+/* barre de conversion collante, toujours visible sous 1024 px */
+.resa-mob{position:fixed;left:0;right:0;bottom:0;z-index:75;background:#fff;border-top:1px solid var(--ligne);
+  box-shadow:0 -6px 20px rgba(11,81,112,.14);padding:10px 16px calc(10px + env(safe-area-inset-bottom));
+  display:none;align-items:center;gap:12px}
+.resa-mob .p{line-height:1.2;flex:1 1 auto;font-family:"Manrope",sans-serif}
+.resa-mob .p small{display:block;font-size:.7rem;color:var(--gris)}
+.resa-mob .p b{font-size:1.3rem;font-weight:700;color:var(--noir);letter-spacing:-.6px}
+.resa-mob .p i{font-style:normal;font-size:.76rem;color:var(--gris)}
+
+/* ---------- jour par jour ---------- */
+.jour{border-left:2px solid var(--ligne);padding:0 0 26px 26px;position:relative}
+.jour:last-child{padding-bottom:0}
+.jour::before{content:"";position:absolute;left:-8px;top:5px;width:14px;height:14px;border-radius:50%;
+  background:var(--or);border:3px solid #fff;box-shadow:0 0 0 1px var(--ligne)}
+.jour h3{margin:0 0 8px}
+.jour h4{margin:0 0 6px;color:var(--nuit-900)}
+.jour p{font-size:.96rem}
+.jour p:last-child{margin-bottom:0}
+.jour{counter-reset:et}
+.etape{padding:16px 0 0 0;position:relative;counter-increment:et}
+.etape+.etape{border-top:1px solid var(--ligne-2);margin-top:16px}
+.etape h4{display:flex;align-items:center;gap:12px}
+.etape h4::before{content:counter(et,decimal-leading-zero);flex:0 0 auto;
+  width:30px;height:30px;border-radius:50%;background:var(--or-fond);border:1px solid var(--or);
+  color:#7A5605;font-family:"Manrope",sans-serif;font-size:.72rem;font-weight:700;
+  display:grid;place-items:center;letter-spacing:0}
+.etape p{padding-left:42px}
+
+/* ---------- inclus / non inclus ---------- */
+.incl{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--ligne);border:1px solid var(--ligne);
+  border-radius:var(--r-l);overflow:hidden}
+.incl>div{background:var(--or-fond);padding:26px}
+.incl>div:last-child{background:var(--fond)}
+.incl h3{font-size:1.06rem;margin-bottom:14px}
+.incl ul{list-style:none;margin:0;padding:0;font-size:.94rem}
+.incl li{padding:8px 0 8px 26px;position:relative;line-height:1.55}
+.incl .oui li::before{content:"✓";position:absolute;left:0;top:8px;color:var(--teal-txt);font-weight:700}
+.incl .non li::before{content:"✕";position:absolute;left:0;top:8px;color:var(--gris-clair);font-weight:700}
+.incl .non li{color:var(--gris)}
+
+/* ---------- alerte contenu ---------- */
+.alerte{border:1px solid var(--or);background:var(--or-fond);border-radius:var(--r-l);padding:18px 20px;
+  font-family:"Manrope",sans-serif;font-size:.89rem;line-height:1.65;color:#5C4204}
+.alerte b{color:#3D2B00}
+
+/* ---------- FAQ ---------- */
+.faq{border-top:1px solid var(--ligne)}
+.faq details{border-bottom:1px solid var(--ligne)}
+.faq summary{padding:17px 44px 17px 0;font-weight:600;font-size:1rem;cursor:pointer;color:var(--noir);
+  position:relative;list-style:none;display:block;font-family:"Archivo",sans-serif;letter-spacing:-.3px}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";position:absolute;right:8px;top:50%;transform:translateY(-50%);
+  font-size:1.6rem;color:var(--or);font-weight:400;transition:transform .25s var(--ease)}
+.faq details[open] summary::after{transform:translateY(-50%) rotate(45deg)}
+.faq summary:hover{color:var(--teal-txt)}
+.faq__c{padding:0 44px 18px 0;color:var(--texte)}
+.faq__c :last-child{margin-bottom:0}
+.faq__c ul{padding-left:20px;margin:0 0 1em}
+
+/* ---------- avis ---------- */
+.avis{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.avis article{background:#fff;border:1px solid var(--ligne);border-radius:var(--r-l);padding:20px}
+.avis .et{color:var(--or);letter-spacing:.14em;font-size:.9rem;margin-bottom:10px}
+.avis blockquote{margin:0 0 14px;font-size:.94rem;line-height:1.6}
+.avis footer{display:flex;align-items:center;gap:10px;font-family:"Manrope",sans-serif;font-size:.8rem;
+  color:var(--gris);border-top:1px solid var(--ligne-2);padding-top:12px}
+.avis footer b{color:var(--noir);display:block;font-weight:700}
+.ini{width:34px;height:34px;border-radius:50%;background:var(--nuit);color:#fff;display:grid;
+  place-items:center;font-weight:700;font-size:.8rem;flex:0 0 auto}
+
+/* ---------- cartes sœurs ---------- */
+.grille{display:grid;gap:20px;grid-template-columns:repeat(3,1fr)}
+.carte{background:#fff;border:1px solid var(--ligne);border-radius:var(--r-l);overflow:hidden;
+  display:flex;flex-direction:column;transition:transform .25s var(--ease),box-shadow .25s var(--ease)}
+.carte:hover{transform:translateY(-6px);box-shadow:var(--ombre-f)}
+.carte__img{position:relative;aspect-ratio:4/3;overflow:hidden;background:var(--fond)}
+.carte__img img{width:100%;height:100%;object-fit:cover;transition:transform .5s var(--ease)}
+.carte:hover .carte__img img{transform:scale(1.05)}
+.carte__tag{position:absolute;top:12px;left:12px;background:var(--or);color:#3D2B00;
+  font-family:"Manrope",sans-serif;font-size:.72rem;font-weight:700;padding:6px 12px;border-radius:var(--r-pill)}
+.carte__corps{padding:18px;display:flex;flex-direction:column;gap:10px;flex:1}
+.carte h3{font-size:1.04rem;line-height:1.3}
+.carte__route{font-family:"Manrope",sans-serif;font-size:.82rem;color:var(--gris);margin:0;line-height:1.5}
+.carte__route b{color:var(--noir);font-weight:700}
+.carte__pied{margin-top:auto;padding-top:12px;border-top:1px solid var(--ligne-2);
+  display:flex;align-items:flex-end;justify-content:space-between;gap:10px}
+.prix{font-family:"Manrope",sans-serif;line-height:1.2}
+.prix small{display:block;font-size:.72rem;color:var(--gris)}
+.prix b{font-size:1.3rem;font-weight:700;color:var(--noir);letter-spacing:-.6px}
+.lien-fl{display:inline-flex;align-items:center;gap:7px;font-family:"Manrope",sans-serif;
+  font-weight:700;font-size:.87rem;color:var(--teal-txt)}
+.lien-fl svg{transition:transform .2s}
+.carte:hover .lien-fl svg{transform:translateX(4px)}
+
+.section{padding:clamp(40px,5vw,64px) 0}
+.section--fond{background:var(--fond)}
+
+/* ---------- pied de page ---------- */
+.pied{background:var(--nuit-900);color:#C0D8E2;padding:56px 0 24px;font-size:.9rem}
+.pied h4{font-family:"Manrope",sans-serif;font-size:.73rem;letter-spacing:.15em;text-transform:uppercase;
+  color:var(--or);font-weight:700;margin:0 0 16px}
+.pied__g{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:40px}
+.pied ul{list-style:none;margin:0;padding:0;display:grid;gap:9px}
+.pied a:hover{color:#fff;text-decoration:underline}
+.pied img{height:36px;width:auto;margin-bottom:16px}
+.pied__bas{margin-top:36px;padding-top:20px;border-top:1px solid rgba(255,255,255,.12);
+  display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:.82rem;color:#9BBCCB}
+
+.aremplir{background:var(--or-fond);border:1px dashed var(--or);color:#7A5605;font-size:.8rem;
+  padding:.1em .5em;border-radius:6px;font-weight:700;font-family:"Manrope",sans-serif}
+
+/* ---------- calque d'annotation ---------- */
+.mm-btn{position:fixed;right:16px;bottom:16px;z-index:90;background:var(--nuit-900);color:#fff;
+  border:0;border-radius:var(--r-pill);padding:11px 18px;font-family:"Manrope",sans-serif;
+  font-size:.82rem;font-weight:700;box-shadow:var(--ombre-f);display:inline-flex;align-items:center;gap:8px}
+.mm-btn b{color:var(--or)}
+body.mm [data-mm]{outline:2px dashed var(--teal-txt);outline-offset:10px;border-radius:4px;position:relative}
+body.mm [data-mm]::before{content:attr(data-mm);position:absolute;top:-16px;left:0;z-index:40;
+  background:var(--teal-txt);color:#fff;font-family:"Manrope",sans-serif;font-size:.68rem;font-weight:700;
+  letter-spacing:.08em;text-transform:uppercase;padding:5px 11px;border-radius:var(--r-pill);white-space:nowrap}
+body.mm [data-mm="Navigation · poids 0,25"]::before{background:var(--gris-clair)}
+body.mm [data-dec]{position:relative}
+body.mm [data-dec]::after{content:attr(data-dec);position:absolute;top:-16px;right:0;z-index:40;
+  font-family:"Manrope",sans-serif;font-size:.68rem;font-weight:700;letter-spacing:.08em;
+  padding:5px 11px;border-radius:var(--r-pill);white-space:nowrap;background:var(--gris-clair);color:#fff}
+body.mm [data-dec="Conservé"]::after{background:#2F7D4F}
+body.mm [data-dec="Nouveau"]::after{background:var(--nuit)}
+body.mm [data-dec="À trancher"]::after{background:#B4402A}
+body.mm .mm-legende{display:block}
+.mm-legende{display:none;background:var(--nuit-900);color:#D5E3E7;border-radius:var(--r-l);padding:18px 22px;
+  margin-top:22px;font-family:"Manrope",sans-serif;font-size:.85rem;line-height:1.7}
+.mm-legende b{color:var(--or)}
+
+[data-rev]{opacity:0;transform:translateY(18px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+[data-rev].vu{opacity:1;transform:none}
+
+@media (max-width:860px){
+  .galerie{margin-bottom:32px}
+}
+@media (max-width:1024px){
+  .colonnes{grid-template-columns:1fr;gap:30px}
+  .colonnes>aside{position:static}
+  .resa{display:none}
+  .resa-mob{display:flex}
+  body{padding-bottom:84px}
+  .incl{grid-template-columns:1fr}
+  .grille,.avis{grid-template-columns:1fr 1fr}
+  .pied__g{grid-template-columns:1fr 1fr}
+  .mm-btn{bottom:92px}
+}
+@media (max-width:860px){
+  .eyebrow{display:block}
+  .eyebrow::before{display:block;margin-bottom:8px}
+  .nav{display:none}
+  .burger{display:inline-flex}
+  .grille,.avis{grid-template-columns:1fr}
+  .pied__g{grid-template-columns:1fr}
+  .bandeau .wrap{justify-content:center}
+  .galerie{display:flex;height:auto;gap:8px;overflow-x:auto;scroll-snap-type:x mandatory;border-radius:0}
+  .galerie a{flex:0 0 84%;scroll-snap-align:center;height:220px;border-radius:var(--r-m)}
+  .mm-btn{right:12px;padding:9px 14px;font-size:.76rem}
+}
+@media (prefers-reduced-motion:reduce){
+  [data-rev]{opacity:1 !important;transform:none !important}
+  *{animation-duration:.01ms !important;transition-duration:.01ms !important;scroll-behavior:auto !important}
+}
+
+/* ===== AE-MOBILE : début du bloc généré — ne pas éditer à la main ===== */
+/* ------------------------------------------------------------------
+   NOTES DE PRODUCTION
+   Les paragraphes d'avertissement portaient leur taille en style en
+   ligne (font-size:.86rem), qu'aucune feuille ne peut battre. La taille
+   est passée dans cette classe ; l'attribut ne garde que la couleur.
+   ------------------------------------------------------------------ */
+.note{font-size:.9rem;line-height:1.6}
+
+/* ------------------------------------------------------------------
+   PLANCHER MOBILE
+   Retour cliente du 24/08/2026, mesuré au navigateur à 375/390/412 px.
+
+   Trois choses, et rien d'autre :
+   1. plus aucun texte sous 15 px — ils descendaient à 11,2 px ;
+   2. toute cible tactile isolée fait au moins 44 px de haut ;
+   3. la barre fixe du bas ne recouvre plus la fin de la page.
+
+   Le seuil est à 900 px, pas 700 : mesuré, une tablette en portrait
+   (768 px) gardait les tailles du bureau, jusqu'à 11,5 px.
+
+   Les liens en ligne dans un paragraphe gardent leur hauteur : les
+   agrandir casserait l'interligne, et la règle des 44 px ne s'applique
+   pas à eux.
+   ------------------------------------------------------------------ */
+@media (max-width:900px){
+
+  /* 1 ─ Texte ------------------------------------------------------ */
+  body{font-size:17px;line-height:1.7}
+
+  h1{font-size:clamp(1.85rem,7.2vw,2.3rem);letter-spacing:-1px;line-height:1.18}
+  h2{font-size:clamp(1.42rem,5.6vw,1.8rem);letter-spacing:-.5px}
+  h3{font-size:1.12rem}
+  h4{font-size:1.02rem}
+
+  .eyebrow{font-size:.88rem;letter-spacing:.12em}
+  .lede,.chapeau p,.chapeau .sous,.reponse,.encart,.alerte{font-size:1.04rem}
+
+  /* Tout ce qui descendait sous 15 px remonte au même palier. */
+  .bandeau,.ariane,.compte,.legende,.legende span,
+  .pied,.pied__bas,.pied ul,.mm-legende,.aremplir,
+  .carte__route,.carte__meta,.carte__tag,.puce,.prix,.prix small,.prix i,
+  .fille__nb,.fille__txt span,.guide span,.guide b,
+  .gens span,.avis footer,.avis blockquote,.avis .et,
+  .chapeau__st,.chapeau__meta,
+  .tab,.tab th,.tab td,.et,.jours,.choix,.choix th,.choix td,
+  .tag-a,.fbtn,.fbtn .n,.filtres__d,.fpan label,.fpan label span,
+  .route span,.route em,.route b,
+  .som,.som a,.som h4,.lat__b,.lat__b ul,.lat__b li a,.lat__b p,
+  .resa,.resa ul,.resa li,.resa .prix small,.resa .prix i,
+  .incl,.incl ul,.incl li,.jour p,.etape p,.etape h4,
+  .fig figcaption,.galerie__leg,.galerie__plus,
+  .faq__c,.moment,.duree,.site p,.site__meta,
+  .compo__phrase,.compo__t p,.champ>span,.opts,
+  .ruban a,.ruban a span,
+  small,.lien-fl,.lien-txt,
+  /* Ces trois-là gagnent contre `h4` seul : leur règle porte une classe. */
+  .som h4,.pied h4,.lat__b h4,.incl h3,
+  .quand,.etape .quand,.fig__sur,.mm-btn,
+  .choix tbody th,.choix thead th,.tab tbody th,.tab thead th,
+  .jours tbody th,.jours thead th,
+  .prix i,.resa .prix i,.resa .prix small,
+  .carte__pied,.filtres label,.compo__res,
+  .galerie a:first-child .galerie__leg,
+  .avis .et,.reperes .km,.site h3,
+  /* Derniers relevés à la sonde, à 375 et 768 px. */
+  .note,.jeton,.ini,.opt,.vers,.etape .vers,.vign span,.vign b,
+  .devis__act small,.resa-mob .p small,.resa-mob .p i,
+  .bande b,.bande b span,.figcaption,.fig figcaption b,
+  .som h4,.compte,.chapeau__meta span{font-size:.95rem}
+
+  /* Le ruban des douze mois est le seul endroit où l'on peut serrer :
+     il est décoratif, et le tableau qui suit dit la même chose en clair. */
+  .ruban a{font-size:.95rem;padding:13px 2px 11px}
+  .ruban a span{font-size:.9rem}
+
+  .faq summary{font-size:1.06rem;padding-right:42px}
+  .faq__c{padding-right:0}
+
+  /* 2 ─ Cibles tactiles -------------------------------------------- */
+  /* 44 px : la hauteur d'un doigt. On ne l'applique qu'aux cibles
+     isolées — un lien au milieu d'une phrase garde sa hauteur. */
+  .btn{font-size:1rem;padding:15px 24px;min-height:48px}
+  .btn--sm{font-size:.95rem;padding:13px 20px;min-height:46px}
+
+  .nav>a,.menu__pan a,.burger,
+  .pied li a,.lat__b li a,.som a,
+  .filtres button,.fbtn,.fpan label,.filtres__d select,
+  .opt,.mm-btn,.tri,#tri,
+  .lien-fl,.vers,.remonte,.carte .lien-fl,
+  .faq summary,.guide,.carte h3 a{
+    min-height:44px;
+    display:flex;
+    align-items:center;
+  }
+  .som a,.pied li a,.lat__b li a{padding-top:9px;padding-bottom:9px}
+  .opt{padding:11px 16px;justify-content:center}
+  .fpan label{padding:11px 10px}
+  .mm-btn{padding:11px 16px}
+  .carte h3 a,.guide{display:block} /* ces deux-là englobent déjà leur cible */
+  .faq summary{display:block;padding-top:19px;padding-bottom:19px}
+
+  /* Les cartes entières sont cliquables : rien à agrandir dedans. */
+  a.carte,a.guide,a.fille,a.une{min-height:0}
+
+  /* Le logo doit rester une cible confortable. */
+  .logo img{height:44px}
+}
+
+/* 3 ─ Barre fixe du bas ---------------------------------------------
+   Elle n'apparaît qu'en dessous de 860 px : le rembourrage ne vaut
+   que là, sinon il ajoute du vide en bas de page sur tablette. */
+@media (max-width:860px){
+  body{padding-bottom:calc(96px + env(safe-area-inset-bottom))}
+}
+
+/* Écrans très étroits : on desserre les gouttières avant le texte. */
+@media (max-width:380px){
+  .wrap{width:calc(100% - 28px)}
+  .btn{padding:15px 18px}
+}
+/* ===== AE-MOBILE : fin du bloc généré ===== */
+/* (17)(18)(12) Mélanie : l'appel au devis du menu doit ressortir. Or foncé,
+   réservé à ce bouton — le reste du site garde l'or de la charte. */
 header .nav>a.btn--or,header .nav>a.btn--or[aria-current]{background:#E08A00;border-color:#E08A00;color:#fff}
-header .nav>a.btn--or:hover{background:#C87700;border-color:#C87700}
+header .nav>a.btn--or:hover{background:#C87700;border-color:#C87700;box-shadow:0 10px 24px rgba(224,138,0,.42)}
+
+.src{margin:0 0 24px;padding:11px 15px;background:var(--or-fond);border-radius:var(--r-s);font-size:.86rem;color:#7A5605;line-height:1.5}
+.src a{color:inherit}
 </style>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[
+{"@type":"BreadcrumbList","itemListElement":[
+{"@type":"ListItem","position":1,"name":"Accueil","item":"https://authentiquegypte.com/"},
+{"@type":"ListItem","position":2,"name":"Nos séjours en Égypte","item":"https://authentiquegypte.com/nos-sejours-egypte/"},
+{"@type":"ListItem","position":3,"name":"Voyage dans le désert en Égypte","item":"https://authentiquegypte.com/nos-sejours-egypte/desert-egypte/"},
+{"@type":"ListItem","position":4,"name":"Voyage à l'oasis de Siwa","item":"https://authentiquegypte.com/programs/excursion-a-loasis-de-siwa/"}]},
+{"@type":"TouristTrip","name":"Voyage à l'oasis de Siwa","description":"L'oasis de Siwa, un havre de paix niché dans le désert occidental de l'Égypte : nature, culture et détente, sources thermales, montagnes et vestiges historiques.",
+"provider":{"@type":"TravelAgency","name":"Authentique Égypte","url":"https://authentiquegypte.com/","areaServed":{"@type":"Country","name":"Égypte"}},
+"offers":{"@type":"Offer","price":"595","priceCurrency":"EUR","availability":"https://schema.org/InStock","url":"https://authentiquegypte.com/programs/excursion-a-loasis-de-siwa/"}},
+{"@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"Qu'est-ce qui rend Siwa unique ?","acceptedAnswer":{"@type":"Answer","text":"Siwa est unique par son isolement, sa culture préservée et ses paysages exceptionnels : culture amazighe avec la langue siwi, les traditions et l'architecture en karsheef ; histoire millénaire avec le temple d'Amon et les nécropoles de Gebel al-Mawta ; paysages contrastés entre palmeraie, lacs salés et désert libyque ; ambiance préservée, loin des circuits touristiques traditionnels."}}]}]}</script>
 </head>
 <body>
+
+<div class="bandeau">
+  <div class="wrap">
+    <span>Agence locale basée au Caire · <strong>Réponse sous 48 h</strong> <small>(hors vendredi et samedi)</small></span>
+    <span style="display:flex;gap:20px;flex-wrap:wrap">
+      <a href="mailto:contact@authentiquegypte.com">✉ contact@authentiquegypte.com</a>
+      <a href="https://wa.me/201066619098">WhatsApp +20 106 661 9098</a>
+    </span>
+  </div>
+</div>
 
 <header class="entete">
   <div class="wrap">
@@ -69,12 +504,12 @@ header .nav>a.btn--or:hover{background:#C87700;border-color:#C87700}
     <nav class="nav" data-mm="Navigation · poids 0,25">
       <a href="index.html">Accueil</a>
       <div class="menu">
-        <button aria-expanded="false">Nos séjours
+        <button aria-expanded="false" aria-current="true">Nos séjours
           <svg width="11" height="7" viewBox="0 0 11 7" fill="none" aria-hidden="true"><path d="M1 1l4.5 4.5L10 1" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
         </button>
         <div class="menu__pan">
           <a href="categorie.html"><span>Croisière sur le Nil<small>Dahabeya, felouque, bateau 5★</small></span></a>
-          <a href="categorie-desert.html"><span>Voyage dans le désert en Égypte<small>Siwa, désert Blanc, Fayoum, Dakhla</small></span></a>
+          <a href="categorie-desert.html" aria-current="page"><span>Voyage dans le désert en Égypte<small>Siwa, désert Blanc, Fayoum, Dakhla</small></span></a>
           <a href="https://authentiquegypte.com/nos-sejours-egypte/voyage-culturel-en-egypte/"><span>Voyage culturel en Égypte<small>Le Caire, Louxor, Abou Simbel</small></span></a>
           <a href="https://authentiquegypte.com/nos-sejours-egypte/mer-rouge/"><span>Séjour en mer Rouge<small>Hurghada, Marsa Alam, plongée</small></span></a>
           <a href="https://authentiquegypte.com/nos-sejours-egypte/sinai-moise-et-saint-catherine/"><span>Sinaï et Sainte-Catherine<small>Mont Moïse, monastère</small></span></a>
@@ -115,162 +550,205 @@ header .nav>a.btn--or:hover{background:#C87700;border-color:#C87700}
 </header>
 
 <main>
+<div class="wrap">
+  <nav class="ariane" aria-label="Fil d'Ariane" data-mm="Fil d'Ariane · l'arbre" data-dec="Nouveau">
+    <ol>
+      <li><a href="index.html">Accueil</a></li>
+      <li><a href="https://authentiquegypte.com/nos-sejours-egypte/">Nos séjours en Égypte</a></li>
+      <li><a href="categorie-desert.html">Voyage dans le désert en Égypte</a></li>
+      <li><span aria-current="page">Oasis de Siwa</span></li>
+    </ol>
+  </nav>
 
-<section class="chapeau">
-  <div class="chapeau__bg"><img src="https://authentiquegypte.com/wp-content/uploads/elementor/thumbs/mor-shani-Jw78jFgWpYE-unsplash-1-scaled-r862dig1mkztc3jl4iu743kthgukp0o2eqgx1qyg3k.jpg" alt=""></div>
+  <div class="tete">
+<p class="eyebrow">Voyage sur mesure en Égypte</p>
+<h1>Du littoral de la mer Rouge aux montagnes du Sinaï</h1>
+<p>Dans cette excursion de 8 jours, découvrez la variété des paysages qu’offre le Sinaï à ceux qui s’y aventurent. Des coraux multicolores de la mer Rouge aux formations géologiques spectaculaires qui dessinent…</p>
+</div>
+
+  <!-- LES 5 PHOTOS DE SIWA DE LA PAGE CLIENT, EN TÊTE -->
+  <div class="galerie">
+<a href="https://authentiquegypte.com/wp-content/uploads/elementor/thumbs/mor-shani-Jw78jFgWpYE-unsplash-1-scaled-r862dig1mkztc3jl4iu743kthgukp0o2eqgx1qyg3k.jpg"><img src="https://authentiquegypte.com/wp-content/uploads/elementor/thumbs/mor-shani-Jw78jFgWpYE-unsplash-1-scaled-r862dig1mkztc3jl4iu743kthgukp0o2eqgx1qyg3k.jpg" alt="Au bord de la mer Rouge." fetchpriority="high" decoding="async"><span class="galerie__leg">Au bord de la mer Rouge.</span></a>
+<a href="https://authentiquegypte.com/wp-content/uploads/elementor/thumbs/DSC00581-1-scaled-r7of06icut4mboc1bee9m3s04gl7gb4lm9700hh1q8.jpg"><img src="https://authentiquegypte.com/wp-content/uploads/elementor/thumbs/DSC00581-1-scaled-r7of06icut4mboc1bee9m3s04gl7gb4lm9700hh1q8.jpg" alt="Au sommet du mont Sinaï" loading="lazy" decoding="async"></a>
+<a href="https://authentiquegypte.com/wp-content/uploads/elementor/thumbs/1-scaled-r864zqrkrnzn8so1vr6rktjdd2e9cnrcd4wa1d8mbk.jpg"><img src="https://authentiquegypte.com/wp-content/uploads/elementor/thumbs/1-scaled-r864zqrkrnzn8so1vr6rktjdd2e9cnrcd4wa1d8mbk.jpg" alt="Bord de mer à Dahab" loading="lazy" decoding="async"></a>
+<a href="https://authentiquegypte.com/wp-content/uploads/elementor/thumbs/DSC00528-1-scaled-r7q52iraffrs2qtwc7enl9yy7bt6f3axh7npp0lf5s.jpg"><img src="https://authentiquegypte.com/wp-content/uploads/elementor/thumbs/DSC00528-1-scaled-r7q52iraffrs2qtwc7enl9yy7bt6f3axh7npp0lf5s.jpg" alt="Contemplation sur les montagnes du Sinaï" loading="lazy" decoding="async"></a>
+<a href="https://authentiquegypte.com/wp-content/uploads/elementor/thumbs/raimond-klavins-j2KNHVDqook-unsplash-scaled-r863ff9pa0w5lwh3qwshoj640xzj5j6bmdpxviqt4w.jpg"><img src="https://authentiquegypte.com/wp-content/uploads/elementor/thumbs/raimond-klavins-j2KNHVDqook-unsplash-scaled-r863ff9pa0w5lwh3qwshoj640xzj5j6bmdpxviqt4w.jpg" alt="Jeep dans le paysage du Sinaï" loading="lazy" decoding="async"></a>
+</div>
+
+  <div class="colonnes">
+    <div>
+<p class="src">Contenu repris de <a href="https://authentiquegypte.com/programs/itineraire-sinai-sainte-catherine-mont-moise-et-mer-rouge/">https://authentiquegypte.com/programs/itineraire-sinai-sainte-catherine-mont-moise-et-mer-rouge/</a>, sans réécriture&nbsp;: seule la mise en page change.</p>
+<p class="eyebrow">Vue d'ensemble</p>
+<h2 style="margin-bottom:14px">de la beauté des côtes de la mer rouge aux montagnes enchantées de Sainte-Catherine</h2>
+<p class="lede">A partir de 990 € / Personne</p>
+<ul><li>8 jours minimum</li><li>Rythme adapté à tous</li><li>Chauffeur et véhicule privé et climatisé</li><li>Nuit en hébergements uniques</li><li>Découvertes multiples : culturelles, spirituelles et naturelles</li></ul>
+<ul><li>Agence locale basée au Caire</li><li>Guides égyptologues francophones</li></ul>
+<h3 style="margin-top:26px">Vue d&#x27;ensemble</h3>
+<p class="lede">Dans cette excursion de 8 jours, découvrez la variété des paysages qu’offre le Sinaï à ceux qui s’y aventurent. Des coraux multicolores de la mer Rouge aux formations géologiques spectaculaires qui dessinent ses côtes, chaque étape révèle une facette unique du désert.Prenez également le temps de découvrir les montagnes du Sinaï lors d’un lever du soleil magique au sommet du mont Moïse, suivi d’une visite du monastère Sainte-Catherine, joyau spirituel niché entre les roches.Un itinéraire accessible à tous, conçu pour vous faire vivre une immersion au cœur des paysages et des traditions, à la rencontre des Bédouins du Sinaï, gardiens de cette terre hors du temps.</p>
+<h3 style="margin-top:26px">Découvrez le Sinaï</h3>
+<p class="lede">Entre Afrique et Asie, la péninsule du Sinaï forme un pont naturel et culturel entre deux mondes. Bordée par le golfe de Suez et le golfe d’Aqaba, elle offre des paysages saisissants : montagnes de granit rose, déserts dorés, canyons spectaculaires et plages baignées par la mer Rouge. C’est un territoire de contrastes, à la fois rude et poétique, entre silence minéral et richesse sous-marine.</p>
+<p class="lede">Terre spirituelle et carrefour d’histoire, le Sinaï abrite le mont Moïse, lieu sacré pour les trois monothéismes, et au pied duquel se dresse le monastère Sainte-Catherine, l’un des plus anciens au monde. Depuis des siècles, pèlerins, nomades et voyageurs y laissent leurs traces, tissant une mosaïque de récits et de traditions.</p>
+<p class="lede">Entre trésors naturels et lieux sacrés, le Sinaï émerveille par sa diversité : les récifs coralliens de Ras Mohamed ou de Ras Abu Gallum comptent parmi les plus beaux au monde, tandis que les canyons colorés et les montagnes du sud, dont le mont Sainte-Catherine, offrent un décor propice à la contemplation. Ici, nature, foi et silence se rejoignent.</p>
+<p class="lede">Ce voyage privilégie les rencontres authentiques et l’immersion culturelle. En parcourant le Sinaï à un rythme apaisé, vous découvrirez aussi la culture bédouine, notamment auprès de la tribu Gabalia à Sainte-Catherine. Une nuit dans une guesthouse tenue par des Bédouins, une expérience, sincère de leur hospitalité.</p>
+<p class="lede">L’itinéraire proposé se déroule dans le sud du Sinaï, une région sécurisée et ouverte au tourisme. Encadré par des partenaires locaux expérimentés, ponctué de checkpoints réguliers et organisé dans les zones de Sharm el Sheikh, Dahab et Sainte-Catherine, le voyage se fait en toute sérénité. Nous avons conçu ce séjour avec un rythme équilibré, une logistique fiable et une approche humaine pour vous garantir une expérience à la fois enrichissante et paisible.</p>
+<ul><li>Quelle est la météo dans le Sinaï ?</li><li>Comment se rendre dans le Sinaï ?</li><li>Peut-on visiter le monastère ?</li><li>Comment visiter le mont Sinaï ?</li><li>Cet itinéraire est-il adapté aux familles ?</li><li>Est-il sûr d&#x27;y aller ?</li></ul>
+<h3 style="margin-top:26px">Pyramides et croisière sur le Nil</h3>
+<p class="lede">A partir de : 830 € / Personne</p>
+<ul><li>8 jours minimum</li><li>Rythme adapté à tous</li><li>Chauffeur et véhicule privé et climatisé</li><li>Nuit en hébergements uniques</li><li>Découvertes multiples : culturelles, spirituelles et naturelles</li></ul>
+<ul><li>Agence locale basée au Caire</li><li>Guides égyptologues francophones</li></ul>
+<div class="bloc-t">
+<p class="eyebrow">Le programme</p>
+<h2 style="margin-bottom:16px">Les étapes de votre séjour</h2>
+<div class="jour">
+<div class="etape"><p>Vous arrivez à l’aéroport de Sharm el Sheikh où vous êtes accueilli par notre représentant local, puis prenez la route en direction de votre hôtel en bord de mer pour commencer votre aventure dans le Sinaï</p></div>
+<div class="etape"><p>Après le petit-déjeuner, embarquez à bord d’un bateau en direction du parc national de Ras Mohamed, un lieu préservé emblématique du Sud du Sinaï et véritable paradis du snorkeling.</p></div>
+<div class="etape"><h4>Équipé d’un masque et d’un tuba, vous partez explorer les eaux turquoise où se déploie une incroyable barrière de corail.</h4><p>Une véritable explosion de couleurs et de vie sous-marine qui émerveillera les amateurs comme les curieux.</p></div>
+<div class="etape"><p>Un déjeuner frais et préparé à bord vous sera servi, avant de repartir pour une nouvelle session d’exploration au cœur de cet écrin naturel.</p></div>
+<div class="etape"><p>En fin d’après-midi, retour à Sharm el Sheikh et transfert à votre hôtel.</p></div>
+<div class="etape"><h4>Ce matin, après le petit-déjeuner, profitez d’une matinée libre.</h4><p>Puis en début d’après-midi, un véhicule privé et climatisé viendra vous chercher à votre hôtel pour prendre la route en direction de Sainte-Catherine.</p></div>
+<div class="etape"><p>La route en bon état menant au village vous donne l’occasion d’observer les paysages du Sinaï, des montagnes abruptes aux langues de sable, et peut-être même de croiser des dromadaires le long de la route.</p></div>
+<div class="etape"><p>Vous arrivez dans votre guesthouse à Sainte-Catherine, tenue par des Bédouins de la tribu Gabalia, qui sauront vous accueillir avec toute l’hospitalité qui leur est reconnue. Le reste de l’après-midi est consacré au repos et à la contemplation du lieu. Un dîner copieux et traditionnel vous sera servi vers 19h afin d’avoir de l’énergie pour le lendemain.</p></div>
+<div class="etape"><p>Ce matin, vous vous réveillez tôt pour un départ vers 1h en direction du monastère Sainte-Catherine, où débute votre randonnée guidée par un Bédouin. Une ascension qui s’annonce mythique et spirituelle.</p></div>
+<div class="etape"><p>La marche, qui dure entre 2h30 et 3h00 à la lumière des frontales, vous mène au sommet pour admirer le lever du soleil sur les montagnes du Sinaï. Une expérience unique, magnifique et mystique, que chacun saura apprécier à sa manière.</p></div>
+<div class="etape"><p>C’est sur ce sommet que Moïse aurait reçu les Tables des lois « écrites du doigt de Dieu » (Exode 31:18), un événement majeur du Judaïsme et du Christianisme, qui trouve un écho dans l’Islam. Ainsi, ce lieu est empreint d’une spiritualité intense, et vous trouverez en son sommet la chapelle de la Sainte-Trinité. Cette dernière fut construite au XXe siècle sur les restes d’une chapelle byzantine du VIe siècle, érigée par Justinien Ier en même temps que le monastère Sainte-Catherine. Aujourd’hui, la chapelle est un lieu de prière occasionnel des moines du monastère.</p></div>
+<div class="etape"><p>Sur la route, vous faites des pauses dans de petits magasins minimalistes, qui vous proposent des boissons chaudes et des collations, idéales pour garder de l’énergie et faire une pause à l’abri si besoin.</p></div>
+<div class="etape"><h4>Vous redescendez ensuite vers le monastère Sainte-Catherine pour en découvrir les trésors.</h4><p>Cette descente s’effectue en 2h00 à 2h30.</p></div>
+<div class="etape"><p>À l’intérieur, vous visitez l’église de la Transfiguration avec ses mosaïques, son marbre et sa remarquable collection d’icônes. Vous poursuivez vers le Buisson ardent, puis montez jusqu’au musée de la bibliothèque (entrée 2 $) qui abrite une collection inestimable d’icônes anciennes et de textes bibliques. C’est d’ailleurs dans cette bibliothèque qu’a été découvert le Codex Sinaiticus, l’une des plus anciennes bibles complètes.</p></div>
+<div class="etape"><h4>C’est Hélène, la mère de l’empereur Constantin, qui fit ériger au IVe siècle une première chapelle entre ces montagnes.</h4><p>Il s’agit de la chapelle du Buisson ardent, située à l’arrière de l’église actuelle. Plus tard, l’empereur Justinien Ier (vers 548–565) fit construire le monastère Sainte-Catherine autour de cette chapelle pour protéger les pèlerins.Le monastère aurait ensuite été protégé par le prophète Mahomet en 625, dans un décret appelé Adhiname, puis par Napoléon Bonaparte en 1798 à travers une Lettre de Sauvegarde (visible dans la bibliothèque), et enfin en 2002 par l’UNESCO, qui l’a inscrit au Patrimoine mondial. Aujourd’hui encore, le gouvernement égyptien lui garantit sa sécurité et le reconnaît comme un haut lieu spirituel.</p></div>
+<div class="etape"><h4>Après cette visite, une voiture vous attend au parking du monastère pour vous ramener à votre guesthouse.</h4><p>Vous profitez d’un petit-déjeuner traditionnel et complet avant de reprendre la route vers Dahab aux alentours de midi.</p></div>
+<div class="etape"><h4>Ces deux jours à Dahab sont libres pour découvrir cette ville pleine de vie et à l’ambiance si particulière.</h4><p>Dahab séduit aussi par son rythme paisible, ses cafés en bord de mer et son atmosphère bohème, idéale pour se détendre entre deux aventures dans le désert ou sous l’eau.</p></div>
+<div class="etape"><p>En option :– Nous pouvons vous proposer des cours de poterie qui vous permettront de créer tout type d’objet et de repartir avec votre réalisation. Il s’agit d’un workshop sur plusieurs jours, car il faut jusqu’à trois jours pour compléter toutes les étapes. Cette activité peut être effectuée le matin ou en fin de journée, à raison de trois heures par jour. Une manière originale et créative de rapporter un souvenir personnel.</p></div>
+<div class="etape"><h4>– Dahab est également le paradis de la plongée, réputée pour ses coraux et ses reliefs sous-marins accessibles.</h4><p>Il est possible de suivre un stage de plongée adapté à votre niveau, par exemple un programme de 3 à 4 jours avec passage du premier niveau PADI (Open Water Course). Dans ce cas, l’itinéraire global peut être modifié : n’hésitez pas à nous faire part de vos souhaits pour recevoir un devis personnalisé.</p></div>
+<div class="etape"><p>– Enfin, profitez des nombreuses activités disponibles au départ de Dahab, que votre hôtel pourra également vous conseiller : sports nautiques, safaris dans les canyons, balades en quad ou dîners bédouins organisés dans le désert.</p></div>
+<div class="etape"><p>Après le petit-déjeuner, vous prenez la route à bord d’une jeep pour une journée d’aventure sur la côte de la mer Rouge.</p></div>
+<div class="etape"><p>Votre première destination est le Blue Hole, au nord de Dahab, un relief sous-marin emblématique, connu dans le monde entier pour l’apnée et le snorkeling. Grâce à un accès facile depuis la plage, vous pourrez y observer de magnifiques coraux et une faune marine riche et colorée.</p></div>
+<div class="etape"><p>Ensuite, vous embarquez à bord d’un bateau en direction de Ras Abu Gallum, une plage isolée bordée par quelques huttes, loin de toute agitation. Une véritable invitation à la déconnexion. Un déjeuner préparé sur place vous est servi, avant de profiter à nouveau des fonds marins pour une nouvelle session de snorkeling.</p></div>
+<div class="etape"><h4>Enfin, votre périple vous mène vers le Blue Lagoon, cette fois célèbre pour ses sports nautiques comme le wind-surf.</h4><p>La couleur de son eau lui a donné son nom : un véritable lagon aux teintes irréelles. Vous pouvez y vous détendre sur la plage ou replonger à votre rythme dans ses eaux cristallines.</p></div>
+<div class="etape"><p>En fin de journée, vous reprenez le bateau, puis votre jeep, pour retourner à votre hôtel à Dahab.</p></div>
+<div class="etape"><p>Après votre petit-déjeuner à l’hôtel, un véhicule privatisé et climatisé vient vous chercher pour votre transfert vers l’aéroport de Sharm el Sheikh, où vous prenez votre vol retour.</p></div>
+<div class="etape"><p>En option :Prolongez votre voyage en Égypte et partez à la découverte de la vallée du Nil, du Caire et des temples majestueux de la Haute-Égypte. Une extension idéale pour approfondir votre immersion culturelle après cette expérience dans le Sinaï.</p></div>
+<ul><li>Dîner inclus</li><li>Hôtel à Sharm el-Sheikh</li></ul><ul><li>Petit-déjeuner, déjeuner et dîner inclus</li><li>Hôtel à Sharm el-Sheikh</li></ul><ul><li>Petit-déjeuner et dîner inclus</li><li>Nuit en guesthouse bédouine</li></ul><ul><li>Petit-déjeuner inclus</li><li>Hôtel à Dahab</li></ul><ul><li>Petit-déjeuner inclus</li><li>Hôtel à Dahab</li></ul><ul><li>Petit-déjeuner et déjeuner inclus</li><li>Hôtel à Dahab</li></ul><ul><li>Petit-déjeuner inclus</li></ul><ul><li>Le programme inclus</li></ul><ul><li>Les transferts en véhicule privatisé et climatisé</li><li>Les nuits mentionnées</li><li>Les repas mentionnés</li><li>Les activités mentionnées</li><li>Les frais d’entrée du parc national de Sainte-Catherine</li><li>Les frais d’entrée du parc national de Ras Mohamed</li><li>Un guide anglophone sur les excursions</li><li>L&#x27;assistance H24</li></ul><ul><li>N&#x27;inclus pas</li></ul><ul><li>Les vols internationaux</li><li>Les repas non mentionnés</li><li>L’entrée au musée de la bibliothèque du monastère Sainte-Catherine (2$)</li><li>Les frais d’entrée à Blue Hole</li><li>Les pourboires</li><li>Les suppléments</li><li>Les dépenses personnelles</li><li>L&#x27;assurance voyage</li><li>Les frais de paiement</li><li>Les frais de visa</li></ul></div>
+</div>
+<div class="bloc-t">
+<p class="eyebrow">Ce qui est compris</p>
+<h2 style="margin-bottom:16px">Le détail du prix</h2>
+<div class="incl"><div><h3 style="color:var(--teal-txt)">Le programme inclut</h3><ul class="oui"><li>Les transferts en véhicule privatisé et climatisé</li><li>Les nuits mentionnées</li><li>Les repas mentionnés</li><li>Les activités mentionnées</li><li>Les frais d’entrée du parc national de Sainte-Catherine</li><li>Les frais d’entrée du parc national de Ras Mohamed</li><li>Un guide anglophone sur les excursions</li><li>L&#x27;assistance H24</li></ul></div><div><h3 style="color:var(--gris)">N'inclut pas</h3><ul class="non"><li>Les vols internationaux</li><li>Les repas non mentionnés</li><li>L’entrée au musée de la bibliothèque du monastère Sainte-Catherine (2$)</li><li>Les frais d’entrée à Blue Hole</li><li>Les pourboires</li><li>Les suppléments</li><li>Les dépenses personnelles</li><li>L&#x27;assurance voyage</li><li>Les frais de paiement</li><li>Les frais de visa</li><li>Quelle est la météo dans le Sinaï ?</li><li>Comment se rendre dans le Sinaï ?</li><li>Peut-on visiter le monastère ?</li><li>Comment visiter le mont Sinaï ?</li><li>Cet itinéraire est-il adapté aux familles ?</li><li>Est-il sûr d&#x27;y aller ?</li><li>Niveau</li><li>Equipement</li><li>Nourriture</li><li>Période</li><li>Assurance</li><li>8 jours minimum</li><li>Rythme adapté à tous</li><li>Chauffeur et véhicule privé et climatisé</li><li>Nuit en hébergements uniques</li><li>Découvertes multiples : culturelles, spirituelles et naturelles</li><li>Agence locale basée au Caire</li><li>Guides égyptologues francophones</li></ul></div></div>
+</div>
+<div class="bloc-t">
+<p class="eyebrow">Bon à savoir</p>
+<h2 style="margin-bottom:16px">Ce qu'on nous demande le plus</h2>
+<div class="faq"><details open><summary>Quelle est la météo dans le Sinaï ?</summary><div class="faq__c"><p class="">Le Sinaï bénéficie d’un climat désertique sec et d’un ensoleillement quasi permanent. Les températures varient selon la saison et l’altitude.</p>
+<p class="">Sur la côte, à Sharm el Sheikh ou Dahab, il fait entre 20 et 25 °C en hiver et 35 à 40 °C en été, avec une eau chaude toute l’année : idéal pour la plongée et le snorkeling.</p>
+<p class="">Dans les montagnes de Sainte-Catherine, les nuits sont fraîches en été (10 à 15 °C) et très froides en hiver (jusqu’à 0 °C au mont Moïse). En journée, les températures oscillent entre 15 et 28 °C.</p>
+<p class="">Le printemps (mars–mai) et l’automne (septembre–novembre) sont les meilleures périodes pour visiter, avec un climat doux et un ciel dégagé.</p></div></details>
+<details><summary>Comment se rendre à Sainte-Catherine ?</summary><div class="faq__c"><p class="">Le point d’entrée principal vers le Sinaï est l’aéroport international de Sharm el Sheikh, accessible en vol direct depuis plusieurs villes européennes ou via Le Caire. À votre arrivée, un chauffeur vous attend à l’aéroport pour votre transfert privé vers l’hôtel.</p>
+<p class="">Si vous êtes déjà en Égypte, il est également possible de rejoindre le Sinaï par la route depuis Le Caire (6 à 8 heures de trajet) en passant par le tunnel Ahmed Hamdi sous le canal de Suez. Cette option est idéale pour ceux qui souhaitent combiner la découverte du Caire ou de la vallée du Nil avec un séjour dans le Sinaï.</p>
+<p class="">Tout au long de votre séjour, les trajets sont assurés en véhicule privé, pour vous garantir confort, sécurité et flexibilité entre les différentes étapes : Sharm el Sheikh, Sainte-Catherine, Dahab, etc.</p></div></details>
+<details><summary>Peut-on visiter le monastère Sainte-Catherine ?</summary><div class="faq__c"><p class="">Vous pouvez visiter le monastère de Sainte-Catherine, ouvert tous les jours sauf le dimanche et les jours fériés chrétiens :</p>
+<p class="">1er mai, 2 mai, 3 mai, 4 mai, 6 mai, 8 mai, 13 juin, 24 juin, 12 juillet, 19 août, 28 août, 21 septembre, 27 septembre, 14 novembre, 4 décembre, 6 décembre, 7 décembre, 9 décembre.</p></div></details>
+<details><summary>Comment puis-je visiter le mont Sinaï ?</summary><div class="faq__c"><p class="">Afin de visiter le mont Sinaï, aussi appelé mont Moïse, il vous faudra vous rendre à Sainte-Catherine. De plus, vous devrez effectuer l’ascension à l’aide d’un guide bédouin.</p>
+<p class="">L’ascension du mont Moïse peut se faire de nuit pour voir le lever du soleil, mais aussi en journée pour contempler le coucher du soleil. N’hésitez pas à nous préciser votre préférence.</p>
+<p class="">Pour plus de confort, nous recommandons de passer 2 jours à Sainte-Catherine et de prendre votre temps. Sainte-Catherine est une ville calme, fraîche et reposante — des conditions idéales pour préparer une ascension et vous reposer au retour. Une excursion d’une seule soirée peut s’avérer particulièrement fatigante si elle est incluse dans des vacances déjà bien chargées.</p></div></details>
+<details><summary>Cet itinéraire est-il adapté aux familles ?</summary><div class="faq__c"><p class="">Oui, cet itinéraire convient parfaitement aux familles, avec un bon équilibre entre découvertes, activités variées et temps de repos. Les journées en mer (snorkeling, bateau, coraux) plaisent beaucoup aux enfants, et Dahab est une ville idéale avec ses plages peu profondes, ses activités ludiques et son atmosphère détendue.</p>
+<p class="">L’ascension du mont Moïse est accessible aux enfants à partir de 8–10 ans en bonne forme, avec des pauses prévues et un chemin sécurisé.</p>
+<p class="">Les hébergements sont adaptés aux familles et notre équipe locale a l’habitude d’accompagner les plus jeunes. N’hésitez pas à nous préciser l’âge de vos enfants : nous adapterons le rythme ou les activités si nécessaire.</p></div></details>
+<details><summary>Est-il sûr de se rendre au monastère Sainte-Catherine ?</summary><div class="faq__c"><p class="">Le Sud du Sinaï est une zone particulièrement protégée et plusieurs points de contrôle sont mis en place entre la côte et la ville de Sainte-Catherine pour assurer cette sécurité. De plus, le Sud-Sinaï n’est pas une zone déconseillée parle site de la diplomatie française</p>
+<p class="">Enfin, lors de votre ascension, vous serez accompagné d’un guide bédouin expérimenté. En cas d’accident — rare sur cet itinéraire — un hôpital se trouve dans la ville de Sainte-Catherine.</p>
+<p class="">Le Sud du Sinaï est une zone particulièrement protégée et plusieurs points de contrôle sont mis en place entre la côte et la ville de Sainte-Catherine pour assurer cette sécurité. De plus, le Sud-Sinaï n’est pas une zone déconseillée par le site de la diplomatie française</p>
+<ul><li>Niveau</li><li>Equipement</li><li>Nourriture</li><li>Période</li><li>Assurance</li></ul></div></details>
+<details><summary>Quel niveau faut-il pour tenter l’ascension du mont Sinaï ?</summary><div class="faq__c"><p class="">Pour effectuer l’ascension du mont Moïse, il n’est pas nécessaire d’être un grand sportif. Nous recommandons simplement d’avoir une condition physique suffisante pour marcher plusieurs heures d’affilée, avec du dénivelé. La fatigue peut s’ajouter à l’effort, c’est pourquoi il est conseillé de bien vous reposer l’après-midi précédent le départ, afin d’aborder la randonnée dans de bonnes conditions.</p></div></details>
+<details><summary>Quel niveau faut-il pour faire du snorkeling ?</summary><div class="faq__c"><p class="">Le snorkeling dans le Sinaï est accessible à tous, même aux débutants. Les sites comme le Blue Hole, Ras Mohamed ou Ras Abu Gallum offrent des zones peu profondes avec une excellente visibilité et une vie marine abondante, facilement observable dès la surface. Il suffit de savoir nager et d’être à l’aise dans l’eau. Le matériel (masque, tuba, palmes) est fourni sur place, et vous serez toujours encadré par un guide local si besoin.</p></div></details>
+<details><summary>Quel équipement prévoir pour l’ascension du mont Moïse ?</summary><div class="faq__c"><p class="">L’ascension du mont Moïse se fait de nuit, avec des températures souvent basses et du vent au sommet. Prévoyez une lampe frontale, des vêtements chauds (polaire, doudoune légère, bonnet, gants fins), une veste coupe-vent, ainsi que des chaussures de randonnée confortables. Un petit sac à dos est utile pour porter eau, snacks et effets personnels.</p>
+<p class="">N&#x27;oubliez pas une crème solaire, une casquette et des lunettes de soleil pour la journée. Même en été, les températures au sommet peuvent descendre à 10°C ou moins. Si vous ne possédez pas de lampe, il est possible d’en acheter au camp de base.</p>
+<p class="">Enfin, les drones sont interdits dans la zone, mais vous pouvez emporter un appareil photo : les ciels étoilés du Sinaï sont spectaculaires grâce à l’absence de pollution lumineuse.</p></div></details>
+<details><summary>Et pour le reste de votre séjour dans le Sinaï ?</summary><div class="faq__c"><p class="">Pour une semaine complète dans le Sinaï, prévoyez des vêtements légers et respirants pour la journée, ainsi qu’un pull ou une veste pour les soirées plus fraîches. Pour les activités en mer, apportez un maillot de bain, un t-shirt anti-UV si vous faites du snorkeling ou du kayak, et des sandales en plastique pour marcher sur les rochers.</p>
+<p class="">Il est conseillé de prendre une bouteille réutilisable, une batterie externe, une serviette à séchage rapide et une trousse de toilette minimaliste. Si vous partez en sortie en mer ou dans le désert, un petit sac à dos sera également pratique.</p></div></details>
+<details><summary>Peut-on manger durant l’ascension du mont Moïse ?</summary><div class="faq__c"><p class="">Oui, nous vous conseillons d’emporter quelques barres de céréales, fruits secs ou en-cas énergétiques pour garder de l’énergie tout au long de la montée. Des pauses sont prévues sur le chemin.</p>
+<p class="">Vous trouverez également sur le sentier de petits magasins rudimentaires qui proposent des boissons chaudes, des barres chocolatées ou encore des nouilles instantanées. Pensez à prendre un peu de monnaie en espèces, ces boutiques n’acceptent pas les cartes bancaires.</p></div></details>
+<details><summary>Comment sont les repas le reste de la semaine ?</summary><div class="faq__c"><p class="">Tout au long de votre voyage dans le Sinaï, les repas principaux sont inclus dans le programme. À Ras Mohamed, vous dégusterez un déjeuner frais sur le bateau entre deux sessions de snorkeling. À Sainte-Catherine, les repas servis dans la guesthouse sont traditionnels et adaptés à l’effort physique : dîner copieux avant l’ascension et petit-déjeuner complet au retour.</p>
+<p class="">Dans la région de Dahab, selon vos activités, vous pourrez manger dans des restaurants locaux ou sur la plage. Si vous participez à des ateliers, plongées ou excursions en mer (comme vers Ras Abu Gallum ou le Blue Lagoon), des repas sont servis sur place, souvent à base de poissons grillés ou plats végétariens typiques.</p></div></details>
+<details><summary>Quelle est la meilleure période pour voyager dans le Sinaï ?</summary><div class="faq__c"><p class="">Le Sinaï peut se visiter toute l’année, mais certaines saisons sont plus favorables selon les activités. Pour l’ascension du mont Moïse, les mois de mars à mai et de septembre à novembre offrent les conditions les plus agréables : températures douces, ciel dégagé et moins de vent au sommet. En hiver, l’expérience reste possible, mais il faut prévoir des vêtements plus chauds pour affronter les températures proches de 0 °C au sommet. En été, l’altitude de Sainte-Catherine permet de fuir la chaleur étouffante du reste du pays.</p>
+<p class="">Concernant le séjour en bord de mer (Sharm el-Sheikh, Dahab), la meilleure période s’étend également du printemps à l’automne, lorsque la mer Rouge est idéale pour le snorkeling ou les sorties en bateau. L’hiver y reste très agréable avec des températures de 22 à 25 °C en journée, tandis que l’été peut être très chaud (jusqu’à 40 °C), mais atténué par la brise marine et les baignades régulières.</p></div></details>
+<details><summary>À quelle assurance voyage dois-je souscrire en Égypte ?</summary><div class="faq__c"><p class="">Nous vous recommandons de souscrire une assurance voyage couvrant les frais médicaux, l’annulation et les activités en milieu naturel. Veillez à vérifier que votre contrat inclut les excursions en montagne.</p></div></details></div>
+</div>
+</div>
+
+    <!-- PANNEAU DE CONVERSION COLLANT — suit tout le défilement -->
+    <aside>
+      <div class="resa" data-mm="Bloc de conversion · collant">
+<p class="prix" style="margin:0 0 2px"><small>À partir de</small><b>990 €</b> <i>/ personne</i></p>
+<ul><li><svg width="16" height="16" viewBox="0 0 17 17" fill="none" aria-hidden="true"><path d="M3 8.8l3.6 3.6L14 5" stroke="#0F6E73" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> 8 jours minimum</li><li><svg width="16" height="16" viewBox="0 0 17 17" fill="none" aria-hidden="true"><path d="M3 8.8l3.6 3.6L14 5" stroke="#0F6E73" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Guide privatif francophone</li><li><svg width="16" height="16" viewBox="0 0 17 17" fill="none" aria-hidden="true"><path d="M3 8.8l3.6 3.6L14 5" stroke="#0F6E73" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Chauffeur et véhicule sécurisé</li><li><svg width="16" height="16" viewBox="0 0 17 17" fill="none" aria-hidden="true"><path d="M3 8.8l3.6 3.6L14 5" stroke="#0F6E73" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Itinéraire modifiable</li></ul>
+<div class="act"><a href="https://authentiquegypte.com/sur-mesure/" class="btn btn--or btn--bloc">Personnaliser ce séjour</a>
+<a href="https://wa.me/201066619098" class="btn btn--wa btn--bloc btn--sm">Écrire sur WhatsApp</a></div>
+<p class="note" style="margin:12px 0 0;text-align:center">Devis gratuit · réponse sous 48 h (hors vendredi et samedi)</p>
+</div>
+    </aside>
+  </div>
+</div>
+
+<section class="section section--fond">
   <div class="wrap">
-    <nav class="ariane" aria-label="Fil d'Ariane"><ol>
-      <li><a href="../index.html">Accueil</a></li>
-      <li><span aria-current="page">Du littoral de la mer Rouge…</span></li>
-    </ol></nav>
-    <p class="eyebrow eyebrow--clair">Séjour</p>
-    <h1>Du littoral de la mer Rouge aux montagnes du Sinaï</h1>
-    <p class="sous">Dans cette excursion de 8 jours, découvrez la variété des paysages qu’offre le Sinaï à ceux qui s’y aventurent. Des coraux multicolores de la mer Rouge aux formations géologiques spectaculaires qui dessinent ses côtes, chaque étape révèle une facette unique du désert.Prenez également le temps de découvrir les montagnes du Sinaï lors d’un lever du soleil magique au sommet du mont Moïse, suivi d’une visite du monastère Sainte-Catherine, joyau spirituel niché entre les roches.Un itinéraire accessible à tous, conçu pour vous faire vivre une immersion au cœur des paysages et des traditions, à la rencontre des Bédouins du Sinaï, gardiens de cette terre hors du temps.</p>
-    <div class="chiffres"><span>8 jours</span><span>À partir de 990 €</span></div>
+    <p class="eyebrow">Ce qu'en disent les voyageurs</p>
+    <h2 style="margin-bottom:22px">23 avis Google sur l'agence</h2>
+    <div class="avis" data-dec="Conservé">
+      <article>
+        <p class="et" aria-label="5 étoiles sur 5">★★★★★</p>
+        <blockquote>Très beau séjour parfaitement organisé. Interlocuteurs agréables et toujours prêts à rendre service. Je recommande !</blockquote>
+        <footer><span class="ini">GG</span><span><b>Gislaine G.</b>Avis Google</span></footer>
+      </article>
+      <article>
+        <p class="et" aria-label="5 étoiles sur 5">★★★★★</p>
+        <blockquote>Le voyage a été très bien organisé par l'agence. Nous avons été accompagnés par un guide francophone très sympathique. Tous les intervenants étaient très professionnels.</blockquote>
+        <footer><span class="ini">DH</span><span><b>Daniel H.</b>Avis Google</span></footer>
+      </article>
+      <article>
+        <p class="et" aria-label="5 étoiles sur 5">★★★★★</p>
+        <blockquote>Une agence à l'écoute, organisation parfaite. Une équipe efficace et réactive.</blockquote>
+        <footer><span class="ini">BR</span><span><b>Brigitte R.</b>Avis Google</span></footer>
+      </article>
+    </div>
+    <p class="note" style="margin-top:16px;color:var(--gris-clair)">Avis repris du widget Google de la page. Aucun ne porte sur Siwa — <span class="aremplir">avis Siwa à collecter</span></p>
   </div>
 </section>
+
+<!-- BLOC DE SŒURS — après le bloc de conversion -->
 <section class="section">
   <div class="wrap">
-    <p class="src">Contenu repris de <a href="https://authentiquegypte.com/programs/itineraire-sinai-sainte-catherine-mont-moise-et-mer-rouge/">https://authentiquegypte.com/programs/itineraire-sinai-sainte-catherine-mont-moise-et-mer-rouge/</a>, sans réécriture. Seule la mise en page change.</p>
-    <div class="deux">
-      <div class="corps">
-        <nav class="sommaire" aria-label="Sommaire"><b>Sur cette page</b><ol><li><a href="#s0">de la beauté des côtes de la mer rouge aux montagnes enchantées de Sainte-Catherine</a></li><li><a href="#s1">Vue d&#x27;ensemble</a></li><li><a href="#s2">Les étapes de votre séjour :</a></li><li><a href="#s3">Découvrez le Sinaï</a></li><li><a href="#s4">Quelle est la météo dans le Sinaï ?</a></li><li><a href="#s5">Comment se rendre à Sainte-Catherine ?</a></li><li><a href="#s6">Peut-on visiter le monastère Sainte-Catherine ?</a></li><li><a href="#s7">Comment puis-je visiter le mont Sinaï ?</a></li><li><a href="#s8">Cet itinéraire est-il adapté aux familles ?</a></li><li><a href="#s9">Est-il sûr de se rendre au monastère Sainte-Catherine ?</a></li><li><a href="#s10">Quel niveau faut-il pour tenter l’ascension du mont Sinaï ?</a></li><li><a href="#s11">Quel niveau faut-il pour faire du snorkeling ?</a></li><li><a href="#s12">Quel équipement prévoir pour l’ascension du mont Moïse ?</a></li><li><a href="#s13">Et pour le reste de votre séjour dans le Sinaï ?</a></li><li><a href="#s14">Peut-on manger durant l’ascension du mont Moïse ?</a></li><li><a href="#s15">Comment sont les repas le reste de la semaine ?</a></li><li><a href="#s16">Quelle est la meilleure période pour voyager dans le Sinaï ?</a></li><li><a href="#s17">À quelle assurance voyage dois-je souscrire en Égypte ?</a></li><li><a href="#s18">Pyramides et croisière sur le Nil</a></li></ol></nav>
-        <h2 id="s0">de la beauté des côtes de la mer rouge aux montagnes enchantées de Sainte-Catherine</h2>
-<p>A partir de 990 € / Personne</p>
-<ul><li>8 jours minimum</li><li>Rythme adapté à tous</li><li>Chauffeur et véhicule privé et climatisé</li><li>Nuit en hébergements uniques</li><li>Découvertes multiples : culturelles, spirituelles et naturelles</li></ul>
-<ul><li>Agence locale basée au Caire</li><li>Guides égyptologues francophones</li></ul>
-<figure><img src="https://authentiquegypte.com/wp-content/uploads/elementor/thumbs/DSC00581-1-scaled-r7of06icut4mboc1bee9m3s04gl7gb4lm9700hh1q8.jpg" alt="Au sommet du mont Sinaï" loading="lazy" decoding="async"><figcaption>Au sommet du mont Sinaï</figcaption></figure>
-<h2 id="s1">Vue d&#x27;ensemble</h2>
-<p>Dans cette excursion de 8 jours, découvrez la variété des paysages qu’offre le Sinaï à ceux qui s’y aventurent. Des coraux multicolores de la mer Rouge aux formations géologiques spectaculaires qui dessinent ses côtes, chaque étape révèle une facette unique du désert.Prenez également le temps de découvrir les montagnes du Sinaï lors d’un lever du soleil magique au sommet du mont Moïse, suivi d’une visite du monastère Sainte-Catherine, joyau spirituel niché entre les roches.Un itinéraire accessible à tous, conçu pour vous faire vivre une immersion au cœur des paysages et des traditions, à la rencontre des Bédouins du Sinaï, gardiens de cette terre hors du temps.</p>
-<figure><img src="https://authentiquegypte.com/wp-content/uploads/elementor/thumbs/1-scaled-r864zqrkrnzn8so1vr6rktjdd2e9cnrcd4wa1d8mbk.jpg" alt="Bord de mer à Dahab" loading="lazy" decoding="async"><figcaption>Bord de mer à Dahab</figcaption></figure>
-<h2 id="s2">Les étapes de votre séjour :</h2>
-<p>Vous arrivez à l’aéroport de Sharm el Sheikh où vous êtes accueilli par notre représentant local, puis prenez la route en direction de votre hôtel en bord de mer pour commencer votre aventure dans le Sinaï</p>
-<ul><li>Dîner inclus</li><li>Hôtel à Sharm el-Sheikh</li></ul>
-<p>Après le petit-déjeuner, embarquez à bord d’un bateau en direction du parc national de Ras Mohamed, un lieu préservé emblématique du Sud du Sinaï et véritable paradis du snorkeling.</p>
-<p>Équipé d’un masque et d’un tuba, vous partez explorer les eaux turquoise où se déploie une incroyable barrière de corail. Une véritable explosion de couleurs et de vie sous-marine qui émerveillera les amateurs comme les curieux.</p>
-<p>Un déjeuner frais et préparé à bord vous sera servi, avant de repartir pour une nouvelle session d’exploration au cœur de cet écrin naturel.</p>
-<p>En fin d’après-midi, retour à Sharm el Sheikh et transfert à votre hôtel.</p>
-<ul><li>Petit-déjeuner, déjeuner et dîner inclus</li><li>Hôtel à Sharm el-Sheikh</li></ul>
-<p>Ce matin, après le petit-déjeuner, profitez d’une matinée libre. Puis en début d’après-midi, un véhicule privé et climatisé viendra vous chercher à votre hôtel pour prendre la route en direction de Sainte-Catherine.</p>
-<p>La route en bon état menant au village vous donne l’occasion d’observer les paysages du Sinaï, des montagnes abruptes aux langues de sable, et peut-être même de croiser des dromadaires le long de la route.</p>
-<p>Vous arrivez dans votre guesthouse à Sainte-Catherine, tenue par des Bédouins de la tribu Gabalia, qui sauront vous accueillir avec toute l’hospitalité qui leur est reconnue. Le reste de l’après-midi est consacré au repos et à la contemplation du lieu. Un dîner copieux et traditionnel vous sera servi vers 19h afin d’avoir de l’énergie pour le lendemain.</p>
-<ul><li>Petit-déjeuner et dîner inclus</li><li>Nuit en guesthouse bédouine</li></ul>
-<p>Ce matin, vous vous réveillez tôt pour un départ vers 1h en direction du monastère Sainte-Catherine, où débute votre randonnée guidée par un Bédouin. Une ascension qui s’annonce mythique et spirituelle.</p>
-<p>La marche, qui dure entre 2h30 et 3h00 à la lumière des frontales, vous mène au sommet pour admirer le lever du soleil sur les montagnes du Sinaï. Une expérience unique, magnifique et mystique, que chacun saura apprécier à sa manière.</p>
-<p>C’est sur ce sommet que Moïse aurait reçu les Tables des lois « écrites du doigt de Dieu » (Exode 31:18), un événement majeur du Judaïsme et du Christianisme, qui trouve un écho dans l’Islam. Ainsi, ce lieu est empreint d’une spiritualité intense, et vous trouverez en son sommet la chapelle de la Sainte-Trinité. Cette dernière fut construite au XXe siècle sur les restes d’une chapelle byzantine du VIe siècle, érigée par Justinien Ier en même temps que le monastère Sainte-Catherine. Aujourd’hui, la chapelle est un lieu de prière occasionnel des moines du monastère.</p>
-<p>Sur la route, vous faites des pauses dans de petits magasins minimalistes, qui vous proposent des boissons chaudes et des collations, idéales pour garder de l’énergie et faire une pause à l’abri si besoin.</p>
-<p>Vous redescendez ensuite vers le monastère Sainte-Catherine pour en découvrir les trésors. Cette descente s’effectue en 2h00 à 2h30.</p>
-<p>À l’intérieur, vous visitez l’église de la Transfiguration avec ses mosaïques, son marbre et sa remarquable collection d’icônes. Vous poursuivez vers le Buisson ardent, puis montez jusqu’au musée de la bibliothèque (entrée 2 $) qui abrite une collection inestimable d’icônes anciennes et de textes bibliques. C’est d’ailleurs dans cette bibliothèque qu’a été découvert le Codex Sinaiticus, l’une des plus anciennes bibles complètes.</p>
-<p>C’est Hélène, la mère de l’empereur Constantin, qui fit ériger au IVe siècle une première chapelle entre ces montagnes. Il s’agit de la chapelle du Buisson ardent, située à l’arrière de l’église actuelle. Plus tard, l’empereur Justinien Ier (vers 548–565) fit construire le monastère Sainte-Catherine autour de cette chapelle pour protéger les pèlerins.Le monastère aurait ensuite été protégé par le prophète Mahomet en 625, dans un décret appelé Adhiname, puis par Napoléon Bonaparte en 1798 à travers une Lettre de Sauvegarde (visible dans la bibliothèque), et enfin en 2002 par l’UNESCO, qui l’a inscrit au Patrimoine mondial. Aujourd’hui encore, le gouvernement égyptien lui garantit sa sécurité et le reconnaît comme un haut lieu spirituel.</p>
-<p>Après cette visite, une voiture vous attend au parking du monastère pour vous ramener à votre guesthouse. Vous profitez d’un petit-déjeuner traditionnel et complet avant de reprendre la route vers Dahab aux alentours de midi.</p>
-<ul><li>Petit-déjeuner inclus</li><li>Hôtel à Dahab</li></ul>
-<p>Ces deux jours à Dahab sont libres pour découvrir cette ville pleine de vie et à l’ambiance si particulière. Dahab séduit aussi par son rythme paisible, ses cafés en bord de mer et son atmosphère bohème, idéale pour se détendre entre deux aventures dans le désert ou sous l’eau.</p>
-<p>En option :– Nous pouvons vous proposer des cours de poterie qui vous permettront de créer tout type d’objet et de repartir avec votre réalisation. Il s’agit d’un workshop sur plusieurs jours, car il faut jusqu’à trois jours pour compléter toutes les étapes. Cette activité peut être effectuée le matin ou en fin de journée, à raison de trois heures par jour. Une manière originale et créative de rapporter un souvenir personnel.</p>
-<p>– Dahab est également le paradis de la plongée, réputée pour ses coraux et ses reliefs sous-marins accessibles. Il est possible de suivre un stage de plongée adapté à votre niveau, par exemple un programme de 3 à 4 jours avec passage du premier niveau PADI (Open Water Course). Dans ce cas, l’itinéraire global peut être modifié : n’hésitez pas à nous faire part de vos souhaits pour recevoir un devis personnalisé.</p>
-<p>– Enfin, profitez des nombreuses activités disponibles au départ de Dahab, que votre hôtel pourra également vous conseiller : sports nautiques, safaris dans les canyons, balades en quad ou dîners bédouins organisés dans le désert.</p>
-<ul><li>Petit-déjeuner inclus</li><li>Hôtel à Dahab</li></ul>
-<p>Après le petit-déjeuner, vous prenez la route à bord d’une jeep pour une journée d’aventure sur la côte de la mer Rouge.</p>
-<p>Votre première destination est le Blue Hole, au nord de Dahab, un relief sous-marin emblématique, connu dans le monde entier pour l’apnée et le snorkeling. Grâce à un accès facile depuis la plage, vous pourrez y observer de magnifiques coraux et une faune marine riche et colorée.</p>
-<p>Ensuite, vous embarquez à bord d’un bateau en direction de Ras Abu Gallum, une plage isolée bordée par quelques huttes, loin de toute agitation. Une véritable invitation à la déconnexion. Un déjeuner préparé sur place vous est servi, avant de profiter à nouveau des fonds marins pour une nouvelle session de snorkeling.</p>
-<p>Enfin, votre périple vous mène vers le Blue Lagoon, cette fois célèbre pour ses sports nautiques comme le wind-surf. La couleur de son eau lui a donné son nom : un véritable lagon aux teintes irréelles. Vous pouvez y vous détendre sur la plage ou replonger à votre rythme dans ses eaux cristallines.</p>
-<p>En fin de journée, vous reprenez le bateau, puis votre jeep, pour retourner à votre hôtel à Dahab.</p>
-<ul><li>Petit-déjeuner et déjeuner inclus</li><li>Hôtel à Dahab</li></ul>
-<p>Après votre petit-déjeuner à l’hôtel, un véhicule privatisé et climatisé vient vous chercher pour votre transfert vers l’aéroport de Sharm el Sheikh, où vous prenez votre vol retour.</p>
-<p>En option :Prolongez votre voyage en Égypte et partez à la découverte de la vallée du Nil, du Caire et des temples majestueux de la Haute-Égypte. Une extension idéale pour approfondir votre immersion culturelle après cette expérience dans le Sinaï.</p>
-<ul><li>Petit-déjeuner inclus</li></ul>
-<ul><li>Le programme inclus</li></ul>
-<ul><li>Les transferts en véhicule privatisé et climatisé</li><li>Les nuits mentionnées</li><li>Les repas mentionnés</li><li>Les activités mentionnées</li><li>Les frais d’entrée du parc national de Sainte-Catherine</li><li>Les frais d’entrée du parc national de Ras Mohamed</li><li>Un guide anglophone sur les excursions</li><li>L&#x27;assistance H24</li></ul>
-<ul><li>N&#x27;inclus pas</li></ul>
-<ul><li>Les vols internationaux</li><li>Les repas non mentionnés</li><li>L’entrée au musée de la bibliothèque du monastère Sainte-Catherine (2$)</li><li>Les frais d’entrée à Blue Hole</li><li>Les pourboires</li><li>Les suppléments</li><li>Les dépenses personnelles</li><li>L&#x27;assurance voyage</li><li>Les frais de paiement</li><li>Les frais de visa</li></ul>
-<figure><img src="https://authentiquegypte.com/wp-content/uploads/elementor/thumbs/DSC00528-1-scaled-r7q52iraffrs2qtwc7enl9yy7bt6f3axh7npp0lf5s.jpg" alt="Contemplation sur les montagnes du Sinaï" loading="lazy" decoding="async"><figcaption>Contemplation sur les montagnes du Sinaï</figcaption></figure>
-<h2 id="s3">Découvrez le Sinaï</h2>
-<p>Entre Afrique et Asie, la péninsule du Sinaï forme un pont naturel et culturel entre deux mondes. Bordée par le golfe de Suez et le golfe d’Aqaba, elle offre des paysages saisissants : montagnes de granit rose, déserts dorés, canyons spectaculaires et plages baignées par la mer Rouge. C’est un territoire de contrastes, à la fois rude et poétique, entre silence minéral et richesse sous-marine.</p>
-<p>Terre spirituelle et carrefour d’histoire, le Sinaï abrite le mont Moïse, lieu sacré pour les trois monothéismes, et au pied duquel se dresse le monastère Sainte-Catherine, l’un des plus anciens au monde. Depuis des siècles, pèlerins, nomades et voyageurs y laissent leurs traces, tissant une mosaïque de récits et de traditions.</p>
-<p>Entre trésors naturels et lieux sacrés, le Sinaï émerveille par sa diversité : les récifs coralliens de Ras Mohamed ou de Ras Abu Gallum comptent parmi les plus beaux au monde, tandis que les canyons colorés et les montagnes du sud, dont le mont Sainte-Catherine, offrent un décor propice à la contemplation. Ici, nature, foi et silence se rejoignent.</p>
-<p>Ce voyage privilégie les rencontres authentiques et l’immersion culturelle. En parcourant le Sinaï à un rythme apaisé, vous découvrirez aussi la culture bédouine, notamment auprès de la tribu Gabalia à Sainte-Catherine. Une nuit dans une guesthouse tenue par des Bédouins, une expérience, sincère de leur hospitalité.</p>
-<p>L’itinéraire proposé se déroule dans le sud du Sinaï, une région sécurisée et ouverte au tourisme. Encadré par des partenaires locaux expérimentés, ponctué de checkpoints réguliers et organisé dans les zones de Sharm el Sheikh, Dahab et Sainte-Catherine, le voyage se fait en toute sérénité. Nous avons conçu ce séjour avec un rythme équilibré, une logistique fiable et une approche humaine pour vous garantir une expérience à la fois enrichissante et paisible.</p>
-<ul><li>Quelle est la météo dans le Sinaï ?</li><li>Comment se rendre dans le Sinaï ?</li><li>Peut-on visiter le monastère ?</li><li>Comment visiter le mont Sinaï ?</li><li>Cet itinéraire est-il adapté aux familles ?</li><li>Est-il sûr d&#x27;y aller ?</li></ul>
-<figure><img src="https://authentiquegypte.com/wp-content/uploads/elementor/thumbs/raimond-klavins-j2KNHVDqook-unsplash-scaled-r863ff9pa0w5lwh3qwshoj640xzj5j6bmdpxviqt4w.jpg" alt="Jeep dans le paysage du Sinaï" loading="lazy" decoding="async"><figcaption>Jeep dans le paysage du Sinaï</figcaption></figure>
-<h3 id="s4">Quelle est la météo dans le Sinaï ?</h3>
-<p>Le Sinaï bénéficie d’un climat désertique sec et d’un ensoleillement quasi permanent. Les températures varient selon la saison et l’altitude.</p>
-<p>Sur la côte, à Sharm el Sheikh ou Dahab, il fait entre 20 et 25 °C en hiver et 35 à 40 °C en été, avec une eau chaude toute l’année : idéal pour la plongée et le snorkeling.</p>
-<p>Dans les montagnes de Sainte-Catherine, les nuits sont fraîches en été (10 à 15 °C) et très froides en hiver (jusqu’à 0 °C au mont Moïse). En journée, les températures oscillent entre 15 et 28 °C.</p>
-<p>Le printemps (mars–mai) et l’automne (septembre–novembre) sont les meilleures périodes pour visiter, avec un climat doux et un ciel dégagé.</p>
-<figure><img src="https://authentiquegypte.com/wp-content/uploads/elementor/thumbs/mohamad-sameh-FGPo7AOnvv8-unsplash-scaled-r84dba5wlts7lqlg8tqufbccyhn8fmuiii8q2walmo.jpg" alt="Bédouins dans le désert" loading="lazy" decoding="async"><figcaption>Bédouins dans le désert</figcaption></figure>
-<h3 id="s5">Comment se rendre à Sainte-Catherine ?</h3>
-<p>Le point d’entrée principal vers le Sinaï est l’aéroport international de Sharm el Sheikh, accessible en vol direct depuis plusieurs villes européennes ou via Le Caire. À votre arrivée, un chauffeur vous attend à l’aéroport pour votre transfert privé vers l’hôtel.</p>
-<p>Si vous êtes déjà en Égypte, il est également possible de rejoindre le Sinaï par la route depuis Le Caire (6 à 8 heures de trajet) en passant par le tunnel Ahmed Hamdi sous le canal de Suez. Cette option est idéale pour ceux qui souhaitent combiner la découverte du Caire ou de la vallée du Nil avec un séjour dans le Sinaï.</p>
-<p>Tout au long de votre séjour, les trajets sont assurés en véhicule privé, pour vous garantir confort, sécurité et flexibilité entre les différentes étapes : Sharm el Sheikh, Sainte-Catherine, Dahab, etc.</p>
-<figure><img src="https://authentiquegypte.com/wp-content/uploads/elementor/thumbs/nassim-wahba-pb8MhOgjlEk-unsplash-scaled-r86305e47xzey0ntxt3qnvxgij9t2ljcis2w4ne48w.jpg" alt="Littoral de la mer rouge. Nassim Wahba - Unsplash" loading="lazy" decoding="async"><figcaption>Littoral de la mer rouge. Nassim Wahba - Unsplash</figcaption></figure>
-<h3 id="s6">Peut-on visiter le monastère Sainte-Catherine ?</h3>
-<p>Vous pouvez visiter le monastère de Sainte-Catherine, ouvert tous les jours sauf le dimanche et les jours fériés chrétiens :</p>
-<p>1er mai, 2 mai, 3 mai, 4 mai, 6 mai, 8 mai, 13 juin, 24 juin, 12 juillet, 19 août, 28 août, 21 septembre, 27 septembre, 14 novembre, 4 décembre, 6 décembre, 7 décembre, 9 décembre.</p>
-<figure><img src="https://authentiquegypte.com/wp-content/uploads/elementor/thumbs/peggy-anke-YxpoB3bvlZQ-unsplash-scaled-r862eudtb4tfs7lyclk659hbs4aalkydlbqoiuzda8.jpg" alt="Au bord du lagoon de la mer rouge" loading="lazy" decoding="async"><figcaption>Au bord du lagoon de la mer rouge</figcaption></figure>
-<h3 id="s7">Comment puis-je visiter le mont Sinaï ?</h3>
-<p>Afin de visiter le mont Sinaï, aussi appelé mont Moïse, il vous faudra vous rendre à Sainte-Catherine. De plus, vous devrez effectuer l’ascension à l’aide d’un guide bédouin.</p>
-<p>L’ascension du mont Moïse peut se faire de nuit pour voir le lever du soleil, mais aussi en journée pour contempler le coucher du soleil. N’hésitez pas à nous préciser votre préférence.</p>
-<p>Pour plus de confort, nous recommandons de passer 2 jours à Sainte-Catherine et de prendre votre temps. Sainte-Catherine est une ville calme, fraîche et reposante — des conditions idéales pour préparer une ascension et vous reposer au retour. Une excursion d’une seule soirée peut s’avérer particulièrement fatigante si elle est incluse dans des vacances déjà bien chargées.</p>
-<figure><img src="https://authentiquegypte.com/wp-content/uploads/elementor/thumbs/DSC00370-scaled-r85uipq3fzv6bkbngs5zfynbh4q1vazb70kw5s9i4g.jpg" alt="Mer et relief du Sinaï" loading="lazy" decoding="async"><figcaption>Mer et relief du Sinaï</figcaption></figure>
-<h3 id="s8">Cet itinéraire est-il adapté aux familles ?</h3>
-<p>Oui, cet itinéraire convient parfaitement aux familles, avec un bon équilibre entre découvertes, activités variées et temps de repos. Les journées en mer (snorkeling, bateau, coraux) plaisent beaucoup aux enfants, et Dahab est une ville idéale avec ses plages peu profondes, ses activités ludiques et son atmosphère détendue.</p>
-<p>L’ascension du mont Moïse est accessible aux enfants à partir de 8–10 ans en bonne forme, avec des pauses prévues et un chemin sécurisé.</p>
-<p>Les hébergements sont adaptés aux familles et notre équipe locale a l’habitude d’accompagner les plus jeunes. N’hésitez pas à nous préciser l’âge de vos enfants : nous adapterons le rythme ou les activités si nécessaire.</p>
-<figure><img src="https://authentiquegypte.com/wp-content/uploads/elementor/thumbs/DSC00551_01-scaled-e1751464241518-r863uikf09jw0ijxmfmupq2jdnloql36d2sl9gd98g.jpg" alt="Spiritualité au sommet du mont Moïse au lever du soleil" loading="lazy" decoding="async"><figcaption>Spiritualité au sommet du mont Moïse au lever du soleil</figcaption></figure>
-<h3 id="s9">Est-il sûr de se rendre au monastère Sainte-Catherine ?</h3>
-<p>Le Sud du Sinaï est une zone particulièrement protégée et plusieurs points de contrôle sont mis en place entre la côte et la ville de Sainte-Catherine pour assurer cette sécurité. De plus, le Sud-Sinaï n’est pas une zone déconseillée parle site de la diplomatie française</p>
-<p>Enfin, lors de votre ascension, vous serez accompagné d’un guide bédouin expérimenté. En cas d’accident — rare sur cet itinéraire — un hôpital se trouve dans la ville de Sainte-Catherine.</p>
-<p>Le Sud du Sinaï est une zone particulièrement protégée et plusieurs points de contrôle sont mis en place entre la côte et la ville de Sainte-Catherine pour assurer cette sécurité. De plus, le Sud-Sinaï n’est pas une zone déconseillée par le site de la diplomatie française</p>
-<ul><li>Niveau</li><li>Equipement</li><li>Nourriture</li><li>Période</li><li>Assurance</li></ul>
-<figure><img src="https://authentiquegypte.com/wp-content/uploads/2023/11/pyramides-1024x683.jpg" alt="" loading="lazy" decoding="async"></figure>
-<h3 id="s10">Quel niveau faut-il pour tenter l’ascension du mont Sinaï ?</h3>
-<p>Pour effectuer l’ascension du mont Moïse, il n’est pas nécessaire d’être un grand sportif. Nous recommandons simplement d’avoir une condition physique suffisante pour marcher plusieurs heures d’affilée, avec du dénivelé. La fatigue peut s’ajouter à l’effort, c’est pourquoi il est conseillé de bien vous reposer l’après-midi précédent le départ, afin d’aborder la randonnée dans de bonnes conditions.</p>
-<figure><img src="https://authentiquegypte.com/wp-content/uploads/2025/07/mor-shani-Jw78jFgWpYE-unsplash-1-300x200.jpg" alt="" loading="lazy" decoding="async"></figure>
-<h3 id="s11">Quel niveau faut-il pour faire du snorkeling ?</h3>
-<p>Le snorkeling dans le Sinaï est accessible à tous, même aux débutants. Les sites comme le Blue Hole, Ras Mohamed ou Ras Abu Gallum offrent des zones peu profondes avec une excellente visibilité et une vie marine abondante, facilement observable dès la surface. Il suffit de savoir nager et d’être à l’aise dans l’eau. Le matériel (masque, tuba, palmes) est fourni sur place, et vous serez toujours encadré par un guide local si besoin.</p>
-<figure><img src="https://authentiquegypte.com/wp-content/uploads/2025/07/nassim-wahba-pb8MhOgjlEk-unsplash-300x225.jpg" alt="" loading="lazy" decoding="async"></figure>
-<h3 id="s12">Quel équipement prévoir pour l’ascension du mont Moïse ?</h3>
-<p>L’ascension du mont Moïse se fait de nuit, avec des températures souvent basses et du vent au sommet. Prévoyez une lampe frontale, des vêtements chauds (polaire, doudoune légère, bonnet, gants fins), une veste coupe-vent, ainsi que des chaussures de randonnée confortables. Un petit sac à dos est utile pour porter eau, snacks et effets personnels.</p>
-<p>N&#x27;oubliez pas une crème solaire, une casquette et des lunettes de soleil pour la journée. Même en été, les températures au sommet peuvent descendre à 10°C ou moins. Si vous ne possédez pas de lampe, il est possible d’en acheter au camp de base.</p>
-<p>Enfin, les drones sont interdits dans la zone, mais vous pouvez emporter un appareil photo : les ciels étoilés du Sinaï sont spectaculaires grâce à l’absence de pollution lumineuse.</p>
-<figure><img src="https://authentiquegypte.com/wp-content/uploads/2025/07/raimond-klavins-j2KNHVDqook-unsplash-300x200.jpg" alt="" loading="lazy" decoding="async"></figure>
-<h3 id="s13">Et pour le reste de votre séjour dans le Sinaï ?</h3>
-<p>Pour une semaine complète dans le Sinaï, prévoyez des vêtements légers et respirants pour la journée, ainsi qu’un pull ou une veste pour les soirées plus fraîches. Pour les activités en mer, apportez un maillot de bain, un t-shirt anti-UV si vous faites du snorkeling ou du kayak, et des sandales en plastique pour marcher sur les rochers.</p>
-<p>Il est conseillé de prendre une bouteille réutilisable, une batterie externe, une serviette à séchage rapide et une trousse de toilette minimaliste. Si vous partez en sortie en mer ou dans le désert, un petit sac à dos sera également pratique.</p>
-<figure><img src="https://authentiquegypte.com/wp-content/uploads/2025/06/DSC00581-300x201.jpg" alt="" loading="lazy" decoding="async"></figure>
-<h3 id="s14">Peut-on manger durant l’ascension du mont Moïse ?</h3>
-<p>Oui, nous vous conseillons d’emporter quelques barres de céréales, fruits secs ou en-cas énergétiques pour garder de l’énergie tout au long de la montée. Des pauses sont prévues sur le chemin.</p>
-<p>Vous trouverez également sur le sentier de petits magasins rudimentaires qui proposent des boissons chaudes, des barres chocolatées ou encore des nouilles instantanées. Pensez à prendre un peu de monnaie en espèces, ces boutiques n’acceptent pas les cartes bancaires.</p>
-<figure><img src="https://authentiquegypte.com/wp-content/uploads/2025/07/1-300x201.jpg" alt="" loading="lazy" decoding="async"></figure>
-<h3 id="s15">Comment sont les repas le reste de la semaine ?</h3>
-<p>Tout au long de votre voyage dans le Sinaï, les repas principaux sont inclus dans le programme. À Ras Mohamed, vous dégusterez un déjeuner frais sur le bateau entre deux sessions de snorkeling. À Sainte-Catherine, les repas servis dans la guesthouse sont traditionnels et adaptés à l’effort physique : dîner copieux avant l’ascension et petit-déjeuner complet au retour.</p>
-<p>Dans la région de Dahab, selon vos activités, vous pourrez manger dans des restaurants locaux ou sur la plage. Si vous participez à des ateliers, plongées ou excursions en mer (comme vers Ras Abu Gallum ou le Blue Lagoon), des repas sont servis sur place, souvent à base de poissons grillés ou plats végétariens typiques.</p>
-<figure><img src="https://authentiquegypte.com/wp-content/uploads/2025/07/peggy-anke-YxpoB3bvlZQ-unsplash-300x200.jpg" alt="" loading="lazy" decoding="async"></figure>
-<h3 id="s16">Quelle est la meilleure période pour voyager dans le Sinaï ?</h3>
-<p>Le Sinaï peut se visiter toute l’année, mais certaines saisons sont plus favorables selon les activités. Pour l’ascension du mont Moïse, les mois de mars à mai et de septembre à novembre offrent les conditions les plus agréables : températures douces, ciel dégagé et moins de vent au sommet. En hiver, l’expérience reste possible, mais il faut prévoir des vêtements plus chauds pour affronter les températures proches de 0 °C au sommet. En été, l’altitude de Sainte-Catherine permet de fuir la chaleur étouffante du reste du pays.</p>
-<p>Concernant le séjour en bord de mer (Sharm el-Sheikh, Dahab), la meilleure période s’étend également du printemps à l’automne, lorsque la mer Rouge est idéale pour le snorkeling ou les sorties en bateau. L’hiver y reste très agréable avec des températures de 22 à 25 °C en journée, tandis que l’été peut être très chaud (jusqu’à 40 °C), mais atténué par la brise marine et les baignades régulières.</p>
-<figure><img src="https://authentiquegypte.com/wp-content/uploads/2025/07/WhatsApp-Image-2025-06-27-at-15.33.21_37e02dae.jpg" alt="Bédouin au coucher du soleil" loading="lazy" decoding="async"><figcaption>Bédouin au coucher du soleil</figcaption></figure>
-<h3 id="s17">À quelle assurance voyage dois-je souscrire en Égypte ?</h3>
-<p>Nous vous recommandons de souscrire une assurance voyage couvrant les frais médicaux, l’annulation et les activités en milieu naturel. Veillez à vérifier que votre contrat inclut les excursions en montagne.</p>
-<figure><img src="https://authentiquegypte.com/wp-content/uploads/2025/06/DSC00581-1-scaled.jpg" alt="Au sommet du mont Sinaï" loading="lazy" decoding="async"><figcaption>Au sommet du mont Sinaï</figcaption></figure>
-<h2 id="s18">Pyramides et croisière sur le Nil</h2>
-<p>A partir de : 830 € / Personne</p>
-<ul><li>8 jours minimum</li><li>Rythme adapté à tous</li><li>Chauffeur et véhicule privé et climatisé</li><li>Nuit en hébergements uniques</li><li>Découvertes multiples : culturelles, spirituelles et naturelles</li></ul>
-<ul><li>Agence locale basée au Caire</li><li>Guides égyptologues francophones</li></ul>
-<figure><img src="https://authentiquegypte.com/wp-content/uploads/2023/11/flying-carpet-Si1MFhSLNWY-unsplash-scaled.jpg" alt="" loading="lazy" decoding="async"></figure>
-      </div>
-      <aside class="flanc"><div class="encart"><h3>Le prix</h3><p class="prix" style="font-size:1.5rem"><small>À partir de</small><b>990 €</b> <i>/ pers.</i></p><p style="font-size:.9rem;color:var(--gris);margin:10px 0 16px">8 jours</p><a href="https://authentiquegypte.com/sur-mesure/" class="btn btn--or btn--bloc btn--sm">Demander mon devis</a></div><div class="encart"><h3>Le programme inclut</h3><ul><li>Les transferts en véhicule privatisé et climatisé</li><li>Les nuits mentionnées</li><li>Les repas mentionnés</li><li>Les activités mentionnées</li><li>Les frais d’entrée du parc national de Sainte-Catherine</li><li>Les frais d’entrée du parc national de Ras Mohamed</li><li>Un guide anglophone sur les excursions</li><li>L&#x27;assistance H24</li></ul></div><div class="encart"><h3>Non inclus</h3><ul><li>Les vols internationaux</li><li>Les repas non mentionnés</li><li>L’entrée au musée de la bibliothèque du monastère Sainte-Catherine (2$)</li><li>Les frais d’entrée à Blue Hole</li><li>Les pourboires</li><li>Les suppléments</li><li>Les dépenses personnelles</li><li>L&#x27;assurance voyage</li><li>Les frais de paiement</li><li>Les frais de visa</li><li>Quelle est la météo dans le Sinaï ?</li><li>Comment se rendre dans le Sinaï ?</li><li>Peut-on visiter le monastère ?</li><li>Comment visiter le mont Sinaï ?</li><li>Cet itinéraire est-il adapté aux familles ?</li><li>Est-il sûr d&#x27;y aller ?</li><li>Niveau</li><li>Equipement</li><li>Nourriture</li><li>Période</li><li>Assurance</li><li>8 jours minimum</li><li>Rythme adapté à tous</li><li>Chauffeur et véhicule privé et climatisé</li><li>Nuit en hébergements uniques</li><li>Découvertes multiples : culturelles, spirituelles et naturelles</li><li>Agence locale basée au Caire</li><li>Guides égyptologues francophones</li></ul></div></aside>
+    <p class="eyebrow">Les autres séjours désert</p>
+    <h2 style="margin-bottom:14px">Siwa se combine, ou se remplace</h2>
+    <p class="lede" style="margin-bottom:26px;max-width:64ch">Deux itinéraires beaucoup plus proches du Caire, dans le même silo.</p>
+    <div class="grille" data-mm="Bloc de sœurs · après le CTA · poids 0,25">
+      <a class="carte" href="https://authentiquegypte.com/programs/excursion-dans-le-desert-blanc/">
+        <div class="carte__img"><img src="https://authentiquegypte.com/wp-content/uploads/2023/11/Desert-blanc-dEgypte.png" alt="Formations de craie du désert Blanc" loading="lazy" decoding="async"><span class="carte__tag">4 h 30 du Caire</span></div>
+        <div class="carte__corps"><h3>Désert Blanc — bivouac sous les étoiles</h3>
+          <p class="carte__route">Le Caire <b>→</b> Bahariya <b>→</b> Désert Blanc</p>
+          <div class="carte__pied"><span class="prix"><small>À partir de</small><b>460 €</b></span>
+            <span class="lien-fl">Voir le séjour <svg width="15" height="11" viewBox="0 0 15 11" fill="none" aria-hidden="true"><path d="M1 5.5h12M9 1.5l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div></div>
+      </a>
+      <a class="carte" href="https://authentiquegypte.com/programs/excursion-a-loasis-de-fayoum/">
+        <div class="carte__img"><img src="https://authentiquegypte.com/wp-content/uploads/2025/06/Voyage-sur-mesure-a-Fayoum-en-Egypte.png" alt="Falaises et lac Qarun dans l'oasis de Fayoum" loading="lazy" decoding="async"><span class="carte__tag">1 h 30 du Caire</span></div>
+        <div class="carte__corps"><h3>Oasis de Fayoum et vallée des Baleines</h3>
+          <p class="carte__route">Le Caire <b>→</b> Wadi El Rayan <b>→</b> Lac Qarun</p>
+          <div class="carte__pied"><span class="prix"><small>À partir de</small><b>390 €</b></span>
+            <span class="lien-fl">Voir le séjour <svg width="15" height="11" viewBox="0 0 15 11" fill="none" aria-hidden="true"><path d="M1 5.5h12M9 1.5l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div></div>
+      </a>
+      <a class="carte" href="categorie-desert.html">
+        <div class="carte__img"><img src="https://authentiquegypte.com/wp-content/uploads/2023/11/Oasis-de-Dakhla-4.png" alt="Palmeraie de l'oasis de Dakhla" loading="lazy" decoding="async"><span class="carte__tag">5 séjours</span></div>
+        <div class="carte__corps"><h3>Tous nos voyages dans le désert en Égypte</h3>
+          <p class="carte__route">Comparer par durée, budget et temps de route</p>
+          <div class="carte__pied"><span class="prix"><small>À partir de</small><b>390 €</b></span>
+            <span class="lien-fl">Voir la catégorie <svg width="15" height="11" viewBox="0 0 15 11" fill="none" aria-hidden="true"><path d="M1 5.5h12M9 1.5l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div></div>
+      </a>
+    </div>
+    <div class="mm-legende">
+      <b>Sœurs re-routées</b> — la version précédente envoyait vers <i>/desert-blanc/</i>, page DESTINATION et non offre. Le lien pointe désormais sur le programme.
+      Siwa n'a pas de page destination alors que le désert Blanc, le désert Noir et Fayoum en ont une : <b>ticket contenu</b>, créer <i>/oasis-de-siwa/</i>.
     </div>
   </div>
 </section>
-<section class="section section--nuit">
-  <div class="wrap" style="text-align:center">
-    <h2 style="color:#fff;margin-bottom:14px">Ce séjour vous intéresse ?</h2>
-    <p class="lede" style="color:#C3D5DA;max-width:58ch;margin:0 auto 26px">Dites-nous vos dates et le nombre de voyageurs : nous vous répondons avec un itinéraire chiffré, jour par jour.</p>
-    <a href="https://authentiquegypte.com/sur-mesure/" class="btn btn--or">Demander mon devis</a>
-  </div>
-</section>
-
 </main>
+
+<div class="resa-mob"><span class="p"><small>Du littoral de la…</small><b>990 €</b> <i>/ pers.</i></span><a href="https://authentiquegypte.com/sur-mesure/" class="btn btn--or btn--sm">Personnaliser</a></div>
 
 <footer class="pied">
   <div class="wrap">
@@ -321,5 +799,82 @@ header .nav>a.btn--or:hover{background:#C87700;border-color:#C87700}
     </div>
   </div>
 </footer>
+
+<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Photos de l'oasis de Siwa">
+  <img id="lb-img" src="" alt="">
+  <button class="prec" type="button" aria-label="Photo précédente">‹</button>
+  <button class="suiv" type="button" aria-label="Photo suivante">›</button>
+  <button class="fermer" type="button" aria-label="Fermer">✕</button>
+  <span class="cpt" id="lb-cpt"></span>
+</div>
+<script>
+/* visionneuse de la galerie */
+(function(){
+  const liens=[...document.querySelectorAll('.galerie a')];
+  const lb=document.getElementById('lb'), img=document.getElementById('lb-img'), cpt=document.getElementById('lb-cpt');
+  if(!liens.length||!lb)return;
+  let i=0;
+  const src=n=>liens[n].getAttribute('href');
+  const alt=n=>liens[n].querySelector('img').alt;
+  function montre(n){
+    i=(n+liens.length)%liens.length;
+    img.src=src(i); img.alt=alt(i);
+    cpt.textContent=(i+1)+' / '+liens.length;
+  }
+  function ouvre(n){ montre(n); lb.dataset.on='1'; document.body.style.overflow='hidden'; }
+  function ferme(){ lb.dataset.on='0'; document.body.style.overflow=''; }
+  liens.forEach((a,n)=>a.addEventListener('click',e=>{e.preventDefault();ouvre(n);}));
+  lb.querySelector('.prec').addEventListener('click',e=>{e.stopPropagation();montre(i-1);});
+  lb.querySelector('.suiv').addEventListener('click',e=>{e.stopPropagation();montre(i+1);});
+  lb.querySelector('.fermer').addEventListener('click',ferme);
+  lb.addEventListener('click',e=>{if(e.target===lb||e.target===img)ferme();});
+  document.addEventListener('keydown',e=>{
+    if(lb.dataset.on!=='1')return;
+    if(e.key==='Escape')ferme();
+    if(e.key==='ArrowLeft')montre(i-1);
+    if(e.key==='ArrowRight')montre(i+1);
+  });
+})();
+</script>
+<script>
+/* révélation au défilement — les blocs se posent au lieu d'apparaître d'un bloc */
+(function(){
+  const cibles=document.querySelectorAll('.tete,.galerie,.colonnes>div>*,.colonnes>aside,.avis article,.grille .carte,.section .eyebrow,.section h2');
+  if(!('IntersectionObserver' in window)){return;}
+  const io=new IntersectionObserver(es=>{
+    es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('vu'); io.unobserve(e.target); } });
+  },{threshold:.08,rootMargin:'0px 0px -40px 0px'});
+  cibles.forEach((el,n)=>{
+    el.setAttribute('data-rev','');
+    el.style.transitionDelay=(Math.min(n%4,3)*60)+'ms';
+    io.observe(el);
+  });
+})();
+</script>
+
+<button class="mm-btn" id="mm-btn" type="button" aria-pressed="false">Annotations <b>OFF</b></button>
+
+<script>
+document.querySelector('.burger')?.addEventListener('click',e=>{
+  const n=document.querySelector('.nav');
+  const o=getComputedStyle(n).display!=='none';
+  n.style.display=o?'none':'flex';
+  n.style.position='absolute';n.style.top='66px';n.style.left='20px';n.style.right='20px';
+  n.style.flexDirection='column';n.style.alignItems='stretch';n.style.background='#fff';
+  n.style.border='1px solid var(--ligne)';n.style.borderRadius='20px';n.style.padding='12px';
+  n.style.boxShadow='var(--ombre-f)';
+  e.currentTarget.setAttribute('aria-expanded',String(!o));
+});
+</script>
+<script>
+(function(){
+  const b=document.getElementById('mm-btn');
+  b.addEventListener('click',()=>{
+    const on=document.body.classList.toggle('mm');
+    b.setAttribute('aria-pressed',String(on));
+    b.innerHTML='Annotations <b>'+(on?'ON':'OFF')+'</b>';
+  });
+})();
+</script>
 </body>
 </html>

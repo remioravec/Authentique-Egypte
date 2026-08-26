@@ -2,64 +2,169 @@
 <html lang="fr">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="icon" href="https://authentiquegypte.com/wp-content/uploads/2026/08/authentique-egypte-logo-transparent.webp">
 <title>Voyage au Lac Nasser — Authentique Égypte</title>
-<meta name="description" content="Confiez l&#x27;organisation de votre voyage en Égypte à nos agents locaux. Nos guides francophones sont là pour vous accompagner tout au long de votre séjour. Nous…">
 <meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Confiez l&#x27;organisation de votre voyage en Égypte à nos agents locaux. Nos guides francophones sont là pour vous accompagner tout au long de votre séjour. Nous…">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../assets/charte.css">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;500;600;700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/charte.css">
 <style>
-/* Repères propres aux pages reprises du site. */
-.chapeau + .section{padding-top:38px}
-.src{margin:0 0 26px;padding:11px 15px;background:var(--or-fond);border-radius:var(--r-s);
-  font-size:.86rem;color:#7A5605;line-height:1.5}
-.src a{color:inherit}
-.corps{max-width:74ch}
-.corps h2{font-size:clamp(1.4rem,2.4vw,1.85rem);margin:44px 0 14px}
-.corps h3{font-size:1.16rem;margin:30px 0 10px}
-.corps p{margin:0 0 16px;line-height:1.75}
-.corps ul{margin:0 0 18px;padding-left:1.1rem}
-.corps li{margin:0 0 8px;line-height:1.65}
-.corps figure{margin:26px 0}
-.corps figure img{width:100%;border-radius:var(--r-m);display:block}
-.corps figcaption{margin-top:9px;font-size:.86rem;color:var(--gris)}
-.sommaire{background:var(--fond-2);border:1px solid var(--ligne);border-radius:var(--r-m);
-  padding:20px 24px;margin:0 0 34px}
-.sommaire b{display:block;font-size:.78rem;text-transform:uppercase;letter-spacing:.08em;
-  color:var(--gris);margin-bottom:10px}
-.sommaire ol{margin:0;padding-left:1.1rem}
-.sommaire li{margin:0 0 6px}
-.deux{display:grid;grid-template-columns:1fr 340px;gap:44px;align-items:start}
-.flanc{position:sticky;top:88px;display:grid;gap:18px}
-.encart{background:#fff;border:1px solid var(--ligne);border-radius:var(--r-m);padding:22px 24px;
-  box-shadow:var(--ombre)}
-.encart h3{margin:0 0 12px;font-size:1.02rem}
-.encart ul{margin:0;padding-left:1.05rem;font-size:.94rem;color:var(--texte)}
-.encart li{margin:0 0 7px}
-.tab-cadre{overflow-x:auto;margin:26px 0;-webkit-overflow-scrolling:touch}
-.tab{width:100%;border-collapse:collapse;font-size:.95rem;min-width:520px}
-.tab th,.tab td{padding:11px 14px;border-bottom:1px solid var(--ligne);text-align:left;vertical-align:top}
-.tab thead th{background:var(--fond-2);font-size:.8rem;text-transform:uppercase;
-  letter-spacing:.06em;color:var(--gris);border-bottom:2px solid var(--ligne)}
-.tab tbody th{font-weight:700;color:var(--noir)}
-.tab tbody tr:last-child th,.tab tbody tr:last-child td{border-bottom:0}
-.galerie{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:14px;margin:26px 0}
-.galerie img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:var(--r-m);display:block}
-.chiffres{display:flex;flex-wrap:wrap;gap:10px;margin:0 0 26px}
-.chiffres span{background:var(--teal-fond);color:var(--teal-txt);border-radius:var(--r-pill);
-  padding:7px 15px;font-size:.9rem;font-weight:600}
-@media (max-width:900px){
-  .deux{grid-template-columns:1fr;gap:30px}
-  .flanc{position:static}
-  .corps p,.corps li{font-size:1rem}
+/* ============================================================
+   GABARIT DESTINATION — refonte demandée le 24/08/2026.
+
+   Une page destination n'est pas une page catégorie. La catégorie
+   vend une famille de séjours ; la destination répond à « est-ce
+   que ça vaut le coup, et combien de temps j'y reste ». Elle doit
+   donc trancher, puis renvoyer vers l'offre.
+
+   Ce que fait ce gabarit :
+   – une réponse en tête : le nombre de jours, tout de suite.
+     C'est la question réelle, et la page en ligne ne la traite pas ;
+   – les sites classés par temps de visite, pas par ordre
+     alphabétique : c'est ce qui permet de composer sa journée ;
+   – un tableau « 2, 3 ou 4 jours » qui montre ce qu'on perd à
+     rester moins longtemps ;
+   – le bloc d'offres au milieu et non en pied : la destination
+     n'existe que pour amener au séjour ;
+   – les destinations voisines en dernier, après le CTA.
+   ============================================================ */
+
+/* ---------- réponse en tête ---------- */
+.reponse{background:var(--or-fond);border-left:4px solid var(--or);border-radius:0 var(--r-m) var(--r-m) 0;
+  padding:22px 26px;margin:0 0 34px;font-size:1.06rem;color:#5C4204}
+.reponse p:last-child{margin-bottom:0}
+.reponse b{color:#3D2B00;font-weight:700}
+
+/* ---------- deux colonnes ---------- */
+.colonnes{display:grid;grid-template-columns:1fr 320px;gap:44px;align-items:start;
+  padding:clamp(32px,4vw,52px) 0 0}
+.colonnes>aside{position:sticky;top:96px}
+.corps{max-width:min(74ch,100%);min-width:0}
+.colonnes>*{min-width:0}
+.corps h2{margin:46px 0 14px;scroll-margin-top:110px}
+.corps h2:first-of-type{margin-top:0}
+.corps a:not(.btn):not(.lien-fl){color:var(--teal-txt);font-weight:600;
+  text-decoration:underline;text-underline-offset:3px}
+
+/* ---------- les sites ---------- */
+.sites{display:grid;gap:14px;margin:22px 0 8px}
+.site{display:grid;grid-template-columns:132px 1fr;gap:18px;align-items:center;
+  border:1px solid var(--ligne);border-radius:var(--r-l);overflow:hidden;background:#fff;
+  transition:transform .22s var(--ease),box-shadow .22s var(--ease)}
+.site:hover{transform:translateY(-3px);box-shadow:var(--ombre)}
+.site img{width:100%;height:100%;min-height:118px;object-fit:cover}
+.site__t{padding:16px 18px 16px 0}
+.site h3{font-size:1.08rem;margin:0 0 5px}
+.site p{margin:0 0 9px;font-size:.94rem;line-height:1.55}
+.site__meta{display:flex;gap:7px;flex-wrap:wrap}
+.duree{display:inline-flex;align-items:center;gap:6px;background:var(--teal-fond);color:var(--teal-txt);
+  border-radius:var(--r-pill);padding:4px 11px;font-family:"Manrope",sans-serif;
+  font-size:.82rem;font-weight:700}
+.duree--long{background:var(--or-fond);color:#7A5605}
+
+/* ---------- tableau de durée ---------- */
+.jours{width:100%;border-collapse:separate;border-spacing:0;font-size:.95rem;
+  border:1px solid var(--ligne);border-radius:var(--r-l);overflow:hidden;background:#fff;margin:20px 0 10px}
+.jours th,.jours td{padding:15px 17px;text-align:left;border-bottom:1px solid var(--ligne-2);vertical-align:top}
+.jours thead th{background:var(--nuit-900);color:#fff;font-family:"Archivo",sans-serif;font-weight:600;
+  border-bottom:0;font-size:.98rem;letter-spacing:-.2px}
+.jours tbody th{font-family:"Manrope",sans-serif;font-weight:700;color:var(--noir);width:110px;
+  background:var(--fond)}
+.jours tr:last-child th,.jours tr:last-child td{border-bottom:0}
+.jours .ok{color:var(--vert);font-weight:600}
+.jours .non{color:var(--gris-clair)}
+
+/* ---------- ruban de saison ---------- */
+.saison{display:grid;grid-template-columns:repeat(12,1fr);gap:4px;margin:20px 0 10px}
+.saison span{display:block;text-align:center;padding:11px 2px 9px;border-radius:var(--r-s);
+  font-family:"Manrope",sans-serif;font-size:.8rem;font-weight:700}
+.saison .ex{background:var(--teal-fond);color:var(--teal-txt)}
+.saison .bon{background:var(--vert-fond);color:var(--vert)}
+.saison .ch{background:#FFF3D6;color:#B07A00}
+.saison .br{background:var(--rouge-fond);color:var(--rouge)}
+.saison b{display:block;font-size:.74rem;font-weight:600;opacity:.8;margin-top:3px}
+
+/* ---------- panneau latéral ---------- */
+.lat{display:grid;gap:16px}
+.lat__b{background:#fff;border:1px solid var(--ligne);border-radius:var(--r-l);padding:22px;
+  position:relative;overflow:hidden}
+.lat__b h4{font-family:"Archivo",sans-serif;font-size:1.05rem;font-weight:600;margin:0 0 13px;
+  letter-spacing:-.4px}
+.lat__b dl{margin:0;font-family:"Manrope",sans-serif;font-size:.92rem;display:grid;gap:11px}
+.lat__b dt{color:var(--gris);font-size:.84rem;font-weight:600}
+.lat__b dd{margin:2px 0 0;color:var(--noir);font-weight:700}
+.lat__b ul{list-style:none;margin:0;padding:0;font-family:"Manrope",sans-serif;font-size:.92rem}
+.lat__b li a{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:11px 0;
+  border-bottom:1px solid var(--ligne-2);color:var(--nuit-900);font-weight:600}
+.lat__b li:last-child a{border-bottom:0}
+.lat__b li a:hover{color:var(--teal-txt)}
+.lat--devis{background:var(--nuit-900);border-color:var(--nuit-900);color:#C3D5DA}
+.lat--devis::before{content:"";position:absolute;top:0;left:0;right:0;height:4px;
+  background:linear-gradient(90deg,var(--or),var(--or-clair))}
+.lat--devis h4{color:#fff}
+.lat--devis p{font-size:.92rem;margin-bottom:16px}
+
+/* ---------- carte simplifiée ---------- */
+.reperes{border:1px solid var(--ligne);border-radius:var(--r-l);background:#fff;padding:22px;margin:22px 0}
+.reperes ol{list-style:none;margin:0;padding:0;display:grid;gap:0}
+.reperes li{display:grid;grid-template-columns:88px 1fr;gap:16px;align-items:baseline;
+  padding:11px 0;border-bottom:1px solid var(--ligne-2);font-size:.95rem}
+.reperes li:last-child{border-bottom:0}
+.reperes .km{font-family:"Manrope",sans-serif;font-weight:700;color:var(--teal-txt);font-size:.88rem}
+.reperes b{color:var(--noir);font-weight:700}
+
+@media (max-width:1024px){
+  .colonnes{grid-template-columns:1fr;gap:30px}
+  .colonnes>aside{position:static}
+  .saison{grid-template-columns:repeat(6,1fr)}
 }
+@media (max-width:700px){
+  .site{grid-template-columns:1fr}
+  .site img{min-height:0;aspect-ratio:16/9}
+  .site__t{padding:0 18px 18px}
+  .saison{grid-template-columns:repeat(4,1fr)}
+  .jours{display:block;overflow-x:auto;white-space:nowrap}
+  .reperes li{grid-template-columns:1fr;gap:2px}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation-duration:.01ms !important;transition-duration:.01ms !important;scroll-behavior:auto !important}
+}
+
+
+/* (17)(18)(12) Mélanie : l'appel au devis du menu doit ressortir. Or foncé,
+   réservé à ce bouton — le reste du site garde l'or de la charte. */
 header .nav>a.btn--or,header .nav>a.btn--or[aria-current]{background:#E08A00;border-color:#E08A00;color:#fff}
-header .nav>a.btn--or:hover{background:#C87700;border-color:#C87700}
+header .nav>a.btn--or:hover{background:#C87700;border-color:#C87700;box-shadow:0 10px 24px rgba(224,138,0,.42)}
+
+.src{margin:0 0 24px;padding:11px 15px;background:var(--or-fond);border-radius:var(--r-s);font-size:.86rem;color:#7A5605;line-height:1.5}
+.src a{color:inherit}
 </style>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[
+{"@type":"BreadcrumbList","itemListElement":[
+{"@type":"ListItem","position":1,"name":"Accueil","item":"https://authentiquegypte.com/"},
+{"@type":"ListItem","position":2,"name":"Destinations","item":"https://authentiquegypte.com/nos-sejours-egypte/"},
+{"@type":"ListItem","position":3,"name":"Voyage au Caire","item":"https://authentiquegypte.com/voyage-au-caire/"}]},
+{"@type":"TouristDestination","name":"Le Caire","description":"La capitale égyptienne : plateau de Gizeh, nécropole de Saqqara, Grand Musée égyptien, Caire copte et islamique.","touristType":"Voyageur culturel",
+"includesAttraction":[
+{"@type":"TouristAttraction","name":"Plateau de Gizeh"},
+{"@type":"TouristAttraction","name":"Grand Musée égyptien"},
+{"@type":"TouristAttraction","name":"Nécropole de Saqqara"},
+{"@type":"TouristAttraction","name":"Khan el-Khalili"}]}]}</script>
 </head>
 <body>
+
+<div class="bandeau">
+  <div class="wrap">
+    <span>Agence locale basée au Caire · <strong>Une personne de l'équipe vous répond</strong></span>
+    <span style="display:flex;gap:20px;flex-wrap:wrap">
+      <a href="mailto:contact@authentiquegypte.com">✉ contact@authentiquegypte.com</a>
+      <a href="https://wa.me/201066619098">WhatsApp +20 106 661 9098</a>
+    </span>
+  </div>
+</div>
 
 <header class="entete">
   <div class="wrap">
@@ -81,11 +186,11 @@ header .nav>a.btn--or:hover{background:#C87700;border-color:#C87700}
         </div>
       </div>
       <div class="menu">
-        <button aria-expanded="false">Destinations
+        <button aria-expanded="false" aria-current="true">Destinations
           <svg width="11" height="7" viewBox="0 0 11 7" fill="none" aria-hidden="true"><path d="M1 1l4.5 4.5L10 1" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
         </button>
         <div class="menu__pan" style="min-width:300px">
-          <a href="destination.html"><span>Voyage au Caire<small>Gizeh, Saqqara, Grand Musée</small></span></a>
+          <a href="destination.html" aria-current="page"><span>Voyage au Caire<small>Gizeh, Saqqara, Grand Musée</small></span></a>
           <a href="https://authentiquegypte.com/voyage-a-louxor/"><span>Voyage à Louxor<small>Karnak, vallée des Rois</small></span></a>
           <a href="https://authentiquegypte.com/voyage-a-assouan/"><span>Voyage à Assouan<small>Philae, Abou Simbel</small></span></a>
           <a href="https://authentiquegypte.com/voyage-a-alexandrie/"><span>Voyage à Alexandrie<small>Méditerranée, catacombes</small></span></a>
@@ -115,101 +220,197 @@ header .nav>a.btn--or:hover{background:#C87700;border-color:#C87700}
 </header>
 
 <main>
-
 <section class="chapeau">
-  <div class="chapeau__bg"><img src="https://authentiquegypte.com/wp-content/uploads/2023/11/WhatsApp-Image-2023-11-07-at-12.03.37.jpeg" alt=""></div>
-  <div class="wrap">
-    <nav class="ariane" aria-label="Fil d'Ariane"><ol>
-      <li><a href="../index.html">Accueil</a></li>
-      <li><span aria-current="page">Voyage au Lac Nasser</span></li>
-    </ol></nav>
-    <p class="eyebrow eyebrow--clair">Destination</p>
-    <h1>Voyage au Lac Nasser</h1>
-    <p class="sous">Confiez l&#x27;organisation de votre voyage en Égypte à nos agents locaux. Nos guides francophones sont là pour vous accompagner tout au long de votre séjour. Nous organisons des séjours sur mesure en Egypte et nous les personnalisons selon vos préférences et vos envies.</p>
-    
-  </div>
+<div class="chapeau__bg"><img src="https://authentiquegypte.com/wp-content/uploads/2023/11/WhatsApp-Image-2023-11-07-at-12.03.37.jpeg" alt="" fetchpriority="high" decoding="async"></div>
+<div class="wrap">
+<nav class="ariane" aria-label="Fil d'Ariane"><ol>
+<li><a href="../index.html">Accueil</a></li>
+<li><a href="index.html#destinations">Destinations</a></li>
+<li><span aria-current="page">Voyage au Lac Nasser</span></li>
+</ol></nav>
+<h1>Voyage au Lac Nasser</h1>
+<p class="sous">Confiez l&#x27;organisation de votre voyage en Égypte à nos agents locaux. Nos guides francophones sont là pour vous accompagner tout au long de votre séjour. Nous organisons des séjours sur mesure en Egypte et nous les personnalisons selon vos préférences et vos envies.</p>
+</div>
 </section>
-<section class="section">
-  <div class="wrap">
-    <p class="src">Contenu repris de <a href="https://authentiquegypte.com/lac-nasser/">https://authentiquegypte.com/lac-nasser/</a>, sans réécriture. Seule la mise en page change.</p>
-    <div class="corps">
-      <nav class="sommaire" aria-label="Sommaire"><b>Sur cette page</b><ol><li><a href="#s1">Agence locale en Égypte</a></li><li><a href="#s2">Privées &amp; personnalisées</a></li><li><a href="#s3">Avec un expert local</a></li><li><a href="#s4">Loin de la foule</a></li><li><a href="#s5">1) Pourquoi le Lac Nasser est-il si particulier ?</a></li><li><a href="#s6">2) Quelles sont les principales étapes d’un voyage au Lac Nasser ?</a></li><li><a href="#s7">3) Quelle faune observer ?</a></li><li><a href="#s8">4) Quelle est la meilleure période pour visiter ?</a></li><li><a href="#s9">5) Combien de jours faut-il prévoir ?</a></li><li><a href="#s10">6) Est-ce adapté aux amateurs de photographie ?</a></li><li><a href="#s11">7) Quelles autres destinations combiner ?</a></li><li><a href="#s12">8) Comment vivre une expérience authentique ?</a></li><li><a href="#s13">Aller plus loin</a></li><li><a href="#s14">Organisation du voyage</a></li></ol></nav>
-      <h2 id="s1">Agence locale en Égypte</h2>
-<p>Confiez l&#x27;organisation de votre voyage en Égypte à nos agents locaux. Nos guides francophones sont là pour vous accompagner tout au long de votre séjour. Nous organisons des séjours sur mesure en Egypte et nous les personnalisons selon vos préférences et vos envies.</p>
+
+<div class="wrap">
+<div class="art">
+<nav class="som" aria-label="Sommaire"><h4>Sur cette page</h4><ol><li><a href="#s1">Agence locale en Égypte</a></li><li><a href="#s2">Privées &amp; personnalisées</a></li><li><a href="#s3">Avec un expert local</a></li><li><a href="#s4">Loin de la foule</a></li><li><a href="#s5">1) Pourquoi le Lac Nasser est-il si particulier ?</a></li><li><a href="#s6">2) Quelles sont les principales étapes d’un voyage au Lac Nasser ?</a></li><li><a href="#s7">3) Quelle faune observer ?</a></li><li><a href="#s8">4) Quelle est la meilleure période pour visiter ?</a></li><li><a href="#s9">5) Combien de jours faut-il prévoir ?</a></li><li><a href="#s10">6) Est-ce adapté aux amateurs de photographie ?</a></li><li><a href="#s11">7) Quelles autres destinations combiner ?</a></li><li><a href="#s12">8) Comment vivre une expérience authentique ?</a></li><li><a href="#s13">Aller plus loin</a></li><li><a href="#s14">Organisation du voyage</a></li></ol></nav>
+<article class="corps">
+<p class="src">Contenu repris de <a href="https://authentiquegypte.com/lac-nasser/">https://authentiquegypte.com/lac-nasser/</a>, sans réécriture&nbsp;: seule la mise en page change.</p>
+<h2 id="s1">Agence locale en Égypte</h2>
+<p class="">Confiez l&#x27;organisation de votre voyage en Égypte à nos agents locaux. Nos guides francophones sont là pour vous accompagner tout au long de votre séjour. Nous organisons des séjours sur mesure en Egypte et nous les personnalisons selon vos préférences et vos envies.</p>
 <h3 id="s2">Privées &amp; personnalisées</h3>
-<p>Chaque itinéraire est conçu selon vos envies, votre rythme et votre façon de voyager. Explorez l’Égypte à votre image.</p>
+<p class="">Chaque itinéraire est conçu selon vos envies, votre rythme et votre façon de voyager. Explorez l’Égypte à votre image.</p>
 <h3 id="s3">Avec un expert local</h3>
-<p>Guidé par des passionnés égyptiens, vous découvrez l’histoire, les traditions et les secrets bien gardés du pays. Un voyage authentique, raconté par ceux qui le vivent.</p>
+<p class="">Guidé par des passionnés égyptiens, vous découvrez l’histoire, les traditions et les secrets bien gardés du pays. Un voyage authentique, raconté par ceux qui le vivent.</p>
 <h3 id="s4">Loin de la foule</h3>
-<p>Nous vous emmenons hors des sentiers battus, dans des lieux confidentiels, loin du tourisme de masse. Rencontrez l’Égypte vraie, en toute sérénité.</p>
-<p>Un voyage au Lac Nasser combine sérénité absolue et immersion dans l’histoire. Créé avec la construction du Haut-Barrage d’Assouan, il dévoile des paysages désertiques saisissants et des trésors archéologiques déplacés pour être préservés.</p>
+<p class="">Nous vous emmenons hors des sentiers battus, dans des lieux confidentiels, loin du tourisme de masse. Rencontrez l’Égypte vraie, en toute sérénité.</p>
+<p class="">Un voyage au Lac Nasser combine sérénité absolue et immersion dans l’histoire. Créé avec la construction du Haut-Barrage d’Assouan, il dévoile des paysages désertiques saisissants et des trésors archéologiques déplacés pour être préservés.</p>
 <h3 id="s5">1) Pourquoi le Lac Nasser est-il si particulier ?</h3>
-<p>Sa création a nécessité le déplacement de monuments pharaoniques, dont Abu Simbel, offrant un témoignage unique d’ingénierie et de préservation patrimoniale.</p>
+<p class="">Sa création a nécessité le déplacement de monuments pharaoniques, dont Abu Simbel, offrant un témoignage unique d’ingénierie et de préservation patrimoniale.</p>
 <h3 id="s6">2) Quelles sont les principales étapes d’un voyage au Lac Nasser ?</h3>
-<p>Une croisière ponctuée d’escales aux temples de Kalabsha, Amada, Wadi el-Seboua et au site de Qasr Ibrim.</p>
+<p class="">Une croisière ponctuée d’escales aux temples de Kalabsha, Amada, Wadi el-Seboua et au site de Qasr Ibrim.</p>
 <h3 id="s7">3) Quelle faune observer ?</h3>
-<p>Des crocodiles du Nil, une diversité d’oiseaux migrateurs, ainsi qu’une faune aquatique variée.</p>
+<p class="">Des crocodiles du Nil, une diversité d’oiseaux migrateurs, ainsi qu’une faune aquatique variée.</p>
 <h3 id="s8">4) Quelle est la meilleure période pour visiter ?</h3>
-<p>De novembre à mars, période idéale pour éviter les fortes chaleurs et profiter d’une navigation confortable.</p>
+<p class="">De novembre à mars, période idéale pour éviter les fortes chaleurs et profiter d’une navigation confortable.</p>
 <h3 id="s9">5) Combien de jours faut-il prévoir ?</h3>
-<p>Quatre à cinq jours permettent de découvrir les sites majeurs tout en savourant la tranquillité des eaux.</p>
+<p class="">Quatre à cinq jours permettent de découvrir les sites majeurs tout en savourant la tranquillité des eaux.</p>
 <h3 id="s10">6) Est-ce adapté aux amateurs de photographie ?</h3>
-<p>Oui, avec ses temples baignés par la lumière dorée de l’aube et ses paysages désertiques, le Lac Nasser est un paradis pour les photographes.</p>
+<p class="">Oui, avec ses temples baignés par la lumière dorée de l’aube et ses paysages désertiques, le Lac Nasser est un paradis pour les photographes.</p>
 <h3 id="s11">7) Quelles autres destinations combiner ?</h3>
-<p>Assouan comme point de départ ou Louxor pour prolonger la découverte des temples et tombeaux.</p>
+<p class="">Assouan comme point de départ ou Louxor pour prolonger la découverte des temples et tombeaux.</p>
 <h3 id="s12">8) Comment vivre une expérience authentique ?</h3>
-<p>Opter pour une petite embarcation ou un bateau traditionnel afin de naviguer au plus près des rives et à un rythme apaisé.</p>
+<p class="">Opter pour une petite embarcation ou un bateau traditionnel afin de naviguer au plus près des rives et à un rythme apaisé.</p>
 <h2 id="s13">Aller plus loin</h2>
-<p>Découvrez aussi :</p>
+<p class="">Découvrez aussi :</p>
 <ul><li>Croisières sur le Nil</li><li>Voyages culturels</li><li>Égypte hors des sentiers battus</li></ul>
 <h2 id="s14">Organisation du voyage</h2>
-<p>Le Lac Nasser se trouve au sud de l’Égypte, s’étendant depuis Assouan jusqu’à la frontière avec le Soudan. C’est l’un des plus grands lacs artificiels au monde, né après la construction du Haut Barrage.</p>
-<p>Oui. Chez Authentique Égypte, tous nos voyages sont privés et sur mesure. Le Lac Nasser peut être intégré dans votre itinéraire si vous souhaitez découvrir cette région spectaculaire, hors des circuits habituels.</p>
-<p>Calme absolu, loin du tourisme de masse.</p>
-<p>Paysages désertiques incroyables au bord de l’eau.</p>
-<p>Sites archéologiques rares, accessibles uniquement par bateau.</p>
-<p>Présence d’oiseaux et faune sauvage.</p>
-<p>Atmosphère très confidentielle, parfaite pour un voyage exclusif.</p>
-<p>Oui. Il existe deux façons de découvrir le Lac Nasser :</p>
-<p>Croisière privée → adaptée à votre rythme, à vos intérêts.</p>
-<p>Croisière en petit groupe → mais chez Authentique Égypte, nous privilégions le sur mesure.</p>
-<p>Nous travaillons uniquement avec des partenaires sérieux et expérimentés.</p>
-<p>Parmi les sites les plus connus :</p>
-<p>Abou Simbel (immanquable)</p>
-<p>Temples déplacés (Amada, Derr, Wadi Es Seboua)</p>
-<p>Petites criques désertiques et îles peu fréquentées</p>
-<p>Observation de la faune</p>
-<p>Oui, sous réserve :</p>
-<p>Que les enfants aiment le bateau et les trajets parfois longs.</p>
-<p>Que le programme soit adapté (possibilité de réduire les étapes).</p>
-<p>Nous concevons le voyage en fonction de votre rythme familial.</p>
-<p>Octobre à avril → températures plus douces.</p>
-<p>Été déconseillé : chaleur intense et confort moindre sur le bateau.</p>
-<p>Non. Le voyage se fait en bateau, souvent dans un grand confort. Seules certaines visites demandent un peu de marche, mais rien de très physique.</p>
-<p>Absolument. Il s’intègre souvent dans un voyage :</p>
-<p>à Assouan,</p>
-<p>à Abou Simbel,</p>
-<p>ou plus largement en Nubie,</p>
-<p>voire combiné avec Louxor pour un itinéraire plus complet.</p>
-<p>Non. Chez Authentique Égypte, tout est sur mesure. Nous élaborons un itinéraire selon :</p>
-<p>vos envies culturelles,</p>
-<p>votre rythme,</p>
-<p>votre intérêt pour la faune ou l’archéologie.</p>
-<p>Oui, dans les zones autorisées.</p>
-<p>Les itinéraires sont contrôlés et encadrés.</p>
-<p>Nous travaillons uniquement avec équipages expérimentés.</p>
-<p>Les déplacements sont soumis à des autorisations locales que nous gérons pour vous.</p>
+<p class="">Le Lac Nasser se trouve au sud de l’Égypte, s’étendant depuis Assouan jusqu’à la frontière avec le Soudan. C’est l’un des plus grands lacs artificiels au monde, né après la construction du Haut Barrage.</p>
+<p class="">Oui. Chez Authentique Égypte, tous nos voyages sont privés et sur mesure. Le Lac Nasser peut être intégré dans votre itinéraire si vous souhaitez découvrir cette région spectaculaire, hors des circuits habituels.</p>
+<p class="">Calme absolu, loin du tourisme de masse.</p>
+<p class="">Paysages désertiques incroyables au bord de l’eau.</p>
+<p class="">Sites archéologiques rares, accessibles uniquement par bateau.</p>
+<p class="">Présence d’oiseaux et faune sauvage.</p>
+<p class="">Atmosphère très confidentielle, parfaite pour un voyage exclusif.</p>
+<p class="">Oui. Il existe deux façons de découvrir le Lac Nasser :</p>
+<p class="">Croisière privée → adaptée à votre rythme, à vos intérêts.</p>
+<p class="">Croisière en petit groupe → mais chez Authentique Égypte, nous privilégions le sur mesure.</p>
+<p class="">Nous travaillons uniquement avec des partenaires sérieux et expérimentés.</p>
+<p class="">Parmi les sites les plus connus :</p>
+<p class="">Abou Simbel (immanquable)</p>
+<p class="">Temples déplacés (Amada, Derr, Wadi Es Seboua)</p>
+<p class="">Petites criques désertiques et îles peu fréquentées</p>
+<p class="">Observation de la faune</p>
+<p class="">Oui, sous réserve :</p>
+<p class="">Que les enfants aiment le bateau et les trajets parfois longs.</p>
+<p class="">Que le programme soit adapté (possibilité de réduire les étapes).</p>
+<p class="">Nous concevons le voyage en fonction de votre rythme familial.</p>
+<p class="">Octobre à avril → températures plus douces.</p>
+<p class="">Été déconseillé : chaleur intense et confort moindre sur le bateau.</p>
+<p class="">Non. Le voyage se fait en bateau, souvent dans un grand confort. Seules certaines visites demandent un peu de marche, mais rien de très physique.</p>
+<p class="">Absolument. Il s’intègre souvent dans un voyage :</p>
+<p class="">à Assouan,</p>
+<p class="">à Abou Simbel,</p>
+<p class="">ou plus largement en Nubie,</p>
+<p class="">voire combiné avec Louxor pour un itinéraire plus complet.</p>
+<p class="">Non. Chez Authentique Égypte, tout est sur mesure. Nous élaborons un itinéraire selon :</p>
+<p class="">vos envies culturelles,</p>
+<p class="">votre rythme,</p>
+<p class="">votre intérêt pour la faune ou l’archéologie.</p>
+<p class="">Oui, dans les zones autorisées.</p>
+<p class="">Les itinéraires sont contrôlés et encadrés.</p>
+<p class="">Nous travaillons uniquement avec équipages expérimentés.</p>
+<p class="">Les déplacements sont soumis à des autorisations locales que nous gérons pour vous.</p>
+<div class="encart">
+<h3>Envie de partir&nbsp;?</h3>
+<p>Nous construisons l'itinéraire avec vous, selon vos dates et votre rythme. Réponse sous 48&nbsp;h, hors vendredi et samedi.</p>
+<p style="margin-top:14px"><a href="https://authentiquegypte.com/sur-mesure/" class="btn btn--nuit btn--sm">Demander mon devis</a></p>
+</div>
+</article>
+</div>
+</div>
+
+<!-- LES SÉJOURS — au milieu de la page, pas en pied : c'est l'unité d'achat -->
+<section class="section section--fond" style="margin-top:clamp(40px,5vw,64px)">
+  <div class="wrap">
+    <p class="eyebrow">Passer du guide au voyage</p>
+    <h2 style="margin-bottom:14px">Les séjours qui passent par Le Caire</h2>
+    <p class="lede" style="margin-bottom:30px">Tous personnalisables : la durée sur place s'ajuste à ce que vous voulez voir.</p>
+    <div class="grille g-3" data-mm="Bloc d'offres · corps · poids 1">
+      <article class="carte">
+        <div class="carte__img"><img src="https://authentiquegypte.com/wp-content/uploads/2023/11/pyramides-1024x683.jpg" alt="Les pyramides de Gizeh" loading="lazy" decoding="async"><span class="carte__tag">Le plus demandé</span></div>
+        <div class="carte__corps">
+          <h3><a href="produit.html">Pyramides et croisière sur le Nil</a></h3>
+          <p class="carte__route">Le Caire <b>→</b> Assouan <b>→</b> Louxor <b>→</b> Hurghada</p>
+          <div class="carte__meta"><span class="puce">8 jours</span><span class="puce puce--teal">3 jours au Caire</span></div>
+          <div class="carte__pied">
+            <span class="prix"><small>À partir de</small><b>1 175 €</b> <i>/ pers.</i></span>
+            <a href="produit.html" class="lien-fl">Le jour par jour <svg width="15" height="11" viewBox="0 0 15 11" fill="none" aria-hidden="true"><path d="M1 5.5h12M9 1.5l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          </div>
+        </div>
+      </article>
+      <article class="carte">
+        <div class="carte__img"><img src="https://authentiquegypte.com/wp-content/uploads/2023/11/axp-photography-4-26QyIOyVg-unsplash-scaled.jpg" alt="Dahabeya sur le Nil" loading="lazy" decoding="async"><span class="carte__tag">Dahabeya</span></div>
+        <div class="carte__corps">
+          <h3><a href="https://authentiquegypte.com/programs/le-caire-et-croisiere-sur-un-bateau-a-voile/">Le Caire et croisière sur un bateau à voile</a></h3>
+          <p class="carte__route">Le Caire <b>→</b> Esna <b>→</b> Assouan</p>
+          <div class="carte__meta"><span class="puce">7 jours</span><span class="puce puce--teal">2 jours au Caire</span></div>
+          <div class="carte__pied">
+            <span class="prix"><small>À partir de</small><b>1 290 €</b> <i>/ pers.</i></span>
+            <a href="https://authentiquegypte.com/programs/le-caire-et-croisiere-sur-un-bateau-a-voile/" class="lien-fl">Le jour par jour <svg width="15" height="11" viewBox="0 0 15 11" fill="none" aria-hidden="true"><path d="M1 5.5h12M9 1.5l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          </div>
+        </div>
+      </article>
+      <article class="carte">
+        <div class="carte__img"><img src="https://authentiquegypte.com/wp-content/uploads/2023/11/Desert-blanc-dEgypte.png" alt="Désert Blanc" loading="lazy" decoding="async"><span class="carte__tag">4 h 30 du Caire</span></div>
+        <div class="carte__corps">
+          <h3><a href="https://authentiquegypte.com/programs/excursion-dans-le-desert-blanc/">Désert Blanc — bivouac sous les étoiles</a></h3>
+          <p class="carte__route">Le Caire <b>→</b> Bahariya <b>→</b> Désert Blanc</p>
+          <div class="carte__meta"><span class="puce">2 jours</span><span class="puce puce--or">S'ajoute à un séjour</span></div>
+          <div class="carte__pied">
+            <span class="prix"><small>À partir de</small><b>460 €</b> <i>/ pers.</i></span>
+            <a href="https://authentiquegypte.com/programs/excursion-dans-le-desert-blanc/" class="lien-fl">Le jour par jour <svg width="15" height="11" viewBox="0 0 15 11" fill="none" aria-hidden="true"><path d="M1 5.5h12M9 1.5l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          </div>
+        </div>
+      </article>
+    </div>
+    <p style="margin-top:20px;font-size:.9rem;color:var(--gris-clair)">
+      <span class="aremplir">7 séjours passent par Le Caire — les 4 autres restent à rattacher</span>
+    </p>
+    <div class="mm-legende">
+      <b>Le bloc d'offres est au milieu, pas en pied</b> — une page destination n'existe que pour
+      amener au séjour. Placé après la FAQ, il n'est vu que par ceux qui déroulent la page entière.
     </div>
   </div>
 </section>
-<section class="section section--nuit">
-  <div class="wrap" style="text-align:center">
-    <h2 style="color:#fff;margin-bottom:14px">Envie de découvrir cette région ?</h2>
-    <p class="lede" style="color:#C3D5DA;max-width:58ch;margin:0 auto 26px">Nous l’intégrons à votre itinéraire, au bon moment de l’année.</p>
-    <a href="https://authentiquegypte.com/sur-mesure/" class="btn btn--or">Demander mon devis</a>
+
+<section class="section">
+  <div class="wrap">
+    <div class="devis">
+      <div>
+        <p class="eyebrow eyebrow--clair">Votre projet</p>
+        <h2>Combien de jours au Caire, dans votre voyage&nbsp;?</h2>
+        <ul>
+          <li><svg width="17" height="17" viewBox="0 0 17 17" fill="none" aria-hidden="true"><path d="M3 8.8l3.6 3.6L14 5" stroke="#FBB50E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Devis gratuit, détaillé jour par jour, sans engagement</li>
+          <li><svg width="17" height="17" viewBox="0 0 17 17" fill="none" aria-hidden="true"><path d="M3 8.8l3.6 3.6L14 5" stroke="#FBB50E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Guide égyptologue francophone et chauffeur privatif</li>
+          <li><svg width="17" height="17" viewBox="0 0 17 17" fill="none" aria-hidden="true"><path d="M3 8.8l3.6 3.6L14 5" stroke="#FBB50E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Acompte seulement une fois l'itinéraire validé</li>
+        </ul>
+      </div>
+      <div class="devis__act">
+        <a href="devis.html" class="btn btn--or btn--bloc">Demander mon devis</a>
+        <a href="https://wa.me/201066619098" class="btn btn--wa btn--bloc">Poser une question sur WhatsApp</a>
+        <small>Aucune carte bancaire demandée à cette étape.</small>
+      </div>
+    </div>
   </div>
 </section>
 
+<!-- SŒURS — après le CTA -->
+<section class="section" style="padding-top:0">
+  <div class="wrap">
+    <p class="eyebrow">Autres destinations</p>
+    <h2 style="margin-bottom:26px">Le Caire se combine bien</h2>
+    <div class="grille g-3" data-mm="Bloc de sœurs · après le CTA · poids 0,25">
+      <a class="carte" href="https://authentiquegypte.com/voyage-a-louxor/">
+        <div class="carte__img"><img src="https://authentiquegypte.com/wp-content/uploads/2025/06/Voyage-sur-mesure-a-Louxor-en-Egypte.png" alt="Karnak à Louxor" loading="lazy" decoding="async"></div>
+        <div class="carte__corps"><h3>Voyage à Louxor</h3><p class="carte__route">Karnak, vallée des Rois — 1 h de vol</p>
+          <div class="carte__pied"><span class="puce">3 jours conseillés</span><span class="lien-fl">Découvrir <svg width="15" height="11" viewBox="0 0 15 11" fill="none" aria-hidden="true"><path d="M1 5.5h12M9 1.5l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div></div>
+      </a>
+      <a class="carte" href="https://authentiquegypte.com/voyage-a-alexandrie/">
+        <div class="carte__img"><img src="https://authentiquegypte.com/wp-content/uploads/2025/06/Voyage-sur-mesure-a-Alexandrie-en-Egypte.png" alt="Le front de mer d'Alexandrie" loading="lazy" decoding="async"></div>
+        <div class="carte__corps"><h3>Voyage à Alexandrie</h3><p class="carte__route">Méditerranée, catacombes — 3 h de route</p>
+          <div class="carte__pied"><span class="puce">1 à 2 jours</span><span class="lien-fl">Découvrir <svg width="15" height="11" viewBox="0 0 15 11" fill="none" aria-hidden="true"><path d="M1 5.5h12M9 1.5l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div></div>
+      </a>
+      <a class="carte" href="https://authentiquegypte.com/voyage-a-fayoum/">
+        <div class="carte__img"><img src="https://authentiquegypte.com/wp-content/uploads/2025/06/Voyage-sur-mesure-a-Fayoum-en-Egypte.png" alt="Lac Qarun dans l'oasis de Fayoum" loading="lazy" decoding="async"></div>
+        <div class="carte__corps"><h3>Voyage à Fayoum</h3><p class="carte__route">Wadi El Rayan, lac Qarun — 1 h 30</p>
+          <div class="carte__pied"><span class="puce">1 journée</span><span class="lien-fl">Découvrir <svg width="15" height="11" viewBox="0 0 15 11" fill="none" aria-hidden="true"><path d="M1 5.5h12M9 1.5l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div></div>
+      </a>
+    </div>
+  </div>
+</section>
 </main>
 
 <footer class="pied">
@@ -261,5 +462,46 @@ header .nav>a.btn--or:hover{background:#C87700;border-color:#C87700}
     </div>
   </div>
 </footer>
+
+<div class="barre-mob">
+  <a href="https://wa.me/201066619098" class="btn btn--fantome btn--sm" style="flex:0 0 auto">WhatsApp</a>
+  <a href="devis.html" class="btn btn--or" style="flex:1">Demander mon devis</a>
+</div>
+
+<button class="mm-btn" id="mm-btn" type="button" aria-pressed="false">Maillage <b>OFF</b></button>
+
+<script>
+document.querySelector('.burger')?.addEventListener('click',e=>{
+  const n=document.querySelector('.nav');
+  const o=getComputedStyle(n).display!=='none';
+  n.style.display=o?'none':'flex';
+  n.style.position='absolute';n.style.top='72px';n.style.left='20px';n.style.right='20px';
+  n.style.flexDirection='column';n.style.alignItems='stretch';n.style.background='#fff';
+  n.style.border='1px solid var(--ligne)';n.style.borderRadius='20px';n.style.padding='12px';
+  n.style.boxShadow='var(--ombre-f)';
+  e.currentTarget.setAttribute('aria-expanded',String(!o));
+});
+</script>
+<script>
+(function(){
+  if(!('IntersectionObserver' in window))return;
+  const cibles=document.querySelectorAll('.site,.carte,.reperes,.jours,.section .eyebrow,.section h2');
+  const io=new IntersectionObserver(es=>{
+    es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('vu'); io.unobserve(e.target); } });
+  },{threshold:.06,rootMargin:'0px 0px -40px 0px'});
+  cibles.forEach((el,n)=>{ el.setAttribute('data-rev','');
+    el.style.transitionDelay=(Math.min(n%4,3)*60)+'ms'; io.observe(el); });
+})();
+</script>
+<script>
+(function(){
+  const b=document.getElementById('mm-btn');
+  b.addEventListener('click',()=>{
+    const on=document.body.classList.toggle('mm');
+    b.setAttribute('aria-pressed',String(on));
+    b.innerHTML='Maillage <b>'+(on?'ON':'OFF')+'</b>';
+  });
+})();
+</script>
 </body>
 </html>
