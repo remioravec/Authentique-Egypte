@@ -33,10 +33,10 @@ DOSSIERS = [
     ('destination', 'Refonte · Destinations'),
     ('qui-part',    'Refonte · Qui part'),
     ('guide',       'Refonte · Guides'),
-    ('hub-guides',  'Refonte · Hub et pages diverses'),
-    ('agence',      'Refonte · Hub et pages diverses'),
-    ('accueil',     'Refonte · Hub et pages diverses'),
-    ('legal',       'Refonte · Hub et pages diverses'),
+    ('hub-guides',  'Refonte · Pages diverses'),
+    ('agence',      'Refonte · Pages diverses'),
+    ('accueil',     'Refonte · Pages diverses'),
+    ('legal',       'Refonte · Pages diverses'),
 ]
 
 

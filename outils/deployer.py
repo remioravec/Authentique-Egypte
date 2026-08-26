@@ -179,6 +179,20 @@ def main():
     })
     print('   %s — id %d (%s)' % (PARENT_TITRE, mere['id'], action))
 
+    # Les huit maquettes ont leur propre dossier. Elles étaient posées
+    # directement sous « Refonte 2026 », au même niveau que les dossiers
+    # de gabarit : rien ne disait lesquelles étaient des dossiers et
+    # lesquelles des pages, et l'arbre devenait illisible.
+    dossier, action = poser_page('refonte-maquettes-de-reference', {
+        'title': 'Refonte · Maquettes de référence',
+        'status': 'draft',
+        'parent': mere['id'],
+        'content': ('<!-- wp:paragraph --><p>Les huit gabarits dessinés à la main. '
+                    'Ce sont les modèles : les pages reprises du site sont rangées '
+                    'dans les autres dossiers.</p><!-- /wp:paragraph -->'),
+    })
+    print('   %-40s id %d (%s)' % ('Refonte · Maquettes de référence', dossier['id'], action))
+
     # Premier passage : garantir l'existence de chaque page, pour connaître
     # les URL avant d'écrire les liens.
     print('→ Pages de maquette')
@@ -187,7 +201,7 @@ def main():
         page, action = poser_page(etape['slug'], {
             'title': etape['titre'],
             'status': 'draft',
-            'parent': mere['id'],
+            'parent': dossier['id'],
             'menu_order': rang,
             'template': 'elementor_canvas',
         })
@@ -196,9 +210,16 @@ def main():
 
     # Un brouillon n'a pas d'URL propre : on passe par ?page_id=.
     liens = {f: '%s/?page_id=%d' % (SITE, p['id']) for f, p in pages.items()}
-    # Les maquettes que nous n'avons pas encore produites gardent leur lien
-    # local : elles doivent rester visiblement absentes, pas discrètement
-    # redirigées ailleurs.
+
+    # « categorie.html » — la catégorie croisières — n'a jamais eu de
+    # maquette dessinée. Elle existe maintenant parmi les pages reprises
+    # du site : on y branche le lien plutôt que de laisser un lien mort
+    # dans le méga-menu de chaque page.
+    croisieres = trouver_page('refonte-categorie-croisieres-en-egypte')
+    if croisieres:
+        liens['categorie.html'] = '%s/?page_id=%d' % (SITE, croisieres['id'])
+    # Toute autre maquette encore absente garde son lien local : elle doit
+    # rester visiblement absente, pas discrètement redirigée ailleurs.
 
     print('→ Contenus')
     for etape in PARCOURS:
