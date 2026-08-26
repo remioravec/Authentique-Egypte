@@ -142,7 +142,30 @@ def poser_page(slug, champs):
     return reponse, action
 
 
+def controler_blocs():
+    """L'entête et le pied doivent être identiques sur les huit pages.
+
+    Ce sont des blocs communs : sur le site ils seront posés une seule
+    fois, dans le thème. Dans les maquettes ils sont recopiés, donc ils
+    divergent — et une cliente qui voit trois menus différents en
+    naviguant croit à un bug plutôt qu'à un oubli. On refuse de
+    déployer tant qu'ils ne sont pas alignés.
+    """
+    blocs = os.path.join(RACINE, 'outils', 'blocs.py')
+    if not os.path.exists(blocs):
+        return
+    r = subprocess.run([sys.executable, blocs, '--verifier'],
+                       capture_output=True, text=True)
+    if r.returncode != 0:
+        sys.stdout.write(r.stdout)
+        sys.exit("\nDéploiement interrompu : l'entête ou le pied a divergé.")
+
+
 def main():
+    print('→ Blocs communs')
+    controler_blocs()
+    print('   entête et pied identiques sur les huit pages')
+
     print('→ Page mère')
     mere, action = poser_page(PARENT_SLUG, {
         'title': PARENT_TITRE,
