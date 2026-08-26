@@ -208,3 +208,16 @@ body.abo-tiroir-ouvert{overflow:hidden}
   .abo-kanban{grid-template-columns:minmax(0,1fr);overflow-x:visible}
   .abo-panneau{width:100vw}
 }
+
+/* ============================================================
+   CONTENUS — les deux zones
+   Le site en ligne et la refonte se lisent d'un coup d'œil :
+   les mêler dans une seule liste obligeait à lire chaque titre.
+   ============================================================ */
+.abo-zone-titre{margin:34px 0 4px;font-size:20px;display:flex;align-items:center;gap:10px}
+.abo-zone-titre .abo-compte{font-size:13px;font-weight:600;color:#fff;background:#0B5170;
+  border-radius:999px;padding:2px 10px}
+.abo-zone-aide{margin:0 0 16px;color:#646970;font-size:13.5px}
+.abo-onglets--gabarits{margin:0 0 8px}
+.abo-onglets--gabarits .abo-onglet{font-size:12.5px;padding:5px 11px}
+.abo-zones .abo-onglet{font-weight:600}

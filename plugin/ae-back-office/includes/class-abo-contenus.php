@@ -55,7 +55,14 @@ class ABO_Contenus {
 	 * @param string $recherche
 	 * @return array<string,WP_Post[]>
 	 */
-	private static function par_gabarit( $recherche = '' ) {
+	/**
+	 * Les contenus, rangés par zone puis par gabarit.
+	 *
+	 * Deux mondes cohabitent : le site en ligne et l'espace de refonte.
+	 * Les mêler dans une seule liste obligeait à lire chaque titre pour
+	 * savoir lequel on regardait.
+	 */
+	private static function par_zone( $recherche = '' ) {
 		$types = ABO_Gabarits::types();
 		if ( post_type_exists( 'ae_maquette' ) ) {
 			$types[] = 'ae_maquette';
@@ -72,16 +79,27 @@ class ABO_Contenus {
 			$args['s'] = $recherche;
 		}
 
-		$rangs = array_fill_keys( array_keys( ABO_Gabarits::VOCABULAIRE ), array() );
+		$vide  = array_fill_keys( array_keys( ABO_Gabarits::VOCABULAIRE ), array() );
+		$zones = array( 'site' => $vide, 'refonte' => $vide );
 
 		foreach ( get_posts( $args ) as $post ) {
-			$rangs[ ABO_Gabarits::du( $post ) ][] = $post;
+			$zones[ ABO_Gabarits::zone( $post ) ][ ABO_Gabarits::du( $post ) ][] = $post;
 		}
 
-		return array_filter( $rangs, static function ( $liste ) {
-			return ! empty( $liste );
-		} );
+		foreach ( $zones as $cle => $rangs ) {
+			$zones[ $cle ] = array_filter( $rangs, static function ( $l ) {
+				return ! empty( $l );
+			} );
+		}
+
+		return $zones;
 	}
+
+	/** Les deux zones, telles qu'on les nomme à l'écran. */
+	const ZONES = array(
+		'site'    => array( 'nom' => 'Site en ligne', 'aide' => 'Ce que voient les visiteurs aujourd\'hui.' ),
+		'refonte' => array( 'nom' => 'Refonte 2026', 'aide' => 'Les pages de la refonte, toutes en brouillon : invisibles du public.' ),
+	);
 
 	/* ---------------------------------------------------------------- */
 	/* Affichage                                                         */
@@ -90,8 +108,15 @@ class ABO_Contenus {
 	public static function ecran() {
 		$recherche = isset( $_GET['s'] ) ? sanitize_text_field( wp_unslash( $_GET['s'] ) ) : '';
 		$filtre    = isset( $_GET['gabarit'] ) ? sanitize_key( wp_unslash( $_GET['gabarit'] ) ) : '';
-		$rangs     = self::par_gabarit( $recherche );
-		$total     = array_sum( array_map( 'count', $rangs ) );
+		$zone      = isset( $_GET['zone'] ) ? sanitize_key( wp_unslash( $_GET['zone'] ) ) : '';
+		if ( ! isset( self::ZONES[ $zone ] ) ) {
+			$zone = '';
+		}
+		$zones     = self::par_zone( $recherche );
+		$comptes   = array_map( static function ( $r ) {
+			return array_sum( array_map( 'count', $r ) );
+		}, $zones );
+		$total     = array_sum( $comptes );
 		?>
 		<div class="wrap abo">
 			<h1 class="wp-heading-inline">Contenus</h1>
@@ -118,103 +143,62 @@ class ABO_Contenus {
 				</p>
 			</form>
 
-			<div class="abo-onglets">
-				<a class="abo-onglet <?php echo '' === $filtre ? 'actif' : ''; ?>"
+			<div class="abo-onglets abo-zones">
+				<a class="abo-onglet <?php echo '' === $zone ? 'actif' : ''; ?>"
 					href="<?php echo esc_url( add_query_arg( array( 'page' => self::MENU, 's' => $recherche ), admin_url( 'admin.php' ) ) ); ?>">
 					Tout <span><?php echo (int) $total; ?></span>
 				</a>
+				<?php foreach ( self::ZONES as $cle => $z ) : ?>
+					<a class="abo-onglet <?php echo $zone === $cle ? 'actif' : ''; ?>"
+						href="<?php echo esc_url( add_query_arg( array( 'page' => self::MENU, 'zone' => $cle, 's' => $recherche ), admin_url( 'admin.php' ) ) ); ?>">
+						<?php echo esc_html( $z['nom'] ); ?>
+						<span><?php echo (int) $comptes[ $cle ]; ?></span>
+					</a>
+				<?php endforeach; ?>
+			</div>
+
+			<?php if ( ! $total ) : ?>
+				<p>Aucun contenu pour cette recherche.</p>
+			<?php endif; ?>
+
+			<?php foreach ( self::ZONES as $cle_zone => $z ) : ?>
+				<?php
+				if ( $zone && $zone !== $cle_zone ) {
+					continue;
+				}
+				$rangs = $zones[ $cle_zone ];
+				if ( ! $rangs ) {
+					continue;
+				}
+				?>
+				<h2 class="abo-zone-titre">
+					<?php echo esc_html( $z['nom'] ); ?>
+					<span class="abo-compte"><?php echo (int) $comptes[ $cle_zone ]; ?></span>
+				</h2>
+				<p class="abo-zone-aide"><?php echo esc_html( $z['aide'] ); ?></p>
+
+				<div class="abo-onglets abo-onglets--gabarits">
+					<?php foreach ( $rangs as $gabarit => $liste ) : ?>
+						<a class="abo-onglet <?php echo $filtre === $gabarit ? 'actif' : ''; ?>"
+							href="#z-<?php echo esc_attr( $cle_zone . '-' . $gabarit ); ?>">
+							<?php echo esc_html( ABO_Gabarits::libelle( $gabarit ) ); ?>
+							<span><?php echo count( $liste ); ?></span>
+						</a>
+					<?php endforeach; ?>
+				</div>
+
 				<?php foreach ( $rangs as $gabarit => $liste ) : ?>
+					<?php
+					if ( $filtre && $filtre !== $gabarit ) {
+						continue;
+					}
+					?>
 					<a class="abo-onglet <?php echo $filtre === $gabarit ? 'actif' : ''; ?>"
 						href="<?php echo esc_url( add_query_arg( array( 'page' => self::MENU, 'gabarit' => $gabarit, 's' => $recherche ), admin_url( 'admin.php' ) ) ); ?>">
 						<?php echo esc_html( ABO_Gabarits::libelle( $gabarit ) ); ?>
 						<span><?php echo count( $liste ); ?></span>
 					</a>
-				<?php endforeach; ?>
-			</div>
-
-			<?php if ( empty( $rangs ) ) : ?>
-				<p>Aucun contenu pour cette recherche.</p>
-			<?php endif; ?>
-
-			<?php foreach ( $rangs as $gabarit => $liste ) : ?>
-				<?php
-				if ( $filtre && $filtre !== $gabarit ) {
-					continue;
-				}
-				$entree = ABO_Gabarits::VOCABULAIRE[ $gabarit ];
-				?>
-				<section class="abo-bloc" id="g-<?php echo esc_attr( $gabarit ); ?>">
-					<header>
-						<h2><?php echo esc_html( $entree['icone'] . ' ' . $entree['nom'] ); ?>
-							<span class="abo-compte"><?php echo count( $liste ); ?></span></h2>
-						<p><?php echo esc_html( $entree['aide'] ); ?></p>
-					</header>
-
-					<table class="widefat striped abo-table">
-						<thead>
-							<tr>
-								<th>Titre</th>
-								<th style="width:110px">État</th>
-								<th style="width:120px">Type</th>
-								<th style="width:150px">Modifié</th>
-								<th style="width:230px">Gabarit</th>
-							</tr>
-						</thead>
-						<tbody>
-						<?php foreach ( $liste as $post ) : ?>
-							<?php
-							$type   = get_post_type_object( $post->post_type );
-							$manuel = (bool) get_post_meta( $post->ID, ABO_Gabarits::META_MAIN, true );
-							?>
-							<tr>
-								<td>
-									<strong><a href="<?php echo esc_url( get_edit_post_link( $post->ID ) ); ?>">
-										<?php echo esc_html( $post->post_title ?: '(sans titre)' ); ?>
-									</a></strong>
-									<div class="row-actions">
-										<span><a href="<?php echo esc_url( get_edit_post_link( $post->ID ) ); ?>">Modifier</a> | </span>
-										<span><a href="<?php echo esc_url( get_permalink( $post->ID ) ); ?>" target="_blank" rel="noreferrer">Voir</a></span>
-									</div>
-									<code class="abo-slug">/<?php echo esc_html( $post->post_name ); ?>/</code>
-								</td>
-								<td>
-									<span class="abo-etat abo-etat--<?php echo esc_attr( $post->post_status ); ?>">
-										<?php
-										$etats = array(
-											'publish' => 'En ligne',
-											'draft'   => 'Brouillon',
-											'private' => 'Privé',
-											'pending' => 'En attente',
-											'future'  => 'Programmé',
-										);
-										echo esc_html( $etats[ $post->post_status ] ?? $post->post_status );
-										?>
-									</span>
-								</td>
-								<td class="abo-type"><?php echo esc_html( $type ? $type->labels->singular_name : $post->post_type ); ?></td>
-								<td class="abo-date"><?php echo esc_html( get_the_modified_date( 'j M Y', $post ) ); ?></td>
-								<td>
-									<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" class="abo-choix">
-										<?php wp_nonce_field( 'abo_gabarit_' . $post->ID ); ?>
-										<input type="hidden" name="action" value="abo_gabarit">
-										<input type="hidden" name="post" value="<?php echo esc_attr( $post->ID ); ?>">
-										<select name="gabarit" onchange="this.form.submit()">
-											<?php foreach ( ABO_Gabarits::VOCABULAIRE as $cle => $v ) : ?>
-												<option value="<?php echo esc_attr( $cle ); ?>" <?php selected( $gabarit, $cle ); ?>>
-													<?php echo esc_html( $v['icone'] . ' ' . $v['nom'] ); ?>
-												</option>
-											<?php endforeach; ?>
-										</select>
-										<?php if ( $manuel ) : ?>
-											<span class="abo-manuel" title="Classé à la main : le rangement automatique ne le touchera pas">✋</span>
-										<?php endif; ?>
-									</form>
-								</td>
-							</tr>
-						<?php endforeach; ?>
-						</tbody>
-					</table>
-				</section>
+								<?php endforeach; ?>
 			<?php endforeach; ?>
 
 			<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" class="abo-pied">

@@ -104,6 +104,13 @@ def enveloppe(x, corps, description=''):
 .encart h3{margin:0 0 12px;font-size:1.02rem}
 .encart ul{margin:0;padding-left:1.05rem;font-size:.94rem;color:var(--texte)}
 .encart li{margin:0 0 7px}
+.tab-cadre{overflow-x:auto;margin:26px 0;-webkit-overflow-scrolling:touch}
+.tab{width:100%%;border-collapse:collapse;font-size:.95rem;min-width:520px}
+.tab th,.tab td{padding:11px 14px;border-bottom:1px solid var(--ligne);text-align:left;vertical-align:top}
+.tab thead th{background:var(--fond-2);font-size:.8rem;text-transform:uppercase;
+  letter-spacing:.06em;color:var(--gris);border-bottom:2px solid var(--ligne)}
+.tab tbody th{font-weight:700;color:var(--noir)}
+.tab tbody tr:last-child th,.tab tbody tr:last-child td{border-bottom:0}
 .galerie{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:14px;margin:26px 0}
 .galerie img{width:100%%;aspect-ratio:4/3;object-fit:cover;border-radius:var(--r-m);display:block}
 .chiffres{display:flex;flex-wrap:wrap;gap:10px;margin:0 0 26px}
@@ -166,6 +173,26 @@ def chapeau(x, surtitre, chiffres=()):
 </section>""" % (fond, e(coupe(x['titre'], 6)), e(surtitre), e(x['titre']), e(x['chapo']), puces)
 
 
+def rendre_tableau(b):
+    """Un tableau du site, rendu tel quel.
+
+    Ils étaient jetés par la première version de l'extraction : le
+    calendrier mois par mois de « quand partir », qui est le cœur de la
+    page, disparaissait avec eux.
+    """
+    tete = ''
+    if b.get('entetes'):
+        tete = '<thead><tr>%s</tr></thead>' % ''.join(
+            '<th scope="col">%s</th>' % e(c) for c in b['entetes'])
+    corps = ''.join(
+        '<tr>%s</tr>' % ''.join(
+            ('<th scope="row">%s</th>' if i == 0 else '<td>%s</td>') % e(c)
+            for i, c in enumerate(ligne))
+        for ligne in b.get('lignes', []))
+
+    return '<div class="tab-cadre"><table class="tab">%s<tbody>%s</tbody></table></div>' % (tete, corps)
+
+
 def utiles(sections):
     """Écarte les titres sans contenu — un intertitre seul au milieu de
     la page fait croire à un bloc perdu."""
@@ -203,6 +230,8 @@ def rendre_sections(sections, images, depuis=0):
                 sortie.append('<blockquote><p>%s</p></blockquote>' % e(b['texte']))
             elif b['type'] == 'figcaption':
                 sortie.append('<p class="note">%s</p>' % e(b['texte']))
+            elif b['type'] == 'tableau':
+                sortie.append(rendre_tableau(b))
 
         combien = base + (1 if n < reste else 0)
         lot = [restantes.pop(0) for _ in range(min(combien, len(restantes)))]

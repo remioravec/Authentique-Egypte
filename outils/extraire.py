@@ -41,7 +41,7 @@ DUREE = re.compile(r'\b(\d{1,2})\s*(?:jours?|nuits?)\b', re.I)
 class Decoupeur(HTMLParser):
     """Aplatit le HTML en une suite de blocs nommés."""
 
-    GARDES = {'h1', 'h2', 'h3', 'h4', 'p', 'li', 'figcaption', 'blockquote'}
+    GARDES = {'h1', 'h2', 'h3', 'h4', 'p', 'li', 'figcaption', 'blockquote', 'td', 'th'}
     IGNORE = {'script', 'style', 'button', 'nav', 'svg', 'form', 'select', 'option'}
 
     def __init__(self):
@@ -51,6 +51,12 @@ class Decoupeur(HTMLParser):
         self.tampon = []
         self.ignore = 0
         self.liste = None
+        # Les tableaux : ils étaient purement et simplement jetés. Le
+        # calendrier mois par mois de « quand partir », qui est le cœur
+        # de la page, disparaissait avec eux.
+        self.tableau = None
+        self.ligne = None
+        self.entete = False
 
     def handle_starttag(self, balise, attrs):
         a = dict(attrs)
@@ -66,6 +72,15 @@ class Decoupeur(HTMLParser):
             return
         if balise in ('ul', 'ol'):
             self.liste = []
+            return
+        if balise == 'table':
+            self.tableau = {'type': 'tableau', 'entetes': [], 'lignes': []}
+            return
+        if balise == 'thead':
+            self.entete = True
+            return
+        if balise == 'tr':
+            self.ligne = []
             return
         if balise in self.GARDES:
             self.vider()
@@ -84,6 +99,27 @@ class Decoupeur(HTMLParser):
                 self.blocs.append({'type': 'liste', 'items': items})
             self.liste = None
             return
+        if balise == 'thead':
+            self.entete = False
+            return
+        if balise == 'tr':
+            self.vider()
+            if self.tableau is not None and self.ligne:
+                if self.entete and not self.tableau['entetes']:
+                    self.tableau['entetes'] = self.ligne
+                else:
+                    self.tableau['lignes'].append(self.ligne)
+            self.ligne = None
+            return
+        if balise == 'table':
+            self.vider()
+            if self.tableau and (self.tableau['lignes'] or self.tableau['entetes']):
+                # Sans en-tête déclaré, la première ligne en tient lieu.
+                if not self.tableau['entetes'] and len(self.tableau['lignes']) > 1:
+                    self.tableau['entetes'] = self.tableau['lignes'].pop(0)
+                self.blocs.append(self.tableau)
+            self.tableau = None
+            return
         if balise in self.GARDES and self.pile and self.pile[-1] == balise:
             self.vider()
             self.pile.pop()
@@ -99,6 +135,9 @@ class Decoupeur(HTMLParser):
         texte = re.sub(r'\s+', ' ', ''.join(self.tampon)).strip()
         self.tampon = []
         balise = self.pile[-1]
+        if balise in ('td', 'th') and self.ligne is not None:
+            self.ligne.append(texte)
+            return
         if not texte or texte.lower() in BRUIT:
             return
         if balise == 'li':
@@ -221,6 +260,7 @@ def extraire(item, type_wp):
         'inclus': inclus,
         'exclus': exclus,
         'mots': sum(len(b.get('texte', '').split()) for b in blocs),
+        'tableaux': sum(1 for b in blocs if b['type'] == 'tableau'),
     }
 
 

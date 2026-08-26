@@ -36,7 +36,8 @@ class ABO_Gabarits {
 		'devis'       => array( 'nom' => 'Devis', 'icone' => '✉️', 'aide' => 'La page de demande de devis.' ),
 		'agence'      => array( 'nom' => 'Agence', 'icone' => '🏛', 'aide' => 'Qui sommes-nous, l\'équipe, les engagements.' ),
 		'legal'       => array( 'nom' => 'Mentions et légal', 'icone' => '⚖️', 'aide' => 'Mentions légales, confidentialité, CGV.' ),
-		'maquette'    => array( 'nom' => 'Maquette de refonte', 'icone' => '🎨', 'aide' => 'Les pages de la zone de refonte, invisibles du public.' ),
+		'maquette'    => array( 'nom' => 'Maquette de référence', 'icone' => '🎨', 'aide' => 'Les gabarits dessinés à la main. Ce sont les modèles.' ),
+		'dossier'     => array( 'nom' => 'Dossier de rangement', 'icone' => '📁', 'aide' => 'Une page qui ne sert qu\'à en contenir d\'autres.' ),
 		'technique'   => array( 'nom' => 'Technique', 'icone' => '⚙️', 'aide' => 'Newsletter, remerciements, pages de service.' ),
 		'autre'       => array( 'nom' => 'Non rangé', 'icone' => '❓', 'aide' => 'À classer à la main.' ),
 	);
@@ -88,8 +89,88 @@ class ABO_Gabarits {
 	 * @param WP_Post $post
 	 * @return string
 	 */
+	/**
+	 * Dans quelle zone du site vit ce contenu.
+	 *
+	 * Deux mondes cohabitent : le site en ligne, et l'espace de refonte
+	 * en brouillon. Les mélanger dans une même liste, c'est obliger la
+	 * cliente à lire un titre pour savoir si elle regarde la page
+	 * actuelle ou sa remplaçante.
+	 *
+	 * On remonte toute la lignée, pas seulement le parent : les pages de
+	 * refonte sont rangées dans des dossiers, elles sont donc des
+	 * petites-filles de « Refonte 2026 ».
+	 *
+	 * @return string 'refonte' ou 'site'
+	 */
+	public static function zone( $post ) {
+		static $racine = null;
+		if ( null === $racine ) {
+			$mere = get_page_by_path( 'refonte-2026' );
+			$racine = $mere ? (int) $mere->ID : 0;
+		}
+		if ( ! $racine || 'page' !== $post->post_type ) {
+			return 'site';
+		}
+		if ( (int) $post->ID === $racine ) {
+			return 'refonte';
+		}
+		foreach ( get_post_ancestors( $post->ID ) as $aieul ) {
+			if ( (int) $aieul === $racine ) {
+				return 'refonte';
+			}
+		}
+
+		return 'site';
+	}
+
+	/**
+	 * Un dossier de rangement de la zone de refonte.
+	 *
+	 * On ne le reconnaît pas à son slug : WordPress mange les accents, et
+	 * « Catégories de séjours » devient « cat-gories-de-s-jours ». On le
+	 * reconnaît à sa place — sous « Refonte 2026 », seuls les dossiers
+	 * sont des filles directes ; les pages sont dedans.
+	 */
+	private static function est_dossier( $post ) {
+		$mere = get_page_by_path( 'refonte-2026' );
+		if ( ! $mere ) {
+			return false;
+		}
+
+		return (int) $post->ID === (int) $mere->ID
+			|| (int) $post->post_parent === (int) $mere->ID;
+	}
+
 	public static function deduire( $post ) {
 		$slug = $post->post_name;
+
+		// 0. La zone de refonte se range comme le reste : par gabarit.
+		//    Les ranger toutes sous « maquette » revenait à dire « c'est du
+		//    provisoire » — ce sont soixante-sept pages, il faut pouvoir y
+		//    retrouver une fiche voyage parmi les guides.
+		if ( 'refonte' === self::zone( $post ) ) {
+			if ( self::est_dossier( $post ) ) {
+				return 'dossier';
+			}
+			// Les pages reprises du site portent leur gabarit dans le slug.
+			if ( preg_match( '/^refonte-(qui-part|hub-guides|accueil|categorie|voyage|destination|guide|devis|agence|legal)-/', $slug, $t ) ) {
+				return $t[1];
+			}
+			// Les huit maquettes dessinées portent le leur en tête de slug.
+			foreach ( array( 'hub-guides' => 'hub-guides', 'qui-part' => 'qui-part',
+				'categorie' => 'categorie', 'voyage' => 'voyage', 'destination' => 'destination',
+				'guide' => 'guide', 'agence' => 'agence', 'accueil' => 'accueil' ) as $prefixe => $gabarit ) {
+				if ( 0 === strpos( $slug, $prefixe ) ) {
+					return $gabarit;
+				}
+			}
+			if ( false !== strpos( $slug, 'devis' ) ) {
+				return 'devis';
+			}
+
+			return 'maquette';
+		}
 
 		// 1. Le type de contenu tranche à lui seul dans trois cas.
 		if ( 'ae_maquette' === $post->post_type ) {
@@ -108,12 +189,6 @@ class ABO_Gabarits {
 		}
 		if ( (int) get_option( 'page_for_posts' ) === (int) $post->ID ) {
 			return 'hub-guides';
-		}
-
-		// 3. Les pages de la zone de refonte, reconnaissables au parent.
-		$mere = get_page_by_path( 'refonte-2026' );
-		if ( $mere && (int) $post->post_parent === (int) $mere->ID ) {
-			return 'maquette';
 		}
 
 		// 4. Une page fille de « Nos séjours » est une catégorie de séjours.
