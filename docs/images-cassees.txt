@@ -1,0 +1,13 @@
+# Images référencées par le site mais qui ne répondent pas (relevé du 26/08/2026).
+# Elles ne sont pas rendues dans les maquettes : afficher une image cassée
+# pendant une relecture ne rend service à personne. À retéléverser côté site.
+https://authentiquegypte.com/wp-content/uploads/2023/11/abu-simbel-576x1024.jpg
+https://authentiquegypte.com/wp-content/uploads/2023/11/aswan-576x1024.jpg
+https://authentiquegypte.com/wp-content/uploads/2023/11/aswan-journee-libre-576x1024.jpg
+https://authentiquegypte.com/wp-content/uploads/2023/11/desert-egypte-576x1024.jpg
+https://authentiquegypte.com/wp-content/uploads/2023/11/louxor-576x1024.jpg
+https://authentiquegypte.com/wp-content/uploads/2023/11/mohamed-soliman-576x1024.jpg
+https://authentiquegypte.com/wp-content/uploads/2023/11/musee-egypte-576x1024.jpg
+https://authentiquegypte.com/wp-content/uploads/2023/11/pyramides-gizeh-576x1024.jpg
+https://authentiquegypte.com/wp-content/uploads/2023/11/vallée-des-rois-576x1024.jpg
+https://authentiquegypte.com/wp-content/uploads/2023/11/vol-international-576x1024.jpg

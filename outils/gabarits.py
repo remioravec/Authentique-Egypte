@@ -28,6 +28,23 @@ BLOCS = os.path.join(MAQUETTES, 'assets', 'blocs')
 DEVIS = 'https://authentiquegypte.com/sur-mesure/'
 
 
+def images_cassees():
+    """Les images que le site référence mais ne sert plus.
+
+    En afficher une pendant une relecture ne rend service à personne :
+    la cliente signale un carré vide au lieu de commenter la page. On
+    les écarte, et on le dit sur la page concernée.
+    """
+    chemin = os.path.join(RACINE, 'docs', 'images-cassees.txt')
+    if not os.path.exists(chemin):
+        return set()
+    with open(chemin, encoding='utf-8') as f:
+        return {l.strip() for l in f if l.strip() and not l.startswith('#')}
+
+
+CASSEES = images_cassees()
+
+
 def e(t):
     return html.escape(t or '', quote=True)
 
@@ -127,7 +144,8 @@ def bandeau_source(x):
 
 
 def chapeau(x, surtitre, chiffres=()):
-    img = x['images'][0]['src'] if x['images'] else ''
+    valides = [i for i in x['images'] if i['src'] not in CASSEES]
+    img = valides[0]['src'] if valides else ''
     fond = ('<div class="chapeau__bg"><img src="%s" alt=""></div>' % e(img)) if img else ''
     puces = ''
     if chiffres:
@@ -155,11 +173,24 @@ def utiles(sections):
 
 
 def rendre_sections(sections, images, depuis=0):
-    """Le contenu, dans son ordre, avec les images réparties entre les
-    sections plutôt qu'entassées en fin de page."""
+    """Le contenu, dans son ordre, avec les images réparties.
+
+    La première version posait une image toutes les deux sections et
+    entassait le reste dans une galerie de fin de page : 46 % des
+    images finissaient loin du texte qu'elles illustrent. On les répartit
+    maintenant sur toutes les sections, au prorata.
+    """
     sections = utiles(sections)
+    restantes = [i for i in images if i['src'] not in CASSEES]
+    ecartees = len(images) - len(restantes)
+
+    # Combien d'images par section, au plus juste.
+    if sections:
+        base, reste = divmod(len(restantes), len(sections))
+    else:
+        base, reste = 0, 0
+
     sortie = []
-    restantes = list(images)
     for n, s in enumerate(sections):
         if s['titre']:
             sortie.append('<h%d id="s%d">%s</h%d>' % (s['niveau'], n, e(s['titre']), s['niveau']))
@@ -172,16 +203,29 @@ def rendre_sections(sections, images, depuis=0):
                 sortie.append('<blockquote><p>%s</p></blockquote>' % e(b['texte']))
             elif b['type'] == 'figcaption':
                 sortie.append('<p class="note">%s</p>' % e(b['texte']))
-        # une image toutes les deux sections, tant qu'il en reste
-        if restantes and n % 2 == 1:
-            im = restantes.pop(0)
+
+        combien = base + (1 if n < reste else 0)
+        lot = [restantes.pop(0) for _ in range(min(combien, len(restantes)))]
+        if len(lot) == 1:
+            im = lot[0]
             sortie.append('<figure><img src="%s" alt="%s" loading="lazy" decoding="async">%s</figure>'
                           % (e(im['src']), e(im['alt']),
                              ('<figcaption>%s</figcaption>' % e(im['alt'])) if im['alt'] else ''))
+        elif lot:
+            sortie.append('<div class="galerie">%s</div>' % ''.join(
+                '<img src="%s" alt="%s" loading="lazy" decoding="async">' % (e(i['src']), e(i['alt']))
+                for i in lot))
+
     if restantes:
         sortie.append('<div class="galerie">%s</div>' % ''.join(
             '<img src="%s" alt="%s" loading="lazy" decoding="async">' % (e(i['src']), e(i['alt']))
             for i in restantes))
+
+    if ecartees:
+        sortie.append('<p class="aremplir">%d image%s de cette page ne répond%s plus sur le site '
+                      '(erreur 404). Elles ne sont pas affichées ici — à retéléverser.</p>'
+                      % (ecartees, 's' if ecartees > 1 else '', 'ent' if ecartees > 1 else ''))
+
     return '\n'.join(sortie)
 
 
