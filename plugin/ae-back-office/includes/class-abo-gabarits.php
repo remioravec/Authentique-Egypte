@@ -259,10 +259,21 @@ class ABO_Gabarits {
 	}
 
 	/** Le gabarit d'un contenu, avec repli sur la déduction. */
+	/**
+	 * Le gabarit d'un contenu.
+	 *
+	 * Un classement posé À LA MAIN fait autorité : c'est tout l'intérêt
+	 * de pouvoir corriger. Un classement automatique, lui, ne doit pas
+	 * survivre à la règle qui l'a produit — sinon corriger la règle ne
+	 * change plus rien, et quarante et une pages restent « non rangées »
+	 * alors que la règle sait les ranger.
+	 */
 	public static function du( $post ) {
-		$gabarit = get_post_meta( $post->ID, self::META, true );
-		if ( $gabarit && isset( self::VOCABULAIRE[ $gabarit ] ) ) {
-			return $gabarit;
+		if ( get_post_meta( $post->ID, self::META_MAIN, true ) ) {
+			$gabarit = get_post_meta( $post->ID, self::META, true );
+			if ( $gabarit && isset( self::VOCABULAIRE[ $gabarit ] ) ) {
+				return $gabarit;
+			}
 		}
 
 		return self::deduire( $post );
