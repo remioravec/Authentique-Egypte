@@ -493,10 +493,11 @@ def page_categorie(x, ctx, gabarit):
     titre_soeurs, eyebrow_s = 'Les autres façons de partir', 'Qui part'
     phrase = 'Famille, couple, solo ou mobilité réduite : chaque profil a sa page.'
 
+    # Les cartes de voyages d'abord, le texte ensuite — demande de Rémi.
     return monter(gabarit, x, [
         chapeau(x, gabarit, chips, remonte),
-        corps_editorial(x, ctx),
         section_sejours(x, sejours, 'Les séjours « %s »' % nc, 'Passer du profil au voyage'),
+        corps_editorial(x, ctx),
         section_soeurs(titre_soeurs, eyebrow_s, phrase, soeurs),
     ])
 
