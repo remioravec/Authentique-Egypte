@@ -246,8 +246,13 @@ def resa(x):
             % (prix, ''.join('<li>%s%s</li>' % (COCHE, M.e(p)) for p in puces), DEVIS, WHATSAPP))
 
 
-def soeurs(x, tous):
-    autres = [a for a in tous if a['id'] != x['id']][:3]
+def soeurs(x, tous, familles):
+    """Les frères de la même famille d'abord — c'est le sens du bloc
+    « se combine, ou se remplace » — puis les autres pour compléter."""
+    ids_famille = familles.get(x['id'], set())
+    memes = [a for a in tous if a['id'] != x['id'] and a['id'] in ids_famille]
+    reste = [a for a in tous if a['id'] != x['id'] and a['id'] not in ids_famille]
+    autres = (memes + reste)[:3]
     cartes = []
     for a in autres:
         img = a['_images'][0] if a['_images'] else None
@@ -272,7 +277,7 @@ def soeurs(x, tous):
 # Le montage                                                        #
 # ---------------------------------------------------------------- #
 
-def rendre(x, tous, titres_voyages):
+def rendre(x, tous, titres_voyages, familles, categorie_de):
     page = M.moule('produit-siwa.html')
     page = M.entete_html(page, x['titre'], M.coupe(x['chapo'], 26))
     page = M.poser_style(page)
@@ -285,12 +290,23 @@ def rendre(x, tous, titres_voyages):
 
     colonne = [M.bandeau_source(x['url']),
                '<p class="eyebrow">Vue d\'ensemble</p>']
+    # ⚠ noté au relevé : la fiche Siwa en ligne décrit l'itinéraire du
+    # Sinaï. La maquette portait déjà cette alerte, on ne la perd pas.
+    if 'loasis-de-siwa' in x['url']:
+        colonne.append('<div class="alerte" style="margin-bottom:22px"><p class="aremplir">'
+                       'Le texte de la page en ligne décrit l\'itinéraire du Sinaï (départ de '
+                       'Sharm el-Sheikh) — le vrai itinéraire de Siwa est à fournir par l\'agence.</p></div>')
     if sous_titre:
         colonne.append('<h2 style="margin-bottom:14px">%s</h2>' % M.e(sous_titre))
     for s in intro:
         if s['titre'] and s['titre'].strip().lower() not in ('vue d\'ensemble', x['titre'].strip().lower()):
             colonne.append('<h3 style="margin-top:22px">%s</h3>' % M.e(s['titre']))
         colonne.append(M.paragraphes(s['blocs']))
+    fam = categorie_de.get(x['id'])
+    if fam:
+        colonne.append('<p class="lede" style="margin-top:18px">Ce séjour fait partie de notre '
+                       'famille «&nbsp;<a href="%s" class="lien-txt">%s</a>&nbsp;».</p>'
+                       % (M.e(fam['url']), M.e(fam['titre'])))
     colonne.append(rendre_jours(itin))
     colonne.append(rendre_corps(corps))
     colonne.append(inclusions(x))
@@ -313,7 +329,7 @@ def rendre(x, tous, titres_voyages):
     ancre = page.index('se combine, ou se remplace')
     deb = page.rfind('<section', 0, ancre)
     fin = page.index('</section>', ancre) + len('</section>')
-    page = page[:deb] + soeurs(x, tous) + page[fin:]
+    page = page[:deb] + soeurs(x, tous, familles) + page[fin:]
 
     return page
 
@@ -333,11 +349,33 @@ def main():
 
     lot = [extraits[i['id']] for i in inventaire if i['gabarit'] == 'voyage']
     titres = {v['titre'].strip() for v in lot}
+
+    # Quelle famille pour quel séjour ? On lit les liens des pages
+    # catégories en ligne — la donnée du site, pas une supposition.
+    par_slug = {i['slug']: i for i in inventaire}
+    voyages_slug = {i['slug']: extraits[i['id']] for i in inventaire if i['gabarit'] == 'voyage'}
+    familles, categorie_de = {}, {}
+    brut_chemin = os.path.join(RACINE, 'docs', 'contenus.json')
+    if os.path.exists(brut_chemin):
+        with open(brut_chemin, encoding='utf-8') as f:
+            brut = json.load(f)
+        for p in brut.get('pages', []):
+            it = par_slug.get(p.get('slug', ''))
+            if not it or it['gabarit'] != 'categorie' or it['slug'] == 'nos-sejours-egypte':
+                continue
+            ids = {voyages_slug[m].get('id') for m in
+                   re.findall(r'/programs/([a-z0-9-]+)/?', (p.get('content', {}) or {}).get('raw', '') or '')
+                   if m in voyages_slug}
+            cat = extraits[it['id']]
+            for vid in ids:
+                familles[vid] = ids
+                categorie_de.setdefault(vid, cat)
+
     os.makedirs(SORTIE, exist_ok=True)
     for x in lot:
         slug = next(i['slug'] for i in inventaire if i['id'] == x['id'])
         with open(os.path.join(SORTIE, 'voyage-%s.html' % slug[:60]), 'w', encoding='utf-8') as f:
-            f.write(rendre(x, lot, titres))
+            f.write(rendre(x, lot, titres, familles, categorie_de))
     print('%d fiches séjour coulées dans produit-siwa.html' % len(lot))
 
 

@@ -248,20 +248,34 @@ def reperer_duree(blocs):
 
 
 def reperer_inclusions(blocs):
-    """« Le programme inclus » / « N'inclus pas », tels qu'ils sont écrits."""
-    inclus, exclus, cible = [], [], None
+    """« Le programme inclus » / « N'inclus pas », tels qu'ils sont écrits.
+
+    Deux écritures cohabitent sur le site : le marqueur en tête de sa
+    propre liste d'items, ou le marqueur SEUL dans une liste à un
+    élément, suivi d'une liste d'items. Le mode ouvert par un marqueur
+    sert donc au plus UNE liste d'items, puis se referme — sans cette
+    borne, l'équipement et les repas tombaient dans « n'inclut pas ».
+    """
+    inclus, exclus = [], []
+    cible = None
     for b in blocs:
-        if b['type'] == 'liste':
-            for item in b['items']:
-                bas = item.lower().strip(" :")
-                if bas.startswith('le programme inclu') or bas in ('inclus', 'ce qui est inclus'):
-                    cible = inclus
-                    continue
-                if bas.startswith("n'inclus pas") or bas.startswith('non inclus') or bas.startswith('non-inclus'):
-                    cible = exclus
-                    continue
-                if cible is not None:
-                    cible.append(item)
+        if b['type'] != 'liste':
+            continue
+        servis = 0
+        for item in b['items']:
+            bas = item.lower().strip(' :')
+            if bas.startswith('le programme inclu') or bas in ('inclus', 'ce qui est inclus'):
+                cible = inclus
+                continue
+            if bas.startswith("n'inclu") or bas.startswith('non inclus') or bas.startswith('non-inclus'):
+                cible = exclus
+                continue
+            if cible is not None:
+                cible.append(item)
+                servis += 1
+        if servis:
+            cible = None
+
     return inclus, exclus
 
 
