@@ -97,7 +97,7 @@ def style_source():
     """Le seul style ajouté au moule : le bandeau qui dit d'où vient le texte."""
     return ('\n.src{margin:0 0 24px;padding:11px 15px;background:var(--or-fond);'
             'border-radius:var(--r-s);font-size:.86rem;color:#7A5605;line-height:1.5}'
-            '\n.src a{color:inherit}\n')
+            '\n.src a{color:inherit;overflow-wrap:anywhere}\n')
 
 
 def poser_style(page):
@@ -121,20 +121,72 @@ def _repond(url):
     return _TAILLES[url]
 
 
-def defloute(page):
-    """Remplace les vignettes « …-300x200.jpg » par l'image d'origine.
+_THUMB = re.compile(r'https://authentiquegypte\.com/wp-content/uploads/elementor/thumbs/'
+                    r'([^\s"\']+?)-[a-z0-9]{20,}\.(jpe?g|png|webp)', re.I)
+_MEDIAS = {}
 
-    WordPress référence souvent une taille intermédiaire : affichée en
-    grand dans la maquette, elle rend flou. On ne touche qu'aux images
-    du site, et seulement quand le plein format répond vraiment — les
-    originaux volumineux s'appellent parfois « …-scaled.jpg ».
+
+def _original(nom, ext):
+    """Retrouve le fichier d'origine d'une miniature Elementor.
+
+    Le nom de la miniature est celui du média suivi d'un condensé ; le
+    dossier daté (2025/06…) n'y figure plus. L'API médias publique du
+    site le retrouve — on exige le même nom de fichier, à la taille près.
     """
+    cle = nom.lower()
+    if cle not in _MEDIAS:
+        import json as _json
+        import urllib.parse
+        import urllib.request
+        terme = re.sub(r'-scaled$', '', nom, flags=re.I)
+        u = ('https://authentiquegypte.com/wp-json/wp/v2/media?search=%s'
+             '&per_page=20&_fields=source_url' % urllib.parse.quote(terme))
+        try:
+            cand = [m['source_url'] for m in _json.load(urllib.request.urlopen(u, timeout=30))]
+        except Exception:
+            cand = []
+        trouve = ''
+        for c in cand:
+            base = c.rsplit('/', 1)[-1].rsplit('.', 1)[0].lower()
+            if base in (cle, terme.lower()):
+                trouve = c
+                break
+        if not (trouve and _repond(trouve)):
+            # Nom trop court pour la recherche (« 1-scaled ») : on sonde
+            # les dossiers datés du site, du plus récent au plus ancien.
+            trouve = ''
+            for annee in range(2026, 2022, -1):
+                for mois in range(12, 0, -1):
+                    c = ('https://authentiquegypte.com/wp-content/uploads/%d/%02d/%s.%s'
+                         % (annee, mois, nom, ext))
+                    if _repond(c):
+                        trouve = c
+                        break
+                if trouve:
+                    break
+        _MEDIAS[cle] = trouve or ''
+    return _MEDIAS[cle]
+
+
+def defloute(page):
+    """Remplace les images réduites par l'image d'origine.
+
+    Deux formes de réduction sur le site : la taille intermédiaire de
+    WordPress (« …-300x200.jpg ») et la miniature d'Elementor
+    (« uploads/elementor/thumbs/… »). Affichées en grand dans la
+    maquette, elles rendent flou. On ne remplace que si le plein
+    format répond vraiment — les originaux volumineux s'appellent
+    parfois « …-scaled.jpg ».
+    """
+    def rem_thumb(m):
+        return _original(m.group(1), m.group(2)) or m.group(0)
+
     def rem(m):
         for cand in (m.group(1) + m.group(2), m.group(1) + '-scaled' + m.group(2)):
             if _repond(cand):
                 return cand
         return m.group(0)
-    return _MINIATURE.sub(rem, page)
+    return _MINIATURE.sub(rem, _THUMB.sub(rem_thumb, page))
 
 
 def paragraphes(blocs, classe='lede'):

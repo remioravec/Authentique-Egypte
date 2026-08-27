@@ -158,6 +158,9 @@ p{margin:0 0 1em}
 /* ---------- deux colonnes + panneau collant ---------- */
 .colonnes{display:grid;grid-template-columns:1fr 340px;gap:44px;align-items:start;
   padding-bottom:clamp(44px,5.5vw,72px)}
+/* min-width:0 : sans lui, un contenu insécable (une URL) élargit la
+   colonne au-delà de l'écran sur mobile. */
+.colonnes>*{min-width:0}
 .colonnes>aside{position:sticky;top:84px}
 .resa{background:#fff;border:1px solid var(--ligne);border-radius:var(--r-l);
   box-shadow:var(--ombre);padding:22px;position:relative;overflow:hidden}
@@ -346,8 +349,9 @@ body.mm .mm-legende{display:block}
 }
 @media (max-width:1024px){
   .colonnes{grid-template-columns:1fr;gap:30px}
-  .colonnes>aside{position:static}
-  .resa{display:none}
+  /* Le panneau de prix reste visible sur mobile : il vient s'incruster
+     entre la galerie et le texte, la barre basse prend le relais ensuite. */
+  .colonnes>aside{position:static;order:-1}
   .resa-mob{display:flex}
   body{padding-bottom:84px}
   .incl{grid-template-columns:1fr}
