@@ -244,6 +244,20 @@ p{margin:0 0 1em}
 .incl .non li::before{content:"✕";position:absolute;left:2px;top:9px;color:var(--gris-clair);font-weight:700}
 .incl .non li{color:var(--gris)}
 
+/* ---------- bande devis ----------
+   Le même appel au devis que sur le reste du site (dessin d'index.html). */
+.devis{background:var(--nuit-900);color:#fff;border-radius:24px;padding:clamp(34px,5vw,56px);
+  display:grid;grid-template-columns:1.1fr .9fr;gap:44px;align-items:center}
+.devis h2{color:#fff}
+.devis ul{list-style:none;padding:0;margin:22px 0 0;display:grid;gap:11px;font-size:.95rem;color:#C3D5DA}
+.devis li{display:flex;gap:11px;align-items:flex-start}
+.devis li svg{flex:0 0 auto;margin-top:5px}
+.devis__act{display:grid;gap:12px}
+.devis__act small{color:#B0CCD9;font-size:.81rem;text-align:center;font-family:"Manrope",sans-serif}
+@media (max-width:860px){
+  .devis{grid-template-columns:1fr;gap:28px}
+}
+
 /* ---------- alerte contenu ---------- */
 .alerte{border:1px solid var(--or);background:var(--or-fond);border-radius:var(--r-l);padding:18px 20px;
   font-family:"Manrope",sans-serif;font-size:.89rem;line-height:1.65;color:#5C4204}
@@ -750,6 +764,47 @@ header .nav>a.btn--or:hover{background:#C87700;border-color:#C87700;box-shadow:0
 </section>
 
 <!-- BLOC DE SŒURS — après le bloc de conversion -->
+<section class="section">
+  <div class="wrap">
+    <div class="devis" data-dec="Nouveau">
+      <div>
+        <p class="eyebrow eyebrow--clair">Votre projet</p>
+        <h2>Ce séjour vous tente&nbsp;? Ajustons-le à vos dates.</h2>
+        <ul>
+          <li><svg width="17" height="17" viewBox="0 0 17 17" fill="none" aria-hidden="true"><path d="M3 8.8l3.6 3.6L14 5" stroke="#FBB50E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Devis gratuit, détaillé jour par jour, sans engagement</li>
+          <li><svg width="17" height="17" viewBox="0 0 17 17" fill="none" aria-hidden="true"><path d="M3 8.8l3.6 3.6L14 5" stroke="#FBB50E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Guide égyptologue francophone et chauffeur privatif</li>
+          <li><svg width="17" height="17" viewBox="0 0 17 17" fill="none" aria-hidden="true"><path d="M3 8.8l3.6 3.6L14 5" stroke="#FBB50E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Acompte seulement une fois l'itinéraire validé</li>
+        </ul>
+      </div>
+      <div class="devis__act">
+        <a href="https://authentiquegypte.com/sur-mesure/" class="btn btn--or btn--bloc">Demander mon devis</a>
+        <a href="https://wa.me/201066619098" class="btn btn--wa btn--bloc">Poser une question sur WhatsApp</a>
+        <small>Aucune carte bancaire demandée à cette étape.</small>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+<div class="wrap">
+<div class="devis">
+<div>
+<p class="eyebrow eyebrow--clair">Votre projet</p>
+<h2>Ce séjour vous tente&nbsp;? Ajustons-le à vos dates.</h2>
+<ul>
+<li><svg width="17" height="17" viewBox="0 0 17 17" fill="none" aria-hidden="true"><path d="M3 8.8l3.6 3.6L14 5" stroke="#FBB50E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Devis gratuit, détaillé jour par jour, sans engagement</li>
+<li><svg width="17" height="17" viewBox="0 0 17 17" fill="none" aria-hidden="true"><path d="M3 8.8l3.6 3.6L14 5" stroke="#FBB50E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Guide égyptologue francophone et chauffeur privatif</li>
+<li><svg width="17" height="17" viewBox="0 0 17 17" fill="none" aria-hidden="true"><path d="M3 8.8l3.6 3.6L14 5" stroke="#FBB50E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Acompte seulement une fois l'itinéraire validé</li>
+</ul>
+</div>
+<div class="devis__act">
+<a href="https://authentiquegypte.com/sur-mesure/" class="btn btn--or btn--bloc">Demander mon devis</a>
+<a href="https://wa.me/201066619098" class="btn btn--wa btn--bloc">Poser une question sur WhatsApp</a>
+<small>Aucune carte bancaire demandée à cette étape.</small>
+</div>
+</div>
+</div>
+</section>
 <section class="section">
 <div class="wrap">
 <p class="eyebrow">Et aussi</p>

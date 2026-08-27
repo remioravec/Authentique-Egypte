@@ -31,6 +31,24 @@ WHATSAPP = 'https://wa.me/201066619098'
 COCHE = ('<svg width="16" height="16" viewBox="0 0 17 17" fill="none" aria-hidden="true">'
          '<path d="M3 8.8l3.6 3.6L14 5" stroke="#0F6E73" stroke-width="2" '
          'stroke-linecap="round" stroke-linejoin="round"/></svg> ')
+COCHE_OR = ('<svg width="17" height="17" viewBox="0 0 17 17" fill="none" aria-hidden="true">'
+            '<path d="M3 8.8l3.6 3.6L14 5" stroke="#FBB50E" stroke-width="2" '
+            'stroke-linecap="round" stroke-linejoin="round"/></svg> ')
+
+
+def bande_devis():
+    """La bande de conversion commune au site, avant les sœurs."""
+    return ('<section class="section">\n<div class="wrap">\n<div class="devis">\n<div>\n'
+            '<p class="eyebrow eyebrow--clair">Votre projet</p>\n'
+            '<h2>Ce séjour vous tente&nbsp;? Ajustons-le à vos dates.</h2>\n<ul>\n'
+            '<li>%sDevis gratuit, détaillé jour par jour, sans engagement</li>\n'
+            '<li>%sGuide égyptologue francophone et chauffeur privatif</li>\n'
+            '<li>%sAcompte seulement une fois l\'itinéraire validé</li>\n</ul>\n</div>\n'
+            '<div class="devis__act">\n'
+            '<a href="%s" class="btn btn--or btn--bloc">Demander mon devis</a>\n'
+            '<a href="%s" class="btn btn--wa btn--bloc">Poser une question sur WhatsApp</a>\n'
+            '<small>Aucune carte bancaire demandée à cette étape.</small>\n</div>\n'
+            '</div>\n</div>\n</section>' % (COCHE_OR, COCHE_OR, COCHE_OR, DEVIS, WHATSAPP))
 
 ETAPES = re.compile(r'étapes|programme|itinéraire|déroul', re.I)
 PRIX_SEUL = re.compile(r'^[AÀ]\s*partir\s*de', re.I)
@@ -355,7 +373,7 @@ def rendre(x, tous, titres_voyages, familles, categorie_de):
     ancre = page.index('se combine, ou se remplace')
     deb = page.rfind('<section', 0, ancre)
     fin = page.index('</section>', ancre) + len('</section>')
-    page = page[:deb] + soeurs(x, tous, familles) + page[fin:]
+    page = page[:deb] + bande_devis() + '\n' + soeurs(x, tous, familles) + page[fin:]
 
     return M.defloute(page)
 

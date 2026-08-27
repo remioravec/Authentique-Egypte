@@ -497,7 +497,8 @@ def page_categorie(x, ctx, gabarit):
     return monter(gabarit, x, [
         chapeau(x, gabarit, chips, remonte),
         section_sejours(x, sejours, 'Les séjours « %s »' % nc, 'Passer du profil au voyage'),
-        corps_editorial(x, ctx),
+        corps_editorial(x, ctx, cta=True),
+        bande_devis('', 'Envie de passer du profil au voyage&nbsp;?'),
         section_soeurs(titre_soeurs, eyebrow_s, phrase, soeurs),
     ])
 
@@ -637,7 +638,10 @@ def page_destination(x, ctx, gabarit):
             '<a href="%s" class="btn btn--or btn--bloc btn--sm">Demander mon devis</a>\n'
             '<a href="%s" class="btn btn--clair btn--bloc btn--sm" style="margin-top:9px">WhatsApp</a>\n'
             '</div>\n</div>\n</aside>' % (DEVIS, WHATSAPP))
-        queue = []
+        # L'appel au devis ferme aussi l'accueil et la page agence —
+        # pas les mentions légales, où il n'a pas sa place.
+        queue = [] if gabarit == 'legal' else \
+            [bande_devis('', 'Un projet de voyage en Égypte&nbsp;?')]
 
     colonnes = ('<div class="wrap">\n<div class="colonnes">\n%s\n%s\n</div>\n</div>'
                 % (corps_destination(x, ctx), flanc))
