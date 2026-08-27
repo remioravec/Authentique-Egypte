@@ -440,6 +440,10 @@ def page_categorie(x, ctx, gabarit):
                 if v['id'] not in {w['id'] for w in vus}:
                     vus.append(v)
         sejours = vus
+        if not x['_images']:
+            # La page en ligne n'a aucune image : le chapeau emprunte
+            # celle d'une de ses familles plutôt que de rester nu.
+            x['_images'] = next((c['_images'] for c in ctx['categories'] if c['_images']), [])
     chips = []
     if sejours:
         chips.append((str(len(sejours)), 'séjour%s' % ('s' if len(sejours) > 1 else '')))
