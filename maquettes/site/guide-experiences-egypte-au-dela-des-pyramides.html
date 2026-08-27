@@ -475,7 +475,7 @@ header .nav>a.btn--or,header .nav>a.btn--or[aria-current]{background:#E08A00;bor
 header .nav>a.btn--or:hover{background:#C87700;border-color:#C87700;box-shadow:0 10px 24px rgba(224,138,0,.42)}
 
 .src{margin:0 0 24px;padding:11px 15px;background:var(--or-fond);border-radius:var(--r-s);font-size:.86rem;color:#7A5605;line-height:1.5}
-.src a{color:inherit}
+.src a{color:inherit;overflow-wrap:anywhere}
 </style>
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[
 {"@type":"BreadcrumbList","itemListElement":[
@@ -577,16 +577,16 @@ header .nav>a.btn--or:hover{background:#C87700;border-color:#C87700;box-shadow:0
 <p class="src">Contenu repris de <a href="https://authentiquegypte.com/experiences-egypte-au-dela-des-pyramides/">https://authentiquegypte.com/experiences-egypte-au-dela-des-pyramides/</a>, sans réécriture&nbsp;: seule la mise en page change.</p>
 <p class="lede">Quand on évoque l&#x27;Égypte, les pyramides de Gizeh sont souvent la première image qui vient à l&#x27;esprit. Pourtant, ce pays fascinant ne se résume pas à ses monuments pharaoniques. Entre croisières intimistes, déserts à couper le souffle, oasis préservées et immersion culturelle, l&#x27;Égypte offre une richesse d&#x27;expériences qui surprend même les voyageurs les plus aguerris.</p>
 <p class="lede">Que vous soyez amateur de nature, d&#x27;histoire vivante ou de rencontres authentiques, voici nos suggestions pour découvrir une Égypte hors des clichés et vivre des moments inoubliables.</p>
-<figure class="fig"><img src="https://authentiquegypte.com/wp-content/uploads/2025/08/Personne-dans-les-rues-de-Kharga-en-Egypte-1024x683.jpg" alt="" loading="lazy" decoding="async"></figure>
+<figure class="fig"><img src="https://authentiquegypte.com/wp-content/uploads/2025/08/Personne-dans-les-rues-de-Kharga-en-Egypte.jpg" alt="" loading="lazy" decoding="async"></figure>
 <h2 id="s1">Explorer les oasis et villages traditionnels</h2>
 <p class="">Les oasis égyptiennes sont de véritables havres de paix, où le temps semble s&#x27;être arrêté. Elles permettent d&#x27;observer le quotidien des habitants, loin de l&#x27;agitation des grandes villes et des circuits touristiques classiques.</p>
-<figure class="fig"><img src="https://authentiquegypte.com/wp-content/uploads/2025/09/FAYOUM-JOUR-1-768x1024.jpeg" alt="" loading="lazy" decoding="async"></figure>
+<figure class="fig"><img src="https://authentiquegypte.com/wp-content/uploads/2025/09/FAYOUM-JOUR-1.jpeg" alt="" loading="lazy" decoding="async"></figure>
 <h3 id="s2">Siwa : Un joyau au cœur du désert</h3>
 <p class="">Oasis L&#x27;oasis de Siwa est réputée pour ses sources naturelles et ses palmeraies luxuriantes. Son architecture en terre crue et l&#x27;hospitalité berbère en font un lieu hors du temps. Découvrir l&#x27;oasis de Siwa</p>
-<figure class="fig"><img src="https://authentiquegypte.com/wp-content/uploads/2023/11/peter-ragheb-naYLQxASRTE-unsplash-1024x768.webp" alt="Désert dans l&#x27;Oasis de Fayoum" loading="lazy" decoding="async"><figcaption>Désert dans l&#x27;Oasis de Fayoum</figcaption></figure>
+<figure class="fig"><img src="https://authentiquegypte.com/wp-content/uploads/2023/11/peter-ragheb-naYLQxASRTE-unsplash-scaled.webp" alt="Désert dans l&#x27;Oasis de Fayoum" loading="lazy" decoding="async"><figcaption>Désert dans l&#x27;Oasis de Fayoum</figcaption></figure>
 <h3 id="s3">Dakhla et Kharga : Entre dunes et vestiges</h3>
 <p class="">Oasis Ces oasis offrent un mélange unique de dunes infinies et de vestiges romains, invitant à la contemplation et à la découverte d&#x27;une Égypte rurale encore méconnue. Explorer l&#x27;oasis de Dakhla</p>
-<figure class="fig"><img src="https://authentiquegypte.com/wp-content/uploads/2023/11/e235bfb4-54a3-41cf-9f55-f2ca30fc8a91-1-1024x680.jpg" alt="Dahabeya" loading="lazy" decoding="async"><figcaption>Dahabeya</figcaption></figure>
+<figure class="fig"><img src="https://authentiquegypte.com/wp-content/uploads/2023/11/e235bfb4-54a3-41cf-9f55-f2ca30fc8a91-1.jpg" alt="Dahabeya" loading="lazy" decoding="async"><figcaption>Dahabeya</figcaption></figure>
 <h3 id="s4">Fayoum : Proche du Caire</h3>
 <p class="">Oasis À seulement quelques heures du Caire, ce lieu est parfait pour un court séjour mêlant nature, archéologie et artisanat local. Excursion à Fayoum</p>
 <figure class="fig"><img src="https://authentiquegypte.com/wp-content/uploads/2023/11/cropped-mohamed-soliman-MFgPnJOsI_I-unsplash-scaled-2.jpg" alt="Felouque" loading="lazy" decoding="async"><figcaption>Felouque</figcaption></figure>
@@ -742,6 +742,7 @@ document.querySelector('.burger')?.addEventListener('click',e=>{
   },{threshold:.06,rootMargin:'0px 0px -40px 0px'});
   cibles.forEach((el,n)=>{ el.setAttribute('data-rev','');
     el.style.transitionDelay=(Math.min(n%4,3)*60)+'ms'; io.observe(el); });
+  setTimeout(()=>{cibles.forEach(el=>el.classList.add('vu'))},2500); /* garde-fou : rien ne reste invisible */
 })();
 </script>
 <script>

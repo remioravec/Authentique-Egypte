@@ -431,7 +431,7 @@ header .nav>a.btn--or,header .nav>a.btn--or[aria-current]{background:#E08A00;bor
 header .nav>a.btn--or:hover{background:#C87700;border-color:#C87700;box-shadow:0 10px 24px rgba(224,138,0,.42)}
 
 .src{margin:0 0 24px;padding:11px 15px;background:var(--or-fond);border-radius:var(--r-s);font-size:.86rem;color:#7A5605;line-height:1.5}
-.src a{color:inherit}
+.src a{color:inherit;overflow-wrap:anywhere}
 </style>
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[
 {"@type":"BreadcrumbList","itemListElement":[
@@ -532,45 +532,50 @@ header .nav>a.btn--or:hover{background:#C87700;border-color:#C87700;box-shadow:0
 <div class="chapeau__st"><span><b>4</b> séjours</span><span><b>1 à 4</b> jours</span><span><b>185 €</b> à partir de</span></div>
 <a class="remonte" href="https://authentiquegypte.com/nos-sejours-egypte/">Une des cinq familles de nos séjours en Égypte <svg width="15" height="11" viewBox="0 0 15 11" fill="none" aria-hidden="true"><path d="M1 5.5h12M9 1.5l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div>
 </section>
-<section class="section section--creme">
+<div class="filtres">
 <div class="wrap">
-<div style="max-width:74ch">
-<p class="src">Contenu repris de <a href="https://authentiquegypte.com/nos-sejours-egypte/desert-egypte/">https://authentiquegypte.com/nos-sejours-egypte/desert-egypte/</a>, sans réécriture&nbsp;: seule la mise en page change.</p>
-
-<h2>Votre voyage, vos envies, notre expertise.</h2>
-<p class="">Nous concevons votre itinéraire sur mesure : choisissez vos étapes, votre rythme, vos expériences. Du silence infini des dunes aux oasis verdoyantes, des bivouacs sous les étoiles aux villages bédouins, chaque moment est pensé pour vous.</p>
-<p class="">Guidés par nos équipes locales passionnées, vivez l’Égypte du désert dans toute son authenticité.</p>
-<h2>Créez un voyage qui vous ressemble !</h2>
-<p class="">Partez à la découverte d’une Égypte authentique, loin des circuits touristiques classiques. Temples millénaires, oasis cachées, rencontres vraies : chaque voyage est conçu selon vos envies, votre rythme, votre façon d’explorer.</p>
-<p class="">Construisez votre aventure familiale [trustindex no-registration=google]</p>
-<h2>L&#x27;organisation du voyage !</h2>
-<p class="">Quelle est la meilleure période pour explorer le désert et les oasis en Égypte ?</p>
-<p class="">👉 Octobre à avril. C’est la saison idéale pour profiter du climat doux du désert et des oasis sans chaleur extrême. Les journées sont agréables pour les excursions, les sites sont moins fréquentés, et les paysages offrent des couchers de soleil spectaculaires sur les dunes et les oasis.</p>
-<p class="">Quelle est la durée idéale pour un circuit dans le désert et les oasis en Égypte ?</p>
-<p class="">👉 5 à 10 jours suffisent pour explorer le désert Blanc, le désert Noir et les principales oasis sans se presser. Pour un rythme plus lent ou un séjour en famille, nous recommandons un circuit de 12 jours incluant bivouacs, lodges et excursions plus longues pour profiter pleinement du désert et des villages oasiens.</p>
-<p class="">Quelle est la différence entre bivouac, lodge et campement traditionnel dans le désert ?</p>
-<p class="">Bivouac sous les étoiles : immersion totale, rustique et authentique, idéal pour les aventuriers.</p>
-<p class="">Lodge ou éco-lodge : confort moderne avec chambres aménagées et services complets, pour profiter du désert sans contraintes.</p>
-<p class="">Campement traditionnel : mélange d’authenticité et de confort, idéal pour découvrir les oasis et le désert à un rythme agréable.</p>
-<p class="">👉 Pas sûr de la meilleure option ?Contactez-nous directement sur WhatsApp pour clarifier votre projet et choisir le séjour qui vous correspond.</p>
-<p class="">Est-ce qu’un guide est inclus pendant les excursions dans le désert et les oasis ?</p>
-<p class="">Oui, chez Authentique Égypte, un guide francophone vous accompagne sur chaque site majeur du désert et des oasis. L’idée : ne pas simplement observer, mais comprendre et vivre pleinement ce que vous découvrez, des dunes aux villages oasiens.</p>
-<p class="">Faut-il un visa pour explorer le désert et les oasis en Égypte ?</p>
-<p class="">Oui, le visa est obligatoire mais simple à obtenir :</p>
-<p class="">E-visa officiel à demander en ligne avant le départ</p>
-<p class="">Visa à l’arrivée dans la plupart des aéroports égyptiens</p>
-<p class="">Notre équipe vous accompagne à chaque étape, pour que vos formalités soient rapides et sans stress, et que votre aventure dans le désert et les oasis commence en toute sérénité.</p>
+<div class="fgroupe">
+<button class="fbtn" data-pan="p-lieu">Destination <svg width="11" height="7" viewBox="0 0 11 7" fill="none" aria-hidden="true"><path d="M1 1l4.5 4.5L10 1" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button>
+<div class="fpan" id="p-lieu">
+<label><input type="checkbox" data-cle="lieu" value="desert-noir"> Désert noir <span>4</span></label>
+<label><input type="checkbox" data-cle="lieu" value="voyage-a-alexandrie"> Alexandrie <span>4</span></label>
+<label><input type="checkbox" data-cle="lieu" value="desert-blanc"> Voyage Désert blanc <span>2</span></label>
+<label><input type="checkbox" data-cle="lieu" value="voyage-a-fayoum"> Fayoum <span>1</span></label>
 </div>
 </div>
-</section>
-<section class="section section--fond">
+<div class="fgroupe">
+<button class="fbtn" data-pan="p-duree">Durée <svg width="11" height="7" viewBox="0 0 11 7" fill="none" aria-hidden="true"><path d="M1 1l4.5 4.5L10 1" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button>
+<div class="fpan" id="p-duree">
+<label><input type="checkbox" data-cle="duree" value="court"> 2 à 3 jours <span>3</span></label>
+<label><input type="checkbox" data-cle="duree" value="moyen"> 4 à 6 jours <span>1</span></label>
+</div>
+</div>
+<div class="fgroupe">
+<button class="fbtn" data-pan="p-qui">Qui part <svg width="11" height="7" viewBox="0 0 11 7" fill="none" aria-hidden="true"><path d="M1 1l4.5 4.5L10 1" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button>
+<div class="fpan" id="p-qui">
+<label><input type="checkbox" data-cle="qui" value="couple"> couple en Égypte <span>1</span></label>
+<label><input type="checkbox" data-cle="qui" value="famille"> famille en Égypte <span>1</span></label>
+</div>
+</div>
+<div class="filtres__d">
+<label for="tri">Trier par</label>
+<select id="tri">
+<option value="perti">Pertinence</option>
+<option value="prix-asc">Prix croissant</option>
+<option value="prix-desc">Prix décroissant</option>
+<option value="duree-asc">Durée la plus courte</option>
+<option value="duree-desc">Durée la plus longue</option>
+</select>
+</div>
+</div>
+</div>
+<div class="wrap"><div class="actifs" id="actifs"></div></div>
+<section style="padding-bottom:clamp(50px,6vw,80px)">
 <div class="wrap">
-<p class="eyebrow">Nos séjours</p>
-<h2 style="margin-bottom:14px">Les séjours déserts et oasis égyptiens</h2>
-<p class="lede" style="margin-bottom:30px">Tous personnalisables&nbsp;: la durée s'ajuste à ce que vous voulez voir.</p>
-<div class="grille g-3">
-<article class="carte">
-<div class="carte__img"><img src="https://authentiquegypte.com/wp-content/uploads/elementor/thumbs/DSC00535-scaled-r7oewu70k0jx1l6stye0qy50352831uyhpoul2ffuo.jpg" alt="Lever du soleil sur le Sinaï" loading="lazy" decoding="async"></div>
+<p class="compte" id="compte"><b>4 séjours</b> · filtrez par destination, durée ou budget</p>
+<div class="grille g-3" id="liste">
+<article class="carte" data-lieu="desert-noir voyage-a-alexandrie" data-duree="court" data-budget="a" data-qui="" data-prix="320" data-jours="2" data-perti="1">
+<div class="carte__img"><img src="https://authentiquegypte.com/wp-content/uploads/2025/06/DSC00535-scaled.jpg" alt="Lever du soleil sur le Sinaï" loading="lazy" decoding="async"></div>
 <div class="carte__corps">
 <h3><a href="https://authentiquegypte.com/programs/sainte-catherine/">Lever du soleil, monastère et nuit à Sainte-Catherine</a></h3>
 <p class="carte__route">Partez dans une aventure privatisée pour découvrir les montagnes reculées du Sinaï et son…</p>
@@ -581,8 +586,8 @@ header .nav>a.btn--or:hover{background:#C87700;border-color:#C87700;box-shadow:0
 </div>
 </div>
 </article>
-<article class="carte">
-<div class="carte__img"><img src="https://authentiquegypte.com/wp-content/uploads/2023/11/Oasis-de-siwa-2-300x200.png" alt="Oasis de siwa" loading="lazy" decoding="async"></div>
+<article class="carte" data-lieu="desert-noir desert-blanc voyage-a-alexandrie" data-duree="moyen" data-budget="a" data-qui="couple" data-prix="595" data-jours="4" data-perti="2">
+<div class="carte__img"><img src="https://authentiquegypte.com/wp-content/uploads/2023/11/Oasis-de-siwa-2.png" alt="Oasis de siwa" loading="lazy" decoding="async"></div>
 <div class="carte__corps">
 <h3><a href="https://authentiquegypte.com/programs/excursion-a-loasis-de-siwa/">Voyage à l&#x27;Oasis de Siwa</a></h3>
 <p class="carte__route">Découvrez l&#x27;Oasis de Siwa, un véritable havre de paix niché dans le désert occidental…</p>
@@ -593,8 +598,8 @@ header .nav>a.btn--or:hover{background:#C87700;border-color:#C87700;box-shadow:0
 </div>
 </div>
 </article>
-<article class="carte">
-<div class="carte__img"><img src="https://authentiquegypte.com/wp-content/uploads/2023/11/Desert-blanc-dEgypte-2-300x200.png" alt="Désert blanc d&#x27;Egypte" loading="lazy" decoding="async"></div>
+<article class="carte" data-lieu="desert-noir desert-blanc voyage-a-alexandrie" data-duree="court" data-budget="a" data-qui="" data-prix="415" data-jours="2" data-perti="3">
+<div class="carte__img"><img src="https://authentiquegypte.com/wp-content/uploads/2023/11/Desert-blanc-dEgypte-2.png" alt="Désert blanc d&#x27;Egypte" loading="lazy" decoding="async"></div>
 <div class="carte__corps">
 <h3><a href="https://authentiquegypte.com/programs/excursion-dans-le-desert-blanc/">Excursion dans le désert blanc</a></h3>
 <p class="carte__route">Le désert blanc en Égypte est un incroyable chef-d&#x27;œuvre naturel créé par des formations…</p>
@@ -605,8 +610,8 @@ header .nav>a.btn--or:hover{background:#C87700;border-color:#C87700;box-shadow:0
 </div>
 </div>
 </article>
-<article class="carte">
-<div class="carte__img"><img src="https://authentiquegypte.com/wp-content/uploads/2025/08/WhatsApp-Image-2025-08-13-at-15.48.30-225x300.jpeg" alt="" loading="lazy" decoding="async"></div>
+<article class="carte" data-lieu="desert-noir voyage-a-alexandrie voyage-a-fayoum" data-duree="court" data-budget="a" data-qui="famille" data-prix="185" data-jours="1" data-perti="4">
+<div class="carte__img"><img src="https://authentiquegypte.com/wp-content/uploads/2025/08/WhatsApp-Image-2025-08-13-at-15.48.30.jpeg" alt="" loading="lazy" decoding="async"></div>
 <div class="carte__corps">
 <h3><a href="https://authentiquegypte.com/programs/excursion-a-loasis-de-fayoum/">Excursion à l&#x27;Oasis de Fayoum</a></h3>
 <p class="carte__route">Plongez au cœur de l&#x27;Égypte authentique lors de notre excursion de deux jours dans…</p>
@@ -618,7 +623,69 @@ header .nav>a.btn--or:hover{background:#C87700;border-color:#C87700;box-shadow:0
 </div>
 </article>
 </div>
+<div id="vide" hidden style="text-align:center;padding:56px 20px;background:var(--fond);border:1px solid var(--ligne);border-radius:var(--r-l)">
+<h3 style="margin-bottom:10px">Aucun séjour ne coche tous ces critères</h3>
+<p class="lede" style="margin:0 auto 22px">Retirez un filtre, ou dites-nous ce que vous cherchez&nbsp;: nous montons aussi des séjours hors catalogue.</p>
+<a href="https://authentiquegypte.com/sur-mesure/" class="btn btn--nuit">Décrire mon projet</a>
 </div>
+</div>
+</section>
+<section class="section section--creme">
+  <div class="wrap" style="text-align:center">
+    <p class="eyebrow">Ce qui décide vraiment</p>
+    <h2 style="margin-bottom:16px">La route, avant le programme</h2>
+    <p class="lede" style="max-width:60ch;margin:0 auto 28px">Entre Fayoum, à une heure et demie du Caire, et Siwa, à dix heures de désert, la distance fixe la durée de votre séjour bien plus que ce qu'il y a à voir sur place. Dites-nous vos dates&nbsp;: nous vous proposons l'itinéraire qui tient debout.</p>
+    <a href="https://authentiquegypte.com/sur-mesure/" class="btn btn--or">Demander mon devis</a>
+  </div>
+</section>
+<section class="section">
+  <div class="wrap">
+    <p class="eyebrow">Aide au choix</p>
+    <h2 style="margin-bottom:16px">Bahariya, écolodge ou aller-retour dans la journée&nbsp;?</h2>
+    <p class="lede" style="margin-bottom:34px">C'est la seule décision qui change vraiment votre séjour. Le reste s'ajuste.</p>
+    <table class="choix" data-mm="Liens intra-silo · corps">
+      <thead><tr><th scope="col">Critère</th><th scope="col">Journée depuis Le Caire</th><th scope="col">Bahariya</th><th scope="col">Écolodge</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">Destinations</th><td>Fayoum</td><td>Désert Blanc, désert Noir</td><td>Siwa, Bahariya</td></tr>
+        <tr><th scope="row">Durée minimum</th><td class="ok">1 journée</td><td>2 jours</td><td>2 à 4 jours</td></tr>
+        <tr><th scope="row">Où l'on dort</th><td>Chez vous, au Caire — campement possible à Fayoum</td><td>Maison d'hôtes ou hôtel, chambre privée</td><td>Écolodge ou hôtel de charme, salle d'eau privée</td></tr>
+        <tr><th scope="row">Sanitaires</th><td>—</td><td class="ok">Complets, dans la chambre</td><td class="ok">Complets</td></tr>
+        <tr><th scope="row">Nuit</th><td>—</td><td class="ok">Ciel étoilé au coucher du soleil, avant de rentrer</td><td>Confort, mais ciel moins pur</td></tr>
+        <tr><th scope="row">Température nocturne</th><td>—</td><td>Chauffage disponible</td><td>Chauffage disponible</td></tr>
+        <tr><th scope="row">Budget indicatif</th><td>390 €</td><td>590 € tout inclus</td><td>595 à 1 290 €</td></tr>
+        <tr><th scope="row">Pour vous si…</th><td>Vous êtes déjà au Caire et voulez une respiration</td><td>Vous voulez les formations de craie sans la longue route — voir le <a href="https://authentiquegypte.com/programs/excursion-dans-le-desert-blanc/" class="lien-txt">désert Blanc depuis Bahariya</a></td><td>Vous voulez du confort après la route</td></tr>
+      </tbody>
+    </table>
+    <p class="note" style="margin-top:22px;color:var(--gris)">Encore hésitant&nbsp;? <a href="https://wa.me/201066619098" class="lien-txt">contactez-nous sur WhatsApp</a>.</p>
+    <div class="mm-legende">
+      <b>Liens re-routés</b> — la v1 envoyait d'ici vers <i>voyage PMR</i> et <i>voyage en famille</i> : deux liens inter-silo dans le corps, qui diluent les deux silos.
+      Ils pointent maintenant vers les itinéraires du désert qui répondent à la même question. Les pages PMR et famille restent accessibles par le méga menu.
+    </div>
+  </div>
+</section>
+<section class="section section--fond" id="devis">
+  <div class="wrap" style="max-width:860px">
+    <p class="eyebrow">Questions sur le désert</p>
+    <h2 style="margin-bottom:26px">Ce qu'on nous demande le plus</h2>
+    <div class="faq">
+      <details open><summary>Quelle oasis choisir pour un premier voyage dans le désert&nbsp;?</summary><div class="faq__c"><p>Le <a href="https://authentiquegypte.com/desert-blanc/" class="lien-txt">désert Blanc</a> si vous avez deux jours&nbsp;: c'est le plus accessible depuis Le Caire et le plus spectaculaire. Siwa demande trois jours minimum à cause des dix heures de route, mais c'est la seule oasis qui a gardé sa culture berbère. Fayoum se fait en une journée.</p></div></details>
+      <details><summary>Quelle est la meilleure période pour le désert égyptien&nbsp;?</summary><div class="faq__c"><p>D'octobre à avril. En été, les températures dépassent 45&nbsp;°C en journée et les excursions deviennent éprouvantes. Les nuits d'hiver descendent près de zéro, mais vous dormez au chaud. Le détail mois par mois est dans <a href="https://authentiquegypte.com/quand-partir-en-egypte/" class="lien-txt">quand partir en Égypte</a>.</p></div></details>
+      <details><summary>Dort-on vraiment sous la tente&nbsp;?</summary><div class="faq__c"><p>À <a href="https://authentiquegypte.com/voyage-a-fayoum/" class="lien-txt">Fayoum</a> seulement, où le campement est possible. Partout ailleurs — désert Blanc, <a href="https://authentiquegypte.com/desert-noir/" class="lien-txt">désert Noir</a>, traversée des oasis — le bivouac exige des autorisations que nous n'obtenons pas&nbsp;: nous vous logeons en écolodge, en maison d'hôtes ou à l'hôtel, en chambre privée.</p></div></details>
+      <details><summary>Faut-il un 4x4 et un guide agréé&nbsp;?</summary><div class="faq__c"><p>Oui, et ce n'est pas négociable&nbsp;: le désert occidental est une zone contrôlée, l'accès exige un permis et un guide agréé. Nos circuits incluent les deux, avec chauffeur francophone. Un voyageur seul ne peut pas y entrer. Sur le reste du pays, voir notre point sur la <a href="https://authentiquegypte.com/securite-en-egypte-en-2026/" class="lien-txt">sécurité en Égypte en 2026</a>.</p></div></details>
+      <details><summary>Peut-on combiner le désert avec une croisière sur le Nil&nbsp;?</summary><div class="faq__c"><p>C'est même le format le plus demandé&nbsp;: Le Caire, deux jours de désert Blanc, puis vol intérieur vers Louxor pour la croisière. Comptez dix jours au total. Voir nos <a href="categorie.html" class="lien-txt">croisières sur le Nil</a>.</p></div></details>
+    </div>
+    <div style="margin-top:44px;background:var(--nuit-900);color:#fff;border-radius:24px;padding:34px;
+      display:flex;gap:24px;align-items:center;justify-content:space-between;flex-wrap:wrap">
+      <div style="max-width:44ch">
+        <h3 style="color:#fff;margin-bottom:8px">Vous savez ce que vous voulez&nbsp;?</h3>
+        <p style="color:#C3D5DA;margin:0;font-size:.95rem">Envoyez-nous vos dates et le nombre de voyageurs. Vous recevez un itinéraire chiffré sous 48 h, hors vendredi et samedi.</p>
+      </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <a href="https://authentiquegypte.com/sur-mesure/" class="btn btn--or">Demander mon devis</a>
+        <a href="https://wa.me/201066619098" class="btn btn--clair">WhatsApp</a>
+      </div>
+    </div>
+  </div>
 </section>
 <section class="section">
 <div class="wrap">
@@ -734,10 +801,15 @@ document.querySelector('.burger')?.addEventListener('click',e=>{
   // lui tout ce qui suit dans le même bloc.
   if(!liste||!compte||!actifs||!vide||!tri){ return; }
   const cartes=[...liste.querySelectorAll('.carte')];
-  const lib={blanc:'Désert Blanc',siwa:'Oasis de Siwa',fayoum:'Oasis de Fayoum',dakhla:'Dakhla et Kharga',
-    court:'2 à 3 jours',moyen:'4 à 6 jours',long:'7 jours et plus',
-    a:'Moins de 600 €',b:'600 à 900 €',c:'Plus de 900 €',
-    famille:'En famille',couple:'En couple',solo:'En solo',pmr:'Mobilité réduite'};
+  /* Les libellés se lisent dans la barre elle-même : le même script sert
+     toutes les pages du gabarit, quels que soient leurs filtres. */
+  const lib={};
+  document.querySelectorAll('.fpan label').forEach(l=>{
+    const i=l.querySelector('input'); if(!i)return;
+    lib[i.value]=l.textContent.trim().replace(/\s*\d+$/,'');
+  });
+  /* La fin de la ligne de compte est propre à chaque page : on la garde. */
+  const resteCompte=compte.innerHTML.replace(/^<b>[^<]*<\/b>/,'');
   document.querySelectorAll('.fbtn').forEach(b=>{
     b.addEventListener('click',e=>{
       e.stopPropagation();
@@ -756,7 +828,7 @@ document.querySelector('.burger')?.addEventListener('click',e=>{
       c.hidden=!ok; if(ok)n++;
     });
     vide.hidden=n>0;
-    compte.innerHTML='<b>'+n+' itinéraire'+(n>1?'s':'')+'</b> · le temps de route figure sur chaque carte';
+    compte.innerHTML='<b>'+n+' itinéraire'+(n>1?'s':'')+'</b>'+resteCompte;
     document.querySelectorAll('.fbtn').forEach(b=>{
       const k=b.dataset.pan.replace('p-','');
       const c=etat[k]?etat[k].length:0;

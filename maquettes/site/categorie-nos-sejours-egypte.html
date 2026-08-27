@@ -431,7 +431,7 @@ header .nav>a.btn--or,header .nav>a.btn--or[aria-current]{background:#E08A00;bor
 header .nav>a.btn--or:hover{background:#C87700;border-color:#C87700;box-shadow:0 10px 24px rgba(224,138,0,.42)}
 
 .src{margin:0 0 24px;padding:11px 15px;background:var(--or-fond);border-radius:var(--r-s);font-size:.86rem;color:#7A5605;line-height:1.5}
-.src a{color:inherit}
+.src a{color:inherit;overflow-wrap:anywhere}
 </style>
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[
 {"@type":"BreadcrumbList","itemListElement":[
@@ -529,8 +529,192 @@ header .nav>a.btn--or:hover{background:#C87700;border-color:#C87700;box-shadow:0
 </ol></nav>
 <h1>Nos séjours</h1>
 <p class="sous">Chaque itinéraire est conçu selon vos envies, votre rythme et votre façon de voyager. Explorez l’Égypte à votre image.</p>
-
-<a class="remonte" href="https://authentiquegypte.com/nos-sejours-egypte/">Une des cinq familles de nos séjours en Égypte <svg width="15" height="11" viewBox="0 0 15 11" fill="none" aria-hidden="true"><path d="M1 5.5h12M9 1.5l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div>
+<div class="chapeau__st"><span><b>10</b> séjours</span><span><b>1 à 9</b> jours</span><span><b>185 €</b> à partir de</span></div>
+</div>
+</section>
+<div class="filtres">
+<div class="wrap">
+<div class="fgroupe">
+<button class="fbtn" data-pan="p-lieu">Destination <svg width="11" height="7" viewBox="0 0 11 7" fill="none" aria-hidden="true"><path d="M1 1l4.5 4.5L10 1" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button>
+<div class="fpan" id="p-lieu">
+<label><input type="checkbox" data-cle="lieu" value="desert-noir"> Désert noir <span>7</span></label>
+<label><input type="checkbox" data-cle="lieu" value="voyage-a-alexandrie"> Alexandrie <span>7</span></label>
+<label><input type="checkbox" data-cle="lieu" value="voyage-a-assouan"> Assouan <span>4</span></label>
+<label><input type="checkbox" data-cle="lieu" value="voyage-a-louxor"> Louxor <span>3</span></label>
+<label><input type="checkbox" data-cle="lieu" value="desert-blanc"> Voyage Désert blanc <span>2</span></label>
+<label><input type="checkbox" data-cle="lieu" value="voyage-a-fayoum"> Fayoum <span>1</span></label>
+<label><input type="checkbox" data-cle="lieu" value="voyage-au-caire"> Caire <span>1</span></label>
+<label><input type="checkbox" data-cle="lieu" value="mont-sinai"> Mont Sinaï sur mesure <span>1</span></label>
+<label><input type="checkbox" data-cle="lieu" value="lac-nasser"> Lac Nasser <span>1</span></label>
+</div>
+</div>
+<div class="fgroupe">
+<button class="fbtn" data-pan="p-duree">Durée <svg width="11" height="7" viewBox="0 0 11 7" fill="none" aria-hidden="true"><path d="M1 1l4.5 4.5L10 1" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button>
+<div class="fpan" id="p-duree">
+<label><input type="checkbox" data-cle="duree" value="court"> 2 à 3 jours <span>4</span></label>
+<label><input type="checkbox" data-cle="duree" value="moyen"> 4 à 6 jours <span>3</span></label>
+<label><input type="checkbox" data-cle="duree" value="long"> 7 jours et plus <span>3</span></label>
+</div>
+</div>
+<div class="fgroupe">
+<button class="fbtn" data-pan="p-budget">Budget <svg width="11" height="7" viewBox="0 0 11 7" fill="none" aria-hidden="true"><path d="M1 1l4.5 4.5L10 1" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button>
+<div class="fpan" id="p-budget">
+<label><input type="checkbox" data-cle="budget" value="a"> Moins de 600 € <span>5</span></label>
+<label><input type="checkbox" data-cle="budget" value="c"> Plus de 900 € <span>5</span></label>
+</div>
+</div>
+<div class="fgroupe">
+<button class="fbtn" data-pan="p-qui">Qui part <svg width="11" height="7" viewBox="0 0 11 7" fill="none" aria-hidden="true"><path d="M1 1l4.5 4.5L10 1" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button>
+<div class="fpan" id="p-qui">
+<label><input type="checkbox" data-cle="qui" value="couple"> couple en Égypte <span>5</span></label>
+<label><input type="checkbox" data-cle="qui" value="famille"> famille en Égypte <span>4</span></label>
+<label><input type="checkbox" data-cle="qui" value="solo"> Voyage solo en Égypte <span>4</span></label>
+</div>
+</div>
+<div class="filtres__d">
+<label for="tri">Trier par</label>
+<select id="tri">
+<option value="perti">Pertinence</option>
+<option value="prix-asc">Prix croissant</option>
+<option value="prix-desc">Prix décroissant</option>
+<option value="duree-asc">Durée la plus courte</option>
+<option value="duree-desc">Durée la plus longue</option>
+</select>
+</div>
+</div>
+</div>
+<div class="wrap"><div class="actifs" id="actifs"></div></div>
+<section style="padding-bottom:clamp(50px,6vw,80px)">
+<div class="wrap">
+<p class="compte" id="compte"><b>10 séjours</b> · filtrez par destination, durée ou budget</p>
+<div class="grille g-3" id="liste">
+<article class="carte" data-lieu="voyage-a-assouan" data-duree="long" data-budget="c" data-qui="couple solo famille" data-prix="1485" data-jours="9" data-perti="1">
+<div class="carte__img"><img src="https://authentiquegypte.com/wp-content/uploads/2023/11/Oasis-de-siwa-4.png" alt="Oasis de siwa" loading="lazy" decoding="async"></div>
+<div class="carte__corps">
+<h3><a href="https://authentiquegypte.com/programs/mer-rouge/">Pyramides, croisière et mer rouge en famille</a></h3>
+<p class="carte__route">Arrivée au CaireAccueil à l’aéroport du Caire par notre représentant. Transfert à votre hôtel…</p>
+<div class="carte__meta"><span class="puce">9 jours</span></div>
+<div class="carte__pied">
+<span class="prix"><small>À partir de</small><b>1485 €</b> <i>/ pers.</i></span>
+<a href="https://authentiquegypte.com/programs/mer-rouge/" class="lien-fl" aria-label="Voir le détail : Pyramides, croisière et mer rouge en famille">Voir le détail <svg width="15" height="11" viewBox="0 0 15 11" fill="none" aria-hidden="true"><path d="M1 5.5h12M9 1.5l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+</div>
+</div>
+</article>
+<article class="carte" data-lieu="desert-noir voyage-a-alexandrie" data-duree="court" data-budget="a" data-qui="" data-prix="320" data-jours="2" data-perti="2">
+<div class="carte__img"><img src="https://authentiquegypte.com/wp-content/uploads/2025/06/DSC00535-scaled.jpg" alt="Lever du soleil sur le Sinaï" loading="lazy" decoding="async"></div>
+<div class="carte__corps">
+<h3><a href="https://authentiquegypte.com/programs/sainte-catherine/">Lever du soleil, monastère et nuit à Sainte-Catherine</a></h3>
+<p class="carte__route">Partez dans une aventure privatisée pour découvrir les montagnes reculées du Sinaï et son…</p>
+<div class="carte__meta"><span class="puce">2 jours</span></div>
+<div class="carte__pied">
+<span class="prix"><small>À partir de</small><b>320 €</b> <i>/ pers.</i></span>
+<a href="https://authentiquegypte.com/programs/sainte-catherine/" class="lien-fl" aria-label="Voir le détail : Lever du soleil, monastère et nuit à Sainte-Catherine">Voir le détail <svg width="15" height="11" viewBox="0 0 15 11" fill="none" aria-hidden="true"><path d="M1 5.5h12M9 1.5l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+</div>
+</div>
+</article>
+<article class="carte" data-lieu="desert-noir desert-blanc voyage-a-alexandrie" data-duree="moyen" data-budget="a" data-qui="couple" data-prix="595" data-jours="4" data-perti="3">
+<div class="carte__img"><img src="https://authentiquegypte.com/wp-content/uploads/2023/11/Oasis-de-siwa-2.png" alt="Oasis de siwa" loading="lazy" decoding="async"></div>
+<div class="carte__corps">
+<h3><a href="https://authentiquegypte.com/programs/excursion-a-loasis-de-siwa/">Voyage à l&#x27;Oasis de Siwa</a></h3>
+<p class="carte__route">Découvrez l&#x27;Oasis de Siwa, un véritable havre de paix niché dans le désert occidental…</p>
+<div class="carte__meta"><span class="puce">4 jours</span></div>
+<div class="carte__pied">
+<span class="prix"><small>À partir de</small><b>595 €</b> <i>/ pers.</i></span>
+<a href="https://authentiquegypte.com/programs/excursion-a-loasis-de-siwa/" class="lien-fl" aria-label="Voir le détail : Voyage à l&#x27;Oasis de Siwa">Voir le détail <svg width="15" height="11" viewBox="0 0 15 11" fill="none" aria-hidden="true"><path d="M1 5.5h12M9 1.5l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+</div>
+</div>
+</article>
+<article class="carte" data-lieu="desert-noir desert-blanc voyage-a-alexandrie" data-duree="court" data-budget="a" data-qui="" data-prix="415" data-jours="2" data-perti="4">
+<div class="carte__img"><img src="https://authentiquegypte.com/wp-content/uploads/2023/11/Desert-blanc-dEgypte-2.png" alt="Désert blanc d&#x27;Egypte" loading="lazy" decoding="async"></div>
+<div class="carte__corps">
+<h3><a href="https://authentiquegypte.com/programs/excursion-dans-le-desert-blanc/">Excursion dans le désert blanc</a></h3>
+<p class="carte__route">Le désert blanc en Égypte est un incroyable chef-d&#x27;œuvre naturel créé par des formations…</p>
+<div class="carte__meta"><span class="puce">2 jours</span></div>
+<div class="carte__pied">
+<span class="prix"><small>À partir de</small><b>415 €</b> <i>/ pers.</i></span>
+<a href="https://authentiquegypte.com/programs/excursion-dans-le-desert-blanc/" class="lien-fl" aria-label="Voir le détail : Excursion dans le désert blanc">Voir le détail <svg width="15" height="11" viewBox="0 0 15 11" fill="none" aria-hidden="true"><path d="M1 5.5h12M9 1.5l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+</div>
+</div>
+</article>
+<article class="carte" data-lieu="desert-noir voyage-a-alexandrie voyage-a-fayoum" data-duree="court" data-budget="a" data-qui="famille" data-prix="185" data-jours="1" data-perti="5">
+<div class="carte__img"><img src="https://authentiquegypte.com/wp-content/uploads/2025/08/WhatsApp-Image-2025-08-13-at-15.48.30.jpeg" alt="" loading="lazy" decoding="async"></div>
+<div class="carte__corps">
+<h3><a href="https://authentiquegypte.com/programs/excursion-a-loasis-de-fayoum/">Excursion à l&#x27;Oasis de Fayoum</a></h3>
+<p class="carte__route">Plongez au cœur de l&#x27;Égypte authentique lors de notre excursion de deux jours dans…</p>
+<div class="carte__meta"><span class="puce">1 jour</span></div>
+<div class="carte__pied">
+<span class="prix"><small>À partir de</small><b>185 €</b> <i>/ pers.</i></span>
+<a href="https://authentiquegypte.com/programs/excursion-a-loasis-de-fayoum/" class="lien-fl" aria-label="Voir le détail : Excursion à l&#x27;Oasis de Fayoum">Voir le détail <svg width="15" height="11" viewBox="0 0 15 11" fill="none" aria-hidden="true"><path d="M1 5.5h12M9 1.5l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+</div>
+</div>
+</article>
+<article class="carte" data-lieu="voyage-a-assouan voyage-a-louxor desert-noir voyage-au-caire voyage-a-alexandrie" data-duree="long" data-budget="c" data-qui="couple solo famille" data-prix="1895" data-jours="8" data-perti="6">
+<div class="carte__img"><img src="https://authentiquegypte.com/wp-content/uploads/2023/11/egypt-3080277_1280.jpg" alt="egypt-3080277_1280" loading="lazy" decoding="async"></div>
+<div class="carte__corps">
+<h3><a href="https://authentiquegypte.com/programs/le-caire-et-croisiere-sur-un-bateau-a-voile/">Le Caire et croisière sur un bateau à voile</a></h3>
+<p class="carte__route">Explorez les mystères des pyramides de Gizeh et laissez-vous émerveiller par la grandeur des…</p>
+<div class="carte__meta"><span class="puce">8 jours</span></div>
+<div class="carte__pied">
+<span class="prix"><small>À partir de</small><b>1895 €</b> <i>/ pers.</i></span>
+<a href="https://authentiquegypte.com/programs/le-caire-et-croisiere-sur-un-bateau-a-voile/" class="lien-fl" aria-label="Voir le détail : Le Caire et croisière sur un bateau à voile">Voir le détail <svg width="15" height="11" viewBox="0 0 15 11" fill="none" aria-hidden="true"><path d="M1 5.5h12M9 1.5l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+</div>
+</div>
+</article>
+<article class="carte" data-lieu="voyage-a-assouan mont-sinai voyage-a-louxor lac-nasser" data-duree="moyen" data-budget="c" data-qui="couple solo" data-prix="1595" data-jours="4" data-perti="7">
+<div class="carte__img"><img src="https://authentiquegypte.com/wp-content/uploads/2023/11/jorge-fernandez-salas-59eU1QM4znI-unsplash.jpg" alt="jorge-fernandez-salas-59eU1QM4znI-unsplash" loading="lazy" decoding="async"></div>
+<div class="carte__corps">
+<h3><a href="https://authentiquegypte.com/programs/croisiere-sur-le-lac-nasser/">Croisière sur le lac Nasser</a></h3>
+<p class="carte__route">Notre croisière vous emmènera à la découverte de sites incontournables tels que les célèbres…</p>
+<div class="carte__meta"><span class="puce">4 jours</span></div>
+<div class="carte__pied">
+<span class="prix"><small>À partir de</small><b>1595 €</b> <i>/ pers.</i></span>
+<a href="https://authentiquegypte.com/programs/croisiere-sur-le-lac-nasser/" class="lien-fl" aria-label="Voir le détail : Croisière sur le lac Nasser">Voir le détail <svg width="15" height="11" viewBox="0 0 15 11" fill="none" aria-hidden="true"><path d="M1 5.5h12M9 1.5l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+</div>
+</div>
+</article>
+<article class="carte" data-lieu="voyage-a-assouan voyage-a-louxor" data-duree="moyen" data-budget="c" data-qui="couple solo famille" data-prix="1175" data-jours="6" data-perti="8">
+<div class="carte__img"><img src="https://authentiquegypte.com/wp-content/uploads/2023/11/pyramides.jpg" alt="pyramides" loading="lazy" decoding="async"></div>
+<div class="carte__corps">
+<h3><a href="https://authentiquegypte.com/programs/pyramides-et-croisiere-sur-le-nil/">Pyramides et croisière sur le Nil</a></h3>
+<p class="carte__route">Explorez les mystères des pyramides de Gizeh et laissez-vous émerveiller par la grandeur des…</p>
+<div class="carte__meta"><span class="puce">6 jours</span></div>
+<div class="carte__pied">
+<span class="prix"><small>À partir de</small><b>1175 €</b> <i>/ pers.</i></span>
+<a href="https://authentiquegypte.com/programs/pyramides-et-croisiere-sur-le-nil/" class="lien-fl" aria-label="Voir le détail : Pyramides et croisière sur le Nil">Voir le détail <svg width="15" height="11" viewBox="0 0 15 11" fill="none" aria-hidden="true"><path d="M1 5.5h12M9 1.5l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+</div>
+</div>
+</article>
+<article class="carte" data-lieu="desert-noir voyage-a-alexandrie" data-duree="long" data-budget="c" data-qui="" data-prix="990" data-jours="8" data-perti="9">
+<div class="carte__img"><img src="https://authentiquegypte.com/wp-content/uploads/2025/07/mor-shani-Jw78jFgWpYE-unsplash-1-scaled.jpg" alt="Au bord de la mer Rouge." loading="lazy" decoding="async"></div>
+<div class="carte__corps">
+<h3><a href="https://authentiquegypte.com/programs/itineraire-sinai-sainte-catherine-mont-moise-et-mer-rouge/">Du littoral de la mer Rouge aux montagnes du Sinaï</a></h3>
+<p class="carte__route">Dans cette excursion de 8 jours, découvrez la variété des paysages qu’offre le Sinaï…</p>
+<div class="carte__meta"><span class="puce">8 jours</span></div>
+<div class="carte__pied">
+<span class="prix"><small>À partir de</small><b>990 €</b> <i>/ pers.</i></span>
+<a href="https://authentiquegypte.com/programs/itineraire-sinai-sainte-catherine-mont-moise-et-mer-rouge/" class="lien-fl" aria-label="Voir le détail : Du littoral de la mer Rouge aux montagnes du Sinaï">Voir le détail <svg width="15" height="11" viewBox="0 0 15 11" fill="none" aria-hidden="true"><path d="M1 5.5h12M9 1.5l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+</div>
+</div>
+</article>
+<article class="carte" data-lieu="desert-noir voyage-a-alexandrie" data-duree="court" data-budget="a" data-qui="" data-prix="290" data-jours="2" data-perti="10">
+<div class="carte__img"><img src="https://authentiquegypte.com/wp-content/uploads/2025/06/DSC00535-scaled.jpg" alt="Lever du soleil sur le Sinaï" loading="lazy" decoding="async"></div>
+<div class="carte__corps">
+<h3><a href="https://authentiquegypte.com/programs/campement-au-coeur-du-mont-moise/">Coucher de soleil et nuit sur le mont Moïse</a></h3>
+<p class="carte__route">Partez à l’aventure pour une excursion privatisée de 2 jours au départ de la…</p>
+<div class="carte__meta"><span class="puce">2 jours</span></div>
+<div class="carte__pied">
+<span class="prix"><small>À partir de</small><b>290 €</b> <i>/ pers.</i></span>
+<a href="https://authentiquegypte.com/programs/campement-au-coeur-du-mont-moise/" class="lien-fl" aria-label="Voir le détail : Coucher de soleil et nuit sur le mont Moïse">Voir le détail <svg width="15" height="11" viewBox="0 0 15 11" fill="none" aria-hidden="true"><path d="M1 5.5h12M9 1.5l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+</div>
+</div>
+</article>
+</div>
+<div id="vide" hidden style="text-align:center;padding:56px 20px;background:var(--fond);border:1px solid var(--ligne);border-radius:var(--r-l)">
+<h3 style="margin-bottom:10px">Aucun séjour ne coche tous ces critères</h3>
+<p class="lede" style="margin:0 auto 22px">Retirez un filtre, ou dites-nous ce que vous cherchez&nbsp;: nous montons aussi des séjours hors catalogue.</p>
+<a href="https://authentiquegypte.com/sur-mesure/" class="btn btn--nuit">Décrire mon projet</a>
+</div>
+</div>
 </section>
 <section class="section section--creme">
 <div class="wrap">
@@ -546,8 +730,6 @@ header .nav>a.btn--or:hover{background:#C87700;border-color:#C87700;box-shadow:0
 <p class="">Que vous souhaitiez explorer les mystères des Pyramides de Gizeh, voguer sur le Nil à bord d&#x27;un bateau de croisière, ou plonger dans les eaux cristallines de la mer Rouge, notre équipe d&#x27;experts passionnés est là pour créer le séjour sur mesure de vos rêves. Grâce à notre connaissance approfondie de l&#x27;Égypte et de ses trésors cachés, nous vous garantissons une expérience authentique et unique. Profitez de nos guides locaux expérimentés qui vous accompagneront à travers les sites historiques les plus célèbres, tout en vous offrant des recommandations personnalisées pour découvrir les perles rares du pays.</p>
 <h2>Séjours sur mesure en Égypte – Explorez l&#x27;Égypte selon vos envies</h2>
 <p class="">Découvrez l&#x27;Égypte autrement avec Authentique Égypte : des séjours sur mesure adaptés à vos goûts, vos attentes et vos besoins. Que vous soyez passionné par l&#x27;histoire ancienne, amateur de plages paradisiaques ou avide de découvertes culturelles, nous vous proposons des expériences personnalisées pour un voyage unique et inoubliable en Égypte.</p>
-<h3>Pourquoi choisir un séjour sur mesure en Égypte ?</h3>
-<p class="">L&#x27;Égypte est une destination fascinante qui offre une diversité incroyable d&#x27;expériences. Un séjour sur mesure vous permet de choisir exactement ce que vous souhaitez vivre, tout en étant accompagné par des experts locaux qui connaissent parfaitement les richesses et secrets de ce pays millénaire. De la visite des pyramides de Gizeh à une croisière sur le Nil, en passant par des excursions dans le désert ou des moments de détente sur les plages de la mer Rouge, chaque détail de votre voyage peut être personnalisé selon vos envies.</p>
 <h3>Nos offres de séjours sur mesure en Égypte</h3>
 <p class="">Nous vous offrons une variété de circuits sur mesure adaptés à tous les types de voyageurs : familles, couples, groupes ou voyageurs individuels. Voici quelques exemples de séjours que nous pouvons personnaliser pour vous :</p>
 <p class="">Circuit Historique – À la découverte des trésors antiques de l&#x27;ÉgypteExplorez les pyramides de Gizeh, le Sphinx, la Vallée des Rois et bien plus encore. Découvrez l&#x27;histoire fascinante de l&#x27;Égypte ancienne avec nos guides locaux passionnés. Découvrez notre circuit historique surmesure.</p>
@@ -559,23 +741,42 @@ header .nav>a.btn--or:hover{background:#C87700;border-color:#C87700;box-shadow:0
 <p class="">Transport Privé et Guides Locaux : Profitez d&#x27;un transport privé confortable et de guides locaux francophones pour vous accompagner tout au long de votre séjour. Nos guides passionnés connaissent les sites incontournables mais aussi les trésors cachés d&#x27;Égypte.</p>
 <p class="">Hébergements de Qualité : Choisissez parmi une sélection d&#x27;hôtels, de resorts ou de croisières de luxe, tous soigneusement sélectionnés pour garantir confort et sécurité. Vous pouvez opter pour des hôtels avec vue sur le Nil, des hébergements dans le désert, ou encore des resorts de luxe à la mer Rouge.</p>
 <p class="">Activités sur Mesure : Nous proposons des activités variées et uniques pour tous les types de voyageurs. Pour les familles, nous organisons des ateliers de danse, de poterie, des découvertes de l&#x27;Égypte ancienne, des safaris dans le désert, et des moments de détente à la plage. Consultez nos activités pour les familles en Égypte.</p>
-<h3>Pourquoi Voyager avec Authentique Égypte ?</h3>
-<p class="">Expertise Locale : Nous sommes une agence locale, profondément enracinée en Égypte. Nous avons un savoir-faire unique et une connaissance approfondie du pays, de ses sites incontournables, de ses cultures et de ses traditions.</p>
-<p class="">Voyage Authentique : Contrairement aux circuits traditionnels, nous nous engageons à offrir une expérience authentique, loin des sentiers battus, avec une attention particulière à chaque détail de votre voyage.</p>
-<p class="">Flexibilité et Service Personnalisé : Nous savons que chaque voyageur a des attentes différentes. C’est pourquoi nous offrons une flexibilité totale pour personnaliser votre séjour en fonction de vos préférences. Vous pouvez modifier votre itinéraire, vos activités et même vos hébergements en fonction de vos besoins.</p>
 <h3>Demandez un Devis Personnalisé</h3>
 <p class="">Vous avez une idée précise de votre voyage en Égypte ou vous souhaitez en discuter avec un expert local pour créer le séjour parfait ? Demandez dès maintenant un devis sur mesure pour votre voyage en Égypte. Notre équipe se fera un plaisir de vous aider à concevoir le voyage de vos rêves.</p>
 <p class="">Demander un devis personnalisé pour votre voyage en Égypte.</p>
 <h3>Liens Utiles</h3>
 <ul><li>Guide complet des formalités pour un voyage en Égypte</li><li>Nos hôtels et hébergements recommandés en Égypte</li><li>Nos activités en famille pour un voyage inoubliable</li></ul>
+<p style="margin-top:26px"><a href="https://authentiquegypte.com/sur-mesure/" class="btn btn--or">Demander mon devis</a></p>
+</div>
+</div>
+</section>
+<section class="section section--fond" id="devis">
+<div class="wrap" style="max-width:860px">
+<p class="eyebrow">Questions fréquentes</p>
+<h2 style="margin-bottom:26px">Ce qu'on nous demande le plus</h2>
+<div class="faq">
+<details open><summary>Pourquoi choisir un séjour sur mesure en Égypte ?</summary><div class="faq__c"><p class="">L&#x27;Égypte est une destination fascinante qui offre une diversité incroyable d&#x27;expériences. Un séjour sur mesure vous permet de choisir exactement ce que vous souhaitez vivre, tout en étant accompagné par des experts locaux qui connaissent parfaitement les richesses et secrets de ce pays millénaire. De la visite des pyramides de Gizeh à une croisière sur le Nil, en passant par des excursions dans le désert ou des moments de détente sur les plages de la mer Rouge, chaque détail de votre voyage peut être personnalisé selon vos envies.</p></div></details>
+<details><summary>Pourquoi Voyager avec Authentique Égypte ?</summary><div class="faq__c"><p class="">Expertise Locale : Nous sommes une agence locale, profondément enracinée en Égypte. Nous avons un savoir-faire unique et une connaissance approfondie du pays, de ses sites incontournables, de ses cultures et de ses traditions.</p>
+<p class="">Voyage Authentique : Contrairement aux circuits traditionnels, nous nous engageons à offrir une expérience authentique, loin des sentiers battus, avec une attention particulière à chaque détail de votre voyage.</p>
+<p class="">Flexibilité et Service Personnalisé : Nous savons que chaque voyageur a des attentes différentes. C’est pourquoi nous offrons une flexibilité totale pour personnaliser votre séjour en fonction de vos préférences. Vous pouvez modifier votre itinéraire, vos activités et même vos hébergements en fonction de vos besoins.</p></div></details>
+</div>
+<div style="margin-top:44px;background:var(--nuit-900);color:#fff;border-radius:24px;padding:34px;display:flex;gap:24px;align-items:center;justify-content:space-between;flex-wrap:wrap">
+<div style="max-width:44ch">
+<h3 style="color:#fff;margin-bottom:8px">Vous savez ce que vous voulez&nbsp;?</h3>
+<p style="color:#C3D5DA;margin:0;font-size:.95rem">Envoyez-nous vos dates et le nombre de voyageurs. Vous recevez un itinéraire chiffré sous 48 h, hors vendredi et samedi.</p>
+</div>
+<div style="display:flex;gap:10px;flex-wrap:wrap">
+<a href="https://authentiquegypte.com/sur-mesure/" class="btn btn--or">Demander mon devis</a>
+<a href="https://wa.me/201066619098" class="btn btn--clair">WhatsApp</a>
+</div>
 </div>
 </div>
 </section>
 <section class="section">
 <div class="wrap">
-<p class="eyebrow">Autres types de séjours</p>
-<h2 style="margin-bottom:14px">Nos séjours se combine bien</h2>
-<p class="lede" style="margin-bottom:32px">Quelques jours s&#x27;ajoutent facilement à un autre de nos séjours.</p>
+<p class="eyebrow">Par type de voyage</p>
+<h2 style="margin-bottom:14px">Nos familles de séjours</h2>
+<p class="lede" style="margin-bottom:32px">Désert, croisière, culturel, mer Rouge ou Sinaï : chaque famille a sa page.</p>
 <div class="grille g-4">
 <a class="carte" href="https://authentiquegypte.com/nos-sejours-egypte/mer-rouge/">
 <div class="carte__img"><img src="https://authentiquegypte.com/wp-content/uploads/2023/11/WhatsApp-Image-2025-08-14-at-13.23.16.jpeg" alt="" loading="lazy" decoding="async"></div>
@@ -685,10 +886,15 @@ document.querySelector('.burger')?.addEventListener('click',e=>{
   // lui tout ce qui suit dans le même bloc.
   if(!liste||!compte||!actifs||!vide||!tri){ return; }
   const cartes=[...liste.querySelectorAll('.carte')];
-  const lib={blanc:'Désert Blanc',siwa:'Oasis de Siwa',fayoum:'Oasis de Fayoum',dakhla:'Dakhla et Kharga',
-    court:'2 à 3 jours',moyen:'4 à 6 jours',long:'7 jours et plus',
-    a:'Moins de 600 €',b:'600 à 900 €',c:'Plus de 900 €',
-    famille:'En famille',couple:'En couple',solo:'En solo',pmr:'Mobilité réduite'};
+  /* Les libellés se lisent dans la barre elle-même : le même script sert
+     toutes les pages du gabarit, quels que soient leurs filtres. */
+  const lib={};
+  document.querySelectorAll('.fpan label').forEach(l=>{
+    const i=l.querySelector('input'); if(!i)return;
+    lib[i.value]=l.textContent.trim().replace(/\s*\d+$/,'');
+  });
+  /* La fin de la ligne de compte est propre à chaque page : on la garde. */
+  const resteCompte=compte.innerHTML.replace(/^<b>[^<]*<\/b>/,'');
   document.querySelectorAll('.fbtn').forEach(b=>{
     b.addEventListener('click',e=>{
       e.stopPropagation();
@@ -707,7 +913,7 @@ document.querySelector('.burger')?.addEventListener('click',e=>{
       c.hidden=!ok; if(ok)n++;
     });
     vide.hidden=n>0;
-    compte.innerHTML='<b>'+n+' itinéraire'+(n>1?'s':'')+'</b> · le temps de route figure sur chaque carte';
+    compte.innerHTML='<b>'+n+' itinéraire'+(n>1?'s':'')+'</b>'+resteCompte;
     document.querySelectorAll('.fbtn').forEach(b=>{
       const k=b.dataset.pan.replace('p-','');
       const c=etat[k]?etat[k].length:0;

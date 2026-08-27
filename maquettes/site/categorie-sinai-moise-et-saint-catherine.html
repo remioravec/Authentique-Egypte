@@ -431,7 +431,7 @@ header .nav>a.btn--or,header .nav>a.btn--or[aria-current]{background:#E08A00;bor
 header .nav>a.btn--or:hover{background:#C87700;border-color:#C87700;box-shadow:0 10px 24px rgba(224,138,0,.42)}
 
 .src{margin:0 0 24px;padding:11px 15px;background:var(--or-fond);border-radius:var(--r-s);font-size:.86rem;color:#7A5605;line-height:1.5}
-.src a{color:inherit}
+.src a{color:inherit;overflow-wrap:anywhere}
 </style>
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[
 {"@type":"BreadcrumbList","itemListElement":[
@@ -532,6 +532,90 @@ header .nav>a.btn--or:hover{background:#C87700;border-color:#C87700;box-shadow:0
 <div class="chapeau__st"><span><b>3</b> séjours</span><span><b>2 à 8</b> jours</span><span><b>290 €</b> à partir de</span></div>
 <a class="remonte" href="https://authentiquegypte.com/nos-sejours-egypte/">Une des cinq familles de nos séjours en Égypte <svg width="15" height="11" viewBox="0 0 15 11" fill="none" aria-hidden="true"><path d="M1 5.5h12M9 1.5l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div>
 </section>
+<div class="filtres">
+<div class="wrap">
+<div class="fgroupe">
+<button class="fbtn" data-pan="p-lieu">Destination <svg width="11" height="7" viewBox="0 0 11 7" fill="none" aria-hidden="true"><path d="M1 1l4.5 4.5L10 1" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button>
+<div class="fpan" id="p-lieu">
+<label><input type="checkbox" data-cle="lieu" value="desert-noir"> Désert noir <span>3</span></label>
+<label><input type="checkbox" data-cle="lieu" value="voyage-a-alexandrie"> Alexandrie <span>3</span></label>
+</div>
+</div>
+<div class="fgroupe">
+<button class="fbtn" data-pan="p-duree">Durée <svg width="11" height="7" viewBox="0 0 11 7" fill="none" aria-hidden="true"><path d="M1 1l4.5 4.5L10 1" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button>
+<div class="fpan" id="p-duree">
+<label><input type="checkbox" data-cle="duree" value="court"> 2 à 3 jours <span>2</span></label>
+<label><input type="checkbox" data-cle="duree" value="long"> 7 jours et plus <span>1</span></label>
+</div>
+</div>
+<div class="fgroupe">
+<button class="fbtn" data-pan="p-budget">Budget <svg width="11" height="7" viewBox="0 0 11 7" fill="none" aria-hidden="true"><path d="M1 1l4.5 4.5L10 1" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button>
+<div class="fpan" id="p-budget">
+<label><input type="checkbox" data-cle="budget" value="a"> Moins de 600 € <span>2</span></label>
+<label><input type="checkbox" data-cle="budget" value="c"> Plus de 900 € <span>1</span></label>
+</div>
+</div>
+<div class="filtres__d">
+<label for="tri">Trier par</label>
+<select id="tri">
+<option value="perti">Pertinence</option>
+<option value="prix-asc">Prix croissant</option>
+<option value="prix-desc">Prix décroissant</option>
+<option value="duree-asc">Durée la plus courte</option>
+<option value="duree-desc">Durée la plus longue</option>
+</select>
+</div>
+</div>
+</div>
+<div class="wrap"><div class="actifs" id="actifs"></div></div>
+<section style="padding-bottom:clamp(50px,6vw,80px)">
+<div class="wrap">
+<p class="compte" id="compte"><b>3 séjours</b> · filtrez par destination, durée ou budget</p>
+<div class="grille g-3" id="liste">
+<article class="carte" data-lieu="desert-noir voyage-a-alexandrie" data-duree="long" data-budget="c" data-qui="" data-prix="990" data-jours="8" data-perti="1">
+<div class="carte__img"><img src="https://authentiquegypte.com/wp-content/uploads/2025/07/mor-shani-Jw78jFgWpYE-unsplash-1-scaled.jpg" alt="Au bord de la mer Rouge." loading="lazy" decoding="async"></div>
+<div class="carte__corps">
+<h3><a href="https://authentiquegypte.com/programs/itineraire-sinai-sainte-catherine-mont-moise-et-mer-rouge/">Du littoral de la mer Rouge aux montagnes du Sinaï</a></h3>
+<p class="carte__route">Dans cette excursion de 8 jours, découvrez la variété des paysages qu’offre le Sinaï…</p>
+<div class="carte__meta"><span class="puce">8 jours</span></div>
+<div class="carte__pied">
+<span class="prix"><small>À partir de</small><b>990 €</b> <i>/ pers.</i></span>
+<a href="https://authentiquegypte.com/programs/itineraire-sinai-sainte-catherine-mont-moise-et-mer-rouge/" class="lien-fl" aria-label="Voir le détail : Du littoral de la mer Rouge aux montagnes du Sinaï">Voir le détail <svg width="15" height="11" viewBox="0 0 15 11" fill="none" aria-hidden="true"><path d="M1 5.5h12M9 1.5l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+</div>
+</div>
+</article>
+<article class="carte" data-lieu="desert-noir voyage-a-alexandrie" data-duree="court" data-budget="a" data-qui="" data-prix="290" data-jours="2" data-perti="2">
+<div class="carte__img"><img src="https://authentiquegypte.com/wp-content/uploads/2025/06/DSC00535-scaled.jpg" alt="Lever du soleil sur le Sinaï" loading="lazy" decoding="async"></div>
+<div class="carte__corps">
+<h3><a href="https://authentiquegypte.com/programs/campement-au-coeur-du-mont-moise/">Coucher de soleil et nuit sur le mont Moïse</a></h3>
+<p class="carte__route">Partez à l’aventure pour une excursion privatisée de 2 jours au départ de la…</p>
+<div class="carte__meta"><span class="puce">2 jours</span></div>
+<div class="carte__pied">
+<span class="prix"><small>À partir de</small><b>290 €</b> <i>/ pers.</i></span>
+<a href="https://authentiquegypte.com/programs/campement-au-coeur-du-mont-moise/" class="lien-fl" aria-label="Voir le détail : Coucher de soleil et nuit sur le mont Moïse">Voir le détail <svg width="15" height="11" viewBox="0 0 15 11" fill="none" aria-hidden="true"><path d="M1 5.5h12M9 1.5l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+</div>
+</div>
+</article>
+<article class="carte" data-lieu="desert-noir voyage-a-alexandrie" data-duree="court" data-budget="a" data-qui="" data-prix="320" data-jours="2" data-perti="3">
+<div class="carte__img"><img src="https://authentiquegypte.com/wp-content/uploads/2025/06/DSC00535-scaled.jpg" alt="Lever du soleil sur le Sinaï" loading="lazy" decoding="async"></div>
+<div class="carte__corps">
+<h3><a href="https://authentiquegypte.com/programs/sainte-catherine/">Lever du soleil, monastère et nuit à Sainte-Catherine</a></h3>
+<p class="carte__route">Partez dans une aventure privatisée pour découvrir les montagnes reculées du Sinaï et son…</p>
+<div class="carte__meta"><span class="puce">2 jours</span></div>
+<div class="carte__pied">
+<span class="prix"><small>À partir de</small><b>320 €</b> <i>/ pers.</i></span>
+<a href="https://authentiquegypte.com/programs/sainte-catherine/" class="lien-fl" aria-label="Voir le détail : Lever du soleil, monastère et nuit à Sainte-Catherine">Voir le détail <svg width="15" height="11" viewBox="0 0 15 11" fill="none" aria-hidden="true"><path d="M1 5.5h12M9 1.5l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+</div>
+</div>
+</article>
+</div>
+<div id="vide" hidden style="text-align:center;padding:56px 20px;background:var(--fond);border:1px solid var(--ligne);border-radius:var(--r-l)">
+<h3 style="margin-bottom:10px">Aucun séjour ne coche tous ces critères</h3>
+<p class="lede" style="margin:0 auto 22px">Retirez un filtre, ou dites-nous ce que vous cherchez&nbsp;: nous montons aussi des séjours hors catalogue.</p>
+<a href="https://authentiquegypte.com/sur-mesure/" class="btn btn--nuit">Décrire mon projet</a>
+</div>
+</div>
+</section>
 <section class="section section--creme">
 <div class="wrap">
 <div style="max-width:74ch">
@@ -560,51 +644,21 @@ header .nav>a.btn--or:hover{background:#C87700;border-color:#C87700;box-shadow:0
 <p class="">E-visa officiel à demander avant le départ,</p>
 <p class="">Ou visa à l’arrivée, délivré dans la plupart des aéroports égyptiens.</p>
 <p class="">Notre équipe vous guide pas à pas pour faciliter toutes les démarches.</p>
+<p style="margin-top:26px"><a href="https://authentiquegypte.com/sur-mesure/" class="btn btn--or">Demander mon devis</a></p>
 </div>
 </div>
 </section>
-<section class="section section--fond">
-<div class="wrap">
-<p class="eyebrow">Nos séjours</p>
-<h2 style="margin-bottom:14px">Les séjours découverte du sinaï</h2>
-<p class="lede" style="margin-bottom:30px">Tous personnalisables&nbsp;: la durée s'ajuste à ce que vous voulez voir.</p>
-<div class="grille g-3">
-<article class="carte">
-<div class="carte__img"><img src="https://authentiquegypte.com/wp-content/uploads/elementor/thumbs/mor-shani-Jw78jFgWpYE-unsplash-1-scaled-r862dig1mkztc3jl4iu743kthgukp0o2eqgx1qyg3k.jpg" alt="Au bord de la mer Rouge." loading="lazy" decoding="async"></div>
-<div class="carte__corps">
-<h3><a href="https://authentiquegypte.com/programs/itineraire-sinai-sainte-catherine-mont-moise-et-mer-rouge/">Du littoral de la mer Rouge aux montagnes du Sinaï</a></h3>
-<p class="carte__route">Dans cette excursion de 8 jours, découvrez la variété des paysages qu’offre le Sinaï…</p>
-<div class="carte__meta"><span class="puce">8 jours</span></div>
-<div class="carte__pied">
-<span class="prix"><small>À partir de</small><b>990 €</b> <i>/ pers.</i></span>
-<a href="https://authentiquegypte.com/programs/itineraire-sinai-sainte-catherine-mont-moise-et-mer-rouge/" class="lien-fl" aria-label="Voir le détail : Du littoral de la mer Rouge aux montagnes du Sinaï">Voir le détail <svg width="15" height="11" viewBox="0 0 15 11" fill="none" aria-hidden="true"><path d="M1 5.5h12M9 1.5l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+<section class="section section--fond" id="devis">
+<div class="wrap" style="max-width:860px">
+<div style="margin-top:0;background:var(--nuit-900);color:#fff;border-radius:24px;padding:34px;display:flex;gap:24px;align-items:center;justify-content:space-between;flex-wrap:wrap">
+<div style="max-width:44ch">
+<h3 style="color:#fff;margin-bottom:8px">Vous savez ce que vous voulez&nbsp;?</h3>
+<p style="color:#C3D5DA;margin:0;font-size:.95rem">Envoyez-nous vos dates et le nombre de voyageurs. Vous recevez un itinéraire chiffré sous 48 h, hors vendredi et samedi.</p>
 </div>
+<div style="display:flex;gap:10px;flex-wrap:wrap">
+<a href="https://authentiquegypte.com/sur-mesure/" class="btn btn--or">Demander mon devis</a>
+<a href="https://wa.me/201066619098" class="btn btn--clair">WhatsApp</a>
 </div>
-</article>
-<article class="carte">
-<div class="carte__img"><img src="https://authentiquegypte.com/wp-content/uploads/elementor/thumbs/DSC00535-scaled-r7oewu70k0jx1l6stye0qy50352831uyhpoul2ffuo.jpg" alt="Lever du soleil sur le Sinaï" loading="lazy" decoding="async"></div>
-<div class="carte__corps">
-<h3><a href="https://authentiquegypte.com/programs/campement-au-coeur-du-mont-moise/">Coucher de soleil et nuit sur le mont Moïse</a></h3>
-<p class="carte__route">Partez à l’aventure pour une excursion privatisée de 2 jours au départ de la…</p>
-<div class="carte__meta"><span class="puce">2 jours</span></div>
-<div class="carte__pied">
-<span class="prix"><small>À partir de</small><b>290 €</b> <i>/ pers.</i></span>
-<a href="https://authentiquegypte.com/programs/campement-au-coeur-du-mont-moise/" class="lien-fl" aria-label="Voir le détail : Coucher de soleil et nuit sur le mont Moïse">Voir le détail <svg width="15" height="11" viewBox="0 0 15 11" fill="none" aria-hidden="true"><path d="M1 5.5h12M9 1.5l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-</div>
-</div>
-</article>
-<article class="carte">
-<div class="carte__img"><img src="https://authentiquegypte.com/wp-content/uploads/elementor/thumbs/DSC00535-scaled-r7oewu70k0jx1l6stye0qy50352831uyhpoul2ffuo.jpg" alt="Lever du soleil sur le Sinaï" loading="lazy" decoding="async"></div>
-<div class="carte__corps">
-<h3><a href="https://authentiquegypte.com/programs/sainte-catherine/">Lever du soleil, monastère et nuit à Sainte-Catherine</a></h3>
-<p class="carte__route">Partez dans une aventure privatisée pour découvrir les montagnes reculées du Sinaï et son…</p>
-<div class="carte__meta"><span class="puce">2 jours</span></div>
-<div class="carte__pied">
-<span class="prix"><small>À partir de</small><b>320 €</b> <i>/ pers.</i></span>
-<a href="https://authentiquegypte.com/programs/sainte-catherine/" class="lien-fl" aria-label="Voir le détail : Lever du soleil, monastère et nuit à Sainte-Catherine">Voir le détail <svg width="15" height="11" viewBox="0 0 15 11" fill="none" aria-hidden="true"><path d="M1 5.5h12M9 1.5l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-</div>
-</div>
-</article>
 </div>
 </div>
 </section>
@@ -722,10 +776,15 @@ document.querySelector('.burger')?.addEventListener('click',e=>{
   // lui tout ce qui suit dans le même bloc.
   if(!liste||!compte||!actifs||!vide||!tri){ return; }
   const cartes=[...liste.querySelectorAll('.carte')];
-  const lib={blanc:'Désert Blanc',siwa:'Oasis de Siwa',fayoum:'Oasis de Fayoum',dakhla:'Dakhla et Kharga',
-    court:'2 à 3 jours',moyen:'4 à 6 jours',long:'7 jours et plus',
-    a:'Moins de 600 €',b:'600 à 900 €',c:'Plus de 900 €',
-    famille:'En famille',couple:'En couple',solo:'En solo',pmr:'Mobilité réduite'};
+  /* Les libellés se lisent dans la barre elle-même : le même script sert
+     toutes les pages du gabarit, quels que soient leurs filtres. */
+  const lib={};
+  document.querySelectorAll('.fpan label').forEach(l=>{
+    const i=l.querySelector('input'); if(!i)return;
+    lib[i.value]=l.textContent.trim().replace(/\s*\d+$/,'');
+  });
+  /* La fin de la ligne de compte est propre à chaque page : on la garde. */
+  const resteCompte=compte.innerHTML.replace(/^<b>[^<]*<\/b>/,'');
   document.querySelectorAll('.fbtn').forEach(b=>{
     b.addEventListener('click',e=>{
       e.stopPropagation();
@@ -744,7 +803,7 @@ document.querySelector('.burger')?.addEventListener('click',e=>{
       c.hidden=!ok; if(ok)n++;
     });
     vide.hidden=n>0;
-    compte.innerHTML='<b>'+n+' itinéraire'+(n>1?'s':'')+'</b> · le temps de route figure sur chaque carte';
+    compte.innerHTML='<b>'+n+' itinéraire'+(n>1?'s':'')+'</b>'+resteCompte;
     document.querySelectorAll('.fbtn').forEach(b=>{
       const k=b.dataset.pan.replace('p-','');
       const c=etat[k]?etat[k].length:0;

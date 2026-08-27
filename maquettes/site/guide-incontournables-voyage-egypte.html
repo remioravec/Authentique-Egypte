@@ -475,7 +475,7 @@ header .nav>a.btn--or,header .nav>a.btn--or[aria-current]{background:#E08A00;bor
 header .nav>a.btn--or:hover{background:#C87700;border-color:#C87700;box-shadow:0 10px 24px rgba(224,138,0,.42)}
 
 .src{margin:0 0 24px;padding:11px 15px;background:var(--or-fond);border-radius:var(--r-s);font-size:.86rem;color:#7A5605;line-height:1.5}
-.src a{color:inherit}
+.src a{color:inherit;overflow-wrap:anywhere}
 </style>
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[
 {"@type":"BreadcrumbList","itemListElement":[
@@ -557,7 +557,7 @@ header .nav>a.btn--or:hover{background:#C87700;border-color:#C87700;box-shadow:0
 
 <main>
 <section class="chapeau">
-<div class="chapeau__bg"><img src="https://authentiquegypte.com/wp-content/uploads/2023/11/michael-rodock-ZsDl4gM69Ms-unsplash-1024x700.jpg" alt="" fetchpriority="high" decoding="async"></div>
+<div class="chapeau__bg"><img src="https://authentiquegypte.com/wp-content/uploads/2023/11/michael-rodock-ZsDl4gM69Ms-unsplash-scaled.jpg" alt="" fetchpriority="high" decoding="async"></div>
 <div class="wrap">
 <nav class="ariane" aria-label="Fil d'Ariane"><ol>
 <li><a href="../index.html">Accueil</a></li>
@@ -579,13 +579,13 @@ header .nav>a.btn--or:hover{background:#C87700;border-color:#C87700;box-shadow:0
 <figure class="fig"><img src="https://authentiquegypte.com/wp-content/uploads/2025/06/Voyage-sur-mesure-a-Assouan-en-Egypte.png" alt="Voyage sur mesure à Assouan en Egypte" loading="lazy" decoding="async"><figcaption>Voyage sur mesure à Assouan en Egypte</figcaption></figure>
 <h3 id="s1">Vol en montgolfière au lever du soleil à Louxor</h3>
 <p class="">Observer le Nil, les temples et la Vallée des Rois depuis les airs, baignés par la lumière dorée du matin : une émotion inoubliable.</p>
-<figure class="fig"><img src="https://authentiquegypte.com/wp-content/uploads/2023/11/omar-elbadry-cQ2wSTjnhxE-unsplash-1024x768.webp" alt="Voyage culturel en Egypte" loading="lazy" decoding="async"><figcaption>Voyage culturel en Egypte</figcaption></figure>
+<figure class="fig"><img src="https://authentiquegypte.com/wp-content/uploads/2023/11/omar-elbadry-cQ2wSTjnhxE-unsplash-scaled.webp" alt="Voyage culturel en Egypte" loading="lazy" decoding="async"><figcaption>Voyage culturel en Egypte</figcaption></figure>
 <h3 id="s2">Naviguer en felouque traditionnelle à Assouan</h3>
 <p class="">À bord d’un voilier ancestral, laissez-vous porter par le vent et découvrez les îles nubiennes d’Assouan au rythme tranquille du fleuve.</p>
-<figure class="fig"><img src="https://authentiquegypte.com/wp-content/uploads/2025/07/DSC00370-1024x684.jpg" alt="Mer et relief du Sinaï" loading="lazy" decoding="async"><figcaption>Mer et relief du Sinaï</figcaption></figure>
+<figure class="fig"><img src="https://authentiquegypte.com/wp-content/uploads/2025/07/DSC00370.jpg" alt="Mer et relief du Sinaï" loading="lazy" decoding="async"><figcaption>Mer et relief du Sinaï</figcaption></figure>
 <h3 id="s3">Boire un thé au Old Cataract Hotel</h3>
 <p class="">Un lieu légendaire où Agatha Christie écrivit une partie de son roman. Savourez un thé face au Nil dans une atmosphère coloniale raffinée.</p>
-<figure class="fig"><img src="https://authentiquegypte.com/wp-content/uploads/2025/06/DSC00581-1-1024x684.jpg" alt="Au sommet du mont Sinaï" loading="lazy" decoding="async"><figcaption>Au sommet du mont Sinaï</figcaption></figure>
+<figure class="fig"><img src="https://authentiquegypte.com/wp-content/uploads/2025/06/DSC00581-1.jpg" alt="Au sommet du mont Sinaï" loading="lazy" decoding="async"><figcaption>Au sommet du mont Sinaï</figcaption></figure>
 <h3 id="s4">Dîner en felouque sur le Nil au Caire</h3>
 <p class="">Un repas sous les étoiles, avec la skyline du Caire en toile de fond et les flots calmes du Nil pour seul accompagnement.</p>
 <h3 id="s5">Kayak à Assouan</h3>
@@ -733,6 +733,7 @@ document.querySelector('.burger')?.addEventListener('click',e=>{
   },{threshold:.06,rootMargin:'0px 0px -40px 0px'});
   cibles.forEach((el,n)=>{ el.setAttribute('data-rev','');
     el.style.transitionDelay=(Math.min(n%4,3)*60)+'ms'; io.observe(el); });
+  setTimeout(()=>{cibles.forEach(el=>el.classList.add('vu'))},2500); /* garde-fou : rien ne reste invisible */
 })();
 </script>
 <script>

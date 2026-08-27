@@ -89,14 +89,14 @@ def chapeau(x, gabarit, chips, remonte=None):
                M.e(x['titre']), M.e(x['chapo']), st, rem))
 
 
-def carte_sejour(v):
+def carte_sejour(v, attrs=''):
     """Une carte de séjour, comme sur la maquette catégorie."""
     img = v['images'][0] if v['images'] else None
     meta = ('<span class="puce">%s</span>' % M.e(v['duree'])) if v['duree'] else ''
     prix = ('<span class="prix"><small>À partir de</small><b>%s</b> <i>/ pers.</i></span>'
             % M.e(v['prix'])) if v['prix'] else '<span class="prix"><b>Sur devis</b></span>'
 
-    return ('<article class="carte">\n'
+    return ('<article class="carte"' + attrs + '>\n'
             '<div class="carte__img"><img src="%s" alt="%s" loading="lazy" decoding="async"></div>\n'
             '<div class="carte__corps">\n<h3><a href="%s">%s</a></h3>\n'
             '<p class="carte__route">%s</p>\n'
@@ -167,9 +167,10 @@ def sections_propres(x, ctx):
     return sortie
 
 
-def corps_editorial(x, ctx, creme=True):
+def corps_editorial(x, ctx, creme=True, sections=None, cta=False):
     """Le texte de la page, dans une section pleine largeur."""
-    sections = sections_propres(x, ctx)
+    if sections is None:
+        sections = sections_propres(x, ctx)
     if not sections:
         return ''
     out = [M.bandeau_source(x['url'])]
@@ -177,6 +178,10 @@ def corps_editorial(x, ctx, creme=True):
         if s['titre'] and s['titre'].strip().lower() != x['titre'].strip().lower():
             out.append('<h%d>%s</h%d>' % (max(s['niveau'], 2), M.e(s['titre']), max(s['niveau'], 2)))
         out.append(M.paragraphes(s['blocs'], ''))
+    if cta:
+        # Le retour de Mélanie sur la maquette : l'appel au devis suit le texte.
+        out.append('<p style="margin-top:26px"><a href="%s" class="btn btn--or">'
+                   'Demander mon devis</a></p>' % DEVIS)
 
     return ('<section class="section%s">\n<div class="wrap">\n'
             '<div style="max-width:74ch">\n%s\n</div>\n</div>\n</section>'
@@ -225,8 +230,186 @@ def monter(gabarit, x, sections_main):
 # Un montage par gabarit                                            #
 # ---------------------------------------------------------------- #
 
+# ---------------------------------------------------------------- #
+# Le filtre de séjours de la maquette catégorie                      #
+# ---------------------------------------------------------------- #
+
+DUREES = [('court', '2 à 3 jours', lambda j: j <= 3),
+          ('moyen', '4 à 6 jours', lambda j: 4 <= j <= 6),
+          ('long', '7 jours et plus', lambda j: j >= 7)]
+BUDGETS = [('a', 'Moins de 600 €', lambda p: p < 600),
+           ('b', '600 à 900 €', lambda p: 600 <= p <= 900),
+           ('c', 'Plus de 900 €', lambda p: p > 900)]
+CHEVRON = ('<svg width="11" height="7" viewBox="0 0 11 7" fill="none" aria-hidden="true">'
+           '<path d="M1 1l4.5 4.5L10 1" stroke="currentColor" stroke-width="1.6" '
+           'stroke-linecap="round"/></svg>')
+
+
+def jours_de(v):
+    m = re.match(r'(\d+)', v['duree'] or '')
+    return int(m.group(1)) if m else 0
+
+
+def prix_de(v):
+    n = re.sub(r'\D', '', v['prix'] or '')
+    return int(n) if n else 0
+
+
+def appartenances(sejours, pages, ctx):
+    """Pour chaque séjour, les pages (destination, qui part) qui le
+    citent — lu dans les liens des pages en ligne, pas supposé."""
+    dedans = {}
+    for p in pages:
+        ids = {v['id'] for v in ctx['sejours'].get(p.get('_slug', ''), [])}
+        for v in sejours:
+            if v['id'] in ids:
+                dedans.setdefault(v['id'], []).append(p)
+    return dedans
+
+
+def cle_qui(slug):
+    return re.sub(r'^voyage-|-en-egypte$', '', slug).replace('en-', '')
+
+
+def filtres_categorie(x, ctx, sejours):
+    """La barre de filtres de la maquette, avec les valeurs réelles de
+    la famille : chaque panneau n'existe que si la donnée existe."""
+    lieux = appartenances(sejours, ctx['destinations'], ctx)
+    quis = appartenances(sejours, ctx['qui_part'], ctx)
+    groupes = []
+
+    def groupe(pan, titre, options):
+        options = [o for o in options if o[2]]
+        if len(options) < 2:
+            return
+        groupes.append(
+            '<div class="fgroupe">\n<button class="fbtn" data-pan="%s">%s %s</button>\n'
+            '<div class="fpan" id="%s">\n%s\n</div>\n</div>'
+            % (pan, M.e(titre), CHEVRON, pan,
+               '\n'.join('<label><input type="checkbox" data-cle="%s" value="%s"> %s <span>%d</span></label>'
+                         % (pan.replace('p-', ''), M.e(val), M.e(lib), n) for val, lib, n in options)))
+
+    dests = {}
+    for v in sejours:
+        for d in lieux.get(v['id'], []):
+            dests.setdefault(d['_slug'], [nom_court(d['titre']), 0])
+            dests[d['_slug']][1] += 1
+    groupe('p-lieu', 'Destination', [(s, l, n) for s, (l, n) in sorted(dests.items(), key=lambda e: -e[1][1])])
+    groupe('p-duree', 'Durée', [(cle, lib, sum(1 for v in sejours if jours_de(v) and t(jours_de(v))))
+                                for cle, lib, t in DUREES])
+    groupe('p-budget', 'Budget', [(cle, lib, sum(1 for v in sejours if prix_de(v) and t(prix_de(v))))
+                                  for cle, lib, t in BUDGETS])
+    profils = {}
+    for v in sejours:
+        for q in quis.get(v['id'], []):
+            cle = cle_qui(q['_slug'])
+            profils.setdefault(cle, [nom_court(q['titre']), 0])
+            profils[cle][1] += 1
+    groupe('p-qui', 'Qui part', [(c, l, n) for c, (l, n) in sorted(profils.items())])
+
+    if not groupes:
+        return ''
+
+    return ('<div class="filtres">\n<div class="wrap">\n%s\n'
+            '<div class="filtres__d">\n<label for="tri">Trier par</label>\n'
+            '<select id="tri">\n<option value="perti">Pertinence</option>\n'
+            '<option value="prix-asc">Prix croissant</option>\n'
+            '<option value="prix-desc">Prix décroissant</option>\n'
+            '<option value="duree-asc">Durée la plus courte</option>\n'
+            '<option value="duree-desc">Durée la plus longue</option>\n</select>\n</div>\n'
+            '</div>\n</div>\n<div class="wrap"><div class="actifs" id="actifs"></div></div>'
+            % '\n'.join(groupes))
+
+
+def donnees_carte(v, ctx, lieux, quis, perti):
+    """Les data-* que le script de filtre de la maquette attend."""
+    jours, prix = jours_de(v), prix_de(v)
+    duree = next((c for c, _, t in DUREES if jours and t(jours)), '')
+    budget = next((c for c, _, t in BUDGETS if prix and t(prix)), '')
+    lieu = ' '.join(d['_slug'] for d in lieux.get(v['id'], []))
+    qui = ' '.join(cle_qui(q['_slug']) for q in quis.get(v['id'], []))
+
+    return (' data-lieu="%s" data-duree="%s" data-budget="%s" data-qui="%s"'
+            ' data-prix="%d" data-jours="%d" data-perti="%d"'
+            % (M.e(lieu), duree, budget, M.e(qui), prix, jours, perti))
+
+
+def section_filles(x, ctx, sejours):
+    """Le bloc de filles de la maquette : compteur, cartes filtrables,
+    état vide. Les ids branchent le script de filtre du moule."""
+    lieux = appartenances(sejours, ctx['destinations'], ctx)
+    quis = appartenances(sejours, ctx['qui_part'], ctx)
+    cartes = '\n'.join(carte_sejour(v, donnees_carte(v, ctx, lieux, quis, n))
+                       for n, v in enumerate(sejours, 1))
+
+    return ('<section style="padding-bottom:clamp(50px,6vw,80px)">\n<div class="wrap">\n'
+            '<p class="compte" id="compte"><b>%d séjour%s</b> · filtrez par destination, durée ou budget</p>\n'
+            '<div class="grille g-3" id="liste">\n%s\n</div>\n'
+            '<div id="vide" hidden style="text-align:center;padding:56px 20px;background:var(--fond);'
+            'border:1px solid var(--ligne);border-radius:var(--r-l)">\n'
+            '<h3 style="margin-bottom:10px">Aucun séjour ne coche tous ces critères</h3>\n'
+            '<p class="lede" style="margin:0 auto 22px">Retirez un filtre, ou dites-nous ce que vous '
+            'cherchez&nbsp;: nous montons aussi des séjours hors catalogue.</p>\n'
+            '<a href="%s" class="btn btn--nuit">Décrire mon projet</a>\n</div>\n'
+            '</div>\n</section>'
+            % (len(sejours), 's' if len(sejours) > 1 else '', cartes, DEVIS))
+
+
+def section_faq_categorie(x, ctx, faq):
+    """La FAQ et l'appel au devis de la maquette — le bloc sombre vient
+    tel quel de la maquette validée, la FAQ du texte de la page."""
+    dedans = []
+    if faq:
+        dedans.append('<p class="eyebrow">Questions fréquentes</p>\n'
+                      '<h2 style="margin-bottom:26px">Ce qu\'on nous demande le plus</h2>\n'
+                      '<div class="faq">\n%s\n</div>'
+                      % '\n'.join('<details%s><summary>%s</summary><div class="faq__c">%s</div></details>'
+                                  % (' open' if n == 0 else '', M.e(s['titre']),
+                                     M.paragraphes(s['blocs'], ''))
+                                  for n, s in enumerate(faq)))
+    dedans.append(
+        '<div style="margin-top:%s;background:var(--nuit-900);color:#fff;border-radius:24px;padding:34px;'
+        'display:flex;gap:24px;align-items:center;justify-content:space-between;flex-wrap:wrap">\n'
+        '<div style="max-width:44ch">\n'
+        '<h3 style="color:#fff;margin-bottom:8px">Vous savez ce que vous voulez&nbsp;?</h3>\n'
+        '<p style="color:#C3D5DA;margin:0;font-size:.95rem">Envoyez-nous vos dates et le nombre de '
+        'voyageurs. Vous recevez un itinéraire chiffré sous 48 h, hors vendredi et samedi.</p>\n</div>\n'
+        '<div style="display:flex;gap:10px;flex-wrap:wrap">\n'
+        '<a href="%s" class="btn btn--or">Demander mon devis</a>\n'
+        '<a href="%s" class="btn btn--clair">WhatsApp</a>\n</div>\n</div>'
+        % ('44px' if faq else '0', DEVIS, WHATSAPP))
+
+    return ('<section class="section section--fond" id="devis">\n'
+            '<div class="wrap" style="max-width:860px">\n%s\n</div>\n</section>' % '\n'.join(dedans))
+
+
+def blocs_maquette_desert():
+    """Les sections éditoriales de la maquette validée par Mélanie
+    (page 7644) : la phrase et l'appel au devis, le tableau « Aide au
+    choix », la FAQ désert. Elles ont été écrites pour cette page —
+    la version générée du désert les garde telles quelles."""
+    moule = M.moule(MOULE['categorie'])
+    out = []
+    for ancre in ('class="section section--creme"', 'Aide au choix', 'id="devis"'):
+        i = moule.index(ancre)
+        deb = moule.rindex('<section', 0, i)
+        fin = moule.index('</section>', i) + len('</section>')
+        out.append(moule[deb:fin])
+
+    return out
+
+
 def page_categorie(x, ctx, gabarit):
     sejours = ctx['sejours'].get(x['slug'], [])
+    if gabarit == 'categorie' and x['slug'] == 'nos-sejours-egypte' and not sejours:
+        # La page mère ne lie pas les programmes un à un : elle montre
+        # l'union des séjours de ses familles, dans leur ordre.
+        vus = []
+        for c in ctx['categories']:
+            for v in ctx['sejours'].get(c.get('_slug', ''), []):
+                if v['id'] not in {w['id'] for w in vus}:
+                    vus.append(v)
+        sejours = vus
     chips = []
     if sejours:
         chips.append((str(len(sejours)), 'séjour%s' % ('s' if len(sejours) > 1 else '')))
@@ -239,21 +422,47 @@ def page_categorie(x, ctx, gabarit):
 
     nc = nom_court(x['titre'])
     if gabarit == 'categorie':
+        # L'ordre de la maquette validée (page « Voyage dans le désert ») :
+        # chapeau, barre de filtres, bloc de filles, texte + appel au devis,
+        # FAQ et bloc sombre de conversion, sœurs — rien avant les filles.
         remonte = (ARIANE['categorie'][0], 'Une des cinq familles de nos séjours en Égypte')
+        if x['slug'] == 'nos-sejours-egypte':
+            remonte = None  # la page mère ne remonte pas vers elle-même
         soeurs = [s for s in ctx['categories'] if s['id'] != x['id'] and s['slug'] != 'nos-sejours-egypte']
-        titre_soeurs, eyebrow_s = '%s se combine bien' % nc, 'Autres types de séjours'
-        phrase = 'Quelques jours s\'ajoutent facilement à un autre de nos séjours.'
-    else:
-        remonte = None
-        soeurs = [s for s in ctx['qui_part'] if s['id'] != x['id']]
-        titre_soeurs, eyebrow_s = 'Les autres façons de partir', 'Qui part'
-        phrase = 'Famille, couple, solo ou mobilité réduite : chaque profil a sa page.'
+        sections = sections_propres(x, ctx)
+        faq = [s for s in sections if '?' in (s['titre'] or '') and s['blocs']]
+        reste = [s for s in sections if s not in faq]
+
+        if x['slug'] == 'desert-egypte':
+            creme, aide, devis = blocs_maquette_desert()
+            milieu = [creme, aide, devis]
+        else:
+            milieu = [corps_editorial(x, ctx, sections=reste, cta=True),
+                      section_faq_categorie(x, ctx, faq)]
+
+        mere = x['slug'] == 'nos-sejours-egypte'
+
+        return monter(gabarit, x, [
+            chapeau(x, gabarit, chips, remonte),
+            filtres_categorie(x, ctx, sejours) if len(sejours) > 1 else '',
+            section_filles(x, ctx, sejours) if sejours else '',
+        ] + milieu + [
+            section_soeurs('Nos familles de séjours' if mere else '%s se combine bien' % nc,
+                           'Par type de voyage' if mere else 'Autres types de séjours',
+                           'Désert, croisière, culturel, mer Rouge ou Sinaï : chaque famille a sa page.'
+                           if mere else
+                           'Quelques jours s\'ajoutent facilement à un autre de nos séjours.', soeurs),
+        ])
+
+    remonte = None
+    soeurs = [s for s in ctx['qui_part'] if s['id'] != x['id']]
+    titre_soeurs, eyebrow_s = 'Les autres façons de partir', 'Qui part'
+    phrase = 'Famille, couple, solo ou mobilité réduite : chaque profil a sa page.'
 
     return monter(gabarit, x, [
         chapeau(x, gabarit, chips, remonte),
         corps_editorial(x, ctx),
-        section_sejours(x, sejours, 'Les séjours %s' % (('« %s »' % nc) if gabarit == 'qui-part' else nc.lower()),
-                        'Nos séjours' if gabarit == 'categorie' else 'Passer du profil au voyage'),
+        section_sejours(x, sejours, 'Les séjours « %s »' % nc, 'Passer du profil au voyage'),
         section_soeurs(titre_soeurs, eyebrow_s, phrase, soeurs),
     ])
 
@@ -413,6 +622,8 @@ def charger():
 
     for x in extraits.values():
         x['_images'] = [i for i in x['images'] if i['src'] not in cassees]
+    for it in inventaire:
+        extraits[it['id']]['_slug'] = it['slug']
 
     # Quels séjours chaque page relie-t-elle ? On lit les liens de la
     # page en ligne : c'est la donnée du site, pas une supposition.

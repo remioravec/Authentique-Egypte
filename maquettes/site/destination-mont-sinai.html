@@ -140,7 +140,7 @@ header .nav>a.btn--or,header .nav>a.btn--or[aria-current]{background:#E08A00;bor
 header .nav>a.btn--or:hover{background:#C87700;border-color:#C87700;box-shadow:0 10px 24px rgba(224,138,0,.42)}
 
 .src{margin:0 0 24px;padding:11px 15px;background:var(--or-fond);border-radius:var(--r-s);font-size:.86rem;color:#7A5605;line-height:1.5}
-.src a{color:inherit}
+.src a{color:inherit;overflow-wrap:anywhere}
 </style>
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[
 {"@type":"BreadcrumbList","itemListElement":[
@@ -343,7 +343,7 @@ header .nav>a.btn--or:hover{background:#C87700;border-color:#C87700;box-shadow:0
 <p class="lede" style="margin-bottom:30px">Tous personnalisables&nbsp;: la durée s'ajuste à ce que vous voulez voir.</p>
 <div class="grille g-3">
 <article class="carte">
-<div class="carte__img"><img src="https://authentiquegypte.com/wp-content/uploads/2023/11/jorge-fernandez-salas-59eU1QM4znI-unsplash-300x200.jpg" alt="jorge-fernandez-salas-59eU1QM4znI-unsplash" loading="lazy" decoding="async"></div>
+<div class="carte__img"><img src="https://authentiquegypte.com/wp-content/uploads/2023/11/jorge-fernandez-salas-59eU1QM4znI-unsplash.jpg" alt="jorge-fernandez-salas-59eU1QM4znI-unsplash" loading="lazy" decoding="async"></div>
 <div class="carte__corps">
 <h3><a href="https://authentiquegypte.com/programs/croisiere-sur-le-lac-nasser/">Croisière sur le lac Nasser</a></h3>
 <p class="carte__route">Notre croisière vous emmènera à la découverte de sites incontournables tels que les célèbres…</p>
@@ -466,6 +466,7 @@ document.querySelector('.burger')?.addEventListener('click',e=>{
   },{threshold:.06,rootMargin:'0px 0px -40px 0px'});
   cibles.forEach((el,n)=>{ el.setAttribute('data-rev','');
     el.style.transitionDelay=(Math.min(n%4,3)*60)+'ms'; io.observe(el); });
+  setTimeout(()=>{cibles.forEach(el=>el.classList.add('vu'))},2500); /* garde-fou : rien ne reste invisible */
 })();
 </script>
 <script>

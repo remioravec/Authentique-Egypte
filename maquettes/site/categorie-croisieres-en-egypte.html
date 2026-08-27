@@ -431,7 +431,7 @@ header .nav>a.btn--or,header .nav>a.btn--or[aria-current]{background:#E08A00;bor
 header .nav>a.btn--or:hover{background:#C87700;border-color:#C87700;box-shadow:0 10px 24px rgba(224,138,0,.42)}
 
 .src{margin:0 0 24px;padding:11px 15px;background:var(--or-fond);border-radius:var(--r-s);font-size:.86rem;color:#7A5605;line-height:1.5}
-.src a{color:inherit}
+.src a{color:inherit;overflow-wrap:anywhere}
 </style>
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[
 {"@type":"BreadcrumbList","itemListElement":[
@@ -532,6 +532,108 @@ header .nav>a.btn--or:hover{background:#C87700;border-color:#C87700;box-shadow:0
 <div class="chapeau__st"><span><b>4</b> séjours</span><span><b>4 à 9</b> jours</span><span><b>1175 €</b> à partir de</span></div>
 <a class="remonte" href="https://authentiquegypte.com/nos-sejours-egypte/">Une des cinq familles de nos séjours en Égypte <svg width="15" height="11" viewBox="0 0 15 11" fill="none" aria-hidden="true"><path d="M1 5.5h12M9 1.5l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div>
 </section>
+<div class="filtres">
+<div class="wrap">
+<div class="fgroupe">
+<button class="fbtn" data-pan="p-lieu">Destination <svg width="11" height="7" viewBox="0 0 11 7" fill="none" aria-hidden="true"><path d="M1 1l4.5 4.5L10 1" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button>
+<div class="fpan" id="p-lieu">
+<label><input type="checkbox" data-cle="lieu" value="voyage-a-assouan"> Assouan <span>4</span></label>
+<label><input type="checkbox" data-cle="lieu" value="voyage-a-louxor"> Louxor <span>3</span></label>
+<label><input type="checkbox" data-cle="lieu" value="desert-noir"> Désert noir <span>1</span></label>
+<label><input type="checkbox" data-cle="lieu" value="voyage-au-caire"> Caire <span>1</span></label>
+<label><input type="checkbox" data-cle="lieu" value="voyage-a-alexandrie"> Alexandrie <span>1</span></label>
+<label><input type="checkbox" data-cle="lieu" value="mont-sinai"> Mont Sinaï sur mesure <span>1</span></label>
+<label><input type="checkbox" data-cle="lieu" value="lac-nasser"> Lac Nasser <span>1</span></label>
+</div>
+</div>
+<div class="fgroupe">
+<button class="fbtn" data-pan="p-duree">Durée <svg width="11" height="7" viewBox="0 0 11 7" fill="none" aria-hidden="true"><path d="M1 1l4.5 4.5L10 1" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button>
+<div class="fpan" id="p-duree">
+<label><input type="checkbox" data-cle="duree" value="moyen"> 4 à 6 jours <span>2</span></label>
+<label><input type="checkbox" data-cle="duree" value="long"> 7 jours et plus <span>2</span></label>
+</div>
+</div>
+<div class="fgroupe">
+<button class="fbtn" data-pan="p-qui">Qui part <svg width="11" height="7" viewBox="0 0 11 7" fill="none" aria-hidden="true"><path d="M1 1l4.5 4.5L10 1" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button>
+<div class="fpan" id="p-qui">
+<label><input type="checkbox" data-cle="qui" value="couple"> couple en Égypte <span>4</span></label>
+<label><input type="checkbox" data-cle="qui" value="famille"> famille en Égypte <span>3</span></label>
+<label><input type="checkbox" data-cle="qui" value="solo"> Voyage solo en Égypte <span>4</span></label>
+</div>
+</div>
+<div class="filtres__d">
+<label for="tri">Trier par</label>
+<select id="tri">
+<option value="perti">Pertinence</option>
+<option value="prix-asc">Prix croissant</option>
+<option value="prix-desc">Prix décroissant</option>
+<option value="duree-asc">Durée la plus courte</option>
+<option value="duree-desc">Durée la plus longue</option>
+</select>
+</div>
+</div>
+</div>
+<div class="wrap"><div class="actifs" id="actifs"></div></div>
+<section style="padding-bottom:clamp(50px,6vw,80px)">
+<div class="wrap">
+<p class="compte" id="compte"><b>4 séjours</b> · filtrez par destination, durée ou budget</p>
+<div class="grille g-3" id="liste">
+<article class="carte" data-lieu="voyage-a-assouan voyage-a-louxor desert-noir voyage-au-caire voyage-a-alexandrie" data-duree="long" data-budget="c" data-qui="couple solo famille" data-prix="1895" data-jours="8" data-perti="1">
+<div class="carte__img"><img src="https://authentiquegypte.com/wp-content/uploads/2023/11/egypt-3080277_1280.jpg" alt="egypt-3080277_1280" loading="lazy" decoding="async"></div>
+<div class="carte__corps">
+<h3><a href="https://authentiquegypte.com/programs/le-caire-et-croisiere-sur-un-bateau-a-voile/">Le Caire et croisière sur un bateau à voile</a></h3>
+<p class="carte__route">Explorez les mystères des pyramides de Gizeh et laissez-vous émerveiller par la grandeur des…</p>
+<div class="carte__meta"><span class="puce">8 jours</span></div>
+<div class="carte__pied">
+<span class="prix"><small>À partir de</small><b>1895 €</b> <i>/ pers.</i></span>
+<a href="https://authentiquegypte.com/programs/le-caire-et-croisiere-sur-un-bateau-a-voile/" class="lien-fl" aria-label="Voir le détail : Le Caire et croisière sur un bateau à voile">Voir le détail <svg width="15" height="11" viewBox="0 0 15 11" fill="none" aria-hidden="true"><path d="M1 5.5h12M9 1.5l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+</div>
+</div>
+</article>
+<article class="carte" data-lieu="voyage-a-assouan mont-sinai voyage-a-louxor lac-nasser" data-duree="moyen" data-budget="c" data-qui="couple solo" data-prix="1595" data-jours="4" data-perti="2">
+<div class="carte__img"><img src="https://authentiquegypte.com/wp-content/uploads/2023/11/jorge-fernandez-salas-59eU1QM4znI-unsplash.jpg" alt="jorge-fernandez-salas-59eU1QM4znI-unsplash" loading="lazy" decoding="async"></div>
+<div class="carte__corps">
+<h3><a href="https://authentiquegypte.com/programs/croisiere-sur-le-lac-nasser/">Croisière sur le lac Nasser</a></h3>
+<p class="carte__route">Notre croisière vous emmènera à la découverte de sites incontournables tels que les célèbres…</p>
+<div class="carte__meta"><span class="puce">4 jours</span></div>
+<div class="carte__pied">
+<span class="prix"><small>À partir de</small><b>1595 €</b> <i>/ pers.</i></span>
+<a href="https://authentiquegypte.com/programs/croisiere-sur-le-lac-nasser/" class="lien-fl" aria-label="Voir le détail : Croisière sur le lac Nasser">Voir le détail <svg width="15" height="11" viewBox="0 0 15 11" fill="none" aria-hidden="true"><path d="M1 5.5h12M9 1.5l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+</div>
+</div>
+</article>
+<article class="carte" data-lieu="voyage-a-assouan voyage-a-louxor" data-duree="moyen" data-budget="c" data-qui="couple solo famille" data-prix="1175" data-jours="6" data-perti="3">
+<div class="carte__img"><img src="https://authentiquegypte.com/wp-content/uploads/2023/11/pyramides.jpg" alt="pyramides" loading="lazy" decoding="async"></div>
+<div class="carte__corps">
+<h3><a href="https://authentiquegypte.com/programs/pyramides-et-croisiere-sur-le-nil/">Pyramides et croisière sur le Nil</a></h3>
+<p class="carte__route">Explorez les mystères des pyramides de Gizeh et laissez-vous émerveiller par la grandeur des…</p>
+<div class="carte__meta"><span class="puce">6 jours</span></div>
+<div class="carte__pied">
+<span class="prix"><small>À partir de</small><b>1175 €</b> <i>/ pers.</i></span>
+<a href="https://authentiquegypte.com/programs/pyramides-et-croisiere-sur-le-nil/" class="lien-fl" aria-label="Voir le détail : Pyramides et croisière sur le Nil">Voir le détail <svg width="15" height="11" viewBox="0 0 15 11" fill="none" aria-hidden="true"><path d="M1 5.5h12M9 1.5l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+</div>
+</div>
+</article>
+<article class="carte" data-lieu="voyage-a-assouan" data-duree="long" data-budget="c" data-qui="couple solo famille" data-prix="1485" data-jours="9" data-perti="4">
+<div class="carte__img"><img src="https://authentiquegypte.com/wp-content/uploads/2023/11/Oasis-de-siwa-4.png" alt="Oasis de siwa" loading="lazy" decoding="async"></div>
+<div class="carte__corps">
+<h3><a href="https://authentiquegypte.com/programs/mer-rouge/">Pyramides, croisière et mer rouge en famille</a></h3>
+<p class="carte__route">Arrivée au CaireAccueil à l’aéroport du Caire par notre représentant. Transfert à votre hôtel…</p>
+<div class="carte__meta"><span class="puce">9 jours</span></div>
+<div class="carte__pied">
+<span class="prix"><small>À partir de</small><b>1485 €</b> <i>/ pers.</i></span>
+<a href="https://authentiquegypte.com/programs/mer-rouge/" class="lien-fl" aria-label="Voir le détail : Pyramides, croisière et mer rouge en famille">Voir le détail <svg width="15" height="11" viewBox="0 0 15 11" fill="none" aria-hidden="true"><path d="M1 5.5h12M9 1.5l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+</div>
+</div>
+</article>
+</div>
+<div id="vide" hidden style="text-align:center;padding:56px 20px;background:var(--fond);border:1px solid var(--ligne);border-radius:var(--r-l)">
+<h3 style="margin-bottom:10px">Aucun séjour ne coche tous ces critères</h3>
+<p class="lede" style="margin:0 auto 22px">Retirez un filtre, ou dites-nous ce que vous cherchez&nbsp;: nous montons aussi des séjours hors catalogue.</p>
+<a href="https://authentiquegypte.com/sur-mesure/" class="btn btn--nuit">Décrire mon projet</a>
+</div>
+</div>
+</section>
 <section class="section section--creme">
 <div class="wrap">
 <div style="max-width:74ch">
@@ -546,8 +648,16 @@ header .nav>a.btn--or:hover{background:#C87700;border-color:#C87700;box-shadow:0
 <p class="">Quelle est la durée idéale pour une croisière ?</p>
 <p class="">👉 4 à 7 nuits suffisent pour explorer Louxor, Edfou, Kom Ombo et Assouan sans courir. Pour un rythme plus lent ou un voyage en famille, on recommande une dahabeya de 10 jours.</p>
 <p class="">Quelle est la différence entre dahabeya, felouque et bateau classique ?</p>
-<h3>Quelle est la différence entre dahabeya, felouque et bateau classique ?</h3>
-<p class="">Dahabeya : bateau traditionnel, charme, confort, 8-12 passagers max</p>
+<p style="margin-top:26px"><a href="https://authentiquegypte.com/sur-mesure/" class="btn btn--or">Demander mon devis</a></p>
+</div>
+</div>
+</section>
+<section class="section section--fond" id="devis">
+<div class="wrap" style="max-width:860px">
+<p class="eyebrow">Questions fréquentes</p>
+<h2 style="margin-bottom:26px">Ce qu'on nous demande le plus</h2>
+<div class="faq">
+<details open><summary>Quelle est la différence entre dahabeya, felouque et bateau classique ?</summary><div class="faq__c"><p class="">Dahabeya : bateau traditionnel, charme, confort, 8-12 passagers max</p>
 <p class="">Felouque : voile uniquement, rustique, idéal pour aventuriers</p>
 <p class="">Bateau classique : plus grand, avec tout le confort moderne, souvent en groupe</p>
 <p class="">👉 Pas sûr de la bonne option ?Contactez-nous directement sur Whatsapp pour clarifier le projet !</p>
@@ -557,64 +667,17 @@ header .nav>a.btn--or:hover{background:#C87700;border-color:#C87700;box-shadow:0
 <p class="">Oui. Le visa est obligatoire mais simple à obtenir :</p>
 <p class="">E-visa officiel en ligne avant départ</p>
 <p class="">Ou visa à l’arrivée dans la plupart des aéroports égyptiens</p>
-<p class="">Notre équipe vous guide si besoin à chaque étape.</p>
+<p class="">Notre équipe vous guide si besoin à chaque étape.</p></div></details>
 </div>
+<div style="margin-top:44px;background:var(--nuit-900);color:#fff;border-radius:24px;padding:34px;display:flex;gap:24px;align-items:center;justify-content:space-between;flex-wrap:wrap">
+<div style="max-width:44ch">
+<h3 style="color:#fff;margin-bottom:8px">Vous savez ce que vous voulez&nbsp;?</h3>
+<p style="color:#C3D5DA;margin:0;font-size:.95rem">Envoyez-nous vos dates et le nombre de voyageurs. Vous recevez un itinéraire chiffré sous 48 h, hors vendredi et samedi.</p>
 </div>
-</section>
-<section class="section section--fond">
-<div class="wrap">
-<p class="eyebrow">Nos séjours</p>
-<h2 style="margin-bottom:14px">Les séjours croisières en egypte</h2>
-<p class="lede" style="margin-bottom:30px">Tous personnalisables&nbsp;: la durée s'ajuste à ce que vous voulez voir.</p>
-<div class="grille g-3">
-<article class="carte">
-<div class="carte__img"><img src="https://authentiquegypte.com/wp-content/uploads/2023/11/egypt-3080277_1280-300x200.jpg" alt="egypt-3080277_1280" loading="lazy" decoding="async"></div>
-<div class="carte__corps">
-<h3><a href="https://authentiquegypte.com/programs/le-caire-et-croisiere-sur-un-bateau-a-voile/">Le Caire et croisière sur un bateau à voile</a></h3>
-<p class="carte__route">Explorez les mystères des pyramides de Gizeh et laissez-vous émerveiller par la grandeur des…</p>
-<div class="carte__meta"><span class="puce">8 jours</span></div>
-<div class="carte__pied">
-<span class="prix"><small>À partir de</small><b>1895 €</b> <i>/ pers.</i></span>
-<a href="https://authentiquegypte.com/programs/le-caire-et-croisiere-sur-un-bateau-a-voile/" class="lien-fl" aria-label="Voir le détail : Le Caire et croisière sur un bateau à voile">Voir le détail <svg width="15" height="11" viewBox="0 0 15 11" fill="none" aria-hidden="true"><path d="M1 5.5h12M9 1.5l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+<div style="display:flex;gap:10px;flex-wrap:wrap">
+<a href="https://authentiquegypte.com/sur-mesure/" class="btn btn--or">Demander mon devis</a>
+<a href="https://wa.me/201066619098" class="btn btn--clair">WhatsApp</a>
 </div>
-</div>
-</article>
-<article class="carte">
-<div class="carte__img"><img src="https://authentiquegypte.com/wp-content/uploads/2023/11/jorge-fernandez-salas-59eU1QM4znI-unsplash-300x200.jpg" alt="jorge-fernandez-salas-59eU1QM4znI-unsplash" loading="lazy" decoding="async"></div>
-<div class="carte__corps">
-<h3><a href="https://authentiquegypte.com/programs/croisiere-sur-le-lac-nasser/">Croisière sur le lac Nasser</a></h3>
-<p class="carte__route">Notre croisière vous emmènera à la découverte de sites incontournables tels que les célèbres…</p>
-<div class="carte__meta"><span class="puce">4 jours</span></div>
-<div class="carte__pied">
-<span class="prix"><small>À partir de</small><b>1595 €</b> <i>/ pers.</i></span>
-<a href="https://authentiquegypte.com/programs/croisiere-sur-le-lac-nasser/" class="lien-fl" aria-label="Voir le détail : Croisière sur le lac Nasser">Voir le détail <svg width="15" height="11" viewBox="0 0 15 11" fill="none" aria-hidden="true"><path d="M1 5.5h12M9 1.5l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-</div>
-</div>
-</article>
-<article class="carte">
-<div class="carte__img"><img src="https://authentiquegypte.com/wp-content/uploads/2023/11/pyramides-300x200.jpg" alt="pyramides" loading="lazy" decoding="async"></div>
-<div class="carte__corps">
-<h3><a href="https://authentiquegypte.com/programs/pyramides-et-croisiere-sur-le-nil/">Pyramides et croisière sur le Nil</a></h3>
-<p class="carte__route">Explorez les mystères des pyramides de Gizeh et laissez-vous émerveiller par la grandeur des…</p>
-<div class="carte__meta"><span class="puce">6 jours</span></div>
-<div class="carte__pied">
-<span class="prix"><small>À partir de</small><b>1175 €</b> <i>/ pers.</i></span>
-<a href="https://authentiquegypte.com/programs/pyramides-et-croisiere-sur-le-nil/" class="lien-fl" aria-label="Voir le détail : Pyramides et croisière sur le Nil">Voir le détail <svg width="15" height="11" viewBox="0 0 15 11" fill="none" aria-hidden="true"><path d="M1 5.5h12M9 1.5l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-</div>
-</div>
-</article>
-<article class="carte">
-<div class="carte__img"><img src="https://authentiquegypte.com/wp-content/uploads/2023/11/Oasis-de-siwa-4-300x200.png" alt="Oasis de siwa" loading="lazy" decoding="async"></div>
-<div class="carte__corps">
-<h3><a href="https://authentiquegypte.com/programs/mer-rouge/">Pyramides, croisière et mer rouge en famille</a></h3>
-<p class="carte__route">Arrivée au CaireAccueil à l’aéroport du Caire par notre représentant. Transfert à votre hôtel…</p>
-<div class="carte__meta"><span class="puce">9 jours</span></div>
-<div class="carte__pied">
-<span class="prix"><small>À partir de</small><b>1485 €</b> <i>/ pers.</i></span>
-<a href="https://authentiquegypte.com/programs/mer-rouge/" class="lien-fl" aria-label="Voir le détail : Pyramides, croisière et mer rouge en famille">Voir le détail <svg width="15" height="11" viewBox="0 0 15 11" fill="none" aria-hidden="true"><path d="M1 5.5h12M9 1.5l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-</div>
-</div>
-</article>
 </div>
 </div>
 </section>
@@ -732,10 +795,15 @@ document.querySelector('.burger')?.addEventListener('click',e=>{
   // lui tout ce qui suit dans le même bloc.
   if(!liste||!compte||!actifs||!vide||!tri){ return; }
   const cartes=[...liste.querySelectorAll('.carte')];
-  const lib={blanc:'Désert Blanc',siwa:'Oasis de Siwa',fayoum:'Oasis de Fayoum',dakhla:'Dakhla et Kharga',
-    court:'2 à 3 jours',moyen:'4 à 6 jours',long:'7 jours et plus',
-    a:'Moins de 600 €',b:'600 à 900 €',c:'Plus de 900 €',
-    famille:'En famille',couple:'En couple',solo:'En solo',pmr:'Mobilité réduite'};
+  /* Les libellés se lisent dans la barre elle-même : le même script sert
+     toutes les pages du gabarit, quels que soient leurs filtres. */
+  const lib={};
+  document.querySelectorAll('.fpan label').forEach(l=>{
+    const i=l.querySelector('input'); if(!i)return;
+    lib[i.value]=l.textContent.trim().replace(/\s*\d+$/,'');
+  });
+  /* La fin de la ligne de compte est propre à chaque page : on la garde. */
+  const resteCompte=compte.innerHTML.replace(/^<b>[^<]*<\/b>/,'');
   document.querySelectorAll('.fbtn').forEach(b=>{
     b.addEventListener('click',e=>{
       e.stopPropagation();
@@ -754,7 +822,7 @@ document.querySelector('.burger')?.addEventListener('click',e=>{
       c.hidden=!ok; if(ok)n++;
     });
     vide.hidden=n>0;
-    compte.innerHTML='<b>'+n+' itinéraire'+(n>1?'s':'')+'</b> · le temps de route figure sur chaque carte';
+    compte.innerHTML='<b>'+n+' itinéraire'+(n>1?'s':'')+'</b>'+resteCompte;
     document.querySelectorAll('.fbtn').forEach(b=>{
       const k=b.dataset.pan.replace('p-','');
       const c=etat[k]?etat[k].length:0;

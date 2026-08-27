@@ -475,7 +475,7 @@ header .nav>a.btn--or,header .nav>a.btn--or[aria-current]{background:#E08A00;bor
 header .nav>a.btn--or:hover{background:#C87700;border-color:#C87700;box-shadow:0 10px 24px rgba(224,138,0,.42)}
 
 .src{margin:0 0 24px;padding:11px 15px;background:var(--or-fond);border-radius:var(--r-s);font-size:.86rem;color:#7A5605;line-height:1.5}
-.src a{color:inherit}
+.src a{color:inherit;overflow-wrap:anywhere}
 </style>
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[
 {"@type":"BreadcrumbList","itemListElement":[
@@ -741,6 +741,7 @@ document.querySelector('.burger')?.addEventListener('click',e=>{
   },{threshold:.06,rootMargin:'0px 0px -40px 0px'});
   cibles.forEach((el,n)=>{ el.setAttribute('data-rev','');
     el.style.transitionDelay=(Math.min(n%4,3)*60)+'ms'; io.observe(el); });
+  setTimeout(()=>{cibles.forEach(el=>el.classList.add('vu'))},2500); /* garde-fou : rien ne reste invisible */
 })();
 </script>
 <script>

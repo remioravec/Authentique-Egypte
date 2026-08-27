@@ -431,7 +431,7 @@ header .nav>a.btn--or,header .nav>a.btn--or[aria-current]{background:#E08A00;bor
 header .nav>a.btn--or:hover{background:#C87700;border-color:#C87700;box-shadow:0 10px 24px rgba(224,138,0,.42)}
 
 .src{margin:0 0 24px;padding:11px 15px;background:var(--or-fond);border-radius:var(--r-s);font-size:.86rem;color:#7A5605;line-height:1.5}
-.src a{color:inherit}
+.src a{color:inherit;overflow-wrap:anywhere}
 </style>
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[
 {"@type":"BreadcrumbList","itemListElement":[
@@ -587,7 +587,7 @@ header .nav>a.btn--or:hover{background:#C87700;border-color:#C87700;box-shadow:0
 <p class="lede" style="margin-bottom:30px">Tous personnalisables&nbsp;: la durée s'ajuste à ce que vous voulez voir.</p>
 <div class="grille g-3">
 <article class="carte">
-<div class="carte__img"><img src="https://authentiquegypte.com/wp-content/uploads/2023/11/Oasis-de-siwa-2-300x200.png" alt="Oasis de siwa" loading="lazy" decoding="async"></div>
+<div class="carte__img"><img src="https://authentiquegypte.com/wp-content/uploads/2023/11/Oasis-de-siwa-2.png" alt="Oasis de siwa" loading="lazy" decoding="async"></div>
 <div class="carte__corps">
 <h3><a href="https://authentiquegypte.com/programs/excursion-a-loasis-de-siwa/">Voyage à l&#x27;Oasis de Siwa</a></h3>
 <p class="carte__route">Découvrez l&#x27;Oasis de Siwa, un véritable havre de paix niché dans le désert occidental…</p>
@@ -599,7 +599,7 @@ header .nav>a.btn--or:hover{background:#C87700;border-color:#C87700;box-shadow:0
 </div>
 </article>
 <article class="carte">
-<div class="carte__img"><img src="https://authentiquegypte.com/wp-content/uploads/2023/11/egypt-3080277_1280-300x200.jpg" alt="egypt-3080277_1280" loading="lazy" decoding="async"></div>
+<div class="carte__img"><img src="https://authentiquegypte.com/wp-content/uploads/2023/11/egypt-3080277_1280.jpg" alt="egypt-3080277_1280" loading="lazy" decoding="async"></div>
 <div class="carte__corps">
 <h3><a href="https://authentiquegypte.com/programs/le-caire-et-croisiere-sur-un-bateau-a-voile/">Le Caire et croisière sur un bateau à voile</a></h3>
 <p class="carte__route">Explorez les mystères des pyramides de Gizeh et laissez-vous émerveiller par la grandeur des…</p>
@@ -611,7 +611,7 @@ header .nav>a.btn--or:hover{background:#C87700;border-color:#C87700;box-shadow:0
 </div>
 </article>
 <article class="carte">
-<div class="carte__img"><img src="https://authentiquegypte.com/wp-content/uploads/2023/11/jorge-fernandez-salas-59eU1QM4znI-unsplash-300x200.jpg" alt="jorge-fernandez-salas-59eU1QM4znI-unsplash" loading="lazy" decoding="async"></div>
+<div class="carte__img"><img src="https://authentiquegypte.com/wp-content/uploads/2023/11/jorge-fernandez-salas-59eU1QM4znI-unsplash.jpg" alt="jorge-fernandez-salas-59eU1QM4znI-unsplash" loading="lazy" decoding="async"></div>
 <div class="carte__corps">
 <h3><a href="https://authentiquegypte.com/programs/croisiere-sur-le-lac-nasser/">Croisière sur le lac Nasser</a></h3>
 <p class="carte__route">Notre croisière vous emmènera à la découverte de sites incontournables tels que les célèbres…</p>
@@ -623,7 +623,7 @@ header .nav>a.btn--or:hover{background:#C87700;border-color:#C87700;box-shadow:0
 </div>
 </article>
 <article class="carte">
-<div class="carte__img"><img src="https://authentiquegypte.com/wp-content/uploads/2023/11/pyramides-300x200.jpg" alt="pyramides" loading="lazy" decoding="async"></div>
+<div class="carte__img"><img src="https://authentiquegypte.com/wp-content/uploads/2023/11/pyramides.jpg" alt="pyramides" loading="lazy" decoding="async"></div>
 <div class="carte__corps">
 <h3><a href="https://authentiquegypte.com/programs/pyramides-et-croisiere-sur-le-nil/">Pyramides et croisière sur le Nil</a></h3>
 <p class="carte__route">Explorez les mystères des pyramides de Gizeh et laissez-vous émerveiller par la grandeur des…</p>
@@ -635,7 +635,7 @@ header .nav>a.btn--or:hover{background:#C87700;border-color:#C87700;box-shadow:0
 </div>
 </article>
 <article class="carte">
-<div class="carte__img"><img src="https://authentiquegypte.com/wp-content/uploads/2023/11/Oasis-de-siwa-4-300x200.png" alt="Oasis de siwa" loading="lazy" decoding="async"></div>
+<div class="carte__img"><img src="https://authentiquegypte.com/wp-content/uploads/2023/11/Oasis-de-siwa-4.png" alt="Oasis de siwa" loading="lazy" decoding="async"></div>
 <div class="carte__corps">
 <h3><a href="https://authentiquegypte.com/programs/mer-rouge/">Pyramides, croisière et mer rouge en famille</a></h3>
 <p class="carte__route">Arrivée au CaireAccueil à l’aéroport du Caire par notre représentant. Transfert à votre hôtel…</p>
@@ -758,10 +758,15 @@ document.querySelector('.burger')?.addEventListener('click',e=>{
   // lui tout ce qui suit dans le même bloc.
   if(!liste||!compte||!actifs||!vide||!tri){ return; }
   const cartes=[...liste.querySelectorAll('.carte')];
-  const lib={blanc:'Désert Blanc',siwa:'Oasis de Siwa',fayoum:'Oasis de Fayoum',dakhla:'Dakhla et Kharga',
-    court:'2 à 3 jours',moyen:'4 à 6 jours',long:'7 jours et plus',
-    a:'Moins de 600 €',b:'600 à 900 €',c:'Plus de 900 €',
-    famille:'En famille',couple:'En couple',solo:'En solo',pmr:'Mobilité réduite'};
+  /* Les libellés se lisent dans la barre elle-même : le même script sert
+     toutes les pages du gabarit, quels que soient leurs filtres. */
+  const lib={};
+  document.querySelectorAll('.fpan label').forEach(l=>{
+    const i=l.querySelector('input'); if(!i)return;
+    lib[i.value]=l.textContent.trim().replace(/\s*\d+$/,'');
+  });
+  /* La fin de la ligne de compte est propre à chaque page : on la garde. */
+  const resteCompte=compte.innerHTML.replace(/^<b>[^<]*<\/b>/,'');
   document.querySelectorAll('.fbtn').forEach(b=>{
     b.addEventListener('click',e=>{
       e.stopPropagation();
@@ -780,7 +785,7 @@ document.querySelector('.burger')?.addEventListener('click',e=>{
       c.hidden=!ok; if(ok)n++;
     });
     vide.hidden=n>0;
-    compte.innerHTML='<b>'+n+' itinéraire'+(n>1?'s':'')+'</b> · le temps de route figure sur chaque carte';
+    compte.innerHTML='<b>'+n+' itinéraire'+(n>1?'s':'')+'</b>'+resteCompte;
     document.querySelectorAll('.fbtn').forEach(b=>{
       const k=b.dataset.pan.replace('p-','');
       const c=etat[k]?etat[k].length:0;
