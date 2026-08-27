@@ -53,8 +53,9 @@ ne pas les commenter.
 - [ ] Voyager en Égypte en fauteuil roulant : est-ce possi → https://authentiquegypte.com/?page_id=7989
 
 ### Pages diverses
-- [ ] HOME → https://authentiquegypte.com/?page_id=7992
-- [ ] Qui sommes nous → https://authentiquegypte.com/?page_id=7991
+- [ ] HOME (maquette validée) → https://authentiquegypte.com/?page_id=7643
+- [ ] Qui sommes-nous (maquette validée) → https://authentiquegypte.com/?page_id=7657
+- [ ] Devis (maquette validée) → https://authentiquegypte.com/?page_id=7658
 - [ ] Notre blog → https://authentiquegypte.com/?page_id=7990
 - [ ] Mentions légales → https://authentiquegypte.com/?page_id=8051
 
