@@ -167,14 +167,39 @@ def sections_propres(x, ctx):
     return sortie
 
 
+# Des libellés de navigation que le site recopie dans le texte : seuls
+# dans une section, ils ne disent rien — on les écarte.
+ETIQUETTES = {'découvrir', 'en savoir plus', 'réserver', 'voir plus', 'lire la suite',
+              'voir le détail', 'composer mon voyage'}
+
+
 def corps_editorial(x, ctx, creme=True, sections=None, cta=False):
-    """Le texte de la page, dans une section pleine largeur."""
+    """Le texte de la page : une carte blanche posée sur le fond crème.
+
+    Les petits arguments du site (un titre court, un paragraphe) sortent
+    du flux et deviennent des cartes d'atouts sous le texte ; les
+    étiquettes orphelines (« Découvrir ») disparaissent.
+    """
     if sections is None:
         sections = sections_propres(x, ctx)
-    if not sections:
-        return ''
-    out = [M.bandeau_source(x['url'])]
+    propres, atouts = [], []
     for s in sections:
+        blocs = [b for b in s['blocs']
+                 if (b.get('texte') or '').strip().lower().rstrip(' !.') not in ETIQUETTES]
+        if not blocs:
+            continue
+        court = (s['titre'] and s['niveau'] >= 3 and len(blocs) == 1
+                 and blocs[0]['type'] == 'p' and len(blocs[0]['texte']) <= 260
+                 and '?' not in s['titre'])
+        if court:
+            atouts.append((s['titre'], blocs[0]['texte']))
+        else:
+            propres.append(dict(s, blocs=blocs))
+    if not propres and not atouts:
+        return ''
+
+    out = [M.bandeau_source(x['url'])]
+    for s in propres:
         if s['titre'] and s['titre'].strip().lower() != x['titre'].strip().lower():
             out.append('<h%d>%s</h%d>' % (max(s['niveau'], 2), M.e(s['titre']), max(s['niveau'], 2)))
         out.append(M.paragraphes(s['blocs'], ''))
@@ -183,9 +208,14 @@ def corps_editorial(x, ctx, creme=True, sections=None, cta=False):
         out.append('<p style="margin-top:26px"><a href="%s" class="btn btn--or">'
                    'Demander mon devis</a></p>' % DEVIS)
 
-    return ('<section class="section%s">\n<div class="wrap">\n'
-            '<div style="max-width:74ch">\n%s\n</div>\n</div>\n</section>'
-            % (' section--creme' if creme else '', '\n'.join(out)))
+    dedans = '<div class="edito">\n%s\n</div>' % '\n'.join(out)
+    if atouts:
+        dedans += ('\n<div class="atouts">\n%s\n</div>'
+                   % '\n'.join('<div class="atout"><h3>%s</h3><p>%s</p></div>'
+                               % (M.e(t), M.e(p)) for t, p in atouts))
+
+    return ('<section class="section%s">\n<div class="wrap">\n%s\n</div>\n</section>'
+            % (' section--creme' if creme else '', dedans))
 
 
 def barre_mob():

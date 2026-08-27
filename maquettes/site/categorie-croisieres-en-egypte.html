@@ -154,18 +154,48 @@ p{margin:0 0 1em}
 .lien-fl svg{transition:transform .2s}
 .carte:hover .lien-fl svg{transform:translateX(4px)}
 
-/* ---------- FAQ ---------- */
-.faq{border-top:1px solid var(--ligne)}
-.faq details{border-bottom:1px solid var(--ligne)}
-.faq summary{padding:20px 44px 20px 0;font-weight:600;font-size:1.02rem;cursor:pointer;color:var(--noir);
+/* ---------- FAQ ----------
+   Des cartes, pas des lignes : même dessin que le gabarit voyage. */
+.faq{display:grid;gap:10px}
+.faq details{border:1px solid var(--ligne);border-radius:var(--r-m);background:var(--papier);
+  transition:border-color .25s var(--ease),box-shadow .25s var(--ease)}
+.faq details[open]{border-color:var(--or);box-shadow:var(--ombre)}
+.faq summary{padding:15px 56px 15px 18px;font-weight:600;font-size:1.02rem;cursor:pointer;color:var(--noir);
   position:relative;list-style:none;display:block;font-family:"Archivo",sans-serif;letter-spacing:-.3px}
 .faq summary::-webkit-details-marker{display:none}
-.faq summary::after{content:"+";position:absolute;right:8px;top:50%;transform:translateY(-50%);
-  font-size:1.6rem;color:var(--or);font-weight:400;transition:transform .25s var(--ease)}
+.faq summary::after{content:"+";position:absolute;right:15px;top:50%;transform:translateY(-50%);
+  width:26px;height:26px;border-radius:50%;background:var(--or-fond);color:#7A5605;
+  display:grid;place-items:center;font-size:1.15rem;font-weight:500;transition:transform .25s var(--ease)}
 .faq details[open] summary::after{transform:translateY(-50%) rotate(45deg)}
 .faq summary:hover{color:var(--teal-txt)}
-.faq__c{padding:0 44px 22px 0;color:var(--texte);max-width:75ch}
+.faq__c{padding:0 18px 16px;color:var(--texte);max-width:75ch}
 .faq__c :last-child{margin-bottom:0}
+
+/* ---------- le texte de la page ----------
+   Le contenu repris du site vit dans une carte blanche posée sur le
+   fond crème, jamais en pavé nu. Les petits arguments (un titre, un
+   paragraphe) sortent du flux et deviennent des cartes d'atouts. */
+.edito{background:var(--papier);border:1px solid var(--ligne);border-radius:var(--r-l);
+  padding:clamp(26px,4.5vw,50px);max-width:920px;margin:0 auto;text-align:left}
+.edito h2{font-size:clamp(1.3rem,2.4vw,1.6rem);margin:34px 0 12px;padding-top:30px;
+  border-top:1px dashed var(--ligne)}
+.edito>h2:first-of-type,.edito .src+h2{margin-top:0;padding-top:0;border-top:0}
+.edito h3,.edito h4{margin:26px 0 8px;color:var(--nuit-900);font-size:1.14rem}
+.edito p,.edito li{color:var(--texte);max-width:70ch}
+.edito ul{padding-left:20px;margin:0 0 1em}
+.edito li{margin-bottom:6px}
+.edito p:last-of-type{margin-bottom:0}
+.edito .btn{margin-top:6px}
+.atouts{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;max-width:920px;margin:16px auto 0}
+.atout{background:var(--papier);border:1px solid var(--ligne);border-radius:var(--r-m);padding:20px 20px 18px}
+.atout h3{font-size:.98rem;margin:0 0 8px;display:flex;gap:10px;align-items:center}
+.atout h3::before{content:"✓";flex:0 0 auto;width:24px;height:24px;border-radius:50%;
+  background:var(--teal-fond);color:var(--teal-txt);font-size:.8rem;font-weight:700;
+  display:grid;place-items:center}
+.atout p{font-size:.92rem;color:var(--texte);margin:0;line-height:1.6}
+@media (max-width:860px){
+  .atouts{grid-template-columns:1fr}
+}
 
 /* ---------- pied de page ---------- */
 .pied{background:var(--nuit-900);color:#C0D8E2;padding:60px 0 26px;font-size:.9rem}
@@ -636,7 +666,7 @@ header .nav>a.btn--or:hover{background:#C87700;border-color:#C87700;box-shadow:0
 </section>
 <section class="section section--creme">
 <div class="wrap">
-<div style="max-width:74ch">
+<div class="edito">
 <p class="src">Contenu repris de <a href="https://authentiquegypte.com/nos-sejours-egypte/croisieres-en-egypte/">https://authentiquegypte.com/nos-sejours-egypte/croisieres-en-egypte/</a>, sans réécriture&nbsp;: seule la mise en page change.</p>
 
 <h2>Créez un voyage qui vous ressemble !</h2>
