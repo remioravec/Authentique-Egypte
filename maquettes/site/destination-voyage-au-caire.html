@@ -87,6 +87,54 @@
 .saison .br{background:var(--rouge-fond);color:var(--rouge)}
 .saison b{display:block;font-size:.74rem;font-weight:600;opacity:.8;margin-top:3px}
 
+/* ---------- FAQ ----------
+   Le balisage existait sans style : les questions sortaient en
+   accordéons bruts du navigateur. Même dessin en cartes que les
+   gabarits voyage et catégorie. */
+.faq{display:grid;gap:10px}
+.faq details{border:1px solid var(--ligne);border-radius:var(--r-m);background:var(--papier);
+  transition:border-color .25s var(--ease),box-shadow .25s var(--ease)}
+.faq details[open]{border-color:var(--or);box-shadow:var(--ombre)}
+.faq summary{padding:15px 56px 15px 18px;font-weight:600;font-size:1rem;cursor:pointer;color:var(--noir);
+  position:relative;list-style:none;display:block;font-family:"Archivo",sans-serif;letter-spacing:-.3px}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";position:absolute;right:15px;top:50%;transform:translateY(-50%);
+  width:26px;height:26px;border-radius:50%;background:var(--or-fond);color:#7A5605;
+  display:grid;place-items:center;font-size:1.15rem;font-weight:500;transition:transform .25s var(--ease)}
+.faq details[open] summary::after{transform:translateY(-50%) rotate(45deg)}
+.faq summary:hover{color:var(--teal-txt)}
+.faq__c{padding:0 18px 16px;color:var(--texte)}
+.faq__c :last-child{margin-bottom:0}
+.faq__c ul{padding-left:20px;margin:0 0 1em}
+
+/* ---------- cartes d'atouts ----------
+   Les petits arguments (un titre, un paragraphe) en cartes cochées,
+   comme sur le gabarit catégorie. */
+.atouts{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:6px 0 10px}
+.atout{background:var(--papier);border:1px solid var(--ligne);border-radius:var(--r-m);padding:20px 20px 18px}
+.atout h3{font-size:.98rem;margin:0 0 8px;display:flex;gap:10px;align-items:center}
+.atout h3::before{content:"✓";flex:0 0 auto;width:24px;height:24px;border-radius:50%;
+  background:var(--teal-fond);color:var(--teal-txt);font-size:.8rem;font-weight:700;
+  display:grid;place-items:center}
+.atout p{font-size:.92rem;color:var(--texte);margin:0;line-height:1.6}
+@media (max-width:860px){
+  .atouts{grid-template-columns:1fr}
+}
+
+/* ---------- bande devis ----------
+   Le balisage existait sans style — repris d'index.html. */
+.devis{background:var(--nuit-900);color:#fff;border-radius:24px;padding:clamp(34px,5vw,56px);
+  display:grid;grid-template-columns:1.1fr .9fr;gap:44px;align-items:center}
+.devis h2{color:#fff}
+.devis ul{list-style:none;padding:0;margin:22px 0 0;display:grid;gap:11px;font-size:.95rem;color:#C3D5DA}
+.devis li{display:flex;gap:11px;align-items:flex-start}
+.devis li svg{flex:0 0 auto;margin-top:5px}
+.devis__act{display:grid;gap:12px}
+.devis__act small{color:#B0CCD9;font-size:.81rem;text-align:center;font-family:"Manrope",sans-serif}
+@media (max-width:860px){
+  .devis{grid-template-columns:1fr;gap:28px}
+}
+
 /* ---------- panneau latéral ---------- */
 .lat{display:grid;gap:16px}
 .lat__b{background:#fff;border:1px solid var(--ligne);border-radius:var(--r-l);padding:22px;
@@ -237,31 +285,14 @@ header .nav>a.btn--or:hover{background:#C87700;border-color:#C87700;box-shadow:0
 <div class="colonnes">
 <article class="corps">
 <p class="src">Contenu repris de <a href="https://authentiquegypte.com/voyage-au-caire/">https://authentiquegypte.com/voyage-au-caire/</a>, sans réécriture&nbsp;: seule la mise en page change.</p>
+<div class="atouts">
+<div class="atout"><h3>Privées &amp; personnalisées</h3><p>Chaque itinéraire est conçu selon vos envies, votre rythme et votre façon de voyager. Explorez l’Égypte à votre image.</p></div>
+<div class="atout"><h3>Avec un expert local</h3><p>Guidé par des passionnés égyptiens, vous découvrez l’histoire, les traditions et les secrets bien gardés du pays. Un voyage authentique, raconté par ceux qui le vivent.</p></div>
+</div>
 
-<h3>Privées &amp; personnalisées</h3>
-<p class="">Chaque itinéraire est conçu selon vos envies, votre rythme et votre façon de voyager. Explorez l’Égypte à votre image.</p>
-<h3>Avec un expert local</h3>
-<p class="">Guidé par des passionnés égyptiens, vous découvrez l’histoire, les traditions et les secrets bien gardés du pays. Un voyage authentique, raconté par ceux qui le vivent.</p>
 <h3>Loin de la foule</h3>
 <p class="">Nous vous emmenons hors des sentiers battus, dans des lieux confidentiels, loin du tourisme de masse. Rencontrez l’Égypte vraie, en toute sérénité.</p>
 <p class="">Un séjour au Caire mêle trésors antiques et effervescence contemporaine. Les pyramides de Gizeh, le Sphinx et les musées de renommée mondiale côtoient ruelles animées, marchés colorés et vues apaisantes sur le Nil.</p>
-<h3>1) Quelles sont les principales visites au Caire ?</h3>
-<p class="">Les pyramides de Gizeh, le Sphinx, le Musée égyptien, le quartier copte et la citadelle de Saladin constituent les incontournables de la capitale.</p>
-<h3>2) Quand visiter la ville ?</h3>
-<p class="">L’automne et le printemps offrent des températures modérées et un ciel dégagé, idéaux pour combiner balades urbaines et excursions.</p>
-<h3>3) Comment se déplacer facilement ?</h3>
-<p class="">Privilégiez un chauffeur privé ou un guide local pour contourner les embouteillages et optimiser votre temps sur place.</p>
-<h3>4) Où trouver les meilleures vues sur le Nil ?</h3>
-<p class="">Depuis les rooftops d’hôtels ou lors d’une croisière à la voile au coucher du soleil.</p>
-<h3>5) Quels quartiers découvrir pour l’authenticité ?</h3>
-<p class="">Le vieux Caire islamique, Khan el-Khalili avec ses souks, et Zamalek pour une atmosphère plus paisible et artistique.</p>
-<h3>6) Quels musées visiter absolument ?</h3>
-<p class="">Le Musée égyptien pour ses collections pharaoniques et le Musée national de la civilisation égyptienne qui expose les momies royales.</p>
-<h3>7) Quelles expériences originales vivre ?</h3>
-<p class="">Assister à un atelier d’artisanat traditionnel ou partager un dîner égyptien au bord du Nil.</p>
-<h3>8) Que prévoir pour un séjour équilibré ?</h3>
-<p class="">Alternez journées de visites intenses et moments de détente dans un hôtel offrant vue sur le Nil.</p>
-<ul><li>Voyages culturels</li><li>Croisières en Égypte</li><li>Égypte hors des sentiers battus</li></ul>
 <h2>Organisation du voyage</h2>
 <p class="">Combien de jours prévoir pour visiter Le Caire ?</p>
 <p class="">Il est généralement conseillé de consacrer 3 à 5 jours à la visite du Caire. Cela permet de découvrir les principaux sites historiques (pyramides de Gizeh, musée égyptien, quartier islamique) tout en prenant le temps d’explorer des lieux moins fréquentés comme le quartier copte ou Zamalek.</p>
@@ -300,6 +331,18 @@ header .nav>a.btn--or:hover{background:#C87700;border-color:#C87700;box-shadow:0
 <p class="">Louxor et Assouan (via vol intérieur ou train de nuit)</p>
 <p class="">Alexandrie (accessible en 2h de train)</p>
 <p class="">Le désert blanc (via Bahariya)Cela permet de construire un circuit plus complet, mêlant culture, nature et détente.</p>
+<h2 id="faq">Questions fréquentes</h2>
+<div class="faq">
+<details open><summary>1) Quelles sont les principales visites au Caire ?</summary><div class="faq__c"><p class="">Les pyramides de Gizeh, le Sphinx, le Musée égyptien, le quartier copte et la citadelle de Saladin constituent les incontournables de la capitale.</p></div></details>
+<details><summary>2) Quand visiter la ville ?</summary><div class="faq__c"><p class="">L’automne et le printemps offrent des températures modérées et un ciel dégagé, idéaux pour combiner balades urbaines et excursions.</p></div></details>
+<details><summary>3) Comment se déplacer facilement ?</summary><div class="faq__c"><p class="">Privilégiez un chauffeur privé ou un guide local pour contourner les embouteillages et optimiser votre temps sur place.</p></div></details>
+<details><summary>4) Où trouver les meilleures vues sur le Nil ?</summary><div class="faq__c"><p class="">Depuis les rooftops d’hôtels ou lors d’une croisière à la voile au coucher du soleil.</p></div></details>
+<details><summary>5) Quels quartiers découvrir pour l’authenticité ?</summary><div class="faq__c"><p class="">Le vieux Caire islamique, Khan el-Khalili avec ses souks, et Zamalek pour une atmosphère plus paisible et artistique.</p></div></details>
+<details><summary>6) Quels musées visiter absolument ?</summary><div class="faq__c"><p class="">Le Musée égyptien pour ses collections pharaoniques et le Musée national de la civilisation égyptienne qui expose les momies royales.</p></div></details>
+<details><summary>7) Quelles expériences originales vivre ?</summary><div class="faq__c"><p class="">Assister à un atelier d’artisanat traditionnel ou partager un dîner égyptien au bord du Nil.</p></div></details>
+<details><summary>8) Que prévoir pour un séjour équilibré ?</summary><div class="faq__c"><p class="">Alternez journées de visites intenses et moments de détente dans un hôtel offrant vue sur le Nil.</p>
+<ul><li>Voyages culturels</li><li>Croisières en Égypte</li><li>Égypte hors des sentiers battus</li></ul></div></details>
+</div>
 </article>
 <aside>
 <div class="lat">
@@ -344,6 +387,26 @@ header .nav>a.btn--or:hover{background:#C87700;border-color:#C87700;box-shadow:0
 </section>
 <section class="section">
 <div class="wrap">
+<div class="devis">
+<div>
+<p class="eyebrow eyebrow--clair">Votre projet</p>
+<h2>Combien de jours pour Caire, dans votre voyage&nbsp;?</h2>
+<ul>
+<li><svg width="17" height="17" viewBox="0 0 17 17" fill="none" aria-hidden="true"><path d="M3 8.8l3.6 3.6L14 5" stroke="#FBB50E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Devis gratuit, détaillé jour par jour, sans engagement</li>
+<li><svg width="17" height="17" viewBox="0 0 17 17" fill="none" aria-hidden="true"><path d="M3 8.8l3.6 3.6L14 5" stroke="#FBB50E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Guide égyptologue francophone et chauffeur privatif</li>
+<li><svg width="17" height="17" viewBox="0 0 17 17" fill="none" aria-hidden="true"><path d="M3 8.8l3.6 3.6L14 5" stroke="#FBB50E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Acompte seulement une fois l'itinéraire validé</li>
+</ul>
+</div>
+<div class="devis__act">
+<a href="https://authentiquegypte.com/sur-mesure/" class="btn btn--or btn--bloc">Demander mon devis</a>
+<a href="https://wa.me/201066619098" class="btn btn--wa btn--bloc">Poser une question sur WhatsApp</a>
+<small>Aucune carte bancaire demandée à cette étape.</small>
+</div>
+</div>
+</div>
+</section>
+<section class="section">
+<div class="wrap">
 <p class="eyebrow">Poursuivre le voyage</p>
 <h2 style="margin-bottom:14px">Caire se combine bien</h2>
 <p class="lede" style="margin-bottom:32px">Les distances comptent : voici ce qui s&#x27;ajoute sans casser le rythme.</p>
@@ -354,7 +417,7 @@ header .nav>a.btn--or:hover{background:#C87700;border-color:#C87700;box-shadow:0
 <div class="carte__pied"><span></span><span class="lien-fl">Découvrir <svg width="15" height="11" viewBox="0 0 15 11" fill="none" aria-hidden="true"><path d="M1 5.5h12M9 1.5l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div></div>
 </a>
 <a class="carte" href="https://authentiquegypte.com/mont-sinai/">
-<div class="carte__img"><img src="" alt="Voyage au Mont Sinaï sur mesure" loading="lazy" decoding="async"></div>
+<div class="carte__img"><img src="https://authentiquegypte.com/wp-content/uploads/2023/11/jorge-fernandez-salas-59eU1QM4znI-unsplash.jpg" alt="jorge-fernandez-salas-59eU1QM4znI-unsplash" loading="lazy" decoding="async"></div>
 <div class="carte__corps"><h3>Voyage au Mont Sinaï sur mesure</h3><p class="carte__route">Confiez l&#x27;organisation de votre voyage en Égypte à nos agents…</p>
 <div class="carte__pied"><span></span><span class="lien-fl">Découvrir <svg width="15" height="11" viewBox="0 0 15 11" fill="none" aria-hidden="true"><path d="M1 5.5h12M9 1.5l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div></div>
 </a>

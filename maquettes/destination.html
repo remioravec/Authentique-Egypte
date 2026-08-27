@@ -86,6 +86,54 @@
 .saison .br{background:var(--rouge-fond);color:var(--rouge)}
 .saison b{display:block;font-size:.74rem;font-weight:600;opacity:.8;margin-top:3px}
 
+/* ---------- FAQ ----------
+   Le balisage existait sans style : les questions sortaient en
+   accordéons bruts du navigateur. Même dessin en cartes que les
+   gabarits voyage et catégorie. */
+.faq{display:grid;gap:10px}
+.faq details{border:1px solid var(--ligne);border-radius:var(--r-m);background:var(--papier);
+  transition:border-color .25s var(--ease),box-shadow .25s var(--ease)}
+.faq details[open]{border-color:var(--or);box-shadow:var(--ombre)}
+.faq summary{padding:15px 56px 15px 18px;font-weight:600;font-size:1rem;cursor:pointer;color:var(--noir);
+  position:relative;list-style:none;display:block;font-family:"Archivo",sans-serif;letter-spacing:-.3px}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";position:absolute;right:15px;top:50%;transform:translateY(-50%);
+  width:26px;height:26px;border-radius:50%;background:var(--or-fond);color:#7A5605;
+  display:grid;place-items:center;font-size:1.15rem;font-weight:500;transition:transform .25s var(--ease)}
+.faq details[open] summary::after{transform:translateY(-50%) rotate(45deg)}
+.faq summary:hover{color:var(--teal-txt)}
+.faq__c{padding:0 18px 16px;color:var(--texte)}
+.faq__c :last-child{margin-bottom:0}
+.faq__c ul{padding-left:20px;margin:0 0 1em}
+
+/* ---------- cartes d'atouts ----------
+   Les petits arguments (un titre, un paragraphe) en cartes cochées,
+   comme sur le gabarit catégorie. */
+.atouts{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:6px 0 10px}
+.atout{background:var(--papier);border:1px solid var(--ligne);border-radius:var(--r-m);padding:20px 20px 18px}
+.atout h3{font-size:.98rem;margin:0 0 8px;display:flex;gap:10px;align-items:center}
+.atout h3::before{content:"✓";flex:0 0 auto;width:24px;height:24px;border-radius:50%;
+  background:var(--teal-fond);color:var(--teal-txt);font-size:.8rem;font-weight:700;
+  display:grid;place-items:center}
+.atout p{font-size:.92rem;color:var(--texte);margin:0;line-height:1.6}
+@media (max-width:860px){
+  .atouts{grid-template-columns:1fr}
+}
+
+/* ---------- bande devis ----------
+   Le balisage existait sans style — repris d'index.html. */
+.devis{background:var(--nuit-900);color:#fff;border-radius:24px;padding:clamp(34px,5vw,56px);
+  display:grid;grid-template-columns:1.1fr .9fr;gap:44px;align-items:center}
+.devis h2{color:#fff}
+.devis ul{list-style:none;padding:0;margin:22px 0 0;display:grid;gap:11px;font-size:.95rem;color:#C3D5DA}
+.devis li{display:flex;gap:11px;align-items:flex-start}
+.devis li svg{flex:0 0 auto;margin-top:5px}
+.devis__act{display:grid;gap:12px}
+.devis__act small{color:#B0CCD9;font-size:.81rem;text-align:center;font-family:"Manrope",sans-serif}
+@media (max-width:860px){
+  .devis{grid-template-columns:1fr;gap:28px}
+}
+
 /* ---------- panneau latéral ---------- */
 .lat{display:grid;gap:16px}
 .lat__b{background:#fff;border:1px solid var(--ligne);border-radius:var(--r-l);padding:22px;

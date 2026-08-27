@@ -87,6 +87,54 @@
 .saison .br{background:var(--rouge-fond);color:var(--rouge)}
 .saison b{display:block;font-size:.74rem;font-weight:600;opacity:.8;margin-top:3px}
 
+/* ---------- FAQ ----------
+   Le balisage existait sans style : les questions sortaient en
+   accordéons bruts du navigateur. Même dessin en cartes que les
+   gabarits voyage et catégorie. */
+.faq{display:grid;gap:10px}
+.faq details{border:1px solid var(--ligne);border-radius:var(--r-m);background:var(--papier);
+  transition:border-color .25s var(--ease),box-shadow .25s var(--ease)}
+.faq details[open]{border-color:var(--or);box-shadow:var(--ombre)}
+.faq summary{padding:15px 56px 15px 18px;font-weight:600;font-size:1rem;cursor:pointer;color:var(--noir);
+  position:relative;list-style:none;display:block;font-family:"Archivo",sans-serif;letter-spacing:-.3px}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";position:absolute;right:15px;top:50%;transform:translateY(-50%);
+  width:26px;height:26px;border-radius:50%;background:var(--or-fond);color:#7A5605;
+  display:grid;place-items:center;font-size:1.15rem;font-weight:500;transition:transform .25s var(--ease)}
+.faq details[open] summary::after{transform:translateY(-50%) rotate(45deg)}
+.faq summary:hover{color:var(--teal-txt)}
+.faq__c{padding:0 18px 16px;color:var(--texte)}
+.faq__c :last-child{margin-bottom:0}
+.faq__c ul{padding-left:20px;margin:0 0 1em}
+
+/* ---------- cartes d'atouts ----------
+   Les petits arguments (un titre, un paragraphe) en cartes cochées,
+   comme sur le gabarit catégorie. */
+.atouts{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:6px 0 10px}
+.atout{background:var(--papier);border:1px solid var(--ligne);border-radius:var(--r-m);padding:20px 20px 18px}
+.atout h3{font-size:.98rem;margin:0 0 8px;display:flex;gap:10px;align-items:center}
+.atout h3::before{content:"✓";flex:0 0 auto;width:24px;height:24px;border-radius:50%;
+  background:var(--teal-fond);color:var(--teal-txt);font-size:.8rem;font-weight:700;
+  display:grid;place-items:center}
+.atout p{font-size:.92rem;color:var(--texte);margin:0;line-height:1.6}
+@media (max-width:860px){
+  .atouts{grid-template-columns:1fr}
+}
+
+/* ---------- bande devis ----------
+   Le balisage existait sans style — repris d'index.html. */
+.devis{background:var(--nuit-900);color:#fff;border-radius:24px;padding:clamp(34px,5vw,56px);
+  display:grid;grid-template-columns:1.1fr .9fr;gap:44px;align-items:center}
+.devis h2{color:#fff}
+.devis ul{list-style:none;padding:0;margin:22px 0 0;display:grid;gap:11px;font-size:.95rem;color:#C3D5DA}
+.devis li{display:flex;gap:11px;align-items:flex-start}
+.devis li svg{flex:0 0 auto;margin-top:5px}
+.devis__act{display:grid;gap:12px}
+.devis__act small{color:#B0CCD9;font-size:.81rem;text-align:center;font-family:"Manrope",sans-serif}
+@media (max-width:860px){
+  .devis{grid-template-columns:1fr;gap:28px}
+}
+
 /* ---------- panneau latéral ---------- */
 .lat{display:grid;gap:16px}
 .lat__b{background:#fff;border:1px solid var(--ligne);border-radius:var(--r-l);padding:22px;
@@ -237,23 +285,13 @@ header .nav>a.btn--or:hover{background:#C87700;border-color:#C87700;box-shadow:0
 <div class="colonnes">
 <article class="corps">
 <p class="src">Contenu repris de <a href="https://authentiquegypte.com/voyage-a-assouan/">https://authentiquegypte.com/voyage-a-assouan/</a>, sans réécriture&nbsp;: seule la mise en page change.</p>
+<div class="atouts">
+<div class="atout"><h3>Privées &amp; personnalisées</h3><p>Chaque itinéraire est conçu selon vos envies, votre rythme et votre façon de voyager. Explorez l’Égypte à votre image.</p></div>
+<div class="atout"><h3>Avec un expert local</h3><p>Guidé par des passionnés égyptiens, vous découvrez l’histoire, les traditions et les secrets bien gardés du pays. Un voyage authentique, raconté par ceux qui le vivent.</p></div>
+</div>
 <div class="sites">
 <article class="site">
-<img src="https://authentiquegypte.com/wp-content/uploads/2023/11/kristina-tamasauskaite-bVRArO7LwB0-unsplash-scaled.jpg" alt="Privées &amp; personnalisées" loading="lazy" decoding="async">
-<div class="site__t">
-<h3>Privées &amp; personnalisées</h3>
-<p class="">Chaque itinéraire est conçu selon vos envies, votre rythme et votre façon de voyager. Explorez l’Égypte à votre image.</p>
-</div>
-</article>
-<article class="site">
-<img src="https://authentiquegypte.com/wp-content/uploads/2023/11/flying-carpet-Si1MFhSLNWY-unsplash-scaled.jpg" alt="Avec un expert local" loading="lazy" decoding="async">
-<div class="site__t">
-<h3>Avec un expert local</h3>
-<p class="">Guidé par des passionnés égyptiens, vous découvrez l’histoire, les traditions et les secrets bien gardés du pays. Un voyage authentique, raconté par ceux qui le vivent.</p>
-</div>
-</article>
-<article class="site">
-<img src="https://authentiquegypte.com/wp-content/uploads/2023/11/WhatsApp-Image-2025-08-14-at-13.23.16.jpeg" alt="Loin de la foule" loading="lazy" decoding="async">
+<img src="https://authentiquegypte.com/wp-content/uploads/2023/11/kristina-tamasauskaite-bVRArO7LwB0-unsplash-scaled.jpg" alt="Loin de la foule" loading="lazy" decoding="async">
 <div class="site__t">
 <h3>Loin de la foule</h3>
 <p class="">Nous vous emmenons hors des sentiers battus, dans des lieux confidentiels, loin du tourisme de masse. Rencontrez l’Égypte vraie, en toute sérénité.</p>
@@ -262,24 +300,6 @@ header .nav>a.btn--or:hover{background:#C87700;border-color:#C87700;box-shadow:0
 </article>
 </div>
 
-<h3>1) Quels sites visiter absolument à Assouan ?</h3>
-<p class="">Le temple de Philae, joyau sauvé des eaux, l’obélisque inachevé pour comprendre le travail des carrières, le mausolée de l’Aga Khan et le monastère Saint-Siméon, accessibles en bateau ou à pied selon la saison.</p>
-<h3>2) Quelles expériences authentiques vivre sur place ?</h3>
-<p class="">Une escapade en pays nubien, une balade en felouque au coucher du soleil entre les îles Éléphantine et Kitchener, ou encore la découverte des maisons aux façades peintes des villages traditionnels.</p>
-<h3>3) Peut-on combiner Assouan avec un séjour au Lac Nasser ?</h3>
-<p class="">Oui, une croisière sur le lac Nasser permet de relier Assouan à Abou Simbel, en visitant des temples isolés et moins fréquentés, offrant une expérience à la fois culturelle et contemplative.</p>
-<h3>4) Quelle est la meilleure saison pour visiter ?</h3>
-<p class="">De novembre à mars, pour des journées ensoleillées mais douces, idéales pour les visites en plein air et les promenades en bateau.</p>
-<h3>5) Comment se déplacer à Assouan ?</h3>
-<p class="">À pied dans le centre-ville, en bateau pour rejoindre les îles, ou en taxi/voiture privée pour atteindre les sites périphériques comme le haut barrage ou le village de Kalabsha.</p>
-<h3>6) Quels marchés locaux explorer ?</h3>
-<p class="">Le souk d’Assouan, parfumé d’épices et animé par les étals de tissus, de bijoux et d’objets artisanaux, est un incontournable pour s’imprégner de la vie locale et ramener des souvenirs uniques.</p>
-<h3>7) Y a-t-il des activités adaptées aux familles ?</h3>
-<p class="">Oui : balades sur le Nil, visites de jardins botaniques, ateliers de peinture nubienne et découvertes interactives des temples permettent aux enfants de s’immerger dans l’histoire tout en s’amusant.</p>
-<h3>8) Quelles autres destinations associer à Assouan ?</h3>
-<p class="">Louxor et sa concentration exceptionnelle de sites antiques, ou le désert égyptien pour compléter le voyage par un contraste saisissant entre verdure du Nil et immensité minérale.</p>
-<p class="">Pour prolonger l’aventure :</p>
-<ul><li>Voyage à Louxor</li><li>Lac Nasser</li><li>Égypte hors des sentiers battus</li></ul>
 <h2>Organisation du voyage</h2>
 <p class="">Pourquoi visiter Assouan lors d’un voyage en Égypte ?</p>
 <p class="">Assouan est réputée pour son ambiance paisible, son patrimoine nubien, et son rôle historique en tant que porte d’entrée vers la Nubie. La ville offre un cadre différent de Louxor ou du Caire : plus calme, plus nature, avec une atmosphère fluviale et insulaire marquée par le Nil.</p>
@@ -325,6 +345,19 @@ header .nav>a.btn--or:hover{background:#C87700;border-color:#C87700;box-shadow:0
 <p class="">un ancrage nubien, absent des autres villes</p>
 <p class="">une proximité avec des sites uniques comme Abou Simbel</p>
 <p class="">Cela en fait souvent une étape complémentaire, plutôt qu&#x27;une alternative aux grandes villes.</p>
+<h2 id="faq">Questions fréquentes</h2>
+<div class="faq">
+<details open><summary>1) Quels sites visiter absolument à Assouan ?</summary><div class="faq__c"><p class="">Le temple de Philae, joyau sauvé des eaux, l’obélisque inachevé pour comprendre le travail des carrières, le mausolée de l’Aga Khan et le monastère Saint-Siméon, accessibles en bateau ou à pied selon la saison.</p></div></details>
+<details><summary>2) Quelles expériences authentiques vivre sur place ?</summary><div class="faq__c"><p class="">Une escapade en pays nubien, une balade en felouque au coucher du soleil entre les îles Éléphantine et Kitchener, ou encore la découverte des maisons aux façades peintes des villages traditionnels.</p></div></details>
+<details><summary>3) Peut-on combiner Assouan avec un séjour au Lac Nasser ?</summary><div class="faq__c"><p class="">Oui, une croisière sur le lac Nasser permet de relier Assouan à Abou Simbel, en visitant des temples isolés et moins fréquentés, offrant une expérience à la fois culturelle et contemplative.</p></div></details>
+<details><summary>4) Quelle est la meilleure saison pour visiter ?</summary><div class="faq__c"><p class="">De novembre à mars, pour des journées ensoleillées mais douces, idéales pour les visites en plein air et les promenades en bateau.</p></div></details>
+<details><summary>5) Comment se déplacer à Assouan ?</summary><div class="faq__c"><p class="">À pied dans le centre-ville, en bateau pour rejoindre les îles, ou en taxi/voiture privée pour atteindre les sites périphériques comme le haut barrage ou le village de Kalabsha.</p></div></details>
+<details><summary>6) Quels marchés locaux explorer ?</summary><div class="faq__c"><p class="">Le souk d’Assouan, parfumé d’épices et animé par les étals de tissus, de bijoux et d’objets artisanaux, est un incontournable pour s’imprégner de la vie locale et ramener des souvenirs uniques.</p></div></details>
+<details><summary>7) Y a-t-il des activités adaptées aux familles ?</summary><div class="faq__c"><p class="">Oui : balades sur le Nil, visites de jardins botaniques, ateliers de peinture nubienne et découvertes interactives des temples permettent aux enfants de s’immerger dans l’histoire tout en s’amusant.</p></div></details>
+<details><summary>8) Quelles autres destinations associer à Assouan ?</summary><div class="faq__c"><p class="">Louxor et sa concentration exceptionnelle de sites antiques, ou le désert égyptien pour compléter le voyage par un contraste saisissant entre verdure du Nil et immensité minérale.</p>
+<p class="">Pour prolonger l’aventure :</p>
+<ul><li>Voyage à Louxor</li><li>Lac Nasser</li><li>Égypte hors des sentiers battus</li></ul></div></details>
+</div>
 </article>
 <aside>
 <div class="lat">
@@ -412,6 +445,26 @@ header .nav>a.btn--or:hover{background:#C87700;border-color:#C87700;box-shadow:0
 </div>
 </div>
 </article>
+</div>
+</div>
+</section>
+<section class="section">
+<div class="wrap">
+<div class="devis">
+<div>
+<p class="eyebrow eyebrow--clair">Votre projet</p>
+<h2>Combien de jours pour Assouan, dans votre voyage&nbsp;?</h2>
+<ul>
+<li><svg width="17" height="17" viewBox="0 0 17 17" fill="none" aria-hidden="true"><path d="M3 8.8l3.6 3.6L14 5" stroke="#FBB50E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Devis gratuit, détaillé jour par jour, sans engagement</li>
+<li><svg width="17" height="17" viewBox="0 0 17 17" fill="none" aria-hidden="true"><path d="M3 8.8l3.6 3.6L14 5" stroke="#FBB50E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Guide égyptologue francophone et chauffeur privatif</li>
+<li><svg width="17" height="17" viewBox="0 0 17 17" fill="none" aria-hidden="true"><path d="M3 8.8l3.6 3.6L14 5" stroke="#FBB50E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Acompte seulement une fois l'itinéraire validé</li>
+</ul>
+</div>
+<div class="devis__act">
+<a href="https://authentiquegypte.com/sur-mesure/" class="btn btn--or btn--bloc">Demander mon devis</a>
+<a href="https://wa.me/201066619098" class="btn btn--wa btn--bloc">Poser une question sur WhatsApp</a>
+<small>Aucune carte bancaire demandée à cette étape.</small>
+</div>
 </div>
 </div>
 </section>

@@ -87,6 +87,54 @@
 .saison .br{background:var(--rouge-fond);color:var(--rouge)}
 .saison b{display:block;font-size:.74rem;font-weight:600;opacity:.8;margin-top:3px}
 
+/* ---------- FAQ ----------
+   Le balisage existait sans style : les questions sortaient en
+   accordéons bruts du navigateur. Même dessin en cartes que les
+   gabarits voyage et catégorie. */
+.faq{display:grid;gap:10px}
+.faq details{border:1px solid var(--ligne);border-radius:var(--r-m);background:var(--papier);
+  transition:border-color .25s var(--ease),box-shadow .25s var(--ease)}
+.faq details[open]{border-color:var(--or);box-shadow:var(--ombre)}
+.faq summary{padding:15px 56px 15px 18px;font-weight:600;font-size:1rem;cursor:pointer;color:var(--noir);
+  position:relative;list-style:none;display:block;font-family:"Archivo",sans-serif;letter-spacing:-.3px}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";position:absolute;right:15px;top:50%;transform:translateY(-50%);
+  width:26px;height:26px;border-radius:50%;background:var(--or-fond);color:#7A5605;
+  display:grid;place-items:center;font-size:1.15rem;font-weight:500;transition:transform .25s var(--ease)}
+.faq details[open] summary::after{transform:translateY(-50%) rotate(45deg)}
+.faq summary:hover{color:var(--teal-txt)}
+.faq__c{padding:0 18px 16px;color:var(--texte)}
+.faq__c :last-child{margin-bottom:0}
+.faq__c ul{padding-left:20px;margin:0 0 1em}
+
+/* ---------- cartes d'atouts ----------
+   Les petits arguments (un titre, un paragraphe) en cartes cochées,
+   comme sur le gabarit catégorie. */
+.atouts{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:6px 0 10px}
+.atout{background:var(--papier);border:1px solid var(--ligne);border-radius:var(--r-m);padding:20px 20px 18px}
+.atout h3{font-size:.98rem;margin:0 0 8px;display:flex;gap:10px;align-items:center}
+.atout h3::before{content:"✓";flex:0 0 auto;width:24px;height:24px;border-radius:50%;
+  background:var(--teal-fond);color:var(--teal-txt);font-size:.8rem;font-weight:700;
+  display:grid;place-items:center}
+.atout p{font-size:.92rem;color:var(--texte);margin:0;line-height:1.6}
+@media (max-width:860px){
+  .atouts{grid-template-columns:1fr}
+}
+
+/* ---------- bande devis ----------
+   Le balisage existait sans style — repris d'index.html. */
+.devis{background:var(--nuit-900);color:#fff;border-radius:24px;padding:clamp(34px,5vw,56px);
+  display:grid;grid-template-columns:1.1fr .9fr;gap:44px;align-items:center}
+.devis h2{color:#fff}
+.devis ul{list-style:none;padding:0;margin:22px 0 0;display:grid;gap:11px;font-size:.95rem;color:#C3D5DA}
+.devis li{display:flex;gap:11px;align-items:flex-start}
+.devis li svg{flex:0 0 auto;margin-top:5px}
+.devis__act{display:grid;gap:12px}
+.devis__act small{color:#B0CCD9;font-size:.81rem;text-align:center;font-family:"Manrope",sans-serif}
+@media (max-width:860px){
+  .devis{grid-template-columns:1fr;gap:28px}
+}
+
 /* ---------- panneau latéral ---------- */
 .lat{display:grid;gap:16px}
 .lat__b{background:#fff;border:1px solid var(--ligne);border-radius:var(--r-l);padding:22px;
@@ -237,73 +285,21 @@ header .nav>a.btn--or:hover{background:#C87700;border-color:#C87700;box-shadow:0
 <div class="colonnes">
 <article class="corps">
 <p class="src">Contenu repris de <a href="https://authentiquegypte.com/desert-noir/">https://authentiquegypte.com/desert-noir/</a>, sans réécriture&nbsp;: seule la mise en page change.</p>
+<div class="atouts">
+<div class="atout"><h3>Privées &amp; personnalisées</h3><p>Chaque itinéraire est conçu selon vos envies, votre rythme et votre façon de voyager. Explorez l’Égypte à votre image.</p></div>
+<div class="atout"><h3>Avec un expert local</h3><p>Guidé par des passionnés égyptiens, vous découvrez l’histoire, les traditions et les secrets bien gardés du pays. Un voyage authentique, raconté par ceux qui le vivent.</p></div>
+</div>
 <div class="sites">
 <article class="site">
 <img src="https://authentiquegypte.com/wp-content/uploads/2025/07/WhatsApp-Image-2025-06-27-at-15.33.21_37e02dae.jpg" alt="Bédouin au coucher du soleil" loading="lazy" decoding="async">
-<div class="site__t">
-<h3>Privées &amp; personnalisées</h3>
-<p class="">Chaque itinéraire est conçu selon vos envies, votre rythme et votre façon de voyager. Explorez l’Égypte à votre image.</p>
-</div>
-</article>
-<article class="site">
-<img src="https://authentiquegypte.com/wp-content/uploads/2025/06/DSC00581-1-scaled.jpg" alt="Au sommet du mont Sinaï" loading="lazy" decoding="async">
-<div class="site__t">
-<h3>Avec un expert local</h3>
-<p class="">Guidé par des passionnés égyptiens, vous découvrez l’histoire, les traditions et les secrets bien gardés du pays. Un voyage authentique, raconté par ceux qui le vivent.</p>
-</div>
-</article>
-<article class="site">
-<img src="https://authentiquegypte.com/wp-content/uploads/2023/11/Siwa_Oasis_sunset_on_Maraqi_Egypt.webp" alt="oasis de siwa" loading="lazy" decoding="async">
 <div class="site__t">
 <h3>Loin de la foule</h3>
 <p class="">Nous vous emmenons hors des sentiers battus, dans des lieux confidentiels, loin du tourisme de masse. Rencontrez l’Égypte vraie, en toute sérénité.</p>
 <p class="">Un voyage dans le Désert noir plonge le visiteur dans un univers minéral unique en Égypte. Ses collines sombres recouvertes de basalte offrent un contraste saisissant avec le sable doré du Sahara environnant.</p>
 </div>
 </article>
-<article class="site">
-<img src="https://authentiquegypte.com/wp-content/uploads/2023/11/thales-botelho-de-sousa-mgGbLjY9jlI-unsplash-scaled.webp" alt="Découverte du désert blanc" loading="lazy" decoding="async">
-<div class="site__t">
-<h3>1) Qu’est-ce qui rend le Désert noir si spécial ?</h3>
-<p class="">Ses collines volcaniques noires et ses panoramas à perte de vue en font un lieu à part, loin des circuits touristiques classiques.</p>
-</div>
-</article>
-<article class="site">
-<img src="https://authentiquegypte.com/wp-content/uploads/2023/11/sohaila-i-darwesh-q6Ynh63OwSE-unsplash-scaled.webp" alt="2) Où se situe-t-il ?" loading="lazy" decoding="async">
-<div class="site__t">
-<h3>2) Où se situe-t-il ?</h3>
-<p class="">Entre le Désert blanc et l’oasis de Siwa, dans la région de Bahariya.</p>
-</div>
-</article>
-<article class="site">
-<img src="https://authentiquegypte.com/wp-content/uploads/2023/11/peter-ragheb-naYLQxASRTE-unsplash-scaled.webp" alt="Désert dans l&#x27;Oasis de Fayoum" loading="lazy" decoding="async">
-<div class="site__t">
-<h3>3) Quelle est la meilleure période pour y aller ?</h3>
-<p class="">De novembre à mars, lorsque les températures sont plus supportables pour les excursions.</p>
-</div>
-</article>
-<article class="site">
-<img src="https://authentiquegypte.com/wp-content/uploads/2023/11/e235bfb4-54a3-41cf-9f55-f2ca30fc8a91-1.jpg" alt="4) Quelles activités prévoir ?" loading="lazy" decoding="async">
-<div class="site__t">
-<h3>4) Quelles activités prévoir ?</h3>
-<p class="">Randonnées, exploration des collines volcaniques, et observation des couchers de soleil sur les dunes.</p>
-</div>
-</article>
-<article class="site">
-<img src="https://authentiquegypte.com/wp-content/uploads/2023/11/kristina-tamasauskaite-bVRArO7LwB0-unsplash-scaled.jpg" alt="5) Combien de temps faut-il y passer ?" loading="lazy" decoding="async">
-<div class="site__t">
-<h3>5) Combien de temps faut-il y passer ?</h3>
-<p class="">Une journée complète depuis Bahariya, ou une étape lors d’un circuit dans les déserts égyptiens.</p>
-</div>
-</article>
 </div>
 
-<h3>6) Est-il possible de combiner avec d’autres sites ?</h3>
-<p class="">Oui, notamment avec le Désert blanc ou l’oasis de Fayoum.</p>
-<h3>7) Quelles précautions prendre ?</h3>
-<p class="">Prévoir de l’eau en quantité suffisante, un chapeau, et être accompagné d’un guide connaissant parfaitement la zone.</p>
-<h3>8) Pourquoi y aller avec un guide local ?</h3>
-<p class="">Pour accéder aux zones les plus intéressantes et découvrir des points de vue peu connus, tout en garantissant la sécurité.</p>
-<p class="">Découvrez aussi : Le Désert blanc, Les déserts égyptiens, Égypte hors des sentiers battus.</p>
 <h2>Organisation du voyage</h2>
 <p class="">Qu’est-ce que le Désert noir en Égypte ?</p>
 <p class="">Le Désert noir est une région désertique située à proximité de Bahariya. Il est connu pour ses collines recouvertes de basalte sombre, qui créent un contraste fascinant avec le sable clair. C’est un paysage lunaire, totalement différent du Désert blanc voisin.</p>
@@ -352,6 +348,18 @@ header .nav>a.btn--or:hover{background:#C87700;border-color:#C87700;box-shadow:0
 <p class="">les paysages insolites,</p>
 <p class="">la nature préservée,</p>
 <p class="">les voyages confidentiels,le Désert noir peut être une belle étape de votre voyage en Égypte. Nous serons ravis d’en discuter avec vous pour créer un itinéraire qui vous ressemble.</p>
+<h2 id="faq">Questions fréquentes</h2>
+<div class="faq">
+<details open><summary>1) Qu’est-ce qui rend le Désert noir si spécial ?</summary><div class="faq__c"><p class="">Ses collines volcaniques noires et ses panoramas à perte de vue en font un lieu à part, loin des circuits touristiques classiques.</p></div></details>
+<details><summary>2) Où se situe-t-il ?</summary><div class="faq__c"><p class="">Entre le Désert blanc et l’oasis de Siwa, dans la région de Bahariya.</p></div></details>
+<details><summary>3) Quelle est la meilleure période pour y aller ?</summary><div class="faq__c"><p class="">De novembre à mars, lorsque les températures sont plus supportables pour les excursions.</p></div></details>
+<details><summary>4) Quelles activités prévoir ?</summary><div class="faq__c"><p class="">Randonnées, exploration des collines volcaniques, et observation des couchers de soleil sur les dunes.</p></div></details>
+<details><summary>5) Combien de temps faut-il y passer ?</summary><div class="faq__c"><p class="">Une journée complète depuis Bahariya, ou une étape lors d’un circuit dans les déserts égyptiens.</p></div></details>
+<details><summary>6) Est-il possible de combiner avec d’autres sites ?</summary><div class="faq__c"><p class="">Oui, notamment avec le Désert blanc ou l’oasis de Fayoum.</p></div></details>
+<details><summary>7) Quelles précautions prendre ?</summary><div class="faq__c"><p class="">Prévoir de l’eau en quantité suffisante, un chapeau, et être accompagné d’un guide connaissant parfaitement la zone.</p></div></details>
+<details><summary>8) Pourquoi y aller avec un guide local ?</summary><div class="faq__c"><p class="">Pour accéder aux zones les plus intéressantes et découvrir des points de vue peu connus, tout en garantissant la sécurité.</p>
+<p class="">Découvrez aussi : Le Désert blanc, Les déserts égyptiens, Égypte hors des sentiers battus.</p></div></details>
+</div>
 </article>
 <aside>
 <div class="lat">
@@ -456,6 +464,26 @@ header .nav>a.btn--or:hover{background:#C87700;border-color:#C87700;box-shadow:0
 </section>
 <section class="section">
 <div class="wrap">
+<div class="devis">
+<div>
+<p class="eyebrow eyebrow--clair">Votre projet</p>
+<h2>Combien de jours pour Désert noir, dans votre voyage&nbsp;?</h2>
+<ul>
+<li><svg width="17" height="17" viewBox="0 0 17 17" fill="none" aria-hidden="true"><path d="M3 8.8l3.6 3.6L14 5" stroke="#FBB50E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Devis gratuit, détaillé jour par jour, sans engagement</li>
+<li><svg width="17" height="17" viewBox="0 0 17 17" fill="none" aria-hidden="true"><path d="M3 8.8l3.6 3.6L14 5" stroke="#FBB50E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Guide égyptologue francophone et chauffeur privatif</li>
+<li><svg width="17" height="17" viewBox="0 0 17 17" fill="none" aria-hidden="true"><path d="M3 8.8l3.6 3.6L14 5" stroke="#FBB50E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Acompte seulement une fois l'itinéraire validé</li>
+</ul>
+</div>
+<div class="devis__act">
+<a href="https://authentiquegypte.com/sur-mesure/" class="btn btn--or btn--bloc">Demander mon devis</a>
+<a href="https://wa.me/201066619098" class="btn btn--wa btn--bloc">Poser une question sur WhatsApp</a>
+<small>Aucune carte bancaire demandée à cette étape.</small>
+</div>
+</div>
+</div>
+</section>
+<section class="section">
+<div class="wrap">
 <p class="eyebrow">Poursuivre le voyage</p>
 <h2 style="margin-bottom:14px">Désert noir se combine bien</h2>
 <p class="lede" style="margin-bottom:32px">Les distances comptent : voici ce qui s&#x27;ajoute sans casser le rythme.</p>
@@ -466,7 +494,7 @@ header .nav>a.btn--or:hover{background:#C87700;border-color:#C87700;box-shadow:0
 <div class="carte__pied"><span></span><span class="lien-fl">Découvrir <svg width="15" height="11" viewBox="0 0 15 11" fill="none" aria-hidden="true"><path d="M1 5.5h12M9 1.5l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div></div>
 </a>
 <a class="carte" href="https://authentiquegypte.com/mont-sinai/">
-<div class="carte__img"><img src="" alt="Voyage au Mont Sinaï sur mesure" loading="lazy" decoding="async"></div>
+<div class="carte__img"><img src="https://authentiquegypte.com/wp-content/uploads/2023/11/jorge-fernandez-salas-59eU1QM4znI-unsplash.jpg" alt="jorge-fernandez-salas-59eU1QM4znI-unsplash" loading="lazy" decoding="async"></div>
 <div class="carte__corps"><h3>Voyage au Mont Sinaï sur mesure</h3><p class="carte__route">Confiez l&#x27;organisation de votre voyage en Égypte à nos agents…</p>
 <div class="carte__pied"><span></span><span class="lien-fl">Découvrir <svg width="15" height="11" viewBox="0 0 15 11" fill="none" aria-hidden="true"><path d="M1 5.5h12M9 1.5l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div></div>
 </a>

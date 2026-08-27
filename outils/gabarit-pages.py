@@ -530,10 +530,27 @@ def flanc_destination(x, ctx, sejours):
 
 def corps_destination(x, ctx):
     """Le corps deux-colonnes : les sections de la page, les sections
-    illustrées en blocs .site comme sur la maquette."""
-    sections = sections_propres(x, ctx)
+    illustrées en blocs .site comme sur la maquette, les questions en
+    cartes FAQ à la fin — jamais en bloc illustré."""
+    sections, faq, atouts = [], [], []
+    for s in sections_propres(x, ctx):
+        blocs = [b for b in s['blocs']
+                 if (b.get('texte') or '').strip().lower().rstrip(' !.') not in ETIQUETTES]
+        if not blocs:
+            continue
+        if s['titre'] and '?' in s['titre'] and s['niveau'] >= 3:
+            faq.append(dict(s, blocs=blocs))
+        elif (s['titre'] and s['niveau'] >= 3 and len(blocs) == 1
+              and blocs[0]['type'] == 'p' and len(blocs[0]['texte']) <= 260):
+            atouts.append((s['titre'], blocs[0]['texte']))
+        else:
+            sections.append(dict(s, blocs=blocs))
     images = list(x['_images'][1:])
     out = [M.bandeau_source(x['url'])]
+    if atouts:
+        out.append('<div class="atouts">\n%s\n</div>'
+                   % '\n'.join('<div class="atout"><h3>%s</h3><p>%s</p></div>'
+                               % (M.e(t), M.e(p)) for t, p in atouts))
     sites, libres = [], []
     for s in sections:
         illustrable = s['titre'] and images and len(s['blocs']) <= 6
@@ -552,8 +569,33 @@ def corps_destination(x, ctx):
         if titre and titre.strip().lower() != x['titre'].strip().lower():
             out.append('<h%d>%s</h%d>' % (max(s['niveau'], 2), M.e(titre), max(s['niveau'], 2)))
         out.append(M.paragraphes(s['blocs'], ''))
+    if faq:
+        out.append('<h2 id="faq">Questions fréquentes</h2>\n<div class="faq">\n%s\n</div>'
+                   % '\n'.join('<details%s><summary>%s</summary><div class="faq__c">%s</div></details>'
+                               % (' open' if n == 0 else '', M.e(s['titre']),
+                                  M.paragraphes(s['blocs'], ''))
+                               for n, s in enumerate(faq)))
 
     return '<article class="corps">\n%s\n</article>' % '\n'.join(out)
+
+
+def bande_devis(nc):
+    """La bande de conversion de la maquette destination, telle quelle."""
+    coche = ('<svg width="17" height="17" viewBox="0 0 17 17" fill="none" aria-hidden="true">'
+             '<path d="M3 8.8l3.6 3.6L14 5" stroke="#FBB50E" stroke-width="2" '
+             'stroke-linecap="round" stroke-linejoin="round"/></svg> ')
+
+    return ('<section class="section">\n<div class="wrap">\n<div class="devis">\n<div>\n'
+            '<p class="eyebrow eyebrow--clair">Votre projet</p>\n'
+            '<h2>Combien de jours pour %s, dans votre voyage&nbsp;?</h2>\n<ul>\n'
+            '<li>%sDevis gratuit, détaillé jour par jour, sans engagement</li>\n'
+            '<li>%sGuide égyptologue francophone et chauffeur privatif</li>\n'
+            '<li>%sAcompte seulement une fois l\'itinéraire validé</li>\n</ul>\n</div>\n'
+            '<div class="devis__act">\n'
+            '<a href="%s" class="btn btn--or btn--bloc">Demander mon devis</a>\n'
+            '<a href="%s" class="btn btn--wa btn--bloc">Poser une question sur WhatsApp</a>\n'
+            '<small>Aucune carte bancaire demandée à cette étape.</small>\n</div>\n'
+            '</div>\n</div>\n</section>' % (M.e(nc), coche, coche, coche, DEVIS, WHATSAPP))
 
 
 def page_destination(x, ctx, gabarit):
@@ -566,10 +608,15 @@ def page_destination(x, ctx, gabarit):
         chips.append((str(len(sejours)), 'séjour%s y passe%s' % (('s', 'nt') if len(sejours) > 1 else ('', ''))))
 
     if gabarit == 'destination':
+        if not x['_images'] and sejours:
+            # La page en ligne n'a pas d'image valide : le chapeau
+            # emprunte celle d'un séjour qui passe par la destination.
+            x['_images'] = next((v['_images'] for v in sejours if v['_images']), [])
         flanc = flanc_destination(x, ctx, sejours)
         soeurs = [s for s in ctx['destinations'] if s['id'] != x['id']]
         queue = [
             section_sejours(x, sejours, 'Les séjours qui passent par %s' % nc, 'Passer du guide au voyage'),
+            bande_devis(nc),
             section_soeurs('%s se combine bien' % nc, 'Poursuivre le voyage',
                            'Les distances comptent : voici ce qui s\'ajoute sans casser le rythme.', soeurs),
         ]

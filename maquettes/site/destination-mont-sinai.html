@@ -87,6 +87,54 @@
 .saison .br{background:var(--rouge-fond);color:var(--rouge)}
 .saison b{display:block;font-size:.74rem;font-weight:600;opacity:.8;margin-top:3px}
 
+/* ---------- FAQ ----------
+   Le balisage existait sans style : les questions sortaient en
+   accordéons bruts du navigateur. Même dessin en cartes que les
+   gabarits voyage et catégorie. */
+.faq{display:grid;gap:10px}
+.faq details{border:1px solid var(--ligne);border-radius:var(--r-m);background:var(--papier);
+  transition:border-color .25s var(--ease),box-shadow .25s var(--ease)}
+.faq details[open]{border-color:var(--or);box-shadow:var(--ombre)}
+.faq summary{padding:15px 56px 15px 18px;font-weight:600;font-size:1rem;cursor:pointer;color:var(--noir);
+  position:relative;list-style:none;display:block;font-family:"Archivo",sans-serif;letter-spacing:-.3px}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";position:absolute;right:15px;top:50%;transform:translateY(-50%);
+  width:26px;height:26px;border-radius:50%;background:var(--or-fond);color:#7A5605;
+  display:grid;place-items:center;font-size:1.15rem;font-weight:500;transition:transform .25s var(--ease)}
+.faq details[open] summary::after{transform:translateY(-50%) rotate(45deg)}
+.faq summary:hover{color:var(--teal-txt)}
+.faq__c{padding:0 18px 16px;color:var(--texte)}
+.faq__c :last-child{margin-bottom:0}
+.faq__c ul{padding-left:20px;margin:0 0 1em}
+
+/* ---------- cartes d'atouts ----------
+   Les petits arguments (un titre, un paragraphe) en cartes cochées,
+   comme sur le gabarit catégorie. */
+.atouts{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:6px 0 10px}
+.atout{background:var(--papier);border:1px solid var(--ligne);border-radius:var(--r-m);padding:20px 20px 18px}
+.atout h3{font-size:.98rem;margin:0 0 8px;display:flex;gap:10px;align-items:center}
+.atout h3::before{content:"✓";flex:0 0 auto;width:24px;height:24px;border-radius:50%;
+  background:var(--teal-fond);color:var(--teal-txt);font-size:.8rem;font-weight:700;
+  display:grid;place-items:center}
+.atout p{font-size:.92rem;color:var(--texte);margin:0;line-height:1.6}
+@media (max-width:860px){
+  .atouts{grid-template-columns:1fr}
+}
+
+/* ---------- bande devis ----------
+   Le balisage existait sans style — repris d'index.html. */
+.devis{background:var(--nuit-900);color:#fff;border-radius:24px;padding:clamp(34px,5vw,56px);
+  display:grid;grid-template-columns:1.1fr .9fr;gap:44px;align-items:center}
+.devis h2{color:#fff}
+.devis ul{list-style:none;padding:0;margin:22px 0 0;display:grid;gap:11px;font-size:.95rem;color:#C3D5DA}
+.devis li{display:flex;gap:11px;align-items:flex-start}
+.devis li svg{flex:0 0 auto;margin-top:5px}
+.devis__act{display:grid;gap:12px}
+.devis__act small{color:#B0CCD9;font-size:.81rem;text-align:center;font-family:"Manrope",sans-serif}
+@media (max-width:860px){
+  .devis{grid-template-columns:1fr;gap:28px}
+}
+
 /* ---------- panneau latéral ---------- */
 .lat{display:grid;gap:16px}
 .lat__b{background:#fff;border:1px solid var(--ligne);border-radius:var(--r-l);padding:22px;
@@ -221,7 +269,7 @@ header .nav>a.btn--or:hover{background:#C87700;border-color:#C87700;box-shadow:0
 
 <main>
 <section class="chapeau">
-
+<div class="chapeau__bg"><img src="https://authentiquegypte.com/wp-content/uploads/2023/11/jorge-fernandez-salas-59eU1QM4znI-unsplash.jpg" alt="" fetchpriority="high" decoding="async"></div>
 <div class="wrap">
 <nav class="ariane" aria-label="Fil d'Ariane"><ol>
 <li><a href="../index.html">Accueil</a></li>
@@ -237,32 +285,21 @@ header .nav>a.btn--or:hover{background:#C87700;border-color:#C87700;box-shadow:0
 <div class="colonnes">
 <article class="corps">
 <p class="src">Contenu repris de <a href="https://authentiquegypte.com/mont-sinai/">https://authentiquegypte.com/mont-sinai/</a>, sans réécriture&nbsp;: seule la mise en page change.</p>
-<p class="">Aucun contenu disponible</p>
-<h3>Privées &amp; personnalisées</h3>
-<p class="">Chaque itinéraire est conçu selon vos envies, votre rythme et votre façon de voyager. Explorez l’Égypte à votre image.</p>
-<h3>Avec un expert local</h3>
-<p class="">Guidé par des passionnés égyptiens, vous découvrez l’histoire, les traditions et les secrets bien gardés du pays. Un voyage authentique, raconté par ceux qui le vivent.</p>
+<div class="atouts">
+<div class="atout"><h3>Privées &amp; personnalisées</h3><p>Chaque itinéraire est conçu selon vos envies, votre rythme et votre façon de voyager. Explorez l’Égypte à votre image.</p></div>
+<div class="atout"><h3>Avec un expert local</h3><p>Guidé par des passionnés égyptiens, vous découvrez l’histoire, les traditions et les secrets bien gardés du pays. Un voyage authentique, raconté par ceux qui le vivent.</p></div>
+</div>
+<div class="sites">
+<article class="site">
+<img src="https://authentiquegypte.com/wp-content/uploads/2023/11/6214467596_f28bb8e91d_b.jpg" alt="Loin de la foule" loading="lazy" decoding="async">
+<div class="site__t">
 <h3>Loin de la foule</h3>
 <p class="">Nous vous emmenons hors des sentiers battus, dans des lieux confidentiels, loin du tourisme de masse. Rencontrez l’Égypte vraie, en toute sérénité.</p>
 <p class="">Un voyage au Lac Nasser combine sérénité absolue et immersion dans l’histoire. Créé avec la construction du Haut-Barrage d’Assouan, il dévoile des paysages désertiques saisissants et des trésors archéologiques déplacés pour être préservés.</p>
-<h3>1) Pourquoi le Lac Nasser est-il si particulier ?</h3>
-<p class="">Sa création a nécessité le déplacement de monuments pharaoniques, dont Abu Simbel, offrant un témoignage unique d’ingénierie et de préservation patrimoniale.</p>
-<h3>2) Quelles sont les principales étapes d’un voyage au Lac Nasser ?</h3>
-<p class="">Une croisière ponctuée d’escales aux temples de Kalabsha, Amada, Wadi el-Seboua et au site de Qasr Ibrim.</p>
-<h3>3) Quelle faune observer ?</h3>
-<p class="">Des crocodiles du Nil, une diversité d’oiseaux migrateurs, ainsi qu’une faune aquatique variée.</p>
-<h3>4) Quelle est la meilleure période pour visiter ?</h3>
-<p class="">De novembre à mars, période idéale pour éviter les fortes chaleurs et profiter d’une navigation confortable.</p>
-<h3>5) Combien de jours faut-il prévoir ?</h3>
-<p class="">Quatre à cinq jours permettent de découvrir les sites majeurs tout en savourant la tranquillité des eaux.</p>
-<h3>6) Est-ce adapté aux amateurs de photographie ?</h3>
-<p class="">Oui, avec ses temples baignés par la lumière dorée de l’aube et ses paysages désertiques, le Lac Nasser est un paradis pour les photographes.</p>
-<h3>7) Quelles autres destinations combiner ?</h3>
-<p class="">Assouan comme point de départ ou Louxor pour prolonger la découverte des temples et tombeaux.</p>
-<h3>8) Comment vivre une expérience authentique ?</h3>
-<p class="">Opter pour une petite embarcation ou un bateau traditionnel afin de naviguer au plus près des rives et à un rythme apaisé.</p>
-<p class="">Découvrez aussi :</p>
-<ul><li>Croisières sur le Nil</li><li>Voyages culturels</li><li>Égypte hors des sentiers battus</li></ul>
+</div>
+</article>
+</div>
+<p class="">Aucun contenu disponible</p>
 <h2>Organisation du voyage</h2>
 <p class="">Où se trouve le Mont Sinaï ?</p>
 <p class="">Le Mont Sinaï se situe dans la péninsule du Sinaï, au sud-est de l’Égypte, près du monastère Sainte-Catherine. Il est considéré comme l’un des lieux les plus sacrés du christianisme, du judaïsme et de l’islam.</p>
@@ -315,6 +352,19 @@ header .nav>a.btn--or:hover{background:#C87700;border-color:#C87700;box-shadow:0
 <p class="">Une aventure hors du commun.</p>
 <p class="">Un lieu chargé d’histoire et de spiritualité.</p>
 <p class="">Un défi physique raisonnable.Le Mont Sinaï peut être une étape inoubliable de votre voyage en Égypte. Nous en discutons avec vous pour créer un itinéraire qui vous ressemble.</p>
+<h2 id="faq">Questions fréquentes</h2>
+<div class="faq">
+<details open><summary>1) Pourquoi le Lac Nasser est-il si particulier ?</summary><div class="faq__c"><p class="">Sa création a nécessité le déplacement de monuments pharaoniques, dont Abu Simbel, offrant un témoignage unique d’ingénierie et de préservation patrimoniale.</p></div></details>
+<details><summary>2) Quelles sont les principales étapes d’un voyage au Lac Nasser ?</summary><div class="faq__c"><p class="">Une croisière ponctuée d’escales aux temples de Kalabsha, Amada, Wadi el-Seboua et au site de Qasr Ibrim.</p></div></details>
+<details><summary>3) Quelle faune observer ?</summary><div class="faq__c"><p class="">Des crocodiles du Nil, une diversité d’oiseaux migrateurs, ainsi qu’une faune aquatique variée.</p></div></details>
+<details><summary>4) Quelle est la meilleure période pour visiter ?</summary><div class="faq__c"><p class="">De novembre à mars, période idéale pour éviter les fortes chaleurs et profiter d’une navigation confortable.</p></div></details>
+<details><summary>5) Combien de jours faut-il prévoir ?</summary><div class="faq__c"><p class="">Quatre à cinq jours permettent de découvrir les sites majeurs tout en savourant la tranquillité des eaux.</p></div></details>
+<details><summary>6) Est-ce adapté aux amateurs de photographie ?</summary><div class="faq__c"><p class="">Oui, avec ses temples baignés par la lumière dorée de l’aube et ses paysages désertiques, le Lac Nasser est un paradis pour les photographes.</p></div></details>
+<details><summary>7) Quelles autres destinations combiner ?</summary><div class="faq__c"><p class="">Assouan comme point de départ ou Louxor pour prolonger la découverte des temples et tombeaux.</p></div></details>
+<details><summary>8) Comment vivre une expérience authentique ?</summary><div class="faq__c"><p class="">Opter pour une petite embarcation ou un bateau traditionnel afin de naviguer au plus près des rives et à un rythme apaisé.</p>
+<p class="">Découvrez aussi :</p>
+<ul><li>Croisières sur le Nil</li><li>Voyages culturels</li><li>Égypte hors des sentiers battus</li></ul></div></details>
+</div>
 </article>
 <aside>
 <div class="lat">
@@ -354,6 +404,26 @@ header .nav>a.btn--or:hover{background:#C87700;border-color:#C87700;box-shadow:0
 </div>
 </div>
 </article>
+</div>
+</div>
+</section>
+<section class="section">
+<div class="wrap">
+<div class="devis">
+<div>
+<p class="eyebrow eyebrow--clair">Votre projet</p>
+<h2>Combien de jours pour Mont Sinaï sur mesure, dans votre voyage&nbsp;?</h2>
+<ul>
+<li><svg width="17" height="17" viewBox="0 0 17 17" fill="none" aria-hidden="true"><path d="M3 8.8l3.6 3.6L14 5" stroke="#FBB50E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Devis gratuit, détaillé jour par jour, sans engagement</li>
+<li><svg width="17" height="17" viewBox="0 0 17 17" fill="none" aria-hidden="true"><path d="M3 8.8l3.6 3.6L14 5" stroke="#FBB50E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Guide égyptologue francophone et chauffeur privatif</li>
+<li><svg width="17" height="17" viewBox="0 0 17 17" fill="none" aria-hidden="true"><path d="M3 8.8l3.6 3.6L14 5" stroke="#FBB50E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Acompte seulement une fois l'itinéraire validé</li>
+</ul>
+</div>
+<div class="devis__act">
+<a href="https://authentiquegypte.com/sur-mesure/" class="btn btn--or btn--bloc">Demander mon devis</a>
+<a href="https://wa.me/201066619098" class="btn btn--wa btn--bloc">Poser une question sur WhatsApp</a>
+<small>Aucune carte bancaire demandée à cette étape.</small>
+</div>
 </div>
 </div>
 </section>

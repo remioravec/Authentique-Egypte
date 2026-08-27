@@ -87,6 +87,54 @@
 .saison .br{background:var(--rouge-fond);color:var(--rouge)}
 .saison b{display:block;font-size:.74rem;font-weight:600;opacity:.8;margin-top:3px}
 
+/* ---------- FAQ ----------
+   Le balisage existait sans style : les questions sortaient en
+   accordéons bruts du navigateur. Même dessin en cartes que les
+   gabarits voyage et catégorie. */
+.faq{display:grid;gap:10px}
+.faq details{border:1px solid var(--ligne);border-radius:var(--r-m);background:var(--papier);
+  transition:border-color .25s var(--ease),box-shadow .25s var(--ease)}
+.faq details[open]{border-color:var(--or);box-shadow:var(--ombre)}
+.faq summary{padding:15px 56px 15px 18px;font-weight:600;font-size:1rem;cursor:pointer;color:var(--noir);
+  position:relative;list-style:none;display:block;font-family:"Archivo",sans-serif;letter-spacing:-.3px}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";position:absolute;right:15px;top:50%;transform:translateY(-50%);
+  width:26px;height:26px;border-radius:50%;background:var(--or-fond);color:#7A5605;
+  display:grid;place-items:center;font-size:1.15rem;font-weight:500;transition:transform .25s var(--ease)}
+.faq details[open] summary::after{transform:translateY(-50%) rotate(45deg)}
+.faq summary:hover{color:var(--teal-txt)}
+.faq__c{padding:0 18px 16px;color:var(--texte)}
+.faq__c :last-child{margin-bottom:0}
+.faq__c ul{padding-left:20px;margin:0 0 1em}
+
+/* ---------- cartes d'atouts ----------
+   Les petits arguments (un titre, un paragraphe) en cartes cochées,
+   comme sur le gabarit catégorie. */
+.atouts{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:6px 0 10px}
+.atout{background:var(--papier);border:1px solid var(--ligne);border-radius:var(--r-m);padding:20px 20px 18px}
+.atout h3{font-size:.98rem;margin:0 0 8px;display:flex;gap:10px;align-items:center}
+.atout h3::before{content:"✓";flex:0 0 auto;width:24px;height:24px;border-radius:50%;
+  background:var(--teal-fond);color:var(--teal-txt);font-size:.8rem;font-weight:700;
+  display:grid;place-items:center}
+.atout p{font-size:.92rem;color:var(--texte);margin:0;line-height:1.6}
+@media (max-width:860px){
+  .atouts{grid-template-columns:1fr}
+}
+
+/* ---------- bande devis ----------
+   Le balisage existait sans style — repris d'index.html. */
+.devis{background:var(--nuit-900);color:#fff;border-radius:24px;padding:clamp(34px,5vw,56px);
+  display:grid;grid-template-columns:1.1fr .9fr;gap:44px;align-items:center}
+.devis h2{color:#fff}
+.devis ul{list-style:none;padding:0;margin:22px 0 0;display:grid;gap:11px;font-size:.95rem;color:#C3D5DA}
+.devis li{display:flex;gap:11px;align-items:flex-start}
+.devis li svg{flex:0 0 auto;margin-top:5px}
+.devis__act{display:grid;gap:12px}
+.devis__act small{color:#B0CCD9;font-size:.81rem;text-align:center;font-family:"Manrope",sans-serif}
+@media (max-width:860px){
+  .devis{grid-template-columns:1fr;gap:28px}
+}
+
 /* ---------- panneau latéral ---------- */
 .lat{display:grid;gap:16px}
 .lat__b{background:#fff;border:1px solid var(--ligne);border-radius:var(--r-l);padding:22px;
@@ -237,23 +285,13 @@ header .nav>a.btn--or:hover{background:#C87700;border-color:#C87700;box-shadow:0
 <div class="colonnes">
 <article class="corps">
 <p class="src">Contenu repris de <a href="https://authentiquegypte.com/voyage-a-louxor/">https://authentiquegypte.com/voyage-a-louxor/</a>, sans réécriture&nbsp;: seule la mise en page change.</p>
+<div class="atouts">
+<div class="atout"><h3>Privées &amp; personnalisées</h3><p>Chaque itinéraire est conçu selon vos envies, votre rythme et votre façon de voyager. Explorez l’Égypte à votre image.</p></div>
+<div class="atout"><h3>Avec un expert local</h3><p>Guidé par des passionnés égyptiens, vous découvrez l’histoire, les traditions et les secrets bien gardés du pays. Un voyage authentique, raconté par ceux qui le vivent.</p></div>
+</div>
 <div class="sites">
 <article class="site">
 <img src="https://authentiquegypte.com/wp-content/uploads/2023/11/gonzalo-pedroviejo-gomez-_Ex6joK1ebQ-unsplash-scaled.jpg" alt="Egypte Nubie Voyage" loading="lazy" decoding="async">
-<div class="site__t">
-<h3>Privées &amp; personnalisées</h3>
-<p class="">Chaque itinéraire est conçu selon vos envies, votre rythme et votre façon de voyager. Explorez l’Égypte à votre image.</p>
-</div>
-</article>
-<article class="site">
-<img src="https://authentiquegypte.com/wp-content/uploads/2023/11/WhatsApp-Image-2023-11-07-at-12.03.37.jpeg" alt="Avec un expert local" loading="lazy" decoding="async">
-<div class="site__t">
-<h3>Avec un expert local</h3>
-<p class="">Guidé par des passionnés égyptiens, vous découvrez l’histoire, les traditions et les secrets bien gardés du pays. Un voyage authentique, raconté par ceux qui le vivent.</p>
-</div>
-</article>
-<article class="site">
-<img src="https://authentiquegypte.com/wp-content/uploads/2023/11/flying-carpet-Si1MFhSLNWY-unsplash-scaled.jpg" alt="Loin de la foule" loading="lazy" decoding="async">
 <div class="site__t">
 <h3>Loin de la foule</h3>
 <p class="">Nous vous emmenons hors des sentiers battus, dans des lieux confidentiels, loin du tourisme de masse. Rencontrez l’Égypte vraie, en toute sérénité.</p>
@@ -262,23 +300,6 @@ header .nav>a.btn--or:hover{background:#C87700;border-color:#C87700;box-shadow:0
 </article>
 </div>
 
-<h3>1) Quels sont les sites incontournables à Louxor ?</h3>
-<p class="">Le temple de Karnak, immense complexe religieux, le temple de Louxor en bord de Nil, la Vallée des Rois et des Reines, ainsi que le temple d’Hatchepsout, chef-d&#x27;œuvre architectural adossé à la montagne thébaine.</p>
-<h3>2) Quelle est la meilleure période pour visiter Louxor ?</h3>
-<p class="">De novembre à mars, pour des températures douces et un ensoleillement optimal, permettant de visiter confortablement même en milieu de journée.</p>
-<h3>3) Comment se déplacer entre les sites ?</h3>
-<p class="">Optez pour un guide-chauffeur pour optimiser vos trajets, surtout vers la rive Ouest. Les déplacements en calèche dans le centre offrent aussi une approche plus pittoresque.</p>
-<h3>4) Peut-on combiner Louxor avec une croisière sur le Nil ?</h3>
-<p class="">Oui, de nombreuses croisières partent ou arrivent à Louxor, offrant une transition fluide vers Assouan et permettant de découvrir les sites emblématiques au fil de l’eau.</p>
-<h3>5) Quels temples moins connus valent le détour ?</h3>
-<p class="">Medinet Habou, temple funéraire de Ramsès III, et le Ramesseum, témoignage du règne de Ramsès II, offrent des visites plus intimistes et chargées d’histoire.</p>
-<h3>6) Quelles expériences originales vivre à Louxor ?</h3>
-<p class="">Un vol en montgolfière au lever du soleil sur la Vallée des Rois, ou la découverte d’ateliers de sculpture et de peinture traditionnels dans les villages alentours.</p>
-<h3>7) Louxor est-elle adaptée aux familles ?</h3>
-<p class="">Oui, avec un programme équilibré alternant visites ludiques, moments de détente en felouque et découvertes interactives pour les enfants.</p>
-<h3>8) Quels conseils pour une visite optimale ?</h3>
-<p class="">Privilégiez les visites tôt le matin pour éviter la chaleur, prévoyez eau, chapeau et crème solaire, et alternez sites majeurs et lieux plus calmes pour garder un rythme agréable.</p>
-<ul><li>Voyage à Assouan</li><li>Voyages culturels</li><li>Égypte hors des sentiers battus</li></ul>
 <h2>Organisation du voyage</h2>
 <p class="">Pourquoi visiter Louxor lors d’un voyage en Égypte ?</p>
 <p class="">Louxor est considérée comme l’un des plus grands musées à ciel ouvert au monde. Elle regroupe des sites majeurs de l’Égypte antique, notamment la vallée des Rois, le temple de Karnak, le temple de Louxor, et de nombreux tombeaux et temples répartis sur les deux rives du Nil.</p>
@@ -309,6 +330,18 @@ header .nav>a.btn--or:hover{background:#C87700;border-color:#C87700;box-shadow:0
 <p class="">Un billet standard donne accès à 3 tombes parmi celles ouvertes au public. D&#x27;autres, comme celles de Ramsès VI, Seti I ou Toutankhamon, nécessitent un billet supplémentaire. Il est possible d’acheter ces options à l’entrée du site.</p>
 <p class="">Peut-on survoler Louxor en montgolfière ?</p>
 <p class="">Oui, c’est une activité très populaire, notamment au lever du soleil. Le survol permet de découvrir les temples et la vallée depuis les airs. Le vol dure environ 45 à 60 minutes, sous réserve des conditions météo.</p>
+<h2 id="faq">Questions fréquentes</h2>
+<div class="faq">
+<details open><summary>1) Quels sont les sites incontournables à Louxor ?</summary><div class="faq__c"><p class="">Le temple de Karnak, immense complexe religieux, le temple de Louxor en bord de Nil, la Vallée des Rois et des Reines, ainsi que le temple d’Hatchepsout, chef-d&#x27;œuvre architectural adossé à la montagne thébaine.</p></div></details>
+<details><summary>2) Quelle est la meilleure période pour visiter Louxor ?</summary><div class="faq__c"><p class="">De novembre à mars, pour des températures douces et un ensoleillement optimal, permettant de visiter confortablement même en milieu de journée.</p></div></details>
+<details><summary>3) Comment se déplacer entre les sites ?</summary><div class="faq__c"><p class="">Optez pour un guide-chauffeur pour optimiser vos trajets, surtout vers la rive Ouest. Les déplacements en calèche dans le centre offrent aussi une approche plus pittoresque.</p></div></details>
+<details><summary>4) Peut-on combiner Louxor avec une croisière sur le Nil ?</summary><div class="faq__c"><p class="">Oui, de nombreuses croisières partent ou arrivent à Louxor, offrant une transition fluide vers Assouan et permettant de découvrir les sites emblématiques au fil de l’eau.</p></div></details>
+<details><summary>5) Quels temples moins connus valent le détour ?</summary><div class="faq__c"><p class="">Medinet Habou, temple funéraire de Ramsès III, et le Ramesseum, témoignage du règne de Ramsès II, offrent des visites plus intimistes et chargées d’histoire.</p></div></details>
+<details><summary>6) Quelles expériences originales vivre à Louxor ?</summary><div class="faq__c"><p class="">Un vol en montgolfière au lever du soleil sur la Vallée des Rois, ou la découverte d’ateliers de sculpture et de peinture traditionnels dans les villages alentours.</p></div></details>
+<details><summary>7) Louxor est-elle adaptée aux familles ?</summary><div class="faq__c"><p class="">Oui, avec un programme équilibré alternant visites ludiques, moments de détente en felouque et découvertes interactives pour les enfants.</p></div></details>
+<details><summary>8) Quels conseils pour une visite optimale ?</summary><div class="faq__c"><p class="">Privilégiez les visites tôt le matin pour éviter la chaleur, prévoyez eau, chapeau et crème solaire, et alternez sites majeurs et lieux plus calmes pour garder un rythme agréable.</p>
+<ul><li>Voyage à Assouan</li><li>Voyages culturels</li><li>Égypte hors des sentiers battus</li></ul></div></details>
+</div>
 </article>
 <aside>
 <div class="lat">
@@ -389,6 +422,26 @@ header .nav>a.btn--or:hover{background:#C87700;border-color:#C87700;box-shadow:0
 </section>
 <section class="section">
 <div class="wrap">
+<div class="devis">
+<div>
+<p class="eyebrow eyebrow--clair">Votre projet</p>
+<h2>Combien de jours pour Louxor, dans votre voyage&nbsp;?</h2>
+<ul>
+<li><svg width="17" height="17" viewBox="0 0 17 17" fill="none" aria-hidden="true"><path d="M3 8.8l3.6 3.6L14 5" stroke="#FBB50E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Devis gratuit, détaillé jour par jour, sans engagement</li>
+<li><svg width="17" height="17" viewBox="0 0 17 17" fill="none" aria-hidden="true"><path d="M3 8.8l3.6 3.6L14 5" stroke="#FBB50E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Guide égyptologue francophone et chauffeur privatif</li>
+<li><svg width="17" height="17" viewBox="0 0 17 17" fill="none" aria-hidden="true"><path d="M3 8.8l3.6 3.6L14 5" stroke="#FBB50E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Acompte seulement une fois l'itinéraire validé</li>
+</ul>
+</div>
+<div class="devis__act">
+<a href="https://authentiquegypte.com/sur-mesure/" class="btn btn--or btn--bloc">Demander mon devis</a>
+<a href="https://wa.me/201066619098" class="btn btn--wa btn--bloc">Poser une question sur WhatsApp</a>
+<small>Aucune carte bancaire demandée à cette étape.</small>
+</div>
+</div>
+</div>
+</section>
+<section class="section">
+<div class="wrap">
 <p class="eyebrow">Poursuivre le voyage</p>
 <h2 style="margin-bottom:14px">Louxor se combine bien</h2>
 <p class="lede" style="margin-bottom:32px">Les distances comptent : voici ce qui s&#x27;ajoute sans casser le rythme.</p>
@@ -399,7 +452,7 @@ header .nav>a.btn--or:hover{background:#C87700;border-color:#C87700;box-shadow:0
 <div class="carte__pied"><span></span><span class="lien-fl">Découvrir <svg width="15" height="11" viewBox="0 0 15 11" fill="none" aria-hidden="true"><path d="M1 5.5h12M9 1.5l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div></div>
 </a>
 <a class="carte" href="https://authentiquegypte.com/mont-sinai/">
-<div class="carte__img"><img src="" alt="Voyage au Mont Sinaï sur mesure" loading="lazy" decoding="async"></div>
+<div class="carte__img"><img src="https://authentiquegypte.com/wp-content/uploads/2023/11/jorge-fernandez-salas-59eU1QM4znI-unsplash.jpg" alt="jorge-fernandez-salas-59eU1QM4znI-unsplash" loading="lazy" decoding="async"></div>
 <div class="carte__corps"><h3>Voyage au Mont Sinaï sur mesure</h3><p class="carte__route">Confiez l&#x27;organisation de votre voyage en Égypte à nos agents…</p>
 <div class="carte__pied"><span></span><span class="lien-fl">Découvrir <svg width="15" height="11" viewBox="0 0 15 11" fill="none" aria-hidden="true"><path d="M1 5.5h12M9 1.5l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div></div>
 </a>
