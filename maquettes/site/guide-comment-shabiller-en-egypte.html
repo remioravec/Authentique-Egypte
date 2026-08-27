@@ -248,6 +248,21 @@ p{margin:0 0 1em}
 
 /* ---------- colonne latérale collante ---------- */
 .art>aside{position:sticky;top:88px}
+/* ---------- bande devis de fin d'article ----------
+   Repris d'index.html : le même appel au devis que sur le reste du site. */
+.devis{background:var(--nuit-900);color:#fff;border-radius:24px;padding:clamp(34px,5vw,56px);
+  display:grid;grid-template-columns:1.1fr .9fr;gap:44px;align-items:center;
+  margin-top:clamp(36px,4.5vw,56px)}
+.devis h2{color:#fff}
+.devis ul{list-style:none;padding:0;margin:22px 0 0;display:grid;gap:11px;font-size:.95rem;color:#C3D5DA}
+.devis li{display:flex;gap:11px;align-items:flex-start}
+.devis li svg{flex:0 0 auto;margin-top:5px}
+.devis__act{display:grid;gap:12px}
+.devis__act small{color:#B0CCD9;font-size:.81rem;text-align:center;font-family:"Manrope",sans-serif}
+@media (max-width:860px){
+  .devis{grid-template-columns:1fr;gap:28px}
+}
+
 .lat{display:grid;gap:16px}
 .lat__b{background:#fff;border:1px solid var(--ligne);border-radius:var(--r-l);padding:22px;
   position:relative;overflow:hidden}
@@ -602,6 +617,36 @@ header .nav>a.btn--or:hover{background:#C87700;border-color:#C87700;box-shadow:0
 <h2 id="s8">Et pour les enfants ?</h2>
 <p class="">Aucune contrainte spécifique, mais les mêmes règles de bon sens s’appliquent.Pour les adolescentes, un legging léger ou une jupe longue évitent les regards insistants.</p>
 </article>
+<aside>
+<div class="lat">
+<div class="lat__b lat--devis">
+<h4>Un projet de voyage&nbsp;?</h4>
+<p>Dites-nous vos dates et vos envies&nbsp;: nous vous disons ce qui tient dans votre séjour, et à quel prix.</p>
+<a href="https://authentiquegypte.com/sur-mesure/" class="btn btn--or btn--bloc btn--sm">Demander mon devis</a>
+<a href="https://wa.me/201066619098" class="btn btn--clair btn--bloc btn--sm" style="margin-top:9px">WhatsApp</a>
+</div>
+<div class="lat__b">
+<h4>Nos familles de séjours</h4>
+<ul><li><a href="https://authentiquegypte.com/nos-sejours-egypte/mer-rouge/">Mer rouge et plongée <svg width="15" height="11" viewBox="0 0 15 11" fill="none" aria-hidden="true"><path d="M1 5.5h12M9 1.5l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></a></li><li><a href="https://authentiquegypte.com/nos-sejours-egypte/desert-egypte/">Déserts et Oasis égyptiens <svg width="15" height="11" viewBox="0 0 15 11" fill="none" aria-hidden="true"><path d="M1 5.5h12M9 1.5l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></a></li><li><a href="https://authentiquegypte.com/nos-sejours-egypte/voyage-culturel-en-egypte/">Voyage culturel en Égypte <svg width="15" height="11" viewBox="0 0 15 11" fill="none" aria-hidden="true"><path d="M1 5.5h12M9 1.5l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></a></li><li><a href="https://authentiquegypte.com/nos-sejours-egypte/croisieres-en-egypte/">Croisières en Egypte <svg width="15" height="11" viewBox="0 0 15 11" fill="none" aria-hidden="true"><path d="M1 5.5h12M9 1.5l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></a></li><li><a href="https://authentiquegypte.com/nos-sejours-egypte/sinai-moise-et-saint-catherine/">Découverte du Sinaï <svg width="15" height="11" viewBox="0 0 15 11" fill="none" aria-hidden="true"><path d="M1 5.5h12M9 1.5l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></a></li></ul>
+</div>
+</div>
+</aside>
+</div>
+<div class="devis">
+<div>
+<p class="eyebrow eyebrow--clair">Votre projet</p>
+<h2>Envie de passer du guide au voyage&nbsp;?</h2>
+<ul>
+<li><svg width="17" height="17" viewBox="0 0 17 17" fill="none" aria-hidden="true"><path d="M3 8.8l3.6 3.6L14 5" stroke="#FBB50E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Devis gratuit, détaillé jour par jour, sans engagement</li>
+<li><svg width="17" height="17" viewBox="0 0 17 17" fill="none" aria-hidden="true"><path d="M3 8.8l3.6 3.6L14 5" stroke="#FBB50E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Guide égyptologue francophone et chauffeur privatif</li>
+<li><svg width="17" height="17" viewBox="0 0 17 17" fill="none" aria-hidden="true"><path d="M3 8.8l3.6 3.6L14 5" stroke="#FBB50E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Acompte seulement une fois l'itinéraire validé</li>
+</ul>
+</div>
+<div class="devis__act">
+<a href="https://authentiquegypte.com/sur-mesure/" class="btn btn--or btn--bloc">Demander mon devis</a>
+<a href="https://wa.me/201066619098" class="btn btn--wa btn--bloc">Poser une question sur WhatsApp</a>
+<small>Aucune carte bancaire demandée à cette étape.</small>
+</div>
 </div>
 </div>
 

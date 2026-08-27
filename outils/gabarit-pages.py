@@ -580,15 +580,22 @@ def corps_destination(x, ctx):
     return '<article class="corps">\n%s\n</article>' % '\n'.join(out)
 
 
-def bande_devis(nc):
-    """La bande de conversion de la maquette destination, telle quelle."""
+def bande_devis(nc, question=None, enveloppe=True):
+    """La bande de conversion de la maquette destination, telle quelle.
+
+    `enveloppe=False` rend la bande nue, à poser dans un wrap existant.
+    """
     coche = ('<svg width="17" height="17" viewBox="0 0 17 17" fill="none" aria-hidden="true">'
              '<path d="M3 8.8l3.6 3.6L14 5" stroke="#FBB50E" stroke-width="2" '
              'stroke-linecap="round" stroke-linejoin="round"/></svg> ')
+    question = question or ('Combien de jours pour %s, dans votre voyage&nbsp;?' % M.e(nc))
 
-    return ('<section class="section">\n<div class="wrap">\n<div class="devis">\n<div>\n'
+    debut = '<section class="section">\n<div class="wrap">\n' if enveloppe else ''
+    fin = '\n</div>\n</section>' if enveloppe else ''
+
+    return (debut + '<div class="devis">\n<div>\n'
             '<p class="eyebrow eyebrow--clair">Votre projet</p>\n'
-            '<h2>Combien de jours pour %s, dans votre voyage&nbsp;?</h2>\n<ul>\n'
+            '<h2>%s</h2>\n<ul>\n'
             '<li>%sDevis gratuit, détaillé jour par jour, sans engagement</li>\n'
             '<li>%sGuide égyptologue francophone et chauffeur privatif</li>\n'
             '<li>%sAcompte seulement une fois l\'itinéraire validé</li>\n</ul>\n</div>\n'
@@ -596,7 +603,7 @@ def bande_devis(nc):
             '<a href="%s" class="btn btn--or btn--bloc">Demander mon devis</a>\n'
             '<a href="%s" class="btn btn--wa btn--bloc">Poser une question sur WhatsApp</a>\n'
             '<small>Aucune carte bancaire demandée à cette étape.</small>\n</div>\n'
-            '</div>\n</div>\n</section>' % (M.e(nc), coche, coche, coche, DEVIS, WHATSAPP))
+            '</div>' % (question, coche, coche, coche, DEVIS, WHATSAPP) + fin)
 
 
 def page_destination(x, ctx, gabarit):
@@ -638,8 +645,28 @@ def page_destination(x, ctx, gabarit):
     return monter(gabarit, x, [chapeau(x, gabarit, chips)] + [colonnes] + queue)
 
 
+def flanc_guide(ctx):
+    """Le panneau collant de droite du gabarit guide : l'appel au devis
+    et les familles de séjours — le dessin de la maquette, qui manquait
+    aux pages générées."""
+    cats = [c for c in ctx['categories'] if c.get('_slug') != 'nos-sejours-egypte']
+    liens = ''.join('<li><a href="%s">%s %s</a></li>' % (M.e(c['url']), M.e(nom_court(c['titre'])), FLECHE)
+                    for c in cats)
+
+    return ('<aside>\n<div class="lat">\n'
+            '<div class="lat__b lat--devis">\n<h4>Un projet de voyage&nbsp;?</h4>\n'
+            '<p>Dites-nous vos dates et vos envies&nbsp;: nous vous disons ce qui tient '
+            'dans votre séjour, et à quel prix.</p>\n'
+            '<a href="%s" class="btn btn--or btn--bloc btn--sm">Demander mon devis</a>\n'
+            '<a href="%s" class="btn btn--clair btn--bloc btn--sm" style="margin-top:9px">WhatsApp</a>\n'
+            '</div>\n'
+            '<div class="lat__b">\n<h4>Nos familles de séjours</h4>\n<ul>%s</ul>\n</div>\n'
+            '</div>\n</aside>' % (DEVIS, WHATSAPP, liens))
+
+
 def page_guide(x, ctx, gabarit):
-    """Le gabarit guide n'a pas changé : chapeau, sommaire .som, corps."""
+    """Le gabarit guide : chapeau, sommaire .som, corps, et le panneau
+    collant de conversion à droite."""
     sections = [s for s in x['sections'] if s['blocs']]
     images = list(x['_images'][1:])
     base, reste = divmod(len(images), max(len(sections), 1))
@@ -664,8 +691,10 @@ def page_guide(x, ctx, gabarit):
             out.append('<div class="bande">%s</div>' % ''.join(
                 '<a href="%s"><img src="%s" alt="%s" loading="lazy" decoding="async"></a>'
                 % (M.e(i['src']), M.e(i['src']), M.e(i['alt'])) for i in lot))
-    art = ('<div class="wrap">\n<div class="art">\n%s\n<article class="corps">\n%s\n</article>\n</div>\n</div>'
-           % (som, '\n'.join(out)))
+    art = ('<div class="wrap">\n<div class="art">\n%s\n<article class="corps">\n%s\n</article>\n%s\n</div>\n'
+           '%s\n</div>'
+           % (som, '\n'.join(out), flanc_guide(ctx),
+              bande_devis('', 'Envie de passer du guide au voyage&nbsp;?', enveloppe=False)))
 
     # Le moule garde sa section de fin « Les autres guides » : on ne
     # remonte que le chapeau et le corps.
