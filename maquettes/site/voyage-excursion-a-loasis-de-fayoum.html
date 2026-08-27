@@ -184,16 +184,33 @@ p{margin:0 0 1em}
 .resa-mob .p b{font-size:1.3rem;font-weight:700;color:var(--noir);letter-spacing:-.6px}
 .resa-mob .p i{font-style:normal;font-size:.76rem;color:var(--gris)}
 
-/* ---------- jour par jour ---------- */
-.jour{border-left:2px solid var(--ligne);padding:0 0 26px 26px;position:relative}
-.jour:last-child{padding-bottom:0}
-.jour::before{content:"";position:absolute;left:-8px;top:5px;width:14px;height:14px;border-radius:50%;
+/* ---------- jour par jour ----------
+   Chaque jour est un accordéon (details), fermé au chargement.
+   Le fil de gauche et la pastille dorée gardent l'esprit chronologie. */
+.jour{border-left:2px solid var(--ligne);padding:0 0 0 26px;position:relative;counter-reset:et}
+.jour::before{content:"";position:absolute;left:-8px;top:20px;width:14px;height:14px;border-radius:50%;
   background:var(--or);border:3px solid #fff;box-shadow:0 0 0 1px var(--ligne)}
-.jour h3{margin:0 0 8px}
+.jour>summary{list-style:none;cursor:pointer;position:relative;padding:13px 48px 13px 0;
+  display:flex;align-items:center;gap:12px;
+  font-family:"Archivo",sans-serif;font-weight:700;font-size:1.1rem;letter-spacing:-.3px;color:var(--noir)}
+.jour .no{flex:0 0 auto;width:30px;height:30px;border-radius:50%;background:var(--or-fond);
+  border:1px solid var(--or);color:#7A5605;font-family:"Manrope",sans-serif;font-size:.72rem;
+  font-weight:700;display:grid;place-items:center;letter-spacing:0}
+.jour__t{display:flex;align-items:center;gap:12px;margin:0;padding:13px 48px 13px 0;
+  font-family:"Archivo",sans-serif;font-weight:700;font-size:1.1rem;letter-spacing:-.3px;color:var(--noir)}
+.jour__intro{padding:6px 0 14px}
+.jour__intro p{font-size:.96rem}
+.jour>summary::-webkit-details-marker{display:none}
+.jour>summary::after{content:"+";position:absolute;right:8px;top:50%;transform:translateY(-50%);
+  width:28px;height:28px;border-radius:50%;background:var(--or-fond);color:#7A5605;
+  display:grid;place-items:center;font-size:1.25rem;font-weight:500;transition:transform .25s var(--ease)}
+.jour[open]>summary::after{transform:translateY(-50%) rotate(45deg)}
+.jour>summary:hover{color:var(--teal-txt)}
+.jour__c{padding:0 0 26px}
+.jour:last-of-type>.jour__c{padding-bottom:10px}
 .jour h4{margin:0 0 6px;color:var(--nuit-900)}
 .jour p{font-size:.96rem}
 .jour p:last-child{margin-bottom:0}
-.jour{counter-reset:et}
 .etape{padding:16px 0 0 0;position:relative;counter-increment:et}
 .etape+.etape{border-top:1px solid var(--ligne-2);margin-top:16px}
 .etape h4{display:flex;align-items:center;gap:12px}
@@ -203,16 +220,25 @@ p{margin:0 0 1em}
   display:grid;place-items:center;letter-spacing:0}
 .etape p{padding-left:42px}
 
-/* ---------- inclus / non inclus ---------- */
-.incl{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--ligne);border:1px solid var(--ligne);
-  border-radius:var(--r-l);overflow:hidden}
-.incl>div{background:var(--or-fond);padding:26px}
-.incl>div:last-child{background:var(--fond)}
-.incl h3{font-size:1.06rem;margin-bottom:14px}
+/* ---------- inclus / non inclus ----------
+   Deux cartes jumelles : la teal dit ce que le prix couvre, la neutre
+   ce qu'il faut prévoir en plus. Chaque ligne porte sa propre coche. */
+.incl{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start}
+.incl__col{border:1px solid var(--ligne);border-top:4px solid var(--gris-clair);
+  border-radius:var(--r-l);background:var(--papier);padding:22px 24px 14px}
+.incl__col--oui{border-top-color:var(--teal);
+  background:linear-gradient(180deg,var(--teal-fond),var(--papier) 130px)}
+.incl h3{font-size:1.02rem;margin-bottom:12px;display:flex;align-items:center;gap:10px}
+.incl__col--oui h3{color:var(--teal-txt)}
+.incl__col--non h3{color:var(--gris)}
+.incl h3 .ic{flex:0 0 auto;width:28px;height:28px;border-radius:50%;display:grid;place-items:center;
+  font-size:.85rem;font-weight:700;background:var(--teal-txt);color:#fff}
+.incl__col--non h3 .ic{background:var(--ligne);color:var(--gris)}
 .incl ul{list-style:none;margin:0;padding:0;font-size:.94rem}
-.incl li{padding:8px 0 8px 26px;position:relative;line-height:1.55}
-.incl .oui li::before{content:"✓";position:absolute;left:0;top:8px;color:var(--teal-txt);font-weight:700}
-.incl .non li::before{content:"✕";position:absolute;left:0;top:8px;color:var(--gris-clair);font-weight:700}
+.incl li{padding:9px 0 9px 30px;position:relative;line-height:1.55}
+.incl li+li{border-top:1px dashed var(--ligne-2)}
+.incl .oui li::before{content:"✓";position:absolute;left:2px;top:9px;color:var(--teal-txt);font-weight:700}
+.incl .non li::before{content:"✕";position:absolute;left:2px;top:9px;color:var(--gris-clair);font-weight:700}
 .incl .non li{color:var(--gris)}
 
 /* ---------- alerte contenu ---------- */
@@ -220,17 +246,22 @@ p{margin:0 0 1em}
   font-family:"Manrope",sans-serif;font-size:.89rem;line-height:1.65;color:#5C4204}
 .alerte b{color:#3D2B00}
 
-/* ---------- FAQ ---------- */
-.faq{border-top:1px solid var(--ligne)}
-.faq details{border-bottom:1px solid var(--ligne)}
-.faq summary{padding:17px 44px 17px 0;font-weight:600;font-size:1rem;cursor:pointer;color:var(--noir);
+/* ---------- FAQ ----------
+   Des cartes, pas des lignes : chaque question a son cadre et son
+   bouton +, pour qu'on voie au premier regard que ça se déplie. */
+.faq{display:grid;gap:10px}
+.faq details{border:1px solid var(--ligne);border-radius:var(--r-m);background:var(--papier);
+  transition:border-color .25s var(--ease),box-shadow .25s var(--ease)}
+.faq details[open]{border-color:var(--or);box-shadow:var(--ombre)}
+.faq summary{padding:15px 56px 15px 18px;font-weight:600;font-size:1rem;cursor:pointer;color:var(--noir);
   position:relative;list-style:none;display:block;font-family:"Archivo",sans-serif;letter-spacing:-.3px}
 .faq summary::-webkit-details-marker{display:none}
-.faq summary::after{content:"+";position:absolute;right:8px;top:50%;transform:translateY(-50%);
-  font-size:1.6rem;color:var(--or);font-weight:400;transition:transform .25s var(--ease)}
+.faq summary::after{content:"+";position:absolute;right:15px;top:50%;transform:translateY(-50%);
+  width:26px;height:26px;border-radius:50%;background:var(--or-fond);color:#7A5605;
+  display:grid;place-items:center;font-size:1.15rem;font-weight:500;transition:transform .25s var(--ease)}
 .faq details[open] summary::after{transform:translateY(-50%) rotate(45deg)}
 .faq summary:hover{color:var(--teal-txt)}
-.faq__c{padding:0 44px 18px 0;color:var(--texte)}
+.faq__c{padding:0 18px 16px;color:var(--texte)}
 .faq__c :last-child{margin-bottom:0}
 .faq__c ul{padding-left:20px;margin:0 0 1em}
 
@@ -418,8 +449,8 @@ body.mm .mm-legende{display:block}
   .ruban a{font-size:.95rem;padding:13px 2px 11px}
   .ruban a span{font-size:.9rem}
 
-  .faq summary{font-size:1.06rem;padding-right:42px}
-  .faq__c{padding-right:0}
+  .faq summary{font-size:1.06rem}
+  .jour>summary{font-size:1.1rem}
 
   /* 2 ─ Cibles tactiles -------------------------------------------- */
   /* 44 px : la hauteur d'un doigt. On ne l'applique qu'aux cibles
@@ -442,7 +473,7 @@ body.mm .mm-legende{display:block}
   .fpan label{padding:11px 10px}
   .mm-btn{padding:11px 16px}
   .carte h3 a,.guide{display:block} /* ces deux-là englobent déjà leur cible */
-  .faq summary{display:block;padding-top:19px;padding-bottom:19px}
+  .faq summary,.jour>summary{display:block;padding-top:19px;padding-bottom:19px}
 
   /* Les cartes entières sont cliquables : rien à agrandir dedans. */
   a.carte,a.guide,a.fille,a.une{min-height:0}
@@ -568,11 +599,11 @@ header .nav>a.btn--or:hover{background:#C87700;border-color:#C87700;box-shadow:0
 
   <!-- LES 5 PHOTOS DE SIWA DE LA PAGE CLIENT, EN TÊTE -->
   <div class="galerie">
-<a href="https://authentiquegypte.com/wp-content/uploads/2025/08/WhatsApp-Image-2025-08-13-at-15.48.30-225x300.jpeg"><img src="https://authentiquegypte.com/wp-content/uploads/2025/08/WhatsApp-Image-2025-08-13-at-15.48.30-225x300.jpeg" alt="" fetchpriority="high" decoding="async"></a>
-<a href="https://authentiquegypte.com/wp-content/uploads/2025/08/WhatsApp-Image-2025-08-13-at-15.48.53-225x300.jpeg"><img src="https://authentiquegypte.com/wp-content/uploads/2025/08/WhatsApp-Image-2025-08-13-at-15.48.53-225x300.jpeg" alt="" loading="lazy" decoding="async"></a>
-<a href="https://authentiquegypte.com/wp-content/uploads/2025/08/WhatsApp-Image-2025-08-13-at-15.45.33-225x300.jpeg"><img src="https://authentiquegypte.com/wp-content/uploads/2025/08/WhatsApp-Image-2025-08-13-at-15.45.33-225x300.jpeg" alt="WhatsApp Image 2025-08-13 at 15.45.33" loading="lazy" decoding="async"></a>
-<a href="https://authentiquegypte.com/wp-content/uploads/2025/09/FAYOUM-JOUR-1-225x300.jpeg"><img src="https://authentiquegypte.com/wp-content/uploads/2025/09/FAYOUM-JOUR-1-225x300.jpeg" alt="" loading="lazy" decoding="async"></a>
-<a href="https://authentiquegypte.com/wp-content/uploads/2025/09/FAYOUM-J2-300x225.jpeg"><img src="https://authentiquegypte.com/wp-content/uploads/2025/09/FAYOUM-J2-300x225.jpeg" alt="" loading="lazy" decoding="async"></a>
+<a href="https://authentiquegypte.com/wp-content/uploads/2025/08/WhatsApp-Image-2025-08-13-at-15.48.30.jpeg"><img src="https://authentiquegypte.com/wp-content/uploads/2025/08/WhatsApp-Image-2025-08-13-at-15.48.30.jpeg" alt="" fetchpriority="high" decoding="async"></a>
+<a href="https://authentiquegypte.com/wp-content/uploads/2025/08/WhatsApp-Image-2025-08-13-at-15.48.53.jpeg"><img src="https://authentiquegypte.com/wp-content/uploads/2025/08/WhatsApp-Image-2025-08-13-at-15.48.53.jpeg" alt="" loading="lazy" decoding="async"></a>
+<a href="https://authentiquegypte.com/wp-content/uploads/2025/08/WhatsApp-Image-2025-08-13-at-15.45.33.jpeg"><img src="https://authentiquegypte.com/wp-content/uploads/2025/08/WhatsApp-Image-2025-08-13-at-15.45.33.jpeg" alt="WhatsApp Image 2025-08-13 at 15.45.33" loading="lazy" decoding="async"></a>
+<a href="https://authentiquegypte.com/wp-content/uploads/2025/09/FAYOUM-JOUR-1.jpeg"><img src="https://authentiquegypte.com/wp-content/uploads/2025/09/FAYOUM-JOUR-1.jpeg" alt="" loading="lazy" decoding="async"></a>
+<a href="https://authentiquegypte.com/wp-content/uploads/2025/09/FAYOUM-J2.jpeg"><img src="https://authentiquegypte.com/wp-content/uploads/2025/09/FAYOUM-J2.jpeg" alt="" loading="lazy" decoding="async"></a>
 </div>
 
   <div class="colonnes">
@@ -585,17 +616,24 @@ header .nav>a.btn--or:hover{background:#C87700;border-color:#C87700;box-shadow:0
 <div class="bloc-t">
 <p class="eyebrow">Le programme</p>
 <h2 style="margin-bottom:16px">Les étapes de votre séjour</h2>
-<div class="jour">
-<div class="etape"><h4>Jour 1 : Aventure et nature dans le Fayoum</h4><p>Départ matinal depuis Le Caire en direction de l’Oasis de Fayoum (environ 2h de route).• Visite des cascades de Wadi El Rayan, l’une des rares chutes d’eau naturelles d’Égypte, au cœur d’un paysage paisible.• Départ pour une aventure en 4×4 jusqu’à la montagne de Medwara, formation rocheuse impressionnante offrant un panorama désertique saisissant.• Exploration de la Vallée des Baleines – Wadi El Hitan, classée au patrimoine mondial de l’UNESCO, célèbre pour ses fossiles marins vieux de 36 millions d’années.• Pause au sommet de la montagne Plateau pour admirer les vues spectaculaires sur les dunes et le désert environnant.• Arrêt au lac Magique pour des moments de détente et de photos dans un cadre féerique.• Déjeuner traditionnel en plein désert ou dans un restaurant local.• Visite du village de Tunis, réputé pour son artisanat de poterie et son ambiance rurale paisible.• En fin de journée, installation au campement dans le désert, dîner sous les étoiles et nuit magique en pleine nature.</p></div>
-<div class="etape"><h4>Jour 2 : Exploration et retour</h4><p>• Réveil en douceur et petit déjeuner au camp face aux dunes.• Visite de la réserve naturelle de Qatrani, riche en formations géologiques et espèces protégées.• Découverte de la mystérieuse vallée des Pastèques (Watermelon Valley), connue pour ses formations rocheuses en forme de fruits géants !• Retour vers Le Caire en début d’après-midi.</p></div>
-<div class="etape"><h4>En option (sur demande) :</h4><p>• Visite du site archéologique de Madinet Madi, ancienne cité gréco-romaine.• Découverte du temple de Qasr Qaroun, dédié au culte de Sobek, le dieu crocodile.</p>
+<details class="jour"><summary><b class="no">01</b>Jour 1 : Aventure et nature dans le Fayoum</summary>
+<div class="jour__c">
+<p>Départ matinal depuis Le Caire en direction de l’Oasis de Fayoum (environ 2h de route).• Visite des cascades de Wadi El Rayan, l’une des rares chutes d’eau naturelles d’Égypte, au cœur d’un paysage paisible.• Départ pour une aventure en 4×4 jusqu’à la montagne de Medwara, formation rocheuse impressionnante offrant un panorama désertique saisissant.• Exploration de la Vallée des Baleines – Wadi El Hitan, classée au patrimoine mondial de l’UNESCO, célèbre pour ses fossiles marins vieux de 36 millions d’années.• Pause au sommet de la montagne Plateau pour admirer les vues spectaculaires sur les dunes et le désert environnant.• Arrêt au lac Magique pour des moments de détente et de photos dans un cadre féerique.• Déjeuner traditionnel en plein désert ou dans un restaurant local.• Visite du village de Tunis, réputé pour son artisanat de poterie et son ambiance rurale paisible.• En fin de journée, installation au campement dans le désert, dîner sous les étoiles et nuit magique en pleine nature.</p>
+</div></details>
+<details class="jour"><summary><b class="no">02</b>Jour 2 : Exploration et retour</summary>
+<div class="jour__c">
+<p>• Réveil en douceur et petit déjeuner au camp face aux dunes.• Visite de la réserve naturelle de Qatrani, riche en formations géologiques et espèces protégées.• Découverte de la mystérieuse vallée des Pastèques (Watermelon Valley), connue pour ses formations rocheuses en forme de fruits géants !• Retour vers Le Caire en début d’après-midi.</p>
+</div></details>
+<details class="jour"><summary><b class="no">03</b>En option (sur demande) :</summary>
+<div class="jour__c">
+<p>• Visite du site archéologique de Madinet Madi, ancienne cité gréco-romaine.• Découverte du temple de Qasr Qaroun, dédié au culte de Sobek, le dieu crocodile.</p>
 <p>Ce circuit peut être adapté à vos envies (niveau de confort, rythme, activités).Possibilité d’ajouter une nuit supplémentaire ou des activités comme le sandboard, un cours de poterie ou une balade à dos de dromadaire.Idéal pour les amoureux de nature, d’histoire et d’authenticité.</p>
 <ul><li>Le programme inclus</li></ul>
 <ul><li>Guide privatif</li><li>Chauffeur privatif dans un véhicule climatisé</li><li>Les entrées aux sites et autorisations</li><li>Les hébergements</li><li>Les transferts</li><li>Les repas mentionnés</li><li>L&#x27;assistance H24</li></ul>
 <ul><li>N&#x27;inclus pas</li></ul>
 <ul><li>Les vols internationaux</li><li>Les pourboires</li><li>Les frais de paiement</li><li>Les dépenses personnelles</li><li>L&#x27;assurance voyage</li></ul>
-<p>FAQ Fayoum - Guide Complet</p></div>
-</div>
+<p>FAQ Fayoum - Guide Complet</p>
+</div></details>
 </div>
 <div class="bloc-t"><h2 style="margin-bottom:14px">Questions fréquentes sur Fayoum</h2><p class="">À partir de 185 € / Personne</p>
 <p class="">Personaliser ce séjour</p>
@@ -604,7 +642,7 @@ header .nav>a.btn--or:hover{background:#C87700;border-color:#C87700;box-shadow:0
 <div class="bloc-t">
 <p class="eyebrow">Ce qui est compris</p>
 <h2 style="margin-bottom:16px">Le détail du prix</h2>
-<div class="incl"><div><h3 style="color:var(--teal-txt)">Le programme inclut</h3><ul class="oui"><li>Guide privatif</li><li>Chauffeur privatif dans un véhicule climatisé</li><li>Les entrées aux sites et autorisations</li><li>Les hébergements</li><li>Les transferts</li><li>Les repas mentionnés</li><li>L&#x27;assistance H24</li></ul></div><div><h3 style="color:var(--gris)">N'inclut pas</h3><ul class="non"><li>Les vols internationaux</li><li>Les pourboires</li><li>Les frais de paiement</li><li>Les dépenses personnelles</li><li>L&#x27;assurance voyage</li></ul></div></div>
+<div class="incl"><div class="incl__col incl__col--oui"><h3><span class="ic">✓</span>Ce voyage inclut</h3><ul class="oui"><li>Guide privatif</li><li>Chauffeur privatif dans un véhicule climatisé</li><li>Les entrées aux sites et autorisations</li><li>Les hébergements</li><li>Les transferts</li><li>Les repas mentionnés</li><li>L&#x27;assistance H24</li></ul></div><div class="incl__col incl__col--non"><h3><span class="ic">✕</span>Ce voyage n'inclut pas</h3><ul class="non"><li>Les vols internationaux</li><li>Les pourboires</li><li>Les frais de paiement</li><li>Les dépenses personnelles</li><li>L&#x27;assurance voyage</li></ul></div></div>
 </div>
 </div>
 
@@ -652,8 +690,8 @@ header .nav>a.btn--or:hover{background:#C87700;border-color:#C87700;box-shadow:0
 <p class="eyebrow">Et aussi</p>
 <h2 style="margin-bottom:22px">Ce séjour se combine, ou se remplace</h2>
 <div class="grille g-3"><article class="carte"><div class="carte__img"><img src="https://authentiquegypte.com/wp-content/uploads/elementor/thumbs/DSC00535-scaled-r7oewu70k0jx1l6stye0qy50352831uyhpoul2ffuo.jpg" alt="Lever du soleil sur le Sinaï" loading="lazy" decoding="async"></div><div class="carte__corps"><h3><a href="https://authentiquegypte.com/programs/sainte-catherine/">Lever du soleil, monastère et nuit à Sainte-Catherine</a></h3><p class="carte__route">2 jours</p><div class="carte__pied"><span class="prix"><small>À partir de</small><b>320 €</b></span><a href="https://authentiquegypte.com/programs/sainte-catherine/" class="lien-fl">Découvrir</a></div></div></article>
-<article class="carte"><div class="carte__img"><img src="https://authentiquegypte.com/wp-content/uploads/2023/11/Oasis-de-siwa-2-300x200.png" alt="Oasis de siwa" loading="lazy" decoding="async"></div><div class="carte__corps"><h3><a href="https://authentiquegypte.com/programs/excursion-a-loasis-de-siwa/">Voyage à l&#x27;Oasis de Siwa</a></h3><p class="carte__route">4 jours</p><div class="carte__pied"><span class="prix"><small>À partir de</small><b>595 €</b></span><a href="https://authentiquegypte.com/programs/excursion-a-loasis-de-siwa/" class="lien-fl">Découvrir</a></div></div></article>
-<article class="carte"><div class="carte__img"><img src="https://authentiquegypte.com/wp-content/uploads/2023/11/Desert-blanc-dEgypte-2-300x200.png" alt="Désert blanc d&#x27;Egypte" loading="lazy" decoding="async"></div><div class="carte__corps"><h3><a href="https://authentiquegypte.com/programs/excursion-dans-le-desert-blanc/">Excursion dans le désert blanc</a></h3><p class="carte__route">2 jours</p><div class="carte__pied"><span class="prix"><small>À partir de</small><b>415 €</b></span><a href="https://authentiquegypte.com/programs/excursion-dans-le-desert-blanc/" class="lien-fl">Découvrir</a></div></div></article></div>
+<article class="carte"><div class="carte__img"><img src="https://authentiquegypte.com/wp-content/uploads/2023/11/Oasis-de-siwa-2.png" alt="Oasis de siwa" loading="lazy" decoding="async"></div><div class="carte__corps"><h3><a href="https://authentiquegypte.com/programs/excursion-a-loasis-de-siwa/">Voyage à l&#x27;Oasis de Siwa</a></h3><p class="carte__route">4 jours</p><div class="carte__pied"><span class="prix"><small>À partir de</small><b>595 €</b></span><a href="https://authentiquegypte.com/programs/excursion-a-loasis-de-siwa/" class="lien-fl">Découvrir</a></div></div></article>
+<article class="carte"><div class="carte__img"><img src="https://authentiquegypte.com/wp-content/uploads/2023/11/Desert-blanc-dEgypte-2.png" alt="Désert blanc d&#x27;Egypte" loading="lazy" decoding="async"></div><div class="carte__corps"><h3><a href="https://authentiquegypte.com/programs/excursion-dans-le-desert-blanc/">Excursion dans le désert blanc</a></h3><p class="carte__route">2 jours</p><div class="carte__pied"><span class="prix"><small>À partir de</small><b>415 €</b></span><a href="https://authentiquegypte.com/programs/excursion-dans-le-desert-blanc/" class="lien-fl">Découvrir</a></div></div></article></div>
 </div>
 </section>
 </main>
@@ -759,6 +797,9 @@ header .nav>a.btn--or:hover{background:#C87700;border-color:#C87700;box-shadow:0
     el.style.transitionDelay=(Math.min(n%4,3)*60)+'ms';
     io.observe(el);
   });
+  /* Garde-fou : si l'observateur ne se déclenche pas (extension,
+     optimiseur de scripts…), tout redevient visible au bout de 2,5 s. */
+  setTimeout(()=>{cibles.forEach(el=>el.classList.add('vu'))},2500);
 })();
 </script>
 

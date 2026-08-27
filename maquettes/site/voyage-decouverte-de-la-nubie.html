@@ -184,16 +184,33 @@ p{margin:0 0 1em}
 .resa-mob .p b{font-size:1.3rem;font-weight:700;color:var(--noir);letter-spacing:-.6px}
 .resa-mob .p i{font-style:normal;font-size:.76rem;color:var(--gris)}
 
-/* ---------- jour par jour ---------- */
-.jour{border-left:2px solid var(--ligne);padding:0 0 26px 26px;position:relative}
-.jour:last-child{padding-bottom:0}
-.jour::before{content:"";position:absolute;left:-8px;top:5px;width:14px;height:14px;border-radius:50%;
+/* ---------- jour par jour ----------
+   Chaque jour est un accordéon (details), fermé au chargement.
+   Le fil de gauche et la pastille dorée gardent l'esprit chronologie. */
+.jour{border-left:2px solid var(--ligne);padding:0 0 0 26px;position:relative;counter-reset:et}
+.jour::before{content:"";position:absolute;left:-8px;top:20px;width:14px;height:14px;border-radius:50%;
   background:var(--or);border:3px solid #fff;box-shadow:0 0 0 1px var(--ligne)}
-.jour h3{margin:0 0 8px}
+.jour>summary{list-style:none;cursor:pointer;position:relative;padding:13px 48px 13px 0;
+  display:flex;align-items:center;gap:12px;
+  font-family:"Archivo",sans-serif;font-weight:700;font-size:1.1rem;letter-spacing:-.3px;color:var(--noir)}
+.jour .no{flex:0 0 auto;width:30px;height:30px;border-radius:50%;background:var(--or-fond);
+  border:1px solid var(--or);color:#7A5605;font-family:"Manrope",sans-serif;font-size:.72rem;
+  font-weight:700;display:grid;place-items:center;letter-spacing:0}
+.jour__t{display:flex;align-items:center;gap:12px;margin:0;padding:13px 48px 13px 0;
+  font-family:"Archivo",sans-serif;font-weight:700;font-size:1.1rem;letter-spacing:-.3px;color:var(--noir)}
+.jour__intro{padding:6px 0 14px}
+.jour__intro p{font-size:.96rem}
+.jour>summary::-webkit-details-marker{display:none}
+.jour>summary::after{content:"+";position:absolute;right:8px;top:50%;transform:translateY(-50%);
+  width:28px;height:28px;border-radius:50%;background:var(--or-fond);color:#7A5605;
+  display:grid;place-items:center;font-size:1.25rem;font-weight:500;transition:transform .25s var(--ease)}
+.jour[open]>summary::after{transform:translateY(-50%) rotate(45deg)}
+.jour>summary:hover{color:var(--teal-txt)}
+.jour__c{padding:0 0 26px}
+.jour:last-of-type>.jour__c{padding-bottom:10px}
 .jour h4{margin:0 0 6px;color:var(--nuit-900)}
 .jour p{font-size:.96rem}
 .jour p:last-child{margin-bottom:0}
-.jour{counter-reset:et}
 .etape{padding:16px 0 0 0;position:relative;counter-increment:et}
 .etape+.etape{border-top:1px solid var(--ligne-2);margin-top:16px}
 .etape h4{display:flex;align-items:center;gap:12px}
@@ -203,16 +220,25 @@ p{margin:0 0 1em}
   display:grid;place-items:center;letter-spacing:0}
 .etape p{padding-left:42px}
 
-/* ---------- inclus / non inclus ---------- */
-.incl{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--ligne);border:1px solid var(--ligne);
-  border-radius:var(--r-l);overflow:hidden}
-.incl>div{background:var(--or-fond);padding:26px}
-.incl>div:last-child{background:var(--fond)}
-.incl h3{font-size:1.06rem;margin-bottom:14px}
+/* ---------- inclus / non inclus ----------
+   Deux cartes jumelles : la teal dit ce que le prix couvre, la neutre
+   ce qu'il faut prévoir en plus. Chaque ligne porte sa propre coche. */
+.incl{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start}
+.incl__col{border:1px solid var(--ligne);border-top:4px solid var(--gris-clair);
+  border-radius:var(--r-l);background:var(--papier);padding:22px 24px 14px}
+.incl__col--oui{border-top-color:var(--teal);
+  background:linear-gradient(180deg,var(--teal-fond),var(--papier) 130px)}
+.incl h3{font-size:1.02rem;margin-bottom:12px;display:flex;align-items:center;gap:10px}
+.incl__col--oui h3{color:var(--teal-txt)}
+.incl__col--non h3{color:var(--gris)}
+.incl h3 .ic{flex:0 0 auto;width:28px;height:28px;border-radius:50%;display:grid;place-items:center;
+  font-size:.85rem;font-weight:700;background:var(--teal-txt);color:#fff}
+.incl__col--non h3 .ic{background:var(--ligne);color:var(--gris)}
 .incl ul{list-style:none;margin:0;padding:0;font-size:.94rem}
-.incl li{padding:8px 0 8px 26px;position:relative;line-height:1.55}
-.incl .oui li::before{content:"✓";position:absolute;left:0;top:8px;color:var(--teal-txt);font-weight:700}
-.incl .non li::before{content:"✕";position:absolute;left:0;top:8px;color:var(--gris-clair);font-weight:700}
+.incl li{padding:9px 0 9px 30px;position:relative;line-height:1.55}
+.incl li+li{border-top:1px dashed var(--ligne-2)}
+.incl .oui li::before{content:"✓";position:absolute;left:2px;top:9px;color:var(--teal-txt);font-weight:700}
+.incl .non li::before{content:"✕";position:absolute;left:2px;top:9px;color:var(--gris-clair);font-weight:700}
 .incl .non li{color:var(--gris)}
 
 /* ---------- alerte contenu ---------- */
@@ -220,17 +246,22 @@ p{margin:0 0 1em}
   font-family:"Manrope",sans-serif;font-size:.89rem;line-height:1.65;color:#5C4204}
 .alerte b{color:#3D2B00}
 
-/* ---------- FAQ ---------- */
-.faq{border-top:1px solid var(--ligne)}
-.faq details{border-bottom:1px solid var(--ligne)}
-.faq summary{padding:17px 44px 17px 0;font-weight:600;font-size:1rem;cursor:pointer;color:var(--noir);
+/* ---------- FAQ ----------
+   Des cartes, pas des lignes : chaque question a son cadre et son
+   bouton +, pour qu'on voie au premier regard que ça se déplie. */
+.faq{display:grid;gap:10px}
+.faq details{border:1px solid var(--ligne);border-radius:var(--r-m);background:var(--papier);
+  transition:border-color .25s var(--ease),box-shadow .25s var(--ease)}
+.faq details[open]{border-color:var(--or);box-shadow:var(--ombre)}
+.faq summary{padding:15px 56px 15px 18px;font-weight:600;font-size:1rem;cursor:pointer;color:var(--noir);
   position:relative;list-style:none;display:block;font-family:"Archivo",sans-serif;letter-spacing:-.3px}
 .faq summary::-webkit-details-marker{display:none}
-.faq summary::after{content:"+";position:absolute;right:8px;top:50%;transform:translateY(-50%);
-  font-size:1.6rem;color:var(--or);font-weight:400;transition:transform .25s var(--ease)}
+.faq summary::after{content:"+";position:absolute;right:15px;top:50%;transform:translateY(-50%);
+  width:26px;height:26px;border-radius:50%;background:var(--or-fond);color:#7A5605;
+  display:grid;place-items:center;font-size:1.15rem;font-weight:500;transition:transform .25s var(--ease)}
 .faq details[open] summary::after{transform:translateY(-50%) rotate(45deg)}
 .faq summary:hover{color:var(--teal-txt)}
-.faq__c{padding:0 44px 18px 0;color:var(--texte)}
+.faq__c{padding:0 18px 16px;color:var(--texte)}
 .faq__c :last-child{margin-bottom:0}
 .faq__c ul{padding-left:20px;margin:0 0 1em}
 
@@ -418,8 +449,8 @@ body.mm .mm-legende{display:block}
   .ruban a{font-size:.95rem;padding:13px 2px 11px}
   .ruban a span{font-size:.9rem}
 
-  .faq summary{font-size:1.06rem;padding-right:42px}
-  .faq__c{padding-right:0}
+  .faq summary{font-size:1.06rem}
+  .jour>summary{font-size:1.1rem}
 
   /* 2 ─ Cibles tactiles -------------------------------------------- */
   /* 44 px : la hauteur d'un doigt. On ne l'applique qu'aux cibles
@@ -442,7 +473,7 @@ body.mm .mm-legende{display:block}
   .fpan label{padding:11px 10px}
   .mm-btn{padding:11px 16px}
   .carte h3 a,.guide{display:block} /* ces deux-là englobent déjà leur cible */
-  .faq summary{display:block;padding-top:19px;padding-bottom:19px}
+  .faq summary,.jour>summary{display:block;padding-top:19px;padding-bottom:19px}
 
   /* Les cartes entières sont cliquables : rien à agrandir dedans. */
   a.carte,a.guide,a.fille,a.une{min-height:0}
@@ -568,11 +599,11 @@ header .nav>a.btn--or:hover{background:#C87700;border-color:#C87700;box-shadow:0
 
   <!-- LES 5 PHOTOS DE SIWA DE LA PAGE CLIENT, EN TÊTE -->
   <div class="galerie">
-<a href="https://authentiquegypte.com/wp-content/uploads/2023/11/gonzalo-pedroviejo-gomez-vHVWERWhWA4-unsplash-1-200x300.jpg"><img src="https://authentiquegypte.com/wp-content/uploads/2023/11/gonzalo-pedroviejo-gomez-vHVWERWhWA4-unsplash-1-200x300.jpg" alt="gonzalo-pedroviejo-gomez-vHVWERWhWA4-unsplash" fetchpriority="high" decoding="async"></a>
-<a href="https://authentiquegypte.com/wp-content/uploads/2023/11/axp-photography-RfyqNPEU2RQ-unsplash-200x300.jpg"><img src="https://authentiquegypte.com/wp-content/uploads/2023/11/axp-photography-RfyqNPEU2RQ-unsplash-200x300.jpg" alt="axp-photography-RfyqNPEU2RQ-unsplash" loading="lazy" decoding="async"></a>
-<a href="https://authentiquegypte.com/wp-content/uploads/2023/11/mohamed-soliman-MFgPnJOsI_I-unsplash-269x300.jpg"><img src="https://authentiquegypte.com/wp-content/uploads/2023/11/mohamed-soliman-MFgPnJOsI_I-unsplash-269x300.jpg" alt="Désert et oasis en Egypte" loading="lazy" decoding="async"></a>
-<a href="https://authentiquegypte.com/wp-content/uploads/2023/11/pyramides-1024x683.jpg"><img src="https://authentiquegypte.com/wp-content/uploads/2023/11/pyramides-1024x683.jpg" alt="" loading="lazy" decoding="async"></a>
-<a href="https://authentiquegypte.com/wp-content/uploads/2023/11/axp-photography-KtodmsPJmEw-unsplash-683x1024.jpg"><img src="https://authentiquegypte.com/wp-content/uploads/2023/11/axp-photography-KtodmsPJmEw-unsplash-683x1024.jpg" alt="Arrivée au Caire" loading="lazy" decoding="async"></a>
+<a href="https://authentiquegypte.com/wp-content/uploads/2023/11/gonzalo-pedroviejo-gomez-vHVWERWhWA4-unsplash-1.jpg"><img src="https://authentiquegypte.com/wp-content/uploads/2023/11/gonzalo-pedroviejo-gomez-vHVWERWhWA4-unsplash-1.jpg" alt="gonzalo-pedroviejo-gomez-vHVWERWhWA4-unsplash" fetchpriority="high" decoding="async"></a>
+<a href="https://authentiquegypte.com/wp-content/uploads/2023/11/axp-photography-RfyqNPEU2RQ-unsplash.jpg"><img src="https://authentiquegypte.com/wp-content/uploads/2023/11/axp-photography-RfyqNPEU2RQ-unsplash.jpg" alt="axp-photography-RfyqNPEU2RQ-unsplash" loading="lazy" decoding="async"></a>
+<a href="https://authentiquegypte.com/wp-content/uploads/2023/11/mohamed-soliman-MFgPnJOsI_I-unsplash.jpg"><img src="https://authentiquegypte.com/wp-content/uploads/2023/11/mohamed-soliman-MFgPnJOsI_I-unsplash.jpg" alt="Désert et oasis en Egypte" loading="lazy" decoding="async"></a>
+<a href="https://authentiquegypte.com/wp-content/uploads/2023/11/pyramides.jpg"><img src="https://authentiquegypte.com/wp-content/uploads/2023/11/pyramides.jpg" alt="" loading="lazy" decoding="async"></a>
+<a href="https://authentiquegypte.com/wp-content/uploads/2023/11/axp-photography-KtodmsPJmEw-unsplash.jpg"><img src="https://authentiquegypte.com/wp-content/uploads/2023/11/axp-photography-KtodmsPJmEw-unsplash.jpg" alt="Arrivée au Caire" loading="lazy" decoding="async"></a>
 </div>
 
   <div class="colonnes">
@@ -588,55 +619,86 @@ header .nav>a.btn--or:hover{background:#C87700;border-color:#C87700;box-shadow:0
 <div class="bloc-t">
 <p class="eyebrow">Le programme</p>
 <h2 style="margin-bottom:16px">Les étapes de votre séjour</h2>
-<div class="jour">
-<div class="etape"><h4>Arrivée au Caire</h4><p>Accueil à l&#x27;aéroport du Caire par notre représentant. Transfert à votre hôtel.</p>
+<details class="jour"><summary><b class="no">01</b>Arrivée au Caire</summary>
+<div class="jour__c">
+<p>Accueil à l&#x27;aéroport du Caire par notre représentant. Transfert à votre hôtel.</p>
 <p>Installation et temps libre pour vous reposer.</p>
-<p>Dîner libre et nuit à l&#x27;hôtel.</p></div>
-<div class="etape"><h4>Visite des Pyramides de Gizeh et du Sphinx</h4><p>Petit-déjeuner à l&#x27;hôtel. Départ pour la visite des Pyramides de Gizeh et du Sphinx.</p>
+<p>Dîner libre et nuit à l&#x27;hôtel.</p>
+</div></details>
+<details class="jour"><summary><b class="no">02</b>Visite des Pyramides de Gizeh et du Sphinx</summary>
+<div class="jour__c">
+<p>Petit-déjeuner à l&#x27;hôtel. Départ pour la visite des Pyramides de Gizeh et du Sphinx.</p>
 <p>Visite du plateau de Gizeh avec un guide égyptologue.</p>
 <p>Déjeuner dans un restaurant avec vue sur les Pyramides.</p>
 <p>En option : Survol des Pyramides en hélicoptère.</p>
-<p>Dîner aux Pyramides et nuit à l&#x27;hôtel au Caire.</p></div>
-<div class="etape"><h4>Visite du Musée Égyptien et du Caire islamique</h4><p>Petit-déjeuner à l&#x27;hôtel. Départ pour la visite du Musée Égyptien.</p>
+<p>Dîner aux Pyramides et nuit à l&#x27;hôtel au Caire.</p>
+</div></details>
+<details class="jour"><summary><b class="no">03</b>Visite du Musée Égyptien et du Caire islamique</summary>
+<div class="jour__c">
+<p>Petit-déjeuner à l&#x27;hôtel. Départ pour la visite du Musée Égyptien.</p>
 <p>Visite de la collection des trésors de Toutânkhamon.</p>
 <p>Déjeuner dans un restaurant local.</p>
-<p>Visite du Caire islamique et copte.</p></div>
-<div class="etape"><h4>Excursion à Saqqarah et Memphis</h4><p>Petit-déjeuner à l&#x27;hôtel. Départ pour Saqqarah.</p>
+<p>Visite du Caire islamique et copte.</p>
+</div></details>
+<details class="jour"><summary><b class="no">04</b>Excursion à Saqqarah et Memphis</summary>
+<div class="jour__c">
+<p>Petit-déjeuner à l&#x27;hôtel. Départ pour Saqqarah.</p>
 <p>Visite de la pyramide à degrés de Djoser.</p>
 <p>Visite des tombes des nobles.</p>
 <p>Visite du site archéologique de Memphis.</p>
-<p>Retour à l&#x27;hôtel en fin de journée.</p></div>
-<div class="etape"><h4>Transfert à Louxor en avion</h4><p>Petit-déjeuner à l&#x27;hôtel. Transfert à l&#x27;aéroport du Caire pour votre vol vers Louxor (1h de vol).</p>
+<p>Retour à l&#x27;hôtel en fin de journée.</p>
+</div></details>
+<details class="jour"><summary><b class="no">05</b>Transfert à Louxor en avion</summary>
+<div class="jour__c">
+<p>Petit-déjeuner à l&#x27;hôtel. Transfert à l&#x27;aéroport du Caire pour votre vol vers Louxor (1h de vol).</p>
 <p>Accueil à l&#x27;aéroport de Louxor par votre guide.</p>
 <p>Visite du temple de Louxor.</p>
-<p>Dîner et nuit à l&#x27;hôtel à Louxor.</p></div>
-<div class="etape"><h4>Excursion à la Vallée des Rois et à Deir el-Bahari</h4><p>Petit-déjeuner à l&#x27;hôtel. Départ pour la Vallée des Rois.</p>
+<p>Dîner et nuit à l&#x27;hôtel à Louxor.</p>
+</div></details>
+<details class="jour"><summary><b class="no">06</b>Excursion à la Vallée des Rois et à Deir el-Bahari</summary>
+<div class="jour__c">
+<p>Petit-déjeuner à l&#x27;hôtel. Départ pour la Vallée des Rois.</p>
 <p>Visite de 3 tombes royales (dont celle de Toutânkhamon).</p>
 <p>Visite du temple de Hatshepsout à Deir el-Bahari.</p>
-<p>En option : Visite du temple de Médinet Habou.</p></div>
-<div class="etape"><h4>Excursion à Karnak et visite de Louxor</h4><p>Petit-déjeuner à l&#x27;hôtel. Départ pour la visite du temple de Karnak.</p>
-<p>En option : Croisière sur le Nil en felouque.</p></div>
-<div class="etape"><h4>Excursion à Edfou et Kom Ombo</h4><p>Petit-déjeuner à l&#x27;hôtel. Départ en voiture privée pour Edfou.</p>
+<p>En option : Visite du temple de Médinet Habou.</p>
+</div></details>
+<details class="jour"><summary><b class="no">07</b>Excursion à Karnak et visite de Louxor</summary>
+<div class="jour__c">
+<p>Petit-déjeuner à l&#x27;hôtel. Départ pour la visite du temple de Karnak.</p>
+<p>En option : Croisière sur le Nil en felouque.</p>
+</div></details>
+<details class="jour"><summary><b class="no">08</b>Excursion à Edfou et Kom Ombo</summary>
+<div class="jour__c">
+<p>Petit-déjeuner à l&#x27;hôtel. Départ en voiture privée pour Edfou.</p>
 <p>Visite du temple d&#x27;Horus à Edfou.</p>
 <p>Visite du temple de Kom Ombo.</p>
-<p>Retour à Louxor en fin de journée.</p></div>
-<div class="etape"><h4>Journée libre à Louxor</h4><p>Petit-déjeuner à l&#x27;hôtel. Journée libre pour profiter de Louxor à votre rythme.</p>
+<p>Retour à Louxor en fin de journée.</p>
+</div></details>
+<details class="jour"><summary><b class="no">09</b>Journée libre à Louxor</summary>
+<div class="jour__c">
+<p>Petit-déjeuner à l&#x27;hôtel. Journée libre pour profiter de Louxor à votre rythme.</p>
 <p>En option : Excursion en bateau-mouche sur le Nil.</p>
-<p>Dîner libre et nuit à l&#x27;hôtel à Louxor.</p></div>
-<div class="etape"><h4>Transfert au Caire et vol international</h4><p>Petit-déjeuner à l&#x27;hôtel. Transfert à l&#x27;aéroport de Louxor pour votre vol vers le Caire.</p>
+<p>Dîner libre et nuit à l&#x27;hôtel à Louxor.</p>
+</div></details>
+<details class="jour"><summary><b class="no">10</b>Transfert au Caire et vol international</summary>
+<div class="jour__c">
+<p>Petit-déjeuner à l&#x27;hôtel. Transfert à l&#x27;aéroport de Louxor pour votre vol vers le Caire.</p>
 <p>Transfert à l&#x27;aéroport du Caire pour votre vol international.</p>
-<p>Fin de nos services.</p></div>
-<div class="etape"><h4>Transfert privé Vol international</h4><ul><li>Le programme inclus</li></ul>
+<p>Fin de nos services.</p>
+</div></details>
+<details class="jour"><summary><b class="no">11</b>Transfert privé Vol international</summary>
+<div class="jour__c">
+<ul><li>Le programme inclus</li></ul>
 <ul><li>Guide francophone privatif</li><li>Chauffeur privatif dans un véhicule climatisé</li><li>Les entrées aux monuments</li><li>Les hébergements</li><li>Les transferts</li><li>Les repas mentionnés</li><li>L&#x27;assistance H24</li></ul>
 <ul><li>N&#x27;inclus pas</li></ul>
-<ul><li>Les vols internationaux</li><li>Les pourboires</li><li>Les frais de paiement</li><li>Les dépenses personnelles</li><li>L&#x27;assurance voyage</li></ul></div>
-<div class="etape"><h4>FAQ Découverte de la Nubie</h4></div>
-</div>
+<ul><li>Les vols internationaux</li><li>Les pourboires</li><li>Les frais de paiement</li><li>Les dépenses personnelles</li><li>L&#x27;assurance voyage</li></ul>
+</div></details>
+<div class="jour jour--seul"><p class="jour__t"><b class="no">12</b>FAQ Découverte de la Nubie</p></div>
 </div>
 <div class="bloc-t">
 <p class="eyebrow">Ce qui est compris</p>
 <h2 style="margin-bottom:16px">Le détail du prix</h2>
-<div class="incl"><div><h3 style="color:var(--teal-txt)">Le programme inclut</h3><ul class="oui"><li>Guide francophone privatif</li><li>Chauffeur privatif dans un véhicule climatisé</li><li>Les entrées aux monuments</li><li>Les hébergements</li><li>Les transferts</li><li>Les repas mentionnés</li><li>L&#x27;assistance H24</li></ul></div><div><h3 style="color:var(--gris)">N'inclut pas</h3><ul class="non"><li>Les vols internationaux</li><li>Les pourboires</li><li>Les frais de paiement</li><li>Les dépenses personnelles</li><li>L&#x27;assurance voyage</li></ul></div></div>
+<div class="incl"><div class="incl__col incl__col--oui"><h3><span class="ic">✓</span>Ce voyage inclut</h3><ul class="oui"><li>Guide francophone privatif</li><li>Chauffeur privatif dans un véhicule climatisé</li><li>Les entrées aux monuments</li><li>Les hébergements</li><li>Les transferts</li><li>Les repas mentionnés</li><li>L&#x27;assistance H24</li></ul></div><div class="incl__col incl__col--non"><h3><span class="ic">✕</span>Ce voyage n'inclut pas</h3><ul class="non"><li>Les vols internationaux</li><li>Les pourboires</li><li>Les frais de paiement</li><li>Les dépenses personnelles</li><li>L&#x27;assurance voyage</li></ul></div></div>
 </div>
 <div class="bloc-t">
 <p class="eyebrow">Bon à savoir</p>
@@ -796,6 +858,9 @@ header .nav>a.btn--or:hover{background:#C87700;border-color:#C87700;box-shadow:0
     el.style.transitionDelay=(Math.min(n%4,3)*60)+'ms';
     io.observe(el);
   });
+  /* Garde-fou : si l'observateur ne se déclenche pas (extension,
+     optimiseur de scripts…), tout redevient visible au bout de 2,5 s. */
+  setTimeout(()=>{cibles.forEach(el=>el.classList.add('vu'))},2500);
 })();
 </script>
 

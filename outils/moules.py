@@ -104,6 +104,39 @@ def poser_style(page):
     return page.replace('</style>', style_source() + '</style>', 1)
 
 
+_TAILLES = {}
+_MINIATURE = re.compile(r'(https://authentiquegypte\.com/wp-content/uploads/[^\s"\']*?)'
+                        r'-\d{2,4}x\d{2,4}(\.(?:jpe?g|png|webp|gif))', re.I)
+
+
+def _repond(url):
+    if url not in _TAILLES:
+        import urllib.request
+        try:
+            r = urllib.request.Request(url, method='HEAD')
+            with urllib.request.urlopen(r, timeout=20) as rep:
+                _TAILLES[url] = rep.status == 200
+        except Exception:
+            _TAILLES[url] = False
+    return _TAILLES[url]
+
+
+def defloute(page):
+    """Remplace les vignettes « …-300x200.jpg » par l'image d'origine.
+
+    WordPress référence souvent une taille intermédiaire : affichée en
+    grand dans la maquette, elle rend flou. On ne touche qu'aux images
+    du site, et seulement quand le plein format répond vraiment — les
+    originaux volumineux s'appellent parfois « …-scaled.jpg ».
+    """
+    def rem(m):
+        for cand in (m.group(1) + m.group(2), m.group(1) + '-scaled' + m.group(2)):
+            if _repond(cand):
+                return cand
+        return m.group(0)
+    return _MINIATURE.sub(rem, page)
+
+
 def paragraphes(blocs, classe='lede'):
     """Les blocs de contenu, dans le balisage de la maquette."""
     out = []

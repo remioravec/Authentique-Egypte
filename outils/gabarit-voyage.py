@@ -138,12 +138,17 @@ def galerie(x):
 
 
 def rendre_jours(sections):
-    """L'itinéraire, dans le balisage .jour / .etape de la maquette."""
-    jours = []
+    """L'itinéraire : chaque étape titrée devient un accordéon fermé.
 
-    def jour(titre):
-        jours.append({'titre': titre, 'etapes': []})
-        return jours[-1]
+    C'est le fonctionnement de la page en ligne — les titres d'étape y
+    sont déjà des têtes d'accordéon. Les paragraphes qui précèdent le
+    premier titre restent visibles, en introduction du programme.
+    """
+    entrees = []
+
+    def entree(titre):
+        entrees.append({'titre': titre, 'blocs': []})
+        return entrees[-1]
 
     # Le site marque ses étapes de deux façons : des titres d'accordéon
     # (<a tabindex>) quand la page est riche, de simples phrases courtes
@@ -153,42 +158,57 @@ def rendre_jours(sections):
     courant = None
     for s in sections:
         if s['niveau'] == 3:
-            courant = jour(s['titre'])
+            courant = entree(s['titre'])
         for b in s['blocs']:
             if b['type'] == 'titre_etape':
-                courant = jour(b['texte'])
+                courant = entree(b['texte'])
             elif b['type'] == 'p':
                 t = b['texte']
                 titre_like = not balises and ((len(t) <= 60 and not t.rstrip().endswith('.')
                               and not PAS_TITRE.match(t)) or re.match(r'^jour\s*\d', t, re.I))
                 if titre_like:
-                    courant = jour(t)
+                    courant = entree(t)
                 else:
                     if courant is None:
-                        courant = jour('')
-                    courant['etapes'].append(('p', t))
+                        courant = entree('')
+                    courant['blocs'].append(('p', t))
             elif b['type'] == 'liste':
                 if courant is None:
-                    courant = jour('')
-                courant['etapes'].append(('ul', b['items']))
+                    courant = entree('')
+                courant['blocs'].append(('ul', b['items']))
 
-    out = []
-    for j in jours:
-        dedans = []
-        for genre, contenu in j['etapes']:
+    def corps(j):
+        out = []
+        for genre, contenu in j['blocs']:
             if genre == 'p':
-                dedans.append('<p>%s</p>' % M.e(contenu))
+                out.append('<p>%s</p>' % M.e(contenu))
             else:
-                dedans.append('<ul>%s</ul>' % ''.join('<li>%s</li>' % M.e(i) for i in contenu))
-        titre = ('<h4>%s</h4>' % M.e(j['titre'])) if j['titre'] else ''
-        out.append('<div class="etape">%s%s</div>' % (titre, '\n'.join(dedans)))
+                out.append('<ul>%s</ul>' % ''.join('<li>%s</li>' % M.e(i) for i in contenu))
+        return '\n'.join(out)
+
+    out, no = [], 0
+    for j in entrees:
+        if not j['titre'] and not out:
+            # L'amorce du programme, avant la première étape : visible.
+            out.append('<div class="jour__intro">%s</div>' % corps(j))
+            continue
+        no += 1
+        if not j['blocs']:
+            # Une étape sans détail (« Dîner », « Nuit en guesthouse ») :
+            # une ligne simple, pas un accordéon qui s'ouvre sur rien.
+            out.append('<div class="jour jour--seul"><p class="jour__t"><b class="no">%02d</b>%s</p></div>'
+                       % (no, M.e(j['titre'])))
+            continue
+        out.append('<details class="jour"><summary><b class="no">%02d</b>%s</summary>\n'
+                   '<div class="jour__c">\n%s\n</div></details>'
+                   % (no, M.e(j['titre'] or 'Étape %d' % no), corps(j)))
 
     if not out:
         return ''
 
     return ('<div class="bloc-t">\n<p class="eyebrow">Le programme</p>\n'
             '<h2 style="margin-bottom:16px">Les étapes de votre séjour</h2>\n'
-            '<div class="jour">\n%s\n</div>\n</div>' % '\n'.join(out))
+            '%s\n</div>' % '\n'.join(out))
 
 
 def rendre_corps(sections):
@@ -206,14 +226,20 @@ def rendre_corps(sections):
 def inclusions(x):
     if not x['inclus'] and not x['exclus']:
         return ''
-    gauche = ('<div><h3 style="color:var(--teal-txt)">Le programme inclut</h3><ul class="oui">%s</ul></div>'
-              % ''.join('<li>%s</li>' % M.e(i) for i in x['inclus'])) if x['inclus'] else '<div></div>'
-    droite = ('<div><h3 style="color:var(--gris)">N\'inclut pas</h3><ul class="non">%s</ul></div>'
-              % ''.join('<li>%s</li>' % M.e(i) for i in x['exclus'])) if x['exclus'] else '<div></div>'
+    cols = []
+    if x['inclus']:
+        cols.append('<div class="incl__col incl__col--oui"><h3><span class="ic">✓</span>Ce voyage inclut</h3>'
+                    '<ul class="oui">%s</ul></div>'
+                    % ''.join('<li>%s</li>' % M.e(i) for i in x['inclus']))
+    if x['exclus']:
+        cols.append('<div class="incl__col incl__col--non"><h3><span class="ic">✕</span>Ce voyage n\'inclut pas</h3>'
+                    '<ul class="non">%s</ul></div>'
+                    % ''.join('<li>%s</li>' % M.e(i) for i in x['exclus']))
+    seule = ' style="grid-template-columns:1fr"' if len(cols) == 1 else ''
 
     return ('<div class="bloc-t">\n<p class="eyebrow">Ce qui est compris</p>\n'
             '<h2 style="margin-bottom:16px">Le détail du prix</h2>\n'
-            '<div class="incl">%s%s</div>\n</div>' % (gauche, droite))
+            '<div class="incl"%s>%s</div>\n</div>' % (seule, ''.join(cols)))
 
 
 def rendre_faq(faq):
@@ -331,7 +357,7 @@ def rendre(x, tous, titres_voyages, familles, categorie_de):
     fin = page.index('</section>', ancre) + len('</section>')
     page = page[:deb] + soeurs(x, tous, familles) + page[fin:]
 
-    return page
+    return M.defloute(page)
 
 
 def main():

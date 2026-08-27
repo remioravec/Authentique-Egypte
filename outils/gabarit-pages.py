@@ -464,7 +464,7 @@ def main():
         if not x['sections']:
             continue
         with open(os.path.join(SORTIE, '%s-%s.html' % (g, it['slug'][:60])), 'w', encoding='utf-8') as f:
-            f.write(MONTAGES[g](x, ctx, g))
+            f.write(M.defloute(MONTAGES[g](x, ctx, g)))
         compte[g] = compte.get(g, 0) + 1
     for g, n in sorted(compte.items()):
         print('  %-14s %2d pages, moule %s' % (g, n, MOULE[g]))

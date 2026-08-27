@@ -184,16 +184,33 @@ p{margin:0 0 1em}
 .resa-mob .p b{font-size:1.3rem;font-weight:700;color:var(--noir);letter-spacing:-.6px}
 .resa-mob .p i{font-style:normal;font-size:.76rem;color:var(--gris)}
 
-/* ---------- jour par jour ---------- */
-.jour{border-left:2px solid var(--ligne);padding:0 0 26px 26px;position:relative}
-.jour:last-child{padding-bottom:0}
-.jour::before{content:"";position:absolute;left:-8px;top:5px;width:14px;height:14px;border-radius:50%;
+/* ---------- jour par jour ----------
+   Chaque jour est un accordéon (details), fermé au chargement.
+   Le fil de gauche et la pastille dorée gardent l'esprit chronologie. */
+.jour{border-left:2px solid var(--ligne);padding:0 0 0 26px;position:relative;counter-reset:et}
+.jour::before{content:"";position:absolute;left:-8px;top:20px;width:14px;height:14px;border-radius:50%;
   background:var(--or);border:3px solid #fff;box-shadow:0 0 0 1px var(--ligne)}
-.jour h3{margin:0 0 8px}
+.jour>summary{list-style:none;cursor:pointer;position:relative;padding:13px 48px 13px 0;
+  display:flex;align-items:center;gap:12px;
+  font-family:"Archivo",sans-serif;font-weight:700;font-size:1.1rem;letter-spacing:-.3px;color:var(--noir)}
+.jour .no{flex:0 0 auto;width:30px;height:30px;border-radius:50%;background:var(--or-fond);
+  border:1px solid var(--or);color:#7A5605;font-family:"Manrope",sans-serif;font-size:.72rem;
+  font-weight:700;display:grid;place-items:center;letter-spacing:0}
+.jour__t{display:flex;align-items:center;gap:12px;margin:0;padding:13px 48px 13px 0;
+  font-family:"Archivo",sans-serif;font-weight:700;font-size:1.1rem;letter-spacing:-.3px;color:var(--noir)}
+.jour__intro{padding:6px 0 14px}
+.jour__intro p{font-size:.96rem}
+.jour>summary::-webkit-details-marker{display:none}
+.jour>summary::after{content:"+";position:absolute;right:8px;top:50%;transform:translateY(-50%);
+  width:28px;height:28px;border-radius:50%;background:var(--or-fond);color:#7A5605;
+  display:grid;place-items:center;font-size:1.25rem;font-weight:500;transition:transform .25s var(--ease)}
+.jour[open]>summary::after{transform:translateY(-50%) rotate(45deg)}
+.jour>summary:hover{color:var(--teal-txt)}
+.jour__c{padding:0 0 26px}
+.jour:last-of-type>.jour__c{padding-bottom:10px}
 .jour h4{margin:0 0 6px;color:var(--nuit-900)}
 .jour p{font-size:.96rem}
 .jour p:last-child{margin-bottom:0}
-.jour{counter-reset:et}
 .etape{padding:16px 0 0 0;position:relative;counter-increment:et}
 .etape+.etape{border-top:1px solid var(--ligne-2);margin-top:16px}
 .etape h4{display:flex;align-items:center;gap:12px}
@@ -203,16 +220,25 @@ p{margin:0 0 1em}
   display:grid;place-items:center;letter-spacing:0}
 .etape p{padding-left:42px}
 
-/* ---------- inclus / non inclus ---------- */
-.incl{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--ligne);border:1px solid var(--ligne);
-  border-radius:var(--r-l);overflow:hidden}
-.incl>div{background:var(--or-fond);padding:26px}
-.incl>div:last-child{background:var(--fond)}
-.incl h3{font-size:1.06rem;margin-bottom:14px}
+/* ---------- inclus / non inclus ----------
+   Deux cartes jumelles : la teal dit ce que le prix couvre, la neutre
+   ce qu'il faut prévoir en plus. Chaque ligne porte sa propre coche. */
+.incl{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start}
+.incl__col{border:1px solid var(--ligne);border-top:4px solid var(--gris-clair);
+  border-radius:var(--r-l);background:var(--papier);padding:22px 24px 14px}
+.incl__col--oui{border-top-color:var(--teal);
+  background:linear-gradient(180deg,var(--teal-fond),var(--papier) 130px)}
+.incl h3{font-size:1.02rem;margin-bottom:12px;display:flex;align-items:center;gap:10px}
+.incl__col--oui h3{color:var(--teal-txt)}
+.incl__col--non h3{color:var(--gris)}
+.incl h3 .ic{flex:0 0 auto;width:28px;height:28px;border-radius:50%;display:grid;place-items:center;
+  font-size:.85rem;font-weight:700;background:var(--teal-txt);color:#fff}
+.incl__col--non h3 .ic{background:var(--ligne);color:var(--gris)}
 .incl ul{list-style:none;margin:0;padding:0;font-size:.94rem}
-.incl li{padding:8px 0 8px 26px;position:relative;line-height:1.55}
-.incl .oui li::before{content:"✓";position:absolute;left:0;top:8px;color:var(--teal-txt);font-weight:700}
-.incl .non li::before{content:"✕";position:absolute;left:0;top:8px;color:var(--gris-clair);font-weight:700}
+.incl li{padding:9px 0 9px 30px;position:relative;line-height:1.55}
+.incl li+li{border-top:1px dashed var(--ligne-2)}
+.incl .oui li::before{content:"✓";position:absolute;left:2px;top:9px;color:var(--teal-txt);font-weight:700}
+.incl .non li::before{content:"✕";position:absolute;left:2px;top:9px;color:var(--gris-clair);font-weight:700}
 .incl .non li{color:var(--gris)}
 
 /* ---------- alerte contenu ---------- */
@@ -220,17 +246,22 @@ p{margin:0 0 1em}
   font-family:"Manrope",sans-serif;font-size:.89rem;line-height:1.65;color:#5C4204}
 .alerte b{color:#3D2B00}
 
-/* ---------- FAQ ---------- */
-.faq{border-top:1px solid var(--ligne)}
-.faq details{border-bottom:1px solid var(--ligne)}
-.faq summary{padding:17px 44px 17px 0;font-weight:600;font-size:1rem;cursor:pointer;color:var(--noir);
+/* ---------- FAQ ----------
+   Des cartes, pas des lignes : chaque question a son cadre et son
+   bouton +, pour qu'on voie au premier regard que ça se déplie. */
+.faq{display:grid;gap:10px}
+.faq details{border:1px solid var(--ligne);border-radius:var(--r-m);background:var(--papier);
+  transition:border-color .25s var(--ease),box-shadow .25s var(--ease)}
+.faq details[open]{border-color:var(--or);box-shadow:var(--ombre)}
+.faq summary{padding:15px 56px 15px 18px;font-weight:600;font-size:1rem;cursor:pointer;color:var(--noir);
   position:relative;list-style:none;display:block;font-family:"Archivo",sans-serif;letter-spacing:-.3px}
 .faq summary::-webkit-details-marker{display:none}
-.faq summary::after{content:"+";position:absolute;right:8px;top:50%;transform:translateY(-50%);
-  font-size:1.6rem;color:var(--or);font-weight:400;transition:transform .25s var(--ease)}
+.faq summary::after{content:"+";position:absolute;right:15px;top:50%;transform:translateY(-50%);
+  width:26px;height:26px;border-radius:50%;background:var(--or-fond);color:#7A5605;
+  display:grid;place-items:center;font-size:1.15rem;font-weight:500;transition:transform .25s var(--ease)}
 .faq details[open] summary::after{transform:translateY(-50%) rotate(45deg)}
 .faq summary:hover{color:var(--teal-txt)}
-.faq__c{padding:0 44px 18px 0;color:var(--texte)}
+.faq__c{padding:0 18px 16px;color:var(--texte)}
 .faq__c :last-child{margin-bottom:0}
 .faq__c ul{padding-left:20px;margin:0 0 1em}
 
@@ -418,8 +449,8 @@ body.mm .mm-legende{display:block}
   .ruban a{font-size:.95rem;padding:13px 2px 11px}
   .ruban a span{font-size:.9rem}
 
-  .faq summary{font-size:1.06rem;padding-right:42px}
-  .faq__c{padding-right:0}
+  .faq summary{font-size:1.06rem}
+  .jour>summary{font-size:1.1rem}
 
   /* 2 ─ Cibles tactiles -------------------------------------------- */
   /* 44 px : la hauteur d'un doigt. On ne l'applique qu'aux cibles
@@ -442,7 +473,7 @@ body.mm .mm-legende{display:block}
   .fpan label{padding:11px 10px}
   .mm-btn{padding:11px 16px}
   .carte h3 a,.guide{display:block} /* ces deux-là englobent déjà leur cible */
-  .faq summary{display:block;padding-top:19px;padding-bottom:19px}
+  .faq summary,.jour>summary{display:block;padding-top:19px;padding-bottom:19px}
 
   /* Les cartes entières sont cliquables : rien à agrandir dedans. */
   a.carte,a.guide,a.fille,a.une{min-height:0}
@@ -590,19 +621,29 @@ header .nav>a.btn--or:hover{background:#C87700;border-color:#C87700;box-shadow:0
 <div class="bloc-t">
 <p class="eyebrow">Le programme</p>
 <h2 style="margin-bottom:16px">Les étapes de votre séjour</h2>
-<div class="jour">
-<div class="etape"><h4>Jour 1 : Arrivée à Sharm el-Sheikh</h4><p>Vous arrivez à l’aéroport de Sharm el Sheikh où vous êtes accueilli par notre représentant local, puis prenez la route en direction de votre hôtel en bord de mer pour commencer votre aventure dans le Sinaï</p>
-<ul><li>Dîner inclus</li><li>Hôtel à Sharm el-Sheikh</li></ul></div>
-<div class="etape"><h4>Jour 2 : Découverte du parc de Ras Mohamed</h4><p>Après le petit-déjeuner, embarquez à bord d’un bateau en direction du parc national de Ras Mohamed, un lieu préservé emblématique du Sud du Sinaï et véritable paradis du snorkeling.</p>
+<details class="jour"><summary><b class="no">01</b>Jour 1 : Arrivée à Sharm el-Sheikh</summary>
+<div class="jour__c">
+<p>Vous arrivez à l’aéroport de Sharm el Sheikh où vous êtes accueilli par notre représentant local, puis prenez la route en direction de votre hôtel en bord de mer pour commencer votre aventure dans le Sinaï</p>
+<ul><li>Dîner inclus</li><li>Hôtel à Sharm el-Sheikh</li></ul>
+</div></details>
+<details class="jour"><summary><b class="no">02</b>Jour 2 : Découverte du parc de Ras Mohamed</summary>
+<div class="jour__c">
+<p>Après le petit-déjeuner, embarquez à bord d’un bateau en direction du parc national de Ras Mohamed, un lieu préservé emblématique du Sud du Sinaï et véritable paradis du snorkeling.</p>
 <p>Équipé d’un masque et d’un tuba, vous partez explorer les eaux turquoise où se déploie une incroyable barrière de corail. Une véritable explosion de couleurs et de vie sous-marine qui émerveillera les amateurs comme les curieux.</p>
 <p>Un déjeuner frais et préparé à bord vous sera servi, avant de repartir pour une nouvelle session d’exploration au cœur de cet écrin naturel.</p>
 <p>En fin d’après-midi, retour à Sharm el Sheikh et transfert à votre hôtel.</p>
-<ul><li>Petit-déjeuner, déjeuner et dîner inclus</li><li>Hôtel à Sharm el-Sheikh</li></ul></div>
-<div class="etape"><h4>Jour 3 : Transfert vers Sainte-Catherine et repos</h4><p>Ce matin, après le petit-déjeuner, profitez d’une matinée libre. Puis en début d’après-midi, un véhicule privé et climatisé viendra vous chercher à votre hôtel pour prendre la route en direction de Sainte-Catherine.</p>
+<ul><li>Petit-déjeuner, déjeuner et dîner inclus</li><li>Hôtel à Sharm el-Sheikh</li></ul>
+</div></details>
+<details class="jour"><summary><b class="no">03</b>Jour 3 : Transfert vers Sainte-Catherine et repos</summary>
+<div class="jour__c">
+<p>Ce matin, après le petit-déjeuner, profitez d’une matinée libre. Puis en début d’après-midi, un véhicule privé et climatisé viendra vous chercher à votre hôtel pour prendre la route en direction de Sainte-Catherine.</p>
 <p>La route en bon état menant au village vous donne l’occasion d’observer les paysages du Sinaï, des montagnes abruptes aux langues de sable, et peut-être même de croiser des dromadaires le long de la route.</p>
 <p>Vous arrivez dans votre guesthouse à Sainte-Catherine, tenue par des Bédouins de la tribu Gabalia, qui sauront vous accueillir avec toute l’hospitalité qui leur est reconnue. Le reste de l’après-midi est consacré au repos et à la contemplation du lieu. Un dîner copieux et traditionnel vous sera servi vers 19h afin d’avoir de l’énergie pour le lendemain.</p>
-<ul><li>Petit-déjeuner et dîner inclus</li><li>Nuit en guesthouse bédouine</li></ul></div>
-<div class="etape"><h4>Jour 4 : Lever du soleil sur le mont Moïse et visite du monastère Sainte-Catherine</h4><p>Ce matin, vous vous réveillez tôt pour un départ vers 1h en direction du monastère Sainte-Catherine, où débute votre randonnée guidée par un Bédouin. Une ascension qui s’annonce mythique et spirituelle.</p>
+<ul><li>Petit-déjeuner et dîner inclus</li><li>Nuit en guesthouse bédouine</li></ul>
+</div></details>
+<details class="jour"><summary><b class="no">04</b>Jour 4 : Lever du soleil sur le mont Moïse et visite du monastère Sainte-Catherine</summary>
+<div class="jour__c">
+<p>Ce matin, vous vous réveillez tôt pour un départ vers 1h en direction du monastère Sainte-Catherine, où débute votre randonnée guidée par un Bédouin. Une ascension qui s’annonce mythique et spirituelle.</p>
 <p>La marche, qui dure entre 2h30 et 3h00 à la lumière des frontales, vous mène au sommet pour admirer le lever du soleil sur les montagnes du Sinaï. Une expérience unique, magnifique et mystique, que chacun saura apprécier à sa manière.</p>
 <p>C’est sur ce sommet que Moïse aurait reçu les Tables des lois « écrites du doigt de Dieu » (Exode 31:18), un événement majeur du Judaïsme et du Christianisme, qui trouve un écho dans l’Islam. Ainsi, ce lieu est empreint d’une spiritualité intense, et vous trouverez en son sommet la chapelle de la Sainte-Trinité. Cette dernière fut construite au XXe siècle sur les restes d’une chapelle byzantine du VIe siècle, érigée par Justinien Ier en même temps que le monastère Sainte-Catherine. Aujourd’hui, la chapelle est un lieu de prière occasionnel des moines du monastère.</p>
 <p>Sur la route, vous faites des pauses dans de petits magasins minimalistes, qui vous proposent des boissons chaudes et des collations, idéales pour garder de l’énergie et faire une pause à l’abri si besoin.</p>
@@ -610,26 +651,35 @@ header .nav>a.btn--or:hover{background:#C87700;border-color:#C87700;box-shadow:0
 <p>À l’intérieur, vous visitez l’église de la Transfiguration avec ses mosaïques, son marbre et sa remarquable collection d’icônes. Vous poursuivez vers le Buisson ardent, puis montez jusqu’au musée de la bibliothèque (entrée 2 $) qui abrite une collection inestimable d’icônes anciennes et de textes bibliques. C’est d’ailleurs dans cette bibliothèque qu’a été découvert le Codex Sinaiticus, l’une des plus anciennes bibles complètes.</p>
 <p>C’est Hélène, la mère de l’empereur Constantin, qui fit ériger au IVe siècle une première chapelle entre ces montagnes. Il s’agit de la chapelle du Buisson ardent, située à l’arrière de l’église actuelle. Plus tard, l’empereur Justinien Ier (vers 548–565) fit construire le monastère Sainte-Catherine autour de cette chapelle pour protéger les pèlerins.Le monastère aurait ensuite été protégé par le prophète Mahomet en 625, dans un décret appelé Adhiname, puis par Napoléon Bonaparte en 1798 à travers une Lettre de Sauvegarde (visible dans la bibliothèque), et enfin en 2002 par l’UNESCO, qui l’a inscrit au Patrimoine mondial. Aujourd’hui encore, le gouvernement égyptien lui garantit sa sécurité et le reconnaît comme un haut lieu spirituel.</p>
 <p>Après cette visite, une voiture vous attend au parking du monastère pour vous ramener à votre guesthouse. Vous profitez d’un petit-déjeuner traditionnel et complet avant de reprendre la route vers Dahab aux alentours de midi.</p>
-<ul><li>Petit-déjeuner inclus</li><li>Hôtel à Dahab</li></ul></div>
-<div class="etape"><h4>Jour 5 et 6 : Libre exploration de Dahab et ses alentours</h4><p>Ces deux jours à Dahab sont libres pour découvrir cette ville pleine de vie et à l’ambiance si particulière. Dahab séduit aussi par son rythme paisible, ses cafés en bord de mer et son atmosphère bohème, idéale pour se détendre entre deux aventures dans le désert ou sous l’eau.</p>
+<ul><li>Petit-déjeuner inclus</li><li>Hôtel à Dahab</li></ul>
+</div></details>
+<details class="jour"><summary><b class="no">05</b>Jour 5 et 6 : Libre exploration de Dahab et ses alentours</summary>
+<div class="jour__c">
+<p>Ces deux jours à Dahab sont libres pour découvrir cette ville pleine de vie et à l’ambiance si particulière. Dahab séduit aussi par son rythme paisible, ses cafés en bord de mer et son atmosphère bohème, idéale pour se détendre entre deux aventures dans le désert ou sous l’eau.</p>
 <p>En option :– Nous pouvons vous proposer des cours de poterie qui vous permettront de créer tout type d’objet et de repartir avec votre réalisation. Il s’agit d’un workshop sur plusieurs jours, car il faut jusqu’à trois jours pour compléter toutes les étapes. Cette activité peut être effectuée le matin ou en fin de journée, à raison de trois heures par jour. Une manière originale et créative de rapporter un souvenir personnel.</p>
 <p>– Dahab est également le paradis de la plongée, réputée pour ses coraux et ses reliefs sous-marins accessibles. Il est possible de suivre un stage de plongée adapté à votre niveau, par exemple un programme de 3 à 4 jours avec passage du premier niveau PADI (Open Water Course). Dans ce cas, l’itinéraire global peut être modifié : n’hésitez pas à nous faire part de vos souhaits pour recevoir un devis personnalisé.</p>
 <p>– Enfin, profitez des nombreuses activités disponibles au départ de Dahab, que votre hôtel pourra également vous conseiller : sports nautiques, safaris dans les canyons, balades en quad ou dîners bédouins organisés dans le désert.</p>
-<ul><li>Petit-déjeuner inclus</li><li>Hôtel à Dahab</li></ul></div>
-<div class="etape"><h4>Jour 7 : Aventure à Blue Hole, Ras Abu Gallum et Blue lagoon</h4><p>Après le petit-déjeuner, vous prenez la route à bord d’une jeep pour une journée d’aventure sur la côte de la mer Rouge.</p>
+<ul><li>Petit-déjeuner inclus</li><li>Hôtel à Dahab</li></ul>
+</div></details>
+<details class="jour"><summary><b class="no">06</b>Jour 7 : Aventure à Blue Hole, Ras Abu Gallum et Blue lagoon</summary>
+<div class="jour__c">
+<p>Après le petit-déjeuner, vous prenez la route à bord d’une jeep pour une journée d’aventure sur la côte de la mer Rouge.</p>
 <p>Votre première destination est le Blue Hole, au nord de Dahab, un relief sous-marin emblématique, connu dans le monde entier pour l’apnée et le snorkeling. Grâce à un accès facile depuis la plage, vous pourrez y observer de magnifiques coraux et une faune marine riche et colorée.</p>
 <p>Ensuite, vous embarquez à bord d’un bateau en direction de Ras Abu Gallum, une plage isolée bordée par quelques huttes, loin de toute agitation. Une véritable invitation à la déconnexion. Un déjeuner préparé sur place vous est servi, avant de profiter à nouveau des fonds marins pour une nouvelle session de snorkeling.</p>
 <p>Enfin, votre périple vous mène vers le Blue Lagoon, cette fois célèbre pour ses sports nautiques comme le wind-surf. La couleur de son eau lui a donné son nom : un véritable lagon aux teintes irréelles. Vous pouvez y vous détendre sur la plage ou replonger à votre rythme dans ses eaux cristallines.</p>
 <p>En fin de journée, vous reprenez le bateau, puis votre jeep, pour retourner à votre hôtel à Dahab.</p>
-<ul><li>Petit-déjeuner et déjeuner inclus</li><li>Hôtel à Dahab</li></ul></div>
-<div class="etape"><h4>Jour 8 : Retour à Sharm el-Sheikh</h4><p>Après votre petit-déjeuner à l’hôtel, un véhicule privatisé et climatisé vient vous chercher pour votre transfert vers l’aéroport de Sharm el Sheikh, où vous prenez votre vol retour.</p>
+<ul><li>Petit-déjeuner et déjeuner inclus</li><li>Hôtel à Dahab</li></ul>
+</div></details>
+<details class="jour"><summary><b class="no">07</b>Jour 8 : Retour à Sharm el-Sheikh</summary>
+<div class="jour__c">
+<p>Après votre petit-déjeuner à l’hôtel, un véhicule privatisé et climatisé vient vous chercher pour votre transfert vers l’aéroport de Sharm el Sheikh, où vous prenez votre vol retour.</p>
 <p>En option :Prolongez votre voyage en Égypte et partez à la découverte de la vallée du Nil, du Caire et des temples majestueux de la Haute-Égypte. Une extension idéale pour approfondir votre immersion culturelle après cette expérience dans le Sinaï.</p>
 <ul><li>Petit-déjeuner inclus</li></ul>
 <ul><li>Le programme inclus</li></ul>
 <ul><li>Les transferts en véhicule privatisé et climatisé</li><li>Les nuits mentionnées</li><li>Les repas mentionnés</li><li>Les activités mentionnées</li><li>Les frais d’entrée du parc national de Sainte-Catherine</li><li>Les frais d’entrée du parc national de Ras Mohamed</li><li>Un guide anglophone sur les excursions</li><li>L&#x27;assistance H24</li></ul>
 <ul><li>N&#x27;inclus pas</li></ul>
-<ul><li>Les vols internationaux</li><li>Les repas non mentionnés</li><li>L’entrée au musée de la bibliothèque du monastère Sainte-Catherine (2$)</li><li>Les frais d’entrée à Blue Hole</li><li>Les pourboires</li><li>Les suppléments</li><li>Les dépenses personnelles</li><li>L&#x27;assurance voyage</li><li>Les frais de paiement</li><li>Les frais de visa</li></ul></div>
-</div>
+<ul><li>Les vols internationaux</li><li>Les repas non mentionnés</li><li>L’entrée au musée de la bibliothèque du monastère Sainte-Catherine (2$)</li><li>Les frais d’entrée à Blue Hole</li><li>Les pourboires</li><li>Les suppléments</li><li>Les dépenses personnelles</li><li>L&#x27;assurance voyage</li><li>Les frais de paiement</li><li>Les frais de visa</li></ul>
+</div></details>
 </div>
 <div class="bloc-t"><h2 style="margin-bottom:14px">Découvrez le Sinaï</h2><p class="">Entre Afrique et Asie, la péninsule du Sinaï forme un pont naturel et culturel entre deux mondes. Bordée par le golfe de Suez et le golfe d’Aqaba, elle offre des paysages saisissants : montagnes de granit rose, déserts dorés, canyons spectaculaires et plages baignées par la mer Rouge. C’est un territoire de contrastes, à la fois rude et poétique, entre silence minéral et richesse sous-marine.</p>
 <p class="">Terre spirituelle et carrefour d’histoire, le Sinaï abrite le mont Moïse, lieu sacré pour les trois monothéismes, et au pied duquel se dresse le monastère Sainte-Catherine, l’un des plus anciens au monde. Depuis des siècles, pèlerins, nomades et voyageurs y laissent leurs traces, tissant une mosaïque de récits et de traditions.</p>
@@ -640,7 +690,7 @@ header .nav>a.btn--or:hover{background:#C87700;border-color:#C87700;box-shadow:0
 <div class="bloc-t">
 <p class="eyebrow">Ce qui est compris</p>
 <h2 style="margin-bottom:16px">Le détail du prix</h2>
-<div class="incl"><div><h3 style="color:var(--teal-txt)">Le programme inclut</h3><ul class="oui"><li>Les transferts en véhicule privatisé et climatisé</li><li>Les nuits mentionnées</li><li>Les repas mentionnés</li><li>Les activités mentionnées</li><li>Les frais d’entrée du parc national de Sainte-Catherine</li><li>Les frais d’entrée du parc national de Ras Mohamed</li><li>Un guide anglophone sur les excursions</li><li>L&#x27;assistance H24</li></ul></div><div><h3 style="color:var(--gris)">N'inclut pas</h3><ul class="non"><li>Les vols internationaux</li><li>Les repas non mentionnés</li><li>L’entrée au musée de la bibliothèque du monastère Sainte-Catherine (2$)</li><li>Les frais d’entrée à Blue Hole</li><li>Les pourboires</li><li>Les suppléments</li><li>Les dépenses personnelles</li><li>L&#x27;assurance voyage</li><li>Les frais de paiement</li><li>Les frais de visa</li></ul></div></div>
+<div class="incl"><div class="incl__col incl__col--oui"><h3><span class="ic">✓</span>Ce voyage inclut</h3><ul class="oui"><li>Les transferts en véhicule privatisé et climatisé</li><li>Les nuits mentionnées</li><li>Les repas mentionnés</li><li>Les activités mentionnées</li><li>Les frais d’entrée du parc national de Sainte-Catherine</li><li>Les frais d’entrée du parc national de Ras Mohamed</li><li>Un guide anglophone sur les excursions</li><li>L&#x27;assistance H24</li></ul></div><div class="incl__col incl__col--non"><h3><span class="ic">✕</span>Ce voyage n'inclut pas</h3><ul class="non"><li>Les vols internationaux</li><li>Les repas non mentionnés</li><li>L’entrée au musée de la bibliothèque du monastère Sainte-Catherine (2$)</li><li>Les frais d’entrée à Blue Hole</li><li>Les pourboires</li><li>Les suppléments</li><li>Les dépenses personnelles</li><li>L&#x27;assurance voyage</li><li>Les frais de paiement</li><li>Les frais de visa</li></ul></div></div>
 </div>
 <div class="bloc-t">
 <p class="eyebrow">Bon à savoir</p>
@@ -838,6 +888,9 @@ header .nav>a.btn--or:hover{background:#C87700;border-color:#C87700;box-shadow:0
     el.style.transitionDelay=(Math.min(n%4,3)*60)+'ms';
     io.observe(el);
   });
+  /* Garde-fou : si l'observateur ne se déclenche pas (extension,
+     optimiseur de scripts…), tout redevient visible au bout de 2,5 s. */
+  setTimeout(()=>{cibles.forEach(el=>el.classList.add('vu'))},2500);
 })();
 </script>
 

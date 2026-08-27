@@ -858,6 +858,7 @@ document.querySelector('.burger')?.addEventListener('click',e=>{
   },{threshold:.06,rootMargin:'0px 0px -40px 0px'});
   cibles.forEach((el,n)=>{ el.setAttribute('data-rev','');
     el.style.transitionDelay=(Math.min(n%4,3)*60)+'ms'; io.observe(el); });
+  setTimeout(()=>{cibles.forEach(el=>el.classList.add('vu'))},2500); /* garde-fou : rien ne reste invisible */
 })();
 </script>
 <script>
