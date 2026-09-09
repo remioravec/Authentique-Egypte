@@ -53,8 +53,15 @@
 
 /* ---------- bandeau de tête ---------- */
 .pg .hero{position:relative;background:var(--nuit-900);overflow:hidden}
-.pg .hero__fond{position:absolute;inset:0}
-.pg .hero__fond img{width:100%;height:100%;object-fit:cover}
+/* La photo nette ne dépasse jamais sa largeur réelle (--une-l) ; le
+   flou derrière remplit le reste. Sans --une-l, rien ne borne : c'est
+   le cas des couvertures de 1920 px, qui couvrent tout sans être
+   étirées. */
+.pg .hero__flou{position:absolute;inset:0;overflow:hidden}
+.pg .hero__flou img{width:100%;height:100%;object-fit:cover;
+  filter:blur(30px) saturate(1.15);transform:scale(1.15)}
+.pg .hero__fond{position:absolute;inset:0;display:grid;justify-items:center}
+.pg .hero__fond img{width:min(100%,var(--une-l,100%));height:100%;object-fit:cover}
 .pg .hero__fond::after{content:"";position:absolute;inset:0;background:
   linear-gradient(180deg,rgba(6,42,58,.62) 0%,rgba(6,42,58,.30) 34%,rgba(5,35,50,.88) 100%)}
 .pg .hero__in{position:relative;padding:24px 0 56px}
@@ -88,8 +95,12 @@
 
 /* ---------- repères ---------- */
 .pg .reperes{background:var(--fond-2);border-bottom:1px solid var(--ligne-pg)}
-.pg .reperes ul{list-style:none;margin:0;padding:24px 0;display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:20px}
+/* Une grille à colonnes automatiques laissait le huitième repère seul
+   sur une deuxième ligne, calé à gauche sous le premier. En flex, la
+   dernière ligne se centre et l'orphelin cesse d'en être un. */
+.pg .reperes ul{list-style:none;margin:0;padding:24px 0;display:flex;flex-wrap:wrap;
+  justify-content:center;gap:20px 24px}
+.pg .reperes li{flex:1 1 150px;max-width:230px}
 .pg .reperes li{display:flex;flex-direction:column;align-items:center;text-align:center;gap:7px;
   font-family:"Manrope",sans-serif}
 .pg .reperes li svg{color:var(--teal-txt)}
@@ -219,9 +230,15 @@
 .pg .carr__b[disabled]:hover{background:rgba(255,255,255,.09);border-color:rgba(255,255,255,.3);
   color:#fff}
 .pg .carr__b:first-child svg{transform:rotate(180deg)}
+/* La barre de défilement reste VISIBLE par défaut : sans JavaScript,
+   les boutons n'existent pas, et entre 861 et 1040 px deux personnes
+   étaient alors hors d'atteinte à la souris. Le script, lui, pose la
+   classe « js » et prend le relais avec ses deux boutons. */
 .pg .carr__p{display:flex;gap:18px;overflow-x:auto;scroll-snap-type:x mandatory;
-  scroll-behavior:smooth;scrollbar-width:none;padding:2px}
-.pg .carr__p::-webkit-scrollbar{display:none}
+  scroll-behavior:smooth;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.4) transparent;
+  padding:2px 2px 10px}
+.pg .carr.js .carr__p{scrollbar-width:none;padding-bottom:2px}
+.pg .carr.js .carr__p::-webkit-scrollbar{display:none}
 .pg .carr__p:focus-visible{outline:2px solid var(--or);outline-offset:4px;border-radius:var(--r-m)}
 /* Quatre cartes exactement dans la largeur : au bureau la piste ne
    déborde pas, les boutons restent donc cachés. */
@@ -233,7 +250,10 @@
   font-size:1.4rem;margin:0 0 16px}
 .pg .carr__c b{font-family:"Manrope",sans-serif;font-size:1.16rem;color:#fff;display:block;
   font-weight:700}
-.pg .carr__r{display:block;color:var(--or);font-family:"Manrope",sans-serif;font-size:.98rem;
+/* L'or de la charte donne 3,64:1 sur le composite de la carte
+   (rgb 38,100,128) : sous le seuil de 4,5. Cet or éclairci en donne
+   4,81 et reste le même or. */
+.pg .carr__r{display:block;color:#FFD97F;font-family:"Manrope",sans-serif;font-size:.98rem;
   font-weight:600;margin-top:3px}
 .pg .carr__f{list-style:none;margin:14px 0 0;padding:14px 0 0;display:grid;gap:7px;
   border-top:1px solid rgba(255,255,255,.16)}
@@ -515,7 +535,13 @@
 .pg .mur__f{height:664px;overflow:hidden;
   -webkit-mask-image:linear-gradient(180deg,transparent,#000 48px,#000 calc(100% - 48px),transparent);
   mask-image:linear-gradient(180deg,transparent,#000 48px,#000 calc(100% - 48px),transparent)}
-.pg .mur__d{animation:mur var(--d,90s) linear infinite;will-change:transform}
+/* display:flow-root n'est pas cosmétique. Sans lui, la marge basse de
+   la DERNIÈRE carte fusionne à travers .mur__p puis .mur__d — ni l'un
+   ni l'autre n'ayant bordure, padding ou contexte de formatage — et la
+   piste mesure 2×période − 22 px. La moitié tombait alors 11 px trop
+   haut : la boucle sautait à chaque tour, mesuré sur les deux colonnes
+   et aux trois largeurs. */
+.pg .mur__d{display:flow-root;animation:mur var(--d,90s) linear infinite;will-change:transform}
 .pg .mur__c:nth-child(2) .mur__d{animation-direction:reverse}
 @keyframes mur{from{transform:translateY(0)}to{transform:translateY(-50%)}}
 /* Trois façons d'arrêter : le bouton, le survol, le focus clavier. */
@@ -535,14 +561,11 @@
 /* Le G de Google porte ses propres couleurs : il lui faut un rond clair
    et non le bleu nuit des initiales, sinon le bleu du logo s'y noie. */
 .pg .ini--g{background:#fff;border:1px solid var(--ligne-pg);box-shadow:0 1px 2px rgba(16,32,48,.06)}
-/* Mouvement réduit : plus d'animation du tout, et le mur redevient une
-   liste. La seconde copie disparaît — elle ne servait que la boucle. */
-@media (prefers-reduced-motion:reduce){
-  .pg .mur__f{height:auto;overflow:visible;-webkit-mask-image:none;mask-image:none}
-  .pg .mur__d{animation:none}
-  .pg .mur__p[aria-hidden]{display:none}
-  .pg .mur__btn,.pg .mur__stop{display:none}
-}
+/* Le mur au repos : plus d'animation, la liste entière. Deux cas, la
+   même règle — et elle est déclarée APRÈS les blocs responsives, à la
+   fin de la feuille, sinon « height:420px » du bloc mobile revenait
+   par-dessus « overflow:visible » et le mur débordait de 2 500 px sur
+   la suite de la page. */
 
 /* ---------- séjours proches ---------- */
 .pg .proches{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
@@ -608,7 +631,8 @@
      (mesuré ×1,34 en densité 2 sur une photo de 1920 px) et la photo
      devient floue. À 470 px, le facteur retombe à 0,87. */
   .pg .hero{background:var(--nuit-900)}
-  .pg .hero__fond{position:absolute;top:0;left:0;right:0;height:470px}
+  .pg .hero__flou,
+  .pg .hero__fond{position:absolute;top:0;left:0;right:0;height:var(--une-h,470px)}
   .pg .hero__fond::after{background:
     linear-gradient(180deg,rgba(6,42,58,.55) 0%,rgba(6,42,58,.12) 32%,
     rgba(8,45,62,.80) 74%,var(--nuit-900) 100%)}
@@ -671,6 +695,26 @@
   body{padding-bottom:84px}
 }
 @media (prefers-reduced-motion:reduce){.pg *,.pg *::before,.pg *::after{transition:none!important}}
+
+/* ---------- le mur au repos ----------
+   Deux situations où le défilement dessert la lecture, et la même
+   réponse : la liste entière, sans mouvement.
+
+   · mouvement réduit : le visiteur l'a demandé ;
+   · sous 861 px : mesurées à 390 px, huit des dix cartes sont plus
+     hautes que la fenêtre. Le lecteur qui met en pause au milieu d'un
+     avis n'avait aucun moyen d'en voir la fin — il fallait relancer et
+     attendre un tour de soixante secondes. Un bouton de pause qui ne
+     sert à rien ne remplit pas le critère 2.2.2.
+
+   Ces règles viennent en FIN de feuille : à spécificité égale, c'est la
+   dernière qui gagne, et les blocs responsives sont au-dessus. */
+@media (prefers-reduced-motion:reduce),(max-width:860px){
+  .pg .mur__f{height:auto;overflow:visible;-webkit-mask-image:none;mask-image:none}
+  .pg .mur__d{animation:none}
+  .pg .mur__p[aria-hidden]{display:none}
+  .pg .mur__btn,.pg .mur__stop{display:none}
+}
 </style>
 <script type="application/ld+json">[{"@context": "https://schema.org", "@type": "TouristTrip", "name": "Voyage à l’Oasis de Siwa", "description": "Vivez l'expérience unique d'une oasis préservée, Charmez-vous des merveilles intemporelles de l'Oasis de Siwa!", "url": "https://authentiquegypte.com/programs/excursion-a-loasis-de-siwa/", "image": ["https://authentiquegypte.com/wp-content/uploads/2023/11/Siwa_Oasis_sunset_on_Maraqi_Egypt.webp", "https://authentiquegypte.com/wp-content/uploads/2023/11/Oasis-de-siwa-2.png", "https://authentiquegypte.com/wp-content/uploads/2023/11/Oasis-de-siwa-3.png", "https://authentiquegypte.com/wp-content/uploads/2023/11/Oasis-de-siwa-5.png", "https://authentiquegypte.com/wp-content/uploads/2023/11/Oasis-de-siwa.png", "https://authentiquegypte.com/wp-content/uploads/2023/11/Oasis-de-siwa-4.png"], "provider": {"@type": "TravelAgency", "name": "Authentique Égypte", "url": "https://authentiquegypte.com/"}, "offers": {"@type": "Offer", "price": 595, "priceCurrency": "EUR", "availability": "https://schema.org/InStock", "seller": {"@type": "TravelAgency", "name": "Authentique Égypte"}}}, {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Qu'est-ce qui rend Siwa unique ?", "acceptedAnswer": {"@type": "Answer", "text": "Siwa est unique par son isolement, sa culture préservée et ses paysages exceptionnels. Culture amazighe : langue siwi, traditions et architecture en karsheef Histoire millénaire : temple d'Amon, nécropoles de Gebel al-Mawta Paysages contrastés : palmeraie, lacs salés, désert libyque Ambiance préservée : loin des circuits touristiques traditionnels Classée au patrimoine mondial de l'UNESCO, Siwa offre une expérience authentique et hors du temps."}}, {"@type": "Question", "name": "Comment s'y rendre depuis Le Caire ?", "acceptedAnswer": {"@type": "Answer", "text": "Le trajet depuis Le Caire prend environ 8 à 10 heures en voiture. En voiture privée : avec chauffeur expérimenté (itinéraire via Bahariya ou Farafra) En excursion organisée : la solution la plus simple avec guide et véhicule adapté En camping : possibilité de bivouac dans le désert environnant Conseil : Préférez les excursions organisées pour bénéficier d'un guide expérimenté et d'un véhicule adapté."}}, {"@type": "Question", "name": "Quelle est la meilleure période pour visiter ?", "acceptedAnswer": {"@type": "Answer", "text": "Période idéale : d'octobre à mars pour des températures agréables (15-25°C). Printemps/Automne : conditions parfaites pour l'exploration Hiver : nuits fraîches (0-10°C), prévoir des vêtements chauds Été : très chaud (40°C+), déconseillé pour les randonnées Astuce : Le lever et coucher du soleil offrent des couleurs magiques sur les paysages."}}, {"@type": "Question", "name": "Combien de temps prévoir pour un séjour ?", "acceptedAnswer": {"@type": "Answer", "text": "Durée recommandée : 3 à 4 jours pour profiter pleinement du site. 2 jours : idéal pour explorer les principaux sites 3-4 jours : pour une expérience complète avec exploration des sites historiques et naturels 5 jours et plus : pour une immersion totale avec excursions dans le désert environnant Conseil : Prévoyez au moins 3 jours pour voir les principaux sites sans précipitation."}}, {"@type": "Question", "name": "Quelles activités sont incontournables ?", "acceptedAnswer": {"@type": "Answer", "text": "Activités principales : Visite des sites historiques : temple d'Amon, forteresse de Shali, nécropoles de Gebel al-Mawta Bains dans les sources naturelles : comme les bains de Cléopâtre Exploration des lacs salés : paysages uniques et baignade flottante Randonnées dans le désert : découverte des paysages désertiques Dégustation de la cuisine locale : plats à base de dattes et d'olives À noter : Siwa offre aussi des possibilités de camping sous les étoiles dans le désert environnant."}}, {"@type": "Question", "name": "Quels équipements prévoir ?", "acceptedAnswer": {"@type": "Answer", "text": "Équipement essentiel : Vêtements : couches superposables (matin frais, journée chaude) Chaussures : chaussures de randonnée confortables Protection : chapeau, lunettes de soleil, crème solaire Eau : minimum 3L par personne par jour Appareil photo : pour capturer les paysages uniques Conseil : Prévoyez un sac à dos léger mais bien équipé pour les excursions."}}, {"@type": "Question", "name": "Conseils de sécurité et santé", "acceptedAnswer": {"@type": "Answer", "text": "Règles de sécurité essentielles : Ne vous éloignez pas du groupe ou du guide, surtout dans le désert Restez hydraté en buvant régulièrement Protégez-vous du soleil (chapeau, crème solaire) Évitez de toucher les formations rocheuses fragiles Respectez les consignes du guide À noter : Le désert peut être dangereux en cas de tempête de sable soudaine."}}, {"@type": "Question", "name": "Peut-on combiner Siwa avec d'autres sites ?", "acceptedAnswer": {"@type": "Answer", "text": "Oui, plusieurs combinaisons possibles : Avec l'Oasis de Bahariya : à 1h de route, paysages verdoyants Avec l'Oasis de Farafra : à 2h, ambiance plus isolée Avec le Désert Blanc : formations rocheuses calcaires spectaculaires Avec le Désert Noir : formations volcaniques contrastées Conseil : Une excursion combinée permet de voir plusieurs paysages désertiques en une seule sortie."}}]}, {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Accueil", "item": "https://authentiquegypte.com/"}, {"@type": "ListItem", "position": 2, "name": "Nos séjours en Égypte", "item": "https://authentiquegypte.com/nos-sejours-egypte/"}, {"@type": "ListItem", "position": 3, "name": "Déserts et Oasis égyptiens", "item": "https://authentiquegypte.com/nos-sejours-egypte/desert-egypte/"}, {"@type": "ListItem", "position": 4, "name": "Voyage à l’Oasis de Siwa", "item": "https://authentiquegypte.com/programs/excursion-a-loasis-de-siwa/"}]}]</script>
 </head>
@@ -728,7 +772,7 @@
   </div>
 </header>
 <main class="pg">
-<section class="hero">
+<section class="hero" style="--une-l:1920px;--une-h:470px">
 <div class="hero__fond"><img src="https://authentiquegypte.com/wp-content/uploads/2023/11/Siwa_Oasis_sunset_on_Maraqi_Egypt.webp" alt="oasis de siwa" decoding="async" srcset="https://authentiquegypte.com/wp-content/uploads/2023/11/Siwa_Oasis_sunset_on_Maraqi_Egypt-300x169.webp 300w, https://authentiquegypte.com/wp-content/uploads/2023/11/Siwa_Oasis_sunset_on_Maraqi_Egypt-768x432.webp 768w, https://authentiquegypte.com/wp-content/uploads/2023/11/Siwa_Oasis_sunset_on_Maraqi_Egypt-1024x577.webp 1024w, https://authentiquegypte.com/wp-content/uploads/2023/11/Siwa_Oasis_sunset_on_Maraqi_Egypt-1536x865.webp 1536w, https://authentiquegypte.com/wp-content/uploads/2023/11/Siwa_Oasis_sunset_on_Maraqi_Egypt.webp 1920w" sizes="100vw" width="1920" height="1081" fetchpriority="high"></div>
 <div class="hero__in"><div class="wrap">
 <div class="hero__pills"><span class="pill"><svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s6-5.5 6-11a6 6 0 1 0-12 0c0 5.5 6 11 6 11z"/><circle cx="12" cy="10" r="2.2"/></svg>Déserts et Oasis égyptiens</span><span class="pill"><svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>3 jours minimum</span><span class="pill"><svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.5"/><path d="M5 20a7 7 0 0 1 14 0"/></svg>Guide privatif</span></div>
@@ -953,12 +997,12 @@
 <div><p class="eyebrow">La destination</p><h2>Tout savoir sur ce séjour</h2><div class="acc"><details open><summary><span class="q">Qu&#x27;est-ce qui rend Siwa unique ?</span><span class="acc__plus"></span></summary><div class="acc__c"><p> <strong>Siwa est unique par son isolement, sa culture préservée et ses paysages exceptionnels.</strong> </p> <ul> <li><strong>Culture amazighe</strong> : langue siwi, traditions et architecture en karsheef</li> <li><strong>Histoire millénaire</strong> : temple d'Amon, nécropoles de Gebel al-Mawta</li> <li><strong>Paysages contrastés</strong> : palmeraie, lacs salés, désert libyque</li> <li><strong>Ambiance préservée</strong> : loin des circuits touristiques traditionnels</li> </ul> <p> Classée au patrimoine mondial de l'UNESCO, Siwa offre une expérience authentique et hors du temps. </p></div></details><details><summary><span class="q">Comment s&#x27;y rendre depuis Le Caire ?</span><span class="acc__plus"></span></summary><div class="acc__c"><p> <strong>Le trajet depuis Le Caire prend environ 8 à 10 heures en voiture.</strong> </p> <ul> <li><strong>En voiture privée</strong> : avec chauffeur expérimenté (itinéraire via Bahariya ou Farafra)</li> <li><strong>En excursion organisée</strong> : la solution la plus simple avec guide et véhicule adapté</li> <li><strong>En camping</strong> : possibilité de bivouac dans le désert environnant</li> </ul> <p> <strong>Conseil :</strong> Préférez les excursions organisées pour bénéficier d'un guide expérimenté et d'un véhicule adapté. </p></div></details><details><summary><span class="q">Quelle est la meilleure période pour visiter ?</span><span class="acc__plus"></span></summary><div class="acc__c"><p> <strong>Période idéale : d'octobre à mars</strong> pour des températures agréables (15-25°C). </p> <ul> <li><strong>Printemps/Automne</strong> : conditions parfaites pour l'exploration</li> <li><strong>Hiver</strong> : nuits fraîches (0-10°C), prévoir des vêtements chauds</li> <li><strong>Été</strong> : très chaud (40°C+), déconseillé pour les randonnées</li> </ul> <p> <strong>Astuce :</strong> Le lever et coucher du soleil offrent des couleurs magiques sur les paysages. </p></div></details><details><summary><span class="q">Quelles activités sont incontournables ?</span><span class="acc__plus"></span></summary><div class="acc__c"><p> <strong>Activités principales :</strong> </p> <ul> <li><strong>Visite des sites historiques</strong> : temple d'Amon, forteresse de Shali, nécropoles de Gebel al-Mawta</li> <li><strong>Bains dans les sources naturelles</strong> : comme les bains de Cléopâtre</li> <li><strong>Exploration des lacs salés</strong> : paysages uniques et baignade flottante</li> <li><strong>Randonnées dans le désert</strong> : découverte des paysages désertiques</li> <li><strong>Dégustation de la cuisine locale</strong> : plats à base de dattes et d'olives</li> </ul> <p> <strong>À noter :</strong> Siwa offre aussi des possibilités de camping sous les étoiles dans le désert environnant. </p></div></details><details><summary><span class="q">Conseils de sécurité et santé</span><span class="acc__plus"></span></summary><div class="acc__c"><p> <strong>Règles de sécurité essentielles :</strong> </p> <ul> <li><strong>Ne vous éloignez pas</strong> du groupe ou du guide, surtout dans le désert</li> <li><strong>Restez hydraté</strong> en buvant régulièrement</li> <li><strong>Protégez-vous</strong> du soleil (chapeau, crème solaire)</li> <li><strong>Évitez</strong> de toucher les formations rocheuses fragiles</li> <li><strong>Respectez</strong> les consignes du guide</li> </ul> <p> <strong>À noter :</strong> Le désert peut être dangereux en cas de tempête de sable soudaine. </p></div></details><details><summary><span class="q">Peut-on combiner Siwa avec d&#x27;autres sites ?</span><span class="acc__plus"></span></summary><div class="acc__c"><p> <strong>Oui, plusieurs combinaisons possibles :</strong> </p> <ul> <li><strong>Avec l'Oasis de Bahariya</strong> : à 1h de route, paysages verdoyants</li> <li><strong>Avec l'Oasis de Farafra</strong> : à 2h, ambiance plus isolée</li> <li><strong>Avec le Désert Blanc</strong> : formations rocheuses calcaires spectaculaires</li> <li><strong>Avec le Désert Noir</strong> : formations volcaniques contrastées</li> </ul> <p> <strong>Conseil :</strong> Une excursion combinée permet de voir plusieurs paysages désertiques en une seule sortie. </p></div></details></div></div>
 <div><p class="eyebrow">Avant de réserver</p><h2>Les questions qui reviennent avant de partir</h2><div class="acc"><details><summary><span class="q">Est-ce sûr de voyager en Égypte en ce moment ?</span><span class="acc__plus"></span></summary><div class="acc__c"><p>Oui pour les zones où nous opérons : Le Caire, Louxor, Assouan, la vallée du Nil et la mer Rouge. Elles sont très fréquentées et surveillées. Nous n'organisons pas de séjour dans le Sinaï nord ni près de la frontière libyenne. Votre guide reste avec vous sur chaque site. Le détail figure dans notre point sur la <a href="https://authentiquegypte.com/securite-en-egypte-en-2026/" class="lien-txt">sécurité en Égypte en 2026</a>.</p></div></details><details><summary><span class="q">Combien coûte réellement un voyage de deux semaines ?</span><span class="acc__plus"></span></summary><div class="acc__c"><p>Comptez 1 400 à 2 200 € par personne hors vols internationaux pour 12 à 14 jours, en hôtels 4★ et 5★ avec guide privatif. Le prix bouge selon la saison, le nombre de voyageurs et le niveau d'hébergement. Nous chiffrons systématiquement deux versions pour que vous voyiez l'écart.</p></div></details><details><summary><span class="q">Réservez-vous les vols internationaux ?</span><span class="acc__plus"></span></summary><div class="acc__c"><p>Non, vous les réservez vous-même : cela vous laisse le contrôle des dates et du prix. Nous vous indiquons les créneaux d'arrivée compatibles avec l'itinéraire, et nous réservons les vols internes (Le Caire–Assouan, Louxor–Hurghada).</p></div></details><details><summary><span class="q">Faut-il un visa, et comment l&#x27;obtenir ?</span><span class="acc__plus"></span></summary><div class="acc__c"><p>Oui. Deux options : l'e-visa en ligne avant le départ, ou le visa à l'arrivée dans la plupart des aéroports (30 € en espèces ou par carte). Passeport valable 6 mois après l'arrivée. La procédure complète est dans le <a href="https://authentiquegypte.com/passeport-egypte/" class="lien-txt">guide passeport et visa pour l'Égypte</a>.</p></div></details><details><summary><span class="q">Que se passe-t-il si je dois annuler ?</span><span class="acc__plus"></span></summary><div class="acc__c"><p>Nous cherchons d'abord à reporter le séjour. Si l'annulation est définitive, des frais s'appliquent selon le délai et les prestataires déjà réservés. C'est la raison pour laquelle nous recommandons une assurance annulation dès la validation.</p></div></details></div></div>
 </div></div></section>
-<section class="pg-sec"><div class="wrap">
-<input type="checkbox" id="mur-stop" class="mur__stop" aria-label="Mettre en pause le défilement des avis">
+<section class="pg-sec" aria-labelledby="t-avis"><div class="wrap">
+<input type="checkbox" id="mur-stop" class="mur__stop">
 <div class="mur__tete">
-<div><p class="eyebrow">Avis Google</p><h2>Ce que disent les voyageurs</h2></div>
+<div><p class="eyebrow">Avis Google</p><h2 id="t-avis">Ce que disent les voyageurs</h2></div>
 <p class="mur__cpt"><b>23 avis Google sur l&#x27;agence</b><small>Relevé sur la fiche le 9 septembre 2026</small></p>
-<label class="mur__btn" for="mur-stop"><svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5v14M15 5v14"/></svg><span class="a">Mettre en pause</span><span class="b">En pause</span></label>
+<label class="mur__btn" for="mur-stop"><svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5v14M15 5v14"/></svg><span class="a">Mettre en pause le défilement</span><span class="b">Reprendre le défilement</span></label>
 </div>
 <div class="mur">
 <div class="mur__c"><div class="mur__f"><div class="mur__d" style="--d:66s">
@@ -1099,6 +1143,9 @@
   // s'il y a vraiment quelque chose à faire défiler.
   var piste=document.getElementById('equipe');
   if(piste){
+    // La classe dit « le script est là » : la barre de défilement peut
+    // s'effacer, les boutons prennent le relais.
+    piste.closest('.carr').classList.add('js');
     var nav=document.querySelector('.carr__nav');
     var bts=nav?nav.querySelectorAll('.carr__b'):[];
     function pas(){ var c=piste.querySelector('.carr__c');

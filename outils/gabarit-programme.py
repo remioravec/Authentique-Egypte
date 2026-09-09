@@ -87,9 +87,8 @@ INTERFACE = {
     'titre_avis': 'Ce que disent les voyageurs',                   # D6
     'avis_source': 'Publié sur Google',                            # D30 (libellé du widget)
     'avis_releve': 'Relevé sur la fiche le',                       # D11
-    'avis_pause': 'Mettre en pause le défilement des avis',        # D30
-    'avis_arret': 'En pause',                                      # D30
-    'avis_marche': 'Mettre en pause',                              # D30
+    'avis_arret': 'Reprendre le défilement',                       # D30
+    'avis_marche': 'Mettre en pause le défilement',                # D30
     'eyebrow_avis': 'Avis Google',                                 # D11
     'titre_devis': 'Ce séjour vous tente ? Ajustons-le à vos dates.',   # D8
     'devis_points': [                                              # D8
@@ -386,8 +385,15 @@ CSS = r"""
 
 /* ---------- bandeau de tête ---------- */
 .pg .hero{position:relative;background:var(--nuit-900);overflow:hidden}
-.pg .hero__fond{position:absolute;inset:0}
-.pg .hero__fond img{width:100%;height:100%;object-fit:cover}
+/* La photo nette ne dépasse jamais sa largeur réelle (--une-l) ; le
+   flou derrière remplit le reste. Sans --une-l, rien ne borne : c'est
+   le cas des couvertures de 1920 px, qui couvrent tout sans être
+   étirées. */
+.pg .hero__flou{position:absolute;inset:0;overflow:hidden}
+.pg .hero__flou img{width:100%;height:100%;object-fit:cover;
+  filter:blur(30px) saturate(1.15);transform:scale(1.15)}
+.pg .hero__fond{position:absolute;inset:0;display:grid;justify-items:center}
+.pg .hero__fond img{width:min(100%,var(--une-l,100%));height:100%;object-fit:cover}
 .pg .hero__fond::after{content:"";position:absolute;inset:0;background:
   linear-gradient(180deg,rgba(6,42,58,.62) 0%,rgba(6,42,58,.30) 34%,rgba(5,35,50,.88) 100%)}
 .pg .hero__in{position:relative;padding:24px 0 56px}
@@ -421,8 +427,12 @@ CSS = r"""
 
 /* ---------- repères ---------- */
 .pg .reperes{background:var(--fond-2);border-bottom:1px solid var(--ligne-pg)}
-.pg .reperes ul{list-style:none;margin:0;padding:24px 0;display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:20px}
+/* Une grille à colonnes automatiques laissait le huitième repère seul
+   sur une deuxième ligne, calé à gauche sous le premier. En flex, la
+   dernière ligne se centre et l'orphelin cesse d'en être un. */
+.pg .reperes ul{list-style:none;margin:0;padding:24px 0;display:flex;flex-wrap:wrap;
+  justify-content:center;gap:20px 24px}
+.pg .reperes li{flex:1 1 150px;max-width:230px}
 .pg .reperes li{display:flex;flex-direction:column;align-items:center;text-align:center;gap:7px;
   font-family:"Manrope",sans-serif}
 .pg .reperes li svg{color:var(--teal-txt)}
@@ -552,9 +562,15 @@ CSS = r"""
 .pg .carr__b[disabled]:hover{background:rgba(255,255,255,.09);border-color:rgba(255,255,255,.3);
   color:#fff}
 .pg .carr__b:first-child svg{transform:rotate(180deg)}
+/* La barre de défilement reste VISIBLE par défaut : sans JavaScript,
+   les boutons n'existent pas, et entre 861 et 1040 px deux personnes
+   étaient alors hors d'atteinte à la souris. Le script, lui, pose la
+   classe « js » et prend le relais avec ses deux boutons. */
 .pg .carr__p{display:flex;gap:18px;overflow-x:auto;scroll-snap-type:x mandatory;
-  scroll-behavior:smooth;scrollbar-width:none;padding:2px}
-.pg .carr__p::-webkit-scrollbar{display:none}
+  scroll-behavior:smooth;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.4) transparent;
+  padding:2px 2px 10px}
+.pg .carr.js .carr__p{scrollbar-width:none;padding-bottom:2px}
+.pg .carr.js .carr__p::-webkit-scrollbar{display:none}
 .pg .carr__p:focus-visible{outline:2px solid var(--or);outline-offset:4px;border-radius:var(--r-m)}
 /* Quatre cartes exactement dans la largeur : au bureau la piste ne
    déborde pas, les boutons restent donc cachés. */
@@ -566,7 +582,10 @@ CSS = r"""
   font-size:1.4rem;margin:0 0 16px}
 .pg .carr__c b{font-family:"Manrope",sans-serif;font-size:1.16rem;color:#fff;display:block;
   font-weight:700}
-.pg .carr__r{display:block;color:var(--or);font-family:"Manrope",sans-serif;font-size:.98rem;
+/* L'or de la charte donne 3,64:1 sur le composite de la carte
+   (rgb 38,100,128) : sous le seuil de 4,5. Cet or éclairci en donne
+   4,81 et reste le même or. */
+.pg .carr__r{display:block;color:#FFD97F;font-family:"Manrope",sans-serif;font-size:.98rem;
   font-weight:600;margin-top:3px}
 .pg .carr__f{list-style:none;margin:14px 0 0;padding:14px 0 0;display:grid;gap:7px;
   border-top:1px solid rgba(255,255,255,.16)}
@@ -848,7 +867,13 @@ CSS = r"""
 .pg .mur__f{height:664px;overflow:hidden;
   -webkit-mask-image:linear-gradient(180deg,transparent,#000 48px,#000 calc(100% - 48px),transparent);
   mask-image:linear-gradient(180deg,transparent,#000 48px,#000 calc(100% - 48px),transparent)}
-.pg .mur__d{animation:mur var(--d,90s) linear infinite;will-change:transform}
+/* display:flow-root n'est pas cosmétique. Sans lui, la marge basse de
+   la DERNIÈRE carte fusionne à travers .mur__p puis .mur__d — ni l'un
+   ni l'autre n'ayant bordure, padding ou contexte de formatage — et la
+   piste mesure 2×période − 22 px. La moitié tombait alors 11 px trop
+   haut : la boucle sautait à chaque tour, mesuré sur les deux colonnes
+   et aux trois largeurs. */
+.pg .mur__d{display:flow-root;animation:mur var(--d,90s) linear infinite;will-change:transform}
 .pg .mur__c:nth-child(2) .mur__d{animation-direction:reverse}
 @keyframes mur{from{transform:translateY(0)}to{transform:translateY(-50%)}}
 /* Trois façons d'arrêter : le bouton, le survol, le focus clavier. */
@@ -868,14 +893,11 @@ CSS = r"""
 /* Le G de Google porte ses propres couleurs : il lui faut un rond clair
    et non le bleu nuit des initiales, sinon le bleu du logo s'y noie. */
 .pg .ini--g{background:#fff;border:1px solid var(--ligne-pg);box-shadow:0 1px 2px rgba(16,32,48,.06)}
-/* Mouvement réduit : plus d'animation du tout, et le mur redevient une
-   liste. La seconde copie disparaît — elle ne servait que la boucle. */
-@media (prefers-reduced-motion:reduce){
-  .pg .mur__f{height:auto;overflow:visible;-webkit-mask-image:none;mask-image:none}
-  .pg .mur__d{animation:none}
-  .pg .mur__p[aria-hidden]{display:none}
-  .pg .mur__btn,.pg .mur__stop{display:none}
-}
+/* Le mur au repos : plus d'animation, la liste entière. Deux cas, la
+   même règle — et elle est déclarée APRÈS les blocs responsives, à la
+   fin de la feuille, sinon « height:420px » du bloc mobile revenait
+   par-dessus « overflow:visible » et le mur débordait de 2 500 px sur
+   la suite de la page. */
 
 /* ---------- séjours proches ---------- */
 .pg .proches{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
@@ -941,7 +963,8 @@ CSS = r"""
      (mesuré ×1,34 en densité 2 sur une photo de 1920 px) et la photo
      devient floue. À 470 px, le facteur retombe à 0,87. */
   .pg .hero{background:var(--nuit-900)}
-  .pg .hero__fond{position:absolute;top:0;left:0;right:0;height:470px}
+  .pg .hero__flou,
+  .pg .hero__fond{position:absolute;top:0;left:0;right:0;height:var(--une-h,470px)}
   .pg .hero__fond::after{background:
     linear-gradient(180deg,rgba(6,42,58,.55) 0%,rgba(6,42,58,.12) 32%,
     rgba(8,45,62,.80) 74%,var(--nuit-900) 100%)}
@@ -1004,6 +1027,26 @@ CSS = r"""
   body{padding-bottom:84px}
 }
 @media (prefers-reduced-motion:reduce){.pg *,.pg *::before,.pg *::after{transition:none!important}}
+
+/* ---------- le mur au repos ----------
+   Deux situations où le défilement dessert la lecture, et la même
+   réponse : la liste entière, sans mouvement.
+
+   · mouvement réduit : le visiteur l'a demandé ;
+   · sous 861 px : mesurées à 390 px, huit des dix cartes sont plus
+     hautes que la fenêtre. Le lecteur qui met en pause au milieu d'un
+     avis n'avait aucun moyen d'en voir la fin — il fallait relancer et
+     attendre un tour de soixante secondes. Un bouton de pause qui ne
+     sert à rien ne remplit pas le critère 2.2.2.
+
+   Ces règles viennent en FIN de feuille : à spécificité égale, c'est la
+   dernière qui gagne, et les blocs responsives sont au-dessus. */
+@media (prefers-reduced-motion:reduce),(max-width:860px){
+  .pg .mur__f{height:auto;overflow:visible;-webkit-mask-image:none;mask-image:none}
+  .pg .mur__d{animation:none}
+  .pg .mur__p[aria-hidden]{display:none}
+  .pg .mur__btn,.pg .mur__stop{display:none}
+}
 """
 
 
@@ -1052,6 +1095,9 @@ SCRIPT = r"""
   // s'il y a vraiment quelque chose à faire défiler.
   var piste=document.getElementById('equipe');
   if(piste){
+    // La classe dit « le script est là » : la barre de défilement peut
+    // s'effacer, les boutons prennent le relais.
+    piste.closest('.carr').classList.add('js');
     var nav=document.querySelector('.carr__nav');
     var bts=nav?nav.querySelectorAll('.carr__b'):[];
     function pas(){ var c=piste.querySelector('.carr__c');
@@ -1104,10 +1150,33 @@ def hero(inv):
     for r in inv['reperes']:
         if re.search(r'jour|nuit|guide', r, re.I):
             pills.append(r)
-    o = ['<section class="hero">']
+    # La photo de couverture n'a pas la même taille d'une fiche à
+    # l'autre : 1920 px sur Siwa, 1280 sur « Pyramides, Louxor et mer
+    # rouge ». Servie en plein écran, la seconde était agrandie de 31 %
+    # sur téléphone — mesuré, pas supposé.
+    #
+    # Elle n'est donc JAMAIS étirée au-delà de sa taille réelle : elle
+    # est centrée à sa largeur, et ce qui reste de part et d'autre est la
+    # même photo, floutée. Une image floutée ne peut pas être floue :
+    # c'est ce qui permet de remplir l'écran sans mentir sur la netteté
+    # (D14). Sur téléphone, la bande est ramenée à ce que la hauteur de
+    # la photo permet à densité 2.
+    large = (une.get('largeur') or 0) if une else 0
+    haut = (une.get('hauteur') or 0) if une else 0
+    etroite = bool(une) and 0 < large < 1920
+    style = ''
+    if large:
+        style = ' style="--une-l:%dpx;--une-h:%dpx"' % (
+            large, max(300, min(470, haut // 2)) if haut else 470)
+    o = ['<section class="hero"%s>' % style]
     if une:
+        if etroite:
+            o.append('<div class="hero__flou" data-flou="oui" aria-hidden="true">%s</div>'
+                     % image(une, large, sizes='100vw'))
         o.append('<div class="hero__fond">' +
-                 image(une, 1920, sizes='100vw', priorite=True) + '</div>')
+                 image(une, min(1920, large) or 1920, priorite=True,
+                       sizes=('(max-width:%dpx) 100vw, %dpx' % (large, large))
+                       if etroite else '100vw') + '</div>')
     o.append('<div class="hero__in"><div class="wrap">')
     o.append('<div class="hero__pills">' + ''.join(
         '<span class="pill">%s%s</span>' % (
@@ -2034,11 +2103,14 @@ def avis(inv):
         colonnes[i].append(t)
         poids[i] += hauteur_avis(t['texte'])
 
-    o = ['<section class="pg-sec"><div class="wrap">',
-         '<input type="checkbox" id="mur-stop" class="mur__stop" aria-label="%s">'
-         % e(INTERFACE['avis_pause']),
+    # Pas d'aria-label sur la case : le nom accessible d'une commande
+    # doit CONTENIR son texte visible (critère 2.5.3), or celui-ci change
+    # avec l'état. Le label le fournit donc lui-même, et l'étiquette
+    # cachée par display:none sort du nom, comme il se doit.
+    o = ['<section class="pg-sec" aria-labelledby="t-avis"><div class="wrap">',
+         '<input type="checkbox" id="mur-stop" class="mur__stop">',
          '<div class="mur__tete">',
-         '<div><p class="eyebrow">%s</p><h2>%s</h2></div>'
+         '<div><p class="eyebrow">%s</p><h2 id="t-avis">%s</h2></div>'
          % (e(INTERFACE['eyebrow_avis']), e(INTERFACE['titre_avis']))]
     droite = []
     if a.get('nombre'):

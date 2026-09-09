@@ -24,3 +24,12 @@ Ce que la source ne permet pas de trancher. Une page se produit quand même, fid
 | Q18 | Cinq fiches | Déroulé | Le déroulé de « Roadtrip en Égypte », « Découverte de la Nubie » et « Croisière sur le lac Nasser » n'est pas structuré en étapes sur la fiche actuelle : rien à afficher jour par jour. | Fournir le déroulé, ou confirmer qu'on affiche ces fiches sans jour par jour. |
 | Q19 | Toutes | Section « Votre guide » | Elle reprend l'équipe de la maquette d'accueil : Hossam, guide égyptologue depuis 14 ans ; Nour, conception d'itinéraires ; Ahmed, chauffeur privatif. | Confirmer ces trois personnes et leurs rôles, et fournir leurs photos. |
 | Q20 | Oasis de Siwa | Carte du trajet | La carte place les lieux que la fiche nomme. Le titre annonce Le Caire et Siwa ; le déroulé décrit Charm el-Cheikh, Sainte-Catherine et le mont Moïse. L'écart est visible sur la carte. | Le déroulé attendu (voir Q1) réglera aussi la carte. |
+
+## Relevé du 09/09/2026 — production des trois pages suivantes
+
+- **Q21.** Les fiches « Pyramides et croisière sur le Nil » (1 195 €) et « Pyramides, croisière et mer rouge en famille » (1 485 €) portent **exactement le même déroulé sur huit jours**, titre de jour par titre de jour. Deux séjours, deux prix, un seul programme : lequel des deux est à corriger ?
+- **Q22.** Sur « Pyramides, Louxor et mer rouge en famille », les **jours 5 et 6 portent le même titre**, « De Louxor à la Mer Rouge ». Est-ce un doublon, ou le jour 6 a-t-il un contenu propre qui n'a pas été saisi ?
+- **Q23.** Trois photos de galerie ont pour **texte alternatif leur nom de fichier** (`axp-photography-4-26qyioyvg-unsplash.jpg`, `axp-photography-vfd1ui3buqu-unsplash-1.jpg`, `dmitrii-zhodzishskii-yw1yrbhxpau-unsplash.jpg`). Nous ne les réécrivons pas : quelle légende leur donner ?
+- **Q24.** La photo de couverture de « Pyramides, Louxor et mer rouge en famille » ne fait que **1 280 px de large** (et une photo du séjour 612 px). La page ne les agrandit plus — elle compose autour — mais un original plus grand donnerait un bandeau plein écran net.
+- **Q25.** Le chapô de « Pyramides, Louxor et mer rouge en famille » est « Les étapes de votre séjour : ». Est-ce le texte voulu, ou une amorce restée en place ?
+

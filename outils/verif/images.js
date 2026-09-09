@@ -110,7 +110,14 @@ function chargerTailles() {
         }
         return p.join(' > ');
       };
-      return [...document.querySelectorAll('img')].map((img, i) => {
+      // Un fond volontairement FLOUTÉ (data-flou) n'a pas de netteté à
+      // mesurer : c'est la composition « image contenue » de D14, où la
+      // photo nette reste à sa taille réelle et où le flou remplit le
+      // reste de l'écran. Lui reprocher son agrandissement reviendrait à
+      // exiger qu'un flou soit net.
+      return [...document.querySelectorAll('img')]
+        .filter(img => !img.closest('[data-flou]'))
+        .map((img, i) => {
         const r = img.getBoundingClientRect();
         const s = getComputedStyle(img);
         const visible = s.display !== 'none' && s.visibility !== 'hidden' && r.width > 0 && r.height > 0;

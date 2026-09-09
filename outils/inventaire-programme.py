@@ -577,6 +577,25 @@ def anomalies(inv):
     # Siwa il décrit le Sinaï : c'est le programme d'un autre séjour,
     # recopié. Un contrôle de mots suffit à le voir, et il vaut pour les
     # quatorze fiches.
+    # Deux jours qui portent le MÊME titre sont soit un doublon de
+    # saisie, soit une étape manquante. Sur la fiche « Pyramides, Louxor
+    # et mer rouge en famille », les jours 5 et 6 s'appellent tous les
+    # deux « De Louxor à la Mer Rouge » : le voyageur qui compte ses
+    # nuits ne s'y retrouve pas, et nous n'avons pas à trancher à sa
+    # place.
+    vus = {}
+    for j in inv['jours']:
+        cle = ' '.join((j['titre'] or '').lower().split())
+        if cle:
+            vus.setdefault(cle, []).append(j['n'])
+    for titre, rangs in vus.items():
+        if len(rangs) > 1:
+            a.append('jours %s : le même titre « %s » revient %d fois'
+                     % (' et '.join(str(x) for x in rangs),
+                        next(j['titre'] for j in inv['jours']
+                             if ' '.join((j['titre'] or '').lower().split()) == titre),
+                        len(rangs)))
+
     lieu = lieu_du_titre(inv['h1'])
     corps = ' '.join(p for j in inv['jours'] for et in j['etapes']
                      for p in et['paragraphes']).lower()

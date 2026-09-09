@@ -866,6 +866,7 @@
  ],
  "anomalies": [
   "image à la une de 1280 px de large : trop petite pour un bandeau plein écran",
-  "images sans original au-delà de 720 px : istockphoto-496213844-612x612-1.jpg"
+  "images sans original au-delà de 720 px : istockphoto-496213844-612x612-1.jpg",
+  "jours 5 et 6 : le même titre « De Louxor à la Mer Rouge » revient 2 fois"
  ]
 }

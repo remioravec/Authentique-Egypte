@@ -198,6 +198,13 @@ const VUES = [
         const enfants = [...parent.children].filter(e => vu(e)
           && !['absolute', 'fixed', 'sticky'].includes(getComputedStyle(e).position));
         for (let i = 0; i < enfants.length - 1; i++) {
+          // Deux éléments EN LIGNE dans un même paragraphe ne se
+          // recouvrent pas : leur rectangle est l'UNION de leurs lignes,
+          // et un lien qui court sur deux lignes englobe forcément le
+          // gras posé au début de la seconde. Ce n'est pas un défaut de
+          // mise en page, c'est la définition d'une boîte en ligne.
+          const enLigne = el => getComputedStyle(el).display === 'inline';
+          if (enLigne(enfants[i]) && enLigne(enfants[i + 1])) continue;
           const a = enfants[i].getBoundingClientRect(), b = enfants[i + 1].getBoundingClientRect();
           const h = Math.min(a.bottom, b.bottom) - Math.max(a.top, b.top);
           const l = Math.min(a.right, b.right) - Math.max(a.left, b.left);
