@@ -432,9 +432,24 @@ CSS = r"""
    clair du bandeau (#DCEAF0, 15 px) doit tenir 4,5:1 sur la photo la
    plus claire possible, et outils/verif/lisibilite.js le vérifie sur
    les pixels rendus, désormais, au lieu de renoncer devant une photo. */
+/* Le voile est DIRIGÉ, pas uniforme : sombre là où le texte se pose,
+   presque transparent là où la photo doit se voir. Un voile uniforme
+   assez fort pour tenir 4,5:1 sous le chapô éteignait toute la photo ;
+   un voile uniforme assez léger pour la laisser vivre descendait le H1
+   à 2,79:1. Les deux couches ci-dessous font le travail chacune de son
+   côté — l'une couche le bas-gauche où vivent le titre, le prix et les
+   boutons, l'autre assied le bas du bandeau sur la section suivante —
+   et outils/verif/lisibilite.js les mesure sur les pixels rendus. */
 .pg .hero::after{content:"";position:absolute;inset:0;background:
-  linear-gradient(180deg,rgba(6,42,58,.74) 0%,rgba(6,42,58,.66) 30%,rgba(5,35,50,.92) 100%)}
-.pg .hero__in{position:relative;padding:24px 0 56px}
+  linear-gradient(96deg,rgba(5,35,50,.90) 0%,rgba(5,35,50,.84) 38%,
+  rgba(5,35,50,.42) 68%,rgba(5,35,50,.20) 100%),
+  linear-gradient(180deg,rgba(6,42,58,.34) 0%,rgba(6,42,58,0) 26%,
+  rgba(5,35,50,.30) 72%,rgba(5,35,50,.80) 100%)}
+/* z-index:1 est indispensable : ::after est le DERNIER enfant peint de
+   .hero, donc il passe par-dessus le texte tant que celui-ci ne monte
+   pas d'un cran. Sans cette ligne, le titre et les deux boutons partent
+   sous le voile. */
+.pg .hero__in{position:relative;z-index:1;padding:24px 0 56px}
 .pg .hero .ariane{color:#C6DCE6;padding-top:0}
 .pg .hero .ariane a{color:var(--or-clair)}
 .pg .hero .ariane li::after{color:rgba(255,255,255,.45)}
@@ -1005,8 +1020,13 @@ CSS = r"""
      (mesuré ×1,34 en densité 2 sur une photo de 1920 px) et la photo
      devient floue. À 470 px, le facteur retombe à 0,87. */
   .pg .hero{background:var(--nuit-900)}
-  /* Le flou garde toute la hauteur ; seule la photo NETTE se limite à
+  /* Sur téléphone le texte prend toute la largeur : le voile dirigé
+     n'a plus de côté où s'effacer, il redevient vertical.
+     Le flou garde toute la hauteur ; seule la photo NETTE se limite à
      la bande que sa propre définition permet. */
+  .pg .hero::after{background:
+    linear-gradient(180deg,rgba(6,42,58,.52) 0%,rgba(6,42,58,.40) 22%,
+    rgba(5,35,50,.72) 58%,rgba(5,35,50,.93) 100%)}
   .pg .hero__fond{position:absolute;top:0;left:0;right:0;height:var(--une-h,470px)}
   .pg .hero__in{padding:14px 0 34px}
   /* Le bloc titre se colle au BAS de la photo, quelle que soit la
@@ -1273,9 +1293,15 @@ def reperes(inv):
     memes = ([x.strip().lower() for x in inv['reperes']]
              == [x.strip().lower() for x in inv.get('inclus') or []]) and bool(inv['reperes'])
     lot = [] if memes else list(inv['reperes'])
-    for d in inv.get('durees') or []:
-        if not any(d.strip().lower() in r.lower() for r in lot):
+    # La durée annoncée n'est ajoutée QUE si les repères n'en portent
+    # aucune. La fiche Siwa en annonce deux qui se contredisent (« 4
+    # jours » et « 3 jours minimum ») : deux tuiles « DURÉE » côte à côte
+    # donneraient la contradiction pour une caractéristique. Elle est
+    # l'affaire du bandeau de vérification, qui la nomme (D19).
+    if not any(re.search(r'\d+\s*(jours?|nuits?)', r, re.I) for r in lot):
+        for d in inv.get('durees') or []:
             lot.insert(0, d)
+            break
 
     o = ['<section class="reperes"><div class="wrap"><ul>']
     if inv['prix']['texte']:
