@@ -67,23 +67,23 @@ def jours(x):
                 js.append(jour)
                 etape = None
                 if not re.match(r'^Jour\s*\d', b['texte']):
-                    etape = {'titre': b['texte'], 'p': []}
+                    etape = {'titre': b['texte'], 'p': [], 'mentions': []}
                     jour['etapes'].append(etape)
             else:
-                etape = {'titre': b['texte'], 'p': []}
+                etape = {'titre': b['texte'], 'p': [], 'mentions': []}
                 jour['etapes'].append(etape)
         elif b['type'] == 'p' and jour is not None:
             if re.match(r'^FAQ\b', b['texte']):
                 continue                                   # intertitre de la FAQ, pas du déroulé
             if etape is None:
-                etape = {'titre': '', 'p': []}
+                etape = {'titre': '', 'p': [], 'mentions': []}
                 jour['etapes'].append(etape)
             etape['p'].append(b['texte'])
         elif b['type'] == 'liste' and jour is not None:
             items = b.get('items') or []
             if any(re.match(r"^(Le programme|N'inclus)", i) for i in items) or set(items) & set(x['inclus'] + x['exclus']):
                 continue                                   # les inclusions sont lues ailleurs
-            jour['mentions'] += items
+            (etape['mentions'] if etape is not None else jour['mentions']).extend(items)
     return js
 
 
@@ -157,6 +157,36 @@ def soeurs(moule):
         out.append({'href': a['href'], 'src': img['src'] if img else '', 'alt': img.get('alt', '') if img else '',
                     'titre': texte(a.select_one('h3')), 'route': texte(a.select_one('.carte__route')),
                     'tag': texte(a.select_one('.carte__tag')), 'prix': texte(prix) if prix else ''})
+    return out
+
+
+def soeurs_live(x, cat_html, fiches):
+    """Les autres séjours de la catégorie live (cartes « Découvrir »), avec le
+    prix et la durée de leur propre fiche ; photo = première image de la fiche
+    en plein format (les vignettes Elementor sont ramenées au fichier d'origine)."""
+    s = BeautifulSoup(cat_html, 'lxml')
+    urls = []
+    for a in s.find_all('a', href=True):
+        if 'Découvrir' in a.get_text() and a['href'] not in urls and a['href'].rstrip('/') != x['url'].rstrip('/'):
+            urls.append(a['href'])
+    par_url = {f['url'].rstrip('/'): f for f in fiches if f.get('url')}
+    out = []
+    for u in urls:
+        f = par_url.get(u.rstrip('/'))
+        if not f or not f.get('prix'):
+            continue
+        src, alt = '', ''
+        for im in f.get('images') or []:
+            m = re.search(r'/elementor/thumbs/(.+?)-[a-z0-9]{40,}\.(\w+)$', im['src'])
+            cand = f"https://authentiquegypte.com/wp-content/uploads/2025/06/{m.group(1)}.{m.group(2)}" if m \
+                else re.sub(r'-\d+x\d+(\.\w+)$', r'\1', im['src'])
+            if re.search(r'logo|screenshot', cand, re.I):
+                continue
+            src, alt = cand, im.get('alt') or f['titre']
+            break
+        tag = next((i for sec in f['sections'] for b in sec['blocs'] if b['type'] == 'liste'
+                    for i in b.get('items', []) if re.search(r'jours? minimum', i)), '')
+        out.append({'href': f['url'], 'src': src, 'alt': alt, 'titre': f['titre'], 'tag': tag, 'prix': f['prix'], 'route': ''})
     return out
 
 
@@ -296,17 +326,18 @@ CSS = r"""
 .pan__liste li{display:flex;gap:10px;align-items:center}
 .pan__liste svg{color:var(--teal-txt);flex:0 0 auto}
 .pan__note{font-family:"Manrope",sans-serif;font-size:.76rem;color:var(--gris);margin:12px 0 0;display:flex;gap:6px;align-items:flex-start}
-.pan__equipe{margin-top:18px;padding-top:18px;border-top:1px solid var(--ligne-2)}
+.pan__equipe{margin-top:14px;padding-top:12px;border-top:1px solid var(--ligne-2)}
 .pan__equipe img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:var(--r-m);display:block}
 .pan__equipe small{display:block;font-family:"Manrope",sans-serif;font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gris);margin:12px 0 2px}
 .pan__equipe b{display:block;font-family:"Manrope",sans-serif;font-size:1rem;color:var(--noir)}
-.pan__equipe span{display:block;font-family:"Manrope",sans-serif;font-size:.86rem;color:var(--gris);margin-bottom:12px}
-.pan__act{display:grid;gap:9px}
+.pan__equipe span{display:block;font-family:"Manrope",sans-serif;font-size:.86rem;color:var(--gris)}
+.pan__act{display:grid;gap:9px;margin-top:14px}
 .pan__conf{background:#fff;border:1px solid var(--ligne);border-radius:var(--r-l);padding:16px;text-align:center;font-family:"Manrope",sans-serif;font-size:.8rem;color:var(--gris);display:grid;gap:4px}
 .pan__conf b{color:var(--nuit-900)}
 /* --- jour par jour --- */
 .jpj{background:linear-gradient(180deg,var(--fond) 0,#fff 100%);padding:60px 0 70px}
 .jpj__grille{display:grid;grid-template-columns:44px minmax(0,720px) minmax(280px,1fr);gap:0 32px;align-items:start}
+.jpj__grille--seul{grid-template-columns:minmax(0,720px) minmax(280px,1fr)}
 .rail{position:sticky;top:100px;display:grid;gap:14px;justify-items:center;padding-top:22px}
 .rail a{display:block;width:10px;height:10px;border-radius:50%;background:var(--ligne);transition:transform .2s var(--ease),background .2s}
 .rail a:hover,.rail a.on{background:var(--teal);transform:scale(1.4);box-shadow:0 0 0 4px var(--teal-fond)}
@@ -316,16 +347,17 @@ CSS = r"""
 .jour__photo img{width:100%;height:100%;object-fit:cover;display:block}
 .jour__photo::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(11,81,112,.32),transparent 45%)}
 .jour__badge{position:absolute;left:16px;top:16px;z-index:2;background:rgba(11,81,112,.9);color:#fff;font-family:"Manrope",sans-serif;font-weight:800;font-size:.84rem;letter-spacing:.06em;padding:6px 12px;border-radius:var(--r-s);backdrop-filter:blur(6px)}
+.jr__intro p{color:var(--texte);font-size:1.05rem;margin:0 0 .8em}
 .jr h3{font-size:clamp(1.4rem,2.4vw,1.85rem);margin:0 0 6px;color:var(--noir)}
 .jour__lieu{display:flex;align-items:center;gap:6px;font-family:"Manrope",sans-serif;font-size:.9rem;color:var(--gris);margin:0 0 18px}
 .jour__lieu svg{color:var(--teal-txt)}
-.et{display:grid;grid-template-columns:36px minmax(0,1fr);gap:12px;align-items:start}
-.et+.et{margin-top:18px}
-.etape__ico{width:36px;height:36px;border-radius:var(--r-s);background:var(--teal-fond);color:var(--teal-txt);display:grid;place-items:center}
-.et h4{font-family:"Manrope",sans-serif;font-size:1rem;font-weight:700;color:var(--nuit-900);margin:8px 0 6px}
-.et p{color:var(--texte);font-size:1rem;margin:0 0 .7em}
-.et__photo{margin:4px 0 14px;border-radius:var(--r-m);overflow:hidden;aspect-ratio:3/2;background:var(--fond)}
-.et__photo img{width:100%;height:100%;object-fit:cover;display:block}
+.jet{display:grid;grid-template-columns:36px minmax(0,1fr);gap:12px;align-items:start}
+.jet+.jet{margin-top:18px}
+.jet__ico{width:36px;height:36px;border-radius:var(--r-s);background:var(--teal-fond);color:var(--teal-txt);display:grid;place-items:center}
+.jet h4{font-family:"Manrope",sans-serif;font-size:1rem;font-weight:700;color:var(--nuit-900);margin:8px 0 6px}
+.jet p{color:var(--texte);font-size:1rem;margin:0 0 .7em}
+.jet__photo{margin:4px 0 14px;border-radius:var(--r-m);overflow:hidden;aspect-ratio:3/2;background:var(--fond)}
+.jet__photo img{width:100%;height:100%;object-fit:cover;display:block}
 .mentions{display:flex;flex-wrap:wrap;gap:8px;margin:22px 0 0}
 .mention{display:inline-flex;align-items:center;gap:6px;font-family:"Manrope",sans-serif;font-size:.8rem;font-weight:600;color:var(--teal-txt);background:var(--teal-fond);border-radius:var(--r-pill);padding:5px 12px}
 .cote{position:sticky;top:96px;display:grid;gap:12px}
@@ -339,6 +371,7 @@ CSS = r"""
 .tarifs-sec{padding:60px 0}
 .tarifs-grille{display:grid;grid-template-columns:1fr 1fr;gap:40px}
 .tarifs-grille>div{display:grid;gap:22px;align-content:start}
+.tarifs-grille__prix{order:-1}
 .tarif{border:1px solid var(--ligne);border-radius:var(--r-m);overflow:hidden;font-family:"Manrope",sans-serif}
 .tarif div{display:flex;justify-content:space-between;align-items:center;padding:14px 16px;background:var(--teal-fond);color:var(--teal-txt);font-size:.95rem}
 .tarif b{font-size:1.15rem;font-weight:800}
@@ -417,8 +450,13 @@ CSS = r"""
   .rail{display:none}
   .cote{position:static;margin-top:36px}
   .tarifs-grille,.prat__grille,.final__grille{grid-template-columns:1fr}
+  .tarifs-grille__prix{order:0}
   .simil__grille{grid-template-columns:1fr 1fr}
   .reps ul{grid-template-columns:repeat(3,1fr)}
+}
+@media (max-width:900px){
+  .pg small,.pg .pill,.pg .hero__prix i,.pg .hero__conf,.pg .reps b,.pg .themes a,.pg .pan__prix i,.pg .pan__note,.pg .pan__equipe span,
+  .pg .jour__badge,.pg .mention,.pg .acc__t,.pg .final__conf,.pg .final__sous,.pg .simil__tag,.pg .simil p,.pg .pourquoi p,.pg .forts span{font-size:.95rem}
 }
 @media (max-width:640px){
   .hero{height:auto;min-height:0}
@@ -434,7 +472,7 @@ CSS = r"""
 """
 
 
-def rendre(x, moule_html, home, etapes_img=None):
+def rendre(x, moule_html, home, etapes_img=None, soeurs_=None):
     etapes_img = etapes_img or {}
     moule = BeautifulSoup(moule_html, 'lxml')
     ph = photos(moule)
@@ -445,11 +483,10 @@ def rendre(x, moule_html, home, etapes_img=None):
     titre_intro, sous_intro, paras = intro(x)
     faq_avec, faq_sans = faq(x, moule)
     rep = reperes(x)
-    sr = soeurs(moule)
+    sr = soeurs_ if soeurs_ else soeurs(moule)
     titre = x['titre']
     prix = x['prix']
-    photo_equipe = 'https://authentiquegypte.com/wp-content/uploads/2025/06/DSC00581-1.jpg'
-    categorie = ('Déserts et Oasis', 'https://authentiquegypte.com/nos-sejours-egypte/desert-egypte/')
+    categorie = CATEGORIE
 
     o = []
     o.append('<nav class="ariane" aria-label="Fil d\'Ariane"><div class="wrap"><ol>'
@@ -466,8 +503,7 @@ def rendre(x, moule_html, home, etapes_img=None):
     o.append(f'<h1>{e(titre)}</h1><p class="hero__chapo">{e(titre_intro)}</p>')
     o.append('<div class="hero__bas">'
              f'<div class="hero__prix"><small>À partir de</small><b>{e(prix)}</b><i>/ Personne</i></div>'
-             '<div class="hero__conf"><span>Agence locale basée au Caire · Réponse sous 48 h (hors vendredi et samedi)</span>'
-             '<span>23 avis Google sur l\'agence</span></div></div>')
+             '<div class="hero__conf"><span>23 avis Google sur l\'agence</span></div></div>')
     o.append(f'<div class="hero__act"><a class="btn btn--or" href="{DEVIS}">Personaliser ce séjour</a>'
              f'<a class="btn btn--verre" href="{WHATSAPP}">{ico("bulle",18)} Poser une question sur WhatsApp</a></div>')
     o.append('</div></div></section>')
@@ -517,19 +553,15 @@ def rendre(x, moule_html, home, etapes_img=None):
              f'<p class="pan__prix"><small>À partir de</small><b>{e(prix)}</b> <i>/ Personne</i></p>'
              '<ul class="pan__liste">' + ''.join(f'<li>{ico("coche",16)}{e(r)}</li>' for r in rep) + '</ul>'
              '<p class="pan__note">Devis gratuit · réponse sous 48 h (hors vendredi et samedi)</p>'
-             '<div class="pan__equipe">'
-             f'<img src="{photo_equipe}" alt="Authentique Égypte, agence locale basée au Caire" loading="lazy" decoding="async">'
-             '<b>Authentique Égypte</b><span>Agence locale basée au Caire</span>'
              f'<div class="pan__act"><a class="btn btn--or btn--bloc" href="{DEVIS}">Personaliser ce séjour</a>'
              f'<a class="btn btn--wa btn--bloc" href="{WHATSAPP}">Poser une question sur WhatsApp</a></div>'
-             '</div></div>'
-             '<div class="pan__conf"><b>★ 23 avis Google sur l\'agence</b><span>Agence locale basée au Caire · Guide privatif · Chauffeur et véhicule sécurisé</span></div>'
-             '</aside></div></div>')
+             '<div class="pan__equipe"><b>Authentique Égypte</b><span>Agence locale basée au Caire</span></div>'
+             '</div></aside></div></div>')
 
     # ---------------- jour par jour
-    o.append(f'<section class="jpj"><div class="wrap"><h2>{e(titre_etapes)}</h2><div class="jpj__grille">')
-    o.append('<nav class="rail" aria-label="Jours">' + ''.join(f'<a href="#jour-{i+1}" aria-label="Aller au jour {i+1}"></a>' for i in range(len(js))) + '</nav>'
-             if len(js) > 1 else '<div></div>')
+    o.append(f'<section class="jpj"><div class="wrap"><h2>{e(titre_etapes)}</h2><div class="jpj__grille{"" if len(js) > 1 else " jpj__grille--seul"}">')
+    if len(js) > 1:
+        o.append('<nav class="rail" aria-label="Jours">' + ''.join(f'<a href="#jour-{i+1}" aria-label="Aller au jour {i+1}"></a>' for i in range(len(js))) + '</nav>')
     o.append('<div>')
     alerte = moule.select_one('.alerte')
     if alerte is not None:
@@ -542,11 +574,16 @@ def rendre(x, moule_html, home, etapes_img=None):
         o.append(f'<article class="jr" id="jour-{i+1}"><div class="jour__photo"><img src="{e(photo["src"])}" alt="{e(photo["alt"])}" loading="lazy" decoding="async"><span class="jour__badge">J{num}</span></div>')
         o.append(f'<h3>{e(tit)}</h3>')
         for et in j['etapes']:
-            o.append(f'<div class="et"><span class="etape__ico">{ico("voiture" if re.search(r"route|départ|retour|descente", et["titre"], re.I) else "pin",17)}</span><div>'
+            if not et['titre']:
+                o.append('<div class="jr__intro">' + ''.join(f'<p>{para(p)}</p>' for p in et['p']) + '</div>')
+                continue
+            o.append(f'<div class="jet"><span class="jet__ico">{ico("voiture" if re.search(r"route|départ|retour|descente", et["titre"], re.I) else "pin",17)}</span><div>'
                      + (f'<h4>{e(et["titre"])}</h4>' if et['titre'] else '')
-                     + (f'<figure class="et__photo"><img src="{e(etapes_img[et["titre"]])}" alt="{e(et["titre"])}" loading="lazy" decoding="async"></figure>'
+                     + (f'<figure class="jet__photo"><img src="{e(etapes_img[et["titre"]])}" alt="{e(et["titre"])}" loading="lazy" decoding="async"></figure>'
                         if et['titre'] in etapes_img else '')
-                     + ''.join(f'<p>{para(p)}</p>' for p in et['p']) + '</div></div>')
+                     + ''.join(f'<p>{para(p)}</p>' for p in et['p'])
+                     + (('<div class="mentions">' + ''.join(f'<span class="mention">{ico(icone_mention(m),13)}{e(m)}</span>' for m in et['mentions']) + '</div>') if et['mentions'] else '')
+                     + '</div></div>')
         if j['mentions']:
             o.append('<div class="mentions">' + ''.join(f'<span class="mention">{ico(icone_mention(m),13)}{e(m)}</span>' for m in j['mentions']) + '</div>')
         o.append('</article>')
@@ -557,16 +594,16 @@ def rendre(x, moule_html, home, etapes_img=None):
     o.append('</div></div></section>')
 
     # ---------------- tarifs, inclus
-    o.append(f'<section class="tarifs-sec"><div class="wrap"><h2>{e(titre_inclus)}</h2><div class="tarifs-grille"><div>')
+    o.append(f'<section class="tarifs-sec"><div class="wrap"><h2>{e(titre_inclus)}</h2><div class="tarifs-grille"><div class="tarifs-grille__inc">')
+    o.append(f'<div class="inc inc--oui"><h3>{ico("coche",18)}Le programme inclus</h3><ul>' + ''.join(f'<li>{ico("coche",14)}{e(i)}</li>' for i in x['inclus']) + '</ul></div>')
+    o.append(f'<div class="inc inc--non"><h3>{ico("croix",18)}N\'inclus pas</h3><ul>' + ''.join(f'<li>{ico("croix",14)}{e(i)}</li>' for i in x['exclus']) + '</ul></div>')
+    o.append('</div><div class="tarifs-grille__prix">')
     o.append(f'<div class="tarif"><div><span>À partir de</span><b>{e(prix)} <small>/ Personne</small></b></div></div>')
     o.append('<div class="adapter"><h3>Ce séjour vous tente ? Ajustons-le à vos dates.</h3><ul>'
              f'<li>{ico("coche",15)}Devis gratuit, détaillé jour par jour, sans engagement</li>'
              f'<li>{ico("coche",15)}Guide égyptologue francophone et chauffeur privatif</li>'
              f'<li>{ico("coche",15)}Acompte seulement une fois l\'itinéraire validé</li></ul>'
              f'<a class="btn btn--or btn--bloc" href="{DEVIS}">Personaliser ce séjour</a></div>')
-    o.append('</div><div>')
-    o.append(f'<div class="inc inc--oui"><h3>{ico("coche",18)}Le programme inclus</h3><ul>' + ''.join(f'<li>{ico("coche",14)}{e(i)}</li>' for i in x['inclus']) + '</ul></div>')
-    o.append(f'<div class="inc inc--non"><h3>{ico("croix",18)}N\'inclus pas</h3><ul>' + ''.join(f'<li>{ico("croix",14)}{e(i)}</li>' for i in x['exclus']) + '</ul></div>')
     o.append('</div></div></div></section>')
 
     # ---------------- infos pratiques + FAQ
@@ -593,7 +630,7 @@ def rendre(x, moule_html, home, etapes_img=None):
 
     # ---------------- appel final
     o.append('<section class="final"><div class="wrap"><div class="final__grille">'
-             f'<div class="final__photo"><img src="{photo_equipe}" alt="Authentique Égypte, agence locale basée au Caire" loading="lazy" decoding="async">'
+             f'<div class="final__photo"><img src="{e(ph[0]["src"])}" alt="{e(ph[0]["alt"])}" loading="lazy" decoding="async">'
              '<div class="final__badge"><b>23</b><small>avis Google</small></div></div>'
              f'<div><h2>{e(home["accompagner"])}</h2><p class="final__sous">Agence locale basée au Caire</p>'
              f'<p class="prose">{e(home["texte_agence"])}</p>'
@@ -610,6 +647,7 @@ def rendre(x, moule_html, home, etapes_img=None):
     o.append('</div><div class="simil__tous"><a class="btn btn--fantome" href="https://authentiquegypte.com/nos-sejours-egypte/">Voir tous nos séjours</a></div></div></section>')
 
     corps = '\n'.join(o)
+    corps = re.sub(r'(?<=[^\s>]) ([?!])', r'&nbsp;\1', corps)
     corps = re.sub(r'href="https://www\.google\.com/url\?[^"]*?url=([^&"]+)[^"]*"',
                    lambda m: 'href="' + urllib.parse.unquote(m.group(1)) + '"', corps)
 
@@ -620,7 +658,8 @@ def rendre(x, moule_html, home, etapes_img=None):
     h = re.sub(r'<div class="resa-mob">.*?</a>\s*</div>',
                f'<div class="resa-mob"><span class="p"><small>{e(titre)}</small><b>{e(prix)}</b> <i>/ pers.</i></span>'
                f'<a class="btn btn--or btn--sm" href="{DEVIS}">Personaliser ce séjour</a></div>', h, count=1, flags=re.S)
-    h = re.sub(r'<script type="application/ld\+json">.*?</script>', json_ld(x, js, faq_avec, ph), h, count=1, flags=re.S)
+    qr = [{'q': it['q'], 'html': it['html']} for g in home['groupes'] for it in g['items']]
+    h = re.sub(r'<script type="application/ld\+json">.*?</script>', json_ld(x, js, faq_avec + qr, ph), h, count=1, flags=re.S)
     h = re.sub(r'(<div id="lb"[^>]*aria-label=")[^"]*"', r'\1Photos du séjour"', h, count=1)
     h = h.replace('</style>', CSS + '#mm-btn{display:none}\n</style>', 1)
     h = h.replace("querySelectorAll('.galerie a')", "querySelectorAll('.galerie a, .cote__photos a')", 1)
@@ -630,6 +669,8 @@ def rendre(x, moule_html, home, etapes_img=None):
     return h, {'jours': len(js), 'etapes': sum(len(j['etapes']) for j in js), 'faq_avec': len(faq_avec),
                'faq_sans': faq_sans, 'photos': len(ph), 'infos': sum(len(g['items']) for g in home['groupes'])}
 
+
+CATEGORIE = ('Déserts et Oasis', 'https://authentiquegypte.com/nos-sejours-egypte/desert-egypte/')
 
 LIENS_LIVE = {
     'index.html': ACCUEIL, 'qui-sommes-nous.html': 'https://authentiquegypte.com/qui-sommes-nous/',
@@ -650,7 +691,7 @@ def json_ld(x, js, faq_avec, ph):
                        'seller': {'@type': 'TravelAgency', 'name': 'Authentique Égypte'}}}
     faq = {'@context': 'https://schema.org', '@type': 'FAQPage',
            'mainEntity': [{'@type': 'Question', 'name': f['q'],
-                           'acceptedAnswer': {'@type': 'Answer', 'text': html_.unescape(re.sub(r'\s+', ' ', re.sub(r'<[^>]+>', ' ', f['html']))).strip()}} for f in faq_avec]}
+                           'acceptedAnswer': {'@type': 'Answer', 'text': html_.unescape(re.sub(r'\s+', ' ', re.sub(r'<[^>]+>', ' ', re.sub(r'</(li|p)>', '. ', f['html'])))).replace('. .', '.').replace('..', '.').replace('?.', '?').strip()}} for f in faq_avec]}
     fil = {'@context': 'https://schema.org', '@type': 'BreadcrumbList', 'itemListElement': [
         {'@type': 'ListItem', 'position': 1, 'name': 'Accueil', 'item': ACCUEIL},
         {'@type': 'ListItem', 'position': 2, 'name': 'Nos séjours en Égypte', 'item': 'https://authentiquegypte.com/nos-sejours-egypte/'},
@@ -665,6 +706,7 @@ def main():
     p.add_argument('sortie')
     p.add_argument('--accueil', default='', help="copie locale de la page d'accueil (sinon téléchargée)")
     p.add_argument('--live', default='', help="copie locale de la page live (sinon téléchargée) : photos du déroulé")
+    p.add_argument('--categorie', default='', help="copie locale de la page catégorie live (sinon téléchargée) : séjours voisins")
     p.add_argument('--moule', default=os.path.join(RACINE, 'maquettes', 'produit-siwa.html'))
     a = p.parse_args()
     x = fiche(a.fiche)
@@ -678,7 +720,14 @@ def main():
     else:
         req = urllib.request.Request(x['url'], headers={'User-Agent': 'Mozilla/5.0 (gabarit-programme)'})
         live_html = urllib.request.urlopen(req, timeout=60).read().decode('utf-8', 'replace')
-    page, bilan = rendre(x, open(a.moule, encoding='utf-8').read(), accueil(home_html), photos_etapes(live_html))
+    if a.categorie:
+        cat_html = open(a.categorie, encoding='utf-8', errors='replace').read()
+    else:
+        req = urllib.request.Request(CATEGORIE[1], headers={'User-Agent': 'Mozilla/5.0 (gabarit-programme)'})
+        cat_html = urllib.request.urlopen(req, timeout=60).read().decode('utf-8', 'replace')
+    toutes = json.load(open(os.path.join(RACINE, 'docs', 'extraits.json'), encoding='utf-8'))
+    page, bilan = rendre(x, open(a.moule, encoding='utf-8').read(), accueil(home_html), photos_etapes(live_html),
+                         soeurs_live(x, cat_html, toutes))
     with open(a.sortie, 'w', encoding='utf-8') as f:
         f.write(page)
     print(f"{a.sortie} : {bilan['jours']} jour(s), {bilan['etapes']} étapes, {bilan['photos']} photos, "
