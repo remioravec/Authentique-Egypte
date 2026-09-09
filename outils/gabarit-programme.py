@@ -449,6 +449,7 @@ CSS = r"""
   .jpj__grille{grid-template-columns:1fr}
   .rail{display:none}
   .cote{position:static;margin-top:36px}
+  .prat__cote{position:static}
   .tarifs-grille,.prat__grille,.final__grille{grid-template-columns:1fr}
   .tarifs-grille__prix{order:0}
   .simil__grille{grid-template-columns:1fr 1fr}
@@ -456,7 +457,7 @@ CSS = r"""
 }
 @media (max-width:900px){
   .pg small,.pg .pill,.pg .hero__prix i,.pg .hero__conf,.pg .reps b,.pg .themes a,.pg .pan__prix i,.pg .pan__note,.pg .pan__equipe span,
-  .pg .jour__badge,.pg .mention,.pg .acc__t,.pg .final__conf,.pg .final__sous,.pg .simil__tag,.pg .simil p,.pg .pourquoi p,.pg .forts span{font-size:.95rem}
+  .pg .tarif b small,.pg .pan__liste,.pg .adapter ul,.pg .jour__badge,.pg .mention,.pg .acc__t,.pg .final__conf,.pg .final__sous,.pg .simil__tag,.pg .simil p,.pg .pourquoi p,.pg .forts span{font-size:.95rem}
 }
 @media (max-width:640px){
   .hero{height:auto;min-height:0}
@@ -577,7 +578,7 @@ def rendre(x, moule_html, home, etapes_img=None, soeurs_=None):
             if not et['titre']:
                 o.append('<div class="jr__intro">' + ''.join(f'<p>{para(p)}</p>' for p in et['p']) + '</div>')
                 continue
-            o.append(f'<div class="jet"><span class="jet__ico">{ico("voiture" if re.search(r"route|départ|retour|descente", et["titre"], re.I) else "pin",17)}</span><div>'
+            o.append(f'<div class="jet"><span class="jet__ico">{ico("pin",17)}</span><div>'
                      + (f'<h4>{e(et["titre"])}</h4>' if et['titre'] else '')
                      + (f'<figure class="jet__photo"><img src="{e(etapes_img[et["titre"]])}" alt="{e(et["titre"])}" loading="lazy" decoding="async"></figure>'
                         if et['titre'] in etapes_img else '')
@@ -630,7 +631,7 @@ def rendre(x, moule_html, home, etapes_img=None, soeurs_=None):
 
     # ---------------- appel final
     o.append('<section class="final"><div class="wrap"><div class="final__grille">'
-             f'<div class="final__photo"><img src="{e(ph[0]["src"])}" alt="{e(ph[0]["alt"])}" loading="lazy" decoding="async">'
+             f'<div class="final__photo"><img src="{e(ph[1 % len(ph)]["src"])}" alt="{e(ph[1 % len(ph)]["alt"])}" loading="lazy" decoding="async">'
              '<div class="final__badge"><b>23</b><small>avis Google</small></div></div>'
              f'<div><h2>{e(home["accompagner"])}</h2><p class="final__sous">Agence locale basée au Caire</p>'
              f'<p class="prose">{e(home["texte_agence"])}</p>'
@@ -670,7 +671,7 @@ def rendre(x, moule_html, home, etapes_img=None, soeurs_=None):
                'faq_sans': faq_sans, 'photos': len(ph), 'infos': sum(len(g['items']) for g in home['groupes'])}
 
 
-CATEGORIE = ('Déserts et Oasis', 'https://authentiquegypte.com/nos-sejours-egypte/desert-egypte/')
+CATEGORIE = ('Déserts et Oasis égyptiens', 'https://authentiquegypte.com/nos-sejours-egypte/desert-egypte/')
 
 LIENS_LIVE = {
     'index.html': ACCUEIL, 'qui-sommes-nous.html': 'https://authentiquegypte.com/qui-sommes-nous/',
@@ -689,13 +690,15 @@ def json_ld(x, js, faq_avec, ph):
                           'itemListElement': [{'@type': 'ListItem', 'position': i + 1, 'name': j['titre']} for i, j in enumerate(js)]},
             'offers': {'@type': 'Offer', 'price': re.sub(r'\D', '', x['prix']), 'priceCurrency': 'EUR',
                        'seller': {'@type': 'TravelAgency', 'name': 'Authentique Égypte'}}}
+    def propre(t):
+        return re.sub(r'\s+([.,;:!?])', r'\1', t)
     faq = {'@context': 'https://schema.org', '@type': 'FAQPage',
            'mainEntity': [{'@type': 'Question', 'name': f['q'],
-                           'acceptedAnswer': {'@type': 'Answer', 'text': html_.unescape(re.sub(r'\s+', ' ', re.sub(r'<[^>]+>', ' ', re.sub(r'</(li|p)>', '. ', f['html'])))).replace('. .', '.').replace('..', '.').replace('?.', '?').strip()}} for f in faq_avec]}
+                           'acceptedAnswer': {'@type': 'Answer', 'text': propre(html_.unescape(re.sub(r'\s+', ' ', re.sub(r'<[^>]+>', ' ', re.sub(r'</(li|p)>', '. ', f['html'])))).replace('. .', '.').replace('..', '.').replace('?.', '?').strip())}} for f in faq_avec]}
     fil = {'@context': 'https://schema.org', '@type': 'BreadcrumbList', 'itemListElement': [
         {'@type': 'ListItem', 'position': 1, 'name': 'Accueil', 'item': ACCUEIL},
         {'@type': 'ListItem', 'position': 2, 'name': 'Nos séjours en Égypte', 'item': 'https://authentiquegypte.com/nos-sejours-egypte/'},
-        {'@type': 'ListItem', 'position': 3, 'name': 'Déserts et Oasis', 'item': 'https://authentiquegypte.com/nos-sejours-egypte/desert-egypte/'},
+        {'@type': 'ListItem', 'position': 3, 'name': CATEGORIE[0], 'item': CATEGORIE[1]},
         {'@type': 'ListItem', 'position': 4, 'name': x['titre'], 'item': x['url']}]}
     return '<script type="application/ld+json">' + json.dumps([trip, faq, fil], ensure_ascii=False) + '</script>'
 
