@@ -501,18 +501,6 @@ CSS = r"""
 .pg .prose strong{color:var(--nuit-900);font-weight:600}
 
 /* ---------- note de production : ce qui est à trancher ---------- */
-.pg .verifier{background:var(--or-fond);border:1px dashed var(--or);border-radius:var(--r-l);
-  padding:20px 24px;font-family:"Manrope",sans-serif}
-.pg .verifier__t{font-weight:800;font-size:1rem;color:#7A5605;margin:0 0 10px;
-  display:flex;align-items:center;gap:9px}
-.pg .verifier__t::before{content:"!";flex:0 0 auto;width:24px;height:24px;border-radius:50%;
-  background:var(--or);color:var(--nuit-900);display:grid;place-items:center;font-size:.9rem}
-.pg .verifier ul{list-style:none;margin:0;padding:0;display:grid;gap:8px;color:#6B4B04;
-  font-size:.98rem;line-height:1.55;max-width:62ch}
-.pg .verifier li{padding-left:18px;position:relative}
-.pg .verifier li::before{content:"";position:absolute;left:2px;top:.6em;width:6px;height:6px;
-  border-radius:50%;background:#B8860B}
-.pg .verifier__d{margin:12px 0 0;font-size:.9rem;color:#8A6100}
 
 
 /* ---------- réponse encadrée : le module minimum de la doctrine ---------- */
@@ -1069,7 +1057,7 @@ CSS = r"""
   .pg .pg-mob .p small,.pg .pan__conf,.pg .mention,.pg .pill,.pg .acc__vide{font-size:.95rem}
   .pg .reperes b,.pg .pan__liste,.pg .apercu span.t{font-size:1rem}
   .pg .ariane,.pg .eyebrow,.pg .apercu .n,.pg .jour__no,.pg .tarif__ligne b small,
-  .pg .mur .ini,.pg .acc__c,.pg .devis__act small,.pg .verifier__d,
+  .pg .mur .ini,.pg .acc__c,.pg .devis__act small,
   .pg .rep,.pg .reps__src,.pg .carte__note,.pg .carte__hors,.pg .somm,
   .pg .somm span span,.pg .somm__t,.pg .valise__t span,.pg .carr__f li,.pg .carr__aide,
   .pg .pan__avis{font-size:.95rem}
@@ -2142,20 +2130,19 @@ def tarif(inv):
 
 
 def a_verifier(inv):
-    """Ce que le relevé de la fiche a trouvé de contradictoire.
+    """Le bandeau des anomalies ne s'affiche plus sur la page (D48).
 
-    Ce bandeau n'est pas du contenu : c'est une note de production,
-    visible seulement pendant la relecture, qui met sous les yeux de la
-    cliente ce qu'elle seule peut trancher — une durée qui ne concorde
-    pas, un déroulé qui parle d'un autre lieu. Sans lui, la page rend
-    l'anomalie invisible en la mettant au propre. Décision D19."""
-    if not inv.get('anomalies'):
-        return ''
-    return ('<aside class="verifier"><p class="verifier__t">%s</p><ul>%s</ul>'
-            '<p class="verifier__d">%s %s</p></aside>'
-            % (e(INTERFACE['titre_verifier']),
-               ''.join('<li>%s</li>' % e(x) for x in inv['anomalies']),
-               e(INTERFACE['releve_du']), e(date_fr(inv['releve']))))
+    Le relevé, lui, continue : l'inventaire cherche toujours les durées
+    qui ne concordent pas, les jours en double, la numérotation à trous
+    et le déroulé qui parle d'un autre lieu. Ces anomalies s'impriment à
+    chaque génération et vivent dans `docs/programmes/questions-melanie.md`.
+    Rien n'est cessé de chercher, c'est la SORTIE qui a changé de place :
+    elle va à l'agence, plus au visiteur.
+
+    Le corollaire de D19 reste : tant qu'une anomalie porte sur le
+    déroulé, l'itinéraire n'entre pas dans les données structurées. Ne
+    plus montrer un doute ne le lève pas."""
+    return ''
 
 
 def suffixe_prix(inv):
@@ -2554,6 +2541,48 @@ def charger(slug):
         return json.load(f)
 
 
+def ecrire_anomalies(tous):
+    """Le relevé des anomalies, hors de la page.
+
+    Il s'affichait autrefois en tête de chaque page, dans un bandeau
+    « À vérifier avec l'agence » (D19). Rémi l'a retiré : une page qui
+    vend un voyage n'est pas un cahier de relecture. Le relevé, lui,
+    continue — et il lui fallait un endroit. Le voici, refait à chaque
+    génération, toutes fiches confondues, avec la date de chaque relevé.
+    """
+    lignes = ['# Anomalies relevées sur les fiches',
+              '',
+              'Écrit par `outils/gabarit-programme.py` à chaque génération. **Ce fichier ne se',
+              "modifie pas à la main** : il redit ce que l'inventaire trouve, et rien d'autre.",
+              "Ce que l'agence doit trancher est repris en questions dans",
+              '`questions-melanie.md`.',
+              '']
+    total = 0
+    for inv in sorted(tous, key=lambda x: x['slug']):
+        if not inv.get('anomalies'):
+            continue
+        total += len(inv['anomalies'])
+        lignes.append('## %s' % inv['h1'])
+        lignes.append('')
+        lignes.append('`%s` — relevé du %s' % (inv['slug'], date_fr(inv['releve'])))
+        lignes.append('')
+        for x in inv['anomalies']:
+            lignes.append('- %s' % x)
+        lignes.append('')
+    saines = [x['slug'] for x in tous if not x.get('anomalies')]
+    if saines:
+        lignes += ['## Fiches sans anomalie', '',
+                   ', '.join('`%s`' % x for x in sorted(saines)), '']
+    lignes.insert(6, '**%d anomalie%s sur %d fiche%s.**'
+                  % (total, 's' if total > 1 else '',
+                     len(tous) - len(saines), 's' if len(tous) - len(saines) > 1 else ''))
+    lignes.insert(7, '')
+    chemin = os.path.join(PROGRAMMES, 'anomalies.md')
+    with open(chemin, 'w', encoding='utf-8') as f:
+        f.write('\n'.join(lignes).rstrip() + '\n')
+    return chemin
+
+
 def main():
     p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     p.add_argument('--programme', default='')
@@ -2601,6 +2630,7 @@ def main():
             print('    ⚠ ' + x)
 
     print('\ninterface du gabarit : ' + os.path.relpath(ecrire_interface(), RACINE))
+    print('anomalies des fiches : ' + os.path.relpath(ecrire_anomalies(tous), RACINE))
 
 
 if __name__ == '__main__':
