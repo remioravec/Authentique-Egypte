@@ -207,43 +207,85 @@
 .pg .guide__c b{font-family:"Manrope",sans-serif;font-size:1.06rem;color:#fff;display:block}
 .pg .guide__c>span:last-child{font-size:.95rem;color:#B4D0DE;line-height:1.5;display:block;margin-top:2px}
 
-/* ---------- carte de repérage ---------- */
-.pg .carte{--carte-mer:#DCEBF2;--carte-nil:#4FA3C7;margin:0;background:#fff;
-  border:1px solid var(--ligne-pg);border-radius:var(--r-l);padding:20px;box-shadow:var(--ombre)}
+/* ---------- carte de repérage : un bandeau large dans la lecture ---------- */
+.pg .carte{--carte-mer:#DCEBF2;--carte-nil:#4FA3C7;--carte-terre:#F2E3C4;--carte-cote:#CBAE7C;
+  margin:0;background:#fff;border:1px solid var(--ligne-pg);border-radius:var(--r-l);
+  padding:22px 24px;box-shadow:var(--ombre)}
 .pg .carte figcaption{padding:0}
 .pg .carte__tete{display:flex;flex-direction:column}
 .pg .carte__tete .eyebrow{order:-1}
 .pg .carte h3{font-size:1.12rem;margin:0 0 16px;letter-spacing:-.3px}
 .pg .carte .eyebrow{margin-bottom:8px}
-.pg .carte__svg{display:block;width:100%;height:auto;border-radius:var(--r-m)}
+.pg .carte__svg{display:block;width:100%;height:auto;border-radius:var(--r-m);
+  border:1px solid var(--ligne-2)}
 .pg .carte__d{fill:var(--nuit-900);stroke:#fff;stroke-width:3}
 .pg .carte__halo{fill:var(--or);opacity:0;transition:opacity .25s var(--ease)}
-.pg .carte__n{fill:#fff;font-family:"Manrope",sans-serif;font-size:13px;font-weight:800;
+.pg .carte__n{fill:#fff;font-family:"Manrope",sans-serif;font-size:14px;font-weight:800;
   text-anchor:middle}
-.pg .carte__lbl{fill:var(--nuit-900);font-family:"Manrope",sans-serif;font-size:21px;font-weight:700;
+.pg .carte__lbl{fill:var(--nuit-900);font-family:"Manrope",sans-serif;font-size:19px;font-weight:700;
   paint-order:stroke;stroke:rgba(255,255,255,.94);stroke-width:6px;stroke-linejoin:round}
-.pg .carte__pt--titre .carte__d{fill:#fff;stroke:var(--rouge);stroke-width:4}
+.pg .carte__pt--titre .carte__d{fill:#fff;stroke:var(--rouge);stroke-width:3.6}
 .pg .carte__pt--titre .carte__lbl{fill:var(--rouge)}
 .pg .carte__pt.on .carte__halo{opacity:.35}
 .pg .carte__pt.on .carte__d{fill:var(--or);stroke:var(--nuit-900)}
 .pg .carte__pt.on .carte__n{fill:var(--nuit-900)}
 .pg .carte__route{opacity:.9}
-.pg .carte__l{list-style:none;margin:16px 0 0;padding:0;display:grid;gap:2px}
-.pg .carte__l li{display:grid;grid-template-columns:26px 1fr;gap:11px;align-items:baseline;
-  font-family:"Manrope",sans-serif;font-size:.95rem;padding:7px 8px;border-radius:var(--r-s);
-  transition:background .2s var(--ease)}
-.pg .carte__l li.on{background:var(--or-fond)}
-.pg .carte__ln{width:22px;height:22px;border-radius:50%;background:var(--nuit-900);color:#fff;
-  display:grid;place-items:center;font-size:.76rem;font-weight:800}
-.pg .carte__l li.on .carte__ln{background:var(--or);color:var(--nuit-900)}
-.pg .carte__l b{color:var(--noir);font-weight:700;display:block}
-.pg .carte__l span span{color:var(--gris-lis);font-size:.92rem;display:block;line-height:1.45}
+/* ---------- sommaire collant : où l'on en est dans le déroulé ---------- */
+.pg .somm{background:#fff;border:1px solid var(--ligne-pg);border-radius:var(--r-l);padding:18px 16px}
+.pg .somm__t{font-family:"Manrope",sans-serif;font-size:.8rem;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--gris-lis);margin:0 0 12px;padding:0 6px}
+.pg .somm ol{list-style:none;margin:0;padding:0;display:grid;gap:2px;counter-reset:none}
+.pg .somm a{display:grid;grid-template-columns:24px 1fr;gap:12px;align-items:baseline;
+  font-family:"Manrope",sans-serif;font-size:.95rem;padding:9px 8px;border-radius:var(--r-s);
+  transition:background .2s var(--ease);min-height:44px;align-content:center}
+.pg .somm a:hover{background:var(--fond)}
+.pg .somm li.on a{background:var(--or-fond)}
+.pg .somm__n{width:24px;height:24px;border-radius:50%;background:var(--fond);color:var(--nuit-900);
+  display:grid;place-items:center;font-size:.8rem;font-weight:800;align-self:center}
+.pg .somm li.on .somm__n{background:var(--or);color:var(--nuit-900)}
+.pg .somm b{color:var(--noir);font-weight:700;display:block;line-height:1.35}
+.pg .somm span span{color:var(--gris-lis);font-size:.92rem;display:block;line-height:1.45;
+  margin-top:2px}
 .pg .carte__hors{display:flex;gap:9px;align-items:flex-start;margin:14px 0 0;padding:12px 14px;
   background:var(--rouge-fond);border-radius:var(--r-m);font-family:"Manrope",sans-serif;
   font-size:.92rem;color:#8A2F1C;line-height:1.5}
 .pg .carte__hors svg{flex:0 0 auto;margin-top:2px}
 .pg .carte__note{margin:14px 0 0;font-family:"Manrope",sans-serif;font-size:.86rem;
-  color:var(--gris-lis);line-height:1.5}
+  color:var(--gris-lis);line-height:1.5;max-width:62ch}
+.pg .carte__ech path{stroke:var(--nuit-900);stroke-width:3;stroke-linecap:butt;opacity:.75}
+.pg .carte__ech text{fill:var(--nuit-900);font-family:"Manrope",sans-serif;font-size:15px;
+  font-weight:700;text-anchor:middle;paint-order:stroke;stroke:rgba(255,255,255,.9);
+  stroke-width:4px;opacity:.9}
+/* La carte est dessinée une fois en 560 unités de large et affichée à
+   deux tailles très différentes : 780 px dans la colonne de lecture,
+   350 px sur un téléphone. Les textes du dessin sont donc redimensionnés
+   par média, sinon ils sortent illisibles d'un côté ou énormes de l'autre. */
+@media (min-width:861px){
+  .pg .carte__lbl{font-size:12px;stroke-width:3.4px}
+  .pg .carte__n{font-size:8px}
+  .pg .carte__d{r:5.5px;stroke-width:1.8}
+  .pg .carte__halo{r:13px}
+  .pg .carte__ech text{font-size:9px;stroke-width:2.6px}
+  .pg .carte__ech path{stroke-width:1.8}
+  .pg .carte__route{stroke-width:2.4;stroke-dasharray:6 4}
+}
+
+/* ---------- repères d'étape : ce que dit la fiche, ce qu'on a mesuré ---------- */
+.pg .reps{display:flex;flex-wrap:wrap;gap:9px;margin:0 0 18px}
+.pg .rep{display:inline-flex;align-items:center;gap:7px;font-family:"Manrope",sans-serif;
+  font-size:.9rem;font-weight:600;border-radius:var(--r-pill);padding:7px 14px;cursor:help}
+/* Ce que la fiche écrit : plein, c'est la parole de l'agence. */
+.pg .rep--fiche{background:var(--nuit-900);color:#fff}
+.pg .rep--fiche svg{color:var(--or)}
+/* Ce que nous avons calculé : en trait, pour qu'on ne confonde pas. */
+.pg .rep--calc{background:#fff;color:var(--nuit-900);border:1.5px dashed var(--teal)}
+.pg .rep--calc svg{color:var(--teal-txt)}
+.pg .reps__src{margin:26px 0 0;padding:16px 18px;background:var(--fond);border-radius:var(--r-m);
+  font-family:"Manrope",sans-serif;font-size:.9rem;color:var(--gris-lis);line-height:1.6;
+  max-width:66ch}
+
+/* ---------- fil d'Ariane sous le bandeau ---------- */
+.pg .ariane--sous{border-bottom:1px solid var(--ligne-2);background:#fff}
 
 /* ---------- galerie ---------- */
 /* Cinq photos en trois colonnes avec une grande en 2×2 laissent une
@@ -251,7 +293,7 @@
    exactement la moitié gauche et les quatre autres la moitié droite :
    le cadre est plein. Les autres comptes tiennent en trois colonnes
    sans case orpheline au milieu. */
-.pg .galerie{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.pg .galerie{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:12px}
 .pg .galerie--5{grid-template-columns:repeat(4,1fr)}
 .pg .galerie a{display:block;aspect-ratio:3/2;border-radius:var(--r-m);overflow:hidden;
   background:var(--fond)}
@@ -280,7 +322,7 @@
   padding:6px 14px;flex:0 0 auto}
 .pg .jour__tete h3{font-size:clamp(1.25rem,2vw,1.5rem)}
 .pg .etape+.etape{margin-top:56px}
-.pg .etape__photo{border-radius:var(--r-l);overflow:hidden;background:var(--fond);margin:0 0 30px;
+.pg .etape__photo{border-radius:var(--r-l);overflow:hidden;background:var(--fond);margin:0 0 40px;
   aspect-ratio:16/9}
 .pg .etape__photo img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s var(--ease)}
 .pg .etape__photo:hover img{transform:scale(1.03)}
@@ -437,12 +479,7 @@
 /* =====================================================================
    RESPONSIVE — les marges restent dans l'échelle mobile 56/48/40/32/28
    ===================================================================== */
-@media (min-width:1041px){
-  /* Au bureau, la colonne de droite tient dans la fenêtre : prix en
-     haut, carte dessous, et la liste des étapes de la carte est
-     masquée — elle est déjà dans la colonne de gauche, en grand. */
-  .pg .carte__l{display:none}
-}
+
 @media (max-width:1040px){
   .pg .guide{grid-template-columns:1fr;gap:32px}
   .pg .bref{padding:28px 24px}
@@ -510,11 +547,9 @@
   .pg .reperes b,.pg .pan__liste,.pg .apercu span.t{font-size:1rem}
   .pg .ariane,.pg .eyebrow,.pg .apercu .n,.pg .jour__no,.pg .tarif__ligne b small,
   .pg .avis__g .ini,.pg .acc__c,.pg .devis__act small,.pg .verifier__d,
-  .pg .bref__src,.pg .carte__note,.pg .carte__hors,.pg .carte__l,
-  .pg .carte__l span span,.pg .valise__t span,.pg .guide__c>span:last-child,
+  .pg .rep,.pg .reps__src,.pg .carte__note,.pg .carte__hors,.pg .somm,
+  .pg .somm span span,.pg .somm__t,.pg .valise__t span,.pg .guide__c>span:last-child,
   .pg .pan__avis{font-size:.95rem}
-  .pg .bref__l dd b{font-size:1.5rem}
-  .pg .bref__l dt,.pg .bref__l dd span{font-size:.95rem}
   .pg .duree__c{padding:20px}
   .pg-mob .p small{font-size:.95rem}
   .pg .eyebrow{letter-spacing:.1em}
@@ -588,7 +623,6 @@
 <section class="hero">
 <div class="hero__fond"><img src="https://authentiquegypte.com/wp-content/uploads/2023/11/Siwa_Oasis_sunset_on_Maraqi_Egypt.webp" alt="oasis de siwa" decoding="async" srcset="https://authentiquegypte.com/wp-content/uploads/2023/11/Siwa_Oasis_sunset_on_Maraqi_Egypt-300x169.webp 300w, https://authentiquegypte.com/wp-content/uploads/2023/11/Siwa_Oasis_sunset_on_Maraqi_Egypt-768x432.webp 768w, https://authentiquegypte.com/wp-content/uploads/2023/11/Siwa_Oasis_sunset_on_Maraqi_Egypt-1024x577.webp 1024w, https://authentiquegypte.com/wp-content/uploads/2023/11/Siwa_Oasis_sunset_on_Maraqi_Egypt-1536x865.webp 1536w, https://authentiquegypte.com/wp-content/uploads/2023/11/Siwa_Oasis_sunset_on_Maraqi_Egypt.webp 1920w" sizes="100vw" width="1920" height="1081" fetchpriority="high"></div>
 <div class="hero__in"><div class="wrap">
-<nav class="ariane" aria-label="Fil d'Ariane"><ol><li><a href="https://authentiquegypte.com/">Accueil</a></li><li><a href="https://authentiquegypte.com/nos-sejours-egypte/">Nos séjours en Égypte</a></li><li><a href="https://authentiquegypte.com/nos-sejours-egypte/desert-egypte/">Déserts et Oasis égyptiens</a></li><li><span aria-current="page">Voyage à l’Oasis de Siwa</span></li></ol></nav>
 <div class="hero__pills"><span class="pill"><svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s6-5.5 6-11a6 6 0 1 0-12 0c0 5.5 6 11 6 11z"/><circle cx="12" cy="10" r="2.2"/></svg>Déserts et Oasis égyptiens</span><span class="pill"><svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>3 jours minimum</span><span class="pill"><svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.5"/><path d="M5 20a7 7 0 0 1 14 0"/></svg>Guide privatif</span></div>
 <h1>Voyage à l’Oasis de Siwa</h1>
 <p class="hero__chapo">L&#x27;Oasis de Siwa : Une oasis préservée aux trésors cachés</p>
@@ -604,17 +638,9 @@
 <li><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.5"/><path d="M5 20a7 7 0 0 1 14 0"/></svg><small>Guide</small><b>Guide privatif</b></li>
 <li><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11l8-7 8 7v9H4z"/><path d="M10 20v-6h4v6"/></svg><small>Hébergement</small><b>Hébergements familiaux</b></li>
 </ul></div></section>
+<nav class="ariane ariane--sous" aria-label="Fil d'Ariane"><div class="wrap"><ol><li><a href="https://authentiquegypte.com/">Accueil</a></li><li><a href="https://authentiquegypte.com/nos-sejours-egypte/">Nos séjours en Égypte</a></li><li><a href="https://authentiquegypte.com/nos-sejours-egypte/desert-egypte/">Déserts et Oasis égyptiens</a></li><li><span aria-current="page">Voyage à l’Oasis de Siwa</span></li></ol></div></nav>
 <div class="wrap"><div class="deux"><div class="corps">
 <aside class="verifier"><p class="verifier__t">À vérifier avec l&#x27;agence avant mise en ligne</p><ul><li>durées contradictoires sur la fiche : 4 jours / 3 jours minimum</li><li>le déroulé ne mentionne jamais « Siwa », le lieu du titre : vérifier que le programme est bien celui de ce séjour</li></ul><p class="verifier__d">Relevé sur la fiche actuelle le 2026-09-09</p></aside>
-<section class="bref">
-<p class="eyebrow">La réponse courte</p>
-<h2>Ce séjour en quatre chiffres</h2>
-<dl class="bref__l">
-<div><dt><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M17 6.5A6 6 0 0 0 7 12a6 6 0 0 0 10 5.5M5 10h8M5 14h8"/></svg>À partir de</dt><dd><b>595 €</b><span>Personne</span></dd></div>
-<div><dt><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Durée</dt><dd><b>3 jours minimum</b></dd></div>
-<div><dt><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 11l1.5-4.5A2 2 0 0 1 8.4 5h7.2a2 2 0 0 1 1.9 1.5L19 11M4 11h16v6h-2a2 2 0 1 1-4 0H10a2 2 0 1 1-4 0H4z"/></svg>Depuis Le Caire</dt><dd><b>8 à 10 heures</b><span>Le trajet depuis Le Caire prend environ 8 à 10 heures en voiture.</span></dd></div>
-<div><dt><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s6-5.5 6-11a6 6 0 1 0-12 0c0 5.5 6 11 6 11z"/><circle cx="12" cy="10" r="2.2"/></svg>Étapes au programme</dt><dd><b>7</b></dd></div>
-</dl><p class="bref__src">Relevé sur la fiche du site le 2026-09-09</p></section>
 <section>
 <p class="eyebrow">Le séjour</p>
 <h2>Vue d&#x27;ensemble</h2>
@@ -655,27 +681,66 @@
 <li><span class="n">J1</span><span class="t">Visite du monastère</span></li>
 <li><span class="n">J1</span><span class="t">Retour à la guesthouse</span></li>
 </ol></section>
+<figure class="carte">
+<figcaption class="carte__tete"><h3>Le trajet, étape par étape</h3><p class="eyebrow">Où vous allez</p></figcaption>
+<svg viewBox="0 0 560.0 238.3" role="img" aria-label="Carte situant les étapes du séjour en Égypte" class="carte__svg">
+<rect width="560.0" height="238.3" fill="var(--carte-mer)"/>
+<path d="M517.9 413.1 L317.7 413.1 L319.7 406.7 L316.5 404.4 L309.5 413.2 L80.1 413.1 L80.1 110.6 L69.9 67.7 L79.4 47.6 L75.4 20.0 L86.3 6.5 L89.1 11.6 L94.9 12.5 L113.7 8.0 L163.6 18.2 L174.4 25.1 L210.3 32.0 L230.8 41.3 L243.9 37.2 L262.4 24.5 L273.1 23.2 L279.5 14.8 L299.0 10.2 L285.7 16.5 L301.8 14.6 L304.8 8.7 L321.1 14.8 L334.5 11.3 L343.6 19.7 L334.6 13.8 L330.1 21.8 L338.9 24.8 L342.3 30.2 L349.0 25.6 L346.5 21.7 L360.8 31.2 L380.2 27.0 L382.5 30.5 L400.0 28.6 L419.5 20.5 L445.5 98.2 L439.3 106.9 L427.0 159.7 L420.3 170.3 L403.4 158.4 L384.5 136.5 L380.2 119.2 L365.1 96.3 L359.4 77.3 L356.0 79.3 L351.8 91.7 L360.6 104.7 L361.9 118.6 L371.6 136.6 L395.5 164.7 L395.7 176.9 L406.7 194.7 L410.7 217.2 L433.0 257.6 L456.2 308.8 L466.7 322.2 L477.9 331.4 L469.0 332.1 L467.6 338.1 L468.3 352.2 L474.8 373.1 L482.7 381.8 L494.3 386.5 L517.9 413.1 Z" fill="var(--carte-terre)" stroke="var(--carte-cote)" stroke-width="1.6"/>
+<path d="M347.2 384.6 L340.6 384.9 L332.2 398.2 L325.5 399.8 L324.8 402.8 L318.0 408.6 L313.5 420.9 L305.1 429.4 L318.3 404.1 L330.7 392.6 L326.7 386.6 L332.1 389.2 L343.4 380.1 L351.0 383.9 L357.0 381.0 L365.8 361.2 L370.1 356.5 L369.6 350.5 L360.6 350.0 L364.6 346.9 L361.6 346.1 L362.7 344.2 L368.0 346.3 L369.3 344.8 L370.7 337.5 L368.9 332.5 L370.9 329.3 L372.9 331.2 L374.9 341.6 L372.1 345.2 L375.6 349.4 L372.5 350.4 L375.7 360.9 L372.5 360.4 L372.1 364.1 L370.1 365.9 L375.0 372.7 L366.0 369.5 L361.3 375.2 L360.2 380.0 L349.5 390.6 L347.7 389.9 L349.6 388.0 L347.2 384.6 Z" fill="var(--carte-nil)" opacity=".85"/>
+<path d="M370.9 329.3 L372.2 356.9 L359.8 379.0 L354.0 384.7 L350.6 385.5 L347.1 382.7 L340.1 383.5 L316.5 409.0 L312.1 419.5 L305.1 429.4" fill="none" stroke="var(--carte-nil)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M276.8 474.9 L278.6 464.5 L286.1 459.2 L291.0 449.9 L290.7 447.6 L300.7 438.2 L305.1 429.4" fill="none" stroke="var(--carte-nil)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M370.9 329.3 L372.5 296.3 L370.7 285.1 L358.5 271.9 L356.7 262.9 L364.5 254.9 L366.7 249.7 L365.6 239.1 L363.5 237.7 L351.9 241.7 L347.0 241.3 L344.3 237.4 L339.1 236.1 L331.7 223.1 L327.8 220.8 L327.4 218.0 L313.0 198.3 L300.6 187.5 L296.9 181.4 L296.7 161.0 L292.2 150.7 L298.0 127.1 L309.8 106.4 L312.3 85.3 L310.5 71.1" fill="none" stroke="var(--carte-nil)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="carte__route" d="M424.4 164.0 L409.9 137.0" fill="none" stroke="var(--or)" stroke-width="4" stroke-dasharray="10 7" stroke-linecap="round"/>
+<g class="carte__pt carte__pt--titre" id="pt-siwa" data-lieu="siwa">
+<circle class="carte__halo" cx="99.9" cy="109.7" r="22"/>
+<circle class="carte__d" cx="99.9" cy="109.7" r="9"/>
+<text class="carte__lbl" x="117.9" y="117.2" text-anchor="start">Oasis de Siwa</text>
+</g>
+<g class="carte__pt carte__pt--titre" id="pt-le-caire" data-lieu="le-caire">
+<circle class="carte__halo" cx="310.4" cy="74.3" r="22"/>
+<circle class="carte__d" cx="310.4" cy="74.3" r="9"/>
+<text class="carte__lbl" x="292.4" y="67.39999999999999" text-anchor="end">Le Caire</text>
+</g>
+<g class="carte__pt" id="pt-charm-el-cheikh" data-lieu="charm-el-cheikh">
+<circle class="carte__halo" cx="424.4" cy="164.0" r="22"/>
+<circle class="carte__d" cx="424.4" cy="164.0" r="9"/>
+<text class="carte__n" x="424.4" y="168.8">1</text>
+<text class="carte__lbl" x="406.4" y="211.1" text-anchor="end">Charm el-Cheikh</text>
+</g>
+<g class="carte__pt" id="pt-sainte-catherine" data-lieu="sainte-catherine mont-moise">
+<circle class="carte__halo" cx="409.9" cy="137.0" r="22"/>
+<circle class="carte__d" cx="409.9" cy="137.0" r="9"/>
+<text class="carte__n" x="409.9" y="141.8">2-3</text>
+<text class="carte__lbl" x="391.9" y="115.7" text-anchor="end">Sainte-Catherine</text>
+</g>
+<g class="carte__ech"><path d="M25.2 227.6 h189.6" /><text x="120.0" y="223.6">500 km</text></g>
+</svg>
+<p class="carte__hors"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.7 5.8 6.3.7-4.7 4.3 1.3 6.2L12 17l-5.6 3 1.3-6.2L3 9.5l6.3-.7z"/></svg>Annoncé par le titre du séjour, absent du déroulé : Oasis de Siwa, Le Caire</p>
+<figcaption class="carte__note">Points placés à leurs coordonnées réelles. Fond de carte :  Natural Earth 1:50m, domaine public (naturalearthdata.com)</figcaption></figure>
 <section>
 <p class="eyebrow">Dans le détail</p>
 <h2>Le séjour jour par jour</h2>
 <div class="jour">
 <div class="jour__tete"><h3>Le Caire - Oasis de Siwa</h3><span class="jour__no">Jour 1</span></div>
-<article class="etape" data-lieu="charm-el-cheikh">
+<article class="etape" id="etape-1" data-lieu="charm-el-cheikh">
 <a class="etape__photo" data-lb href="https://authentiquegypte.com/wp-content/uploads/2025/06/mohamad-sameh-Jl6Ghf2YsFQ-unsplash-scaled.jpg" data-alt="Paysage du Sinaï" aria-label="Agrandir la photo : Paysage du Sinaï"><img src="https://authentiquegypte.com/wp-content/uploads/2025/06/mohamad-sameh-Jl6Ghf2YsFQ-unsplash-scaled.jpg" alt="Paysage du Sinaï" decoding="async" srcset="https://authentiquegypte.com/wp-content/uploads/2025/06/mohamad-sameh-Jl6Ghf2YsFQ-unsplash-300x200.jpg 300w, https://authentiquegypte.com/wp-content/uploads/2025/06/mohamad-sameh-Jl6Ghf2YsFQ-unsplash-768x512.jpg 768w, https://authentiquegypte.com/wp-content/uploads/2025/06/mohamad-sameh-Jl6Ghf2YsFQ-unsplash-1024x683.jpg 1024w, https://authentiquegypte.com/wp-content/uploads/2025/06/mohamad-sameh-Jl6Ghf2YsFQ-unsplash-1536x1024.jpg 1536w, https://authentiquegypte.com/wp-content/uploads/2025/06/mohamad-sameh-Jl6Ghf2YsFQ-unsplash-2048x1365.jpg 2048w, https://authentiquegypte.com/wp-content/uploads/2025/06/mohamad-sameh-Jl6Ghf2YsFQ-unsplash-scaled.jpg 2560w" sizes="(max-width:1040px) 100vw, 780px" width="2560" height="1707" loading="lazy"></a>
+
 <p>Départ dans l’après-midi. Un véhicule privé et climatisé vient vous chercher à votre hôtel à Sharm el-Sheikh ou Dahab dans l’après-midi pour prendre la route en direction de Sainte-Catherine.</p>
 <p>La route en bon état menant au village vous donne l’occasion d’observer les paysages du Sinaï, des montagnes abruptes aux langues de sables, et peut-être même de croiser des dromadaires le long de la route.</p>
 
 </article>
-<article class="etape" data-lieu="sainte-catherine">
+<article class="etape" id="etape-2" data-lieu="sainte-catherine">
 <a class="etape__photo" data-lb href="https://authentiquegypte.com/wp-content/uploads/2025/06/DSC00493-scaled.jpg" data-alt="Guesthouse" aria-label="Agrandir la photo : Guesthouse"><img src="https://authentiquegypte.com/wp-content/uploads/2025/06/DSC00493-scaled.jpg" alt="Guesthouse" decoding="async" srcset="https://authentiquegypte.com/wp-content/uploads/2025/06/DSC00493-300x201.jpg 300w, https://authentiquegypte.com/wp-content/uploads/2025/06/DSC00493-768x513.jpg 768w, https://authentiquegypte.com/wp-content/uploads/2025/06/DSC00493-1024x684.jpg 1024w, https://authentiquegypte.com/wp-content/uploads/2025/06/DSC00493-1536x1027.jpg 1536w, https://authentiquegypte.com/wp-content/uploads/2025/06/DSC00493-2048x1369.jpg 2048w, https://authentiquegypte.com/wp-content/uploads/2025/06/DSC00493-scaled.jpg 2560w" sizes="(max-width:1040px) 100vw, 780px" width="2560" height="1711" loading="lazy"></a>
 <h4><svg aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s6-5.5 6-11a6 6 0 1 0-12 0c0 5.5 6 11 6 11z"/><circle cx="12" cy="10" r="2.2"/></svg>Arrivée chez votre hôte</h4>
+<p class="reps"><span class="rep rep--calc" title="OSRM sur données OpenStreetMap (router.project-osrm.org) — relevé le 2026-09-09"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 11l1.5-4.5A2 2 0 0 1 8.4 5h7.2a2 2 0 0 1 1.9 1.5L19 11M4 11h16v6h-2a2 2 0 1 1-4 0H10a2 2 0 1 1-4 0H4z"/></svg>209 km · 2 h 37 de route</span></p>
 <p>Vous arrivez dans le village de Sainte-Catherine, peuplé en grande partie de Bédouin de la tribu Gabalia.</p>
 <p>Rencontrez ensuite Saleh et l’équipe de la guesthouse qui vous accueillerons avec toute l’hospitalité bédouine dans un lieu particulièrement propice au repos et à la méditation. Vous profitez d’une chambre avec salle de bain privative afin de vous reposer, ainsi que d’un dîner traditionnel et complet pour faire le plein d’énergie avant l’ascension.</p>
 <p class="mentions"><span class="mention"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3v7a2 2 0 0 0 4 0V3M9 3v18M17 3c-2 2-3 5-3 8h3v10"/></svg>Dîner</span><span class="mention"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18V8M3 12h18v6M7 12V9h6v3"/></svg>Nuit en guesthouse</span></p>
 </article>
-<article class="etape" data-lieu="mont-moise">
+<article class="etape" id="etape-3" data-lieu="mont-moise">
 <a class="etape__photo" data-lb href="https://authentiquegypte.com/wp-content/uploads/2025/06/DSC00535-scaled.jpg" data-alt="Lever du soleil sur le Sinaï" aria-label="Agrandir la photo : Lever du soleil sur le Sinaï"><img src="https://authentiquegypte.com/wp-content/uploads/2025/06/DSC00535-scaled.jpg" alt="Lever du soleil sur le Sinaï" decoding="async" srcset="https://authentiquegypte.com/wp-content/uploads/2025/06/DSC00535-300x201.jpg 300w, https://authentiquegypte.com/wp-content/uploads/2025/06/DSC00535-768x513.jpg 768w, https://authentiquegypte.com/wp-content/uploads/2025/06/DSC00535-1024x684.jpg 1024w, https://authentiquegypte.com/wp-content/uploads/2025/06/DSC00535-1536x1027.jpg 1536w, https://authentiquegypte.com/wp-content/uploads/2025/06/DSC00535-2048x1369.jpg 2048w, https://authentiquegypte.com/wp-content/uploads/2025/06/DSC00535-scaled.jpg 2560w" sizes="(max-width:1040px) 100vw, 780px" width="2560" height="1711" loading="lazy"></a>
 <h4><svg aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s6-5.5 6-11a6 6 0 1 0-12 0c0 5.5 6 11 6 11z"/><circle cx="12" cy="10" r="2.2"/></svg>Départ pour l&#x27;ascension</h4>
+
 <p>Après une courte, mais confortable nuit, vous partez pour l’ascension du mont Moïse (ou Gebel Moussa en arabe), le départ de la guesthouse se fait vers 1h00 avec votre guide bédouin. Une ascension qui s’annonce mythique et spirituelle.</p>
 <p>Ainsi, vous débutez votre randonnée sur un chemin qui longe le monastère, puis partez dans le noir guidé en tête par un Bédouin de la tribu des Gebeliya, ces derniers connaissent tous les sentiers de la région et maîtrisent l’approche au sommet du mont Moïse comme nul autre.</p>
 <p>À la lumière des lampes frontales, vous suivez un chemin emprunté depuis des centaines d’années par les moines et les Bédouins. Désormais, vous marchez sur une voie qui se pratique sans grande difficulté malgré le dénivelé de près de 700 mètres positifs et les 750 marches finales jusqu’au sommet.</p>
@@ -683,31 +748,35 @@
 <p>Sur la route, vous prenez des pauses dans de petits magasins minimalistes et faits de pierres, qui vous serviront boissons chaudes et collations pour garder de l’énergie tout au long de l’ascension et vous mettre à l’abri pour vous reposer un peu au besoin.</p>
 
 </article>
-<article class="etape" data-lieu="mont-moise">
+<article class="etape" id="etape-4" data-lieu="mont-moise">
 <a class="etape__photo" data-lb href="https://authentiquegypte.com/wp-content/uploads/2025/06/DSC00528-scaled-e1750597600417.jpg" data-alt="" aria-label="Agrandir la photo : Lever de soleil au sommet"><img src="https://authentiquegypte.com/wp-content/uploads/2025/06/DSC00528-scaled-e1750597600417.jpg" alt="" decoding="async" srcset="https://authentiquegypte.com/wp-content/uploads/2025/06/DSC00528-scaled-e1750597600417-300x210.jpg 300w, https://authentiquegypte.com/wp-content/uploads/2025/06/DSC00528-scaled-e1750597600417-768x537.jpg 768w, https://authentiquegypte.com/wp-content/uploads/2025/06/DSC00528-scaled-e1750597600417-1024x716.jpg 1024w, https://authentiquegypte.com/wp-content/uploads/2025/06/DSC00528-scaled-e1750597600417-1536x1073.jpg 1536w, https://authentiquegypte.com/wp-content/uploads/2025/06/DSC00528-scaled-e1750597600417.jpg 1710w" sizes="(max-width:1040px) 100vw, 780px" width="1710" height="1195" loading="lazy"></a>
 <h4><svg aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s6-5.5 6-11a6 6 0 1 0-12 0c0 5.5 6 11 6 11z"/><circle cx="12" cy="10" r="2.2"/></svg>Lever de soleil au sommet</h4>
+<p class="reps"><span class="rep rep--fiche" title="Durée annoncée par la fiche du site"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>2h30 et 3h00</span></p>
 <p>La marche qui dure entre 2h30 et 3h00 vous mène au sommet du mont Moïse pour admirer le lever du soleil sur les montagnes du Sinaï, dont le mont Sainte-Catherine, la plus haute montagne d’Egypte, à 2629 mètres.</p>
 <p>Une expérience unique, magnifique et que chacun saura apprécier à sa manière.</p>
 
 </article>
-<article class="etape" data-lieu="sainte-catherine">
+<article class="etape" id="etape-5" data-lieu="sainte-catherine">
 <a class="etape__photo" data-lb href="https://authentiquegypte.com/wp-content/uploads/2025/06/DSC00611-scaled.jpg" data-alt="Descente du mont Sinaï au lever du soleil" aria-label="Agrandir la photo : Descente du mont Sinaï au lever du soleil"><img src="https://authentiquegypte.com/wp-content/uploads/2025/06/DSC00611-scaled.jpg" alt="Descente du mont Sinaï au lever du soleil" decoding="async" srcset="https://authentiquegypte.com/wp-content/uploads/2025/06/DSC00611-300x201.jpg 300w, https://authentiquegypte.com/wp-content/uploads/2025/06/DSC00611-768x513.jpg 768w, https://authentiquegypte.com/wp-content/uploads/2025/06/DSC00611-1024x684.jpg 1024w, https://authentiquegypte.com/wp-content/uploads/2025/06/DSC00611-1536x1027.jpg 1536w, https://authentiquegypte.com/wp-content/uploads/2025/06/DSC00611-2048x1369.jpg 2048w, https://authentiquegypte.com/wp-content/uploads/2025/06/DSC00611-scaled.jpg 2560w" sizes="(max-width:1040px) 100vw, 780px" width="2560" height="1711" loading="lazy"></a>
 <h4><svg aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s6-5.5 6-11a6 6 0 1 0-12 0c0 5.5 6 11 6 11z"/><circle cx="12" cy="10" r="2.2"/></svg>Descente vers le monastère</h4>
+<p class="reps"><span class="rep rep--fiche" title="Durée annoncée par la fiche du site"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>2h00 à 2h30</span></p>
 <p>Reprenez ensuite le chemin en sens inverse et découvrez le paysage qui vous entourait jusqu’alors discrètement à la lueur de la lune. Cette descente s’effectue en 2h00 à 2h30.</p>
 <p>Enfin, vous commencez à apercevoir le monastère grec orthodoxe de Sainte-Catherine, éclairé par les premiers rayons du soleil et encaissé entre deux montagnes, un écrin de verdure au centre d’une vallée aride.</p>
 
 </article>
-<article class="etape" data-lieu="sainte-catherine">
+<article class="etape" id="etape-6" data-lieu="sainte-catherine">
 <a class="etape__photo" data-lb href="https://authentiquegypte.com/wp-content/uploads/2025/06/raimond-klavins-8j3FvUT6yM4-unsplash-scaled.jpg" data-alt="Monastère Sainte-Catherine, Raimond Klavins" aria-label="Agrandir la photo : Monastère Sainte-Catherine, Raimond Klavins"><img src="https://authentiquegypte.com/wp-content/uploads/2025/06/raimond-klavins-8j3FvUT6yM4-unsplash-scaled.jpg" alt="Monastère Sainte-Catherine, Raimond Klavins" decoding="async" srcset="https://authentiquegypte.com/wp-content/uploads/2025/06/raimond-klavins-8j3FvUT6yM4-unsplash-300x200.jpg 300w, https://authentiquegypte.com/wp-content/uploads/2025/06/raimond-klavins-8j3FvUT6yM4-unsplash-768x512.jpg 768w, https://authentiquegypte.com/wp-content/uploads/2025/06/raimond-klavins-8j3FvUT6yM4-unsplash-1024x683.jpg 1024w, https://authentiquegypte.com/wp-content/uploads/2025/06/raimond-klavins-8j3FvUT6yM4-unsplash-1536x1025.jpg 1536w, https://authentiquegypte.com/wp-content/uploads/2025/06/raimond-klavins-8j3FvUT6yM4-unsplash-2048x1367.jpg 2048w, https://authentiquegypte.com/wp-content/uploads/2025/06/raimond-klavins-8j3FvUT6yM4-unsplash-scaled.jpg 2560w" sizes="(max-width:1040px) 100vw, 780px" width="2560" height="1708" loading="lazy"></a>
 <h4><svg aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s6-5.5 6-11a6 6 0 1 0-12 0c0 5.5 6 11 6 11z"/><circle cx="12" cy="10" r="2.2"/></svg>Visite du monastère</h4>
+
 <p>Le monastère est construit de murs en granit épais de 2 à 3 mètres, cette fortification s’accompagnait jusqu’au XXe siècle d’absence totale de porte. Ainsi, les moines rentraient via une fenêtre à une dizaine de mètres de hauteur où était installé un système d’ascenseur tracté manuellement. Cette situation explique l’étroitesse des passages, construits plus tard et par lesquels vous passez pour rentrer dans le monastère.</p>
 <p>À l’intérieur, vous visitez l’église de la Transfiguration avec ses mosaïques, son marbre et sa collection d’icônes. Poursuivez vers le Buisson ardent, puis montez pour découvrir le musée de la bibliothèque (2$) et sa collection inestimable d’icônes préservées et de textes bibliques. C’est d’ailleurs dans la bibliothèque du monastère que fut découverte une des plus anciennes bibles complètes (Codex Sinaiticus).</p>
 <p>C’est en premier lieu, Hélène, la mère de l’empereur Constantin qui fit ériger au IVe siècle une chapelle entre ces montagnes isolées. La chapelle du Buisson ardent qui se trouve à l’arrière de l’église. Vient ensuite l’empereur Justinien 1er (vers 548–565) qui autour de la Chapelle du Buisson ardent fit construire le monastère pour protéger les pèlerins.Le monastère aurait été ensuite protégé par Mahomet en personne en 625 dans un décret (Adhiname), puis par Napoléon Bonaparte en 1798 (La Lettre de Sauvegarde, visible dans la bibliothèque) et enfin en 2002 par le l’UNESCO qui l’ajouta à son fameux Patrimoine mondial. Aujourd’hui encore, le gouvernement égyptien lui garantit sa sécurité et le reconnaît comme un haut lieu spirituel.</p>
 <p>Enfin, déambulez dans le parc ombragé et verdoyant du monastère où vous pourrez peut-être faire la rencontre d’un moine. En effet, plus d’une vingtaine de moines vivent de manière permanente au monastère, ils sont pour la plupart grecs et vivent pour la prière, la copie de manuscrits et l’accueil des pèlerins.</p>
 
 </article>
-<article class="etape" data-lieu="sainte-catherine">
+<article class="etape" id="etape-7" data-lieu="sainte-catherine">
 <h4><svg aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s6-5.5 6-11a6 6 0 1 0-12 0c0 5.5 6 11 6 11z"/><circle cx="12" cy="10" r="2.2"/></svg>Retour à la guesthouse</h4>
+
 <p>Une voiture viendra vous chercher au parking du monastère afin de vous emmener à la guesthouse. Vous profitez d’un petit-déjeuner traditionnel et complet avant de reprendre la route en direction de la côte vers 12h00.</p>
 <p class="mentions"><span class="mention"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3v7a2 2 0 0 0 4 0V3M9 3v18M17 3c-2 2-3 5-3 8h3v10"/></svg>Petit-déjeuner</span></p>
 </article>
@@ -736,56 +805,16 @@
 </div>
 <aside class="pan"><div class="pan__carte">
 <p class="pan__prix" style="margin:0"><small>À partir de</small><b>595 €</b> <i>/ Personne</i></p>
+<ul class="pan__liste"><li><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span>3 jours minimum</span></li><li><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20c4-1 5-6 5-6l3-9 3 9s1 5 5 6"/><path d="M9 14h6"/></svg><span>Rythme adapté</span></li><li><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 11l1.5-4.5A2 2 0 0 1 8.4 5h7.2a2 2 0 0 1 1.9 1.5L19 11M4 11h16v6h-2a2 2 0 1 1-4 0H10a2 2 0 1 1-4 0H4z"/></svg><span>Chauffeur et véhicule sécurisé</span></li><li><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.5"/><path d="M5 20a7 7 0 0 1 14 0"/></svg><span>Guide privatif</span></li><li><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11l8-7 8 7v9H4z"/><path d="M10 20v-6h4v6"/></svg><span>Hébergements familiaux</span></li></ul>
 <div class="pan__act"><a class="btn btn--or btn--bloc" href="https://authentiquegypte.com/sur-mesure/">Personnaliser ce séjour</a><a class="btn btn--wa btn--bloc" href="https://wa.me/201066619098"><svg aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6a3 3 0 0 1 3-3h10a3 3 0 0 1 3 3v8a3 3 0 0 1-3 3H9l-5 4z"/></svg> Poser une question sur WhatsApp</a></div>
 <p class="pan__note">Réponse sous 48 h, hors vendredi et samedi<br>Aucune carte bancaire demandée à cette étape.</p>
 <p class="pan__avis"><span class="et" aria-hidden="true">★★★★★</span><b>23 avis Google</b> <span>Agence locale basée au Caire</span></p>
 </div>
-<figure class="carte">
-<figcaption class="carte__tete"><h3>Le trajet, étape par étape</h3><p class="eyebrow">Où vous allez</p></figcaption>
-<svg viewBox="0 0 564 470" role="img" aria-label="Carte de l&#x27;Égypte situant les étapes du séjour" class="carte__svg">
-<defs><linearGradient id="sable" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F6E7C8"/><stop offset="1" stop-color="#EAD5A8"/></linearGradient></defs>
-<rect width="564" height="470" fill="var(--carte-mer)" rx="14"/>
-<path d="M47.0 28.6 L94.1 37.3 L134.8 37.3 L184.2 57.1 L235.1 50.5 L258.7 30.7 L286.1 26.4 L317.4 32.9 L333.1 41.7 L368.4 43.9 L409.5 43.0 L435.0 118.6 L426.4 158.1 L416.2 182.3 L409.5 196.8 L384.1 158.1 L362.5 131.8 L344.9 101.0 L342.9 96.6 L350.7 114.2 L368.4 175.7 L393.9 217.4 L415.4 272.3 L442.8 347.0 L466.4 395.3 L513.4 448.0 L35.3 448.0 L35.3 316.3 L43.1 140.6 Z" fill="url(#sable)" stroke="#D9BC85" stroke-width="1.2"/>
-<path d="M356.6 356.2 L350.7 311.9 L346.4 286.0 L325.3 246.0 L295.9 215.2 L288.0 171.3 L290.0 127.4 L291.6 94.9 L266.5 57.1 L246.9 46.1" fill="none" stroke="var(--carte-nil)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M291.6 94.9 L303.7 57.1 L314.3 34.3" fill="none" stroke="var(--carte-nil)" stroke-width="2" stroke-linecap="round"/>
-<path d="M356.6 356.2 L337.0 390.9 L317.4 417.3 L306.9 433.1" fill="none" stroke="var(--carte-nil)" stroke-width="4" stroke-linecap="round" opacity=".85"/>
-<path class="carte__route" d="M412.7 188.2 L397.3 160.1 L398.8 163.8" fill="none" stroke="var(--or)" stroke-width="4" stroke-dasharray="9 7" stroke-linecap="round"/>
-<g class="carte__pt carte__pt--titre" id="pt-siwa" data-lieu="siwa">
-<circle class="carte__halo" cx="67.4" cy="131.6" r="22"/>
-<circle class="carte__d" cx="67.4" cy="131.6" r="9"/>
-<text class="carte__lbl" x="85.4" y="139.1" text-anchor="start">Oasis de Siwa</text>
-</g>
-<g class="carte__pt carte__pt--titre" id="pt-le-caire" data-lieu="le-caire">
-<circle class="carte__halo" cx="291.4" cy="94.7" r="22"/>
-<circle class="carte__d" cx="291.4" cy="94.7" r="9"/>
-<text class="carte__lbl" x="273.4" y="86.2" text-anchor="end">Le Caire</text>
-</g>
-<g class="carte__pt" id="pt-charm-el-cheikh" data-lieu="charm-el-cheikh">
-<circle class="carte__halo" cx="412.7" cy="188.2" r="22"/>
-<circle class="carte__d" cx="412.7" cy="188.2" r="9"/>
-<text class="carte__n" x="412.7" y="192.79999999999998">1</text>
-<text class="carte__lbl" x="430.7" y="239.7" text-anchor="start">Charm el-Cheikh</text>
-</g>
-<g class="carte__pt" id="pt-sainte-catherine" data-lieu="sainte-catherine">
-<circle class="carte__halo" cx="397.3" cy="160.1" r="22"/>
-<circle class="carte__d" cx="397.3" cy="160.1" r="9"/>
-<text class="carte__n" x="397.3" y="164.7">2</text>
-<text class="carte__lbl" x="415.3" y="135.6" text-anchor="start">Sainte-Catherine</text>
-</g>
-<g class="carte__pt" id="pt-mont-moise" data-lieu="mont-moise">
-<circle class="carte__halo" cx="398.8" cy="163.8" r="22"/>
-<circle class="carte__d" cx="398.8" cy="163.8" r="9"/>
-<text class="carte__n" x="398.8" y="168.4">3</text>
-<text class="carte__lbl" x="416.8" y="179.3" text-anchor="start">Mont Moïse</text>
-</g>
-</svg>
-<ol class="carte__l">
-<li data-lieu="charm-el-cheikh"><span class="carte__ln">1</span><span><b>Charm el-Cheikh</b><span>Le Caire - Oasis de Siwa</span></span></li>
-<li data-lieu="sainte-catherine"><span class="carte__ln">2</span><span><b>Sainte-Catherine</b><span>Arrivée chez votre hôte</span></span></li>
-<li data-lieu="mont-moise"><span class="carte__ln">3</span><span><b>Mont Moïse</b><span>Départ pour l&#x27;ascension</span></span></li>
-</ol>
-<p class="carte__hors"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.7 5.8 6.3.7-4.7 4.3 1.3 6.2L12 17l-5.6 3 1.3-6.2L3 9.5l6.3-.7z"/></svg>Annoncé par le titre du séjour, absent du déroulé : Oasis de Siwa, Le Caire</p>
-<figcaption class="carte__note">Carte de repérage : tracé schématique, points placés à leurs coordonnées réelles.</figcaption></figure>
+<nav class="somm" aria-label="Le fil du séjour"><p class="somm__t">Le fil du séjour</p><ol>
+<li data-lieu="charm-el-cheikh"><a href="#etape-1"><span class="somm__n">1</span><span><b>Charm el-Cheikh</b><span>Le Caire - Oasis de Siwa</span></span></a></li>
+<li data-lieu="sainte-catherine"><a href="#etape-2"><span class="somm__n">2</span><span><b>Sainte-Catherine</b><span>Arrivée chez votre hôte</span></span></a></li>
+<li data-lieu="mont-moise"><a href="#etape-3"><span class="somm__n">3</span><span><b>Mont Moïse</b><span>Départ pour l&#x27;ascension</span></span></a></li>
+</ol></nav>
 </aside>
 </div></div>
 <section class="pg-sec pg-sec--nuit"><div class="wrap"><div class="guide">
@@ -919,9 +948,10 @@
   var pts=document.querySelectorAll('.carte__pt'), lignes=document.querySelectorAll('.carte__l li');
   var etapes=document.querySelectorAll('.etape[data-lieu]');
   if(pts.length&&etapes.length&&'IntersectionObserver' in window){
+    function porte(el,lieu){ return (' '+el.dataset.lieu+' ').indexOf(' '+lieu+' ')>=0; }
     function allumer(lieu){
-      pts.forEach(function(g){ g.classList.toggle('on', g.dataset.lieu===lieu); });
-      lignes.forEach(function(l){ l.classList.toggle('on', l.dataset.lieu===lieu); });
+      pts.forEach(function(g){ g.classList.toggle('on', porte(g,lieu)); });
+      lignes.forEach(function(l){ l.classList.toggle('on', porte(l,lieu)); });
     }
     var vues=new Map();
     var obs=new IntersectionObserver(function(entrees){

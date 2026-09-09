@@ -115,8 +115,13 @@ INTERFACE = {
     # --- carte (D25)
     'eyebrow_carte': 'Où vous allez',                              # D25
     'titre_carte': 'Le trajet, étape par étape',                   # D25
-    'carte_note': 'Carte de repérage : tracé schématique, points placés '
-                  'à leurs coordonnées réelles.',                  # D25
+    'carte_note': 'Points placés à leurs coordonnées réelles. Fond de carte : ',   # D25
+    # --- repères de trajet (D27)
+    'titre_sommaire': 'Le fil du séjour',                           # D25
+    'source_trajets': 'Les distances et les temps de route sont calculés par nos soins '
+                      'sur les données OpenStreetMap, entre les lieux que la fiche nomme. '
+                      'Ils situent le trajet : ils ne remplacent pas le programme de '
+                      'l\'agence. Les durées écrites par la fiche sont reprises telles quelles.',
 }
 
 
@@ -497,43 +502,85 @@ CSS = r"""
 .pg .guide__c b{font-family:"Manrope",sans-serif;font-size:1.06rem;color:#fff;display:block}
 .pg .guide__c>span:last-child{font-size:.95rem;color:#B4D0DE;line-height:1.5;display:block;margin-top:2px}
 
-/* ---------- carte de repérage ---------- */
-.pg .carte{--carte-mer:#DCEBF2;--carte-nil:#4FA3C7;margin:0;background:#fff;
-  border:1px solid var(--ligne-pg);border-radius:var(--r-l);padding:20px;box-shadow:var(--ombre)}
+/* ---------- carte de repérage : un bandeau large dans la lecture ---------- */
+.pg .carte{--carte-mer:#DCEBF2;--carte-nil:#4FA3C7;--carte-terre:#F2E3C4;--carte-cote:#CBAE7C;
+  margin:0;background:#fff;border:1px solid var(--ligne-pg);border-radius:var(--r-l);
+  padding:22px 24px;box-shadow:var(--ombre)}
 .pg .carte figcaption{padding:0}
 .pg .carte__tete{display:flex;flex-direction:column}
 .pg .carte__tete .eyebrow{order:-1}
 .pg .carte h3{font-size:1.12rem;margin:0 0 16px;letter-spacing:-.3px}
 .pg .carte .eyebrow{margin-bottom:8px}
-.pg .carte__svg{display:block;width:100%;height:auto;border-radius:var(--r-m)}
+.pg .carte__svg{display:block;width:100%;height:auto;border-radius:var(--r-m);
+  border:1px solid var(--ligne-2)}
 .pg .carte__d{fill:var(--nuit-900);stroke:#fff;stroke-width:3}
 .pg .carte__halo{fill:var(--or);opacity:0;transition:opacity .25s var(--ease)}
-.pg .carte__n{fill:#fff;font-family:"Manrope",sans-serif;font-size:13px;font-weight:800;
+.pg .carte__n{fill:#fff;font-family:"Manrope",sans-serif;font-size:14px;font-weight:800;
   text-anchor:middle}
-.pg .carte__lbl{fill:var(--nuit-900);font-family:"Manrope",sans-serif;font-size:21px;font-weight:700;
+.pg .carte__lbl{fill:var(--nuit-900);font-family:"Manrope",sans-serif;font-size:19px;font-weight:700;
   paint-order:stroke;stroke:rgba(255,255,255,.94);stroke-width:6px;stroke-linejoin:round}
-.pg .carte__pt--titre .carte__d{fill:#fff;stroke:var(--rouge);stroke-width:4}
+.pg .carte__pt--titre .carte__d{fill:#fff;stroke:var(--rouge);stroke-width:3.6}
 .pg .carte__pt--titre .carte__lbl{fill:var(--rouge)}
 .pg .carte__pt.on .carte__halo{opacity:.35}
 .pg .carte__pt.on .carte__d{fill:var(--or);stroke:var(--nuit-900)}
 .pg .carte__pt.on .carte__n{fill:var(--nuit-900)}
 .pg .carte__route{opacity:.9}
-.pg .carte__l{list-style:none;margin:16px 0 0;padding:0;display:grid;gap:2px}
-.pg .carte__l li{display:grid;grid-template-columns:26px 1fr;gap:11px;align-items:baseline;
-  font-family:"Manrope",sans-serif;font-size:.95rem;padding:7px 8px;border-radius:var(--r-s);
-  transition:background .2s var(--ease)}
-.pg .carte__l li.on{background:var(--or-fond)}
-.pg .carte__ln{width:22px;height:22px;border-radius:50%;background:var(--nuit-900);color:#fff;
-  display:grid;place-items:center;font-size:.76rem;font-weight:800}
-.pg .carte__l li.on .carte__ln{background:var(--or);color:var(--nuit-900)}
-.pg .carte__l b{color:var(--noir);font-weight:700;display:block}
-.pg .carte__l span span{color:var(--gris-lis);font-size:.92rem;display:block;line-height:1.45}
+/* ---------- sommaire collant : où l'on en est dans le déroulé ---------- */
+.pg .somm{background:#fff;border:1px solid var(--ligne-pg);border-radius:var(--r-l);padding:18px 16px}
+.pg .somm__t{font-family:"Manrope",sans-serif;font-size:.8rem;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--gris-lis);margin:0 0 12px;padding:0 6px}
+.pg .somm ol{list-style:none;margin:0;padding:0;display:grid;gap:2px;counter-reset:none}
+.pg .somm a{display:grid;grid-template-columns:24px 1fr;gap:12px;align-items:baseline;
+  font-family:"Manrope",sans-serif;font-size:.95rem;padding:9px 8px;border-radius:var(--r-s);
+  transition:background .2s var(--ease);min-height:44px;align-content:center}
+.pg .somm a:hover{background:var(--fond)}
+.pg .somm li.on a{background:var(--or-fond)}
+.pg .somm__n{width:24px;height:24px;border-radius:50%;background:var(--fond);color:var(--nuit-900);
+  display:grid;place-items:center;font-size:.8rem;font-weight:800;align-self:center}
+.pg .somm li.on .somm__n{background:var(--or);color:var(--nuit-900)}
+.pg .somm b{color:var(--noir);font-weight:700;display:block;line-height:1.35}
+.pg .somm span span{color:var(--gris-lis);font-size:.92rem;display:block;line-height:1.45;
+  margin-top:2px}
 .pg .carte__hors{display:flex;gap:9px;align-items:flex-start;margin:14px 0 0;padding:12px 14px;
   background:var(--rouge-fond);border-radius:var(--r-m);font-family:"Manrope",sans-serif;
   font-size:.92rem;color:#8A2F1C;line-height:1.5}
 .pg .carte__hors svg{flex:0 0 auto;margin-top:2px}
 .pg .carte__note{margin:14px 0 0;font-family:"Manrope",sans-serif;font-size:.86rem;
-  color:var(--gris-lis);line-height:1.5}
+  color:var(--gris-lis);line-height:1.5;max-width:62ch}
+.pg .carte__ech path{stroke:var(--nuit-900);stroke-width:3;stroke-linecap:butt;opacity:.75}
+.pg .carte__ech text{fill:var(--nuit-900);font-family:"Manrope",sans-serif;font-size:15px;
+  font-weight:700;text-anchor:middle;paint-order:stroke;stroke:rgba(255,255,255,.9);
+  stroke-width:4px;opacity:.9}
+/* La carte est dessinée une fois en 560 unités de large et affichée à
+   deux tailles très différentes : 780 px dans la colonne de lecture,
+   350 px sur un téléphone. Les textes du dessin sont donc redimensionnés
+   par média, sinon ils sortent illisibles d'un côté ou énormes de l'autre. */
+@media (min-width:861px){
+  .pg .carte__lbl{font-size:12px;stroke-width:3.4px}
+  .pg .carte__n{font-size:8px}
+  .pg .carte__d{r:5.5px;stroke-width:1.8}
+  .pg .carte__halo{r:13px}
+  .pg .carte__ech text{font-size:9px;stroke-width:2.6px}
+  .pg .carte__ech path{stroke-width:1.8}
+  .pg .carte__route{stroke-width:2.4;stroke-dasharray:6 4}
+}
+
+/* ---------- repères d'étape : ce que dit la fiche, ce qu'on a mesuré ---------- */
+.pg .reps{display:flex;flex-wrap:wrap;gap:9px;margin:0 0 18px}
+.pg .rep{display:inline-flex;align-items:center;gap:7px;font-family:"Manrope",sans-serif;
+  font-size:.9rem;font-weight:600;border-radius:var(--r-pill);padding:7px 14px;cursor:help}
+/* Ce que la fiche écrit : plein, c'est la parole de l'agence. */
+.pg .rep--fiche{background:var(--nuit-900);color:#fff}
+.pg .rep--fiche svg{color:var(--or)}
+/* Ce que nous avons calculé : en trait, pour qu'on ne confonde pas. */
+.pg .rep--calc{background:#fff;color:var(--nuit-900);border:1.5px dashed var(--teal)}
+.pg .rep--calc svg{color:var(--teal-txt)}
+.pg .reps__src{margin:26px 0 0;padding:16px 18px;background:var(--fond);border-radius:var(--r-m);
+  font-family:"Manrope",sans-serif;font-size:.9rem;color:var(--gris-lis);line-height:1.6;
+  max-width:66ch}
+
+/* ---------- fil d'Ariane sous le bandeau ---------- */
+.pg .ariane--sous{border-bottom:1px solid var(--ligne-2);background:#fff}
 
 /* ---------- galerie ---------- */
 /* Cinq photos en trois colonnes avec une grande en 2×2 laissent une
@@ -541,7 +588,7 @@ CSS = r"""
    exactement la moitié gauche et les quatre autres la moitié droite :
    le cadre est plein. Les autres comptes tiennent en trois colonnes
    sans case orpheline au milieu. */
-.pg .galerie{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.pg .galerie{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:12px}
 .pg .galerie--5{grid-template-columns:repeat(4,1fr)}
 .pg .galerie a{display:block;aspect-ratio:3/2;border-radius:var(--r-m);overflow:hidden;
   background:var(--fond)}
@@ -570,7 +617,7 @@ CSS = r"""
   padding:6px 14px;flex:0 0 auto}
 .pg .jour__tete h3{font-size:clamp(1.25rem,2vw,1.5rem)}
 .pg .etape+.etape{margin-top:56px}
-.pg .etape__photo{border-radius:var(--r-l);overflow:hidden;background:var(--fond);margin:0 0 30px;
+.pg .etape__photo{border-radius:var(--r-l);overflow:hidden;background:var(--fond);margin:0 0 40px;
   aspect-ratio:16/9}
 .pg .etape__photo img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s var(--ease)}
 .pg .etape__photo:hover img{transform:scale(1.03)}
@@ -727,12 +774,7 @@ CSS = r"""
 /* =====================================================================
    RESPONSIVE — les marges restent dans l'échelle mobile 56/48/40/32/28
    ===================================================================== */
-@media (min-width:1041px){
-  /* Au bureau, la colonne de droite tient dans la fenêtre : prix en
-     haut, carte dessous, et la liste des étapes de la carte est
-     masquée — elle est déjà dans la colonne de gauche, en grand. */
-  .pg .carte__l{display:none}
-}
+
 @media (max-width:1040px){
   .pg .guide{grid-template-columns:1fr;gap:32px}
   .pg .bref{padding:28px 24px}
@@ -800,11 +842,9 @@ CSS = r"""
   .pg .reperes b,.pg .pan__liste,.pg .apercu span.t{font-size:1rem}
   .pg .ariane,.pg .eyebrow,.pg .apercu .n,.pg .jour__no,.pg .tarif__ligne b small,
   .pg .avis__g .ini,.pg .acc__c,.pg .devis__act small,.pg .verifier__d,
-  .pg .bref__src,.pg .carte__note,.pg .carte__hors,.pg .carte__l,
-  .pg .carte__l span span,.pg .valise__t span,.pg .guide__c>span:last-child,
+  .pg .rep,.pg .reps__src,.pg .carte__note,.pg .carte__hors,.pg .somm,
+  .pg .somm span span,.pg .somm__t,.pg .valise__t span,.pg .guide__c>span:last-child,
   .pg .pan__avis{font-size:.95rem}
-  .pg .bref__l dd b{font-size:1.5rem}
-  .pg .bref__l dt,.pg .bref__l dd span{font-size:.95rem}
   .pg .duree__c{padding:20px}
   .pg-mob .p small{font-size:.95rem}
   .pg .eyebrow{letter-spacing:.1em}
@@ -865,9 +905,10 @@ SCRIPT = r"""
   var pts=document.querySelectorAll('.carte__pt'), lignes=document.querySelectorAll('.carte__l li');
   var etapes=document.querySelectorAll('.etape[data-lieu]');
   if(pts.length&&etapes.length&&'IntersectionObserver' in window){
+    function porte(el,lieu){ return (' '+el.dataset.lieu+' ').indexOf(' '+lieu+' ')>=0; }
     function allumer(lieu){
-      pts.forEach(function(g){ g.classList.toggle('on', g.dataset.lieu===lieu); });
-      lignes.forEach(function(l){ l.classList.toggle('on', l.dataset.lieu===lieu); });
+      pts.forEach(function(g){ g.classList.toggle('on', porte(g,lieu)); });
+      lignes.forEach(function(l){ l.classList.toggle('on', porte(l,lieu)); });
     }
     var vues=new Map();
     var obs=new IntersectionObserver(function(entrees){
@@ -895,7 +936,6 @@ def hero(inv):
         o.append('<div class="hero__fond">' +
                  image(une, 1920, sizes='100vw', priorite=True) + '</div>')
     o.append('<div class="hero__in"><div class="wrap">')
-    o.append(ariane(inv))
     o.append('<div class="hero__pills">' + ''.join(
         '<span class="pill">%s%s</span>' % (
             ico(icone_repere(p), 15) if p != inv['categorie']['nom'] else ico('pin', 15), e(p))
@@ -915,12 +955,16 @@ def hero(inv):
     return '\n'.join(o)
 
 
+def ariane_ol(inv):
+    return '<div class="wrap">' + ariane(inv) + '</div>'
+
+
 def ariane(inv):
-    return ('<nav class="ariane" aria-label="Fil d\'Ariane"><ol>'
+    return ('<ol>'
             f'<li><a href="{SITE}/">{e(INTERFACE["ariane_accueil"])}</a></li>'
             f'<li><a href="{SITE}/nos-sejours-egypte/">{e(INTERFACE["ariane_sejours"])}</a></li>'
             f'<li><a href="{e(inv["categorie"]["url"])}">{e(inv["categorie"]["nom"])}</a></li>'
-            f'<li><span aria-current="page">{e(inv["h1"])}</span></li></ol></nav>')
+            f'<li><span aria-current="page">{e(inv["h1"])}</span></li></ol>')
 
 
 def reperes(inv):
@@ -961,6 +1005,68 @@ def apercu(inv):
                  % (('J%d' % j['n']) if j['numerote'] else ('%d' % i), e(et['titre'])))
     o.append('</ol></section>')
     return '\n'.join(o)
+
+
+# Les durées que la FICHE écrit elle-même : « 2h30 et 3h00 », « 8 à 10
+# heures ». Elles priment sur tout calcul, et s'affichent comme ce
+# qu'elles sont — la parole de l'agence.
+DUREE_FICHE = re.compile(
+    r'\b(\d{1,2}\s*h\s*\d{2}(?:\s*(?:et|à|a)\s*\d{1,2}\s*h\s*\d{2})?'
+    r'|\d{1,2}\s*(?:à|a)\s*\d{1,2}\s*heures?'
+    r'|\d{1,3}\s*minutes?'
+    r'|\d{1,2}\s*heures?)\b', re.I)
+DIST_FICHE = re.compile(r'\b(\d{1,4}\s*km)\b', re.I)
+# « le départ se fait vers 1h00 » est une HEURE, « la marche dure entre
+# 2h30 et 3h00 » est une durée. Les deux s'écrivent pareil. Sans ces
+# deux filtres, la page affichait « 1h00 » et « 12h00 » comme des temps
+# de trajet — des chiffres faux sur une page qui vend un voyage.
+AVANT_HEURE = re.compile(r"(vers|d[èe]s|aux alentours de|[àa] partir de|départ [àa]|[àa])\s*$", re.I)
+AVANT_DUREE = re.compile(r"(dur[ée]e?|durent|s['’]effectue|effectue\s+en|compter|pr[ée]voir"
+                         r"|pendant|au bout de|marche\s+(?:de|qui)|trajet\s+de|route\s+de"
+                         r"|ascension\s+de|descente\s+\w+\s+en|environ).{0,28}$", re.I)
+
+
+def charger_trajets():
+    """Les trajets relevés par `outils/trajets.py`, s'il y en a."""
+    chemin = os.path.join(PROGRAMMES, '_trajets.json')
+    if not os.path.exists(chemin):
+        return {}
+    with open(chemin, encoding='utf-8') as f:
+        return json.load(f).get('trajets', {})
+
+
+def duree_lisible(minutes):
+    h, m = divmod(int(minutes), 60)
+    if not h:
+        return '%d min' % m
+    return '%d h' % h if not m else '%d h %02d' % (h, m)
+
+
+def reperes_etape(et, depuis, vers, trajets):
+    """Les repères d'une étape : ce que la fiche dit, ce qu'on a mesuré.
+
+    Deux origines, deux allures, jamais mélangées. Un chiffre calculé
+    porte sa source et sa date dans son infobulle ; un chiffre écarté
+    par le contrôle de vraisemblance n'apparaît pas."""
+    chips = []
+    texte = ' '.join([et.get('titre', '')] + et.get('paragraphes', []))
+    for motif, icone, quoi in ((DUREE_FICHE, 'horloge', 'Durée'), (DIST_FICHE, 'pas', 'Distance')):
+        for m in motif.finditer(texte):
+            avant = texte[max(0, m.start() - 60):m.start()]
+            if quoi == 'Durée':
+                if AVANT_HEURE.search(avant) or not AVANT_DUREE.search(avant):
+                    continue                    # une heure de la journée, pas une durée
+            valeur = re.sub(r'\s+', ' ', m.group(1)).strip()
+            chips.append('<span class="rep rep--fiche" title="%s annoncée par la fiche du site">'
+                         '%s%s</span>' % (e(quoi), ico(icone, 14), e(valeur)))
+            break
+    if depuis and vers and depuis != vers:
+        t = trajets.get(depuis + '>' + vers)
+        if t and not t.get('douteux'):
+            chips.append('<span class="rep rep--calc" title="%s — relevé le %s">%s%s</span>'
+                         % (e(t['source']), e(t['releve']), ico('voiture', 14),
+                            e('%d km · %s de route' % (t['km'], duree_lisible(t['minutes'])))))
+    return ('<p class="reps">' + ''.join(chips) + '</p>') if chips else ''
 
 
 def mentions_html(lot):
@@ -1007,42 +1113,70 @@ LIEUX = {
     'mont-moise':        ('Mont Moïse',      33.975, 28.470, r'mont\s+mo[ïi]se|gebel\s+moussa', 4, 'd'),
 }
 
-# Le cadre de la carte, en degrés. Il déborde du pays des deux côtés :
-# à l'est pour laisser la mer Rouge et la place des libellés, au sud
-# pour ne pas couper la pointe du pays, qui descend jusqu'au 22e
-# parallèle et va chercher le 37e méridien.
-CADRE = (23.8, 38.2, 21.5, 32.2)          # lon min, lon max, lat min, lat max
-# Un degré de longitude est plus court qu'un degré de latitude dès qu'on
-# quitte l'équateur : sans ce facteur, l'Égypte s'étale en largeur.
-COS_LAT = math.cos(math.radians((21.5 + 32.2) / 2))
-ECHELLE = 470 / (32.2 - 21.5)             # pixels par degré de latitude
-BOITE = (round((38.2 - 23.8) * COS_LAT * ECHELLE), 470)
-
-# Le trait de côte, relevé point par point : Méditerranée d'ouest en
-# est, bordure du Sinaï, entaille du golfe de Suez, mer Rouge, frontière
-# sud au 22e parallèle, frontière ouest au 25e méridien.
-COTE = [
-    (25.00, 31.55), (26.20, 31.35), (27.24, 31.35), (28.50, 30.90), (29.80, 31.05),
-    (30.40, 31.50), (31.10, 31.60), (31.90, 31.45), (32.30, 31.25), (33.20, 31.20),
-    (34.25, 31.22), (34.90, 29.50), (34.68, 28.60), (34.42, 28.05), (34.25, 27.72),
-    (33.60, 28.60), (33.05, 29.20), (32.60, 29.90), (32.55, 30.00), (32.75, 29.60),
-    (33.20, 28.20), (33.85, 27.25), (34.40, 26.00), (35.10, 24.30), (35.70, 23.20),
-    (36.90, 22.00), (24.70, 22.00), (24.70, 25.00), (24.90, 29.00),
-]
-NIL = [(32.90, 24.09), (32.75, 25.10), (32.64, 25.69), (32.10, 26.60), (31.35, 27.30),
-       (31.15, 28.30), (31.20, 29.30), (31.24, 30.04), (30.60, 30.90), (30.10, 31.15)]
-NIL_EST = [(31.24, 30.04), (31.55, 30.90), (31.82, 31.42)]
-NASSER = [(32.90, 24.09), (32.40, 23.30), (31.90, 22.70), (31.63, 22.34)]
+# Le fond de carte vient de Natural Earth 1:50m (domaine public),
+# extrait une fois par `outils/carte-egypte.py` et versionné. Le tracé
+# dessiné à la main de la première version était joli et faux.
+def fond_de_carte():
+    chemin = os.path.join(RACINE, 'outils', 'carte-egypte.json')
+    if not os.path.exists(chemin):
+        return None
+    with open(chemin, encoding='utf-8') as f:
+        return json.load(f)
 
 
-def projeter(lon, lat):
-    lo1, _, _, la2 = CADRE
-    return (round((lon - lo1) * COS_LAT * ECHELLE, 1),
-            round((la2 - lat) * ECHELLE, 1))
+# Le dessin fait TOUJOURS 560 unités de large, quel que soit le séjour
+# cadré : c'est ce qui permet d'écrire une seule fois la taille des
+# libellés, et qu'ils sortent lisibles sur les quatorze fiches.
+LARGEUR_CARTE = 560.0
+# Largeur moyenne d'un caractère du libellé, en unités du dessin. La
+# police vaut 19 unités dans le cas le plus serré (l'affichage mobile,
+# où la carte est réduite le plus fort) et un caractère de Manrope en
+# occupe un peu plus de la moitié. Sert à savoir si une étiquette sort
+# du cadre — et, si elle sort, à la basculer de l'autre côté avant
+# d'élargir la carte, qui s'aplatirait.
+LARGEUR_CAR = 10.0
+# L'Égypte s'étend du 22e au 32e parallèle : une carte qui la cadre en
+# entier tient dans ce rapport. On garde le cadrage entre ces bornes,
+# sinon un séjour très étalé d'est en ouest donne un bandeau plat.
+RAPPORT = (1.45, 2.35)                          # largeur / hauteur admissibles
+BORNES = (23.4, 38.6, 21.2, 32.5)               # jusqu'où le cadrage peut s'ouvrir
 
 
-def trace(points, fermer=False):
-    d = 'M' + ' L'.join('%s %s' % projeter(x, y) for x, y in points)
+def cadrer(lons, lats):
+    """La fenêtre de la carte : les lieux, de la marge, et un rapport
+    de forme tenable."""
+    lo1, lo2, la1, la2 = min(lons), max(lons), min(lats), max(lats)
+    mx = max((lo2 - lo1) * 0.22, 1.7)
+    my = max((la2 - la1) * 0.30, 1.4)
+    lo1, lo2 = lo1 - mx * 1.4, lo2 + mx * 1.9   # de la place pour les libellés
+    la1, la2 = la1 - my, la2 + my
+
+    for _ in range(40):
+        cos_lat = math.cos(math.radians((la1 + la2) / 2))
+        rapport = ((lo2 - lo1) * cos_lat) / (la2 - la1)
+        if rapport > RAPPORT[1] and (la1 > BORNES[2] or la2 < BORNES[3]):
+            manque = ((lo2 - lo1) * cos_lat / RAPPORT[1] - (la2 - la1)) / 2
+            la1, la2 = max(BORNES[2], la1 - manque), min(BORNES[3], la2 + manque)
+        elif rapport < RAPPORT[0] and (lo1 > BORNES[0] or lo2 < BORNES[1]):
+            manque = ((la2 - la1) * RAPPORT[0] / cos_lat - (lo2 - lo1)) / 2
+            lo1, lo2 = max(BORNES[0], lo1 - manque), min(BORNES[1], lo2 + manque)
+        else:
+            break
+    cos_lat = math.cos(math.radians((la1 + la2) / 2))
+    echelle = LARGEUR_CARTE / ((lo2 - lo1) * cos_lat)
+    return {'lo1': lo1, 'la2': la2, 'cos': cos_lat, 'echelle': echelle,
+            'larg': round(LARGEUR_CARTE, 1), 'haut': round((la2 - la1) * echelle, 1)}
+
+
+def projeter(lon, lat, c):
+    return (round((lon - c['lo1']) * c['cos'] * c['echelle'], 1),
+            round((c['la2'] - lat) * c['echelle'], 1))
+
+
+def trace(points, c, fermer=False):
+    if not points:
+        return ''
+    d = 'M' + ' L'.join('%s %s' % projeter(x, y, c) for x, y in points)
     return d + (' Z' if fermer else '')
 
 
@@ -1069,10 +1203,11 @@ def lieux_du_sejour(inv):
     le déroulé décrit le Sinaï. La carte le montre au lieu de le taire."""
     ordre, vus = [], set()
 
-    def ajoute(cle, origine, etape=''):
+    def ajoute(cle, origine, etape='', rang_dom=0):
         if cle and cle not in vus:
             vus.add(cle)
-            ordre.append({'cle': cle, 'origine': origine, 'etape': etape})
+            ordre.append({'cle': cle, 'origine': origine, 'etape': etape,
+                          'rang_dom': rang_dom})
 
     # Ce que le séjour ANNONCE : son titre, et les titres de ses jours.
     for mot in re.split(r'\s*[-–—]\s*', inv['h1']):
@@ -1083,92 +1218,181 @@ def lieux_du_sejour(inv):
     # Ce que le séjour DÉCRIT : le corps des étapes. Une étape muette
     # reste là où la précédente s'est arrêtée — on ne se téléporte pas
     # entre deux paragraphes.
-    dernier = ''
+    dernier, rang = '', 0
     for j in inv['jours']:
         for et in j['etapes']:
+            rang += 1
             cle = lieu_de(' '.join([et['titre']] + et['paragraphes'])) or dernier
             if cle:
                 dernier = cle
-                ajoute(cle, 'deroule', et['titre'] or j['titre'])
+                ajoute(cle, 'deroule', et['titre'] or j['titre'], rang)
     return ordre
+
+
+def index_etapes(inv):
+    """Le sommaire du déroulé, collant à côté du texte.
+
+    Il tient le même rôle que la carte : savoir où l'on en est. Chaque
+    ligne mène à son étape et s'allume avec elle."""
+    lot = [x for x in lieux_du_sejour(inv) if x['origine'] == 'deroule']
+    if len(lot) < 2:
+        return ''
+    o = ['<nav class="somm" aria-label="%s"><p class="somm__t">%s</p><ol>'
+         % (e(INTERFACE['titre_sommaire']), e(INTERFACE['titre_sommaire']))]
+    for i, x in enumerate(lot, start=1):
+        o.append('<li data-lieu="%s"><a href="#etape-%d"><span class="somm__n">%d</span>'
+                 '<span><b>%s</b>%s</span></a></li>'
+                 % (e(x['cle']), x['rang_dom'], i, e(LIEUX[x['cle']][0]),
+                    ('<span>%s</span>' % e(x['etape'])) if x['etape'] else ''))
+    o.append('</ol></nav>')
+    return '\n'.join(o)
 
 
 def carte(inv):
     """La carte de repérage : où mène ce séjour, étape par étape.
 
-    Elle reste à l'écran pendant qu'on lit le déroulé — c'est la
-    question que tout le monde se pose au troisième paragraphe."""
+    Le cadrage suit le séjour : on montre la région qu'il traverse, avec
+    assez de pays autour pour qu'on se situe. Les lieux sont ceux que la
+    fiche NOMME, à leurs coordonnées réelles ; le trait de côte et le Nil
+    viennent de Natural Earth."""
+    fond = fond_de_carte()
     lot = lieux_du_sejour(inv)
-    if len(lot) < 2:
+    if not fond or len(lot) < 2:
         return ''
     etapes = [x for x in lot if x['origine'] == 'deroule']
 
-    pts = []
-    for i, x in enumerate(lot):
+    # Deux lieux distants de quatre kilomètres — le monastère et le
+    # sommet — sont le MÊME point à l'échelle d'un pays. On les réunit
+    # plutôt que de les superposer ou de les écarter, ce qui reviendrait
+    # à mentir sur leurs coordonnées.
+    groupes = []
+    for x in lot:
         fiche = LIEUX[x['cle']]
-        nom, lon, lat = fiche[0], fiche[1], fiche[2]
-        dy = fiche[4] if len(fiche) > 4 else 0
-        cote = fiche[5] if len(fiche) > 5 else 'd'
-        px, py = projeter(lon, lat)
-        pts.append({'cle': x['cle'], 'nom': nom, 'x': px, 'y': py, 'dy': dy, 'cote': cote,
-                    'etape': x['etape'], 'deroule': x['origine'] == 'deroule',
-                    'rang': (etapes.index(x) + 1) if x in etapes else 0})
+        pose = False
+        for g in groupes:
+            if (abs(g['lon'] - fiche[1]) < 0.12 and abs(g['lat'] - fiche[2]) < 0.12
+                    and g['deroule'] == (x['origine'] == 'deroule')):
+                g['cles'].append(x['cle'])
+                g['noms'].append(fiche[0])
+                g['etapes'].append(x['etape'])
+                if x in etapes:
+                    g['rangs'].append(etapes.index(x) + 1)
+                pose = True
+                break
+        if not pose:
+            groupes.append({'cles': [x['cle']], 'noms': [fiche[0]],
+                            'lon': fiche[1], 'lat': fiche[2],
+                            'dy': fiche[4] if len(fiche) > 4 else 0,
+                            'cote': fiche[5] if len(fiche) > 5 else 'd',
+                            'etapes': [x['etape']],
+                            'rangs': [etapes.index(x) + 1] if x in etapes else [],
+                            'deroule': x['origine'] == 'deroule'})
 
+    def poser(c):
+        pts = []
+        for g in groupes:
+            px, py = projeter(g['lon'], g['lat'], c)
+            rangs = g['rangs']
+            # Un point qui réunit plusieurs lieux ne porte que le
+            # premier sur la carte : « Sainte-Catherine · Mont Moïse »
+            # écrit en toutes lettres occupait 60 % de la largeur du
+            # dessin. Le sommaire, lui, les nomme tous les deux.
+            pts.append({'cle': g['cles'][0], 'cles': ' '.join(g['cles']),
+                        'nom': g['noms'][0],
+                        'noms': ' · '.join(g['noms']), 'x': px, 'y': py, 'dy': g['dy'],
+                        'cote': g['cote'], 'etape': g['etapes'][0], 'deroule': g['deroule'],
+                        'rang': rangs[0] if rangs else 0,
+                        'rangs': ('%d-%d' % (rangs[0], rangs[-1])) if len(rangs) > 1
+                                 else (str(rangs[0]) if rangs else '')})
+        return pts
+
+    # Le cadrage s'élargit jusqu'à ce que les libellés tiennent dedans :
+    # « Sainte-Catherine · Mont Moïse » écrit à droite d'un point de la
+    # côte du Sinaï sortait du dessin.
+    lons = [g['lon'] for g in groupes]
+    lats = [g['lat'] for g in groupes]
+    c = cadrer(lons, lats)
+    for _ in range(4):
+        pts = poser(c)
+        # Premier recours : un libellé qui sort à droite passe à gauche,
+        # et l'inverse. C'est gratuit, et ça évite d'élargir le cadre.
+        for q in pts:
+            large = len(q['nom']) * LARGEUR_CAR + 18
+            if q['cote'] == 'd' and q['x'] + large > LARGEUR_CARTE and q['x'] - large > 0:
+                q['cote'] = 'g'
+            elif q['cote'] == 'g' and q['x'] - large < 0 and q['x'] + large < LARGEUR_CARTE:
+                q['cote'] = 'd'
+        deborde_d = max([q['x'] + 18 + len(q['nom']) * LARGEUR_CAR
+                         for q in pts if q['cote'] == 'd'] + [0]) - LARGEUR_CARTE
+        deborde_g = -min([q['x'] - 18 - len(q['nom']) * LARGEUR_CAR
+                          for q in pts if q['cote'] == 'g'] + [0])
+        if deborde_d < 4 and deborde_g < 4:
+            break
+        par_degre = c['echelle'] * c['cos']
+        lons = lons + [max(lons) + max(deborde_d, 0) / par_degre,
+                       min(lons) - max(deborde_g, 0) / par_degre]
+        c = cadrer(lons, lats)
+        cotes = {q['cle']: q['cote'] for q in pts}
+        for g in groupes:
+            g['cote'] = cotes.get(g['cles'][0], g['cote'])
+    larg, haut = c['larg'], c['haut']
     route = [q for q in pts if q['deroule']]
+
+    # L'échelle : une barre dont on sait ce qu'elle vaut.
+    for km in (1000, 500, 200, 100, 50, 20):
+        px_km = c['echelle'] / 111.0
+        if km * px_km < larg * 0.34:
+            barre = (km, round(km * px_km, 1))
+            break
+    else:
+        barre = (20, round(20 * c['echelle'] / 111.0, 1))
+
     o = ['<figure class="carte">',
-         # L'intitulé est écrit APRÈS le titre et remonté par la mise en
-         # page : un titre suivi de rien est signalé comme orphelin.
          '<figcaption class="carte__tete"><h3>%s</h3><p class="eyebrow">%s</p></figcaption>'
          % (e(INTERFACE['titre_carte']), e(INTERFACE['eyebrow_carte'])),
-         '<svg viewBox="0 0 %d %d" role="img" aria-label="%s" class="carte__svg">'
-         % (BOITE[0], BOITE[1], e('Carte de l\'Égypte situant les étapes du séjour')),
-         '<defs><linearGradient id="sable" x1="0" y1="0" x2="0" y2="1">'
-         '<stop offset="0" stop-color="#F6E7C8"/><stop offset="1" stop-color="#EAD5A8"/>'
-         '</linearGradient></defs>',
-         '<rect width="%d" height="%d" fill="var(--carte-mer)" rx="14"/>' % BOITE,
-         '<path d="%s" fill="url(#sable)" stroke="#D9BC85" stroke-width="1.2"/>' % trace(COTE, True),
-         '<path d="%s" fill="none" stroke="var(--carte-nil)" stroke-width="2.4" '
-         'stroke-linecap="round" stroke-linejoin="round"/>' % trace(NIL),
-         '<path d="%s" fill="none" stroke="var(--carte-nil)" stroke-width="2" '
-         'stroke-linecap="round"/>' % trace(NIL_EST),
-         '<path d="%s" fill="none" stroke="var(--carte-nil)" stroke-width="4" '
-         'stroke-linecap="round" opacity=".85"/>' % trace(NASSER)]
+         '<svg viewBox="0 0 %s %s" role="img" aria-label="%s" class="carte__svg">'
+         % (larg, haut, e('Carte situant les étapes du séjour en Égypte')),
+         '<rect width="%s" height="%s" fill="var(--carte-mer)"/>' % (larg, haut),
+         '<path d="%s" fill="var(--carte-terre)" stroke="var(--carte-cote)" stroke-width="1.6"/>'
+         % trace(fond['contour'], c, True)]
+    for anneau in fond.get('nasser', []):
+        o.append('<path d="%s" fill="var(--carte-nil)" opacity=".85"/>'
+                 % trace(anneau, c, True))
+    for troncon in fond.get('nil', []):
+        o.append('<path d="%s" fill="none" stroke="var(--carte-nil)" stroke-width="2.6" '
+                 'stroke-linecap="round" stroke-linejoin="round"/>' % trace(troncon, c))
 
     if len(route) > 1:
         o.append('<path class="carte__route" d="%s" fill="none" stroke="var(--or)" '
-                 'stroke-width="4" stroke-dasharray="9 7" stroke-linecap="round"/>'
+                 'stroke-width="4" stroke-dasharray="10 7" stroke-linecap="round"/>'
                  % ('M' + ' L'.join('%s %s' % (q['x'], q['y']) for q in route)))
 
     for q in pts:
         droite = q['cote'] == 'd'
         cl = 'carte__pt' + ('' if q['deroule'] else ' carte__pt--titre')
-        o.append('<g class="%s" id="pt-%s" data-lieu="%s">' % (cl, e(q['cle']), e(q['cle'])))
+        o.append('<g class="%s" id="pt-%s" data-lieu="%s">' % (cl, e(q['cle']), e(q['cles'])))
         o.append('<circle class="carte__halo" cx="%s" cy="%s" r="22"/>' % (q['x'], q['y']))
         o.append('<circle class="carte__d" cx="%s" cy="%s" r="9"/>' % (q['x'], q['y']))
-        if q['rang']:
-            o.append('<text class="carte__n" x="%s" y="%s">%d</text>'
-                     % (q['x'], q['y'] + 4.6, q['rang']))
+        if q['rangs']:
+            o.append('<text class="carte__n" x="%s" y="%s">%s</text>'
+                     % (q['x'], q['y'] + 4.8, e(q['rangs'])))
         o.append('<text class="carte__lbl" x="%s" y="%s" text-anchor="%s">%s</text>'
-                 % (q['x'] + (18 if droite else -18), q['y'] + 7.5 + q['dy'] * 2,
+                 % (q['x'] + (18 if droite else -18), q['y'] + 7.5 + q['dy'] * 1.8,
                     'start' if droite else 'end', e(q['nom'])))
         o.append('</g>')
+
+    ex, ey = round(larg * 0.045, 1), round(haut * 0.955, 1)
+    o.append('<g class="carte__ech"><path d="M%s %s h%s" /><text x="%s" y="%s">%d km</text></g>'
+             % (ex, ey, barre[1], round(ex + barre[1] / 2, 1), round(ey - 4, 1), barre[0]))
     o.append('</svg>')
 
-    if route:
-        o.append('<ol class="carte__l">')
-        for q in route:
-            o.append('<li data-lieu="%s"><span class="carte__ln">%d</span>'
-                     '<span><b>%s</b>%s</span></li>'
-                     % (e(q['cle']), q['rang'], e(q['nom']),
-                        ('<span>%s</span>' % e(q['etape'])) if q['etape'] else ''))
-        o.append('</ol>')
     hors = [q['nom'] for q in pts if not q['deroule']]
     if hors:
         o.append('<p class="carte__hors">%s%s</p>'
                  % (ico('etoile', 14),
                     e('Annoncé par le titre du séjour, absent du déroulé : ' + ', '.join(hors))))
-    o.append('<figcaption class="carte__note">%s</figcaption></figure>'
-             % e(INTERFACE['carte_note']))
+    o.append('<figcaption class="carte__note">%s %s</figcaption></figure>'
+             % (e(INTERFACE['carte_note']), e(fond['source'])))
     return '\n'.join(o)
 
 
@@ -1358,9 +1582,12 @@ def galerie(inv):
 def deroule(inv):
     if not inv['jours']:
         return ''
+    trajets = charger_trajets()
     o = ['<section>', '<p class="eyebrow">%s</p>' % e(INTERFACE['eyebrow_deroule']),
          '<h2>%s</h2>' % e(INTERFACE['titre_deroule'])]
     dernier_lieu = ''
+    rang_dom = 0
+    calcule = False
     for j in inv['jours']:
         o.append('<div class="jour">')
         # Le numéro est écrit APRÈS le titre et remonté par la mise en
@@ -1369,9 +1596,12 @@ def deroule(inv):
                  % (e(j['titre']),
                     ('<span class="jour__no">Jour %d</span>' % j['n']) if j['numerote'] else ''))
         for et in j['etapes']:
+            precedent = dernier_lieu
             lieu = lieu_de(' '.join([et['titre']] + et['paragraphes'])) or dernier_lieu
             dernier_lieu = lieu or dernier_lieu
-            o.append('<article class="etape"%s>' % (' data-lieu="%s"' % e(lieu) if lieu else ''))
+            rang_dom += 1
+            o.append('<article class="etape" id="etape-%d"%s>'
+                     % (rang_dom, ' data-lieu="%s"' % e(lieu) if lieu else ''))
             if et.get('image'):
                 img = et['image']
                 # La boîte fait au plus 780 px : toutes les photos du
@@ -1387,6 +1617,10 @@ def deroule(inv):
                                   780, sizes='(max-width:1040px) 100vw, 780px')))
             if et['titre']:
                 o.append('<h4>%s%s</h4>' % (ico('pin', 17), e(et['titre'])))
+            reps = reperes_etape(et, precedent, lieu, trajets)
+            if 'rep--calc' in reps:
+                calcule = True
+            o.append(reps)
             for p in et['paragraphes']:
                 o.append('<p>%s</p>' % e(p))
             o.append(mentions_html(et.get('mentions')))
@@ -1448,9 +1682,13 @@ def panneau(inv):
     if inv['prix']['texte']:
         o.append('<p class="pan__prix" style="margin:0"><small>%s</small><b>%s</b> <i>%s</i></p>'
                  % (e(INTERFACE['depuis']), e(inv['prix']['texte']), e(suffixe_prix(inv))))
-    # Les repères sont déjà dans la bande sous le bandeau : les répéter
-    # ici allongeait le panneau de 180 px et le faisait sortir de la
-    # fenêtre, ce qui casse le collant.
+    # Ce que le séjour comprend, au même endroit que le prix : c'est là
+    # qu'on décide. La bande du haut les répète, et c'est voulu — l'une
+    # se lit en arrivant, l'autre au moment de cliquer.
+    if inv['reperes']:
+        o.append('<ul class="pan__liste">' + ''.join(
+            '<li>%s<span>%s</span></li>' % (ico(icone_repere(r), 16), e(r))
+            for r in inv['reperes']) + '</ul>')
     o.append('<div class="pan__act">'
              f'<a class="btn btn--or btn--bloc" href="{DEVIS}">{e(INTERFACE["cta_devis"])}</a>'
              f'<a class="btn btn--wa btn--bloc" href="{WHATSAPP}">{ico("bulle", 17)} {e(INTERFACE["cta_whatsapp"])}</a>'
@@ -1461,9 +1699,7 @@ def panneau(inv):
         o.append('<p class="pan__avis"><span class="et" aria-hidden="true">★★★★★</span>'
                  '<b>%d avis Google</b> <span>%s</span></p>' % (n, e(INTERFACE['agence'])))
     o.append('</div>')
-    # La carte reste sous le prix : elle accompagne toute la lecture du
-    # déroulé, qui est la partie la plus longue de la page.
-    o.append(carte(inv))
+    o.append(index_etapes(inv))
     o.append('</aside>')
     return '\n'.join(o)
 
@@ -1629,9 +1865,10 @@ def page(inv, home, voisins, chemin_charte='assets/charte.css'):
     corps = '\n'.join(x for x in [
         hero(inv),
         reperes(inv),
+        '<nav class="ariane ariane--sous" aria-label="Fil d\'Ariane">%s</nav>' % ariane_ol(inv),
         '<div class="wrap"><div class="deux"><div class="corps">',
-        a_verifier(inv), en_bref(inv), presentation(inv), galerie(inv),
-        selecteur_duree(inv), apercu(inv), deroule(inv),
+        a_verifier(inv), presentation(inv), galerie(inv),
+        selecteur_duree(inv), apercu(inv), carte(inv), deroule(inv),
         tarif(inv), inclusions(inv), liste_valise(inv),
         '</div>', panneau(inv), '</div></div>',
         votre_guide(inv, home),
