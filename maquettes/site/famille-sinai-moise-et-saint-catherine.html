@@ -758,12 +758,16 @@
 .pg .filtre__r:focus-visible+.filtre__l{outline:2px solid var(--teal-txt);outline-offset:3px}
 .pg .filtre__aide{margin:14px 0 0;font-family:"Manrope",sans-serif;font-size:.95rem;
   color:var(--gris-lis)}
+.pg .filtre__etat{margin:6px 0 0;font-family:"Manrope",sans-serif;font-size:.95rem;
+  font-weight:700;color:var(--teal-txt)}
+.pg .filtre__etat:empty{display:none}
+.pg .filtre__vide{margin:24px 0 0;padding:18px 20px;background:var(--or-fond);
+  border:1px dashed var(--or);border-radius:var(--r-m);font-family:"Manrope",sans-serif;
+  font-size:1rem;color:#7A5605}
 /* Le filtre en CSS pur : chaque bouton radio commande l'affichage des
-   cartes qui ne portent pas sa tranche. Rien n'est injecté au clic,
-   rien ne se recharge, et sans JavaScript tout fonctionne. */
-.pg .filtre__r--court:checked~.filtre__aide~*,
-.pg .filtre__r--moyen:checked~.filtre__aide~*{display:block}
-.pg .filtre{position:relative}
+   cartes qui ne portent pas sa tranche. Aucune requête — tout est déjà
+   dans la page —, aucun rechargement, aucun changement d'URL, et sans
+   JavaScript il fonctionne exactement pareil. */
 .pg .filtre:has(.filtre__r--court:checked)~.cartes .carte:not([data-duree="court"]),
 .pg .filtre:has(.filtre__r--moyen:checked)~.cartes .carte:not([data-duree="moyen"]),
 .pg .filtre:has(.filtre__r--long:checked)~.cartes .carte:not([data-duree="long"]){display:none}
@@ -916,7 +920,7 @@
 </ul></div></section>
 <nav class="ariane ariane--sous" aria-label="Fil d'Ariane"><div class="wrap"><ol><li><a href="https://authentiquegypte.com/">Accueil</a></li><li><a href="https://authentiquegypte.com/nos-sejours-egypte/">Nos séjours en Égypte</a></li><li><span aria-current="page">Sinaï</span></li></ol></div></nav>
 <section class="pg-sec" id="sejours"><div class="wrap">
-<p class="eyebrow">Au choix</p><h2>Les séjours de cette famille</h2>
+<p class="eyebrow">Au choix</p><h2>Nos séjours</h2>
 <div class="filtre">
 <p class="filtre__t" id="filtre-t">Combien de jours voulez-vous partir ?</p>
 <div class="filtre__o" role="group" aria-labelledby="filtre-t">
@@ -925,6 +929,8 @@
 <input class="filtre__r filtre__r--long" type="radio" name="duree" id="f-long"><label class="filtre__l" for="f-long">4 jours et plus</label>
 </div>
 <p class="filtre__aide">Le filtre agit sur les cartes ci-dessous, sans recharger la page.</p>
+<p class="filtre__etat" id="filtre-etat" role="status" aria-live="polite"></p>
+<p class="filtre__vide" hidden>Aucun séjour de cette durée pour le moment.</p>
 </div>
 <div class="cartes cartes--3">
 <article class="carte" data-duree="long">
@@ -1081,7 +1087,7 @@
     </div>
   </div>
 </footer>
-<script>
+<script>var MOT=["{n} séjour affiché sur {t}", "{n} séjours affichés sur {t}"];var TOUT="Tous les séjours sont affichés.";
 (function(){
   // Visionneuse : la photo s'ouvre dans sa taille d'origine.
   var lb=document.getElementById('pg-lb'), img=lb&&lb.querySelector('img');
@@ -1171,6 +1177,35 @@
     },{rootMargin:'-25% 0px -45% 0px',threshold:[0,.25,.5,1]});
     etapes.forEach(function(x){ obs.observe(x); });
   }
+})();
+
+(function(){
+  // Le filtre par durée fonctionne déjà sans une ligne de JavaScript :
+  // ce sont des boutons radio et des règles CSS. Rien n'est demandé au
+  // serveur — les quatre séjours sont dans la page —, rien ne se
+  // recharge, l'URL ne bouge pas.
+  //
+  // Ce que le script ajoute est ce que le CSS ne sait pas faire : DIRE
+  // combien de séjours restent. Un filtre qui retire trois cartes sans
+  // rien annoncer laisse le visiteur se demander s'il a cassé la page,
+  // et un lecteur d'écran, lui, ne voit rien du tout.
+  var zone = document.querySelector('.filtre');
+  if(!zone) return;
+  var etat = document.getElementById('filtre-etat');
+  var vide = zone.querySelector('.filtre__vide');
+  var cartes = [].slice.call(document.querySelectorAll('.cartes .carte'));
+  if(!etat || !cartes.length) return;
+
+  function compter(){
+    var restant = cartes.filter(function(c){
+      return getComputedStyle(c).display !== 'none';
+    }).length;
+    etat.textContent = restant === cartes.length ? TOUT
+      : MOT[restant > 1 ? 1 : 0].replace('{n}', restant).replace('{t}', cartes.length);
+    if(vide) vide.hidden = restant > 0;
+  }
+  zone.addEventListener('change', compter);
+  compter();
 })();
 </script>
 </body>

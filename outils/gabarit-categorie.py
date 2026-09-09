@@ -47,12 +47,15 @@ INTERFACE = {
     'sejours': 'séjours',                                           # D49
     'un_sejour': 'séjour',                                          # D49
     'depuis': 'À partir de',                                        # D6
-    'titre_liste': 'Les séjours de cette famille',                  # D49
+    'titre_liste': 'Nos séjours',                                   # D49
     'eyebrow_liste': 'Au choix',                                    # D49
     'titre_filtre': 'Combien de jours voulez-vous partir ?',        # D50
     'filtre_tous': 'Tous',                                          # D50
     'filtre_aide': 'Le filtre agit sur les cartes ci-dessous, sans recharger la page.',  # D50
-    'filtre_vide': 'Aucun séjour de cette durée dans cette famille.',   # D50
+    'filtre_vide': 'Aucun séjour de cette durée pour le moment.',   # D50
+    'filtre_un': '{n} séjour affiché sur {t}',                      # D53
+    'filtre_plusieurs': '{n} séjours affichés sur {t}',             # D53
+    'filtre_tout': 'Tous les séjours sont affichés.',               # D53
     'voir': 'Voir le séjour',                                       # D49
     'duree_min': 'Durée annoncée',                                  # D49
     'prix_des': 'Dès',                                              # D49
@@ -272,6 +275,12 @@ def liste(inv, sejours):
                      % (cle, cle, ' checked' if i == 0 else '', cle, e(nom)))
         o.append('</div>')
         o.append('<p class="filtre__aide">%s</p>' % e(INTERFACE['filtre_aide']))
+        # Le compteur est posé par le script et annoncé aux lecteurs
+        # d'écran : sans lui, un filtre qui retire trois cartes ne dit
+        # rien à qui ne voit pas la page. Il reste vide sans JavaScript,
+        # où le filtre fonctionne quand même.
+        o.append('<p class="filtre__etat" id="filtre-etat" role="status" aria-live="polite"></p>')
+        o.append('<p class="filtre__vide" hidden>%s</p>' % e(INTERFACE['filtre_vide']))
         o.append('</div>')
 
     o.append('<div class="cartes cartes--%d">' % len(sejours))
@@ -427,12 +436,16 @@ CSS = r"""
 .pg .filtre__r:focus-visible+.filtre__l{outline:2px solid var(--teal-txt);outline-offset:3px}
 .pg .filtre__aide{margin:14px 0 0;font-family:"Manrope",sans-serif;font-size:.95rem;
   color:var(--gris-lis)}
+.pg .filtre__etat{margin:6px 0 0;font-family:"Manrope",sans-serif;font-size:.95rem;
+  font-weight:700;color:var(--teal-txt)}
+.pg .filtre__etat:empty{display:none}
+.pg .filtre__vide{margin:24px 0 0;padding:18px 20px;background:var(--or-fond);
+  border:1px dashed var(--or);border-radius:var(--r-m);font-family:"Manrope",sans-serif;
+  font-size:1rem;color:#7A5605}
 /* Le filtre en CSS pur : chaque bouton radio commande l'affichage des
-   cartes qui ne portent pas sa tranche. Rien n'est injecté au clic,
-   rien ne se recharge, et sans JavaScript tout fonctionne. */
-.pg .filtre__r--court:checked~.filtre__aide~*,
-.pg .filtre__r--moyen:checked~.filtre__aide~*{display:block}
-.pg .filtre{position:relative}
+   cartes qui ne portent pas sa tranche. Aucune requête — tout est déjà
+   dans la page —, aucun rechargement, aucun changement d'URL, et sans
+   JavaScript il fonctionne exactement pareil. */
 .pg .filtre:has(.filtre__r--court:checked)~.cartes .carte:not([data-duree="court"]),
 .pg .filtre:has(.filtre__r--moyen:checked)~.cartes .carte:not([data-duree="moyen"]),
 .pg .filtre:has(.filtre__r--long:checked)~.cartes .carte:not([data-duree="long"]){display:none}
@@ -514,11 +527,46 @@ CSS = r"""
 """
 
 
+SCRIPT = r"""
+(function(){
+  // Le filtre par durée fonctionne déjà sans une ligne de JavaScript :
+  // ce sont des boutons radio et des règles CSS. Rien n'est demandé au
+  // serveur — les quatre séjours sont dans la page —, rien ne se
+  // recharge, l'URL ne bouge pas.
+  //
+  // Ce que le script ajoute est ce que le CSS ne sait pas faire : DIRE
+  // combien de séjours restent. Un filtre qui retire trois cartes sans
+  // rien annoncer laisse le visiteur se demander s'il a cassé la page,
+  // et un lecteur d'écran, lui, ne voit rien du tout.
+  var zone = document.querySelector('.filtre');
+  if(!zone) return;
+  var etat = document.getElementById('filtre-etat');
+  var vide = zone.querySelector('.filtre__vide');
+  var cartes = [].slice.call(document.querySelectorAll('.cartes .carte'));
+  if(!etat || !cartes.length) return;
+
+  function compter(){
+    var restant = cartes.filter(function(c){
+      return getComputedStyle(c).display !== 'none';
+    }).length;
+    etat.textContent = restant === cartes.length ? TOUT
+      : MOT[restant > 1 ? 1 : 0].replace('{n}', restant).replace('{t}', cartes.length);
+    if(vide) vide.hidden = restant > 0;
+  }
+  zone.addEventListener('change', compter);
+  compter();
+})();
+"""
+
+
 # ------------------------------------------------------------------ page
 
 def page(inv, sejours, home, autres, chemin_charte='assets/charte.css'):
     titre = re.sub(r'\s*[-|]\s*Voyage en Égypte sur mesure\s*$', '',
                    inv['title_seo'] or '').strip() or inv['h1']
+    mot = json.dumps([INTERFACE['filtre_un'], INTERFACE['filtre_plusieurs']],
+                     ensure_ascii=False)
+    tout = json.dumps(INTERFACE['filtre_tout'], ensure_ascii=False)
     corps = '\n'.join(x for x in [
         hero(inv, sejours),
         reperes(inv, sejours),
@@ -553,7 +601,7 @@ def page(inv, sejours, home, autres, chemin_charte='assets/charte.css'):
 {corps}
 </main>
 {bloc('pied.html')}
-<script>{_g.SCRIPT}</script>
+<script>var MOT={mot};var TOUT={tout};{_g.SCRIPT}{SCRIPT}</script>
 </body>
 </html>
 """
