@@ -152,6 +152,10 @@
 /* ---------- module : le bon format de séjour ---------- */
 .pg .mod__aide{margin:-6px 0 18px;font-family:"Manrope",sans-serif;font-size:.96rem;
   color:var(--gris-lis)}
+.pg .mod__apres{margin:18px 0 0;font-size:1rem;line-height:1.7;color:var(--texte)}
+.pg .mod--valise .valise+.mod__intro{margin-top:22px}
+.pg .mod--valise .mod__intro a,.pg .mod__apres a{color:var(--teal-txt);text-decoration:underline;
+  text-underline-offset:3px}
 .pg .mod__intro{font-family:"Manrope",sans-serif;font-size:1.02rem;color:var(--nuit-900);
   font-weight:600;margin:0 0 20px;max-width:62ch}
 .pg .mod__conseil{display:flex;gap:11px;align-items:flex-start;margin:20px 0 0;padding:16px 18px;
@@ -784,10 +788,12 @@
 </div></div></div></section>
 <section class="reperes"><div class="wrap"><ul>
 <li><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M17 6.5A6 6 0 0 0 7 12a6 6 0 0 0 10 5.5M5 10h8M5 14h8"/></svg><small>À partir de</small><b>1195 €</b></li>
+<li><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><small>Durée</small><b>6 jours minimum</b></li>
 <li><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.5"/><path d="M5 20a7 7 0 0 1 14 0"/></svg><small>Guide</small><b>Guides égyptologues francophones</b></li>
 </ul></div></section>
 <nav class="ariane ariane--sous" aria-label="Fil d'Ariane"><div class="wrap"><ol><li><a href="https://authentiquegypte.com/">Accueil</a></li><li><a href="https://authentiquegypte.com/nos-sejours-egypte/">Nos séjours en Égypte</a></li><li><a href="https://authentiquegypte.com/nos-sejours-egypte/croisieres-en-egypte/">Croisières en Égypte</a></li><li><span aria-current="page">Pyramides et croisière sur le Nil</span></li></ol></div></nav>
 <div class="wrap"><div class="deux"><div class="corps">
+<aside class="verifier"><p class="verifier__t">À vérifier avec l&#x27;agence avant mise en ligne</p><ul><li>durée annoncée « 6 jours minimum » pour 8 jours décrits dans le déroulé</li></ul><p class="verifier__d">Relevé sur la fiche actuelle le 9 septembre 2026</p></aside>
 <section>
 <p class="eyebrow">Le séjour</p>
 <h2>Vue d&#x27;ensemble</h2>
@@ -801,42 +807,40 @@
 </section>
 <figure class="carte">
 <figcaption class="carte__tete"><h3>Le trajet, étape par étape</h3><p class="eyebrow">Où vous allez</p></figcaption>
-<svg viewBox="0 0 560.0 506.3" role="img" aria-label="Carte situant les étapes du séjour en Égypte" class="carte__svg">
-<rect width="560.0" height="506.3" fill="var(--carte-mer)"/>
-<path d="M496.3 425.3 L296.0 425.4 L297.9 419.1 L294.7 416.9 L287.7 425.4 L58.2 425.4 L58.2 130.3 L48.0 88.5 L57.5 68.9 L53.5 41.9 L64.5 28.8 L67.2 33.8 L73.0 34.6 L91.8 30.2 L141.8 40.2 L152.5 46.9 L188.4 53.6 L209.0 62.7 L222.1 58.7 L240.6 46.4 L251.4 45.1 L257.7 36.9 L277.2 32.4 L263.9 38.6 L280.1 36.7 L283.1 30.9 L299.3 36.9 L312.8 33.5 L321.9 41.7 L312.9 35.9 L308.4 43.6 L317.1 46.6 L320.6 51.9 L327.2 47.4 L324.8 43.6 L339.1 52.8 L358.5 48.8 L360.8 52.2 L378.3 50.3 L397.8 42.4 L423.8 118.2 L417.6 126.7 L405.3 178.2 L398.6 188.5 L381.7 176.9 L362.8 155.5 L358.5 138.7 L343.4 116.4 L337.7 97.8 L334.3 99.8 L330.1 111.9 L338.9 124.6 L340.1 138.1 L349.9 155.7 L373.8 183.0 L373.9 195.0 L385.0 212.3 L389.0 234.3 L411.3 273.7 L434.5 323.6 L445.0 336.7 L456.3 345.6 L447.3 346.3 L445.9 352.2 L446.6 365.9 L453.1 386.4 L461.0 394.8 L472.7 399.4 L496.3 425.3 Z" fill="var(--carte-terre)" stroke="var(--carte-cote)" stroke-width="1.6"/>
-<path d="M325.5 397.5 L318.9 397.9 L310.4 410.8 L303.8 412.4 L303.0 415.3 L296.2 421.0 L291.8 432.9 L283.4 441.2 L296.6 416.6 L308.9 405.4 L304.9 399.5 L310.4 402.0 L321.7 393.1 L329.3 396.8 L335.3 394.1 L344.1 374.7 L348.4 370.1 L347.8 364.3 L338.9 363.8 L342.9 360.7 L339.8 360.0 L341.0 358.1 L346.2 360.2 L347.6 358.7 L349.0 351.6 L347.2 346.8 L349.2 343.6 L351.2 345.5 L353.2 355.6 L350.3 359.1 L353.9 363.2 L350.8 364.2 L353.9 374.4 L350.8 373.9 L350.4 377.5 L348.3 379.3 L353.3 386.0 L344.3 382.8 L339.6 388.4 L338.4 393.0 L327.8 403.4 L326.0 402.7 L327.9 400.9 L325.5 397.5 Z" fill="var(--carte-nil)" opacity=".85"/>
-<path d="M349.2 343.6 L350.5 370.5 L338.1 392.1 L332.2 397.6 L328.9 398.4 L325.4 395.7 L318.4 396.5 L294.7 421.4 L290.3 431.6 L283.4 441.2" fill="none" stroke="var(--carte-nil)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M255.0 485.7 L256.8 475.5 L264.4 470.4 L269.3 461.3 L268.9 459.0 L278.9 449.9 L283.4 441.2" fill="none" stroke="var(--carte-nil)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M349.2 343.6 L350.8 311.5 L348.9 300.5 L336.7 287.7 L335.0 278.8 L342.8 271.1 L345.0 265.9 L343.9 255.7 L341.8 254.3 L330.2 258.2 L325.3 257.8 L322.5 253.9 L317.4 252.8 L309.9 240.1 L306.0 237.8 L305.6 235.0 L291.2 215.8 L278.9 205.3 L275.1 199.4 L275.0 179.5 L270.4 169.4 L276.3 146.4 L288.1 126.2 L290.6 105.6 L288.8 91.8" fill="none" stroke="var(--carte-nil)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
-<g class="carte__pt carte__pt--titre" id="pt-le-caire" data-lieu="le-caire">
-<circle class="carte__halo" cx="288.7" cy="94.9" r="22"/>
-<circle class="carte__d" cx="288.7" cy="94.9" r="9"/>
-<text class="carte__lbl" x="270.7" y="88.0" text-anchor="end">Caire</text>
+<svg viewBox="0 0 560.0 394.2" role="img" aria-label="Carte situant les étapes du séjour en Égypte" class="carte__svg">
+<rect width="560.0" height="394.2" fill="var(--carte-mer)"/>
+<path d="M496.3 406.8 L296.0 406.9 L297.9 400.6 L294.7 398.4 L287.7 406.9 L58.2 406.9 L58.2 109.6 L48.0 67.4 L57.5 47.6 L53.5 20.5 L64.5 7.3 L67.2 12.3 L73.0 13.1 L91.8 8.7 L141.8 18.7 L152.5 25.5 L188.4 32.3 L209.0 41.4 L222.1 37.4 L240.6 25.0 L251.4 23.7 L257.7 15.4 L277.2 10.9 L263.9 17.1 L280.1 15.2 L283.1 9.4 L299.3 15.4 L312.8 12.0 L321.9 20.3 L312.9 14.4 L308.4 22.2 L317.1 25.2 L320.6 30.5 L327.2 26.0 L324.8 22.2 L339.1 31.5 L358.5 27.4 L360.8 30.8 L378.3 29.0 L397.8 21.0 L423.8 97.4 L417.6 105.9 L405.3 157.8 L398.6 168.2 L381.7 156.5 L362.8 135.0 L358.5 118.0 L343.4 95.5 L337.7 76.8 L334.3 78.8 L330.1 91.0 L338.9 103.8 L340.1 117.4 L349.9 135.1 L373.8 162.7 L373.9 174.7 L385.0 192.2 L389.0 214.4 L411.3 254.0 L434.5 304.3 L445.0 317.6 L456.3 326.5 L447.3 327.2 L445.9 333.1 L446.6 347.0 L453.1 367.6 L461.0 376.1 L472.7 380.7 L496.3 406.8 Z" fill="var(--carte-terre)" stroke="var(--carte-cote)" stroke-width="1.6"/>
+<path d="M325.5 378.8 L318.9 379.2 L310.4 392.2 L303.8 393.8 L303.0 396.7 L296.2 402.5 L291.8 414.5 L283.4 422.9 L296.6 398.0 L308.9 386.7 L304.9 380.8 L310.4 383.3 L321.7 374.4 L329.3 378.1 L335.3 375.4 L344.1 355.9 L348.4 351.2 L347.8 345.4 L338.9 344.8 L342.9 341.8 L339.8 341.1 L341.0 339.2 L346.2 341.2 L347.6 339.7 L349.0 332.6 L347.2 327.7 L349.2 324.5 L351.2 326.4 L353.2 336.6 L350.3 340.1 L353.9 344.3 L350.8 345.3 L353.9 355.5 L350.8 355.0 L350.4 358.7 L348.3 360.5 L353.3 367.2 L344.3 364.0 L339.6 369.7 L338.4 374.3 L327.8 384.8 L326.0 384.1 L327.9 382.2 L325.5 378.8 Z" fill="var(--carte-nil)" opacity=".85"/>
+<path d="M349.2 324.5 L350.5 351.6 L338.1 373.4 L332.2 378.9 L328.9 379.7 L325.4 377.0 L318.4 377.8 L294.7 402.9 L290.3 413.1 L283.4 422.9" fill="none" stroke="var(--carte-nil)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M255.0 467.7 L256.8 457.4 L264.4 452.2 L269.3 443.1 L268.9 440.8 L278.9 431.6 L283.4 422.9" fill="none" stroke="var(--carte-nil)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M349.2 324.5 L350.8 292.1 L348.9 281.1 L336.7 268.1 L335.0 259.2 L342.8 251.4 L345.0 246.2 L343.9 235.9 L341.8 234.5 L330.2 238.5 L325.3 238.0 L322.5 234.2 L317.4 233.0 L309.9 220.2 L306.0 217.9 L305.6 215.1 L291.2 195.8 L278.9 185.1 L275.1 179.2 L275.0 159.1 L270.4 149.0 L276.3 125.8 L288.1 105.4 L290.6 84.7 L288.8 70.7" fill="none" stroke="var(--carte-nil)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="carte__route" d="M288.7 73.9 L350.0 320.3 L340.4 254.2 L383.6 189.2" fill="none" stroke="var(--or)" stroke-width="4" stroke-dasharray="10 7" stroke-linecap="round"/>
+<g class="carte__pt" id="pt-le-caire" data-lieu="le-caire">
+<circle class="carte__halo" cx="288.7" cy="73.9" r="22"/>
+<circle class="carte__d" cx="288.7" cy="73.9" r="9"/>
+<text class="carte__n" x="288.7" y="78.7">1</text>
+<text class="carte__lbl" x="270.7" y="67.0" text-anchor="end">Le Caire</text>
 </g>
-<g class="carte__pt carte__pt--titre" id="pt-assouan" data-lieu="assouan">
-<circle class="carte__halo" cx="350.0" cy="339.4" r="22"/>
-<circle class="carte__d" cx="350.0" cy="339.4" r="9"/>
-<text class="carte__lbl" x="368.0" y="346.9" text-anchor="start">Assouan</text>
+<g class="carte__pt" id="pt-assouan" data-lieu="assouan">
+<circle class="carte__halo" cx="350.0" cy="320.3" r="22"/>
+<circle class="carte__d" cx="350.0" cy="320.3" r="9"/>
+<text class="carte__n" x="350.0" y="325.1">2</text>
+<text class="carte__lbl" x="368.0" y="327.8" text-anchor="start">Assouan</text>
 </g>
-<g class="carte__pt carte__pt--titre" id="pt-louxor" data-lieu="louxor">
-<circle class="carte__halo" cx="340.4" cy="273.8" r="22"/>
-<circle class="carte__d" cx="340.4" cy="273.8" r="9"/>
-<text class="carte__lbl" x="358.4" y="281.3" text-anchor="start">Louxor</text>
+<g class="carte__pt" id="pt-louxor" data-lieu="louxor">
+<circle class="carte__halo" cx="340.4" cy="254.2" r="22"/>
+<circle class="carte__d" cx="340.4" cy="254.2" r="9"/>
+<text class="carte__n" x="340.4" y="259.0">3</text>
+<text class="carte__lbl" x="358.4" y="261.7" text-anchor="start">Louxor</text>
 </g>
-<g class="carte__pt carte__pt--titre" id="pt-hurghada" data-lieu="hurghada">
-<circle class="carte__halo" cx="383.6" cy="209.4" r="22"/>
-<circle class="carte__d" cx="383.6" cy="209.4" r="9"/>
-<text class="carte__lbl" x="401.6" y="216.9" text-anchor="start">Hurghada</text>
+<g class="carte__pt" id="pt-hurghada" data-lieu="hurghada">
+<circle class="carte__halo" cx="383.6" cy="189.2" r="22"/>
+<circle class="carte__d" cx="383.6" cy="189.2" r="9"/>
+<text class="carte__n" x="383.6" y="194.0">4</text>
+<text class="carte__lbl" x="401.6" y="196.7" text-anchor="start">Hurghada</text>
 </g>
-<g class="carte__pt" id="pt-abou-simbel" data-lieu="abou-simbel">
-<circle class="carte__halo" cx="303.1" cy="411.4" r="22"/>
-<circle class="carte__d" cx="303.1" cy="411.4" r="9"/>
-<text class="carte__n" x="303.1" y="416.2">1</text>
-<text class="carte__lbl" x="285.1" y="418.9" text-anchor="end">Abou Simbel</text>
-</g>
-<g class="carte__ech"><path d="M25.2 483.5 h184.9" /><text x="117.7" y="479.5">500 km</text></g>
+<g class="carte__ech"><path d="M25.2 376.5 h186.4" /><text x="118.4" y="372.5">500 km</text></g>
 </svg>
-<p class="carte__hors"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.7 5.8 6.3.7-4.7 4.3 1.3 6.2L12 17l-5.6 3 1.3-6.2L3 9.5l6.3-.7z"/></svg>Annoncé par le titre du séjour, absent du déroulé : Caire, Assouan, Louxor, Hurghada</p>
 <figcaption class="carte__note">Points placés à leurs coordonnées réelles. Fond de carte :  Natural Earth 1:50m, domaine public (naturalearthdata.com)</figcaption></figure>
 <section>
 <p class="eyebrow">Dans le détail</p>
@@ -863,7 +867,7 @@
 </div>
 <div class="jour">
 <div class="jour__tete"><h3>Assouan et Abou Simbel</h3><span class="jour__no">Jour 3</span></div>
-<article class="etape" id="etape-3" data-lieu="abou-simbel">
+<article class="etape" id="etape-3" data-lieu="assouan">
 <a class="etape__photo" data-lb href="https://authentiquegypte.com/wp-content/uploads/2025/06/Voyage-sur-mesure-a-Assouan-en-Egypte.png" data-alt="Voyage sur mesure à Assouan en Egypte" aria-label="Agrandir la photo : Voyage sur mesure à Assouan en Egypte"><img src="https://authentiquegypte.com/wp-content/uploads/2025/06/Voyage-sur-mesure-a-Assouan-en-Egypte.png" alt="Voyage sur mesure à Assouan en Egypte" decoding="async" srcset="https://authentiquegypte.com/wp-content/uploads/2025/06/Voyage-sur-mesure-a-Assouan-en-Egypte-300x251.png 300w, https://authentiquegypte.com/wp-content/uploads/2025/06/Voyage-sur-mesure-a-Assouan-en-Egypte-768x644.png 768w, https://authentiquegypte.com/wp-content/uploads/2025/06/Voyage-sur-mesure-a-Assouan-en-Egypte.png 940w" sizes="(max-width:1040px) 100vw, 780px" width="940" height="788" loading="lazy"></a>
 
 <p>Excursion à Abou SimbelDépart tôt le matin pour l’excursion à Abou Simbel (environ 3h de route). Visite des deux temples sculptés dans la montagne par Ramsès II.Retour à Assouan en fin de journée. Dîner et nuit à l’hôtel.</p>
@@ -873,7 +877,7 @@
 </div>
 <div class="jour">
 <div class="jour__tete"><h3>Temple de Philae et navigation vers Kom Ombo</h3><span class="jour__no">Jour 4</span></div>
-<article class="etape" id="etape-4" data-lieu="abou-simbel">
+<article class="etape" id="etape-4" data-lieu="assouan">
 
 <p>Temple de Philae et navigation vers Kom OmboVisite du temple d’Isis sur l’île de Philae. Embarquement sur votre bateau de croisière pour Kom Ombo.Navigation vers Kom Ombo avec déjeuner à bord. Arrivée en fin de journée.Hébergement : Bateau de croisière 5*</p>
 
@@ -882,7 +886,7 @@
 </div>
 <div class="jour">
 <div class="jour__tete"><h3>Temple de Kom Ombo et navigation vers Edfou</h3><span class="jour__no">Jour 5</span></div>
-<article class="etape" id="etape-5" data-lieu="abou-simbel">
+<article class="etape" id="etape-5" data-lieu="assouan">
 
 <p>Temple de Kom Ombo et NavigationSelon les horaires de navigation, la matinée, vous explorerez les marchés et les scènes de vie dans les villages nubiens. Début de votre navigation jusqu’au site de Kôm Ombo, un sanctuaire abritant l’un des temples égyptiens les mieux conservés, celui de Sobek et d’Haroëris.Hébergement : Bateau de croisière 5*</p>
 
@@ -933,14 +937,19 @@
 <p class="pan__note">Réponse sous 48 h, hors vendredi et samedi<br>Aucune carte bancaire demandée à cette étape.</p>
 <p class="pan__avis"><svg class="gg" aria-hidden="true" width="18" height="18" viewBox="0 0 48 48"><path fill="#4285F4" d="M45.12 24.5c0-1.56-.14-3.06-.4-4.5H24v8.51h11.84c-.51 2.75-2.06 5.08-4.39 6.64v5.52h7.11c4.16-3.83 6.56-9.47 6.56-16.17z"/><path fill="#34A853" d="M24 46c5.94 0 10.92-1.97 14.56-5.33l-7.11-5.52c-1.97 1.32-4.49 2.1-7.45 2.1-5.73 0-10.58-3.87-12.31-9.07H4.34v5.7C7.96 41.07 15.4 46 24 46z"/><path fill="#FBBC05" d="M11.69 28.18C11.25 26.86 11 25.45 11 24s.25-2.86.69-4.18v-5.7H4.34C2.85 17.09 2 20.45 2 24s.85 6.91 2.34 9.88l7.35-5.7z"/><path fill="#EA4335" d="M24 10.75c3.23 0 6.13 1.11 8.41 3.29l6.31-6.31C34.91 4.18 29.93 2 24 2 15.4 2 7.96 6.93 4.34 14.12l7.35 5.7c1.73-5.2 6.58-9.07 12.31-9.07z"/></svg><b>23 avis Google</b> <span>Agence locale basée au Caire</span></p>
 </div>
-
+<nav class="somm" aria-label="Le fil du séjour"><p class="somm__t">Le fil du séjour</p><ol>
+<li data-lieu="le-caire"><a href="#etape-1"><span class="somm__n">1</span><span><b>Le Caire</b><span>Arrivée au Caire</span></span></a></li>
+<li data-lieu="assouan"><a href="#etape-2"><span class="somm__n">2</span><span><b>Assouan</b><span>Pyramides de Gizeh et Musée Égyptien</span></span></a></li>
+<li data-lieu="louxor"><a href="#etape-6"><span class="somm__n">3</span><span><b>Louxor</b><span>Temples de Louxor et Karnak</span></span></a></li>
+<li data-lieu="hurghada"><a href="#etape-8"><span class="somm__n">4</span><span><b>Hurghada</b><span>Journée libre à Hurghada</span></span></a></li>
+</ol></nav>
 </aside>
 </div></div>
 <section class="pg-sec pg-sec--nuit"><div class="wrap">
 <div class="guide">
 <div><p class="eyebrow eyebrow--clair">Qui vous accompagne</p>
 <h2>Votre guide, votre chauffeur, et personne d&#x27;autre</h2>
-<p class="guide__intro">Ce séjour est privatif : vous ne partagez ni le guide, ni le véhicule, ni le rythme.</p></div>
+<p class="guide__intro">Ce séjour est privatif : vous ne partagez ni le guide, ni le véhicule.</p></div>
 <ul class="guide__r">
 <li><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.5"/><path d="M5 20a7 7 0 0 1 14 0"/></svg><span>Guide francophone privatif</span></li>
 <li><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 11l1.5-4.5A2 2 0 0 1 8.4 5h7.2a2 2 0 0 1 1.9 1.5L19 11M4 11h16v6h-2a2 2 0 1 1-4 0H10a2 2 0 1 1-4 0H4z"/></svg><span>Chauffeur privatif dans un véhicule climatisé</span></li>

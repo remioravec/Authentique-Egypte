@@ -152,6 +152,10 @@
 /* ---------- module : le bon format de séjour ---------- */
 .pg .mod__aide{margin:-6px 0 18px;font-family:"Manrope",sans-serif;font-size:.96rem;
   color:var(--gris-lis)}
+.pg .mod__apres{margin:18px 0 0;font-size:1rem;line-height:1.7;color:var(--texte)}
+.pg .mod--valise .valise+.mod__intro{margin-top:22px}
+.pg .mod--valise .mod__intro a,.pg .mod__apres a{color:var(--teal-txt);text-decoration:underline;
+  text-underline-offset:3px}
 .pg .mod__intro{font-family:"Manrope",sans-serif;font-size:1.02rem;color:var(--nuit-900);
   font-weight:600;margin:0 0 20px;max-width:62ch}
 .pg .mod__conseil{display:flex;gap:11px;align-items:flex-start;margin:20px 0 0;padding:16px 18px;
@@ -784,6 +788,7 @@
 </div></div></div></section>
 <section class="reperes"><div class="wrap"><ul>
 <li><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M17 6.5A6 6 0 0 0 7 12a6 6 0 0 0 10 5.5M5 10h8M5 14h8"/></svg><small>À partir de</small><b>595 €</b></li>
+<li><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><small>Durée</small><b>4 jours</b></li>
 <li><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><small>Durée</small><b>3 jours minimum</b></li>
 <li><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20c4-1 5-6 5-6l3-9 3 9s1 5 5 6"/><path d="M9 14h6"/></svg><small>Rythme</small><b>Rythme adapté</b></li>
 <li><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 11l1.5-4.5A2 2 0 0 1 8.4 5h7.2a2 2 0 0 1 1.9 1.5L19 11M4 11h16v6h-2a2 2 0 1 1-4 0H10a2 2 0 1 1-4 0H4z"/></svg><small>Transport</small><b>Chauffeur et véhicule sécurisé</b></li>
@@ -808,7 +813,7 @@
 <section class="mod mod--duree">
 <p class="eyebrow">Le bon format</p>
 <h2>Combien de temps prévoir pour un séjour ?</h2>
-<p class="mod__intro">Durée recommandée : 3 à 4 jours pour profiter pleinement du site.</p>
+<p class="mod__intro"><strong>Durée recommandée : 3 à 4 jours</strong> pour profiter pleinement du site.</p>
 <div class="duree">
 <input class="duree__r" type="radio" name="duree" id="duree-0">
 <input class="duree__r" type="radio" name="duree" id="duree-1" checked>
@@ -822,7 +827,7 @@
 <div class="duree__c"><b>3-4 jours</b><p> : pour une expérience complète avec exploration des sites historiques et naturels</p></div>
 <div class="duree__c"><b>5 jours et plus</b><p> : pour une immersion totale avec excursions dans le désert environnant</p></div>
 </div></div>
-<p class="mod__conseil"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.7 5.8 6.3.7-4.7 4.3 1.3 6.2L12 17l-5.6 3 1.3-6.2L3 9.5l6.3-.7z"/></svg><span>Prévoyez au moins 3 jours pour voir les principaux sites sans précipitation.</span></p>
+<p class="mod__conseil"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.7 5.8 6.3.7-4.7 4.3 1.3 6.2L12 17l-5.6 3 1.3-6.2L3 9.5l6.3-.7z"/></svg><span>Conseil : Prévoyez au moins 3 jours pour voir les principaux sites sans précipitation.</span></p>
 </section>
 <section class="apercu">
 <h2>Les étapes de votre séjour</h2><ol>
@@ -837,44 +842,39 @@
 <figcaption class="carte__tete"><h3>Le trajet, étape par étape</h3><p class="eyebrow">Où vous allez</p></figcaption>
 <svg viewBox="0 0 560.0 238.3" role="img" aria-label="Carte situant les étapes du séjour en Égypte" class="carte__svg">
 <rect width="560.0" height="238.3" fill="var(--carte-mer)"/>
-<path d="M517.9 413.1 L317.7 413.1 L319.7 406.7 L316.5 404.4 L309.5 413.2 L80.1 413.1 L80.1 110.6 L69.9 67.7 L79.4 47.6 L75.4 20.0 L86.3 6.5 L89.1 11.6 L94.9 12.5 L113.7 8.0 L163.6 18.2 L174.4 25.1 L210.3 32.0 L230.8 41.3 L243.9 37.2 L262.4 24.5 L273.1 23.2 L279.5 14.8 L299.0 10.2 L285.7 16.5 L301.8 14.6 L304.8 8.7 L321.1 14.8 L334.5 11.3 L343.6 19.7 L334.6 13.8 L330.1 21.8 L338.9 24.8 L342.3 30.2 L349.0 25.6 L346.5 21.7 L360.8 31.2 L380.2 27.0 L382.5 30.5 L400.0 28.6 L419.5 20.5 L445.5 98.2 L439.3 106.9 L427.0 159.7 L420.3 170.3 L403.4 158.4 L384.5 136.5 L380.2 119.2 L365.1 96.3 L359.4 77.3 L356.0 79.3 L351.8 91.7 L360.6 104.7 L361.9 118.6 L371.6 136.6 L395.5 164.7 L395.7 176.9 L406.7 194.7 L410.7 217.2 L433.0 257.6 L456.2 308.8 L466.7 322.2 L477.9 331.4 L469.0 332.1 L467.6 338.1 L468.3 352.2 L474.8 373.1 L482.7 381.8 L494.3 386.5 L517.9 413.1 Z" fill="var(--carte-terre)" stroke="var(--carte-cote)" stroke-width="1.6"/>
-<path d="M347.2 384.6 L340.6 384.9 L332.2 398.2 L325.5 399.8 L324.8 402.8 L318.0 408.6 L313.5 420.9 L305.1 429.4 L318.3 404.1 L330.7 392.6 L326.7 386.6 L332.1 389.2 L343.4 380.1 L351.0 383.9 L357.0 381.0 L365.8 361.2 L370.1 356.5 L369.6 350.5 L360.6 350.0 L364.6 346.9 L361.6 346.1 L362.7 344.2 L368.0 346.3 L369.3 344.8 L370.7 337.5 L368.9 332.5 L370.9 329.3 L372.9 331.2 L374.9 341.6 L372.1 345.2 L375.6 349.4 L372.5 350.4 L375.7 360.9 L372.5 360.4 L372.1 364.1 L370.1 365.9 L375.0 372.7 L366.0 369.5 L361.3 375.2 L360.2 380.0 L349.5 390.6 L347.7 389.9 L349.6 388.0 L347.2 384.6 Z" fill="var(--carte-nil)" opacity=".85"/>
-<path d="M370.9 329.3 L372.2 356.9 L359.8 379.0 L354.0 384.7 L350.6 385.5 L347.1 382.7 L340.1 383.5 L316.5 409.0 L312.1 419.5 L305.1 429.4" fill="none" stroke="var(--carte-nil)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M276.8 474.9 L278.6 464.5 L286.1 459.2 L291.0 449.9 L290.7 447.6 L300.7 438.2 L305.1 429.4" fill="none" stroke="var(--carte-nil)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M370.9 329.3 L372.5 296.3 L370.7 285.1 L358.5 271.9 L356.7 262.9 L364.5 254.9 L366.7 249.7 L365.6 239.1 L363.5 237.7 L351.9 241.7 L347.0 241.3 L344.3 237.4 L339.1 236.1 L331.7 223.1 L327.8 220.8 L327.4 218.0 L313.0 198.3 L300.6 187.5 L296.9 181.4 L296.7 161.0 L292.2 150.7 L298.0 127.1 L309.8 106.4 L312.3 85.3 L310.5 71.1" fill="none" stroke="var(--carte-nil)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
-<path class="carte__route" d="M424.4 164.0 L409.9 137.0" fill="none" stroke="var(--or)" stroke-width="4" stroke-dasharray="10 7" stroke-linecap="round"/>
+<path d="M537.4 441.9 L327.9 441.9 L329.9 435.2 L326.6 432.8 L319.2 442.0 L79.2 441.9 L79.2 124.4 L68.5 79.3 L78.4 58.2 L74.3 29.2 L85.7 15.1 L88.6 20.4 L94.7 21.4 L114.3 16.6 L166.6 27.3 L177.8 34.6 L215.4 41.8 L236.9 51.5 L250.6 47.2 L269.9 34.0 L281.2 32.6 L287.8 23.8 L308.2 19.0 L294.3 25.6 L311.2 23.6 L314.4 17.4 L331.3 23.8 L345.4 20.1 L354.9 29.0 L345.5 22.7 L340.9 31.1 L350.0 34.3 L353.6 39.9 L360.6 35.1 L358.0 31.0 L372.9 41.0 L393.2 36.6 L395.7 40.3 L413.9 38.3 L434.4 29.8 L461.6 111.3 L455.1 120.4 L442.2 175.9 L435.2 187.0 L417.5 174.5 L397.8 151.5 L393.2 133.4 L377.5 109.3 L371.5 89.4 L367.9 91.5 L363.6 104.5 L372.8 118.2 L374.0 132.8 L384.3 151.6 L409.3 181.1 L409.4 194.0 L421.0 212.6 L425.2 236.3 L448.5 278.6 L472.8 332.4 L483.7 346.5 L495.5 356.1 L486.2 356.9 L484.7 363.1 L485.5 378.0 L492.2 399.9 L500.5 409.0 L512.7 413.9 L537.4 441.9 Z" fill="var(--carte-terre)" stroke="var(--carte-cote)" stroke-width="1.6"/>
+<path d="M358.7 412.0 L351.9 412.4 L343.0 426.2 L336.0 428.0 L335.2 431.1 L328.2 437.2 L323.4 450.1 L314.7 459.0 L328.5 432.5 L341.4 420.4 L337.2 414.1 L342.9 416.8 L354.8 407.2 L362.7 411.2 L369.0 408.2 L378.2 387.4 L382.7 382.4 L382.1 376.2 L372.8 375.6 L376.9 372.4 L373.7 371.6 L374.9 369.6 L380.4 371.7 L381.8 370.2 L383.3 362.6 L381.4 357.3 L383.6 353.9 L385.6 356.0 L387.7 366.8 L384.7 370.6 L388.4 375.1 L385.2 376.1 L388.5 387.1 L385.2 386.5 L384.8 390.4 L382.6 392.4 L387.8 399.5 L378.4 396.1 L373.5 402.1 L372.3 407.1 L361.1 418.3 L359.3 417.6 L361.2 415.6 L358.7 412.0 Z" fill="var(--carte-nil)" opacity=".85"/>
+<path d="M383.6 353.9 L384.9 382.9 L371.9 406.1 L365.8 412.0 L362.3 412.9 L358.6 410.0 L351.3 410.9 L326.6 437.6 L321.9 448.6 L314.7 459.0" fill="none" stroke="var(--carte-nil)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M285.0 506.8 L286.9 495.9 L294.8 490.4 L299.9 480.6 L299.6 478.1 L310.0 468.3 L314.7 459.0" fill="none" stroke="var(--carte-nil)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M383.6 353.9 L385.2 319.3 L383.3 307.5 L370.5 293.7 L368.7 284.2 L376.8 275.9 L379.1 270.3 L378.0 259.3 L375.8 257.8 L363.6 262.0 L358.5 261.6 L355.6 257.4 L350.3 256.1 L342.4 242.5 L338.4 240.1 L337.9 237.1 L322.9 216.4 L310.0 205.1 L306.1 198.7 L305.9 177.3 L301.1 166.4 L307.3 141.6 L319.6 119.9 L322.2 97.8 L320.3 82.9" fill="none" stroke="var(--carte-nil)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+<path class="carte__route" d="M320.3 86.3 L424.4 152.0" fill="none" stroke="var(--or)" stroke-width="4" stroke-dasharray="10 7" stroke-linecap="round"/>
 <g class="carte__pt carte__pt--titre" id="pt-siwa" data-lieu="siwa">
-<circle class="carte__halo" cx="99.9" cy="109.7" r="22"/>
-<circle class="carte__d" cx="99.9" cy="109.7" r="9"/>
-<text class="carte__lbl" x="117.9" y="117.2" text-anchor="start">Siwa</text>
+<circle class="carte__halo" cx="99.9" cy="123.4" r="22"/>
+<circle class="carte__d" cx="99.9" cy="123.4" r="9"/>
+<text class="carte__lbl" x="117.9" y="130.9" text-anchor="start">Oasis de Siwa</text>
 </g>
-<g class="carte__pt carte__pt--titre" id="pt-le-caire" data-lieu="le-caire">
-<circle class="carte__halo" cx="310.4" cy="74.3" r="22"/>
-<circle class="carte__d" cx="310.4" cy="74.3" r="9"/>
-<text class="carte__lbl" x="292.4" y="67.39999999999999" text-anchor="end">Caire</text>
-</g>
-<g class="carte__pt" id="pt-charm-el-cheikh" data-lieu="charm-el-cheikh">
-<circle class="carte__halo" cx="424.4" cy="164.0" r="22"/>
-<circle class="carte__d" cx="424.4" cy="164.0" r="9"/>
-<text class="carte__n" x="424.4" y="168.8">1</text>
-<text class="carte__lbl" x="406.4" y="211.1" text-anchor="end">Sharm el-Sheikh</text>
+<g class="carte__pt" id="pt-le-caire" data-lieu="le-caire">
+<circle class="carte__halo" cx="320.3" cy="86.3" r="22"/>
+<circle class="carte__d" cx="320.3" cy="86.3" r="9"/>
+<text class="carte__n" x="320.3" y="91.1">1</text>
+<text class="carte__lbl" x="302.3" y="79.39999999999999" text-anchor="end">Le Caire</text>
 </g>
 <g class="carte__pt" id="pt-sainte-catherine" data-lieu="sainte-catherine mont-moise">
-<circle class="carte__halo" cx="409.9" cy="137.0" r="22"/>
-<circle class="carte__d" cx="409.9" cy="137.0" r="9"/>
-<text class="carte__n" x="409.9" y="141.8">2-3</text>
-<text class="carte__lbl" x="391.9" y="115.7" text-anchor="end">Sainte-Catherine</text>
+<circle class="carte__halo" cx="424.4" cy="152.0" r="22"/>
+<circle class="carte__d" cx="424.4" cy="152.0" r="9"/>
+<text class="carte__n" x="424.4" y="156.8">2-3</text>
+<text class="carte__lbl" x="406.4" y="130.7" text-anchor="end">Sainte-Catherine</text>
 </g>
-<g class="carte__ech"><path d="M25.2 227.6 h189.6" /><text x="120.0" y="223.6">500 km</text></g>
+<g class="carte__ech"><path d="M25.2 227.6 h79.6" /><text x="65.0" y="223.6">200 km</text></g>
 </svg>
-<p class="carte__hors"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.7 5.8 6.3.7-4.7 4.3 1.3 6.2L12 17l-5.6 3 1.3-6.2L3 9.5l6.3-.7z"/></svg>Annoncé par le titre du séjour, absent du déroulé : Siwa, Caire</p>
+<p class="carte__hors"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.7 5.8 6.3.7-4.7 4.3 1.3 6.2L12 17l-5.6 3 1.3-6.2L3 9.5l6.3-.7z"/></svg>Annoncé par le titre du séjour, absent du déroulé : Oasis de Siwa</p>
 <figcaption class="carte__note">Points placés à leurs coordonnées réelles. Fond de carte :  Natural Earth 1:50m, domaine public (naturalearthdata.com)</figcaption></figure>
 <section>
 <p class="eyebrow">Dans le détail</p>
 <h2>Le séjour jour par jour</h2>
 <div class="jour">
 <div class="jour__tete"><h3>Le Caire - Oasis de Siwa</h3><span class="jour__no">Jour 1</span></div>
-<article class="etape" id="etape-1" data-lieu="charm-el-cheikh">
+<article class="etape" id="etape-1" data-lieu="le-caire">
 <a class="etape__photo" data-lb href="https://authentiquegypte.com/wp-content/uploads/2025/06/mohamad-sameh-Jl6Ghf2YsFQ-unsplash-scaled.jpg" data-alt="Paysage du Sinaï" aria-label="Agrandir la photo : Paysage du Sinaï"><img src="https://authentiquegypte.com/wp-content/uploads/2025/06/mohamad-sameh-Jl6Ghf2YsFQ-unsplash-scaled.jpg" alt="Paysage du Sinaï" decoding="async" srcset="https://authentiquegypte.com/wp-content/uploads/2025/06/mohamad-sameh-Jl6Ghf2YsFQ-unsplash-300x200.jpg 300w, https://authentiquegypte.com/wp-content/uploads/2025/06/mohamad-sameh-Jl6Ghf2YsFQ-unsplash-768x512.jpg 768w, https://authentiquegypte.com/wp-content/uploads/2025/06/mohamad-sameh-Jl6Ghf2YsFQ-unsplash-1024x683.jpg 1024w, https://authentiquegypte.com/wp-content/uploads/2025/06/mohamad-sameh-Jl6Ghf2YsFQ-unsplash-1536x1024.jpg 1536w, https://authentiquegypte.com/wp-content/uploads/2025/06/mohamad-sameh-Jl6Ghf2YsFQ-unsplash-2048x1365.jpg 2048w, https://authentiquegypte.com/wp-content/uploads/2025/06/mohamad-sameh-Jl6Ghf2YsFQ-unsplash-scaled.jpg 2560w" sizes="(max-width:1040px) 100vw, 780px" width="2560" height="1707" loading="lazy"></a>
 
 <p>Départ dans l’après-midi. Un véhicule privé et climatisé vient vous chercher à votre hôtel à Sharm el-Sheikh ou Dahab dans l’après-midi pour prendre la route en direction de Sainte-Catherine.</p>
@@ -884,7 +884,7 @@
 <article class="etape" id="etape-2" data-lieu="sainte-catherine">
 <a class="etape__photo" data-lb href="https://authentiquegypte.com/wp-content/uploads/2025/06/DSC00493-scaled.jpg" data-alt="Guesthouse" aria-label="Agrandir la photo : Guesthouse"><img src="https://authentiquegypte.com/wp-content/uploads/2025/06/DSC00493-scaled.jpg" alt="Guesthouse" decoding="async" srcset="https://authentiquegypte.com/wp-content/uploads/2025/06/DSC00493-300x201.jpg 300w, https://authentiquegypte.com/wp-content/uploads/2025/06/DSC00493-768x513.jpg 768w, https://authentiquegypte.com/wp-content/uploads/2025/06/DSC00493-1024x684.jpg 1024w, https://authentiquegypte.com/wp-content/uploads/2025/06/DSC00493-1536x1027.jpg 1536w, https://authentiquegypte.com/wp-content/uploads/2025/06/DSC00493-2048x1369.jpg 2048w, https://authentiquegypte.com/wp-content/uploads/2025/06/DSC00493-scaled.jpg 2560w" sizes="(max-width:1040px) 100vw, 780px" width="2560" height="1711" loading="lazy"></a>
 <h4><svg aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s6-5.5 6-11a6 6 0 1 0-12 0c0 5.5 6 11 6 11z"/><circle cx="12" cy="10" r="2.2"/></svg>Arrivée chez votre hôte</h4>
-<p class="reps"><span class="rep rep--calc" title="OSRM sur données OpenStreetMap (router.project-osrm.org) — relevé le 9 septembre 2026"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 11l1.5-4.5A2 2 0 0 1 8.4 5h7.2a2 2 0 0 1 1.9 1.5L19 11M4 11h16v6h-2a2 2 0 1 1-4 0H10a2 2 0 1 1-4 0H4z"/></svg>209 km · 2 h 37 de route</span></p>
+
 <p>Vous arrivez dans le village de Sainte-Catherine, peuplé en grande partie de Bédouin de la tribu Gabalia.</p>
 <p>Rencontrez ensuite Saleh et l’équipe de la guesthouse qui vous accueillerons avec toute l’hospitalité bédouine dans un lieu particulièrement propice au repos et à la méditation. Vous profitez d’une chambre avec salle de bain privative afin de vous reposer, ainsi que d’un dîner traditionnel et complet pour faire le plein d’énergie avant l’ascension.</p>
 <p class="mentions"><span class="mention"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3v7a2 2 0 0 0 4 0V3M9 3v18M17 3c-2 2-3 5-3 8h3v10"/></svg>Dîner</span><span class="mention"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18V8M3 12h18v6M7 12V9h6v3"/></svg>Nuit en guesthouse</span></p>
@@ -934,7 +934,6 @@
 </article>
 
 </div>
-<p class="reps__src">Les distances et les temps de route sont calculés par nos soins sur les données OpenStreetMap, entre les lieux que la fiche nomme. Ils situent le trajet : ils ne remplacent pas le programme de l&#x27;agence. Les durées écrites par la fiche sont reprises telles quelles.</p>
 </section>
 <section><p class="eyebrow">Budget</p><h2>Tarif par personne</h2><div class="tarif"><div class="tarif__ligne"><span>À partir de</span><b>595 € <small>/ Personne</small></b></div></div></section>
 <section><h2>Ce que le prix comprend</h2><div class="incl">
@@ -944,17 +943,19 @@
 <section class="mod mod--valise">
 <p class="eyebrow">Avant de boucler le sac</p>
 <h2>Quels équipements prévoir ?</h2>
-<p class="mod__intro">Équipement essentiel :</p>
+<div id="valise">
+<p class="mod__intro"><strong>Équipement essentiel :</strong></p>
 <p class="mod__aide">Cochez au fur et à mesure, la liste reste sur cet écran.</p>
-<ul class="valise" id="valise">
+<ul class="valise">
 <li><label><input type="checkbox"><span class="valise__b" aria-hidden="true"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l4.5 4.5L19 7"/></svg></span><span class="valise__t"><b>Vêtements</b><span> : couches superposables (matin frais, journée chaude)</span></span></label></li>
 <li><label><input type="checkbox"><span class="valise__b" aria-hidden="true"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l4.5 4.5L19 7"/></svg></span><span class="valise__t"><b>Chaussures</b><span> : chaussures de randonnée confortables</span></span></label></li>
 <li><label><input type="checkbox"><span class="valise__b" aria-hidden="true"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l4.5 4.5L19 7"/></svg></span><span class="valise__t"><b>Protection</b><span> : chapeau, lunettes de soleil, crème solaire</span></span></label></li>
 <li><label><input type="checkbox"><span class="valise__b" aria-hidden="true"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l4.5 4.5L19 7"/></svg></span><span class="valise__t"><b>Eau</b><span> : minimum 3L par personne par jour</span></span></label></li>
 <li><label><input type="checkbox"><span class="valise__b" aria-hidden="true"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l4.5 4.5L19 7"/></svg></span><span class="valise__t"><b>Appareil photo</b><span> : pour capturer les paysages uniques</span></span></label></li>
 </ul>
+<p class="mod__conseil"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.7 5.8 6.3.7-4.7 4.3 1.3 6.2L12 17l-5.6 3 1.3-6.2L3 9.5l6.3-.7z"/></svg><span>Conseil : Prévoyez un sac à dos léger mais bien équipé pour les excursions.</span></p>
+</div>
 <p class="valise__etat" id="valise-etat" role="status">Il reste <b>5</b> éléments à préparer</p>
-<p class="mod__conseil"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.7 5.8 6.3.7-4.7 4.3 1.3 6.2L12 17l-5.6 3 1.3-6.2L3 9.5l6.3-.7z"/></svg><span>Prévoyez un sac à dos léger mais bien équipé pour les excursions.</span></p>
 </section>
 </div>
 <aside class="pan"><div class="pan__carte">
@@ -965,9 +966,9 @@
 <p class="pan__avis"><svg class="gg" aria-hidden="true" width="18" height="18" viewBox="0 0 48 48"><path fill="#4285F4" d="M45.12 24.5c0-1.56-.14-3.06-.4-4.5H24v8.51h11.84c-.51 2.75-2.06 5.08-4.39 6.64v5.52h7.11c4.16-3.83 6.56-9.47 6.56-16.17z"/><path fill="#34A853" d="M24 46c5.94 0 10.92-1.97 14.56-5.33l-7.11-5.52c-1.97 1.32-4.49 2.1-7.45 2.1-5.73 0-10.58-3.87-12.31-9.07H4.34v5.7C7.96 41.07 15.4 46 24 46z"/><path fill="#FBBC05" d="M11.69 28.18C11.25 26.86 11 25.45 11 24s.25-2.86.69-4.18v-5.7H4.34C2.85 17.09 2 20.45 2 24s.85 6.91 2.34 9.88l7.35-5.7z"/><path fill="#EA4335" d="M24 10.75c3.23 0 6.13 1.11 8.41 3.29l6.31-6.31C34.91 4.18 29.93 2 24 2 15.4 2 7.96 6.93 4.34 14.12l7.35 5.7c1.73-5.2 6.58-9.07 12.31-9.07z"/></svg><b>23 avis Google</b> <span>Agence locale basée au Caire</span></p>
 </div>
 <nav class="somm" aria-label="Le fil du séjour"><p class="somm__t">Le fil du séjour</p><ol>
-<li data-lieu="charm-el-cheikh"><a href="#etape-1"><span class="somm__n">1</span><span><b>Sharm el-Sheikh</b><span>Le Caire - Oasis de Siwa</span></span></a></li>
+<li data-lieu="le-caire"><a href="#etape-1"><span class="somm__n">1</span><span><b>Le Caire</b><span>Le Caire - Oasis de Siwa</span></span></a></li>
 <li data-lieu="sainte-catherine"><a href="#etape-2"><span class="somm__n">2</span><span><b>Sainte-Catherine</b><span>Arrivée chez votre hôte</span></span></a></li>
-<li data-lieu="mont-moise"><a href="#etape-3"><span class="somm__n">3</span><span><b>Mont Moïse</b><span>Départ pour l&#x27;ascension</span></span></a></li>
+<li data-lieu="mont-moise"><a href="#etape-3"><span class="somm__n">3</span><span><b>Gebel Moussa</b><span>Départ pour l&#x27;ascension</span></span></a></li>
 </ol></nav>
 </aside>
 </div></div>
@@ -975,7 +976,7 @@
 <div class="guide">
 <div><p class="eyebrow eyebrow--clair">Qui vous accompagne</p>
 <h2>Votre guide, votre chauffeur, et personne d&#x27;autre</h2>
-<p class="guide__intro">Ce séjour est privatif : vous ne partagez ni le guide, ni le véhicule, ni le rythme.</p></div>
+<p class="guide__intro">Ce séjour est privatif : vous ne partagez ni le guide, ni le véhicule.</p></div>
 <ul class="guide__r">
 <li><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.5"/><path d="M5 20a7 7 0 0 1 14 0"/></svg><span>Guide privatif</span></li>
 <li><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 11l1.5-4.5A2 2 0 0 1 8.4 5h7.2a2 2 0 0 1 1.9 1.5L19 11M4 11h16v6h-2a2 2 0 1 1-4 0H10a2 2 0 1 1-4 0H4z"/></svg><span>Chauffeur privatif</span></li>

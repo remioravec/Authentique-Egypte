@@ -114,8 +114,10 @@ INTERFACE = {
     # --- votre guide (D26)
     'eyebrow_guide': 'Qui vous accompagne',                        # D26
     'titre_guide': 'Votre guide, votre chauffeur, et personne d\'autre',  # D26
-    'guide_intro': 'Ce séjour est privatif : vous ne partagez ni le guide, '
-                   'ni le véhicule, ni le rythme.',                # D26
+    'guide_privatif': 'Ce séjour est privatif : vous ne partagez ni le guide, '
+                      'ni le véhicule.',                           # D41
+    'guide_seul': 'Ce séjour est privatif : vous ne partagez pas votre guide.',  # D41
+    'guide_neutre': 'Ce que la fiche prévoit pour vous accompagner :',  # D41
     'titre_equipe': 'Les visages derrière votre séjour',            # D26
     'equipe_aide': 'Faites défiler pour rencontrer toute l\'équipe.',  # D26
     'precedent': 'Personne précédente',                            # D26
@@ -189,11 +191,36 @@ def items_de(reponse_html):
     return lot
 
 
+def blocs_reponse(reponse_html):
+    """Les blocs d'une réponse, DANS L'ORDRE : paragraphes et listes.
+
+    Une réponse de la fiche n'est pas toujours « une phrase puis une
+    liste ». Celle de la fiche famille en compte sept : deux listes,
+    chacune avec son intertitre, puis trois paragraphes dont un lien.
+    Ramasser tous les `<li>` d'un coup fusionnait les deux listes en une
+    seule et jetait le reste — et comme la question est sortie de
+    l'accordéon (D24), ce reste n'était plus nulle part sur la page.
+    """
+    lot = []
+    for m in re.finditer(r'<(p|ul|ol)\b[^>]*>(.*?)</\1>', reponse_html or '', re.S):
+        if m.group(1) == 'p':
+            if texte_nu(m.group(2)):
+                lot.append(('p', m.group(2).strip()))
+        else:
+            items = items_de('<ul>%s</ul>' % m.group(2))
+            if items:
+                lot.append(('liste', items))
+    return lot
+
+
 def conseil_de(reponse_html):
-    """La ligne « Conseil : … » que la fiche pose en fin de réponse."""
-    m = re.search(r'<p>\s*<strong>\s*Conseil\s*:?\s*</strong>\s*(.*?)</p>',
+    """La ligne « Conseil : … » que la fiche pose en fin de réponse.
+
+    Son intitulé fait partie de la phrase : le retirer laissait un
+    conseil qui ne dit plus qu'il en est un."""
+    m = re.search(r'<p>\s*<strong>\s*(Conseil)\s*:?\s*</strong>\s*(.*?)</p>',
                   reponse_html or '', re.S | re.I)
-    return texte_nu(m.group(1)) if m else ''
+    return ('%s : %s' % (m.group(1), texte_nu(m.group(2)))) if m else ''
 
 
 GOOGLE_G = (
@@ -484,6 +511,10 @@ CSS = r"""
 /* ---------- module : le bon format de séjour ---------- */
 .pg .mod__aide{margin:-6px 0 18px;font-family:"Manrope",sans-serif;font-size:.96rem;
   color:var(--gris-lis)}
+.pg .mod__apres{margin:18px 0 0;font-size:1rem;line-height:1.7;color:var(--texte)}
+.pg .mod--valise .valise+.mod__intro{margin-top:22px}
+.pg .mod--valise .mod__intro a,.pg .mod__apres a{color:var(--teal-txt);text-decoration:underline;
+  text-underline-offset:3px}
 .pg .mod__intro{font-family:"Manrope",sans-serif;font-size:1.02rem;color:var(--nuit-900);
   font-weight:600;margin:0 0 20px;max-width:62ch}
 .pg .mod__conseil{display:flex;gap:11px;align-items:flex-start;margin:20px 0 0;padding:16px 18px;
@@ -1210,11 +1241,31 @@ def ariane(inv):
 
 
 def reperes(inv):
+    """La bande de repères sous le bandeau.
+
+    Deux règles apprises sur les fiches autres que Siwa :
+
+    · la DURÉE annoncée par l'encart de prix (« 6 jours minimum ») n'est
+      pas toujours dans les repères. Elle ne s'affichait alors nulle
+      part : un chiffre de la cliente, perdu. Elle est ajoutée quand les
+      repères ne la portent pas déjà ;
+    · quand les repères de la fiche sont, mot pour mot, sa liste
+      d'inclusions — c'est le cas de « Pyramides, Louxor et mer rouge en
+      famille » — les afficher revient à donner trois fois la même liste
+      sur la même page. On ne garde alors que le prix et la durée.
+    """
+    memes = ([x.strip().lower() for x in inv['reperes']]
+             == [x.strip().lower() for x in inv.get('inclus') or []]) and bool(inv['reperes'])
+    lot = [] if memes else list(inv['reperes'])
+    for d in inv.get('durees') or []:
+        if not any(d.strip().lower() in r.lower() for r in lot):
+            lot.insert(0, d)
+
     o = ['<section class="reperes"><div class="wrap"><ul>']
     if inv['prix']['texte']:
         o.append('<li>%s<small>%s</small><b>%s</b></li>'
                  % (ico('euro', 22), e(INTERFACE['depuis']), e(inv['prix']['texte'])))
-    for r in inv['reperes']:
+    for r in lot:
         o.append('<li>%s<small>%s</small><b>%s</b></li>'
                  % (ico(icone_repere(r), 22), e(libelle_repere(r)), e(r)))
     o.append('</ul></div></section>')
@@ -1244,7 +1295,7 @@ def apercu(inv):
     o = ['<section class="apercu">', '<h2>%s</h2><ol>' % e(INTERFACE['titre_etapes'])]
     for i, (j, et) in enumerate(titres, start=1):
         o.append('<li><span class="n">%s</span><span class="t">%s</span></li>'
-                 % (('J%d' % j['n']) if j['numerote'] else ('%d' % i), e(et['titre'])))
+                 % (('J%s' % rang_jour(j)) if j['numerote'] else ('%d' % i), e(et['titre'])))
     o.append('</ol></section>')
     return '\n'.join(o)
 
@@ -1447,9 +1498,15 @@ def nom_du_lieu(cle, inv):
     qui s'affiche, sur la carte comme au sommaire, et le répertoire ne
     sert plus qu'à reconnaître le lieu et à le placer."""
     label, _, _, motif = LIEUX[cle][:4]
-    m = re.search(motif, texte_du_sejour(inv), re.I)
-    if m and m.group(0).strip().lower() != label.lower():
-        return m.group(0).strip()
+    # La PLUS LONGUE des graphies employées, pas la première rencontrée :
+    # le motif accepte « le caire » comme « caire », et « Arrivée au
+    # Caire » figurant avant « Le Caire » dans la fiche, la carte
+    # affichait « Caire » tout court.
+    formes = [m.group(0).strip() for m in re.finditer(motif, texte_du_sejour(inv), re.I)]
+    if formes:
+        forme = max(formes, key=len)
+        if forme.lower() != label.lower() and len(forme) >= len(label) - 3:
+            return forme[0].upper() + forme[1:]
     return label
 
 
@@ -1458,6 +1515,11 @@ def texte_du_sejour(inv):
     if '_texte' not in inv:
         bouts = [inv.get('h1') or '', inv.get('chapo') or '']
         bouts += inv.get('presentation') or []
+        # La FAQ écrit « Le Caire : pyramides, sphinx » là où le déroulé
+        # écrit « Arrivée au Caire » : c'est la même fiche, et la
+        # graphie la plus complète est celle qu'on affiche.
+        for f in inv.get('faq') or []:
+            bouts += [f.get('q') or '', texte_nu(f.get('reponse_html') or '')]
         for j in inv['jours']:
             bouts.append(j['titre'])
             for et in j['etapes']:
@@ -1470,30 +1532,46 @@ def texte_du_sejour(inv):
 def lieux_du_sejour(inv):
     """Les lieux nommés par le séjour, dans l'ordre où on les rencontre.
 
-    Le titre compte : sur cette fiche il annonce Le Caire et Siwa quand
-    le déroulé décrit le Sinaï. La carte le montre au lieu de le taire."""
-    ordre, vus = [], set()
+    Deux origines, et la distinction porte une affirmation lourde : un
+    lieu « annoncé » est un lieu que le TITRE DU SÉJOUR promet et que le
+    déroulé ne décrit jamais. Sur la fiche Siwa, c'est vrai de Siwa
+    elle-même — le déroulé y décrit le Sinaï — et la carte le montre au
+    lieu de le taire.
+
+    C'est donc une affirmation sur le contenu de la cliente, et elle
+    doit être juste. Elle ne l'était pas : les titres de jours étaient
+    comptés comme des annonces, et comme un lieu déjà vu n'était plus
+    repris, « Arrivée au Caire » suffisait à classer Le Caire parmi les
+    absents — sur une fiche où le déroulé parle du Caire pendant deux
+    jours. Le titre d'un jour fait partie du déroulé : il le décrit, il
+    ne l'annonce pas. Et un lieu vu d'abord dans le titre du séjour puis
+    décrit ensuite n'est plus un absent : il est PROMU."""
+    ordre, rang_par_cle = [], {}
 
     def ajoute(cle, origine, etape='', rang_dom=0):
-        if cle and cle not in vus:
-            vus.add(cle)
-            ordre.append({'cle': cle, 'origine': origine, 'etape': etape,
-                          'rang_dom': rang_dom})
+        if not cle:
+            return
+        if cle in rang_par_cle:
+            x = ordre[rang_par_cle[cle]]
+            if origine == 'deroule' and x['origine'] != 'deroule':
+                x.update({'origine': 'deroule', 'etape': etape, 'rang_dom': rang_dom})
+            return
+        rang_par_cle[cle] = len(ordre)
+        ordre.append({'cle': cle, 'origine': origine, 'etape': etape,
+                      'rang_dom': rang_dom})
 
-    # Ce que le séjour ANNONCE : son titre, et les titres de ses jours.
+    # Ce que le séjour ANNONCE : son titre, et lui seul.
     for mot in re.split(r'\s*[-–—]\s*', inv['h1']):
         ajoute(lieu_de(mot), 'titre')
-    for j in inv['jours']:
-        for mot in re.split(r'\s*[-–—]\s*', j['titre']):
-            ajoute(lieu_de(mot), 'titre')
-    # Ce que le séjour DÉCRIT : le corps des étapes. Une étape muette
-    # reste là où la précédente s'est arrêtée — on ne se téléporte pas
-    # entre deux paragraphes.
+    # Ce que le séjour DÉCRIT : ses étapes, titre du jour compris. Une
+    # étape muette reste là où la précédente s'est arrêtée — on ne se
+    # téléporte pas entre deux paragraphes.
     dernier, rang = '', 0
     for j in inv['jours']:
-        for et in j['etapes']:
+        for i, et in enumerate(j['etapes']):
             rang += 1
-            cle = lieu_de(' '.join([et['titre']] + et['paragraphes'])) or dernier
+            bouts = ([j['titre']] if i == 0 else []) + [et['titre']] + et['paragraphes']
+            cle = lieu_de(' '.join(x for x in bouts if x)) or dernier
             if cle:
                 dernier = cle
                 ajoute(cle, 'deroule', et['titre'] or j['titre'], rang)
@@ -1739,21 +1817,27 @@ def selecteur_duree(inv):
     f = faq_par(inv, r'combien de temps|dur[ée]e')
     if not f:
         return ''
-    lot = [(t, d) for t, d in items_de(f['reponse_html']) if re.search(r'\d', t)]
+    # « Excursion d'une journée » ne porte pas de chiffre et reste une
+    # durée : filtrer sur les chiffres effaçait purement l'option la
+    # plus courte du séjour, et la question étant sortie de l'accordéon,
+    # elle n'existait plus nulle part.
+    lot = items_de(f['reponse_html'])
     if len(lot) < 2:
         return ''
     # Le <p> ENTIER, pas seulement son <strong>. La fiche écrit « Durée
     # recommandée : 3 à 4 jours pour profiter pleinement du site. » ;
     # s'arrêter au gras coupait quatre mots de la cliente.
-    tete = re.search(r'<p>(.*?)</p>', f['reponse_html'], re.S)
-    conseil = conseil_de(f['reponse_html'])
     defaut = 1 if len(lot) > 1 else 0
+    # Tout ce que la réponse dit AUTOUR de la liste : l'intro, les
+    # remarques, le conseil. Sortie de l'accordéon, la question n'a plus
+    # d'autre endroit où le dire.
+    autour = [(g, c) for g, c in blocs_reponse(f['reponse_html']) if g == 'p']
 
     o = ['<section class="mod mod--duree">',
          '<p class="eyebrow">%s</p>' % e(INTERFACE['eyebrow_duree']),
          '<h2>%s</h2>' % e(f['q'])]
-    if tete and texte_nu(tete.group(1)):
-        o.append('<p class="mod__intro">%s</p>' % e(texte_nu(tete.group(1))))
+    if autour and not re.match(r'\s*conseil\s*:', texte_nu(autour[0][1]), re.I):
+        o.append('<p class="mod__intro">%s</p>' % autour.pop(0)[1])
     o.append('<div class="duree">')
     for i, (t, _) in enumerate(lot):
         o.append('<input class="duree__r" type="radio" name="duree" id="duree-%d"%s>'
@@ -1765,8 +1849,12 @@ def selecteur_duree(inv):
     for i, (t, d) in enumerate(lot):
         o.append('<div class="duree__c"><b>%s</b><p>%s</p></div>' % (e(t), e(d)))
     o.append('</div></div>')
-    if conseil:
-        o.append('<p class="mod__conseil">%s<span>%s</span></p>' % (ico('etoile', 16), e(conseil)))
+    for _, corps in autour:
+        nu = texte_nu(corps)
+        if re.match(r'\s*conseil\s*:', nu, re.I):
+            o.append('<p class="mod__conseil">%s<span>%s</span></p>' % (ico('etoile', 16), e(nu)))
+        else:
+            o.append('<p class="mod__apres">%s</p>' % corps)
     o.append('</section>')
     return '\n'.join(o)
 
@@ -1782,29 +1870,54 @@ def liste_valise(inv):
     lot = items_de(f['reponse_html'])
     if len(lot) < 3:
         return ''
-    conseil = conseil_de(f['reponse_html'])
-    # « Équipement essentiel : » est une phrase de la fiche. Notre mode
-    # d'emploi ne la remplace pas, il vient après elle.
-    tete = re.search(r'<p>(.*?)</p>', f['reponse_html'], re.S)
+    blocs = blocs_reponse(f['reponse_html'])
     o = ['<section class="mod mod--valise">',
          '<p class="eyebrow">%s</p>' % e(INTERFACE['eyebrow_valise']),
-         '<h2>%s</h2>' % e(f['q'])]
-    if tete and texte_nu(tete.group(1)):
-        o.append('<p class="mod__intro">%s</p>' % e(texte_nu(tete.group(1))))
-    o += ['<p class="mod__aide">%s</p>' % e(INTERFACE['valise_aide']),
-          '<ul class="valise" id="valise">']
-    for i, (t, d) in enumerate(lot):
-        o.append('<li><label><input type="checkbox"><span class="valise__b" aria-hidden="true">%s</span>'
-                 '<span class="valise__t"><b>%s</b>%s</span></label></li>'
-                 % (ico('coche', 14), e(t), ('<span>%s</span>' % e(d)) if d else ''))
-    o.append('</ul>')
+         '<h2>%s</h2>' % e(f['q']),
+         '<div id="valise">']
+    aide_posee = False
+    for genre, corps in blocs:
+        if genre == 'p':
+            nu = texte_nu(corps)
+            if re.match(r'\s*conseil\s*:', nu, re.I):
+                o.append('<p class="mod__conseil">%s<span>%s</span></p>' % (ico('etoile', 16), e(nu)))
+                continue
+            # Le HTML de la cliente passe tel quel, comme dans
+            # l'accordéon : son lien reste un lien.
+            o.append('<p class="mod__intro">%s</p>' % corps)
+            if not aide_posee:
+                o.append('<p class="mod__aide">%s</p>' % e(INTERFACE['valise_aide']))
+                aide_posee = True
+            continue
+        o.append('<ul class="valise">')
+        for t, d in corps:
+            o.append('<li><label><input type="checkbox">'
+                     '<span class="valise__b" aria-hidden="true">%s</span>'
+                     '<span class="valise__t"><b>%s</b>%s</span></label></li>'
+                     % (ico('coche', 14), e(t), ('<span>%s</span>' % e(d)) if d else ''))
+        o.append('</ul>')
+    o.append('</div>')
     o.append('<p class="valise__etat" id="valise-etat" role="status">%s <b>%d</b> %s</p>'
              % (e(INTERFACE['valise_reste']), len(lot),
                 e('éléments à préparer' if len(lot) > 1 else 'élément à préparer')))
-    if conseil:
-        o.append('<p class="mod__conseil">%s<span>%s</span></p>' % (ico('etoile', 16), e(conseil)))
     o.append('</section>')
     return '\n'.join(o)
+
+
+def intro_guide(roles):
+    """La phrase d'accroche de la section guide, et rien de plus.
+
+    « Ni le rythme » ne s'appuyait sur aucune ligne de la fiche :
+    l'agent contrôle contenu l'a relevé comme une affirmation sur le
+    produit, et il a raison. Ce qui reste est ce que les inclusions
+    disent en toutes lettres — un guide privatif, un chauffeur privatif —
+    et la phrase se règle sur ce qui a été trouvé (D41)."""
+    genres = {g for g, _ in roles}
+    if 'guide' in genres and 'voiture' in genres:
+        return INTERFACE['guide_privatif']
+    if 'guide' in genres:
+        return INTERFACE['guide_seul']
+    return INTERFACE['guide_neutre']
 
 
 def votre_guide(inv, home):
@@ -1834,7 +1947,7 @@ def votre_guide(inv, home):
          '<div class="guide">',
          '<div><p class="eyebrow eyebrow--clair">%s</p>' % e(INTERFACE['eyebrow_guide']),
          '<h2>%s</h2>' % e(INTERFACE['titre_guide']),
-         '<p class="guide__intro">%s</p></div>' % e(INTERFACE['guide_intro']),
+         '<p class="guide__intro">%s</p></div>' % e(intro_guide(roles)),
          '<ul class="guide__r">']
     for icone, item in roles:
         o.append('<li>%s<span>%s</span></li>' % (ico(icone, 18), e(item)))
@@ -1896,6 +2009,22 @@ def galerie(inv):
     return '\n'.join(o)
 
 
+def rang_jour(j):
+    """Le numéro que la FICHE donne à ce jour, pas le nôtre.
+
+    La fiche « Pyramides, Louxor et mer rouge en famille » numérote
+    1, 2, 3, 6, 7, 7, 8 : elle saute les jours 4 et 5 et écrit deux fois
+    « Jour 7 ». Renuméroter en continu changeait quatre chiffres de la
+    cliente et effaçait le trou — personne ne l'aurait plus vu. On
+    affiche ce qu'elle écrit ; l'anomalie, elle, est dans le bandeau."""
+    m = re.match(r'\s*jours?\s*(\d+)', j.get('titre_source') or '', re.I)
+    return m.group(1) if m else str(j['n'])
+
+
+def numero_jour(j):
+    return 'Jour %s' % rang_jour(j)
+
+
 def deroule(inv):
     if not inv['jours']:
         return ''
@@ -1905,21 +2034,29 @@ def deroule(inv):
     dernier_lieu = ''
     rang_dom = 0
     calcule = False
+    # D15 : une photo de la source ne sert jamais deux fois. La fiche
+    # famille répète son jour 7 à l'identique, photo comprise ; le
+    # doublon serait le nôtre, pas le sien.
+    photos_vues = set()
     for j in inv['jours']:
         o.append('<div class="jour">')
         # Le numéro est écrit APRÈS le titre et remonté par la mise en
         # page : un titre suivi de rien est signalé comme orphelin.
         o.append('<div class="jour__tete"><h3>%s</h3>%s</div>'
                  % (e(j['titre']),
-                    ('<span class="jour__no">Jour %d</span>' % j['n']) if j['numerote'] else ''))
+                    ('<span class="jour__no">%s</span>' % e(numero_jour(j))) if j['numerote'] else ''))
         for et in j['etapes']:
             precedent = dernier_lieu
-            lieu = lieu_de(' '.join([et['titre']] + et['paragraphes'])) or dernier_lieu
+            # Le titre du jour nomme souvent le seul lieu de l'étape
+            # (« Arrivée au Caire ») : il compte, comme dans la carte.
+            bouts = ([j['titre']] if et is j['etapes'][0] else []) + [et['titre']] + et['paragraphes']
+            lieu = lieu_de(' '.join(x for x in bouts if x)) or dernier_lieu
             dernier_lieu = lieu or dernier_lieu
             rang_dom += 1
             o.append('<article class="etape" id="etape-%d"%s>'
                      % (rang_dom, ' data-lieu="%s"' % e(lieu) if lieu else ''))
-            if et.get('image'):
+            if et.get('image') and et['image']['base'] not in photos_vues:
+                photos_vues.add(et['image']['base'])
                 img = et['image']
                 # La boîte fait au plus 780 px : toutes les photos du
                 # déroulé sont au-delà, aucune n'est agrandie.

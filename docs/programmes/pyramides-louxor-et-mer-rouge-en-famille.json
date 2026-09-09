@@ -867,6 +867,7 @@
  "anomalies": [
   "image à la une de 1280 px de large : trop petite pour un bandeau plein écran",
   "images sans original au-delà de 720 px : istockphoto-496213844-612x612-1.jpg",
-  "jours 5 et 6 : le même titre « De Louxor à la Mer Rouge » revient 2 fois"
+  "le titre « De Louxor à la Mer Rouge » revient 2 fois, au jour 7",
+  "le déroulé saute les jours 4, 5 : la fiche numérote 1, 2, 3, 6, 7, 7, 8"
  ]
 }

@@ -583,18 +583,50 @@ def anomalies(inv):
     # deux « De Louxor à la Mer Rouge » : le voyageur qui compte ses
     # nuits ne s'y retrouve pas, et nous n'avons pas à trancher à sa
     # place.
+    # Le numéro cité est celui que la FICHE écrit (« Jour 7 »), jamais
+    # notre rang de lecture : c'est le sien que l'agence doit retrouver.
+    def numero(j):
+        m = re.match(r'\s*jours?\s*(\d+)', j.get('titre_source') or '', re.I)
+        return m.group(1) if m else str(j['n'])
+
     vus = {}
     for j in inv['jours']:
         cle = ' '.join((j['titre'] or '').lower().split())
         if cle:
-            vus.setdefault(cle, []).append(j['n'])
-    for titre, rangs in vus.items():
-        if len(rangs) > 1:
-            a.append('jours %s : le même titre « %s » revient %d fois'
-                     % (' et '.join(str(x) for x in rangs),
-                        next(j['titre'] for j in inv['jours']
-                             if ' '.join((j['titre'] or '').lower().split()) == titre),
-                        len(rangs)))
+            vus.setdefault(cle, []).append(j)
+    for titre, lot in vus.items():
+        if len(lot) > 1:
+            rangs = [numero(j) for j in lot]
+            a.append('le titre « %s » revient %d fois, %s'
+                     % (lot[0]['titre'], len(lot),
+                        'au jour %s' % rangs[0] if len(set(rangs)) == 1
+                        else 'aux jours ' + ' et '.join(rangs)))
+    # La durée annoncée par l'encart de prix contre le nombre de jours
+    # réellement décrits. « 6 jours minimum » sur un déroulé de huit
+    # jours, « 2 jours minimum » sur trois : le voyageur qui compare un
+    # prix à une durée se trompe, et l'agence ne le voit pas.
+    # Au moins deux jours numérotés : en deçà, le déroulé n'est pas un
+    # jour par jour et la comparaison ne veut rien dire.
+    if len(inv['jours']) > 1 and all(j.get('numerote') for j in inv['jours']):
+        decrits = len(inv['jours'])
+        ecarts = [d for d in (inv.get('durees') or [])
+                  if re.search(r'(\d+)\s*jours?', d, re.I)
+                  and int(re.search(r'(\d+)\s*jours?', d, re.I).group(1)) != decrits]
+        if ecarts:
+            a.append('durée annoncée « %s » pour %d jours décrits dans le déroulé'
+                     % (' » et « '.join(ecarts), decrits))
+
+    # Une numérotation à trous est une anomalie à part entière : la
+    # fiche famille passe du jour 3 au jour 6.
+    suite = [numero(j) for j in inv['jours'] if (j.get('titre_source') or '')]
+    chiffres = [int(x) for x in suite if x.isdigit()]
+    if len(chiffres) > 1:
+        manquants = [n for n in range(min(chiffres), max(chiffres) + 1) if n not in chiffres]
+        if manquants:
+            a.append('le déroulé saute %s : la fiche numérote %s'
+                     % ('le jour ' + str(manquants[0]) if len(manquants) == 1
+                        else 'les jours ' + ', '.join(str(x) for x in manquants),
+                        ', '.join(suite)))
 
     lieu = lieu_du_titre(inv['h1'])
     corps = ' '.join(p for j in inv['jours'] for et in j['etapes']

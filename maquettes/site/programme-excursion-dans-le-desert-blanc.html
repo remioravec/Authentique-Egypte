@@ -152,6 +152,10 @@
 /* ---------- module : le bon format de séjour ---------- */
 .pg .mod__aide{margin:-6px 0 18px;font-family:"Manrope",sans-serif;font-size:.96rem;
   color:var(--gris-lis)}
+.pg .mod__apres{margin:18px 0 0;font-size:1rem;line-height:1.7;color:var(--texte)}
+.pg .mod--valise .valise+.mod__intro{margin-top:22px}
+.pg .mod--valise .mod__intro a,.pg .mod__apres a{color:var(--teal-txt);text-decoration:underline;
+  text-underline-offset:3px}
 .pg .mod__intro{font-family:"Manrope",sans-serif;font-size:1.02rem;color:var(--nuit-900);
   font-weight:600;margin:0 0 20px;max-width:62ch}
 .pg .mod__conseil{display:flex;gap:11px;align-items:flex-start;margin:20px 0 0;padding:16px 18px;
@@ -785,10 +789,12 @@
 </div></div></div></section>
 <section class="reperes"><div class="wrap"><ul>
 <li><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M17 6.5A6 6 0 0 0 7 12a6 6 0 0 0 10 5.5M5 10h8M5 14h8"/></svg><small>À partir de</small><b>415 €</b></li>
+<li><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><small>Durée</small><b>2 jours minimum</b></li>
 <li><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 11l1.5-4.5A2 2 0 0 1 8.4 5h7.2a2 2 0 0 1 1.9 1.5L19 11M4 11h16v6h-2a2 2 0 1 1-4 0H10a2 2 0 1 1-4 0H4z"/></svg><small>Transport</small><b>Véhicule sécurisé, chauffeurs certifiés</b></li>
 </ul></div></section>
 <nav class="ariane ariane--sous" aria-label="Fil d'Ariane"><div class="wrap"><ol><li><a href="https://authentiquegypte.com/">Accueil</a></li><li><a href="https://authentiquegypte.com/nos-sejours-egypte/">Nos séjours en Égypte</a></li><li><a href="https://authentiquegypte.com/nos-sejours-egypte/desert-egypte/">Déserts et Oasis égyptiens</a></li><li><span aria-current="page">Excursion dans le désert blanc</span></li></ol></div></nav>
 <div class="wrap"><div class="deux"><div class="corps">
+<aside class="verifier"><p class="verifier__t">À vérifier avec l&#x27;agence avant mise en ligne</p><ul><li>durée annoncée « 2 jours minimum » pour 3 jours décrits dans le déroulé</li></ul><p class="verifier__d">Relevé sur la fiche actuelle le 9 septembre 2026</p></aside>
 <section>
 <p class="eyebrow">Le séjour</p>
 <h2>Vue d&#x27;ensemble</h2>
@@ -803,18 +809,21 @@
 <section class="mod mod--duree">
 <p class="eyebrow">Le bon format</p>
 <h2>Combien de temps prévoir ?</h2>
-<p class="mod__intro">Durée recommandée : 2-3 jours pour profiter pleinement du site.</p>
+<p class="mod__intro"><strong>Durée recommandée : 2-3 jours</strong> pour profiter pleinement du site.</p>
 <div class="duree">
 <input class="duree__r" type="radio" name="duree" id="duree-0">
 <input class="duree__r" type="radio" name="duree" id="duree-1" checked>
+<input class="duree__r" type="radio" name="duree" id="duree-2">
 <div class="duree__ong" role="tablist">
-<label class="duree__o" for="duree-0" tabindex="0">2 jours</label>
-<label class="duree__o" for="duree-1" tabindex="0">3 jours</label>
+<label class="duree__o" for="duree-0" tabindex="0">Excursion d&#x27;une journée</label>
+<label class="duree__o" for="duree-1" tabindex="0">2 jours</label>
+<label class="duree__o" for="duree-2" tabindex="0">3 jours</label>
 </div><div class="duree__p">
+<div class="duree__c"><b>Excursion d&#x27;une journée</b><p> : visite rapide mais intense (départ tôt le matin)</p></div>
 <div class="duree__c"><b>2 jours</b><p> : idéal pour explorer les principaux sites et faire une nuit en bivouac</p></div>
 <div class="duree__c"><b>3 jours</b><p> : pour une expérience complète avec exploration des oasis voisines</p></div>
 </div></div>
-<p class="mod__conseil"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.7 5.8 6.3.7-4.7 4.3 1.3 6.2L12 17l-5.6 3 1.3-6.2L3 9.5l6.3-.7z"/></svg><span>Prévoyez au moins une nuit sur place pour voir le paysage sous différents éclairages.</span></p>
+<p class="mod__conseil"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.7 5.8 6.3.7-4.7 4.3 1.3 6.2L12 17l-5.6 3 1.3-6.2L3 9.5l6.3-.7z"/></svg><span>Conseil : Prévoyez au moins une nuit sur place pour voir le paysage sous différents éclairages.</span></p>
 </section>
 <figure class="carte">
 <figcaption class="carte__tete"><h3>Le trajet, étape par étape</h3><p class="eyebrow">Où vous allez</p></figcaption>
@@ -825,31 +834,34 @@
 <path d="M456.4 514.8 L458.5 560.0 L438.0 596.4 L428.4 605.6 L422.9 606.9 L417.2 602.4 L405.7 603.8 L366.8 645.6 L359.5 662.7 L348.0 679.0" fill="none" stroke="var(--carte-nil)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
 <path d="M301.4 753.7 L304.4 736.7 L316.8 728.0 L324.9 712.7 L324.3 708.8 L340.7 693.5 L348.0 679.0" fill="none" stroke="var(--carte-nil)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
 <path d="M456.4 514.8 L458.9 460.8 L455.9 442.3 L435.8 420.7 L433.0 405.9 L445.8 392.8 L449.4 384.2 L447.6 366.9 L444.2 364.6 L425.0 371.2 L417.0 370.5 L412.4 364.0 L404.0 362.0 L391.7 340.7 L385.3 336.9 L384.6 332.2 L360.9 300.0 L340.6 282.2 L334.5 272.3 L334.2 238.8 L326.8 221.9 L336.4 183.2 L355.8 149.3 L359.9 114.7 L356.9 91.3" fill="none" stroke="var(--carte-nil)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
-<g class="carte__pt carte__pt--titre" id="pt-desert-blanc" data-lieu="desert-blanc">
+<path class="carte__route" d="M151.7 289.6 L212.7 213.7 L356.8 96.7" fill="none" stroke="var(--or)" stroke-width="4" stroke-dasharray="10 7" stroke-linecap="round"/>
+<g class="carte__pt" id="pt-desert-blanc" data-lieu="desert-blanc">
 <circle class="carte__halo" cx="151.7" cy="289.6" r="22"/>
 <circle class="carte__d" cx="151.7" cy="289.6" r="9"/>
+<text class="carte__n" x="151.7" y="294.40000000000003">1</text>
 <text class="carte__lbl" x="133.7" y="325.90000000000003" text-anchor="end">Désert Blanc</text>
 </g>
-<g class="carte__pt carte__pt--titre" id="pt-bahariya" data-lieu="bahariya">
+<g class="carte__pt" id="pt-bahariya" data-lieu="bahariya">
 <circle class="carte__halo" cx="212.7" cy="213.7" r="22"/>
 <circle class="carte__d" cx="212.7" cy="213.7" r="9"/>
+<text class="carte__n" x="212.7" y="218.5">2</text>
 <text class="carte__lbl" x="194.7" y="221.2" text-anchor="end">Bahariya</text>
 </g>
-<g class="carte__pt carte__pt--titre" id="pt-le-caire" data-lieu="le-caire">
+<g class="carte__pt" id="pt-le-caire" data-lieu="le-caire">
 <circle class="carte__halo" cx="356.8" cy="96.7" r="22"/>
 <circle class="carte__d" cx="356.8" cy="96.7" r="9"/>
-<text class="carte__lbl" x="338.8" y="89.8" text-anchor="end">Caire</text>
+<text class="carte__n" x="356.8" y="101.5">3</text>
+<text class="carte__lbl" x="338.8" y="89.8" text-anchor="end">Le Caire</text>
 </g>
 <g class="carte__ech"><path d="M25.2 368.8 h124.4" /><text x="87.4" y="364.8">200 km</text></g>
 </svg>
-<p class="carte__hors"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.7 5.8 6.3.7-4.7 4.3 1.3 6.2L12 17l-5.6 3 1.3-6.2L3 9.5l6.3-.7z"/></svg>Annoncé par le titre du séjour, absent du déroulé : Désert Blanc, Bahariya, Caire</p>
 <figcaption class="carte__note">Points placés à leurs coordonnées réelles. Fond de carte :  Natural Earth 1:50m, domaine public (naturalearthdata.com)</figcaption></figure>
 <section>
 <p class="eyebrow">Dans le détail</p>
 <h2>Le séjour jour par jour</h2>
 <div class="jour">
 <div class="jour__tete"><h3>Oasis de Bahariya</h3><span class="jour__no">Jour 1</span></div>
-<article class="etape" id="etape-1" data-lieu="le-caire">
+<article class="etape" id="etape-1" data-lieu="bahariya">
 
 <p>Départ tôt le matin du Caire en direction de l’oasis de Bahariya.À l’arrivée, vous découvrirez la Montagne Anglaise, réputée pour ses vues panoramiques sur le désert, avant de partager un déjeuner traditionnel dans une maison bédouine.L’après-midi sera consacré à la visite des lacs salés, puis vous profiterez d’un dîner et d’une nuit à l’hôtel de Bahariya.</p>
 
@@ -867,7 +879,7 @@
 </div>
 <div class="jour">
 <div class="jour__tete"><h3>Retour au Caire</h3><span class="jour__no">Jour 3</span></div>
-<article class="etape" id="etape-3" data-lieu="bahariya">
+<article class="etape" id="etape-3" data-lieu="le-caire">
 
 <p>Petit-déjeuner au camp.Sur le chemin du retour, vous visiterez le Musée des Momies de Bahariya, avant de reprendre la route vers Le Caire en fin de matinée.</p>
 
@@ -883,17 +895,19 @@
 <section class="mod mod--valise">
 <p class="eyebrow">Avant de boucler le sac</p>
 <h2>Quels équipements prévoir ?</h2>
-<p class="mod__intro">Équipement essentiel :</p>
+<div id="valise">
+<p class="mod__intro"><strong>Équipement essentiel :</strong></p>
 <p class="mod__aide">Cochez au fur et à mesure, la liste reste sur cet écran.</p>
-<ul class="valise" id="valise">
+<ul class="valise">
 <li><label><input type="checkbox"><span class="valise__b" aria-hidden="true"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l4.5 4.5L19 7"/></svg></span><span class="valise__t"><b>Vêtements</b><span> : couches superposables (matin frais, journée chaude)</span></span></label></li>
 <li><label><input type="checkbox"><span class="valise__b" aria-hidden="true"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l4.5 4.5L19 7"/></svg></span><span class="valise__t"><b>Chaussures</b><span> : chaussures de randonnée confortables</span></span></label></li>
 <li><label><input type="checkbox"><span class="valise__b" aria-hidden="true"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l4.5 4.5L19 7"/></svg></span><span class="valise__t"><b>Protection</b><span> : chapeau, lunettes de soleil, crème solaire</span></span></label></li>
 <li><label><input type="checkbox"><span class="valise__b" aria-hidden="true"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l4.5 4.5L19 7"/></svg></span><span class="valise__t"><b>Eau</b><span> : minimum 3L par personne par jour</span></span></label></li>
 <li><label><input type="checkbox"><span class="valise__b" aria-hidden="true"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l4.5 4.5L19 7"/></svg></span><span class="valise__t"><b>Appareil photo</b><span> : pour capturer les paysages uniques</span></span></label></li>
 </ul>
+<p class="mod__conseil"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.7 5.8 6.3.7-4.7 4.3 1.3 6.2L12 17l-5.6 3 1.3-6.2L3 9.5l6.3-.7z"/></svg><span>Conseil : Prévoyez un sac à dos léger mais bien équipé pour les randonnées.</span></p>
+</div>
 <p class="valise__etat" id="valise-etat" role="status">Il reste <b>5</b> éléments à préparer</p>
-<p class="mod__conseil"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.7 5.8 6.3.7-4.7 4.3 1.3 6.2L12 17l-5.6 3 1.3-6.2L3 9.5l6.3-.7z"/></svg><span>Prévoyez un sac à dos léger mais bien équipé pour les randonnées.</span></p>
 </section>
 </div>
 <aside class="pan"><div class="pan__carte">
@@ -903,14 +917,18 @@
 <p class="pan__note">Réponse sous 48 h, hors vendredi et samedi<br>Aucune carte bancaire demandée à cette étape.</p>
 <p class="pan__avis"><svg class="gg" aria-hidden="true" width="18" height="18" viewBox="0 0 48 48"><path fill="#4285F4" d="M45.12 24.5c0-1.56-.14-3.06-.4-4.5H24v8.51h11.84c-.51 2.75-2.06 5.08-4.39 6.64v5.52h7.11c4.16-3.83 6.56-9.47 6.56-16.17z"/><path fill="#34A853" d="M24 46c5.94 0 10.92-1.97 14.56-5.33l-7.11-5.52c-1.97 1.32-4.49 2.1-7.45 2.1-5.73 0-10.58-3.87-12.31-9.07H4.34v5.7C7.96 41.07 15.4 46 24 46z"/><path fill="#FBBC05" d="M11.69 28.18C11.25 26.86 11 25.45 11 24s.25-2.86.69-4.18v-5.7H4.34C2.85 17.09 2 20.45 2 24s.85 6.91 2.34 9.88l7.35-5.7z"/><path fill="#EA4335" d="M24 10.75c3.23 0 6.13 1.11 8.41 3.29l6.31-6.31C34.91 4.18 29.93 2 24 2 15.4 2 7.96 6.93 4.34 14.12l7.35 5.7c1.73-5.2 6.58-9.07 12.31-9.07z"/></svg><b>23 avis Google</b> <span>Agence locale basée au Caire</span></p>
 </div>
-
+<nav class="somm" aria-label="Le fil du séjour"><p class="somm__t">Le fil du séjour</p><ol>
+<li data-lieu="desert-blanc"><a href="#etape-2"><span class="somm__n">1</span><span><b>Désert Blanc</b><span>Désert Noir &amp; Désert Blanc</span></span></a></li>
+<li data-lieu="bahariya"><a href="#etape-1"><span class="somm__n">2</span><span><b>Bahariya</b><span>Oasis de Bahariya</span></span></a></li>
+<li data-lieu="le-caire"><a href="#etape-3"><span class="somm__n">3</span><span><b>Le Caire</b><span>Retour au Caire</span></span></a></li>
+</ol></nav>
 </aside>
 </div></div>
 <section class="pg-sec pg-sec--nuit"><div class="wrap">
 <div class="guide">
 <div><p class="eyebrow eyebrow--clair">Qui vous accompagne</p>
 <h2>Votre guide, votre chauffeur, et personne d&#x27;autre</h2>
-<p class="guide__intro">Ce séjour est privatif : vous ne partagez ni le guide, ni le véhicule, ni le rythme.</p></div>
+<p class="guide__intro">Ce séjour est privatif : vous ne partagez ni le guide, ni le véhicule.</p></div>
 <ul class="guide__r">
 <li><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.5"/><path d="M5 20a7 7 0 0 1 14 0"/></svg><span>Guide privatif</span></li>
 <li><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 11l1.5-4.5A2 2 0 0 1 8.4 5h7.2a2 2 0 0 1 1.9 1.5L19 11M4 11h16v6h-2a2 2 0 1 1-4 0H10a2 2 0 1 1-4 0H4z"/></svg><span>Chauffeur privatif dans un véhicule climatisé</span></li>

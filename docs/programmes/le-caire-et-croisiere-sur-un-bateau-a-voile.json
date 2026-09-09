@@ -817,6 +817,7 @@
  ],
  "anomalies": [
   "durées contradictoires sur la fiche : 3 jours / 8 jours minimum",
-  "aucun prix lu sur la fiche"
+  "aucun prix lu sur la fiche",
+  "durée annoncée « 3 jours » pour 8 jours décrits dans le déroulé"
  ]
 }
