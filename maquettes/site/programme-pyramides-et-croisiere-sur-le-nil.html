@@ -503,6 +503,10 @@
 .pg .acc__c ul li::before{content:"";position:absolute;left:2px;top:.62em;width:7px;height:7px;
   border-radius:50%;background:var(--or)}
 .pg .acc__c strong{color:var(--nuit-900);font-weight:600}
+/* Les réponses de la cliente portent parfois leurs propres titres. Sans
+   interligne, un H3 de deux lignes se serre à 1,25 — sous le plancher. */
+.pg .acc__c h3,.pg .acc__c h4{font-size:1.05rem;line-height:1.45;margin:18px 0 8px}
+.pg .acc__c h3:first-child,.pg .acc__c h4:first-child{margin-top:0}
 .pg .acc__c a{color:var(--teal-txt);text-decoration:underline;text-underline-offset:3px}
 .pg .acc__vide{color:#7A5605;background:var(--or-fond);border:1px dashed var(--or);
   border-radius:var(--r-s);padding:10px 14px;font-family:"Manrope",sans-serif;font-size:.94rem}
@@ -799,7 +803,6 @@
 <div class="hero__in"><div class="wrap">
 <div class="hero__pills"><span class="pill"><svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s6-5.5 6-11a6 6 0 1 0-12 0c0 5.5 6 11 6 11z"/><circle cx="12" cy="10" r="2.2"/></svg>Croisières en Égypte</span><span class="pill"><svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.5"/><path d="M5 20a7 7 0 0 1 14 0"/></svg>Guides égyptologues francophones</span></div>
 <h1>Pyramides et croisière sur le Nil</h1>
-<p class="hero__chapo">Les étapes de votre séjour :</p>
 <div class="hero__bas">
 <div class="hero__prix"><small>À partir de</small><b>1195 €</b><i>/ Personne</i></div>
 <div class="hero__act"><a class="btn btn--or" href="https://authentiquegypte.com/sur-mesure/">Personnaliser ce séjour</a><a class="btn btn--verre" href="https://wa.me/201066619098"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6a3 3 0 0 1 3-3h10a3 3 0 0 1 3 3v8a3 3 0 0 1-3 3H9l-5 4z"/></svg> Poser une question sur WhatsApp</a></div>

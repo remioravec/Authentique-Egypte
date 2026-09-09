@@ -7,7 +7,7 @@
  "title_seo": "Vivez l'expérience extraordinaire au Désert Blanc en Égypte - Voyage en Égypte sur mesure",
  "meta_description": "Partez à l'aventure et explorez le désert blanc égyptien accompagné de nos guides locaux. Cette excursion dans le désert blanc sera magique",
  "h1": "Excursion dans le désert blanc",
- "chapo": "Les étapes de votre séjour :",
+ "chapo": "",
  "presentation_titre": "Vue d'ensemble",
  "presentation": [
   "Le désert blanc en Égypte est un incroyable chef-d’œuvre naturel créé par des formations rocheuses étonnantes qui ressemblent à un paysage tout droit sorti d’un rêve. Les roches calcaires blanches se dressent dans un désert plat et stérile, offrant une vue à couper le souffle. C’est un endroit où la nature se transforme en art, où le calme infini et l’immensité du désert créent une atmosphère unique.",
@@ -415,6 +415,8 @@
   "Nous avons visité Le Caire avec cette agence. Nous avons établi notre programme avec eux et ils ont été très à l écoute. Dès notre arrivée à l aéroport un représentant nous attendait pour les formalités. Puis ils ont été présents plusieurs fois pendant notre séjour. La guide et les chauffeurs ont été très professionnels et très ponctuels. Merci à toute l équipe"
  ],
  "anomalies": [
+  "la fiche n'a pas de phrase de présentation : son chapô est l'intitulé de section « Les étapes de votre séjour : », partagé par plusieurs fiches",
   "durée annoncée « 2 jours minimum » pour 3 jours décrits dans le déroulé"
- ]
+ ],
+ "chapo_source": "Les étapes de votre séjour :"
 }

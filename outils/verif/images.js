@@ -254,8 +254,15 @@ function chargerTailles() {
       bloquants.push(`image étrangère à la fiche et absente du registre : ${dit(e)}`);
     }
     if (soeurs.length) releve.soeurs = soeurs;
+    // « Aucune photo de la fiche ne disparaît » est une règle de FICHE.
+    // Un inventaire dont le slug commence par « _ » est un RÉSERVOIR
+    // — les photos de toutes les familles, par exemple — et une page
+    // n'a évidemment pas à les porter toutes. La règle de provenance,
+    // elle, continue de s'appliquer : rien n'entre qui ne vienne du
+    // réservoir ou du registre.
+    const reservoir = String(d.slug || '').startsWith('_');
     const posees = new Set(releve.images.map(e => e.base));
-    const oubliees = [...dedans].filter(b => !posees.has(b));
+    const oubliees = reservoir ? [] : [...dedans].filter(b => !posees.has(b));
     if (oubliees.length)
       majeurs.push(`image(s) de la fiche non reprise(s) : ${oubliees.join(', ')}`);
   }

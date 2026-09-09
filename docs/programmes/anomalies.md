@@ -4,7 +4,7 @@
 modifie pas à la main** : il redit ce que l'inventaire trouve, et rien d'autre.
 Ce que l'agence doit trancher est repris en questions dans
 `questions-melanie.md`.
-**44 anomalies sur 14 fiches.**
+**51 anomalies sur 14 fiches.**
 
 
 ## Coucher de soleil et nuit sur le mont Moïse
@@ -22,6 +22,7 @@ Ce que l'agence doit trancher est repris en questions dans
 
 `croisiere-sur-le-lac-nasser` — relevé du 9 septembre 2026
 
+- la fiche n'a pas de phrase de présentation : son chapô est l'intitulé de section « Votre programme de voyage », partagé par plusieurs fiches
 - image à la une de 1024 px de large : trop petite pour un bandeau plein écran
 - images sans original au-delà de 720 px : mohamed-soliman.jpg, desert-egypte.jpg, aswan.jpg, abu-simbel.jpg, aswan-journee-libre.jpg, vallée-des-rois.jpg, musee-egypte.jpg, pyramides-gizeh.jpg, vol-international.jpg
 - images non résolues dans la médiathèque : desert-egypte.jpg, aswan.jpg, abu-simbel.jpg, aswan-journee-libre.jpg, vallée-des-rois.jpg, musee-egypte.jpg, pyramides-gizeh.jpg, vol-international.jpg
@@ -53,6 +54,7 @@ Ce que l'agence doit trancher est repris en questions dans
 
 `excursion-dans-le-desert-blanc` — relevé du 9 septembre 2026
 
+- la fiche n'a pas de phrase de présentation : son chapô est l'intitulé de section « Les étapes de votre séjour : », partagé par plusieurs fiches
 - durée annoncée « 2 jours minimum » pour 3 jours décrits dans le déroulé
 
 ## Du littoral de la mer Rouge aux montagnes du Sinaï
@@ -69,6 +71,7 @@ Ce que l'agence doit trancher est repris en questions dans
 
 `le-caire-et-croisiere-sur-un-bateau-a-voile` — relevé du 9 septembre 2026
 
+- la fiche n'a pas de phrase de présentation : son chapô est l'intitulé de section « Les étapes de votre séjour : », partagé par plusieurs fiches
 - durées contradictoires sur la fiche : 3 jours / 8 jours minimum
 - aucun prix lu sur la fiche
 - durée annoncée « 3 jours » pour 8 jours décrits dans le déroulé
@@ -86,6 +89,7 @@ Ce que l'agence doit trancher est repris en questions dans
 
 `mer-rouge` — relevé du 9 septembre 2026
 
+- la fiche n'a pas de phrase de présentation : son chapô est l'intitulé de section « Les étapes de votre séjour : », partagé par plusieurs fiches
 - image à la une de 1280 px de large : trop petite pour un bandeau plein écran
 - durée annoncée « 9 jours minimum » pour 8 jours décrits dans le déroulé
 
@@ -93,12 +97,14 @@ Ce que l'agence doit trancher est repris en questions dans
 
 `pyramides-et-croisiere-sur-le-nil` — relevé du 9 septembre 2026
 
+- la fiche n'a pas de phrase de présentation : son chapô est l'intitulé de section « Les étapes de votre séjour : », partagé par plusieurs fiches
 - durée annoncée « 6 jours minimum » pour 8 jours décrits dans le déroulé
 
 ## Pyramides, Louxor et mer rouge en famille
 
 `pyramides-louxor-et-mer-rouge-en-famille` — relevé du 9 septembre 2026
 
+- la fiche n'a pas de phrase de présentation : son chapô est l'intitulé de section « Les étapes de votre séjour : », partagé par plusieurs fiches
 - image à la une de 1280 px de large : trop petite pour un bandeau plein écran
 - images sans original au-delà de 720 px : istockphoto-496213844-612x612-1.jpg
 - le titre « De Louxor à la Mer Rouge » revient 2 fois, au jour 7
@@ -108,6 +114,7 @@ Ce que l'agence doit trancher est repris en questions dans
 
 `roadtrip-en-egypte` — relevé du 9 septembre 2026
 
+- la fiche n'a pas de phrase de présentation : son chapô est l'intitulé de section « Votre programme de voyage », partagé par plusieurs fiches
 - aucun prix lu sur la fiche
 - le déroulé ne numérote pas ses jours : tout est rendu comme un seul jour
 - aucun déroulé jour par jour trouvé

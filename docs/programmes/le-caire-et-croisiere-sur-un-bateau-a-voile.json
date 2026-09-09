@@ -7,7 +7,7 @@
  "title_seo": "Explorez les Mystères du Nil: Croisière sur un Petit Bateau - Voyage en Égypte sur mesure",
  "meta_description": "Embarquez à bord du bateau à voile dahhabeya et explorez le mystère des pyramides de Gizeh avec une croisière petit bateau sur le Nil.",
  "h1": "Le Caire et croisière sur un bateau à voile",
- "chapo": "Les étapes de votre séjour :",
+ "chapo": "",
  "presentation_titre": "Vue d'ensemble",
  "presentation": [
   "Explorez les mystères des pyramides de Gizeh et laissez-vous émerveiller par la grandeur des monuments anciens. Partez à la rencontre du majestueux Nil en embarquant à bord d’une croisière sur le Nil, sur un bateau à voile, la dahhabeya (9 à 14 cabines) où vous pourrez profiter de panoramas à couper le souffle et découvrir l’histoire fascinante des pharaons.",
@@ -816,8 +816,10 @@
   "liste"
  ],
  "anomalies": [
+  "la fiche n'a pas de phrase de présentation : son chapô est l'intitulé de section « Les étapes de votre séjour : », partagé par plusieurs fiches",
   "durées contradictoires sur la fiche : 3 jours / 8 jours minimum",
   "aucun prix lu sur la fiche",
   "durée annoncée « 3 jours » pour 8 jours décrits dans le déroulé"
- ]
+ ],
+ "chapo_source": "Les étapes de votre séjour :"
 }

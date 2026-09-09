@@ -7,7 +7,7 @@
  "title_seo": "Partez en Voyage en Famille en Égypte : Plages et Pyramides",
  "meta_description": "Voyagez en Égypte avec toute votre famille, lors de votre séjour en égypte. Gizeh, le Nil et détente sur les belles plages de la Mer Rouge.",
  "h1": "Pyramides, croisière et mer rouge en famille",
- "chapo": "Les étapes de votre séjour :",
+ "chapo": "",
  "presentation_titre": "",
  "presentation": [],
  "prix": {
@@ -910,7 +910,9 @@
   "liste"
  ],
  "anomalies": [
+  "la fiche n'a pas de phrase de présentation : son chapô est l'intitulé de section « Les étapes de votre séjour : », partagé par plusieurs fiches",
   "image à la une de 1280 px de large : trop petite pour un bandeau plein écran",
   "durée annoncée « 9 jours minimum » pour 8 jours décrits dans le déroulé"
- ]
+ ],
+ "chapo_source": "Les étapes de votre séjour :"
 }

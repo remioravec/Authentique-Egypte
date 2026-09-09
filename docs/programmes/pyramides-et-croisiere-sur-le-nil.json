@@ -7,7 +7,7 @@
  "title_seo": "Explorer les mystères des Pyramides et croisière sur le Nil - Voyage en Égypte sur mesure",
  "meta_description": "Voyagez en Égypte et découvrez les secrets des Pyramides de Gizeh tout en navigant à bord d'une croisière sur le Nil.",
  "h1": "Pyramides et croisière sur le Nil",
- "chapo": "Les étapes de votre séjour :",
+ "chapo": "",
  "presentation_titre": "Vue d'ensemble",
  "presentation": [
   "Explorez les mystères des pyramides de Gizeh et laissez-vous émerveiller par la grandeur des monuments anciens. Partez à la rencontre du majestueux Nil en embarquant à bord d’une croisière sur le Nil, où vous pourrez profiter de panoramas à couper le souffle et découvrir l’histoire fascinante des pharaons.",
@@ -902,6 +902,8 @@
   "Nous avons visité Le Caire avec cette agence. Nous avons établi notre programme avec eux et ils ont été très à l écoute. Dès notre arrivée à l aéroport un représentant nous attendait pour les formalités. Puis ils ont été présents plusieurs fois pendant notre séjour. La guide et les chauffeurs ont été très professionnels et très ponctuels. Merci à toute l équipe"
  ],
  "anomalies": [
+  "la fiche n'a pas de phrase de présentation : son chapô est l'intitulé de section « Les étapes de votre séjour : », partagé par plusieurs fiches",
   "durée annoncée « 6 jours minimum » pour 8 jours décrits dans le déroulé"
- ]
+ ],
+ "chapo_source": "Les étapes de votre séjour :"
 }

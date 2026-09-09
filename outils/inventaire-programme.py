@@ -81,6 +81,18 @@ FAMILLE_FORCEE = {
 }
 
 # Les intitulés d'intendance : ils ferment une étape, ils ne la titrent pas.
+# Des « chapôs » qui n'en sont pas : ce sont les intitulés de section de
+# l'éditeur, aspirés à la place de la phrase de présentation. On les
+# reconnaît à ceci qu'ils sont IDENTIQUES d'une fiche à l'autre — cinq
+# fiches annoncent « Les étapes de votre séjour : », deux « Votre
+# programme de voyage ». Un chapô décrit CE voyage ; celui-là n'en
+# décrit aucun. Il est écarté de la présentation, conservé dans
+# `chapo_source`, et signalé.
+CHAPOS_DE_SECTION = {
+    'les étapes de votre séjour :',
+    'votre programme de voyage',
+}
+
 MENTION = re.compile(r'^(petit-?déjeuner|déjeuner|dîner|diner|nuit\b|repas)\b', re.I)
 MARQUEUR_INCL = re.compile(r"^(le programme inclu|inclus\b|n'inclu|non[- ]inclus)", re.I)
 DEBUT_AVIS = re.compile(r'(agence de voyage sur mesure en egypte|\d+\s*avis\s*google)', re.I)
@@ -551,6 +563,10 @@ def inventorier(slug, medias, releve):
 
 def anomalies(inv):
     a = []
+    if inv.get('chapo_source') and not inv.get('chapo'):
+        a.append('la fiche n\'a pas de phrase de présentation : son chapô est '
+                 'l\'intitulé de section « %s », partagé par plusieurs fiches'
+                 % inv['chapo_source'])
     if len(inv['durees']) > 1:
         a.append('durées contradictoires sur la fiche : ' + ' / '.join(inv['durees']))
     sans = [f['q'] for f in inv['faq'] if not f['reponse_html']]

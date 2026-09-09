@@ -39,3 +39,11 @@ Ce que la source ne permet pas de trancher. Une page se produit quand même, fid
 - **Q30.** Les **repères de « Pyramides, Louxor et mer rouge en famille » sont, mot pour mot, sa liste d'inclusions.** La page ne les affiche donc plus deux fois, mais la fiche n'a en réalité aucun repère à elle.
 - **Q31.** La FAQ du désert Blanc affirme qu'il est « **classé au patrimoine mondial de l'UNESCO** ». Le parc national du Désert Blanc figure sur la liste indicative de l'Égypte, il n'est pas inscrit. Même nature que Q4 pour Siwa.
 
+## Relevé du 09/09/2026 — production des pages « type de séjour »
+
+- **Q32.** **Sept fiches sur quatorze n'ont pas de phrase de présentation.** Leur chapô est un intitulé de section recopié : « Les étapes de votre séjour : » (désert Blanc, Le Caire et croisière, mer rouge, Pyramides et croisière, Louxor et mer rouge en famille) ou « Votre programme de voyage » (lac Nasser, roadtrip). Il faudrait une phrase par séjour — c'est la première ligne que lit un visiteur, sur la fiche comme sur la page famille.
+- **Q33.** **Quatre séjours ne figurent sur aucune page « type de séjour »** : Découverte de la Nubie, Lever du soleil et nuit à Sainte-Catherine, Pyramides Louxor et mer rouge en famille, Roadtrip en Égypte. Ils existent, ils ont un prix, et aucune page de famille n'y mène.
+- **Q34.** La famille **Mer rouge ne range qu'un seul séjour**, alors que « Pyramides, Louxor et mer rouge en famille » et « Itinéraire Sinaï… et mer rouge » relèvent visiblement du même thème.
+- **Q35.** La page **« Nos séjours »** (la page mère) ne liste aucun séjour et n'a pas de FAQ : elle n'a pas le même gabarit que les cinq familles.
+- **Q36.** Le widget d'avis porte la **note de chaque voyageur** dans son HTML (cinq étoiles pleines ou vides). Sur la page désert, un avis sur dix est à 4 étoiles. Souhaitez-vous que les pages affichent la note relevée, avis par avis ?
+

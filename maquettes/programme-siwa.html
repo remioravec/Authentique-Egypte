@@ -503,6 +503,10 @@
 .pg .acc__c ul li::before{content:"";position:absolute;left:2px;top:.62em;width:7px;height:7px;
   border-radius:50%;background:var(--or)}
 .pg .acc__c strong{color:var(--nuit-900);font-weight:600}
+/* Les réponses de la cliente portent parfois leurs propres titres. Sans
+   interligne, un H3 de deux lignes se serre à 1,25 — sous le plancher. */
+.pg .acc__c h3,.pg .acc__c h4{font-size:1.05rem;line-height:1.45;margin:18px 0 8px}
+.pg .acc__c h3:first-child,.pg .acc__c h4:first-child{margin-top:0}
 .pg .acc__c a{color:var(--teal-txt);text-decoration:underline;text-underline-offset:3px}
 .pg .acc__vide{color:#7A5605;background:var(--or-fond);border:1px dashed var(--or);
   border-radius:var(--r-s);padding:10px 14px;font-family:"Manrope",sans-serif;font-size:.94rem}
