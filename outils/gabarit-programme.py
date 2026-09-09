@@ -327,38 +327,34 @@ def plus_grande(images, sauf=()):
 # ------------------------------------------------------------------ accueil validé
 
 def accueil():
-    """Les blocs repris de la maquette d'accueil VALIDÉE.
+    """Les blocs repris de l'accueil — depuis son INVENTAIRE, pas depuis
+    la maquette.
 
-    Jamais de l'accueil en ligne : celui-ci porte encore le visa à 25 €,
-    corrigé à 30 € dans la maquette (backlog C1)."""
-    with open(os.path.join(MAQUETTES, 'index.html'), encoding='utf-8') as f:
-        h = f.read()
+    La maquette `maquettes/index.html` avait été promue source pour vingt
+    pages sans jamais être confrontée à l'accueil en ligne. L'agent
+    contrôle contenu du 09/09/2026 l'a fait : sur treize questions de la
+    cliente, cinq étaient reprises, toutes reformulées, dont deux sans
+    aucune source — un budget « 1 400 à 2 200 € pour 12 à 14 jours »
+    qui n'existe nulle part, et une politique de zones (« nous
+    n'organisons pas de séjour près de la frontière libyenne ») qui
+    contredisait le séjour à Siwa vendu par la même page.
 
-    pratique = []
-    zone = h[h.find('Cinq réponses avant de nous écrire'):]
-    for m in re.finditer(r'<details[^>]*><summary>(.*?)</summary>\s*'
-                         r'<div class="faq__c">(.*?)</div>\s*</details>', zone, re.S):
-        # Le libellé est du HTML : ses entités (&nbsp;) doivent être
-        # rendues en texte AVANT d'être ré-échappées, sinon le visiteur
-        # lit « en ce moment&nbsp;? » en toutes lettres.
-        pratique.append({'q': H.unescape(re.sub(r'\s+', ' ', re.sub(r'<[^>]+>', '', m.group(1))).strip()),
-                         'html': re.sub(r'\s+', ' ', m.group(2)).strip()})
+    On lit donc `docs/accueil.json`, relevé daté de la page en ligne, et
+    les treize questions de la cliente s'affichent telles qu'elle les
+    écrit — la seule retouche étant le visa passé à 30 €, qu'elle a
+    demandé (backlog C1) et qui est déclarée dans l'inventaire.
 
-    etapes = []
-    zone = h[h.find("Quatre étapes, et vous n'avancez jamais"):]
-    for m in re.finditer(r'<div class="etape"><i class="pt"></i>\s*<h3>(.*?)</h3>\s*<p>(.*?)</p>\s*'
-                         r'<span class="quand">(.*?)</span>', zone, re.S):
-        etapes.append({'titre': m.group(1).strip(), 'texte': m.group(2).strip(),
-                       'quand': m.group(3).strip()})
-
-    equipe = []
-    zone = h[h.find('class="gens"'):]
-    for m in re.finditer(r'<span class="med">(.*?)</span><b>(.*?)</b><span>(.*?)</span>',
-                         zone[:2000], re.S):
-        equipe.append({'initiale': m.group(1).strip(), 'nom': m.group(2).strip(),
-                       'role': re.sub(r'\s+', ' ', m.group(3)).strip()})
-
-    return {'pratique': pratique, 'etapes': etapes[:4], 'equipe': equipe}
+    L'équipe reste vide tant que l'accueil ne nomme personne : les
+    quatre prénoms de la maquette n'ont pas de source."""
+    chemin = os.path.join(RACINE, 'docs', 'accueil.json')
+    if not os.path.exists(chemin):
+        sys.exit("l'inventaire de l'accueil manque : lancez outils/inventaire-accueil.py")
+    with open(chemin, encoding='utf-8') as f:
+        inv = json.load(f)
+    pratique = [{'q': q['q'], 'html': q['reponse_html'], 'groupe': g['titre']}
+                for g in inv['groupes'] for q in g['questions']]
+    return {'pratique': pratique, 'etapes': [], 'equipe': inv.get('equipe') or [],
+            'accueil': inv}
 
 
 # ------------------------------------------------------------------ blocs communs
