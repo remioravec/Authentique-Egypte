@@ -60,10 +60,21 @@
 .pg .hero__flou{position:absolute;inset:0;overflow:hidden}
 .pg .hero__flou img{width:100%;height:100%;object-fit:cover;
   filter:blur(30px) saturate(1.15);transform:scale(1.15)}
-.pg .hero__fond{position:absolute;inset:0;display:grid;justify-items:center}
-.pg .hero__fond img{width:min(100%,var(--une-l,100%));height:100%;object-fit:cover}
-.pg .hero__fond::after{content:"";position:absolute;inset:0;background:
-  linear-gradient(180deg,rgba(6,42,58,.62) 0%,rgba(6,42,58,.30) 34%,rgba(5,35,50,.88) 100%)}
+/* overflow:hidden et min-height:0 ne sont pas décoratifs : l'image est
+   un élément de GRILLE, et un élément de grille garde sa hauteur
+   intrinsèque (min-height:auto). Une couverture portrait débordait donc
+   de sa bande par le bas, hors du voile. */
+.pg .hero__fond{position:absolute;inset:0;display:grid;justify-items:center;overflow:hidden}
+.pg .hero__fond img{width:min(100%,var(--une-l,100%));height:100%;min-height:0;
+  object-fit:cover}
+/* Le voile couvre le BANDEAU ENTIER, pas la seule bande de photo nette :
+   sinon la moitié basse du bandeau mobile restait en pleine lumière.
+   Son plancher d'opacité est mesuré, pas choisi : le texte le plus
+   clair du bandeau (#DCEAF0, 15 px) doit tenir 4,5:1 sur la photo la
+   plus claire possible, et outils/verif/lisibilite.js le vérifie sur
+   les pixels rendus, désormais, au lieu de renoncer devant une photo. */
+.pg .hero::after{content:"";position:absolute;inset:0;background:
+  linear-gradient(180deg,rgba(6,42,58,.74) 0%,rgba(6,42,58,.66) 30%,rgba(5,35,50,.92) 100%)}
 .pg .hero__in{position:relative;padding:24px 0 56px}
 .pg .hero .ariane{color:#C6DCE6;padding-top:0}
 .pg .hero .ariane a{color:var(--or-clair)}
@@ -635,11 +646,9 @@
      (mesuré ×1,34 en densité 2 sur une photo de 1920 px) et la photo
      devient floue. À 470 px, le facteur retombe à 0,87. */
   .pg .hero{background:var(--nuit-900)}
-  .pg .hero__flou,
+  /* Le flou garde toute la hauteur ; seule la photo NETTE se limite à
+     la bande que sa propre définition permet. */
   .pg .hero__fond{position:absolute;top:0;left:0;right:0;height:var(--une-h,470px)}
-  .pg .hero__fond::after{background:
-    linear-gradient(180deg,rgba(6,42,58,.55) 0%,rgba(6,42,58,.12) 32%,
-    rgba(8,45,62,.80) 74%,var(--nuit-900) 100%)}
   .pg .hero__in{padding:14px 0 34px}
   /* Le bloc titre se colle au BAS de la photo, quelle que soit la
      longueur du titre : la marge automatique fait le calcul, pas moi. */
@@ -777,6 +786,7 @@
 </header>
 <main class="pg">
 <section class="hero" style="--une-l:2560px;--une-h:470px">
+<div class="hero__flou" data-flou="oui" aria-hidden="true"><img src="https://authentiquegypte.com/wp-content/uploads/2023/11/flying-carpet-Si1MFhSLNWY-unsplash-scaled.jpg" alt="" decoding="async" srcset="https://authentiquegypte.com/wp-content/uploads/2023/11/flying-carpet-Si1MFhSLNWY-unsplash-300x200.jpg 300w, https://authentiquegypte.com/wp-content/uploads/2023/11/flying-carpet-Si1MFhSLNWY-unsplash-768x512.jpg 768w, https://authentiquegypte.com/wp-content/uploads/2023/11/flying-carpet-Si1MFhSLNWY-unsplash-1024x683.jpg 1024w, https://authentiquegypte.com/wp-content/uploads/2023/11/flying-carpet-Si1MFhSLNWY-unsplash-1536x1024.jpg 1536w, https://authentiquegypte.com/wp-content/uploads/2023/11/flying-carpet-Si1MFhSLNWY-unsplash-2048x1366.jpg 2048w, https://authentiquegypte.com/wp-content/uploads/2023/11/flying-carpet-Si1MFhSLNWY-unsplash-scaled.jpg 2560w" sizes="100vw" width="2560" height="1707" loading="lazy"></div>
 <div class="hero__fond"><img src="https://authentiquegypte.com/wp-content/uploads/2023/11/flying-carpet-Si1MFhSLNWY-unsplash-scaled.jpg" alt="" decoding="async" srcset="https://authentiquegypte.com/wp-content/uploads/2023/11/flying-carpet-Si1MFhSLNWY-unsplash-300x200.jpg 300w, https://authentiquegypte.com/wp-content/uploads/2023/11/flying-carpet-Si1MFhSLNWY-unsplash-768x512.jpg 768w, https://authentiquegypte.com/wp-content/uploads/2023/11/flying-carpet-Si1MFhSLNWY-unsplash-1024x683.jpg 1024w, https://authentiquegypte.com/wp-content/uploads/2023/11/flying-carpet-Si1MFhSLNWY-unsplash-1536x1024.jpg 1536w, https://authentiquegypte.com/wp-content/uploads/2023/11/flying-carpet-Si1MFhSLNWY-unsplash-2048x1366.jpg 2048w, https://authentiquegypte.com/wp-content/uploads/2023/11/flying-carpet-Si1MFhSLNWY-unsplash-scaled.jpg 2560w" sizes="100vw" width="2560" height="1707" fetchpriority="high"></div>
 <div class="hero__in"><div class="wrap">
 <div class="hero__pills"><span class="pill"><svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s6-5.5 6-11a6 6 0 1 0-12 0c0 5.5 6 11 6 11z"/><circle cx="12" cy="10" r="2.2"/></svg>Croisières en Égypte</span><span class="pill"><svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.5"/><path d="M5 20a7 7 0 0 1 14 0"/></svg>Guides égyptologues francophones</span></div>
@@ -1070,7 +1080,7 @@
 </footer>
 <div class="pg-mob"><span class="p"><small>À partir de</small><b>1195 €</b> <i>/ pers.</i></span><a class="btn btn--or btn--sm" href="https://authentiquegypte.com/sur-mesure/">Demander mon devis</a></div>
 <div class="pg-lb" id="pg-lb" role="dialog" aria-modal="true" aria-label="Photos du séjour">
-  <button type="button">Fermer</button><img src="" alt="">
+  <button type="button">Fermer</button><img alt="">
 </div>
 <script>var VALISE_FINI="Votre sac est prêt.";
 (function(){
@@ -1084,7 +1094,9 @@
         lb.classList.add('on'); lb.querySelector('button').focus();
       });
     });
-    function fermer(){ lb.classList.remove('on'); img.src=''; }
+    // removeAttribute et non src='' : un src vide se résout en l'URL
+    // de la PAGE, que le navigateur re-télécharge alors comme image.
+    function fermer(){ lb.classList.remove('on'); img.removeAttribute('src'); }
     lb.addEventListener('click',function(ev){ if(ev.target===lb||ev.target.tagName==='BUTTON') fermer(); });
     document.addEventListener('keydown',function(ev){ if(ev.key==='Escape') fermer(); });
   }

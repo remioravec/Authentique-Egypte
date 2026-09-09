@@ -26,6 +26,9 @@
 */
 const { chromium } = require('/opt/node22/lib/node_modules/playwright');
 const path = require('path');
+const fs = require('fs');
+const crypto = require('crypto');
+const CACHE = process.env.IMGCACHE || '/tmp/imgcache';
 
 const fichier = process.argv[2];
 if (!fichier) { console.error('usage : lisibilite.js <page.html> [--json]'); process.exit(2); }
@@ -43,7 +46,13 @@ const VUES = [
 
   for (const vue of VUES) {
     const page = await nav.newPage({ viewport: { width: vue.largeur, height: 900 } });
-    await page.route(/^https?:/, r => r.abort());
+    // Les photos sont servies depuis le cache local quand il les a : sans
+    // elles, le texte du bandeau se mesure sur du vide, et c'est
+    // précisément là que six contrastes trop faibles se cachaient.
+    await page.route(/^https?:/, r => {
+      const f = path.join(CACHE, crypto.createHash('md5').update(r.request().url()).digest('hex'));
+      return fs.existsSync(f) ? r.fulfill({ path: f }) : r.abort();
+    });
     await page.goto('file://' + absolu, { waitUntil: 'domcontentloaded' });
     await page.waitForTimeout(2500);
 
@@ -130,7 +139,12 @@ const VUES = [
         const masque = /hidden|clip/.test(s.overflow) || /hidden|clip/.test(s.overflowX);
         const tronque = el.scrollWidth > el.clientWidth + 1
           && (masque || (s.textOverflow === 'ellipsis' && s.whiteSpace === 'nowrap'));
+        el.setAttribute('data-lis', String(textes.length));
         textes.push({
+          rang: textes.length,
+          couleur: [couleur.r, couleur.v, couleur.b],
+          boite: (() => { const b = el.getBoundingClientRect();
+                          return { x: b.x, y: b.y, l: b.width, h: b.height }; })(),
           selecteur: sel(el), extrait: propre.slice(0, 60), balise: el.tagName.toLowerCase(),
           taille: Math.round(taille * 10) / 10,
           interligne: Math.round((inter / taille) * 100) / 100,
@@ -228,6 +242,51 @@ const VUES = [
       };
     }, vue);
 
+    // ---- Le texte posé sur une PHOTO se mesure, il ne se suppose pas.
+    // On masque le texte, on photographie ce qu'il y a dessous, et on
+    // prend le pixel le plus défavorable (au 95e centile, pour ne pas
+    // se laisser piéger par un liseré isolé). C'est la seule façon de
+    // savoir si un voile tient : le calculer depuis le CSS suppose de
+    // connaître la photo, et la photo change à chaque fiche.
+    for (const t of releve.vues[vue.nom].textes) {
+      if (!t.surPhoto || t.boite.l < 2 || t.boite.h < 2) continue;
+      const el = await page.$(`[data-lis="${t.rang}"]`);
+      if (!el) continue;
+      await el.evaluate(e => { e.style.visibility = 'hidden'; });
+      let cliche = null;
+      try {
+        cliche = await page.screenshot({
+          clip: { x: Math.max(0, t.boite.x), y: Math.max(0, t.boite.y),
+                  width: Math.max(2, Math.min(t.boite.l, vue.largeur - Math.max(0, t.boite.x))),
+                  height: Math.max(2, t.boite.h) },
+        });
+      } catch (err) { /* hors écran : rien à mesurer */ }
+      await el.evaluate(e => { e.style.visibility = ''; });
+      if (!cliche) continue;
+      t.contraste = await page.evaluate(async ([b64, couleur]) => {
+        const img = new Image();
+        await new Promise(ok => { img.onload = ok; img.onerror = ok; img.src = 'data:image/png;base64,' + b64; });
+        if (!img.width) return null;
+        const c = document.createElement('canvas');
+        c.width = img.width; c.height = img.height;
+        c.getContext('2d').drawImage(img, 0, 0);
+        const px = c.getContext('2d').getImageData(0, 0, img.width, img.height).data;
+        const f = x => { x /= 255; return x <= 0.03928 ? x / 12.92 : Math.pow((x + 0.055) / 1.055, 2.4); };
+        const L = p => 0.2126 * f(px[p]) + 0.7152 * f(px[p + 1]) + 0.0722 * f(px[p + 2]);
+        const lum = [];
+        for (let p = 0; p < px.length; p += 4) lum.push(L(p));
+        lum.sort((x, y) => x - y);
+        const texte = 0.2126 * f(couleur[0]) + 0.7152 * f(couleur[1]) + 0.0722 * f(couleur[2]);
+        // Le pire fond : le plus clair pour un texte clair, le plus
+        // sombre pour un texte sombre.
+        const pire = texte > 0.5 ? lum[Math.floor(lum.length * 0.95)] : lum[Math.floor(lum.length * 0.05)];
+        const [x, y] = [texte, pire].sort((m, n) => n - m);
+        return Math.round(((x + 0.05) / (y + 0.05)) * 100) / 100;
+      }, [cliche.toString('base64'), t.couleur]);
+      t.surPhoto = false;          // il est mesuré : il rentre dans le rang commun
+      t.mesureSurPhoto = true;
+    }
+
     await page.close();
   }
   await nav.close();
@@ -256,10 +315,11 @@ const VUES = [
       const exige = grand ? 3 : 4.5;
       if (t.surPhoto) {
         if (!t.ombre)
-          unique(mineurs, `texte sur photo sans ombre portée (${ou}) : « ${t.extrait} » — ${t.selecteur} `
-            + `— contraste à confirmer à l'œil`);
+          unique(mineurs, `texte sur photo non mesurable (${ou}, photo absente du cache) : `
+            + `« ${t.extrait} » — ${t.selecteur}`);
       } else if (t.contraste !== null && t.contraste < exige) {
-        unique(majeurs, `contraste ${t.contraste}:1 sous le minimum de ${exige}:1 (${ou}) : `
+        unique(majeurs, `contraste ${t.contraste}:1 sous le minimum de ${exige}:1 (${ou}`
+          + `${t.mesureSurPhoto ? ', mesuré sur la photo rendue' : ''}) : `
           + `« ${t.extrait} » — ${t.selecteur}`);
       }
     }
