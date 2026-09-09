@@ -146,6 +146,18 @@ const VUES = [
         });
       }
 
+      // Une marge verticale déclarée sur un élément EN LIGNE est
+      // purement ignorée par le navigateur. Le défaut est invisible à la
+      // relecture du CSS — la règle est bien là — et ne se voit qu'à la
+      // mesure. Il a coûté 36 px d'air sous chaque photo d'étape.
+      const margesMortes = [...document.querySelectorAll('main *')].filter(el => {
+        if (!vu(el)) return false;
+        const s = getComputedStyle(el);
+        if (s.display !== 'inline') return false;
+        return parseFloat(s.marginTop) > 1 || parseFloat(s.marginBottom) > 1;
+      }).map(el => ({ selecteur: sel(el),
+                      marges: getComputedStyle(el).marginTop + ' / ' + getComputedStyle(el).marginBottom }));
+
       // Cibles tactiles
       const cibles = [...document.querySelectorAll('a,button,summary,input,select,[role="button"]')]
         .filter(vu).map(el => {
@@ -188,7 +200,7 @@ const VUES = [
       const padBody = Math.round(parseFloat(getComputedStyle(document.body).paddingBottom));
 
       return {
-        textes, cibles, sections, recouvre: [...new Set(recouvre)], fixes, padBody,
+        textes, cibles, sections, margesMortes, recouvre: [...new Set(recouvre)], fixes, padBody,
         deborde: document.documentElement.scrollWidth > window.innerWidth,
         largeur: document.documentElement.scrollWidth,
       };
@@ -250,6 +262,9 @@ const VUES = [
           unique(majeurs, `marge ${cote} de ${v} px hors échelle ${vue.echelleSection.join('/')} (${ou}) : ${s.selecteur}`);
       }
     }
+    for (const m of d.margesMortes)
+      unique(majeurs, `marge verticale ignorée (${ou}) : ${m.selecteur} est en ligne, `
+        + `ses marges ${m.marges} ne s'appliquent pas`);
     for (const r of d.recouvre) unique(bloquants, `recouvrement (${ou}) : ${r}`);
     if (d.deborde) unique(majeurs, `débordement horizontal (${ou}) : ${d.largeur} px pour ${vue.largeur} px`);
   }

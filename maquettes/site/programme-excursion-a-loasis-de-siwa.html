@@ -322,12 +322,17 @@
   padding:6px 14px;flex:0 0 auto}
 .pg .jour__tete h3{font-size:clamp(1.25rem,2vw,1.5rem)}
 .pg .etape+.etape{margin-top:56px}
-.pg .etape__photo{border-radius:var(--r-l);overflow:hidden;background:var(--fond);margin:0 0 40px;
-  aspect-ratio:16/9}
+/* display:block est indispensable, pas cosmétique : la photo est portée
+   par un <a>, donc un élément EN LIGNE, sur lequel une marge verticale
+   est purement ignorée. La marge basse était déclarée à 40 px et
+   l'écart mesuré au navigateur valait zéro. */
+.pg .etape__photo{display:block;border-radius:var(--r-l);overflow:hidden;background:var(--fond);
+  margin:0 0 36px;aspect-ratio:16/9}
+.pg .etape__photo+*{margin-top:0}
 .pg .etape__photo img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s var(--ease)}
 .pg .etape__photo:hover img{transform:scale(1.03)}
 .pg .etape h4{font-family:"Archivo",sans-serif;font-size:1.24rem;font-weight:600;color:var(--noir);
-  margin:0 0 16px;letter-spacing:-.3px;display:flex;align-items:center;gap:10px}
+  margin:0 0 18px;letter-spacing:-.3px;display:flex;align-items:center;gap:10px}
 .pg .etape h4 svg{color:var(--teal-txt);flex:0 0 auto}
 .pg .etape p{color:var(--texte);font-size:1.04rem;line-height:1.8;max-width:62ch}
 .pg .mentions{display:flex;flex-wrap:wrap;gap:9px;margin:18px 0 0;padding:0}
@@ -559,7 +564,8 @@
   .pg .incl__col,.pg .pan__carte{padding:20px}
   .pg .acc summary{font-size:1.02rem;padding:16px 18px}
   .pg .acc__c{padding:0 18px 18px}
-  .pg .etape+.etape{margin-top:40px}
+  .pg .etape+.etape{margin-top:44px}
+  .pg .etape__photo{margin-bottom:32px}
   body{padding-bottom:84px}
 }
 @media (prefers-reduced-motion:reduce){.pg *,.pg *::before,.pg *::after{transition:none!important}}
