@@ -176,9 +176,15 @@ def items_de(reponse_html):
     """Les points d'une réponse, découpés « intitulé : détail »."""
     lot = []
     for brut in re.findall(r'<li>(.*?)</li>', reponse_html or '', re.S):
-        m = re.match(r'\s*<strong>(.*?)</strong>\s*:?\s*(.*)$', brut, re.S)
+        m = re.match(r'\s*<strong>(.*?)</strong>\s*(.*)$', brut, re.S)
         if m:
-            lot.append((texte_nu(m.group(1)), texte_nu(m.group(2)).lstrip(': ')))
+            # Le « : » de la fiche est SA ponctuation : on le garde tel
+            # qu'elle l'écrit, ESPACE COMPRISE — « Vêtements : couches »
+            # et non « Vêtements: couches » — au lieu de le raboter.
+            detail = texte_nu(m.group(2))
+            if detail[:1] in ':;!?':
+                detail = ' ' + detail
+            lot.append((texte_nu(m.group(1)), detail))
         elif texte_nu(brut):
             lot.append((texte_nu(brut), ''))
     return lot
@@ -189,6 +195,28 @@ def conseil_de(reponse_html):
     m = re.search(r'<p>\s*<strong>\s*Conseil\s*:?\s*</strong>\s*(.*?)</p>',
                   reponse_html or '', re.S | re.I)
     return texte_nu(m.group(1)) if m else ''
+
+
+GOOGLE_G = (
+    '<path fill="#4285F4" d="M45.12 24.5c0-1.56-.14-3.06-.4-4.5H24v8.51h11.84c-.51 2.75-2.06 '
+    '5.08-4.39 6.64v5.52h7.11c4.16-3.83 6.56-9.47 6.56-16.17z"/>'
+    '<path fill="#34A853" d="M24 46c5.94 0 10.92-1.97 14.56-5.33l-7.11-5.52c-1.97 1.32-4.49 '
+    '2.1-7.45 2.1-5.73 0-10.58-3.87-12.31-9.07H4.34v5.7C7.96 41.07 15.4 46 24 46z"/>'
+    '<path fill="#FBBC05" d="M11.69 28.18C11.25 26.86 11 25.45 11 24s.25-2.86.69-4.18v-5.7H4.34'
+    'C2.85 17.09 2 20.45 2 24s.85 6.91 2.34 9.88l7.35-5.7z"/>'
+    '<path fill="#EA4335" d="M24 10.75c3.23 0 6.13 1.11 8.41 3.29l6.31-6.31C34.91 4.18 29.93 2 '
+    '24 2 15.4 2 7.96 6.93 4.34 14.12l7.35 5.7c1.73-5.2 6.58-9.07 12.31-9.07z"/>')
+
+
+def google(taille=20):
+    """Le G de Google, en attribution de la source d'un avis.
+
+    Ce n'est pas une décoration : c'est ce que le widget de la fiche
+    affiche déjà, et c'est la seule chose que la source autorise à dire.
+    La NOTE, elle, n'existe nulle part dans le relevé — ni globale, ni
+    par avis — donc aucune étoile n'est dessinée (D30)."""
+    return ('<svg class="gg" aria-hidden="true" width="%d" height="%d" viewBox="0 0 48 48">%s</svg>'
+            % (taille, taille, GOOGLE_G))
 
 
 def ico(nom, taille=18, classe=''):
@@ -444,6 +472,8 @@ CSS = r"""
   font-size:.86rem;color:#C3DAE7}
 
 /* ---------- module : le bon format de séjour ---------- */
+.pg .mod__aide{margin:-6px 0 18px;font-family:"Manrope",sans-serif;font-size:.96rem;
+  color:var(--gris-lis)}
 .pg .mod__intro{font-family:"Manrope",sans-serif;font-size:1.02rem;color:var(--nuit-900);
   font-weight:600;margin:0 0 20px;max-width:62ch}
 .pg .mod__conseil{display:flex;gap:11px;align-items:flex-start;margin:20px 0 0;padding:16px 18px;
@@ -701,7 +731,7 @@ CSS = r"""
 .pg .pan__avis{display:flex;flex-wrap:wrap;justify-content:center;align-items:baseline;gap:5px 9px;
   margin:14px 0 0;padding:14px 0 0;border-top:1px solid var(--ligne-2);
   font-family:"Manrope",sans-serif;font-size:.92rem;color:var(--gris-lis);text-align:center}
-.pg .pan__avis .et{color:var(--or-fonce);letter-spacing:.1em}
+.pg .pan__avis .gg{flex:0 0 auto;align-self:center}
 .pg .pan__avis b{color:var(--noir)}
 .pg .pan__conf{background:var(--or-fond);border:1px solid #F6DEB0;border-radius:var(--r-l);padding:18px;
   font-family:"Manrope",sans-serif;font-size:.9rem;color:#6B4B04;display:grid;gap:6px;text-align:center}
@@ -835,6 +865,9 @@ CSS = r"""
 .pg .mur__a footer b{color:var(--noir);display:block;font-weight:700}
 .pg .ini{width:38px;height:38px;border-radius:50%;background:var(--nuit);color:#fff;display:grid;
   place-items:center;font-weight:700;font-size:.9rem;flex:0 0 auto}
+/* Le G de Google porte ses propres couleurs : il lui faut un rond clair
+   et non le bleu nuit des initiales, sinon le bleu du logo s'y noie. */
+.pg .ini--g{background:#fff;border:1px solid var(--ligne-pg);box-shadow:0 1px 2px rgba(16,32,48,.06)}
 /* Mouvement réduit : plus d'animation du tout, et le mur redevient une
    liste. La seconde copie disparaît — elle ne servait que la boucle. */
 @media (prefers-reduced-motion:reduce){
@@ -1336,6 +1369,35 @@ def lieu_de(texte):
     return trouve[1] if trouve else ''
 
 
+def nom_du_lieu(cle, inv):
+    """Le nom d'un lieu, tel que la FICHE l'écrit.
+
+    Le répertoire porte « Charm el-Cheikh », l'orthographe employée par
+    l'agence en août ; cette fiche-ci écrit « Sharm el-Sheikh ». D25 dit
+    que les lieux sont ceux que la fiche NOMME : c'est donc sa graphie
+    qui s'affiche, sur la carte comme au sommaire, et le répertoire ne
+    sert plus qu'à reconnaître le lieu et à le placer."""
+    label, _, _, motif = LIEUX[cle][:4]
+    m = re.search(motif, texte_du_sejour(inv), re.I)
+    if m and m.group(0).strip().lower() != label.lower():
+        return m.group(0).strip()
+    return label
+
+
+def texte_du_sejour(inv):
+    """Tout ce que la fiche écrit, en un seul bloc, pour y chercher."""
+    if '_texte' not in inv:
+        bouts = [inv.get('h1') or '', inv.get('chapo') or '']
+        bouts += inv.get('presentation') or []
+        for j in inv['jours']:
+            bouts.append(j['titre'])
+            for et in j['etapes']:
+                bouts.append(et['titre'])
+                bouts += et['paragraphes']
+        inv['_texte'] = ' '.join(x for x in bouts if x)
+    return inv['_texte']
+
+
 def lieux_du_sejour(inv):
     """Les lieux nommés par le séjour, dans l'ordre où on les rencontre.
 
@@ -1382,7 +1444,7 @@ def index_etapes(inv):
     for i, x in enumerate(lot, start=1):
         o.append('<li data-lieu="%s"><a href="#etape-%d"><span class="somm__n">%d</span>'
                  '<span><b>%s</b>%s</span></a></li>'
-                 % (e(x['cle']), x['rang_dom'], i, e(LIEUX[x['cle']][0]),
+                 % (e(x['cle']), x['rang_dom'], i, e(nom_du_lieu(x['cle'], inv)),
                     ('<span>%s</span>' % e(x['etape'])) if x['etape'] else ''))
     o.append('</ol></nav>')
     return '\n'.join(o)
@@ -1413,14 +1475,14 @@ def carte(inv):
             if (abs(g['lon'] - fiche[1]) < 0.12 and abs(g['lat'] - fiche[2]) < 0.12
                     and g['deroule'] == (x['origine'] == 'deroule')):
                 g['cles'].append(x['cle'])
-                g['noms'].append(fiche[0])
+                g['noms'].append(nom_du_lieu(x['cle'], inv))
                 g['etapes'].append(x['etape'])
                 if x in etapes:
                     g['rangs'].append(etapes.index(x) + 1)
                 pose = True
                 break
         if not pose:
-            groupes.append({'cles': [x['cle']], 'noms': [fiche[0]],
+            groupes.append({'cles': [x['cle']], 'noms': [nom_du_lieu(x['cle'], inv)],
                             'lon': fiche[1], 'lat': fiche[2],
                             'dy': fiche[4] if len(fiche) > 4 else 0,
                             'cote': fiche[5] if len(fiche) > 5 else 'd',
@@ -1611,14 +1673,17 @@ def selecteur_duree(inv):
     lot = [(t, d) for t, d in items_de(f['reponse_html']) if re.search(r'\d', t)]
     if len(lot) < 2:
         return ''
-    tete = re.search(r'<p>\s*<strong>(.*?)</strong>', f['reponse_html'], re.S)
+    # Le <p> ENTIER, pas seulement son <strong>. La fiche écrit « Durée
+    # recommandée : 3 à 4 jours pour profiter pleinement du site. » ;
+    # s'arrêter au gras coupait quatre mots de la cliente.
+    tete = re.search(r'<p>(.*?)</p>', f['reponse_html'], re.S)
     conseil = conseil_de(f['reponse_html'])
     defaut = 1 if len(lot) > 1 else 0
 
     o = ['<section class="mod mod--duree">',
          '<p class="eyebrow">%s</p>' % e(INTERFACE['eyebrow_duree']),
          '<h2>%s</h2>' % e(f['q'])]
-    if tete:
+    if tete and texte_nu(tete.group(1)):
         o.append('<p class="mod__intro">%s</p>' % e(texte_nu(tete.group(1))))
     o.append('<div class="duree">')
     for i, (t, _) in enumerate(lot):
@@ -1649,11 +1714,16 @@ def liste_valise(inv):
     if len(lot) < 3:
         return ''
     conseil = conseil_de(f['reponse_html'])
+    # « Équipement essentiel : » est une phrase de la fiche. Notre mode
+    # d'emploi ne la remplace pas, il vient après elle.
+    tete = re.search(r'<p>(.*?)</p>', f['reponse_html'], re.S)
     o = ['<section class="mod mod--valise">',
          '<p class="eyebrow">%s</p>' % e(INTERFACE['eyebrow_valise']),
-         '<h2>%s</h2>' % e(f['q']),
-         '<p class="mod__intro">%s</p>' % e(INTERFACE['valise_aide']),
-         '<ul class="valise" id="valise">']
+         '<h2>%s</h2>' % e(f['q'])]
+    if tete and texte_nu(tete.group(1)):
+        o.append('<p class="mod__intro">%s</p>' % e(texte_nu(tete.group(1))))
+    o += ['<p class="mod__aide">%s</p>' % e(INTERFACE['valise_aide']),
+          '<ul class="valise" id="valise">']
     for i, (t, d) in enumerate(lot):
         o.append('<li><label><input type="checkbox"><span class="valise__b" aria-hidden="true">%s</span>'
                  '<span class="valise__t"><b>%s</b>%s</span></label></li>'
@@ -1805,6 +1875,10 @@ def deroule(inv):
             o.append('</article>')
         o.append(mentions_html(j['mentions']))
         o.append('</div>')
+    # D27 : un chiffre que NOUS calculons ne s'affiche pas sans dire d'où
+    # il vient. L'infobulle ne suffit pas — au doigt, elle n'existe pas.
+    if calcule:
+        o.append('<p class="reps__src">%s</p>' % e(INTERFACE['source_trajets']))
     o.append('</section>')
     return '\n'.join(o)
 
@@ -1874,8 +1948,12 @@ def panneau(inv):
     o.append('<p class="pan__note">%s<br>%s</p>' % (e(INTERFACE['delai']), e(INTERFACE['sans_cb'])))
     n = (inv.get('avis_google') or {}).get('nombre')
     if n:
-        o.append('<p class="pan__avis"><span class="et" aria-hidden="true">★★★★★</span>'
-                 '<b>%d avis Google</b> <span>%s</span></p>' % (n, e(INTERFACE['agence'])))
+        # Cinq étoiles pleines seraient une NOTE, et la fiche n'en donne
+        # aucune : ni note globale, ni note par avis. Le G de Google dit
+        # la source, ce que le relevé porte vraiment (D30).
+        o.append('<p class="pan__avis">%s'
+                 '<b>%d avis Google</b> <span>%s</span></p>'
+                 % (google(18), n, e(INTERFACE['agence'])))
     o.append('</div>')
     o.append(index_etapes(inv))
     o.append('</aside>')
@@ -2022,11 +2100,14 @@ def hauteur_avis(texte):
 
 
 def carte_avis(t):
-    ini = ''.join(x[0].upper() for x in t['auteur'].split()[:2]) or '·'
+    """Une carte d'avis. La signature porte le G de Google et non les
+    initiales de l'auteur : ce qui compte au pied d'un témoignage, c'est
+    d'où il vient — et c'est ce que le widget de la fiche montre."""
     return ('<article class="mur__a"><span class="mur__q" aria-hidden="true">&#8220;</span>'
             '<blockquote>%s</blockquote>'
-            '<footer><span class="ini">%s</span><span><b>%s</b>%s</span></footer></article>'
-            % (e(t['texte']), e(ini), e(t['auteur']), e(INTERFACE['avis_source'])))
+            '<footer><span class="ini ini--g">%s</span>'
+            '<span><b>%s</b>%s</span></footer></article>'
+            % (e(t['texte']), google(21), e(t['auteur']), e(INTERFACE['avis_source'])))
 
 
 
