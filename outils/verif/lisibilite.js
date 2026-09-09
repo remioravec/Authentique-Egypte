@@ -85,7 +85,16 @@ const VUES = [
       const fondDe = el => {
         for (let e = el; e; e = e.parentElement) {
           const s = getComputedStyle(e);
-          if (s.backgroundImage && s.backgroundImage !== 'none') return { photo: true, sur: sel(e) };
+          const fi = s.backgroundImage;
+          if (fi && fi !== 'none') {
+            // Une photo (`url(...)`) ne se mesure pas hors ligne. Un
+            // dégradé, si : on prend celle de ses couleurs qui donne le
+            // PIRE contraste, et on juge là-dessus.
+            if (/url\(/.test(fi)) return { photo: true, sur: sel(e) };
+            const stops = (fi.match(/rgba?\([^)]+\)/g) || []).map(rgb)
+              .filter(c => c && c.a >= 0.85);
+            if (stops.length) return { stops, sur: sel(e) };
+          }
           const c = rgb(s.backgroundColor);
           if (c && c.a >= 0.95) return { couleur: c };
         }
@@ -116,8 +125,11 @@ const VUES = [
         // par un texte voisin, ne porte pas d'information : le critère
         // de contraste des TEXTES ne s'y applique pas.
         const decoratif = el.closest('[aria-hidden="true"]') !== null;
+        // Un texte n'est coupé que si le débordement est MASQUÉ. Le
+        // « text-overflow: clip » par défaut ne coupe rien tout seul.
+        const masque = /hidden|clip/.test(s.overflow) || /hidden|clip/.test(s.overflowX);
         const tronque = el.scrollWidth > el.clientWidth + 1
-          && /hidden|ellipsis|clip/.test(s.textOverflow + s.overflowX + s.overflow);
+          && (masque || (s.textOverflow === 'ellipsis' && s.whiteSpace === 'nowrap'));
         textes.push({
           selecteur: sel(el), extrait: propre.slice(0, 60), balise: el.tagName.toLowerCase(),
           taille: Math.round(taille * 10) / 10,
@@ -125,7 +137,10 @@ const VUES = [
           parLigne,
           gras, tronque,
           ombre: s.textShadow !== 'none',
-          contraste: (fond.couleur && !decoratif) ? Math.round(contraste(couleur, fond.couleur) * 100) / 100 : null,
+          contraste: decoratif ? null
+            : fond.couleur ? Math.round(contraste(couleur, fond.couleur) * 100) / 100
+            : fond.stops ? Math.round(Math.min(...fond.stops.map(c => contraste(couleur, c))) * 100) / 100
+            : null,
           decoratif,
           surPhoto: !!fond.photo,
         });
@@ -150,6 +165,9 @@ const VUES = [
       // Recouvrements entre frères posés dans le flux
       const recouvre = [];
       for (const parent of document.querySelectorAll('main, main *')) {
+        // Un <svg> a son propre système de coordonnées : deux points
+        // voisins sur une carte s'y touchent par construction.
+        if (parent.closest('svg')) continue;
         const enfants = [...parent.children].filter(e => vu(e)
           && !['absolute', 'fixed', 'sticky'].includes(getComputedStyle(e).position));
         for (let i = 0; i < enfants.length - 1; i++) {

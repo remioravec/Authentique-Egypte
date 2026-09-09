@@ -118,13 +118,140 @@
   border-radius:50%;background:#B8860B}
 .pg .verifier__d{margin:12px 0 0;font-size:.9rem;color:#8A6100}
 
+
+/* ---------- réponse encadrée : le module minimum de la doctrine ---------- */
+.pg .bref{background:linear-gradient(135deg,var(--nuit-900) 0%,#0E6288 100%);
+  border-radius:var(--r-l);padding:32px 34px;color:#fff;position:relative;overflow:hidden}
+.pg .bref::after{content:"";position:absolute;right:-70px;top:-70px;width:220px;height:220px;
+  border-radius:50%;background:radial-gradient(circle,rgba(251,181,14,.30),transparent 68%)}
+.pg .bref .eyebrow{color:var(--or-clair)}
+.pg .bref h2{color:#fff;margin-bottom:24px;position:relative}
+.pg .bref__l{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+  gap:22px 28px;margin:0;position:relative}
+.pg .bref__l div{display:grid;gap:6px}
+.pg .bref__l dt{display:flex;align-items:center;gap:8px;font-family:"Manrope",sans-serif;
+  font-size:.86rem;letter-spacing:.06em;text-transform:uppercase;color:#D8E8F1;margin:0}
+.pg .bref__l dt svg{color:var(--or-clair)}
+.pg .bref__l dd{margin:0;font-family:"Manrope",sans-serif;line-height:1.35}
+.pg .bref__l dd b{display:block;font-size:1.65rem;font-weight:800;letter-spacing:-.8px;color:#fff}
+.pg .bref__l dd span{display:block;font-size:.92rem;color:#D8E8F1;margin-top:4px;line-height:1.5}
+.pg .bref__src{position:relative;margin:26px 0 0;font-family:"Manrope",sans-serif;
+  font-size:.86rem;color:#C3DAE7}
+
+/* ---------- module : le bon format de séjour ---------- */
+.pg .mod__intro{font-family:"Manrope",sans-serif;font-size:1.02rem;color:var(--nuit-900);
+  font-weight:600;margin:0 0 20px;max-width:62ch}
+.pg .mod__conseil{display:flex;gap:11px;align-items:flex-start;margin:20px 0 0;padding:16px 18px;
+  background:var(--or-fond);border-radius:var(--r-m);font-family:"Manrope",sans-serif;
+  font-size:.98rem;color:#6B4B04;line-height:1.6;max-width:64ch}
+.pg .mod__conseil svg{flex:0 0 auto;color:#B8860B;margin-top:2px}
+.pg .duree{position:relative}
+.pg .duree__r{position:absolute;opacity:0;pointer-events:none}
+.pg .duree__ong{display:flex;flex-wrap:wrap;gap:10px;margin:0 0 18px}
+.pg .duree__o{font-family:"Manrope",sans-serif;font-weight:700;font-size:.98rem;
+  padding:12px 22px;border-radius:var(--r-pill);border:1.5px solid var(--ligne-pg);
+  background:#fff;color:var(--nuit-900);cursor:pointer;transition:all .2s var(--ease);
+  min-height:44px;display:inline-flex;align-items:center}
+.pg .duree__o:hover{border-color:var(--teal);color:var(--teal-txt)}
+.pg .duree__o:focus-visible{outline:3px solid var(--or);outline-offset:3px}
+.pg .duree__c{display:none;background:var(--teal-fond);border:1px solid #CDE9EA;
+  border-radius:var(--r-l);padding:24px 26px}
+.pg .duree__c b{display:block;font-family:"Manrope",sans-serif;font-size:1.25rem;font-weight:800;
+  color:var(--teal-txt);letter-spacing:-.4px;margin-bottom:8px}
+.pg .duree__c p{margin:0;font-size:1.04rem;line-height:1.7;color:var(--texte);max-width:60ch}
+/* Sans CSS ni JavaScript, les trois formats restent lisibles à la suite :
+   c'est le mode dégradé qu'impose la doctrine. */
+.pg .duree__r:nth-of-type(1):checked~.duree__ong .duree__o:nth-child(1),
+.pg .duree__r:nth-of-type(2):checked~.duree__ong .duree__o:nth-child(2),
+.pg .duree__r:nth-of-type(3):checked~.duree__ong .duree__o:nth-child(3),
+.pg .duree__r:nth-of-type(4):checked~.duree__ong .duree__o:nth-child(4)
+  {background:var(--nuit-900);border-color:var(--nuit-900);color:#fff}
+.pg .duree__r:nth-of-type(1):checked~.duree__p .duree__c:nth-child(1),
+.pg .duree__r:nth-of-type(2):checked~.duree__p .duree__c:nth-child(2),
+.pg .duree__r:nth-of-type(3):checked~.duree__p .duree__c:nth-child(3),
+.pg .duree__r:nth-of-type(4):checked~.duree__p .duree__c:nth-child(4){display:block}
+
+/* ---------- module : la liste à cocher ---------- */
+.pg .valise{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.pg .valise label{display:flex;gap:14px;align-items:flex-start;background:#fff;
+  border:1px solid var(--ligne-pg);border-radius:var(--r-m);padding:16px 18px;cursor:pointer;
+  transition:border-color .2s var(--ease),background .2s var(--ease);min-height:44px}
+.pg .valise label:hover{border-color:var(--teal)}
+.pg .valise input{position:absolute;opacity:0;width:0;height:0}
+.pg .valise__b{flex:0 0 auto;width:24px;height:24px;border-radius:7px;border:2px solid var(--ligne);
+  display:grid;place-items:center;color:transparent;transition:all .18s var(--ease);margin-top:1px}
+.pg .valise input:checked+.valise__b{background:var(--teal-txt);border-color:var(--teal-txt);color:#fff}
+.pg .valise input:focus-visible+.valise__b{outline:3px solid var(--or);outline-offset:3px}
+.pg .valise__t{font-size:1.02rem;line-height:1.55;color:var(--texte)}
+.pg .valise__t b{color:var(--noir);font-family:"Manrope",sans-serif;font-weight:700}
+.pg .valise__t span{display:block;color:var(--gris-lis);font-size:.98rem;margin-top:2px}
+.pg .valise input:checked~.valise__t{opacity:.55;text-decoration:line-through;
+  text-decoration-color:var(--ligne)}
+.pg .valise__etat{margin:16px 0 0;font-family:"Manrope",sans-serif;font-size:.98rem;
+  color:var(--gris-lis)}
+.pg .valise__etat b{color:var(--teal-txt);font-weight:800}
+
+/* ---------- votre guide ---------- */
+.pg .guide{display:grid;grid-template-columns:1.15fr 1fr;gap:52px;align-items:center}
+.pg .guide__intro{font-size:1.12rem;line-height:1.7;color:#C9DDE7;max-width:44ch;margin:0 0 26px}
+.pg .guide__r{list-style:none;margin:0;padding:0;display:grid;gap:14px}
+.pg .guide__r li{display:flex;gap:13px;align-items:center;font-family:"Manrope",sans-serif;
+  font-size:1.02rem;color:#fff}
+.pg .guide__r svg{flex:0 0 auto;color:var(--or)}
+.pg .guide__g{display:grid;gap:14px}
+.pg .guide__c{display:grid;grid-template-columns:52px 1fr;gap:16px;align-items:center;
+  background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.16);
+  border-radius:var(--r-l);padding:16px 20px}
+.pg .guide__m{width:52px;height:52px;border-radius:50%;background:var(--or);color:var(--nuit-900);
+  display:grid;place-items:center;font-family:"Manrope",sans-serif;font-weight:800;font-size:1.15rem}
+.pg .guide__c b{font-family:"Manrope",sans-serif;font-size:1.06rem;color:#fff;display:block}
+.pg .guide__c>span:last-child{font-size:.95rem;color:#B4D0DE;line-height:1.5;display:block;margin-top:2px}
+
+/* ---------- carte de repérage ---------- */
+.pg .carte{--carte-mer:#DCEBF2;--carte-nil:#4FA3C7;margin:0;background:#fff;
+  border:1px solid var(--ligne-pg);border-radius:var(--r-l);padding:20px;box-shadow:var(--ombre)}
+.pg .carte figcaption{padding:0}
+.pg .carte__tete{display:flex;flex-direction:column}
+.pg .carte__tete .eyebrow{order:-1}
+.pg .carte h3{font-size:1.12rem;margin:0 0 16px;letter-spacing:-.3px}
+.pg .carte .eyebrow{margin-bottom:8px}
+.pg .carte__svg{display:block;width:100%;height:auto;border-radius:var(--r-m)}
+.pg .carte__d{fill:var(--nuit-900);stroke:#fff;stroke-width:3}
+.pg .carte__halo{fill:var(--or);opacity:0;transition:opacity .25s var(--ease)}
+.pg .carte__n{fill:#fff;font-family:"Manrope",sans-serif;font-size:13px;font-weight:800;
+  text-anchor:middle}
+.pg .carte__lbl{fill:var(--nuit-900);font-family:"Manrope",sans-serif;font-size:21px;font-weight:700;
+  paint-order:stroke;stroke:rgba(255,255,255,.94);stroke-width:6px;stroke-linejoin:round}
+.pg .carte__pt--titre .carte__d{fill:#fff;stroke:var(--rouge);stroke-width:4}
+.pg .carte__pt--titre .carte__lbl{fill:var(--rouge)}
+.pg .carte__pt.on .carte__halo{opacity:.35}
+.pg .carte__pt.on .carte__d{fill:var(--or);stroke:var(--nuit-900)}
+.pg .carte__pt.on .carte__n{fill:var(--nuit-900)}
+.pg .carte__route{opacity:.9}
+.pg .carte__l{list-style:none;margin:16px 0 0;padding:0;display:grid;gap:2px}
+.pg .carte__l li{display:grid;grid-template-columns:26px 1fr;gap:11px;align-items:baseline;
+  font-family:"Manrope",sans-serif;font-size:.95rem;padding:7px 8px;border-radius:var(--r-s);
+  transition:background .2s var(--ease)}
+.pg .carte__l li.on{background:var(--or-fond)}
+.pg .carte__ln{width:22px;height:22px;border-radius:50%;background:var(--nuit-900);color:#fff;
+  display:grid;place-items:center;font-size:.76rem;font-weight:800}
+.pg .carte__l li.on .carte__ln{background:var(--or);color:var(--nuit-900)}
+.pg .carte__l b{color:var(--noir);font-weight:700;display:block}
+.pg .carte__l span span{color:var(--gris-lis);font-size:.92rem;display:block;line-height:1.45}
+.pg .carte__hors{display:flex;gap:9px;align-items:flex-start;margin:14px 0 0;padding:12px 14px;
+  background:var(--rouge-fond);border-radius:var(--r-m);font-family:"Manrope",sans-serif;
+  font-size:.92rem;color:#8A2F1C;line-height:1.5}
+.pg .carte__hors svg{flex:0 0 auto;margin-top:2px}
+.pg .carte__note{margin:14px 0 0;font-family:"Manrope",sans-serif;font-size:.86rem;
+  color:var(--gris-lis);line-height:1.5}
+
 /* ---------- galerie ---------- */
 /* Cinq photos en trois colonnes avec une grande en 2×2 laissent une
    case vide en bas à droite. En QUATRE colonnes, la grande occupe
    exactement la moitié gauche et les quatre autres la moitié droite :
    le cadre est plein. Les autres comptes tiennent en trois colonnes
    sans case orpheline au milieu. */
-.pg .galerie{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.pg .galerie{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
 .pg .galerie--5{grid-template-columns:repeat(4,1fr)}
 .pg .galerie a{display:block;aspect-ratio:3/2;border-radius:var(--r-m);overflow:hidden;
   background:var(--fond)}
@@ -152,13 +279,13 @@
   letter-spacing:.06em;color:var(--nuit-900);background:var(--or);border-radius:var(--r-pill);
   padding:6px 14px;flex:0 0 auto}
 .pg .jour__tete h3{font-size:clamp(1.25rem,2vw,1.5rem)}
-.pg .etape+.etape{margin-top:48px}
-.pg .etape__photo{border-radius:var(--r-l);overflow:hidden;background:var(--fond);margin:0 0 20px;
+.pg .etape+.etape{margin-top:56px}
+.pg .etape__photo{border-radius:var(--r-l);overflow:hidden;background:var(--fond);margin:0 0 30px;
   aspect-ratio:16/9}
 .pg .etape__photo img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s var(--ease)}
 .pg .etape__photo:hover img{transform:scale(1.03)}
-.pg .etape h4{font-family:"Archivo",sans-serif;font-size:1.2rem;font-weight:600;color:var(--noir);
-  margin:0 0 12px;letter-spacing:-.3px;display:flex;align-items:center;gap:10px}
+.pg .etape h4{font-family:"Archivo",sans-serif;font-size:1.24rem;font-weight:600;color:var(--noir);
+  margin:0 0 16px;letter-spacing:-.3px;display:flex;align-items:center;gap:10px}
 .pg .etape h4 svg{color:var(--teal-txt);flex:0 0 auto}
 .pg .etape p{color:var(--texte);font-size:1.04rem;line-height:1.8;max-width:62ch}
 .pg .mentions{display:flex;flex-wrap:wrap;gap:9px;margin:18px 0 0;padding:0}
@@ -187,6 +314,11 @@
 .pg .pan__act{display:grid;gap:10px}
 .pg .pan__note{font-family:"Manrope",sans-serif;font-size:.86rem;color:var(--gris-lis);
   margin:14px 0 0;text-align:center;line-height:1.5}
+.pg .pan__avis{display:flex;flex-wrap:wrap;justify-content:center;align-items:baseline;gap:5px 9px;
+  margin:14px 0 0;padding:14px 0 0;border-top:1px solid var(--ligne-2);
+  font-family:"Manrope",sans-serif;font-size:.92rem;color:var(--gris-lis);text-align:center}
+.pg .pan__avis .et{color:var(--or-fonce);letter-spacing:.1em}
+.pg .pan__avis b{color:var(--noir)}
 .pg .pan__conf{background:var(--or-fond);border:1px solid #F6DEB0;border-radius:var(--r-l);padding:18px;
   font-family:"Manrope",sans-serif;font-size:.9rem;color:#6B4B04;display:grid;gap:6px;text-align:center}
 .pg .pan__conf b{color:var(--noir);font-size:1rem}
@@ -305,7 +437,19 @@
 /* =====================================================================
    RESPONSIVE — les marges restent dans l'échelle mobile 56/48/40/32/28
    ===================================================================== */
+@media (min-width:1041px){
+  /* Au bureau, la colonne de droite tient dans la fenêtre : prix en
+     haut, carte dessous, et la liste des étapes de la carte est
+     masquée — elle est déjà dans la colonne de gauche, en grand. */
+  .pg .carte__l{display:none}
+}
 @media (max-width:1040px){
+  .pg .guide{grid-template-columns:1fr;gap:32px}
+  .pg .bref{padding:28px 24px}
+  /* Le prix est dans le bandeau, 200 px plus haut, et dans la barre du
+     bas : trois fois sur un écran de téléphone, c'est deux fois de trop. */
+  .pg .pan__prix{display:none}
+  .pg .carte{padding:16px}
   /* minmax(0,1fr) et non 1fr : un « 1fr » nu laisse la colonne grandir
      jusqu'au contenu le plus large. Le bouton WhatsApp, que la charte
      empêche de revenir à la ligne, portait ainsi la colonne à 386 px
@@ -319,17 +463,33 @@
   .pg .incl{grid-template-columns:1fr;gap:20px}
 }
 @media (max-width:860px){
-  /* Le bandeau : au bureau la photo est le fond du bloc ; sur mobile
-     elle devient une bande au-dessus du texte. Sans cela, un écran
-     étroit et haut réclame à l'image plus de pixels qu'elle n'en a —
-     mesuré ×1,34 à 390 px en densité 2 — et la photo devient floue. */
-  .pg .hero__fond{position:relative;aspect-ratio:4/3}
-  .pg .hero__fond::after{background:linear-gradient(180deg,rgba(6,42,58,.15) 40%,rgba(5,35,50,.75) 100%)}
-  .pg .hero__in{padding:20px 0 40px;background:var(--nuit-900)}
-  .pg .hero .ariane{padding-bottom:6px}
-  .pg .hero__pills{margin:14px 0 14px;gap:6px}
-  .pg .hero__chapo{margin-bottom:22px}
-  .pg .hero h1,.pg .hero__chapo{text-shadow:none}
+  /* Le bandeau mobile : la photo occupe le premier écran en entier et
+     le titre se pose dedans, dans son bas. Sa hauteur est BORNÉE à
+     470 px, et ce n'est pas un choix esthétique : au-delà, un écran
+     étroit et haut réclame à l'image plus de pixels qu'elle n'en a
+     (mesuré ×1,34 en densité 2 sur une photo de 1920 px) et la photo
+     devient floue. À 470 px, le facteur retombe à 0,87. */
+  .pg .hero{background:var(--nuit-900)}
+  .pg .hero__fond{position:absolute;top:0;left:0;right:0;height:470px}
+  .pg .hero__fond::after{background:
+    linear-gradient(180deg,rgba(6,42,58,.55) 0%,rgba(6,42,58,.12) 32%,
+    rgba(8,45,62,.80) 74%,var(--nuit-900) 100%)}
+  .pg .hero__in{padding:14px 0 34px}
+  /* Le bloc titre se colle au BAS de la photo, quelle que soit la
+     longueur du titre : la marge automatique fait le calcul, pas moi. */
+  .pg .hero__in>.wrap{display:flex;flex-direction:column;min-height:456px}
+  .pg .hero .ariane{padding-bottom:0}
+  .pg .hero .ariane ol{flex-wrap:nowrap;overflow-x:auto;overscroll-behavior-x:contain;
+    scrollbar-width:none;-ms-overflow-style:none}
+  .pg .hero .ariane ol::-webkit-scrollbar{display:none}
+  .pg .hero .ariane li{white-space:nowrap}
+  .pg .hero__pills{margin:auto 0 16px;gap:7px}
+  .pg .hero h1{font-size:2.15rem;max-width:14ch}
+  .pg .hero__chapo{margin-bottom:0}
+  .pg .hero__bas{margin-top:28px}
+  .pg .hero__bas{gap:14px}
+  .pg .hero__prix,.pg .hero__act{width:100%}
+  .pg .hero__act .btn{flex:1}
   .pg-sec{padding:48px 0}
   .pg-sec--serre{padding:40px 0}
   .pg .deux{padding:40px 0;gap:32px}
@@ -349,7 +509,13 @@
   .pg .pg-mob .p small,.pg .pan__conf,.pg .mention,.pg .pill,.pg .acc__vide{font-size:.95rem}
   .pg .reperes b,.pg .pan__liste,.pg .apercu span.t{font-size:1rem}
   .pg .ariane,.pg .eyebrow,.pg .apercu .n,.pg .jour__no,.pg .tarif__ligne b small,
-  .pg .avis__g .ini,.pg .acc__c,.pg .devis__act small,.pg .verifier__d{font-size:.95rem}
+  .pg .avis__g .ini,.pg .acc__c,.pg .devis__act small,.pg .verifier__d,
+  .pg .bref__src,.pg .carte__note,.pg .carte__hors,.pg .carte__l,
+  .pg .carte__l span span,.pg .valise__t span,.pg .guide__c>span:last-child,
+  .pg .pan__avis{font-size:.95rem}
+  .pg .bref__l dd b{font-size:1.5rem}
+  .pg .bref__l dt,.pg .bref__l dd span{font-size:.95rem}
+  .pg .duree__c{padding:20px}
   .pg-mob .p small{font-size:.95rem}
   .pg .eyebrow{letter-spacing:.1em}
   .pg .hero h1{font-size:1.95rem;letter-spacing:-.8px}
@@ -440,6 +606,15 @@
 </ul></div></section>
 <div class="wrap"><div class="deux"><div class="corps">
 <aside class="verifier"><p class="verifier__t">À vérifier avec l&#x27;agence avant mise en ligne</p><ul><li>durées contradictoires sur la fiche : 4 jours / 3 jours minimum</li><li>le déroulé ne mentionne jamais « Siwa », le lieu du titre : vérifier que le programme est bien celui de ce séjour</li></ul><p class="verifier__d">Relevé sur la fiche actuelle le 2026-09-09</p></aside>
+<section class="bref">
+<p class="eyebrow">La réponse courte</p>
+<h2>Ce séjour en quatre chiffres</h2>
+<dl class="bref__l">
+<div><dt><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M17 6.5A6 6 0 0 0 7 12a6 6 0 0 0 10 5.5M5 10h8M5 14h8"/></svg>À partir de</dt><dd><b>595 €</b><span>Personne</span></dd></div>
+<div><dt><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Durée</dt><dd><b>3 jours minimum</b></dd></div>
+<div><dt><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 11l1.5-4.5A2 2 0 0 1 8.4 5h7.2a2 2 0 0 1 1.9 1.5L19 11M4 11h16v6h-2a2 2 0 1 1-4 0H10a2 2 0 1 1-4 0H4z"/></svg>Depuis Le Caire</dt><dd><b>8 à 10 heures</b><span>Le trajet depuis Le Caire prend environ 8 à 10 heures en voiture.</span></dd></div>
+<div><dt><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s6-5.5 6-11a6 6 0 1 0-12 0c0 5.5 6 11 6 11z"/><circle cx="12" cy="10" r="2.2"/></svg>Étapes au programme</dt><dd><b>7</b></dd></div>
+</dl><p class="bref__src">Relevé sur la fiche du site le 2026-09-09</p></section>
 <section>
 <p class="eyebrow">Le séjour</p>
 <h2>Vue d&#x27;ensemble</h2>
@@ -451,6 +626,25 @@
 <a data-lb href="https://authentiquegypte.com/wp-content/uploads/2023/11/Oasis-de-siwa-5.png" data-alt="Oasis de siwa"><img src="https://authentiquegypte.com/wp-content/uploads/2023/11/Oasis-de-siwa-5.png" alt="Oasis de siwa" decoding="async" srcset="https://authentiquegypte.com/wp-content/uploads/2023/11/Oasis-de-siwa-5-300x200.png 300w, https://authentiquegypte.com/wp-content/uploads/2023/11/Oasis-de-siwa-5-768x512.png 768w, https://authentiquegypte.com/wp-content/uploads/2023/11/Oasis-de-siwa-5.png 1000w" sizes="(max-width:860px) 45vw, 370px" width="1000" height="667" loading="lazy"></a>
 <a data-lb href="https://authentiquegypte.com/wp-content/uploads/2023/11/Oasis-de-siwa.png" data-alt="Oasis de siwa"><img src="https://authentiquegypte.com/wp-content/uploads/2023/11/Oasis-de-siwa.png" alt="Oasis de siwa" decoding="async" srcset="https://authentiquegypte.com/wp-content/uploads/2023/11/Oasis-de-siwa-300x200.png 300w, https://authentiquegypte.com/wp-content/uploads/2023/11/Oasis-de-siwa-768x512.png 768w, https://authentiquegypte.com/wp-content/uploads/2023/11/Oasis-de-siwa.png 1000w" sizes="(max-width:860px) 45vw, 370px" width="1000" height="667" loading="lazy"></a>
 <a data-lb href="https://authentiquegypte.com/wp-content/uploads/2023/11/Oasis-de-siwa-4.png" data-alt="Oasis de siwa"><img src="https://authentiquegypte.com/wp-content/uploads/2023/11/Oasis-de-siwa-4.png" alt="Oasis de siwa" decoding="async" srcset="https://authentiquegypte.com/wp-content/uploads/2023/11/Oasis-de-siwa-4-300x200.png 300w, https://authentiquegypte.com/wp-content/uploads/2023/11/Oasis-de-siwa-4-768x512.png 768w, https://authentiquegypte.com/wp-content/uploads/2023/11/Oasis-de-siwa-4.png 1000w" sizes="(max-width:860px) 45vw, 370px" width="1000" height="667" loading="lazy"></a>
+</section>
+<section class="mod mod--duree">
+<p class="eyebrow">Le bon format</p>
+<h2>Combien de temps prévoir pour un séjour ?</h2>
+<p class="mod__intro">Durée recommandée : 3 à 4 jours</p>
+<div class="duree">
+<input class="duree__r" type="radio" name="duree" id="duree-0">
+<input class="duree__r" type="radio" name="duree" id="duree-1" checked>
+<input class="duree__r" type="radio" name="duree" id="duree-2">
+<div class="duree__ong" role="tablist">
+<label class="duree__o" for="duree-0" tabindex="0">2 jours</label>
+<label class="duree__o" for="duree-1" tabindex="0">3-4 jours</label>
+<label class="duree__o" for="duree-2" tabindex="0">5 jours et plus</label>
+</div><div class="duree__p">
+<div class="duree__c"><b>2 jours</b><p>idéal pour explorer les principaux sites</p></div>
+<div class="duree__c"><b>3-4 jours</b><p>pour une expérience complète avec exploration des sites historiques et naturels</p></div>
+<div class="duree__c"><b>5 jours et plus</b><p>pour une immersion totale avec excursions dans le désert environnant</p></div>
+</div></div>
+<p class="mod__conseil"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.7 5.8 6.3.7-4.7 4.3 1.3 6.2L12 17l-5.6 3 1.3-6.2L3 9.5l6.3-.7z"/></svg><span>Prévoyez au moins 3 jours pour voir les principaux sites sans précipitation.</span></p>
 </section>
 <section class="apercu">
 <h2>Les étapes de votre séjour</h2><ol>
@@ -466,20 +660,20 @@
 <h2>Le séjour jour par jour</h2>
 <div class="jour">
 <div class="jour__tete"><h3>Le Caire - Oasis de Siwa</h3><span class="jour__no">Jour 1</span></div>
-<article class="etape">
+<article class="etape" data-lieu="charm-el-cheikh">
 <a class="etape__photo" data-lb href="https://authentiquegypte.com/wp-content/uploads/2025/06/mohamad-sameh-Jl6Ghf2YsFQ-unsplash-scaled.jpg" data-alt="Paysage du Sinaï" aria-label="Agrandir la photo : Paysage du Sinaï"><img src="https://authentiquegypte.com/wp-content/uploads/2025/06/mohamad-sameh-Jl6Ghf2YsFQ-unsplash-scaled.jpg" alt="Paysage du Sinaï" decoding="async" srcset="https://authentiquegypte.com/wp-content/uploads/2025/06/mohamad-sameh-Jl6Ghf2YsFQ-unsplash-300x200.jpg 300w, https://authentiquegypte.com/wp-content/uploads/2025/06/mohamad-sameh-Jl6Ghf2YsFQ-unsplash-768x512.jpg 768w, https://authentiquegypte.com/wp-content/uploads/2025/06/mohamad-sameh-Jl6Ghf2YsFQ-unsplash-1024x683.jpg 1024w, https://authentiquegypte.com/wp-content/uploads/2025/06/mohamad-sameh-Jl6Ghf2YsFQ-unsplash-1536x1024.jpg 1536w, https://authentiquegypte.com/wp-content/uploads/2025/06/mohamad-sameh-Jl6Ghf2YsFQ-unsplash-2048x1365.jpg 2048w, https://authentiquegypte.com/wp-content/uploads/2025/06/mohamad-sameh-Jl6Ghf2YsFQ-unsplash-scaled.jpg 2560w" sizes="(max-width:1040px) 100vw, 780px" width="2560" height="1707" loading="lazy"></a>
 <p>Départ dans l’après-midi. Un véhicule privé et climatisé vient vous chercher à votre hôtel à Sharm el-Sheikh ou Dahab dans l’après-midi pour prendre la route en direction de Sainte-Catherine.</p>
 <p>La route en bon état menant au village vous donne l’occasion d’observer les paysages du Sinaï, des montagnes abruptes aux langues de sables, et peut-être même de croiser des dromadaires le long de la route.</p>
 
 </article>
-<article class="etape">
+<article class="etape" data-lieu="sainte-catherine">
 <a class="etape__photo" data-lb href="https://authentiquegypte.com/wp-content/uploads/2025/06/DSC00493-scaled.jpg" data-alt="Guesthouse" aria-label="Agrandir la photo : Guesthouse"><img src="https://authentiquegypte.com/wp-content/uploads/2025/06/DSC00493-scaled.jpg" alt="Guesthouse" decoding="async" srcset="https://authentiquegypte.com/wp-content/uploads/2025/06/DSC00493-300x201.jpg 300w, https://authentiquegypte.com/wp-content/uploads/2025/06/DSC00493-768x513.jpg 768w, https://authentiquegypte.com/wp-content/uploads/2025/06/DSC00493-1024x684.jpg 1024w, https://authentiquegypte.com/wp-content/uploads/2025/06/DSC00493-1536x1027.jpg 1536w, https://authentiquegypte.com/wp-content/uploads/2025/06/DSC00493-2048x1369.jpg 2048w, https://authentiquegypte.com/wp-content/uploads/2025/06/DSC00493-scaled.jpg 2560w" sizes="(max-width:1040px) 100vw, 780px" width="2560" height="1711" loading="lazy"></a>
 <h4><svg aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s6-5.5 6-11a6 6 0 1 0-12 0c0 5.5 6 11 6 11z"/><circle cx="12" cy="10" r="2.2"/></svg>Arrivée chez votre hôte</h4>
 <p>Vous arrivez dans le village de Sainte-Catherine, peuplé en grande partie de Bédouin de la tribu Gabalia.</p>
 <p>Rencontrez ensuite Saleh et l’équipe de la guesthouse qui vous accueillerons avec toute l’hospitalité bédouine dans un lieu particulièrement propice au repos et à la méditation. Vous profitez d’une chambre avec salle de bain privative afin de vous reposer, ainsi que d’un dîner traditionnel et complet pour faire le plein d’énergie avant l’ascension.</p>
 <p class="mentions"><span class="mention"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3v7a2 2 0 0 0 4 0V3M9 3v18M17 3c-2 2-3 5-3 8h3v10"/></svg>Dîner</span><span class="mention"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18V8M3 12h18v6M7 12V9h6v3"/></svg>Nuit en guesthouse</span></p>
 </article>
-<article class="etape">
+<article class="etape" data-lieu="mont-moise">
 <a class="etape__photo" data-lb href="https://authentiquegypte.com/wp-content/uploads/2025/06/DSC00535-scaled.jpg" data-alt="Lever du soleil sur le Sinaï" aria-label="Agrandir la photo : Lever du soleil sur le Sinaï"><img src="https://authentiquegypte.com/wp-content/uploads/2025/06/DSC00535-scaled.jpg" alt="Lever du soleil sur le Sinaï" decoding="async" srcset="https://authentiquegypte.com/wp-content/uploads/2025/06/DSC00535-300x201.jpg 300w, https://authentiquegypte.com/wp-content/uploads/2025/06/DSC00535-768x513.jpg 768w, https://authentiquegypte.com/wp-content/uploads/2025/06/DSC00535-1024x684.jpg 1024w, https://authentiquegypte.com/wp-content/uploads/2025/06/DSC00535-1536x1027.jpg 1536w, https://authentiquegypte.com/wp-content/uploads/2025/06/DSC00535-2048x1369.jpg 2048w, https://authentiquegypte.com/wp-content/uploads/2025/06/DSC00535-scaled.jpg 2560w" sizes="(max-width:1040px) 100vw, 780px" width="2560" height="1711" loading="lazy"></a>
 <h4><svg aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s6-5.5 6-11a6 6 0 1 0-12 0c0 5.5 6 11 6 11z"/><circle cx="12" cy="10" r="2.2"/></svg>Départ pour l&#x27;ascension</h4>
 <p>Après une courte, mais confortable nuit, vous partez pour l’ascension du mont Moïse (ou Gebel Moussa en arabe), le départ de la guesthouse se fait vers 1h00 avec votre guide bédouin. Une ascension qui s’annonce mythique et spirituelle.</p>
@@ -489,21 +683,21 @@
 <p>Sur la route, vous prenez des pauses dans de petits magasins minimalistes et faits de pierres, qui vous serviront boissons chaudes et collations pour garder de l’énergie tout au long de l’ascension et vous mettre à l’abri pour vous reposer un peu au besoin.</p>
 
 </article>
-<article class="etape">
+<article class="etape" data-lieu="mont-moise">
 <a class="etape__photo" data-lb href="https://authentiquegypte.com/wp-content/uploads/2025/06/DSC00528-scaled-e1750597600417.jpg" data-alt="" aria-label="Agrandir la photo : Lever de soleil au sommet"><img src="https://authentiquegypte.com/wp-content/uploads/2025/06/DSC00528-scaled-e1750597600417.jpg" alt="" decoding="async" srcset="https://authentiquegypte.com/wp-content/uploads/2025/06/DSC00528-scaled-e1750597600417-300x210.jpg 300w, https://authentiquegypte.com/wp-content/uploads/2025/06/DSC00528-scaled-e1750597600417-768x537.jpg 768w, https://authentiquegypte.com/wp-content/uploads/2025/06/DSC00528-scaled-e1750597600417-1024x716.jpg 1024w, https://authentiquegypte.com/wp-content/uploads/2025/06/DSC00528-scaled-e1750597600417-1536x1073.jpg 1536w, https://authentiquegypte.com/wp-content/uploads/2025/06/DSC00528-scaled-e1750597600417.jpg 1710w" sizes="(max-width:1040px) 100vw, 780px" width="1710" height="1195" loading="lazy"></a>
 <h4><svg aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s6-5.5 6-11a6 6 0 1 0-12 0c0 5.5 6 11 6 11z"/><circle cx="12" cy="10" r="2.2"/></svg>Lever de soleil au sommet</h4>
 <p>La marche qui dure entre 2h30 et 3h00 vous mène au sommet du mont Moïse pour admirer le lever du soleil sur les montagnes du Sinaï, dont le mont Sainte-Catherine, la plus haute montagne d’Egypte, à 2629 mètres.</p>
 <p>Une expérience unique, magnifique et que chacun saura apprécier à sa manière.</p>
 
 </article>
-<article class="etape">
+<article class="etape" data-lieu="sainte-catherine">
 <a class="etape__photo" data-lb href="https://authentiquegypte.com/wp-content/uploads/2025/06/DSC00611-scaled.jpg" data-alt="Descente du mont Sinaï au lever du soleil" aria-label="Agrandir la photo : Descente du mont Sinaï au lever du soleil"><img src="https://authentiquegypte.com/wp-content/uploads/2025/06/DSC00611-scaled.jpg" alt="Descente du mont Sinaï au lever du soleil" decoding="async" srcset="https://authentiquegypte.com/wp-content/uploads/2025/06/DSC00611-300x201.jpg 300w, https://authentiquegypte.com/wp-content/uploads/2025/06/DSC00611-768x513.jpg 768w, https://authentiquegypte.com/wp-content/uploads/2025/06/DSC00611-1024x684.jpg 1024w, https://authentiquegypte.com/wp-content/uploads/2025/06/DSC00611-1536x1027.jpg 1536w, https://authentiquegypte.com/wp-content/uploads/2025/06/DSC00611-2048x1369.jpg 2048w, https://authentiquegypte.com/wp-content/uploads/2025/06/DSC00611-scaled.jpg 2560w" sizes="(max-width:1040px) 100vw, 780px" width="2560" height="1711" loading="lazy"></a>
 <h4><svg aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s6-5.5 6-11a6 6 0 1 0-12 0c0 5.5 6 11 6 11z"/><circle cx="12" cy="10" r="2.2"/></svg>Descente vers le monastère</h4>
 <p>Reprenez ensuite le chemin en sens inverse et découvrez le paysage qui vous entourait jusqu’alors discrètement à la lueur de la lune. Cette descente s’effectue en 2h00 à 2h30.</p>
 <p>Enfin, vous commencez à apercevoir le monastère grec orthodoxe de Sainte-Catherine, éclairé par les premiers rayons du soleil et encaissé entre deux montagnes, un écrin de verdure au centre d’une vallée aride.</p>
 
 </article>
-<article class="etape">
+<article class="etape" data-lieu="sainte-catherine">
 <a class="etape__photo" data-lb href="https://authentiquegypte.com/wp-content/uploads/2025/06/raimond-klavins-8j3FvUT6yM4-unsplash-scaled.jpg" data-alt="Monastère Sainte-Catherine, Raimond Klavins" aria-label="Agrandir la photo : Monastère Sainte-Catherine, Raimond Klavins"><img src="https://authentiquegypte.com/wp-content/uploads/2025/06/raimond-klavins-8j3FvUT6yM4-unsplash-scaled.jpg" alt="Monastère Sainte-Catherine, Raimond Klavins" decoding="async" srcset="https://authentiquegypte.com/wp-content/uploads/2025/06/raimond-klavins-8j3FvUT6yM4-unsplash-300x200.jpg 300w, https://authentiquegypte.com/wp-content/uploads/2025/06/raimond-klavins-8j3FvUT6yM4-unsplash-768x512.jpg 768w, https://authentiquegypte.com/wp-content/uploads/2025/06/raimond-klavins-8j3FvUT6yM4-unsplash-1024x683.jpg 1024w, https://authentiquegypte.com/wp-content/uploads/2025/06/raimond-klavins-8j3FvUT6yM4-unsplash-1536x1025.jpg 1536w, https://authentiquegypte.com/wp-content/uploads/2025/06/raimond-klavins-8j3FvUT6yM4-unsplash-2048x1367.jpg 2048w, https://authentiquegypte.com/wp-content/uploads/2025/06/raimond-klavins-8j3FvUT6yM4-unsplash-scaled.jpg 2560w" sizes="(max-width:1040px) 100vw, 780px" width="2560" height="1708" loading="lazy"></a>
 <h4><svg aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s6-5.5 6-11a6 6 0 1 0-12 0c0 5.5 6 11 6 11z"/><circle cx="12" cy="10" r="2.2"/></svg>Visite du monastère</h4>
 <p>Le monastère est construit de murs en granit épais de 2 à 3 mètres, cette fortification s’accompagnait jusqu’au XXe siècle d’absence totale de porte. Ainsi, les moines rentraient via une fenêtre à une dizaine de mètres de hauteur où était installé un système d’ascenseur tracté manuellement. Cette situation explique l’étroitesse des passages, construits plus tard et par lesquels vous passez pour rentrer dans le monastère.</p>
@@ -512,7 +706,7 @@
 <p>Enfin, déambulez dans le parc ombragé et verdoyant du monastère où vous pourrez peut-être faire la rencontre d’un moine. En effet, plus d’une vingtaine de moines vivent de manière permanente au monastère, ils sont pour la plupart grecs et vivent pour la prière, la copie de manuscrits et l’accueil des pèlerins.</p>
 
 </article>
-<article class="etape">
+<article class="etape" data-lieu="sainte-catherine">
 <h4><svg aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s6-5.5 6-11a6 6 0 1 0-12 0c0 5.5 6 11 6 11z"/><circle cx="12" cy="10" r="2.2"/></svg>Retour à la guesthouse</h4>
 <p>Une voiture viendra vous chercher au parking du monastère afin de vous emmener à la guesthouse. Vous profitez d’un petit-déjeuner traditionnel et complet avant de reprendre la route en direction de la côte vers 12h00.</p>
 <p class="mentions"><span class="mention"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3v7a2 2 0 0 0 4 0V3M9 3v18M17 3c-2 2-3 5-3 8h3v10"/></svg>Petit-déjeuner</span></p>
@@ -525,18 +719,91 @@
 <div class="incl__col incl__col--oui"><h3><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l4.5 4.5L19 7"/></svg>Le programme inclus</h3><ul><li><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l4.5 4.5L19 7"/></svg><span>Guide privatif</span></li><li><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l4.5 4.5L19 7"/></svg><span>Chauffeur privatif</span></li><li><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l4.5 4.5L19 7"/></svg><span>Les entrées aux monuments et autorisations</span></li><li><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l4.5 4.5L19 7"/></svg><span>Les hébergements</span></li><li><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l4.5 4.5L19 7"/></svg><span>Les transferts en 4x4 climatisé</span></li><li><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l4.5 4.5L19 7"/></svg><span>Les repas mentionnés</span></li><li><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l4.5 4.5L19 7"/></svg><span>L&#x27;assistance H24</span></li></ul></div>
 <div class="incl__col incl__col--non"><h3><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6L6 18"/></svg>N&#x27;inclus pas</h3><ul><li><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6L6 18"/></svg><span>Les vols internationaux</span></li><li><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6L6 18"/></svg><span>Les pourboires</span></li><li><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6L6 18"/></svg><span>Les frais de paiement</span></li><li><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6L6 18"/></svg><span>Les dépenses personnelles</span></li><li><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6L6 18"/></svg><span>L&#x27;assurance voyage</span></li></ul></div>
 </div></section>
+<section class="mod mod--valise">
+<p class="eyebrow">Avant de boucler le sac</p>
+<h2>Quels équipements prévoir ?</h2>
+<p class="mod__intro">Cochez au fur et à mesure, la liste reste sur cet écran.</p>
+<ul class="valise" id="valise">
+<li><label><input type="checkbox"><span class="valise__b" aria-hidden="true"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l4.5 4.5L19 7"/></svg></span><span class="valise__t"><b>Vêtements</b><span>couches superposables (matin frais, journée chaude)</span></span></label></li>
+<li><label><input type="checkbox"><span class="valise__b" aria-hidden="true"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l4.5 4.5L19 7"/></svg></span><span class="valise__t"><b>Chaussures</b><span>chaussures de randonnée confortables</span></span></label></li>
+<li><label><input type="checkbox"><span class="valise__b" aria-hidden="true"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l4.5 4.5L19 7"/></svg></span><span class="valise__t"><b>Protection</b><span>chapeau, lunettes de soleil, crème solaire</span></span></label></li>
+<li><label><input type="checkbox"><span class="valise__b" aria-hidden="true"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l4.5 4.5L19 7"/></svg></span><span class="valise__t"><b>Eau</b><span>minimum 3L par personne par jour</span></span></label></li>
+<li><label><input type="checkbox"><span class="valise__b" aria-hidden="true"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l4.5 4.5L19 7"/></svg></span><span class="valise__t"><b>Appareil photo</b><span>pour capturer les paysages uniques</span></span></label></li>
+</ul>
+<p class="valise__etat" id="valise-etat" role="status">Il reste <b>5</b> éléments à préparer</p>
+<p class="mod__conseil"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.7 5.8 6.3.7-4.7 4.3 1.3 6.2L12 17l-5.6 3 1.3-6.2L3 9.5l6.3-.7z"/></svg><span>Prévoyez un sac à dos léger mais bien équipé pour les excursions.</span></p>
+</section>
 </div>
 <aside class="pan"><div class="pan__carte">
 <p class="pan__prix" style="margin:0"><small>À partir de</small><b>595 €</b> <i>/ Personne</i></p>
-<ul class="pan__liste"><li><svg aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span>3 jours minimum</span></li><li><svg aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20c4-1 5-6 5-6l3-9 3 9s1 5 5 6"/><path d="M9 14h6"/></svg><span>Rythme adapté</span></li><li><svg aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 11l1.5-4.5A2 2 0 0 1 8.4 5h7.2a2 2 0 0 1 1.9 1.5L19 11M4 11h16v6h-2a2 2 0 1 1-4 0H10a2 2 0 1 1-4 0H4z"/></svg><span>Chauffeur et véhicule sécurisé</span></li><li><svg aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.5"/><path d="M5 20a7 7 0 0 1 14 0"/></svg><span>Guide privatif</span></li><li><svg aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11l8-7 8 7v9H4z"/><path d="M10 20v-6h4v6"/></svg><span>Hébergements familiaux</span></li></ul>
 <div class="pan__act"><a class="btn btn--or btn--bloc" href="https://authentiquegypte.com/sur-mesure/">Personnaliser ce séjour</a><a class="btn btn--wa btn--bloc" href="https://wa.me/201066619098"><svg aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6a3 3 0 0 1 3-3h10a3 3 0 0 1 3 3v8a3 3 0 0 1-3 3H9l-5 4z"/></svg> Poser une question sur WhatsApp</a></div>
 <p class="pan__note">Réponse sous 48 h, hors vendredi et samedi<br>Aucune carte bancaire demandée à cette étape.</p>
+<p class="pan__avis"><span class="et" aria-hidden="true">★★★★★</span><b>23 avis Google</b> <span>Agence locale basée au Caire</span></p>
 </div>
-<div class="pan__conf"><span class="et" aria-hidden="true">★★★★★</span><b>23 avis Google</b><span>Agence locale basée au Caire</span></div>
+<figure class="carte">
+<figcaption class="carte__tete"><h3>Le trajet, étape par étape</h3><p class="eyebrow">Où vous allez</p></figcaption>
+<svg viewBox="0 0 564 470" role="img" aria-label="Carte de l&#x27;Égypte situant les étapes du séjour" class="carte__svg">
+<defs><linearGradient id="sable" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F6E7C8"/><stop offset="1" stop-color="#EAD5A8"/></linearGradient></defs>
+<rect width="564" height="470" fill="var(--carte-mer)" rx="14"/>
+<path d="M47.0 28.6 L94.1 37.3 L134.8 37.3 L184.2 57.1 L235.1 50.5 L258.7 30.7 L286.1 26.4 L317.4 32.9 L333.1 41.7 L368.4 43.9 L409.5 43.0 L435.0 118.6 L426.4 158.1 L416.2 182.3 L409.5 196.8 L384.1 158.1 L362.5 131.8 L344.9 101.0 L342.9 96.6 L350.7 114.2 L368.4 175.7 L393.9 217.4 L415.4 272.3 L442.8 347.0 L466.4 395.3 L513.4 448.0 L35.3 448.0 L35.3 316.3 L43.1 140.6 Z" fill="url(#sable)" stroke="#D9BC85" stroke-width="1.2"/>
+<path d="M356.6 356.2 L350.7 311.9 L346.4 286.0 L325.3 246.0 L295.9 215.2 L288.0 171.3 L290.0 127.4 L291.6 94.9 L266.5 57.1 L246.9 46.1" fill="none" stroke="var(--carte-nil)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M291.6 94.9 L303.7 57.1 L314.3 34.3" fill="none" stroke="var(--carte-nil)" stroke-width="2" stroke-linecap="round"/>
+<path d="M356.6 356.2 L337.0 390.9 L317.4 417.3 L306.9 433.1" fill="none" stroke="var(--carte-nil)" stroke-width="4" stroke-linecap="round" opacity=".85"/>
+<path class="carte__route" d="M412.7 188.2 L397.3 160.1 L398.8 163.8" fill="none" stroke="var(--or)" stroke-width="4" stroke-dasharray="9 7" stroke-linecap="round"/>
+<g class="carte__pt carte__pt--titre" id="pt-siwa" data-lieu="siwa">
+<circle class="carte__halo" cx="67.4" cy="131.6" r="22"/>
+<circle class="carte__d" cx="67.4" cy="131.6" r="9"/>
+<text class="carte__lbl" x="85.4" y="139.1" text-anchor="start">Oasis de Siwa</text>
+</g>
+<g class="carte__pt carte__pt--titre" id="pt-le-caire" data-lieu="le-caire">
+<circle class="carte__halo" cx="291.4" cy="94.7" r="22"/>
+<circle class="carte__d" cx="291.4" cy="94.7" r="9"/>
+<text class="carte__lbl" x="273.4" y="86.2" text-anchor="end">Le Caire</text>
+</g>
+<g class="carte__pt" id="pt-charm-el-cheikh" data-lieu="charm-el-cheikh">
+<circle class="carte__halo" cx="412.7" cy="188.2" r="22"/>
+<circle class="carte__d" cx="412.7" cy="188.2" r="9"/>
+<text class="carte__n" x="412.7" y="192.79999999999998">1</text>
+<text class="carte__lbl" x="430.7" y="239.7" text-anchor="start">Charm el-Cheikh</text>
+</g>
+<g class="carte__pt" id="pt-sainte-catherine" data-lieu="sainte-catherine">
+<circle class="carte__halo" cx="397.3" cy="160.1" r="22"/>
+<circle class="carte__d" cx="397.3" cy="160.1" r="9"/>
+<text class="carte__n" x="397.3" y="164.7">2</text>
+<text class="carte__lbl" x="415.3" y="135.6" text-anchor="start">Sainte-Catherine</text>
+</g>
+<g class="carte__pt" id="pt-mont-moise" data-lieu="mont-moise">
+<circle class="carte__halo" cx="398.8" cy="163.8" r="22"/>
+<circle class="carte__d" cx="398.8" cy="163.8" r="9"/>
+<text class="carte__n" x="398.8" y="168.4">3</text>
+<text class="carte__lbl" x="416.8" y="179.3" text-anchor="start">Mont Moïse</text>
+</g>
+</svg>
+<ol class="carte__l">
+<li data-lieu="charm-el-cheikh"><span class="carte__ln">1</span><span><b>Charm el-Cheikh</b><span>Le Caire - Oasis de Siwa</span></span></li>
+<li data-lieu="sainte-catherine"><span class="carte__ln">2</span><span><b>Sainte-Catherine</b><span>Arrivée chez votre hôte</span></span></li>
+<li data-lieu="mont-moise"><span class="carte__ln">3</span><span><b>Mont Moïse</b><span>Départ pour l&#x27;ascension</span></span></li>
+</ol>
+<p class="carte__hors"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.7 5.8 6.3.7-4.7 4.3 1.3 6.2L12 17l-5.6 3 1.3-6.2L3 9.5l6.3-.7z"/></svg>Annoncé par le titre du séjour, absent du déroulé : Oasis de Siwa, Le Caire</p>
+<figcaption class="carte__note">Carte de repérage : tracé schématique, points placés à leurs coordonnées réelles.</figcaption></figure>
 </aside>
 </div></div>
+<section class="pg-sec pg-sec--nuit"><div class="wrap"><div class="guide">
+<div><p class="eyebrow eyebrow--clair">Qui vous accompagne</p>
+<h2>Votre guide, votre chauffeur, et personne d&#x27;autre</h2>
+<p class="guide__intro">Ce séjour est privatif : vous ne partagez ni le guide, ni le véhicule, ni le rythme.</p>
+<ul class="guide__r">
+<li><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.5"/><path d="M5 20a7 7 0 0 1 14 0"/></svg><span>Guide privatif</span></li>
+<li><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 11l1.5-4.5A2 2 0 0 1 8.4 5h7.2a2 2 0 0 1 1.9 1.5L19 11M4 11h16v6h-2a2 2 0 1 1-4 0H10a2 2 0 1 1-4 0H4z"/></svg><span>Chauffeur privatif</span></li>
+<li><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 11l1.5-4.5A2 2 0 0 1 8.4 5h7.2a2 2 0 0 1 1.9 1.5L19 11M4 11h16v6h-2a2 2 0 1 1-4 0H10a2 2 0 1 1-4 0H4z"/></svg><span>Les transferts en 4x4 climatisé</span></li>
+<li><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/></svg><span>L&#x27;assistance H24</span></li>
+</ul></div><div class="guide__g">
+<div class="guide__c"><span class="guide__m">H</span><b>Hossam</b><span>Guide égyptologue — 14 ans — français, arabe, anglais</span></div>
+<div class="guide__c"><span class="guide__m">N</span><b>Nour</b><span>Conception d&#x27;itinéraires — votre interlocutrice du devis au retour</span></div>
+<div class="guide__c"><span class="guide__m">A</span><b>Ahmed</b><span>Chauffeur privatif — Le Caire, Delta et vallée du Nil</span></div>
+</div></div></div></section>
 <section class="pg-sec pg-sec--fond"><div class="wrap"><div class="faqs">
-<div><p class="eyebrow">La destination</p><h2>Tout savoir sur ce séjour</h2><div class="acc"><details open><summary><span class="q">Qu&#x27;est-ce qui rend Siwa unique ?</span><span class="acc__plus"></span></summary><div class="acc__c"><p> <strong>Siwa est unique par son isolement, sa culture préservée et ses paysages exceptionnels.</strong> </p> <ul> <li><strong>Culture amazighe</strong> : langue siwi, traditions et architecture en karsheef</li> <li><strong>Histoire millénaire</strong> : temple d'Amon, nécropoles de Gebel al-Mawta</li> <li><strong>Paysages contrastés</strong> : palmeraie, lacs salés, désert libyque</li> <li><strong>Ambiance préservée</strong> : loin des circuits touristiques traditionnels</li> </ul> <p> Classée au patrimoine mondial de l'UNESCO, Siwa offre une expérience authentique et hors du temps. </p></div></details><details><summary><span class="q">Comment s&#x27;y rendre depuis Le Caire ?</span><span class="acc__plus"></span></summary><div class="acc__c"><p> <strong>Le trajet depuis Le Caire prend environ 8 à 10 heures en voiture.</strong> </p> <ul> <li><strong>En voiture privée</strong> : avec chauffeur expérimenté (itinéraire via Bahariya ou Farafra)</li> <li><strong>En excursion organisée</strong> : la solution la plus simple avec guide et véhicule adapté</li> <li><strong>En camping</strong> : possibilité de bivouac dans le désert environnant</li> </ul> <p> <strong>Conseil :</strong> Préférez les excursions organisées pour bénéficier d'un guide expérimenté et d'un véhicule adapté. </p></div></details><details><summary><span class="q">Quelle est la meilleure période pour visiter ?</span><span class="acc__plus"></span></summary><div class="acc__c"><p> <strong>Période idéale : d'octobre à mars</strong> pour des températures agréables (15-25°C). </p> <ul> <li><strong>Printemps/Automne</strong> : conditions parfaites pour l'exploration</li> <li><strong>Hiver</strong> : nuits fraîches (0-10°C), prévoir des vêtements chauds</li> <li><strong>Été</strong> : très chaud (40°C+), déconseillé pour les randonnées</li> </ul> <p> <strong>Astuce :</strong> Le lever et coucher du soleil offrent des couleurs magiques sur les paysages. </p></div></details><details><summary><span class="q">Combien de temps prévoir pour un séjour ?</span><span class="acc__plus"></span></summary><div class="acc__c"><p> <strong>Durée recommandée : 3 à 4 jours</strong> pour profiter pleinement du site. </p> <ul> <li><strong>2 jours</strong> : idéal pour explorer les principaux sites</li> <li><strong>3-4 jours</strong> : pour une expérience complète avec exploration des sites historiques et naturels</li> <li><strong>5 jours et plus</strong> : pour une immersion totale avec excursions dans le désert environnant</li> </ul> <p> <strong>Conseil :</strong> Prévoyez au moins 3 jours pour voir les principaux sites sans précipitation. </p></div></details><details><summary><span class="q">Quelles activités sont incontournables ?</span><span class="acc__plus"></span></summary><div class="acc__c"><p> <strong>Activités principales :</strong> </p> <ul> <li><strong>Visite des sites historiques</strong> : temple d'Amon, forteresse de Shali, nécropoles de Gebel al-Mawta</li> <li><strong>Bains dans les sources naturelles</strong> : comme les bains de Cléopâtre</li> <li><strong>Exploration des lacs salés</strong> : paysages uniques et baignade flottante</li> <li><strong>Randonnées dans le désert</strong> : découverte des paysages désertiques</li> <li><strong>Dégustation de la cuisine locale</strong> : plats à base de dattes et d'olives</li> </ul> <p> <strong>À noter :</strong> Siwa offre aussi des possibilités de camping sous les étoiles dans le désert environnant. </p></div></details><details><summary><span class="q">Quels équipements prévoir ?</span><span class="acc__plus"></span></summary><div class="acc__c"><p> <strong>Équipement essentiel :</strong> </p> <ul> <li><strong>Vêtements</strong> : couches superposables (matin frais, journée chaude)</li> <li><strong>Chaussures</strong> : chaussures de randonnée confortables</li> <li><strong>Protection</strong> : chapeau, lunettes de soleil, crème solaire</li> <li><strong>Eau</strong> : minimum 3L par personne par jour</li> <li><strong>Appareil photo</strong> : pour capturer les paysages uniques</li> </ul> <p> <strong>Conseil :</strong> Prévoyez un sac à dos léger mais bien équipé pour les excursions. </p></div></details><details><summary><span class="q">Conseils de sécurité et santé</span><span class="acc__plus"></span></summary><div class="acc__c"><p> <strong>Règles de sécurité essentielles :</strong> </p> <ul> <li><strong>Ne vous éloignez pas</strong> du groupe ou du guide, surtout dans le désert</li> <li><strong>Restez hydraté</strong> en buvant régulièrement</li> <li><strong>Protégez-vous</strong> du soleil (chapeau, crème solaire)</li> <li><strong>Évitez</strong> de toucher les formations rocheuses fragiles</li> <li><strong>Respectez</strong> les consignes du guide</li> </ul> <p> <strong>À noter :</strong> Le désert peut être dangereux en cas de tempête de sable soudaine. </p></div></details><details><summary><span class="q">Peut-on combiner Siwa avec d&#x27;autres sites ?</span><span class="acc__plus"></span></summary><div class="acc__c"><p> <strong>Oui, plusieurs combinaisons possibles :</strong> </p> <ul> <li><strong>Avec l'Oasis de Bahariya</strong> : à 1h de route, paysages verdoyants</li> <li><strong>Avec l'Oasis de Farafra</strong> : à 2h, ambiance plus isolée</li> <li><strong>Avec le Désert Blanc</strong> : formations rocheuses calcaires spectaculaires</li> <li><strong>Avec le Désert Noir</strong> : formations volcaniques contrastées</li> </ul> <p> <strong>Conseil :</strong> Une excursion combinée permet de voir plusieurs paysages désertiques en une seule sortie. </p></div></details></div></div>
+<div><p class="eyebrow">La destination</p><h2>Tout savoir sur ce séjour</h2><div class="acc"><details open><summary><span class="q">Qu&#x27;est-ce qui rend Siwa unique ?</span><span class="acc__plus"></span></summary><div class="acc__c"><p> <strong>Siwa est unique par son isolement, sa culture préservée et ses paysages exceptionnels.</strong> </p> <ul> <li><strong>Culture amazighe</strong> : langue siwi, traditions et architecture en karsheef</li> <li><strong>Histoire millénaire</strong> : temple d'Amon, nécropoles de Gebel al-Mawta</li> <li><strong>Paysages contrastés</strong> : palmeraie, lacs salés, désert libyque</li> <li><strong>Ambiance préservée</strong> : loin des circuits touristiques traditionnels</li> </ul> <p> Classée au patrimoine mondial de l'UNESCO, Siwa offre une expérience authentique et hors du temps. </p></div></details><details><summary><span class="q">Comment s&#x27;y rendre depuis Le Caire ?</span><span class="acc__plus"></span></summary><div class="acc__c"><p> <strong>Le trajet depuis Le Caire prend environ 8 à 10 heures en voiture.</strong> </p> <ul> <li><strong>En voiture privée</strong> : avec chauffeur expérimenté (itinéraire via Bahariya ou Farafra)</li> <li><strong>En excursion organisée</strong> : la solution la plus simple avec guide et véhicule adapté</li> <li><strong>En camping</strong> : possibilité de bivouac dans le désert environnant</li> </ul> <p> <strong>Conseil :</strong> Préférez les excursions organisées pour bénéficier d'un guide expérimenté et d'un véhicule adapté. </p></div></details><details><summary><span class="q">Quelle est la meilleure période pour visiter ?</span><span class="acc__plus"></span></summary><div class="acc__c"><p> <strong>Période idéale : d'octobre à mars</strong> pour des températures agréables (15-25°C). </p> <ul> <li><strong>Printemps/Automne</strong> : conditions parfaites pour l'exploration</li> <li><strong>Hiver</strong> : nuits fraîches (0-10°C), prévoir des vêtements chauds</li> <li><strong>Été</strong> : très chaud (40°C+), déconseillé pour les randonnées</li> </ul> <p> <strong>Astuce :</strong> Le lever et coucher du soleil offrent des couleurs magiques sur les paysages. </p></div></details><details><summary><span class="q">Quelles activités sont incontournables ?</span><span class="acc__plus"></span></summary><div class="acc__c"><p> <strong>Activités principales :</strong> </p> <ul> <li><strong>Visite des sites historiques</strong> : temple d'Amon, forteresse de Shali, nécropoles de Gebel al-Mawta</li> <li><strong>Bains dans les sources naturelles</strong> : comme les bains de Cléopâtre</li> <li><strong>Exploration des lacs salés</strong> : paysages uniques et baignade flottante</li> <li><strong>Randonnées dans le désert</strong> : découverte des paysages désertiques</li> <li><strong>Dégustation de la cuisine locale</strong> : plats à base de dattes et d'olives</li> </ul> <p> <strong>À noter :</strong> Siwa offre aussi des possibilités de camping sous les étoiles dans le désert environnant. </p></div></details><details><summary><span class="q">Conseils de sécurité et santé</span><span class="acc__plus"></span></summary><div class="acc__c"><p> <strong>Règles de sécurité essentielles :</strong> </p> <ul> <li><strong>Ne vous éloignez pas</strong> du groupe ou du guide, surtout dans le désert</li> <li><strong>Restez hydraté</strong> en buvant régulièrement</li> <li><strong>Protégez-vous</strong> du soleil (chapeau, crème solaire)</li> <li><strong>Évitez</strong> de toucher les formations rocheuses fragiles</li> <li><strong>Respectez</strong> les consignes du guide</li> </ul> <p> <strong>À noter :</strong> Le désert peut être dangereux en cas de tempête de sable soudaine. </p></div></details><details><summary><span class="q">Peut-on combiner Siwa avec d&#x27;autres sites ?</span><span class="acc__plus"></span></summary><div class="acc__c"><p> <strong>Oui, plusieurs combinaisons possibles :</strong> </p> <ul> <li><strong>Avec l'Oasis de Bahariya</strong> : à 1h de route, paysages verdoyants</li> <li><strong>Avec l'Oasis de Farafra</strong> : à 2h, ambiance plus isolée</li> <li><strong>Avec le Désert Blanc</strong> : formations rocheuses calcaires spectaculaires</li> <li><strong>Avec le Désert Noir</strong> : formations volcaniques contrastées</li> </ul> <p> <strong>Conseil :</strong> Une excursion combinée permet de voir plusieurs paysages désertiques en une seule sortie. </p></div></details></div></div>
 <div><p class="eyebrow">Avant de réserver</p><h2>Les questions qui reviennent avant de partir</h2><div class="acc"><details><summary><span class="q">Est-ce sûr de voyager en Égypte en ce moment ?</span><span class="acc__plus"></span></summary><div class="acc__c"><p>Oui pour les zones où nous opérons : Le Caire, Louxor, Assouan, la vallée du Nil et la mer Rouge. Elles sont très fréquentées et surveillées. Nous n'organisons pas de séjour dans le Sinaï nord ni près de la frontière libyenne. Votre guide reste avec vous sur chaque site. Le détail figure dans notre point sur la <a href="https://authentiquegypte.com/securite-en-egypte-en-2026/" class="lien-txt">sécurité en Égypte en 2026</a>.</p></div></details><details><summary><span class="q">Combien coûte réellement un voyage de deux semaines ?</span><span class="acc__plus"></span></summary><div class="acc__c"><p>Comptez 1 400 à 2 200 € par personne hors vols internationaux pour 12 à 14 jours, en hôtels 4★ et 5★ avec guide privatif. Le prix bouge selon la saison, le nombre de voyageurs et le niveau d'hébergement. Nous chiffrons systématiquement deux versions pour que vous voyiez l'écart.</p></div></details><details><summary><span class="q">Réservez-vous les vols internationaux ?</span><span class="acc__plus"></span></summary><div class="acc__c"><p>Non, vous les réservez vous-même : cela vous laisse le contrôle des dates et du prix. Nous vous indiquons les créneaux d'arrivée compatibles avec l'itinéraire, et nous réservons les vols internes (Le Caire–Assouan, Louxor–Hurghada).</p></div></details><details><summary><span class="q">Faut-il un visa, et comment l&#x27;obtenir ?</span><span class="acc__plus"></span></summary><div class="acc__c"><p>Oui. Deux options : l'e-visa en ligne avant le départ, ou le visa à l'arrivée dans la plupart des aéroports (30 € en espèces ou par carte). Passeport valable 6 mois après l'arrivée. La procédure complète est dans le <a href="https://authentiquegypte.com/passeport-egypte/" class="lien-txt">guide passeport et visa pour l'Égypte</a>.</p></div></details><details><summary><span class="q">Que se passe-t-il si je dois annuler ?</span><span class="acc__plus"></span></summary><div class="acc__c"><p>Nous cherchons d'abord à reporter le séjour. Si l'annulation est définitive, des frais s'appliquent selon le délai et les prestataires déjà réservés. C'est la raison pour laquelle nous recommandons une assurance annulation dès la validation.</p></div></details></div></div>
 </div></div></section>
 <section class="pg-sec"><div class="wrap">
@@ -608,7 +875,7 @@
 <div class="pg-lb" id="pg-lb" role="dialog" aria-modal="true" aria-label="Photos du séjour">
   <button type="button">Fermer</button><img src="" alt="">
 </div>
-<script>
+<script>var VALISE_FINI="Votre sac est prêt.";
 (function(){
   // Visionneuse : la photo s'ouvre dans sa taille d'origine.
   var lb=document.getElementById('pg-lb'), img=lb&&lb.querySelector('img');
@@ -623,6 +890,47 @@
     function fermer(){ lb.classList.remove('on'); img.src=''; }
     lb.addEventListener('click',function(ev){ if(ev.target===lb||ev.target.tagName==='BUTTON') fermer(); });
     document.addEventListener('keydown',function(ev){ if(ev.key==='Escape') fermer(); });
+  }
+
+  // Les onglets de durée fonctionnent en CSS pur ; le clavier a besoin
+  // d'une ligne de plus, les libellés n'étant pas des boutons.
+  document.querySelectorAll('.duree__o').forEach(function(l){
+    l.addEventListener('keydown',function(ev){
+      if(ev.key==='Enter'||ev.key===' '){ ev.preventDefault(); l.click(); }
+    });
+  });
+
+  // La liste d'équipement coche nativement ; le compteur est un confort.
+  var valise=document.getElementById('valise'), etat=document.getElementById('valise-etat');
+  if(valise&&etat){
+    var cases=valise.querySelectorAll('input[type=checkbox]');
+    var gabarit=etat.innerHTML;
+    function compter(){
+      var reste=0; cases.forEach(function(c){ if(!c.checked) reste++; });
+      etat.innerHTML = reste ? gabarit.replace(/<b>\d+<\/b>/,'<b>'+reste+'</b>')
+                                     .replace(/élément(s?) à/, (reste>1?'éléments à':'élément à'))
+                             : '\u2713 ' + VALISE_FINI;
+    }
+    cases.forEach(function(c){ c.addEventListener('change',compter); });
+    compter();
+  }
+
+  // La carte suit la lecture : l'étape qu'on lit s'allume sur la carte.
+  var pts=document.querySelectorAll('.carte__pt'), lignes=document.querySelectorAll('.carte__l li');
+  var etapes=document.querySelectorAll('.etape[data-lieu]');
+  if(pts.length&&etapes.length&&'IntersectionObserver' in window){
+    function allumer(lieu){
+      pts.forEach(function(g){ g.classList.toggle('on', g.dataset.lieu===lieu); });
+      lignes.forEach(function(l){ l.classList.toggle('on', l.dataset.lieu===lieu); });
+    }
+    var vues=new Map();
+    var obs=new IntersectionObserver(function(entrees){
+      entrees.forEach(function(x){ vues.set(x.target, x.isIntersecting?x.intersectionRatio:0); });
+      var meilleur=null, score=0;
+      vues.forEach(function(v,k){ if(v>score){ score=v; meilleur=k; } });
+      if(meilleur) allumer(meilleur.dataset.lieu);
+    },{rootMargin:'-25% 0px -45% 0px',threshold:[0,.25,.5,1]});
+    etapes.forEach(function(x){ obs.observe(x); });
   }
 })();
 </script>

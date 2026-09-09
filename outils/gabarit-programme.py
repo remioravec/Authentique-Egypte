@@ -27,6 +27,7 @@ Trois règles tiennent tout le fichier :
 import argparse
 import html as H
 import json
+import math
 import os
 import re
 import sys
@@ -97,6 +98,25 @@ INTERFACE = {
     'photos': 'Photos du séjour',                                  # D6
     'titre_verifier': 'À vérifier avec l\'agence avant mise en ligne',   # D19
     'releve_du': 'Relevé sur la fiche actuelle le',                # D19
+    # --- modules d'attention, doctrine NavBoost (D24)
+    'eyebrow_bref': 'La réponse courte',                           # D24
+    'titre_bref': 'Ce séjour en quatre chiffres',                  # D24
+    'source_fiche': 'Relevé sur la fiche du site le',              # D24
+    'eyebrow_duree': 'Le bon format',                              # D24
+    'eyebrow_valise': 'Avant de boucler le sac',                   # D24
+    'valise_aide': 'Cochez au fur et à mesure, la liste reste sur cet écran.',  # D24
+    'valise_reste': 'Il reste',                                    # D24
+    'valise_fini': 'Votre sac est prêt.',                          # D24
+    # --- votre guide (D26)
+    'eyebrow_guide': 'Qui vous accompagne',                        # D26
+    'titre_guide': 'Votre guide, votre chauffeur, et personne d\'autre',  # D26
+    'guide_intro': 'Ce séjour est privatif : vous ne partagez ni le guide, '
+                   'ni le véhicule, ni le rythme.',                # D26
+    # --- carte (D25)
+    'eyebrow_carte': 'Où vous allez',                              # D25
+    'titre_carte': 'Le trajet, étape par étape',                   # D25
+    'carte_note': 'Carte de repérage : tracé schématique, points placés '
+                  'à leurs coordonnées réelles.',                  # D25
 }
 
 
@@ -123,6 +143,37 @@ ICONES = {
     'bouclier': '<path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/>',
     'fleche': '<path d="M4 12h13M12 6l6 6-6 6"/>',
 }
+
+
+def texte_nu(h):
+    return re.sub(r'\s+', ' ', H.unescape(re.sub(r'<[^>]+>', ' ', h or ''))).strip()
+
+
+def faq_par(inv, motif):
+    """La question de la fiche qui correspond au motif, et sa réponse."""
+    for f in inv['faq']:
+        if re.search(motif, f['q'], re.I) and f['reponse_html']:
+            return f
+    return None
+
+
+def items_de(reponse_html):
+    """Les points d'une réponse, découpés « intitulé : détail »."""
+    lot = []
+    for brut in re.findall(r'<li>(.*?)</li>', reponse_html or '', re.S):
+        m = re.match(r'\s*<strong>(.*?)</strong>\s*:?\s*(.*)$', brut, re.S)
+        if m:
+            lot.append((texte_nu(m.group(1)), texte_nu(m.group(2)).lstrip(': ')))
+        elif texte_nu(brut):
+            lot.append((texte_nu(brut), ''))
+    return lot
+
+
+def conseil_de(reponse_html):
+    """La ligne « Conseil : … » que la fiche pose en fin de réponse."""
+    m = re.search(r'<p>\s*<strong>\s*Conseil\s*:?\s*</strong>\s*(.*?)</p>',
+                  reponse_html or '', re.S | re.I)
+    return texte_nu(m.group(1)) if m else ''
 
 
 def ico(nom, taille=18, classe=''):
@@ -231,7 +282,14 @@ def accueil():
         etapes.append({'titre': m.group(1).strip(), 'texte': m.group(2).strip(),
                        'quand': m.group(3).strip()})
 
-    return {'pratique': pratique, 'etapes': etapes[:4]}
+    equipe = []
+    zone = h[h.find('class="gens"'):]
+    for m in re.finditer(r'<span class="med">(.*?)</span><b>(.*?)</b><span>(.*?)</span>',
+                         zone[:2000], re.S):
+        equipe.append({'initiale': m.group(1).strip(), 'nom': m.group(2).strip(),
+                       'role': re.sub(r'\s+', ' ', m.group(3)).strip()})
+
+    return {'pratique': pratique, 'etapes': etapes[:4], 'equipe': equipe}
 
 
 # ------------------------------------------------------------------ blocs communs
@@ -350,13 +408,140 @@ CSS = r"""
   border-radius:50%;background:#B8860B}
 .pg .verifier__d{margin:12px 0 0;font-size:.9rem;color:#8A6100}
 
+
+/* ---------- réponse encadrée : le module minimum de la doctrine ---------- */
+.pg .bref{background:linear-gradient(135deg,var(--nuit-900) 0%,#0E6288 100%);
+  border-radius:var(--r-l);padding:32px 34px;color:#fff;position:relative;overflow:hidden}
+.pg .bref::after{content:"";position:absolute;right:-70px;top:-70px;width:220px;height:220px;
+  border-radius:50%;background:radial-gradient(circle,rgba(251,181,14,.30),transparent 68%)}
+.pg .bref .eyebrow{color:var(--or-clair)}
+.pg .bref h2{color:#fff;margin-bottom:24px;position:relative}
+.pg .bref__l{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+  gap:22px 28px;margin:0;position:relative}
+.pg .bref__l div{display:grid;gap:6px}
+.pg .bref__l dt{display:flex;align-items:center;gap:8px;font-family:"Manrope",sans-serif;
+  font-size:.86rem;letter-spacing:.06em;text-transform:uppercase;color:#D8E8F1;margin:0}
+.pg .bref__l dt svg{color:var(--or-clair)}
+.pg .bref__l dd{margin:0;font-family:"Manrope",sans-serif;line-height:1.35}
+.pg .bref__l dd b{display:block;font-size:1.65rem;font-weight:800;letter-spacing:-.8px;color:#fff}
+.pg .bref__l dd span{display:block;font-size:.92rem;color:#D8E8F1;margin-top:4px;line-height:1.5}
+.pg .bref__src{position:relative;margin:26px 0 0;font-family:"Manrope",sans-serif;
+  font-size:.86rem;color:#C3DAE7}
+
+/* ---------- module : le bon format de séjour ---------- */
+.pg .mod__intro{font-family:"Manrope",sans-serif;font-size:1.02rem;color:var(--nuit-900);
+  font-weight:600;margin:0 0 20px;max-width:62ch}
+.pg .mod__conseil{display:flex;gap:11px;align-items:flex-start;margin:20px 0 0;padding:16px 18px;
+  background:var(--or-fond);border-radius:var(--r-m);font-family:"Manrope",sans-serif;
+  font-size:.98rem;color:#6B4B04;line-height:1.6;max-width:64ch}
+.pg .mod__conseil svg{flex:0 0 auto;color:#B8860B;margin-top:2px}
+.pg .duree{position:relative}
+.pg .duree__r{position:absolute;opacity:0;pointer-events:none}
+.pg .duree__ong{display:flex;flex-wrap:wrap;gap:10px;margin:0 0 18px}
+.pg .duree__o{font-family:"Manrope",sans-serif;font-weight:700;font-size:.98rem;
+  padding:12px 22px;border-radius:var(--r-pill);border:1.5px solid var(--ligne-pg);
+  background:#fff;color:var(--nuit-900);cursor:pointer;transition:all .2s var(--ease);
+  min-height:44px;display:inline-flex;align-items:center}
+.pg .duree__o:hover{border-color:var(--teal);color:var(--teal-txt)}
+.pg .duree__o:focus-visible{outline:3px solid var(--or);outline-offset:3px}
+.pg .duree__c{display:none;background:var(--teal-fond);border:1px solid #CDE9EA;
+  border-radius:var(--r-l);padding:24px 26px}
+.pg .duree__c b{display:block;font-family:"Manrope",sans-serif;font-size:1.25rem;font-weight:800;
+  color:var(--teal-txt);letter-spacing:-.4px;margin-bottom:8px}
+.pg .duree__c p{margin:0;font-size:1.04rem;line-height:1.7;color:var(--texte);max-width:60ch}
+/* Sans CSS ni JavaScript, les trois formats restent lisibles à la suite :
+   c'est le mode dégradé qu'impose la doctrine. */
+.pg .duree__r:nth-of-type(1):checked~.duree__ong .duree__o:nth-child(1),
+.pg .duree__r:nth-of-type(2):checked~.duree__ong .duree__o:nth-child(2),
+.pg .duree__r:nth-of-type(3):checked~.duree__ong .duree__o:nth-child(3),
+.pg .duree__r:nth-of-type(4):checked~.duree__ong .duree__o:nth-child(4)
+  {background:var(--nuit-900);border-color:var(--nuit-900);color:#fff}
+.pg .duree__r:nth-of-type(1):checked~.duree__p .duree__c:nth-child(1),
+.pg .duree__r:nth-of-type(2):checked~.duree__p .duree__c:nth-child(2),
+.pg .duree__r:nth-of-type(3):checked~.duree__p .duree__c:nth-child(3),
+.pg .duree__r:nth-of-type(4):checked~.duree__p .duree__c:nth-child(4){display:block}
+
+/* ---------- module : la liste à cocher ---------- */
+.pg .valise{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.pg .valise label{display:flex;gap:14px;align-items:flex-start;background:#fff;
+  border:1px solid var(--ligne-pg);border-radius:var(--r-m);padding:16px 18px;cursor:pointer;
+  transition:border-color .2s var(--ease),background .2s var(--ease);min-height:44px}
+.pg .valise label:hover{border-color:var(--teal)}
+.pg .valise input{position:absolute;opacity:0;width:0;height:0}
+.pg .valise__b{flex:0 0 auto;width:24px;height:24px;border-radius:7px;border:2px solid var(--ligne);
+  display:grid;place-items:center;color:transparent;transition:all .18s var(--ease);margin-top:1px}
+.pg .valise input:checked+.valise__b{background:var(--teal-txt);border-color:var(--teal-txt);color:#fff}
+.pg .valise input:focus-visible+.valise__b{outline:3px solid var(--or);outline-offset:3px}
+.pg .valise__t{font-size:1.02rem;line-height:1.55;color:var(--texte)}
+.pg .valise__t b{color:var(--noir);font-family:"Manrope",sans-serif;font-weight:700}
+.pg .valise__t span{display:block;color:var(--gris-lis);font-size:.98rem;margin-top:2px}
+.pg .valise input:checked~.valise__t{opacity:.55;text-decoration:line-through;
+  text-decoration-color:var(--ligne)}
+.pg .valise__etat{margin:16px 0 0;font-family:"Manrope",sans-serif;font-size:.98rem;
+  color:var(--gris-lis)}
+.pg .valise__etat b{color:var(--teal-txt);font-weight:800}
+
+/* ---------- votre guide ---------- */
+.pg .guide{display:grid;grid-template-columns:1.15fr 1fr;gap:52px;align-items:center}
+.pg .guide__intro{font-size:1.12rem;line-height:1.7;color:#C9DDE7;max-width:44ch;margin:0 0 26px}
+.pg .guide__r{list-style:none;margin:0;padding:0;display:grid;gap:14px}
+.pg .guide__r li{display:flex;gap:13px;align-items:center;font-family:"Manrope",sans-serif;
+  font-size:1.02rem;color:#fff}
+.pg .guide__r svg{flex:0 0 auto;color:var(--or)}
+.pg .guide__g{display:grid;gap:14px}
+.pg .guide__c{display:grid;grid-template-columns:52px 1fr;gap:16px;align-items:center;
+  background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.16);
+  border-radius:var(--r-l);padding:16px 20px}
+.pg .guide__m{width:52px;height:52px;border-radius:50%;background:var(--or);color:var(--nuit-900);
+  display:grid;place-items:center;font-family:"Manrope",sans-serif;font-weight:800;font-size:1.15rem}
+.pg .guide__c b{font-family:"Manrope",sans-serif;font-size:1.06rem;color:#fff;display:block}
+.pg .guide__c>span:last-child{font-size:.95rem;color:#B4D0DE;line-height:1.5;display:block;margin-top:2px}
+
+/* ---------- carte de repérage ---------- */
+.pg .carte{--carte-mer:#DCEBF2;--carte-nil:#4FA3C7;margin:0;background:#fff;
+  border:1px solid var(--ligne-pg);border-radius:var(--r-l);padding:20px;box-shadow:var(--ombre)}
+.pg .carte figcaption{padding:0}
+.pg .carte__tete{display:flex;flex-direction:column}
+.pg .carte__tete .eyebrow{order:-1}
+.pg .carte h3{font-size:1.12rem;margin:0 0 16px;letter-spacing:-.3px}
+.pg .carte .eyebrow{margin-bottom:8px}
+.pg .carte__svg{display:block;width:100%;height:auto;border-radius:var(--r-m)}
+.pg .carte__d{fill:var(--nuit-900);stroke:#fff;stroke-width:3}
+.pg .carte__halo{fill:var(--or);opacity:0;transition:opacity .25s var(--ease)}
+.pg .carte__n{fill:#fff;font-family:"Manrope",sans-serif;font-size:13px;font-weight:800;
+  text-anchor:middle}
+.pg .carte__lbl{fill:var(--nuit-900);font-family:"Manrope",sans-serif;font-size:21px;font-weight:700;
+  paint-order:stroke;stroke:rgba(255,255,255,.94);stroke-width:6px;stroke-linejoin:round}
+.pg .carte__pt--titre .carte__d{fill:#fff;stroke:var(--rouge);stroke-width:4}
+.pg .carte__pt--titre .carte__lbl{fill:var(--rouge)}
+.pg .carte__pt.on .carte__halo{opacity:.35}
+.pg .carte__pt.on .carte__d{fill:var(--or);stroke:var(--nuit-900)}
+.pg .carte__pt.on .carte__n{fill:var(--nuit-900)}
+.pg .carte__route{opacity:.9}
+.pg .carte__l{list-style:none;margin:16px 0 0;padding:0;display:grid;gap:2px}
+.pg .carte__l li{display:grid;grid-template-columns:26px 1fr;gap:11px;align-items:baseline;
+  font-family:"Manrope",sans-serif;font-size:.95rem;padding:7px 8px;border-radius:var(--r-s);
+  transition:background .2s var(--ease)}
+.pg .carte__l li.on{background:var(--or-fond)}
+.pg .carte__ln{width:22px;height:22px;border-radius:50%;background:var(--nuit-900);color:#fff;
+  display:grid;place-items:center;font-size:.76rem;font-weight:800}
+.pg .carte__l li.on .carte__ln{background:var(--or);color:var(--nuit-900)}
+.pg .carte__l b{color:var(--noir);font-weight:700;display:block}
+.pg .carte__l span span{color:var(--gris-lis);font-size:.92rem;display:block;line-height:1.45}
+.pg .carte__hors{display:flex;gap:9px;align-items:flex-start;margin:14px 0 0;padding:12px 14px;
+  background:var(--rouge-fond);border-radius:var(--r-m);font-family:"Manrope",sans-serif;
+  font-size:.92rem;color:#8A2F1C;line-height:1.5}
+.pg .carte__hors svg{flex:0 0 auto;margin-top:2px}
+.pg .carte__note{margin:14px 0 0;font-family:"Manrope",sans-serif;font-size:.86rem;
+  color:var(--gris-lis);line-height:1.5}
+
 /* ---------- galerie ---------- */
 /* Cinq photos en trois colonnes avec une grande en 2×2 laissent une
    case vide en bas à droite. En QUATRE colonnes, la grande occupe
    exactement la moitié gauche et les quatre autres la moitié droite :
    le cadre est plein. Les autres comptes tiennent en trois colonnes
    sans case orpheline au milieu. */
-.pg .galerie{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.pg .galerie{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
 .pg .galerie--5{grid-template-columns:repeat(4,1fr)}
 .pg .galerie a{display:block;aspect-ratio:3/2;border-radius:var(--r-m);overflow:hidden;
   background:var(--fond)}
@@ -384,13 +569,13 @@ CSS = r"""
   letter-spacing:.06em;color:var(--nuit-900);background:var(--or);border-radius:var(--r-pill);
   padding:6px 14px;flex:0 0 auto}
 .pg .jour__tete h3{font-size:clamp(1.25rem,2vw,1.5rem)}
-.pg .etape+.etape{margin-top:48px}
-.pg .etape__photo{border-radius:var(--r-l);overflow:hidden;background:var(--fond);margin:0 0 20px;
+.pg .etape+.etape{margin-top:56px}
+.pg .etape__photo{border-radius:var(--r-l);overflow:hidden;background:var(--fond);margin:0 0 30px;
   aspect-ratio:16/9}
 .pg .etape__photo img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s var(--ease)}
 .pg .etape__photo:hover img{transform:scale(1.03)}
-.pg .etape h4{font-family:"Archivo",sans-serif;font-size:1.2rem;font-weight:600;color:var(--noir);
-  margin:0 0 12px;letter-spacing:-.3px;display:flex;align-items:center;gap:10px}
+.pg .etape h4{font-family:"Archivo",sans-serif;font-size:1.24rem;font-weight:600;color:var(--noir);
+  margin:0 0 16px;letter-spacing:-.3px;display:flex;align-items:center;gap:10px}
 .pg .etape h4 svg{color:var(--teal-txt);flex:0 0 auto}
 .pg .etape p{color:var(--texte);font-size:1.04rem;line-height:1.8;max-width:62ch}
 .pg .mentions{display:flex;flex-wrap:wrap;gap:9px;margin:18px 0 0;padding:0}
@@ -419,6 +604,11 @@ CSS = r"""
 .pg .pan__act{display:grid;gap:10px}
 .pg .pan__note{font-family:"Manrope",sans-serif;font-size:.86rem;color:var(--gris-lis);
   margin:14px 0 0;text-align:center;line-height:1.5}
+.pg .pan__avis{display:flex;flex-wrap:wrap;justify-content:center;align-items:baseline;gap:5px 9px;
+  margin:14px 0 0;padding:14px 0 0;border-top:1px solid var(--ligne-2);
+  font-family:"Manrope",sans-serif;font-size:.92rem;color:var(--gris-lis);text-align:center}
+.pg .pan__avis .et{color:var(--or-fonce);letter-spacing:.1em}
+.pg .pan__avis b{color:var(--noir)}
 .pg .pan__conf{background:var(--or-fond);border:1px solid #F6DEB0;border-radius:var(--r-l);padding:18px;
   font-family:"Manrope",sans-serif;font-size:.9rem;color:#6B4B04;display:grid;gap:6px;text-align:center}
 .pg .pan__conf b{color:var(--noir);font-size:1rem}
@@ -537,7 +727,19 @@ CSS = r"""
 /* =====================================================================
    RESPONSIVE — les marges restent dans l'échelle mobile 56/48/40/32/28
    ===================================================================== */
+@media (min-width:1041px){
+  /* Au bureau, la colonne de droite tient dans la fenêtre : prix en
+     haut, carte dessous, et la liste des étapes de la carte est
+     masquée — elle est déjà dans la colonne de gauche, en grand. */
+  .pg .carte__l{display:none}
+}
 @media (max-width:1040px){
+  .pg .guide{grid-template-columns:1fr;gap:32px}
+  .pg .bref{padding:28px 24px}
+  /* Le prix est dans le bandeau, 200 px plus haut, et dans la barre du
+     bas : trois fois sur un écran de téléphone, c'est deux fois de trop. */
+  .pg .pan__prix{display:none}
+  .pg .carte{padding:16px}
   /* minmax(0,1fr) et non 1fr : un « 1fr » nu laisse la colonne grandir
      jusqu'au contenu le plus large. Le bouton WhatsApp, que la charte
      empêche de revenir à la ligne, portait ainsi la colonne à 386 px
@@ -551,17 +753,33 @@ CSS = r"""
   .pg .incl{grid-template-columns:1fr;gap:20px}
 }
 @media (max-width:860px){
-  /* Le bandeau : au bureau la photo est le fond du bloc ; sur mobile
-     elle devient une bande au-dessus du texte. Sans cela, un écran
-     étroit et haut réclame à l'image plus de pixels qu'elle n'en a —
-     mesuré ×1,34 à 390 px en densité 2 — et la photo devient floue. */
-  .pg .hero__fond{position:relative;aspect-ratio:4/3}
-  .pg .hero__fond::after{background:linear-gradient(180deg,rgba(6,42,58,.15) 40%,rgba(5,35,50,.75) 100%)}
-  .pg .hero__in{padding:20px 0 40px;background:var(--nuit-900)}
-  .pg .hero .ariane{padding-bottom:6px}
-  .pg .hero__pills{margin:14px 0 14px;gap:6px}
-  .pg .hero__chapo{margin-bottom:22px}
-  .pg .hero h1,.pg .hero__chapo{text-shadow:none}
+  /* Le bandeau mobile : la photo occupe le premier écran en entier et
+     le titre se pose dedans, dans son bas. Sa hauteur est BORNÉE à
+     470 px, et ce n'est pas un choix esthétique : au-delà, un écran
+     étroit et haut réclame à l'image plus de pixels qu'elle n'en a
+     (mesuré ×1,34 en densité 2 sur une photo de 1920 px) et la photo
+     devient floue. À 470 px, le facteur retombe à 0,87. */
+  .pg .hero{background:var(--nuit-900)}
+  .pg .hero__fond{position:absolute;top:0;left:0;right:0;height:470px}
+  .pg .hero__fond::after{background:
+    linear-gradient(180deg,rgba(6,42,58,.55) 0%,rgba(6,42,58,.12) 32%,
+    rgba(8,45,62,.80) 74%,var(--nuit-900) 100%)}
+  .pg .hero__in{padding:14px 0 34px}
+  /* Le bloc titre se colle au BAS de la photo, quelle que soit la
+     longueur du titre : la marge automatique fait le calcul, pas moi. */
+  .pg .hero__in>.wrap{display:flex;flex-direction:column;min-height:456px}
+  .pg .hero .ariane{padding-bottom:0}
+  .pg .hero .ariane ol{flex-wrap:nowrap;overflow-x:auto;overscroll-behavior-x:contain;
+    scrollbar-width:none;-ms-overflow-style:none}
+  .pg .hero .ariane ol::-webkit-scrollbar{display:none}
+  .pg .hero .ariane li{white-space:nowrap}
+  .pg .hero__pills{margin:auto 0 16px;gap:7px}
+  .pg .hero h1{font-size:2.15rem;max-width:14ch}
+  .pg .hero__chapo{margin-bottom:0}
+  .pg .hero__bas{margin-top:28px}
+  .pg .hero__bas{gap:14px}
+  .pg .hero__prix,.pg .hero__act{width:100%}
+  .pg .hero__act .btn{flex:1}
   .pg-sec{padding:48px 0}
   .pg-sec--serre{padding:40px 0}
   .pg .deux{padding:40px 0;gap:32px}
@@ -581,7 +799,13 @@ CSS = r"""
   .pg .pg-mob .p small,.pg .pan__conf,.pg .mention,.pg .pill,.pg .acc__vide{font-size:.95rem}
   .pg .reperes b,.pg .pan__liste,.pg .apercu span.t{font-size:1rem}
   .pg .ariane,.pg .eyebrow,.pg .apercu .n,.pg .jour__no,.pg .tarif__ligne b small,
-  .pg .avis__g .ini,.pg .acc__c,.pg .devis__act small,.pg .verifier__d{font-size:.95rem}
+  .pg .avis__g .ini,.pg .acc__c,.pg .devis__act small,.pg .verifier__d,
+  .pg .bref__src,.pg .carte__note,.pg .carte__hors,.pg .carte__l,
+  .pg .carte__l span span,.pg .valise__t span,.pg .guide__c>span:last-child,
+  .pg .pan__avis{font-size:.95rem}
+  .pg .bref__l dd b{font-size:1.5rem}
+  .pg .bref__l dt,.pg .bref__l dd span{font-size:.95rem}
+  .pg .duree__c{padding:20px}
   .pg-mob .p small{font-size:.95rem}
   .pg .eyebrow{letter-spacing:.1em}
   .pg .hero h1{font-size:1.95rem;letter-spacing:-.8px}
@@ -612,6 +836,47 @@ SCRIPT = r"""
     function fermer(){ lb.classList.remove('on'); img.src=''; }
     lb.addEventListener('click',function(ev){ if(ev.target===lb||ev.target.tagName==='BUTTON') fermer(); });
     document.addEventListener('keydown',function(ev){ if(ev.key==='Escape') fermer(); });
+  }
+
+  // Les onglets de durée fonctionnent en CSS pur ; le clavier a besoin
+  // d'une ligne de plus, les libellés n'étant pas des boutons.
+  document.querySelectorAll('.duree__o').forEach(function(l){
+    l.addEventListener('keydown',function(ev){
+      if(ev.key==='Enter'||ev.key===' '){ ev.preventDefault(); l.click(); }
+    });
+  });
+
+  // La liste d'équipement coche nativement ; le compteur est un confort.
+  var valise=document.getElementById('valise'), etat=document.getElementById('valise-etat');
+  if(valise&&etat){
+    var cases=valise.querySelectorAll('input[type=checkbox]');
+    var gabarit=etat.innerHTML;
+    function compter(){
+      var reste=0; cases.forEach(function(c){ if(!c.checked) reste++; });
+      etat.innerHTML = reste ? gabarit.replace(/<b>\d+<\/b>/,'<b>'+reste+'</b>')
+                                     .replace(/élément(s?) à/, (reste>1?'éléments à':'élément à'))
+                             : '\u2713 ' + VALISE_FINI;
+    }
+    cases.forEach(function(c){ c.addEventListener('change',compter); });
+    compter();
+  }
+
+  // La carte suit la lecture : l'étape qu'on lit s'allume sur la carte.
+  var pts=document.querySelectorAll('.carte__pt'), lignes=document.querySelectorAll('.carte__l li');
+  var etapes=document.querySelectorAll('.etape[data-lieu]');
+  if(pts.length&&etapes.length&&'IntersectionObserver' in window){
+    function allumer(lieu){
+      pts.forEach(function(g){ g.classList.toggle('on', g.dataset.lieu===lieu); });
+      lignes.forEach(function(l){ l.classList.toggle('on', l.dataset.lieu===lieu); });
+    }
+    var vues=new Map();
+    var obs=new IntersectionObserver(function(entrees){
+      entrees.forEach(function(x){ vues.set(x.target, x.isIntersecting?x.intersectionRatio:0); });
+      var meilleur=null, score=0;
+      vues.forEach(function(v,k){ if(v>score){ score=v; meilleur=k; } });
+      if(meilleur) allumer(meilleur.dataset.lieu);
+    },{rootMargin:'-25% 0px -45% 0px',threshold:[0,.25,.5,1]});
+    etapes.forEach(function(x){ obs.observe(x); });
   }
 })();
 """
@@ -711,6 +976,363 @@ def mentions_html(lot):
         for m in lot) + '</p>')
 
 
+
+
+# ------------------------------------------------------------------ carte
+
+# Les coordonnées sont des faits géographiques, pas du contenu : elles
+# ne sont ni écrites ni interprétées, elles situent des lieux que la
+# fiche NOMME. Un lieu absent du texte n'apparaît jamais sur la carte.
+# nom · longitude · latitude · motif de détection · décalage vertical du
+# libellé · côté où l'écrire ('d' à droite du point, 'g' à gauche).
+# Le monastère et le sommet sont à quatre kilomètres l'un de l'autre :
+# leurs points se touchent à cette échelle. Les coordonnées restent
+# exactes, seuls les LIBELLÉS s'écartent.
+LIEUX = {
+    'le-caire':          ('Le Caire',        31.236, 30.044, r'\ble caire\b|\bcaire\b',   -8, 'g'),
+    'siwa':              ('Oasis de Siwa',   25.519, 29.203, r'\bsiwa\b',                    0, 'd'),
+    'alexandrie':        ('Alexandrie',      29.919, 31.200, r'\balexandrie\b',            -10, 'g'),
+    'marsa-matrouh':     ('Marsa Matrouh',   27.237, 31.353, r'marsa\s*matrouh',            -10, 'd'),
+    'bahariya':          ('Bahariya',        28.858, 28.349, r'bahariya|baharia',             0, 'g'),
+    'farafra':           ('Farafra',         27.972, 27.058, r'farafra',                      0, 'g'),
+    'desert-blanc':      ('Désert Blanc',    27.850, 27.250, r'd[ée]sert\s+blanc',          16, 'g'),
+    'fayoum':            ('Fayoum',          30.844, 29.310, r'fayoum',                       8, 'g'),
+    'louxor':            ('Louxor',          32.640, 25.687, r'louxor|louqsor',               0, 'd'),
+    'assouan':           ('Assouan',         32.899, 24.089, r'assouan|aswan',                0, 'd'),
+    'abou-simbel':       ('Abou Simbel',     31.626, 22.337, r'abou\s*simbel|abu\s*simbel',  0, 'g'),
+    'hurghada':          ('Hurghada',        33.812, 27.257, r'hurghada',                     0, 'd'),
+    'charm-el-cheikh':   ('Charm el-Cheikh', 34.330, 27.915, r'sharm\s*el[- ]?sheikh|charm\s*el[- ]?cheikh', 22, 'd'),
+    'dahab':             ('Dahab',           34.513, 28.501, r'\bdahab\b',                   2, 'd'),
+    'sainte-catherine':  ('Sainte-Catherine', 33.938, 28.556, r'sainte[- ]catherine',        -16, 'd'),
+    'mont-moise':        ('Mont Moïse',      33.975, 28.470, r'mont\s+mo[ïi]se|gebel\s+moussa', 4, 'd'),
+}
+
+# Le cadre de la carte, en degrés. Il déborde du pays des deux côtés :
+# à l'est pour laisser la mer Rouge et la place des libellés, au sud
+# pour ne pas couper la pointe du pays, qui descend jusqu'au 22e
+# parallèle et va chercher le 37e méridien.
+CADRE = (23.8, 38.2, 21.5, 32.2)          # lon min, lon max, lat min, lat max
+# Un degré de longitude est plus court qu'un degré de latitude dès qu'on
+# quitte l'équateur : sans ce facteur, l'Égypte s'étale en largeur.
+COS_LAT = math.cos(math.radians((21.5 + 32.2) / 2))
+ECHELLE = 470 / (32.2 - 21.5)             # pixels par degré de latitude
+BOITE = (round((38.2 - 23.8) * COS_LAT * ECHELLE), 470)
+
+# Le trait de côte, relevé point par point : Méditerranée d'ouest en
+# est, bordure du Sinaï, entaille du golfe de Suez, mer Rouge, frontière
+# sud au 22e parallèle, frontière ouest au 25e méridien.
+COTE = [
+    (25.00, 31.55), (26.20, 31.35), (27.24, 31.35), (28.50, 30.90), (29.80, 31.05),
+    (30.40, 31.50), (31.10, 31.60), (31.90, 31.45), (32.30, 31.25), (33.20, 31.20),
+    (34.25, 31.22), (34.90, 29.50), (34.68, 28.60), (34.42, 28.05), (34.25, 27.72),
+    (33.60, 28.60), (33.05, 29.20), (32.60, 29.90), (32.55, 30.00), (32.75, 29.60),
+    (33.20, 28.20), (33.85, 27.25), (34.40, 26.00), (35.10, 24.30), (35.70, 23.20),
+    (36.90, 22.00), (24.70, 22.00), (24.70, 25.00), (24.90, 29.00),
+]
+NIL = [(32.90, 24.09), (32.75, 25.10), (32.64, 25.69), (32.10, 26.60), (31.35, 27.30),
+       (31.15, 28.30), (31.20, 29.30), (31.24, 30.04), (30.60, 30.90), (30.10, 31.15)]
+NIL_EST = [(31.24, 30.04), (31.55, 30.90), (31.82, 31.42)]
+NASSER = [(32.90, 24.09), (32.40, 23.30), (31.90, 22.70), (31.63, 22.34)]
+
+
+def projeter(lon, lat):
+    lo1, _, _, la2 = CADRE
+    return (round((lon - lo1) * COS_LAT * ECHELLE, 1),
+            round((la2 - lat) * ECHELLE, 1))
+
+
+def trace(points, fermer=False):
+    d = 'M' + ' L'.join('%s %s' % projeter(x, y) for x, y in points)
+    return d + (' Z' if fermer else '')
+
+
+def lieu_de(texte):
+    """Le lieu que ce texte nomme EN PREMIER.
+
+    L'ordre du texte, pas l'ordre du répertoire : une étape qui commence
+    par « l'ascension du mont Moïse » et cite le monastère de
+    Sainte-Catherine trois lignes plus bas parle du mont, pas du
+    monastère."""
+    t = (texte or '').lower()
+    trouve = None
+    for cle, fiche in LIEUX.items():
+        m = re.search(fiche[3], t, re.I)
+        if m and (trouve is None or m.start() < trouve[0]):
+            trouve = (m.start(), cle)
+    return trouve[1] if trouve else ''
+
+
+def lieux_du_sejour(inv):
+    """Les lieux nommés par le séjour, dans l'ordre où on les rencontre.
+
+    Le titre compte : sur cette fiche il annonce Le Caire et Siwa quand
+    le déroulé décrit le Sinaï. La carte le montre au lieu de le taire."""
+    ordre, vus = [], set()
+
+    def ajoute(cle, origine, etape=''):
+        if cle and cle not in vus:
+            vus.add(cle)
+            ordre.append({'cle': cle, 'origine': origine, 'etape': etape})
+
+    # Ce que le séjour ANNONCE : son titre, et les titres de ses jours.
+    for mot in re.split(r'\s*[-–—]\s*', inv['h1']):
+        ajoute(lieu_de(mot), 'titre')
+    for j in inv['jours']:
+        for mot in re.split(r'\s*[-–—]\s*', j['titre']):
+            ajoute(lieu_de(mot), 'titre')
+    # Ce que le séjour DÉCRIT : le corps des étapes. Une étape muette
+    # reste là où la précédente s'est arrêtée — on ne se téléporte pas
+    # entre deux paragraphes.
+    dernier = ''
+    for j in inv['jours']:
+        for et in j['etapes']:
+            cle = lieu_de(' '.join([et['titre']] + et['paragraphes'])) or dernier
+            if cle:
+                dernier = cle
+                ajoute(cle, 'deroule', et['titre'] or j['titre'])
+    return ordre
+
+
+def carte(inv):
+    """La carte de repérage : où mène ce séjour, étape par étape.
+
+    Elle reste à l'écran pendant qu'on lit le déroulé — c'est la
+    question que tout le monde se pose au troisième paragraphe."""
+    lot = lieux_du_sejour(inv)
+    if len(lot) < 2:
+        return ''
+    etapes = [x for x in lot if x['origine'] == 'deroule']
+
+    pts = []
+    for i, x in enumerate(lot):
+        fiche = LIEUX[x['cle']]
+        nom, lon, lat = fiche[0], fiche[1], fiche[2]
+        dy = fiche[4] if len(fiche) > 4 else 0
+        cote = fiche[5] if len(fiche) > 5 else 'd'
+        px, py = projeter(lon, lat)
+        pts.append({'cle': x['cle'], 'nom': nom, 'x': px, 'y': py, 'dy': dy, 'cote': cote,
+                    'etape': x['etape'], 'deroule': x['origine'] == 'deroule',
+                    'rang': (etapes.index(x) + 1) if x in etapes else 0})
+
+    route = [q for q in pts if q['deroule']]
+    o = ['<figure class="carte">',
+         # L'intitulé est écrit APRÈS le titre et remonté par la mise en
+         # page : un titre suivi de rien est signalé comme orphelin.
+         '<figcaption class="carte__tete"><h3>%s</h3><p class="eyebrow">%s</p></figcaption>'
+         % (e(INTERFACE['titre_carte']), e(INTERFACE['eyebrow_carte'])),
+         '<svg viewBox="0 0 %d %d" role="img" aria-label="%s" class="carte__svg">'
+         % (BOITE[0], BOITE[1], e('Carte de l\'Égypte situant les étapes du séjour')),
+         '<defs><linearGradient id="sable" x1="0" y1="0" x2="0" y2="1">'
+         '<stop offset="0" stop-color="#F6E7C8"/><stop offset="1" stop-color="#EAD5A8"/>'
+         '</linearGradient></defs>',
+         '<rect width="%d" height="%d" fill="var(--carte-mer)" rx="14"/>' % BOITE,
+         '<path d="%s" fill="url(#sable)" stroke="#D9BC85" stroke-width="1.2"/>' % trace(COTE, True),
+         '<path d="%s" fill="none" stroke="var(--carte-nil)" stroke-width="2.4" '
+         'stroke-linecap="round" stroke-linejoin="round"/>' % trace(NIL),
+         '<path d="%s" fill="none" stroke="var(--carte-nil)" stroke-width="2" '
+         'stroke-linecap="round"/>' % trace(NIL_EST),
+         '<path d="%s" fill="none" stroke="var(--carte-nil)" stroke-width="4" '
+         'stroke-linecap="round" opacity=".85"/>' % trace(NASSER)]
+
+    if len(route) > 1:
+        o.append('<path class="carte__route" d="%s" fill="none" stroke="var(--or)" '
+                 'stroke-width="4" stroke-dasharray="9 7" stroke-linecap="round"/>'
+                 % ('M' + ' L'.join('%s %s' % (q['x'], q['y']) for q in route)))
+
+    for q in pts:
+        droite = q['cote'] == 'd'
+        cl = 'carte__pt' + ('' if q['deroule'] else ' carte__pt--titre')
+        o.append('<g class="%s" id="pt-%s" data-lieu="%s">' % (cl, e(q['cle']), e(q['cle'])))
+        o.append('<circle class="carte__halo" cx="%s" cy="%s" r="22"/>' % (q['x'], q['y']))
+        o.append('<circle class="carte__d" cx="%s" cy="%s" r="9"/>' % (q['x'], q['y']))
+        if q['rang']:
+            o.append('<text class="carte__n" x="%s" y="%s">%d</text>'
+                     % (q['x'], q['y'] + 4.6, q['rang']))
+        o.append('<text class="carte__lbl" x="%s" y="%s" text-anchor="%s">%s</text>'
+                 % (q['x'] + (18 if droite else -18), q['y'] + 7.5 + q['dy'] * 2,
+                    'start' if droite else 'end', e(q['nom'])))
+        o.append('</g>')
+    o.append('</svg>')
+
+    if route:
+        o.append('<ol class="carte__l">')
+        for q in route:
+            o.append('<li data-lieu="%s"><span class="carte__ln">%d</span>'
+                     '<span><b>%s</b>%s</span></li>'
+                     % (e(q['cle']), q['rang'], e(q['nom']),
+                        ('<span>%s</span>' % e(q['etape'])) if q['etape'] else ''))
+        o.append('</ol>')
+    hors = [q['nom'] for q in pts if not q['deroule']]
+    if hors:
+        o.append('<p class="carte__hors">%s%s</p>'
+                 % (ico('etoile', 14),
+                    e('Annoncé par le titre du séjour, absent du déroulé : ' + ', '.join(hors))))
+    o.append('<figcaption class="carte__note">%s</figcaption></figure>'
+             % e(INTERFACE['carte_note']))
+    return '\n'.join(o)
+
+
+# ------------------------------------------------------------------ modules d'attention
+#
+# Doctrine NavBoost, étape 3 bis d'`operationnel-contenu` : deux leviers
+# seulement, gagner le clic et terminer la session. Le module ne se
+# choisit pas par goût, il se lit dans le relevé SERP du 09/09/2026 sur
+# « voyage oasis de siwa egypte » :
+#
+#   · un AI Overview au-dessus du premier organique  → réponse encadrée
+#     et chiffre daté, renforcés ;
+#   · cinq pages de paragraphes, aucun outil          → la place est
+#     libre pour un module qui répond à la variable de la requête ;
+#   · la variable de cette requête est la DURÉE — « Combien de temps
+#     prévoir » est à la fois une question de la fiche et une recherche
+#     associée de la SERP                             → sélecteur ;
+#   · « Autres questions posées » : trois des quatre sont déjà répondues
+#     par la fiche                                    → FAQ conservée.
+#
+# Les six règles de construction sont tenues : aucune dépendance, le
+# module fonctionne sans JavaScript (le sélecteur est en CSS pur, la
+# liste en cases natives), rien de ce qui compte n'est injecté au clic,
+# les éléments sont accessibles au clavier, la mise en page ne bouge
+# pas, et TOUTES les données sortent de la fiche de la cliente.
+
+
+def en_bref(inv):
+    """La réponse encadrée : ce qu'un visiteur veut savoir en dix secondes.
+
+    Quatre chiffres, tous relevés sur la fiche, tous datés. C'est aussi
+    ce qu'un modèle de langue recopie quand il cite une page."""
+    lignes = []
+    if inv['prix']['texte']:
+        lignes.append(('euro', INTERFACE['depuis'], inv['prix']['texte'],
+                       suffixe_prix(inv).lstrip('/ ')))
+    duree = next((r for r in inv['reperes'] if re.search(r'jour|nuit', r, re.I)), '')
+    if duree:
+        lignes.append(('horloge', 'Durée', duree, ''))
+    trajet = faq_par(inv, r"s'y rendre|comment venir|acc[eè]s")
+    if trajet:
+        m = re.search(r'<strong>(.*?)</strong>', trajet['reponse_html'], re.S)
+        if m:
+            phrase = texte_nu(m.group(1))
+            chiffre = re.search(r'(\d+\s*[àa]\s*\d+\s*heures?|\d+\s*h)', phrase)
+            lignes.append(('voiture', 'Depuis Le Caire',
+                           chiffre.group(1) if chiffre else phrase,
+                           phrase if chiffre else ''))
+    etapes = sum(len(j['etapes']) for j in inv['jours'])
+    if etapes:
+        lignes.append(('pin', 'Étapes au programme', str(etapes), ''))
+    if not lignes:
+        return ''
+    o = ['<section class="bref">',
+         '<p class="eyebrow">%s</p>' % e(INTERFACE['eyebrow_bref']),
+         '<h2>%s</h2>' % e(INTERFACE['titre_bref']),
+         '<dl class="bref__l">']
+    for icone, label, valeur, detail in lignes:
+        o.append('<div><dt>%s%s</dt><dd><b>%s</b>%s</dd></div>'
+                 % (ico(icone, 18), e(label), e(valeur),
+                    ('<span>%s</span>' % e(detail)) if detail else ''))
+    o.append('</dl><p class="bref__src">%s %s</p></section>'
+             % (e(INTERFACE['source_fiche']), e(inv['releve'])))
+    return '\n'.join(o)
+
+
+def selecteur_duree(inv):
+    """Le module de la requête : « combien de jours prévoir ».
+
+    Trois formats, leurs descriptions et le conseil final viennent de la
+    réponse que la fiche donne déjà. Rien n'est ajouté : la question est
+    seulement sortie de l'accordéon, où personne ne la déplie."""
+    f = faq_par(inv, r'combien de temps|dur[ée]e')
+    if not f:
+        return ''
+    lot = [(t, d) for t, d in items_de(f['reponse_html']) if re.search(r'\d', t)]
+    if len(lot) < 2:
+        return ''
+    tete = re.search(r'<p>\s*<strong>(.*?)</strong>', f['reponse_html'], re.S)
+    conseil = conseil_de(f['reponse_html'])
+    defaut = 1 if len(lot) > 1 else 0
+
+    o = ['<section class="mod mod--duree">',
+         '<p class="eyebrow">%s</p>' % e(INTERFACE['eyebrow_duree']),
+         '<h2>%s</h2>' % e(f['q'])]
+    if tete:
+        o.append('<p class="mod__intro">%s</p>' % e(texte_nu(tete.group(1))))
+    o.append('<div class="duree">')
+    for i, (t, _) in enumerate(lot):
+        o.append('<input class="duree__r" type="radio" name="duree" id="duree-%d"%s>'
+                 % (i, ' checked' if i == defaut else ''))
+    o.append('<div class="duree__ong" role="tablist">')
+    for i, (t, _) in enumerate(lot):
+        o.append('<label class="duree__o" for="duree-%d" tabindex="0">%s</label>' % (i, e(t)))
+    o.append('</div><div class="duree__p">')
+    for i, (t, d) in enumerate(lot):
+        o.append('<div class="duree__c"><b>%s</b><p>%s</p></div>' % (e(t), e(d)))
+    o.append('</div></div>')
+    if conseil:
+        o.append('<p class="mod__conseil">%s<span>%s</span></p>' % (ico('etoile', 16), e(conseil)))
+    o.append('</section>')
+    return '\n'.join(o)
+
+
+def liste_valise(inv):
+    """La liste d'équipement de la fiche, rendue cochable.
+
+    Cases natives : elle fonctionne sans une ligne de JavaScript, et le
+    compteur n'est qu'un confort par-dessus."""
+    f = faq_par(inv, r'[ée]quipements?|emporter|valise')
+    if not f:
+        return ''
+    lot = items_de(f['reponse_html'])
+    if len(lot) < 3:
+        return ''
+    conseil = conseil_de(f['reponse_html'])
+    o = ['<section class="mod mod--valise">',
+         '<p class="eyebrow">%s</p>' % e(INTERFACE['eyebrow_valise']),
+         '<h2>%s</h2>' % e(f['q']),
+         '<p class="mod__intro">%s</p>' % e(INTERFACE['valise_aide']),
+         '<ul class="valise" id="valise">']
+    for i, (t, d) in enumerate(lot):
+        o.append('<li><label><input type="checkbox"><span class="valise__b" aria-hidden="true">%s</span>'
+                 '<span class="valise__t"><b>%s</b>%s</span></label></li>'
+                 % (ico('coche', 14), e(t), ('<span>%s</span>' % e(d)) if d else ''))
+    o.append('</ul>')
+    o.append('<p class="valise__etat" id="valise-etat" role="status">%s <b>%d</b> %s</p>'
+             % (e(INTERFACE['valise_reste']), len(lot),
+                e('éléments à préparer' if len(lot) > 1 else 'élément à préparer')))
+    if conseil:
+        o.append('<p class="mod__conseil">%s<span>%s</span></p>' % (ico('etoile', 16), e(conseil)))
+    o.append('</section>')
+    return '\n'.join(o)
+
+
+def votre_guide(inv, home):
+    """Qui accompagne, d'après ce que la fiche inclut et ce que l'accueil
+    validé dit de l'équipe. Aucun nom, aucune expérience inventés."""
+    roles = []
+    for item in inv.get('inclus', []):
+        if re.search(r'\bguide\b', item, re.I):
+            roles.append(('guide', item))
+        elif re.search(r'chauffeur|v[ée]hicule|transfert', item, re.I):
+            roles.append(('voiture', item))
+        elif re.search(r'assistance|h24|24', item, re.I):
+            roles.append(('bouclier', item))
+    if not roles:
+        return ''
+    o = ['<section class="pg-sec pg-sec--nuit"><div class="wrap"><div class="guide">',
+         '<div><p class="eyebrow eyebrow--clair">%s</p>' % e(INTERFACE['eyebrow_guide']),
+         '<h2>%s</h2>' % e(INTERFACE['titre_guide']),
+         '<p class="guide__intro">%s</p>' % e(INTERFACE['guide_intro']),
+         '<ul class="guide__r">']
+    for icone, item in roles:
+        o.append('<li>%s<span>%s</span></li>' % (ico(icone, 18), e(item)))
+    o.append('</ul></div><div class="guide__g">')
+    for g in home.get('equipe', [])[:3]:
+        o.append('<div class="guide__c"><span class="guide__m">%s</span>'
+                 '<b>%s</b><span>%s</span></div>'
+                 % (e(g['initiale']), e(g['nom']), e(g['role'])))
+    o.append('</div></div></div></section>')
+    return '\n'.join(o)
+
+
 def galerie(inv):
     """Les photos de la fiche qui n'illustrent aucune étape.
 
@@ -738,6 +1360,7 @@ def deroule(inv):
         return ''
     o = ['<section>', '<p class="eyebrow">%s</p>' % e(INTERFACE['eyebrow_deroule']),
          '<h2>%s</h2>' % e(INTERFACE['titre_deroule'])]
+    dernier_lieu = ''
     for j in inv['jours']:
         o.append('<div class="jour">')
         # Le numéro est écrit APRÈS le titre et remonté par la mise en
@@ -746,7 +1369,9 @@ def deroule(inv):
                  % (e(j['titre']),
                     ('<span class="jour__no">Jour %d</span>' % j['n']) if j['numerote'] else ''))
         for et in j['etapes']:
-            o.append('<article class="etape">')
+            lieu = lieu_de(' '.join([et['titre']] + et['paragraphes'])) or dernier_lieu
+            dernier_lieu = lieu or dernier_lieu
+            o.append('<article class="etape"%s>' % (' data-lieu="%s"' % e(lieu) if lieu else ''))
             if et.get('image'):
                 img = et['image']
                 # La boîte fait au plus 780 px : toutes les photos du
@@ -823,20 +1448,22 @@ def panneau(inv):
     if inv['prix']['texte']:
         o.append('<p class="pan__prix" style="margin:0"><small>%s</small><b>%s</b> <i>%s</i></p>'
                  % (e(INTERFACE['depuis']), e(inv['prix']['texte']), e(suffixe_prix(inv))))
-    if inv['reperes']:
-        o.append('<ul class="pan__liste">' + ''.join(
-            '<li>%s<span>%s</span></li>' % (ico(icone_repere(r), 17), e(r)) for r in inv['reperes'])
-            + '</ul>')
+    # Les repères sont déjà dans la bande sous le bandeau : les répéter
+    # ici allongeait le panneau de 180 px et le faisait sortir de la
+    # fenêtre, ce qui casse le collant.
     o.append('<div class="pan__act">'
              f'<a class="btn btn--or btn--bloc" href="{DEVIS}">{e(INTERFACE["cta_devis"])}</a>'
              f'<a class="btn btn--wa btn--bloc" href="{WHATSAPP}">{ico("bulle", 17)} {e(INTERFACE["cta_whatsapp"])}</a>'
              '</div>')
     o.append('<p class="pan__note">%s<br>%s</p>' % (e(INTERFACE['delai']), e(INTERFACE['sans_cb'])))
-    o.append('</div>')
     n = (inv.get('avis_google') or {}).get('nombre')
     if n:
-        o.append('<div class="pan__conf"><span class="et" aria-hidden="true">★★★★★</span>'
-                 '<b>%d avis Google</b><span>%s</span></div>' % (n, e(INTERFACE['agence'])))
+        o.append('<p class="pan__avis"><span class="et" aria-hidden="true">★★★★★</span>'
+                 '<b>%d avis Google</b> <span>%s</span></p>' % (n, e(INTERFACE['agence'])))
+    o.append('</div>')
+    # La carte reste sous le prix : elle accompagne toute la lecture du
+    # déroulé, qui est la partie la plus longue de la page.
+    o.append(carte(inv))
     o.append('</aside>')
     return '\n'.join(o)
 
@@ -855,7 +1482,13 @@ def faqs(inv, home):
         return ''.join(out)
 
     pratique = [{'q': x['q'], 'html': x['html']} for x in home['pratique']]
-    fiche = [{'q': f['q'], 'html': f['reponse_html']} for f in inv['faq']]
+    # Deux questions sont sorties de l'accordéon : elles sont devenues
+    # des modules, plus haut dans la page. Le contenu reste entier, il
+    # est seulement présenté là où il sert.
+    promues = {(faq_par(inv, r'combien de temps|dur[ée]e') or {}).get('q'),
+               (faq_par(inv, r'[ée]quipements?|emporter|valise') or {}).get('q')}
+    fiche = [{'q': f['q'], 'html': f['reponse_html']}
+             for f in inv['faq'] if f['q'] not in promues]
     if not pratique and not fiche:
         return ''
     o = ['<section class="pg-sec pg-sec--fond"><div class="wrap"><div class="faqs">']
@@ -997,15 +1630,18 @@ def page(inv, home, voisins, chemin_charte='assets/charte.css'):
         hero(inv),
         reperes(inv),
         '<div class="wrap"><div class="deux"><div class="corps">',
-        a_verifier(inv), presentation(inv), galerie(inv), apercu(inv), deroule(inv),
-        tarif(inv), inclusions(inv),
+        a_verifier(inv), en_bref(inv), presentation(inv), galerie(inv),
+        selecteur_duree(inv), apercu(inv), deroule(inv),
+        tarif(inv), inclusions(inv), liste_valise(inv),
         '</div>', panneau(inv), '</div></div>',
+        votre_guide(inv, home),
         faqs(inv, home),
         avis(inv),
         bande_devis(home),
         proches(inv, voisins),
     ] if x)
 
+    fini = json.dumps(INTERFACE['valise_fini'], ensure_ascii=False)
     return f"""<!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -1032,7 +1668,7 @@ def page(inv, home, voisins, chemin_charte='assets/charte.css'):
 <div class="pg-lb" id="pg-lb" role="dialog" aria-modal="true" aria-label="{e(INTERFACE['photos'])}">
   <button type="button">Fermer</button><img src="" alt="">
 </div>
-<script>{SCRIPT}</script>
+<script>var VALISE_FINI={fini};{SCRIPT}</script>
 </body>
 </html>
 """
