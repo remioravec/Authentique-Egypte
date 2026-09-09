@@ -156,7 +156,10 @@ def extraire(html):
     for a in art.select('article[data-day-index]'):
         j = {'n': int(a['data-day-index']) + 1}
         img = a.find('img')
-        j['image'] = {'src': image_pleine(img.get('src')), 'alt': img.get('alt', '')} if img else None
+        alt = img.get('alt', '') if img else ''
+        if re.fullmatch(r'Jour \d+', alt):            # alt générique de la source, parfois décalé
+            alt = f"Jour {j['n']}"
+        j['image'] = {'src': image_pleine(img.get('src')), 'alt': alt} if img else None
         j['titre'] = texte(a.find('h3'))
         lieu = a.find('h3').find_next_sibling('div')
         j['lieu'] = texte(lieu.find('a')) if lieu and lieu.find('a') else texte(lieu)
@@ -276,7 +279,31 @@ CSS_SUPPLEMENT = """
 .prat .faq__c p{margin:0 0 .8em}
 #mm-btn{display:none}   /* le bouton d'annotations du moule : rien à montrer ici */
 @media (max-width:760px){.atouts,.etapes{grid-template-columns:1fr}}
+@media (max-width:900px){.bloc-t .tarifs,.bloc-t .tarifs+.note{display:none}}
 """
+
+
+def json_ld(inv, titre_court):
+    prix = re.sub(r'\D', '', inv.get('prix_depuis', '')) or None
+    trip = {'@context': 'https://schema.org', '@type': 'TouristTrip', 'name': inv['h1'],
+            'description': inv['description'],
+            'image': [inv['hero_image']['src']] if inv.get('hero_image') else [],
+            'provider': {'@type': 'TravelAgency', 'name': 'Authentique Égypte', 'url': 'https://authentiquegypte.com/'},
+            'itinerary': {'@type': 'ItemList', 'numberOfItems': len(inv['itineraire']['jours']),
+                          'itemListElement': [{'@type': 'ListItem', 'position': j['n'], 'name': f"Jour {j['n']} : {j['titre']}"}
+                                              for j in inv['itineraire']['jours']]}}
+    if prix:
+        trip['offers'] = {'@type': 'Offer', 'price': prix, 'priceCurrency': 'EUR',
+                          'seller': {'@type': 'TravelAgency', 'name': 'Authentique Égypte'}}
+    faq = {'@context': 'https://schema.org', '@type': 'FAQPage',
+           'mainEntity': [{'@type': 'Question', 'name': q['q'], 'acceptedAnswer': {'@type': 'Answer', 'text': q['r']}}
+                          for q in inv['faq']['items']]}
+    fil = {'@context': 'https://schema.org', '@type': 'BreadcrumbList', 'itemListElement': [
+        {'@type': 'ListItem', 'position': 1, 'name': 'Accueil', 'item': 'https://authentiquegypte.com/'},
+        {'@type': 'ListItem', 'position': 2, 'name': 'Nos séjours en Égypte', 'item': 'https://authentiquegypte.com/nos-sejours-egypte/'},
+        {'@type': 'ListItem', 'position': 3, 'name': 'Voyage culturel', 'item': 'https://authentiquegypte.com/nos-sejours-egypte/voyage-culturel-en-egypte/'},
+        {'@type': 'ListItem', 'position': 4, 'name': titre_court}]}
+    return '<script type="application/ld+json">' + json.dumps([trip, faq, fil], ensure_ascii=False) + '</script>'
 
 
 def rendre(inv, moule, titre_court=None):
@@ -391,6 +418,11 @@ def rendre(inv, moule, titre_court=None):
     o.append('</div></aside></div>')  # fin colonnes
     o.append('</div>')  # fin wrap
 
+    # la réassurance du moule (avis Google de l'agence) garde sa place avant l'appel au devis
+    avis = re.search(r'<section class="section section--fond">.*?</section>', moule, re.S)
+    if avis:
+        o.append(avis.group(0))
+
     # bande devis : le texte de la source, nos boutons
     o.append('<section class="section"><div class="wrap"><div class="devis"><div>'
              f'<p class="eyebrow eyebrow--clair">Votre projet</p><h2>{esc(inv["adapter"]["titre"])}</h2>'
@@ -403,9 +435,17 @@ def rendre(inv, moule, titre_court=None):
     h = re.sub(r'<main>.*?</main>', lambda m: '\n'.join(o), h, count=1, flags=re.S)
 
     # barre mobile
-    h = re.sub(r'<div class="resa-mob">.*?</div>\s*</div>',
+    h = re.sub(r'<div class="resa-mob">.*?</a>\s*</div>',
                f'<div class="resa-mob"><span class="p"><small>{esc(titre_court)}</small><b>{esc(inv["prix_depuis"])}</b> <i>/ pers.</i></span>'
                f'<a class="btn btn--or btn--sm" href="{DEVIS}">Personnaliser ce circuit</a></div>', h, count=1, flags=re.S)
+
+    # données structurées : celles de ce circuit, pas celles du moule
+    h = re.sub(r'<script type="application/ld\+json">.*?</script>', lambda m: json_ld(inv, titre_court), h, count=1, flags=re.S)
+    # page courante du menu : la catégorie du fil d'Ariane
+    h = h.replace(' aria-current="page"', '', 1)
+    h = h.replace('href="https://authentiquegypte.com/nos-sejours-egypte/voyage-culturel-en-egypte/"',
+                  'href="https://authentiquegypte.com/nos-sejours-egypte/voyage-culturel-en-egypte/" aria-current="page"', 1)
+    h = re.sub(r'(<div id="lb"[^>]*aria-label=")[^"]*"', r'\1Photos du circuit"', h, count=1)
 
     # les liens de maquette de l'entête et du pied pointent sur le site live
     for rel, live in LIENS_LIVE.items():
