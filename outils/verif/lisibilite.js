@@ -158,9 +158,24 @@ const VUES = [
       }).map(el => ({ selecteur: sel(el),
                       marges: getComputedStyle(el).marginTop + ' / ' + getComputedStyle(el).marginBottom }));
 
-      // Cibles tactiles
+      // Cibles tactiles.
+      // Une case dérobée à l'œil mais laissée au clavier n'est pas une
+      // cible de 1 px : ce qu'on touche, c'est son <label>, et c'est LUI
+      // qui doit faire 44 px. On l'écarte donc, mais seulement si ce
+      // label existe vraiment et tient la mesure — sinon la commande
+      // n'est atteignable ni au doigt ni au clavier, et le défaut est
+      // réel.
+      const derobee = el => {
+        if (!(el.tagName === 'INPUT' || el.tagName === 'SELECT')) return false;
+        const r = el.getBoundingClientRect();
+        if (r.width > 2 || r.height > 2) return false;
+        const lab = el.id ? document.querySelector(`label[for="${el.id}"]`) : el.closest('label');
+        if (!lab) return false;
+        const rl = lab.getBoundingClientRect();
+        return rl.width >= 44 && rl.height >= 44;
+      };
       const cibles = [...document.querySelectorAll('a,button,summary,input,select,[role="button"]')]
-        .filter(vu).map(el => {
+        .filter(el => vu(el) && !derobee(el)).map(el => {
           const r = el.getBoundingClientRect();
           return { selecteur: sel(el), extrait: txt(el).slice(0, 40), l: Math.round(r.width), h: Math.round(r.height),
                    enLigne: getComputedStyle(el).display === 'inline' };

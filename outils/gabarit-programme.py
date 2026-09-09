@@ -85,6 +85,11 @@ INTERFACE = {
     'titre_faq': 'Tout savoir sur ce séjour',                      # D6
     'eyebrow_faq': 'La destination',                               # D6
     'titre_avis': 'Ce que disent les voyageurs',                   # D6
+    'avis_source': 'Publié sur Google',                            # D30 (libellé du widget)
+    'avis_releve': 'Relevé sur la fiche le',                       # D11
+    'avis_pause': 'Mettre en pause le défilement des avis',        # D30
+    'avis_arret': 'En pause',                                      # D30
+    'avis_marche': 'Mettre en pause',                              # D30
     'eyebrow_avis': 'Avis Google',                                 # D11
     'titre_devis': 'Ce séjour vous tente ? Ajustons-le à vos dates.',   # D8
     'devis_points': [                                              # D8
@@ -112,6 +117,10 @@ INTERFACE = {
     'titre_guide': 'Votre guide, votre chauffeur, et personne d\'autre',  # D26
     'guide_intro': 'Ce séjour est privatif : vous ne partagez ni le guide, '
                    'ni le véhicule, ni le rythme.',                # D26
+    'titre_equipe': 'Les visages derrière votre séjour',            # D26
+    'equipe_aide': 'Faites défiler pour rencontrer toute l\'équipe.',  # D26
+    'precedent': 'Personne précédente',                            # D26
+    'suivant': 'Personne suivante',                                # D26
     # --- carte (D25)
     'eyebrow_carte': 'Où vous allez',                              # D25
     'titre_carte': 'Le trajet, étape par étape',                   # D25
@@ -147,6 +156,7 @@ ICONES = {
     'bulle': '<path d="M4 6a3 3 0 0 1 3-3h10a3 3 0 0 1 3 3v8a3 3 0 0 1-3 3H9l-5 4z"/>',
     'bouclier': '<path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/>',
     'fleche': '<path d="M4 12h13M12 6l6 6-6 6"/>',
+    'pause': '<path d="M9 5v14M15 5v14"/>',
 }
 
 
@@ -486,21 +496,53 @@ CSS = r"""
   color:var(--gris-lis)}
 .pg .valise__etat b{color:var(--teal-txt);font-weight:800}
 
-/* ---------- votre guide ---------- */
-.pg .guide{display:grid;grid-template-columns:1.15fr 1fr;gap:52px;align-items:center}
-.pg .guide__intro{font-size:1.12rem;line-height:1.7;color:#C9DDE7;max-width:44ch;margin:0 0 26px}
+/* ---------- votre guide : le texte, puis le carrousel de l'équipe ---------- */
+.pg .guide{display:grid;grid-template-columns:1.15fr 1fr;gap:52px;align-items:center;
+  margin:0 0 44px}
+.pg .guide__intro{font-size:1.12rem;line-height:1.7;color:#C9DDE7;max-width:44ch;margin:0}
 .pg .guide__r{list-style:none;margin:0;padding:0;display:grid;gap:14px}
 .pg .guide__r li{display:flex;gap:13px;align-items:center;font-family:"Manrope",sans-serif;
   font-size:1.02rem;color:#fff}
 .pg .guide__r svg{flex:0 0 auto;color:var(--or)}
-.pg .guide__g{display:grid;gap:14px}
-.pg .guide__c{display:grid;grid-template-columns:52px 1fr;gap:16px;align-items:center;
-  background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.16);
-  border-radius:var(--r-l);padding:16px 20px}
-.pg .guide__m{width:52px;height:52px;border-radius:50%;background:var(--or);color:var(--nuit-900);
-  display:grid;place-items:center;font-family:"Manrope",sans-serif;font-weight:800;font-size:1.15rem}
-.pg .guide__c b{font-family:"Manrope",sans-serif;font-size:1.06rem;color:#fff;display:block}
-.pg .guide__c>span:last-child{font-size:.95rem;color:#B4D0DE;line-height:1.5;display:block;margin-top:2px}
+
+/* Le carrousel d'équipe. Il défile nativement : glissement au doigt,
+   flèches du clavier sur la piste (d'où le tabindex). Les deux boutons
+   sont posés par le script et seulement si la piste déborde — sans
+   JavaScript, on ne montre pas des commandes mortes. */
+.pg .carr{border-top:1px solid rgba(255,255,255,.16);padding-top:34px}
+.pg .carr__tete{display:flex;align-items:center;justify-content:space-between;gap:20px;
+  margin:0 0 22px}
+.pg .carr__tete h3{font-size:1.22rem;color:#fff;letter-spacing:-.2px}
+.pg .carr__nav{display:flex;gap:10px;flex:0 0 auto}
+.pg .carr__b{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;
+  background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.3);color:#fff;
+  cursor:pointer;transition:background .18s,border-color .18s}
+.pg .carr__b:hover{background:var(--or);border-color:var(--or);color:var(--nuit-900)}
+.pg .carr__b[disabled]{opacity:.38;cursor:default}
+.pg .carr__b[disabled]:hover{background:rgba(255,255,255,.09);border-color:rgba(255,255,255,.3);
+  color:#fff}
+.pg .carr__b:first-child svg{transform:rotate(180deg)}
+.pg .carr__p{display:flex;gap:18px;overflow-x:auto;scroll-snap-type:x mandatory;
+  scroll-behavior:smooth;scrollbar-width:none;padding:2px}
+.pg .carr__p::-webkit-scrollbar{display:none}
+.pg .carr__p:focus-visible{outline:2px solid var(--or);outline-offset:4px;border-radius:var(--r-m)}
+/* Quatre cartes exactement dans la largeur : au bureau la piste ne
+   déborde pas, les boutons restent donc cachés. */
+.pg .carr__c{flex:0 0 calc((100% - 54px)/4);scroll-snap-align:start;
+  background:linear-gradient(160deg,rgba(255,255,255,.11),rgba(255,255,255,.05));
+  border:1px solid rgba(255,255,255,.18);border-radius:var(--r-l);padding:26px 24px 24px}
+.pg .carr__m{width:60px;height:60px;border-radius:50%;background:var(--or);color:var(--nuit-900);
+  display:grid;place-items:center;font-family:"Manrope",sans-serif;font-weight:800;
+  font-size:1.4rem;margin:0 0 16px}
+.pg .carr__c b{font-family:"Manrope",sans-serif;font-size:1.16rem;color:#fff;display:block;
+  font-weight:700}
+.pg .carr__r{display:block;color:var(--or);font-family:"Manrope",sans-serif;font-size:.98rem;
+  font-weight:600;margin-top:3px}
+.pg .carr__f{list-style:none;margin:14px 0 0;padding:14px 0 0;display:grid;gap:7px;
+  border-top:1px solid rgba(255,255,255,.16)}
+.pg .carr__f li{font-size:.97rem;line-height:1.5;color:#CFE2EC}
+.pg .carr__aide{margin:16px 0 0;font-family:"Manrope",sans-serif;font-size:.95rem;
+  color:#A9C6D6;display:none}
 
 /* ---------- carte de repérage : un bandeau large dans la lecture ---------- */
 .pg .carte{--carte-mer:#DCEBF2;--carte-nil:#4FA3C7;--carte-terre:#F2E3C4;--carte-cote:#CBAE7C;
@@ -730,20 +772,77 @@ CSS = r"""
 .pg .acc__vide{color:#7A5605;background:var(--or-fond);border:1px dashed var(--or);
   border-radius:var(--r-s);padding:10px 14px;font-family:"Manrope",sans-serif;font-size:.94rem}
 
-/* ---------- avis ---------- */
-.pg .avis__tete{display:flex;flex-wrap:wrap;align-items:baseline;gap:12px 20px;margin:0 0 28px}
-.pg .avis__tete .et{color:var(--or-fonce);letter-spacing:.14em;font-size:1.15rem}
-.pg .avis__tete b{font-family:"Manrope",sans-serif;font-size:1.05rem;color:var(--noir)}
-.pg .avis__g{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;align-items:start}
-.pg .avis__g article{background:#fff;border:1px solid var(--ligne-pg);border-radius:var(--r-l);
-  padding:24px;display:flex;flex-direction:column;gap:14px}
-.pg .avis__g .et{color:var(--or-fonce);letter-spacing:.14em;font-size:.98rem}
-.pg .avis__g blockquote{margin:0;font-size:1rem;line-height:1.7;color:var(--texte);flex:1}
-.pg .avis__g footer{display:flex;align-items:center;gap:12px;font-family:"Manrope",sans-serif;
-  font-size:.9rem;color:var(--gris-lis);border-top:1px solid var(--ligne-2);padding-top:14px}
-.pg .avis__g footer b{color:var(--noir);display:block;font-weight:700}
+/* ---------- le mur d'avis : deux colonnes qui défilent ----------
+   La boucle repose sur une règle simple : chaque colonne porte DEUX
+   fois ses cartes et remonte de la moitié exacte de sa hauteur. D'où la
+   marge sur les cartes plutôt qu'un `gap` sur la piste — un `gap`
+   n'existe qu'ENTRE les enfants, la moitié de la hauteur tomberait
+   alors un demi-écart trop haut et la boucle sauterait à chaque tour.
+   La marge est portée par un <article>, donc un élément de bloc : elle
+   s'applique (ce n'est pas le cas d'un <a>, voir .etape__photo). */
+.pg .mur__tete{display:flex;flex-wrap:wrap;align-items:flex-end;gap:16px 28px;margin:0 0 26px}
+.pg .mur__tete>div:first-child{flex:1 1 340px}
+.pg .mur__tete h2{margin:0}
+.pg .mur__cpt{margin:0;font-family:"Manrope",sans-serif;line-height:1.45}
+.pg .mur__cpt b{display:block;font-size:1.05rem;color:var(--noir);font-weight:700}
+.pg .mur__cpt small{display:block;font-size:.94rem;color:var(--gris-lis);margin-top:2px}
+/* La case est le bouton : le défilement s'arrête donc sans JavaScript,
+   comme l'exige le critère 2.2.2. Elle reste dans le flux du clavier,
+   seulement dérobée à l'œil. */
+.pg .mur__stop{position:absolute;width:1px;height:1px;margin:-1px;padding:0;border:0;
+  overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.pg .mur__btn{display:inline-flex;align-items:center;gap:9px;min-height:44px;padding:0 18px;
+  border-radius:var(--r-pill);border:1px solid var(--ligne-pg);background:#fff;cursor:pointer;
+  font-family:"Manrope",sans-serif;font-size:.96rem;font-weight:600;color:var(--gris-lis);
+  transition:border-color .18s,color .18s}
+.pg .mur__btn:hover{border-color:var(--nuit);color:var(--nuit-900)}
+.pg .mur__btn svg{color:var(--or-fonce)}
+.pg .mur__btn .b{display:none}
+.pg .mur__stop:checked~.mur__tete .mur__btn .a{display:none}
+.pg .mur__stop:checked~.mur__tete .mur__btn .b{display:inline}
+.pg .mur__stop:focus-visible~.mur__tete .mur__btn{outline:2px solid var(--teal-txt);
+  outline-offset:3px}
+
+.pg .mur{display:grid;grid-template-columns:1fr 1fr;gap:26px;align-items:start}
+/* Chaque colonne est un PANNEAU encadré, et la fenêtre de défilement est
+   à l'intérieur. Deux raisons, et la seconde est un défaut mesuré :
+   la fenêtre est la colonne et non la grille, sinon une grille à une
+   colonne sur téléphone effacerait cinq avis sur dix ; et le cadre est
+   séparé de la fenêtre parce que le fondu qui adoucit les bords ronge
+   tout ce qu'il traverse, cadre compris. Sans lui, sur téléphone, la
+   carte coupée en bas du premier panneau et celle coupée en haut du
+   second se lisaient comme une seule — le texte d'un voyageur suivi de
+   la signature d'un autre. */
+.pg .mur__c{background:var(--fond-2);border:1px solid var(--ligne-pg);
+  border-radius:var(--r-l);padding:18px}
+.pg .mur__f{height:664px;overflow:hidden;
+  -webkit-mask-image:linear-gradient(180deg,transparent,#000 48px,#000 calc(100% - 48px),transparent);
+  mask-image:linear-gradient(180deg,transparent,#000 48px,#000 calc(100% - 48px),transparent)}
+.pg .mur__d{animation:mur var(--d,90s) linear infinite;will-change:transform}
+.pg .mur__c:nth-child(2) .mur__d{animation-direction:reverse}
+@keyframes mur{from{transform:translateY(0)}to{transform:translateY(-50%)}}
+/* Trois façons d'arrêter : le bouton, le survol, le focus clavier. */
+.pg .mur:hover .mur__d,.pg .mur:focus-within .mur__d,
+.pg .mur__stop:checked~.mur .mur__d{animation-play-state:paused}
+.pg .mur__a{background:#fff;border:1px solid var(--ligne-pg);border-radius:var(--r-l);
+  padding:24px;margin:0 0 22px;box-shadow:0 2px 10px rgba(16,32,48,.05)}
+.pg .mur__q{display:block;font-family:"Archivo",serif;font-size:2.4rem;line-height:.6;
+  color:var(--or);margin:6px 0 12px}
+.pg .mur__a blockquote{margin:0;font-size:1rem;line-height:1.7;color:var(--texte)}
+.pg .mur__a footer{display:flex;align-items:center;gap:12px;font-family:"Manrope",sans-serif;
+  font-size:.9rem;color:var(--gris-lis);border-top:1px solid var(--ligne-2);
+  padding-top:14px;margin-top:16px}
+.pg .mur__a footer b{color:var(--noir);display:block;font-weight:700}
 .pg .ini{width:38px;height:38px;border-radius:50%;background:var(--nuit);color:#fff;display:grid;
   place-items:center;font-weight:700;font-size:.9rem;flex:0 0 auto}
+/* Mouvement réduit : plus d'animation du tout, et le mur redevient une
+   liste. La seconde copie disparaît — elle ne servait que la boucle. */
+@media (prefers-reduced-motion:reduce){
+  .pg .mur__f{height:auto;overflow:visible;-webkit-mask-image:none;mask-image:none}
+  .pg .mur__d{animation:none}
+  .pg .mur__p[aria-hidden]{display:none}
+  .pg .mur__btn,.pg .mur__stop{display:none}
+}
 
 /* ---------- séjours proches ---------- */
 .pg .proches{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
@@ -782,6 +881,8 @@ CSS = r"""
 
 @media (max-width:1040px){
   .pg .guide{grid-template-columns:1fr;gap:32px}
+  .pg .carr__c{flex-basis:calc((100% - 18px)/2.2)}
+  .pg .carr__aide{display:block}
   .pg .bref{padding:28px 24px}
   /* Le prix est dans le bandeau, 200 px plus haut, et dans la barre du
      bas : trois fois sur un écran de téléphone, c'est deux fois de trop. */
@@ -833,7 +934,13 @@ CSS = r"""
   .pg .deux>.corps{gap:48px}
   .pg-mob{display:flex}
   .pg .proches{grid-template-columns:1fr}
-  .pg .avis__g{grid-template-columns:1fr}
+  /* Les deux fenêtres se rangent l'une sous l'autre : sans une
+     gouttière franche, la carte coupée en bas de la première et celle
+     coupée en haut de la seconde se lisent comme une seule, avec le
+     texte d'un voyageur et la signature d'un autre. */
+  .pg .mur{grid-template-columns:1fr;gap:22px}
+  .pg .mur__f{height:420px}
+  .pg .carr__c{flex-basis:86%}
   .pg .galerie{grid-template-columns:1fr 1fr}
   .pg .galerie a:first-child{grid-column:span 2;grid-row:auto;aspect-ratio:3/2}
   .pg .hero__in{padding:24px 0 40px}
@@ -842,13 +949,13 @@ CSS = r"""
   /* Plancher mobile : rien sous 15 px. Le retour du 24/08 portait
      précisément là-dessus, et l'outil de lisibilité le vérifie. */
   .pg .reperes small,.pg .hero__prix small,.pg .hero__prix i,.pg .pan__prix small,
-  .pg .pan__prix i,.pg .pan__note,.pg .note,.pg .proches p,.pg .avis__g footer,
+  .pg .pan__prix i,.pg .pan__note,.pg .note,.pg .proches p,.pg .mur__a footer,
   .pg .pg-mob .p small,.pg .pan__conf,.pg .mention,.pg .pill,.pg .acc__vide{font-size:.95rem}
   .pg .reperes b,.pg .pan__liste,.pg .apercu span.t{font-size:1rem}
   .pg .ariane,.pg .eyebrow,.pg .apercu .n,.pg .jour__no,.pg .tarif__ligne b small,
-  .pg .avis__g .ini,.pg .acc__c,.pg .devis__act small,.pg .verifier__d,
+  .pg .mur .ini,.pg .acc__c,.pg .devis__act small,.pg .verifier__d,
   .pg .rep,.pg .reps__src,.pg .carte__note,.pg .carte__hors,.pg .somm,
-  .pg .somm span span,.pg .somm__t,.pg .valise__t span,.pg .guide__c>span:last-child,
+  .pg .somm span span,.pg .somm__t,.pg .valise__t span,.pg .carr__f li,.pg .carr__aide,
   .pg .pan__avis{font-size:.95rem}
   .pg .duree__c{padding:20px}
   .pg-mob .p small{font-size:.95rem}
@@ -905,6 +1012,33 @@ SCRIPT = r"""
     }
     cases.forEach(function(c){ c.addEventListener('change',compter); });
     compter();
+  }
+
+  // Le carrousel de l'équipe glisse déjà au doigt et aux flèches du
+  // clavier ; les deux boutons sont un confort, et on ne les montre que
+  // s'il y a vraiment quelque chose à faire défiler.
+  var piste=document.getElementById('equipe');
+  if(piste){
+    var nav=document.querySelector('.carr__nav');
+    var bts=nav?nav.querySelectorAll('.carr__b'):[];
+    function pas(){ var c=piste.querySelector('.carr__c');
+      return c?c.getBoundingClientRect().width+18:320; }
+    function etat(){
+      var deborde=piste.scrollWidth>piste.clientWidth+4;
+      if(nav) nav.hidden=!deborde;
+      if(!deborde) return;
+      var fin=piste.scrollWidth-piste.clientWidth-2;
+      bts[0].disabled=piste.scrollLeft<=2;
+      bts[1].disabled=piste.scrollLeft>=fin;
+    }
+    bts.forEach(function(b){
+      b.addEventListener('click',function(){
+        piste.scrollBy({left:pas()*(+b.dataset.carr),behavior:'smooth'});
+      });
+    });
+    piste.addEventListener('scroll',etat,{passive:true});
+    window.addEventListener('resize',etat);
+    etat();
   }
 
   // La carte suit la lecture : l'étape qu'on lit s'allume sur la carte.
@@ -1070,7 +1204,7 @@ def reperes_etape(et, depuis, vers, trajets):
         t = trajets.get(depuis + '>' + vers)
         if t and not t.get('douteux'):
             chips.append('<span class="rep rep--calc" title="%s — relevé le %s">%s%s</span>'
-                         % (e(t['source']), e(t['releve']), ico('voiture', 14),
+                         % (e(t['source']), e(date_fr(t['releve'])), ico('voiture', 14),
                             e('%d km · %s de route' % (t['km'], duree_lisible(t['minutes'])))))
     return ('<p class="reps">' + ''.join(chips) + '</p>') if chips else ''
 
@@ -1461,7 +1595,7 @@ def en_bref(inv):
                  % (ico(icone, 18), e(label), e(valeur),
                     ('<span>%s</span>' % e(detail)) if detail else ''))
     o.append('</dl><p class="bref__src">%s %s</p></section>'
-             % (e(INTERFACE['source_fiche']), e(inv['releve'])))
+             % (e(INTERFACE['source_fiche']), e(date_fr(inv['releve']))))
     return '\n'.join(o)
 
 
@@ -1536,7 +1670,17 @@ def liste_valise(inv):
 
 def votre_guide(inv, home):
     """Qui accompagne, d'après ce que la fiche inclut et ce que l'accueil
-    validé dit de l'équipe. Aucun nom, aucune expérience inventés."""
+    validé dit de l'équipe. Aucun nom, aucune expérience inventés.
+
+    L'équipe passe d'une pile de trois cartes à un carrousel des quatre
+    personnes de l'accueil : chacune a la place de porter son métier ET
+    son détail — l'ancienneté et les langues d'Hossam tenaient sur une
+    ligne grise de 15 px, elles sont maintenant lisibles.
+
+    Le carrousel défile nativement (glissement au doigt, flèches du
+    clavier sur la piste). Les deux boutons sont un confort ajouté par
+    le script, et ils n'apparaissent que si la piste déborde vraiment :
+    sans JavaScript, la page reste entière."""
     roles = []
     for item in inv.get('inclus', []):
         if re.search(r'\bguide\b', item, re.I):
@@ -1547,20 +1691,48 @@ def votre_guide(inv, home):
             roles.append(('bouclier', item))
     if not roles:
         return ''
-    o = ['<section class="pg-sec pg-sec--nuit"><div class="wrap"><div class="guide">',
+    o = ['<section class="pg-sec pg-sec--nuit"><div class="wrap">',
+         '<div class="guide">',
          '<div><p class="eyebrow eyebrow--clair">%s</p>' % e(INTERFACE['eyebrow_guide']),
          '<h2>%s</h2>' % e(INTERFACE['titre_guide']),
-         '<p class="guide__intro">%s</p>' % e(INTERFACE['guide_intro']),
+         '<p class="guide__intro">%s</p></div>' % e(INTERFACE['guide_intro']),
          '<ul class="guide__r">']
     for icone, item in roles:
         o.append('<li>%s<span>%s</span></li>' % (ico(icone, 18), e(item)))
-    o.append('</ul></div><div class="guide__g">')
-    for g in home.get('equipe', [])[:3]:
-        o.append('<div class="guide__c"><span class="guide__m">%s</span>'
-                 '<b>%s</b><span>%s</span></div>'
-                 % (e(g['initiale']), e(g['nom']), e(g['role'])))
-    o.append('</div></div></div></section>')
+    o.append('</ul></div>')
+
+    equipe = home.get('equipe', [])
+    if equipe:
+        o.append('<div class="carr">')
+        o.append('<div class="carr__tete"><h3>%s</h3>'
+                 '<div class="carr__nav" hidden>'
+                 '<button type="button" class="carr__b" data-carr="-1" '
+                 'aria-controls="equipe" aria-label="%s">%s</button>'
+                 '<button type="button" class="carr__b" data-carr="1" '
+                 'aria-controls="equipe" aria-label="%s">%s</button>'
+                 '</div></div>'
+                 % (e(INTERFACE['titre_equipe']), e(INTERFACE['precedent']),
+                    ico('fleche', 18), e(INTERFACE['suivant']), ico('fleche', 18)))
+        o.append('<div class="carr__p" id="equipe" tabindex="0" role="group" aria-label="%s">'
+                 % e(INTERFACE['titre_equipe']))
+        for g in equipe:
+            # Le rôle de l'accueil s'écrit « métier — détail — détail ».
+            # On ne réécrit rien : on coupe sur le tiret de la source et
+            # on donne à chaque morceau sa place.
+            bouts = [x.strip() for x in re.split(r'\s+—\s+', g['role']) if x.strip()]
+            metier, details = (bouts[0], bouts[1:]) if bouts else (g['role'], [])
+            o.append('<article class="carr__c">'
+                     '<span class="carr__m" aria-hidden="true">%s</span>'
+                     '<b>%s</b><span class="carr__r">%s</span>%s</article>'
+                     % (e(g['initiale']), e(g['nom']), e(metier),
+                        ('<ul class="carr__f">%s</ul>'
+                         % ''.join('<li>%s</li>' % e(d) for d in details)) if details else ''))
+        o.append('</div>')
+        o.append('<p class="carr__aide">%s</p>' % e(INTERFACE['equipe_aide']))
+        o.append('</div>')
+    o.append('</div></section>')
     return '\n'.join(o)
+
 
 
 def galerie(inv):
@@ -1661,7 +1833,7 @@ def a_verifier(inv):
             '<p class="verifier__d">%s %s</p></aside>'
             % (e(INTERFACE['titre_verifier']),
                ''.join('<li>%s</li>' % e(x) for x in inv['anomalies']),
-               e(INTERFACE['releve_du']), e(inv['releve'])))
+               e(INTERFACE['releve_du']), e(date_fr(inv['releve']))))
 
 
 def suffixe_prix(inv):
@@ -1746,23 +1918,116 @@ def faqs(inv, home):
 
 
 def avis(inv):
+    """Le mur d'avis : deux colonnes qui défilent en continu.
+
+    Les dix témoignages du widget de la fiche vont de 78 à 619
+    caractères. Un carrousel horizontal aurait aligné les dix cartes sur
+    la plus haute et laissé du vide sous les neuf autres ; deux colonnes
+    verticales laissent chaque avis à sa longueur, et le mouvement
+    montre qu'il y en a plus que ce que l'écran porte.
+
+    Trois contraintes tenues :
+
+    - **on peut l'arrêter.** WCAG 2.2.2 : tout mouvement automatique de
+      plus de cinq secondes doit pouvoir être mis en pause. Le bouton
+      est une case à cocher native, donc il fonctionne sans JavaScript ;
+      le survol et le focus clavier arrêtent aussi le défilement, et
+      `prefers-reduced-motion` supprime l'animation, les dix avis
+      restant alors simplement empilés ;
+    - **la boucle est invisible.** Chaque colonne porte deux fois ses
+      cartes et remonte d'exactement la moitié de sa hauteur. L'écart
+      entre cartes est une marge, jamais un `gap` : un `gap` aurait
+      laissé un demi-écart de décalage à chaque tour ;
+    - **rien n'est ajouté au contenu.** Aucune étoile : la fiche affiche
+      un nombre d'avis, jamais une note. La seconde copie de chaque
+      colonne est `aria-hidden` — elle sert la boucle, pas la lecture.
+    """
     a = inv.get('avis_google') or {}
-    lot = (a.get('temoignages') or [])[:3]
+    lot = a.get('temoignages') or []
     if not lot:
         return ''
-    o = ['<section class="pg-sec"><div class="wrap">',
-         '<p class="eyebrow">%s</p><h2>%s</h2>' % (e(INTERFACE['eyebrow_avis']), e(INTERFACE['titre_avis'])),
-         '<div class="avis__tete"><span class="et" aria-hidden="true">★★★★★</span>']
-    if a.get('nombre'):
-        o.append('<b>%d avis Google sur l\'agence</b>' % a['nombre'])
-    o.append('</div><div class="avis__g">')
+
+    # Répartition : chaque avis va dans la colonne la plus courte, ce qui
+    # garde l'ordre de la source et équilibre les deux hauteurs.
+    colonnes = [[], []]
+    poids = [0, 0]
     for t in lot:
-        ini = ''.join(x[0].upper() for x in t['auteur'].split()[:2]) or '·'
-        o.append('<article><span class="et" aria-hidden="true">★★★★★</span><blockquote>%s</blockquote>'
-                 '<footer><span class="ini">%s</span><span><b>%s</b>Avis Google</span></footer></article>'
-                 % (e(t['texte']), e(ini), e(t['auteur'])))
+        i = 0 if poids[0] <= poids[1] else 1
+        colonnes[i].append(t)
+        poids[i] += hauteur_avis(t['texte'])
+
+    o = ['<section class="pg-sec"><div class="wrap">',
+         '<input type="checkbox" id="mur-stop" class="mur__stop" aria-label="%s">'
+         % e(INTERFACE['avis_pause']),
+         '<div class="mur__tete">',
+         '<div><p class="eyebrow">%s</p><h2>%s</h2></div>'
+         % (e(INTERFACE['eyebrow_avis']), e(INTERFACE['titre_avis']))]
+    droite = []
+    if a.get('nombre'):
+        droite.append('<b>%s</b>' % e('%d avis Google sur l\'agence' % a['nombre']))
+    if a.get('releve'):
+        droite.append('<small>%s %s</small>'
+                      % (e(INTERFACE['avis_releve']), e(date_fr(a['releve']))))
+    if droite:
+        o.append('<p class="mur__cpt">%s</p>' % ''.join(droite))
+    o.append('<label class="mur__btn" for="mur-stop">%s'
+             '<span class="a">%s</span><span class="b">%s</span></label>'
+             % (ico('pause', 15), e(INTERFACE['avis_marche']), e(INTERFACE['avis_arret'])))
+    o.append('</div>')
+
+    o.append('<div class="mur">')
+    for colonne in colonnes:
+        if not colonne:
+            continue
+        # 26 px par seconde : la vitesse de lecture confortable relevée
+        # sur les murs d'avis. La durée suit donc la hauteur réelle de la
+        # colonne, sinon la colonne courte filerait deux fois plus vite.
+        duree = max(40, round(sum(hauteur_avis(t['texte']) for t in colonne) / 26))
+        o.append('<div class="mur__c"><div class="mur__f">'
+                 '<div class="mur__d" style="--d:%ds">' % duree)
+        for copie in (0, 1):
+            o.append('<div class="mur__p"%s>' % (' aria-hidden="true"' if copie else ''))
+            for t in colonne:
+                o.append(carte_avis(t))
+            o.append('</div>')
+        o.append('</div></div></div>')
     o.append('</div></div></section>')
     return '\n'.join(o)
+
+
+MOIS_FR = ('janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet',
+           'août', 'septembre', 'octobre', 'novembre', 'décembre')
+
+
+def date_fr(iso):
+    """« 2026-09-09 » se lit « 9 septembre 2026 ».
+
+    C'est une date de RELEVÉ, écrite par nous : elle suit donc la
+    typographie française, comme tout libellé d'interface (D17)."""
+    m = re.match(r'(\d{4})-(\d{2})-(\d{2})$', str(iso or ''))
+    if not m:
+        return str(iso or '')
+    an, mois, jour = int(m.group(1)), int(m.group(2)), int(m.group(3))
+    return '%d%s %s %d' % (jour, 'er' if jour == 1 else '', MOIS_FR[mois - 1], an)
+
+
+def hauteur_avis(texte):
+    """La hauteur d'une carte, en pixels, estimée à la génération.
+
+    Elle ne sert qu'à deux choses : équilibrer les colonnes et donner à
+    chacune la durée qui produit la même vitesse. Un à-peu-près suffit —
+    62 caractères par ligne dans une colonne de 560 px, 27 px de ligne."""
+    import math
+    return 166 + math.ceil(len(texte) / 62.0) * 27
+
+
+def carte_avis(t):
+    ini = ''.join(x[0].upper() for x in t['auteur'].split()[:2]) or '·'
+    return ('<article class="mur__a"><span class="mur__q" aria-hidden="true">&#8220;</span>'
+            '<blockquote>%s</blockquote>'
+            '<footer><span class="ini">%s</span><span><b>%s</b>%s</span></footer></article>'
+            % (e(t['texte']), e(ini), e(t['auteur']), e(INTERFACE['avis_source'])))
+
 
 
 def bande_devis(home):

@@ -191,21 +191,53 @@
   color:var(--gris-lis)}
 .pg .valise__etat b{color:var(--teal-txt);font-weight:800}
 
-/* ---------- votre guide ---------- */
-.pg .guide{display:grid;grid-template-columns:1.15fr 1fr;gap:52px;align-items:center}
-.pg .guide__intro{font-size:1.12rem;line-height:1.7;color:#C9DDE7;max-width:44ch;margin:0 0 26px}
+/* ---------- votre guide : le texte, puis le carrousel de l'équipe ---------- */
+.pg .guide{display:grid;grid-template-columns:1.15fr 1fr;gap:52px;align-items:center;
+  margin:0 0 44px}
+.pg .guide__intro{font-size:1.12rem;line-height:1.7;color:#C9DDE7;max-width:44ch;margin:0}
 .pg .guide__r{list-style:none;margin:0;padding:0;display:grid;gap:14px}
 .pg .guide__r li{display:flex;gap:13px;align-items:center;font-family:"Manrope",sans-serif;
   font-size:1.02rem;color:#fff}
 .pg .guide__r svg{flex:0 0 auto;color:var(--or)}
-.pg .guide__g{display:grid;gap:14px}
-.pg .guide__c{display:grid;grid-template-columns:52px 1fr;gap:16px;align-items:center;
-  background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.16);
-  border-radius:var(--r-l);padding:16px 20px}
-.pg .guide__m{width:52px;height:52px;border-radius:50%;background:var(--or);color:var(--nuit-900);
-  display:grid;place-items:center;font-family:"Manrope",sans-serif;font-weight:800;font-size:1.15rem}
-.pg .guide__c b{font-family:"Manrope",sans-serif;font-size:1.06rem;color:#fff;display:block}
-.pg .guide__c>span:last-child{font-size:.95rem;color:#B4D0DE;line-height:1.5;display:block;margin-top:2px}
+
+/* Le carrousel d'équipe. Il défile nativement : glissement au doigt,
+   flèches du clavier sur la piste (d'où le tabindex). Les deux boutons
+   sont posés par le script et seulement si la piste déborde — sans
+   JavaScript, on ne montre pas des commandes mortes. */
+.pg .carr{border-top:1px solid rgba(255,255,255,.16);padding-top:34px}
+.pg .carr__tete{display:flex;align-items:center;justify-content:space-between;gap:20px;
+  margin:0 0 22px}
+.pg .carr__tete h3{font-size:1.22rem;color:#fff;letter-spacing:-.2px}
+.pg .carr__nav{display:flex;gap:10px;flex:0 0 auto}
+.pg .carr__b{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;
+  background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.3);color:#fff;
+  cursor:pointer;transition:background .18s,border-color .18s}
+.pg .carr__b:hover{background:var(--or);border-color:var(--or);color:var(--nuit-900)}
+.pg .carr__b[disabled]{opacity:.38;cursor:default}
+.pg .carr__b[disabled]:hover{background:rgba(255,255,255,.09);border-color:rgba(255,255,255,.3);
+  color:#fff}
+.pg .carr__b:first-child svg{transform:rotate(180deg)}
+.pg .carr__p{display:flex;gap:18px;overflow-x:auto;scroll-snap-type:x mandatory;
+  scroll-behavior:smooth;scrollbar-width:none;padding:2px}
+.pg .carr__p::-webkit-scrollbar{display:none}
+.pg .carr__p:focus-visible{outline:2px solid var(--or);outline-offset:4px;border-radius:var(--r-m)}
+/* Quatre cartes exactement dans la largeur : au bureau la piste ne
+   déborde pas, les boutons restent donc cachés. */
+.pg .carr__c{flex:0 0 calc((100% - 54px)/4);scroll-snap-align:start;
+  background:linear-gradient(160deg,rgba(255,255,255,.11),rgba(255,255,255,.05));
+  border:1px solid rgba(255,255,255,.18);border-radius:var(--r-l);padding:26px 24px 24px}
+.pg .carr__m{width:60px;height:60px;border-radius:50%;background:var(--or);color:var(--nuit-900);
+  display:grid;place-items:center;font-family:"Manrope",sans-serif;font-weight:800;
+  font-size:1.4rem;margin:0 0 16px}
+.pg .carr__c b{font-family:"Manrope",sans-serif;font-size:1.16rem;color:#fff;display:block;
+  font-weight:700}
+.pg .carr__r{display:block;color:var(--or);font-family:"Manrope",sans-serif;font-size:.98rem;
+  font-weight:600;margin-top:3px}
+.pg .carr__f{list-style:none;margin:14px 0 0;padding:14px 0 0;display:grid;gap:7px;
+  border-top:1px solid rgba(255,255,255,.16)}
+.pg .carr__f li{font-size:.97rem;line-height:1.5;color:#CFE2EC}
+.pg .carr__aide{margin:16px 0 0;font-family:"Manrope",sans-serif;font-size:.95rem;
+  color:#A9C6D6;display:none}
 
 /* ---------- carte de repérage : un bandeau large dans la lecture ---------- */
 .pg .carte{--carte-mer:#DCEBF2;--carte-nil:#4FA3C7;--carte-terre:#F2E3C4;--carte-cote:#CBAE7C;
@@ -435,20 +467,77 @@
 .pg .acc__vide{color:#7A5605;background:var(--or-fond);border:1px dashed var(--or);
   border-radius:var(--r-s);padding:10px 14px;font-family:"Manrope",sans-serif;font-size:.94rem}
 
-/* ---------- avis ---------- */
-.pg .avis__tete{display:flex;flex-wrap:wrap;align-items:baseline;gap:12px 20px;margin:0 0 28px}
-.pg .avis__tete .et{color:var(--or-fonce);letter-spacing:.14em;font-size:1.15rem}
-.pg .avis__tete b{font-family:"Manrope",sans-serif;font-size:1.05rem;color:var(--noir)}
-.pg .avis__g{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;align-items:start}
-.pg .avis__g article{background:#fff;border:1px solid var(--ligne-pg);border-radius:var(--r-l);
-  padding:24px;display:flex;flex-direction:column;gap:14px}
-.pg .avis__g .et{color:var(--or-fonce);letter-spacing:.14em;font-size:.98rem}
-.pg .avis__g blockquote{margin:0;font-size:1rem;line-height:1.7;color:var(--texte);flex:1}
-.pg .avis__g footer{display:flex;align-items:center;gap:12px;font-family:"Manrope",sans-serif;
-  font-size:.9rem;color:var(--gris-lis);border-top:1px solid var(--ligne-2);padding-top:14px}
-.pg .avis__g footer b{color:var(--noir);display:block;font-weight:700}
+/* ---------- le mur d'avis : deux colonnes qui défilent ----------
+   La boucle repose sur une règle simple : chaque colonne porte DEUX
+   fois ses cartes et remonte de la moitié exacte de sa hauteur. D'où la
+   marge sur les cartes plutôt qu'un `gap` sur la piste — un `gap`
+   n'existe qu'ENTRE les enfants, la moitié de la hauteur tomberait
+   alors un demi-écart trop haut et la boucle sauterait à chaque tour.
+   La marge est portée par un <article>, donc un élément de bloc : elle
+   s'applique (ce n'est pas le cas d'un <a>, voir .etape__photo). */
+.pg .mur__tete{display:flex;flex-wrap:wrap;align-items:flex-end;gap:16px 28px;margin:0 0 26px}
+.pg .mur__tete>div:first-child{flex:1 1 340px}
+.pg .mur__tete h2{margin:0}
+.pg .mur__cpt{margin:0;font-family:"Manrope",sans-serif;line-height:1.45}
+.pg .mur__cpt b{display:block;font-size:1.05rem;color:var(--noir);font-weight:700}
+.pg .mur__cpt small{display:block;font-size:.94rem;color:var(--gris-lis);margin-top:2px}
+/* La case est le bouton : le défilement s'arrête donc sans JavaScript,
+   comme l'exige le critère 2.2.2. Elle reste dans le flux du clavier,
+   seulement dérobée à l'œil. */
+.pg .mur__stop{position:absolute;width:1px;height:1px;margin:-1px;padding:0;border:0;
+  overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.pg .mur__btn{display:inline-flex;align-items:center;gap:9px;min-height:44px;padding:0 18px;
+  border-radius:var(--r-pill);border:1px solid var(--ligne-pg);background:#fff;cursor:pointer;
+  font-family:"Manrope",sans-serif;font-size:.96rem;font-weight:600;color:var(--gris-lis);
+  transition:border-color .18s,color .18s}
+.pg .mur__btn:hover{border-color:var(--nuit);color:var(--nuit-900)}
+.pg .mur__btn svg{color:var(--or-fonce)}
+.pg .mur__btn .b{display:none}
+.pg .mur__stop:checked~.mur__tete .mur__btn .a{display:none}
+.pg .mur__stop:checked~.mur__tete .mur__btn .b{display:inline}
+.pg .mur__stop:focus-visible~.mur__tete .mur__btn{outline:2px solid var(--teal-txt);
+  outline-offset:3px}
+
+.pg .mur{display:grid;grid-template-columns:1fr 1fr;gap:26px;align-items:start}
+/* Chaque colonne est un PANNEAU encadré, et la fenêtre de défilement est
+   à l'intérieur. Deux raisons, et la seconde est un défaut mesuré :
+   la fenêtre est la colonne et non la grille, sinon une grille à une
+   colonne sur téléphone effacerait cinq avis sur dix ; et le cadre est
+   séparé de la fenêtre parce que le fondu qui adoucit les bords ronge
+   tout ce qu'il traverse, cadre compris. Sans lui, sur téléphone, la
+   carte coupée en bas du premier panneau et celle coupée en haut du
+   second se lisaient comme une seule — le texte d'un voyageur suivi de
+   la signature d'un autre. */
+.pg .mur__c{background:var(--fond-2);border:1px solid var(--ligne-pg);
+  border-radius:var(--r-l);padding:18px}
+.pg .mur__f{height:664px;overflow:hidden;
+  -webkit-mask-image:linear-gradient(180deg,transparent,#000 48px,#000 calc(100% - 48px),transparent);
+  mask-image:linear-gradient(180deg,transparent,#000 48px,#000 calc(100% - 48px),transparent)}
+.pg .mur__d{animation:mur var(--d,90s) linear infinite;will-change:transform}
+.pg .mur__c:nth-child(2) .mur__d{animation-direction:reverse}
+@keyframes mur{from{transform:translateY(0)}to{transform:translateY(-50%)}}
+/* Trois façons d'arrêter : le bouton, le survol, le focus clavier. */
+.pg .mur:hover .mur__d,.pg .mur:focus-within .mur__d,
+.pg .mur__stop:checked~.mur .mur__d{animation-play-state:paused}
+.pg .mur__a{background:#fff;border:1px solid var(--ligne-pg);border-radius:var(--r-l);
+  padding:24px;margin:0 0 22px;box-shadow:0 2px 10px rgba(16,32,48,.05)}
+.pg .mur__q{display:block;font-family:"Archivo",serif;font-size:2.4rem;line-height:.6;
+  color:var(--or);margin:6px 0 12px}
+.pg .mur__a blockquote{margin:0;font-size:1rem;line-height:1.7;color:var(--texte)}
+.pg .mur__a footer{display:flex;align-items:center;gap:12px;font-family:"Manrope",sans-serif;
+  font-size:.9rem;color:var(--gris-lis);border-top:1px solid var(--ligne-2);
+  padding-top:14px;margin-top:16px}
+.pg .mur__a footer b{color:var(--noir);display:block;font-weight:700}
 .pg .ini{width:38px;height:38px;border-radius:50%;background:var(--nuit);color:#fff;display:grid;
   place-items:center;font-weight:700;font-size:.9rem;flex:0 0 auto}
+/* Mouvement réduit : plus d'animation du tout, et le mur redevient une
+   liste. La seconde copie disparaît — elle ne servait que la boucle. */
+@media (prefers-reduced-motion:reduce){
+  .pg .mur__f{height:auto;overflow:visible;-webkit-mask-image:none;mask-image:none}
+  .pg .mur__d{animation:none}
+  .pg .mur__p[aria-hidden]{display:none}
+  .pg .mur__btn,.pg .mur__stop{display:none}
+}
 
 /* ---------- séjours proches ---------- */
 .pg .proches{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
@@ -487,6 +576,8 @@
 
 @media (max-width:1040px){
   .pg .guide{grid-template-columns:1fr;gap:32px}
+  .pg .carr__c{flex-basis:calc((100% - 18px)/2.2)}
+  .pg .carr__aide{display:block}
   .pg .bref{padding:28px 24px}
   /* Le prix est dans le bandeau, 200 px plus haut, et dans la barre du
      bas : trois fois sur un écran de téléphone, c'est deux fois de trop. */
@@ -538,7 +629,13 @@
   .pg .deux>.corps{gap:48px}
   .pg-mob{display:flex}
   .pg .proches{grid-template-columns:1fr}
-  .pg .avis__g{grid-template-columns:1fr}
+  /* Les deux fenêtres se rangent l'une sous l'autre : sans une
+     gouttière franche, la carte coupée en bas de la première et celle
+     coupée en haut de la seconde se lisent comme une seule, avec le
+     texte d'un voyageur et la signature d'un autre. */
+  .pg .mur{grid-template-columns:1fr;gap:22px}
+  .pg .mur__f{height:420px}
+  .pg .carr__c{flex-basis:86%}
   .pg .galerie{grid-template-columns:1fr 1fr}
   .pg .galerie a:first-child{grid-column:span 2;grid-row:auto;aspect-ratio:3/2}
   .pg .hero__in{padding:24px 0 40px}
@@ -547,13 +644,13 @@
   /* Plancher mobile : rien sous 15 px. Le retour du 24/08 portait
      précisément là-dessus, et l'outil de lisibilité le vérifie. */
   .pg .reperes small,.pg .hero__prix small,.pg .hero__prix i,.pg .pan__prix small,
-  .pg .pan__prix i,.pg .pan__note,.pg .note,.pg .proches p,.pg .avis__g footer,
+  .pg .pan__prix i,.pg .pan__note,.pg .note,.pg .proches p,.pg .mur__a footer,
   .pg .pg-mob .p small,.pg .pan__conf,.pg .mention,.pg .pill,.pg .acc__vide{font-size:.95rem}
   .pg .reperes b,.pg .pan__liste,.pg .apercu span.t{font-size:1rem}
   .pg .ariane,.pg .eyebrow,.pg .apercu .n,.pg .jour__no,.pg .tarif__ligne b small,
-  .pg .avis__g .ini,.pg .acc__c,.pg .devis__act small,.pg .verifier__d,
+  .pg .mur .ini,.pg .acc__c,.pg .devis__act small,.pg .verifier__d,
   .pg .rep,.pg .reps__src,.pg .carte__note,.pg .carte__hors,.pg .somm,
-  .pg .somm span span,.pg .somm__t,.pg .valise__t span,.pg .guide__c>span:last-child,
+  .pg .somm span span,.pg .somm__t,.pg .valise__t span,.pg .carr__f li,.pg .carr__aide,
   .pg .pan__avis{font-size:.95rem}
   .pg .duree__c{padding:20px}
   .pg-mob .p small{font-size:.95rem}
@@ -646,7 +743,7 @@
 </ul></div></section>
 <nav class="ariane ariane--sous" aria-label="Fil d'Ariane"><div class="wrap"><ol><li><a href="https://authentiquegypte.com/">Accueil</a></li><li><a href="https://authentiquegypte.com/nos-sejours-egypte/">Nos séjours en Égypte</a></li><li><a href="https://authentiquegypte.com/nos-sejours-egypte/desert-egypte/">Déserts et Oasis égyptiens</a></li><li><span aria-current="page">Voyage à l’Oasis de Siwa</span></li></ol></div></nav>
 <div class="wrap"><div class="deux"><div class="corps">
-<aside class="verifier"><p class="verifier__t">À vérifier avec l&#x27;agence avant mise en ligne</p><ul><li>durées contradictoires sur la fiche : 4 jours / 3 jours minimum</li><li>le déroulé ne mentionne jamais « Siwa », le lieu du titre : vérifier que le programme est bien celui de ce séjour</li></ul><p class="verifier__d">Relevé sur la fiche actuelle le 2026-09-09</p></aside>
+<aside class="verifier"><p class="verifier__t">À vérifier avec l&#x27;agence avant mise en ligne</p><ul><li>durées contradictoires sur la fiche : 4 jours / 3 jours minimum</li><li>le déroulé ne mentionne jamais « Siwa », le lieu du titre : vérifier que le programme est bien celui de ce séjour</li></ul><p class="verifier__d">Relevé sur la fiche actuelle le 9 septembre 2026</p></aside>
 <section>
 <p class="eyebrow">Le séjour</p>
 <h2>Vue d&#x27;ensemble</h2>
@@ -738,7 +835,7 @@
 <article class="etape" id="etape-2" data-lieu="sainte-catherine">
 <a class="etape__photo" data-lb href="https://authentiquegypte.com/wp-content/uploads/2025/06/DSC00493-scaled.jpg" data-alt="Guesthouse" aria-label="Agrandir la photo : Guesthouse"><img src="https://authentiquegypte.com/wp-content/uploads/2025/06/DSC00493-scaled.jpg" alt="Guesthouse" decoding="async" srcset="https://authentiquegypte.com/wp-content/uploads/2025/06/DSC00493-300x201.jpg 300w, https://authentiquegypte.com/wp-content/uploads/2025/06/DSC00493-768x513.jpg 768w, https://authentiquegypte.com/wp-content/uploads/2025/06/DSC00493-1024x684.jpg 1024w, https://authentiquegypte.com/wp-content/uploads/2025/06/DSC00493-1536x1027.jpg 1536w, https://authentiquegypte.com/wp-content/uploads/2025/06/DSC00493-2048x1369.jpg 2048w, https://authentiquegypte.com/wp-content/uploads/2025/06/DSC00493-scaled.jpg 2560w" sizes="(max-width:1040px) 100vw, 780px" width="2560" height="1711" loading="lazy"></a>
 <h4><svg aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s6-5.5 6-11a6 6 0 1 0-12 0c0 5.5 6 11 6 11z"/><circle cx="12" cy="10" r="2.2"/></svg>Arrivée chez votre hôte</h4>
-<p class="reps"><span class="rep rep--calc" title="OSRM sur données OpenStreetMap (router.project-osrm.org) — relevé le 2026-09-09"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 11l1.5-4.5A2 2 0 0 1 8.4 5h7.2a2 2 0 0 1 1.9 1.5L19 11M4 11h16v6h-2a2 2 0 1 1-4 0H10a2 2 0 1 1-4 0H4z"/></svg>209 km · 2 h 37 de route</span></p>
+<p class="reps"><span class="rep rep--calc" title="OSRM sur données OpenStreetMap (router.project-osrm.org) — relevé le 9 septembre 2026"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 11l1.5-4.5A2 2 0 0 1 8.4 5h7.2a2 2 0 0 1 1.9 1.5L19 11M4 11h16v6h-2a2 2 0 1 1-4 0H10a2 2 0 1 1-4 0H4z"/></svg>209 km · 2 h 37 de route</span></p>
 <p>Vous arrivez dans le village de Sainte-Catherine, peuplé en grande partie de Bédouin de la tribu Gabalia.</p>
 <p>Rencontrez ensuite Saleh et l’équipe de la guesthouse qui vous accueillerons avec toute l’hospitalité bédouine dans un lieu particulièrement propice au repos et à la méditation. Vous profitez d’une chambre avec salle de bain privative afin de vous reposer, ainsi que d’un dîner traditionnel et complet pour faire le plein d’énergie avant l’ascension.</p>
 <p class="mentions"><span class="mention"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3v7a2 2 0 0 0 4 0V3M9 3v18M17 3c-2 2-3 5-3 8h3v10"/></svg>Dîner</span><span class="mention"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18V8M3 12h18v6M7 12V9h6v3"/></svg>Nuit en guesthouse</span></p>
@@ -823,32 +920,72 @@
 </ol></nav>
 </aside>
 </div></div>
-<section class="pg-sec pg-sec--nuit"><div class="wrap"><div class="guide">
+<section class="pg-sec pg-sec--nuit"><div class="wrap">
+<div class="guide">
 <div><p class="eyebrow eyebrow--clair">Qui vous accompagne</p>
 <h2>Votre guide, votre chauffeur, et personne d&#x27;autre</h2>
-<p class="guide__intro">Ce séjour est privatif : vous ne partagez ni le guide, ni le véhicule, ni le rythme.</p>
+<p class="guide__intro">Ce séjour est privatif : vous ne partagez ni le guide, ni le véhicule, ni le rythme.</p></div>
 <ul class="guide__r">
 <li><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.5"/><path d="M5 20a7 7 0 0 1 14 0"/></svg><span>Guide privatif</span></li>
 <li><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 11l1.5-4.5A2 2 0 0 1 8.4 5h7.2a2 2 0 0 1 1.9 1.5L19 11M4 11h16v6h-2a2 2 0 1 1-4 0H10a2 2 0 1 1-4 0H4z"/></svg><span>Chauffeur privatif</span></li>
 <li><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 11l1.5-4.5A2 2 0 0 1 8.4 5h7.2a2 2 0 0 1 1.9 1.5L19 11M4 11h16v6h-2a2 2 0 1 1-4 0H10a2 2 0 1 1-4 0H4z"/></svg><span>Les transferts en 4x4 climatisé</span></li>
 <li><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/></svg><span>L&#x27;assistance H24</span></li>
-</ul></div><div class="guide__g">
-<div class="guide__c"><span class="guide__m">H</span><b>Hossam</b><span>Guide égyptologue — 14 ans — français, arabe, anglais</span></div>
-<div class="guide__c"><span class="guide__m">N</span><b>Nour</b><span>Conception d&#x27;itinéraires — votre interlocutrice du devis au retour</span></div>
-<div class="guide__c"><span class="guide__m">A</span><b>Ahmed</b><span>Chauffeur privatif — Le Caire, Delta et vallée du Nil</span></div>
-</div></div></div></section>
+</ul></div>
+<div class="carr">
+<div class="carr__tete"><h3>Les visages derrière votre séjour</h3><div class="carr__nav" hidden><button type="button" class="carr__b" data-carr="-1" aria-controls="equipe" aria-label="Personne précédente"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13M12 6l6 6-6 6"/></svg></button><button type="button" class="carr__b" data-carr="1" aria-controls="equipe" aria-label="Personne suivante"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13M12 6l6 6-6 6"/></svg></button></div></div>
+<div class="carr__p" id="equipe" tabindex="0" role="group" aria-label="Les visages derrière votre séjour">
+<article class="carr__c"><span class="carr__m" aria-hidden="true">H</span><b>Hossam</b><span class="carr__r">Guide égyptologue</span><ul class="carr__f"><li>14 ans</li><li>français, arabe, anglais</li></ul></article>
+<article class="carr__c"><span class="carr__m" aria-hidden="true">N</span><b>Nour</b><span class="carr__r">Conception d&#x27;itinéraires</span><ul class="carr__f"><li>votre interlocutrice du devis au retour</li></ul></article>
+<article class="carr__c"><span class="carr__m" aria-hidden="true">A</span><b>Ahmed</b><span class="carr__r">Chauffeur privatif</span><ul class="carr__f"><li>Le Caire, Delta et vallée du Nil</li></ul></article>
+<article class="carr__c"><span class="carr__m" aria-hidden="true">M</span><b>Mariam</b><span class="carr__r">Assistance sur place</span><ul class="carr__f"><li>joignable 24 h/24 pendant le séjour</li></ul></article>
+</div>
+<p class="carr__aide">Faites défiler pour rencontrer toute l&#x27;équipe.</p>
+</div>
+</div></section>
 <section class="pg-sec pg-sec--fond"><div class="wrap"><div class="faqs">
 <div><p class="eyebrow">La destination</p><h2>Tout savoir sur ce séjour</h2><div class="acc"><details open><summary><span class="q">Qu&#x27;est-ce qui rend Siwa unique ?</span><span class="acc__plus"></span></summary><div class="acc__c"><p> <strong>Siwa est unique par son isolement, sa culture préservée et ses paysages exceptionnels.</strong> </p> <ul> <li><strong>Culture amazighe</strong> : langue siwi, traditions et architecture en karsheef</li> <li><strong>Histoire millénaire</strong> : temple d'Amon, nécropoles de Gebel al-Mawta</li> <li><strong>Paysages contrastés</strong> : palmeraie, lacs salés, désert libyque</li> <li><strong>Ambiance préservée</strong> : loin des circuits touristiques traditionnels</li> </ul> <p> Classée au patrimoine mondial de l'UNESCO, Siwa offre une expérience authentique et hors du temps. </p></div></details><details><summary><span class="q">Comment s&#x27;y rendre depuis Le Caire ?</span><span class="acc__plus"></span></summary><div class="acc__c"><p> <strong>Le trajet depuis Le Caire prend environ 8 à 10 heures en voiture.</strong> </p> <ul> <li><strong>En voiture privée</strong> : avec chauffeur expérimenté (itinéraire via Bahariya ou Farafra)</li> <li><strong>En excursion organisée</strong> : la solution la plus simple avec guide et véhicule adapté</li> <li><strong>En camping</strong> : possibilité de bivouac dans le désert environnant</li> </ul> <p> <strong>Conseil :</strong> Préférez les excursions organisées pour bénéficier d'un guide expérimenté et d'un véhicule adapté. </p></div></details><details><summary><span class="q">Quelle est la meilleure période pour visiter ?</span><span class="acc__plus"></span></summary><div class="acc__c"><p> <strong>Période idéale : d'octobre à mars</strong> pour des températures agréables (15-25°C). </p> <ul> <li><strong>Printemps/Automne</strong> : conditions parfaites pour l'exploration</li> <li><strong>Hiver</strong> : nuits fraîches (0-10°C), prévoir des vêtements chauds</li> <li><strong>Été</strong> : très chaud (40°C+), déconseillé pour les randonnées</li> </ul> <p> <strong>Astuce :</strong> Le lever et coucher du soleil offrent des couleurs magiques sur les paysages. </p></div></details><details><summary><span class="q">Quelles activités sont incontournables ?</span><span class="acc__plus"></span></summary><div class="acc__c"><p> <strong>Activités principales :</strong> </p> <ul> <li><strong>Visite des sites historiques</strong> : temple d'Amon, forteresse de Shali, nécropoles de Gebel al-Mawta</li> <li><strong>Bains dans les sources naturelles</strong> : comme les bains de Cléopâtre</li> <li><strong>Exploration des lacs salés</strong> : paysages uniques et baignade flottante</li> <li><strong>Randonnées dans le désert</strong> : découverte des paysages désertiques</li> <li><strong>Dégustation de la cuisine locale</strong> : plats à base de dattes et d'olives</li> </ul> <p> <strong>À noter :</strong> Siwa offre aussi des possibilités de camping sous les étoiles dans le désert environnant. </p></div></details><details><summary><span class="q">Conseils de sécurité et santé</span><span class="acc__plus"></span></summary><div class="acc__c"><p> <strong>Règles de sécurité essentielles :</strong> </p> <ul> <li><strong>Ne vous éloignez pas</strong> du groupe ou du guide, surtout dans le désert</li> <li><strong>Restez hydraté</strong> en buvant régulièrement</li> <li><strong>Protégez-vous</strong> du soleil (chapeau, crème solaire)</li> <li><strong>Évitez</strong> de toucher les formations rocheuses fragiles</li> <li><strong>Respectez</strong> les consignes du guide</li> </ul> <p> <strong>À noter :</strong> Le désert peut être dangereux en cas de tempête de sable soudaine. </p></div></details><details><summary><span class="q">Peut-on combiner Siwa avec d&#x27;autres sites ?</span><span class="acc__plus"></span></summary><div class="acc__c"><p> <strong>Oui, plusieurs combinaisons possibles :</strong> </p> <ul> <li><strong>Avec l'Oasis de Bahariya</strong> : à 1h de route, paysages verdoyants</li> <li><strong>Avec l'Oasis de Farafra</strong> : à 2h, ambiance plus isolée</li> <li><strong>Avec le Désert Blanc</strong> : formations rocheuses calcaires spectaculaires</li> <li><strong>Avec le Désert Noir</strong> : formations volcaniques contrastées</li> </ul> <p> <strong>Conseil :</strong> Une excursion combinée permet de voir plusieurs paysages désertiques en une seule sortie. </p></div></details></div></div>
 <div><p class="eyebrow">Avant de réserver</p><h2>Les questions qui reviennent avant de partir</h2><div class="acc"><details><summary><span class="q">Est-ce sûr de voyager en Égypte en ce moment ?</span><span class="acc__plus"></span></summary><div class="acc__c"><p>Oui pour les zones où nous opérons : Le Caire, Louxor, Assouan, la vallée du Nil et la mer Rouge. Elles sont très fréquentées et surveillées. Nous n'organisons pas de séjour dans le Sinaï nord ni près de la frontière libyenne. Votre guide reste avec vous sur chaque site. Le détail figure dans notre point sur la <a href="https://authentiquegypte.com/securite-en-egypte-en-2026/" class="lien-txt">sécurité en Égypte en 2026</a>.</p></div></details><details><summary><span class="q">Combien coûte réellement un voyage de deux semaines ?</span><span class="acc__plus"></span></summary><div class="acc__c"><p>Comptez 1 400 à 2 200 € par personne hors vols internationaux pour 12 à 14 jours, en hôtels 4★ et 5★ avec guide privatif. Le prix bouge selon la saison, le nombre de voyageurs et le niveau d'hébergement. Nous chiffrons systématiquement deux versions pour que vous voyiez l'écart.</p></div></details><details><summary><span class="q">Réservez-vous les vols internationaux ?</span><span class="acc__plus"></span></summary><div class="acc__c"><p>Non, vous les réservez vous-même : cela vous laisse le contrôle des dates et du prix. Nous vous indiquons les créneaux d'arrivée compatibles avec l'itinéraire, et nous réservons les vols internes (Le Caire–Assouan, Louxor–Hurghada).</p></div></details><details><summary><span class="q">Faut-il un visa, et comment l&#x27;obtenir ?</span><span class="acc__plus"></span></summary><div class="acc__c"><p>Oui. Deux options : l'e-visa en ligne avant le départ, ou le visa à l'arrivée dans la plupart des aéroports (30 € en espèces ou par carte). Passeport valable 6 mois après l'arrivée. La procédure complète est dans le <a href="https://authentiquegypte.com/passeport-egypte/" class="lien-txt">guide passeport et visa pour l'Égypte</a>.</p></div></details><details><summary><span class="q">Que se passe-t-il si je dois annuler ?</span><span class="acc__plus"></span></summary><div class="acc__c"><p>Nous cherchons d'abord à reporter le séjour. Si l'annulation est définitive, des frais s'appliquent selon le délai et les prestataires déjà réservés. C'est la raison pour laquelle nous recommandons une assurance annulation dès la validation.</p></div></details></div></div>
 </div></div></section>
 <section class="pg-sec"><div class="wrap">
-<p class="eyebrow">Avis Google</p><h2>Ce que disent les voyageurs</h2>
-<div class="avis__tete"><span class="et" aria-hidden="true">★★★★★</span>
-<b>23 avis Google sur l'agence</b>
-</div><div class="avis__g">
-<article><span class="et" aria-hidden="true">★★★★★</span><blockquote>Très beau séjour parfaitement organisé. Interlocuteurs agréables et toujours prêts à rendre service. Je recommande!!</blockquote><footer><span class="ini">GG</span><span><b>gislaine gagey</b>Avis Google</span></footer></article>
-<article><span class="et" aria-hidden="true">★★★★★</span><blockquote>&quot; Merveilleux voyage sublimé par une organisation sans faille. Les guides étaient passionnants, les correspondants dans chaque ville très compétents. La petite croisière sur le Nil fût un pur bonheur. Merci à tous et à Hend! Nous recommandons cette agence. Par contre, le harcèlement dans les souks ne sert pas le tourisme égyptien. Nous aurions certainement plus acheté si nous avions pu nous promener sereinement dans les souks. Le harcèlement ne donne pas envie d&#x27;acheter, au contraire, nous n&#x27;osions plu rentrer dans les magasins.&quot;</blockquote><footer><span class="ini">LP</span><span><b>Lhuillier Patrick</b>Avis Google</span></footer></article>
-<article><span class="et" aria-hidden="true">★★★★★</span><blockquote>Nous avons passé une semaine à visiter Le Caire et ses environs (y compris le Grand Musée Egyptien à voir absolument) ainsi qu&#x27;Alexandrie. Le voyage a été très bien organisé par l&#x27;agence Authentique Egypte. Nous avons été accompagnés par un guide francophone très sympathique. Tous les intervenants étaient très professionnels. Bravo</blockquote><footer><span class="ini">DH</span><span><b>Daniel HEC</b>Avis Google</span></footer></article>
+<input type="checkbox" id="mur-stop" class="mur__stop" aria-label="Mettre en pause le défilement des avis">
+<div class="mur__tete">
+<div><p class="eyebrow">Avis Google</p><h2>Ce que disent les voyageurs</h2></div>
+<p class="mur__cpt"><b>23 avis Google sur l&#x27;agence</b><small>Relevé sur la fiche le 9 septembre 2026</small></p>
+<label class="mur__btn" for="mur-stop"><svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5v14M15 5v14"/></svg><span class="a">Mettre en pause</span><span class="b">En pause</span></label>
+</div>
+<div class="mur">
+<div class="mur__c"><div class="mur__f"><div class="mur__d" style="--d:66s">
+<div class="mur__p">
+<article class="mur__a"><span class="mur__q" aria-hidden="true">&#8220;</span><blockquote>Très beau séjour parfaitement organisé. Interlocuteurs agréables et toujours prêts à rendre service. Je recommande!!</blockquote><footer><span class="ini">GG</span><span><b>gislaine gagey</b>Publié sur Google</span></footer></article>
+<article class="mur__a"><span class="mur__q" aria-hidden="true">&#8220;</span><blockquote>Nous avons passé une semaine à visiter Le Caire et ses environs (y compris le Grand Musée Egyptien à voir absolument) ainsi qu&#x27;Alexandrie. Le voyage a été très bien organisé par l&#x27;agence Authentique Egypte. Nous avons été accompagnés par un guide francophone très sympathique. Tous les intervenants étaient très professionnels. Bravo</blockquote><footer><span class="ini">DH</span><span><b>Daniel HEC</b>Publié sur Google</span></footer></article>
+<article class="mur__a"><span class="mur__q" aria-hidden="true">&#8220;</span><blockquote>Nous avons été émerveillés chaque jour par ce beau pays et cette civilisation tellement riche. Nous avons encore des étoiles dans les yeux et ce voyage restera gravé dans notre mémoire à jamais. Organisation au top avec Hend, les représentants, les chauffeurs et les guides extrêmement gentils, avec une pensée particulière pour Marina au Caire et Mahmoud 1er à Louxor. Un grand merci à tous.</blockquote><footer><span class="ini">BC</span><span><b>Brigitte CAMP</b>Publié sur Google</span></footer></article>
+<article class="mur__a"><span class="mur__q" aria-hidden="true">&#8220;</span><blockquote>Enchantés de notre voyage organisé à la perfection par Hend, notre référente agence que nous remercions ici vivement pour son accompagnement. Les différents représentants, nos 2 guides ( Nabil et Mohamed) ont été d&#x27;une efficacité exemplaire. La coordination entre tous les intervenants fut impeccable. La croisière de 3 nuits sur notre Dahabiya (Safiya 2) a été superbe avec un équipage d&#x27;une gentillesse et serviabilité de tout instant. Joëlle Pittola et Jean-Vincent. 💙🤍❤️</blockquote><footer><span class="ini">JV</span><span><b>JEAN VINCENT</b>Publié sur Google</span></footer></article>
+<article class="mur__a"><span class="mur__q" aria-hidden="true">&#8220;</span><blockquote>Quel bonheur ! Depuis la préparation du voyage travaillé avec Hend , jusqu’à sa réalisation et son terme tout était parfait aucune fausses notes. Dès endroits et des hôtels magnifiques, des guides professionnels, adorables , bienveillants ( Menna super guide super photographe et une bonne humeur communicative , Zaki charmant , très dans l’échange, passionné avec un français parfait et le célèbre Mahamoud 1er très investit , passionné, disponible , drôle) des vacances riches en découvertes autant pour les sites que pour l’humain . Agence à recommander sans hésitation. Bravo et merci à tous Edith Morgane et Gaelle</blockquote><footer><span class="ini">EB</span><span><b>Edith BRESSON</b>Publié sur Google</span></footer></article>
+</div>
+<div class="mur__p" aria-hidden="true">
+<article class="mur__a"><span class="mur__q" aria-hidden="true">&#8220;</span><blockquote>Très beau séjour parfaitement organisé. Interlocuteurs agréables et toujours prêts à rendre service. Je recommande!!</blockquote><footer><span class="ini">GG</span><span><b>gislaine gagey</b>Publié sur Google</span></footer></article>
+<article class="mur__a"><span class="mur__q" aria-hidden="true">&#8220;</span><blockquote>Nous avons passé une semaine à visiter Le Caire et ses environs (y compris le Grand Musée Egyptien à voir absolument) ainsi qu&#x27;Alexandrie. Le voyage a été très bien organisé par l&#x27;agence Authentique Egypte. Nous avons été accompagnés par un guide francophone très sympathique. Tous les intervenants étaient très professionnels. Bravo</blockquote><footer><span class="ini">DH</span><span><b>Daniel HEC</b>Publié sur Google</span></footer></article>
+<article class="mur__a"><span class="mur__q" aria-hidden="true">&#8220;</span><blockquote>Nous avons été émerveillés chaque jour par ce beau pays et cette civilisation tellement riche. Nous avons encore des étoiles dans les yeux et ce voyage restera gravé dans notre mémoire à jamais. Organisation au top avec Hend, les représentants, les chauffeurs et les guides extrêmement gentils, avec une pensée particulière pour Marina au Caire et Mahmoud 1er à Louxor. Un grand merci à tous.</blockquote><footer><span class="ini">BC</span><span><b>Brigitte CAMP</b>Publié sur Google</span></footer></article>
+<article class="mur__a"><span class="mur__q" aria-hidden="true">&#8220;</span><blockquote>Enchantés de notre voyage organisé à la perfection par Hend, notre référente agence que nous remercions ici vivement pour son accompagnement. Les différents représentants, nos 2 guides ( Nabil et Mohamed) ont été d&#x27;une efficacité exemplaire. La coordination entre tous les intervenants fut impeccable. La croisière de 3 nuits sur notre Dahabiya (Safiya 2) a été superbe avec un équipage d&#x27;une gentillesse et serviabilité de tout instant. Joëlle Pittola et Jean-Vincent. 💙🤍❤️</blockquote><footer><span class="ini">JV</span><span><b>JEAN VINCENT</b>Publié sur Google</span></footer></article>
+<article class="mur__a"><span class="mur__q" aria-hidden="true">&#8220;</span><blockquote>Quel bonheur ! Depuis la préparation du voyage travaillé avec Hend , jusqu’à sa réalisation et son terme tout était parfait aucune fausses notes. Dès endroits et des hôtels magnifiques, des guides professionnels, adorables , bienveillants ( Menna super guide super photographe et une bonne humeur communicative , Zaki charmant , très dans l’échange, passionné avec un français parfait et le célèbre Mahamoud 1er très investit , passionné, disponible , drôle) des vacances riches en découvertes autant pour les sites que pour l’humain . Agence à recommander sans hésitation. Bravo et merci à tous Edith Morgane et Gaelle</blockquote><footer><span class="ini">EB</span><span><b>Edith BRESSON</b>Publié sur Google</span></footer></article>
+</div>
+</div></div></div>
+<div class="mur__c"><div class="mur__f"><div class="mur__d" style="--d:68s">
+<div class="mur__p">
+<article class="mur__a"><span class="mur__q" aria-hidden="true">&#8220;</span><blockquote>&quot; Merveilleux voyage sublimé par une organisation sans faille. Les guides étaient passionnants, les correspondants dans chaque ville très compétents. La petite croisière sur le Nil fût un pur bonheur. Merci à tous et à Hend! Nous recommandons cette agence. Par contre, le harcèlement dans les souks ne sert pas le tourisme égyptien. Nous aurions certainement plus acheté si nous avions pu nous promener sereinement dans les souks. Le harcèlement ne donne pas envie d&#x27;acheter, au contraire, nous n&#x27;osions plu rentrer dans les magasins.&quot;</blockquote><footer><span class="ini">LP</span><span><b>Lhuillier Patrick</b>Publié sur Google</span></footer></article>
+<article class="mur__a"><span class="mur__q" aria-hidden="true">&#8220;</span><blockquote>Une agence a l’écoute! Organisation parfaite! Une équipe efficace et réactive.</blockquote><footer><span class="ini">BR</span><span><b>Brigitte Raffray</b>Publié sur Google</span></footer></article>
+<article class="mur__a"><span class="mur__q" aria-hidden="true">&#8220;</span><blockquote>Nous revenons d’un merveilleux circuit sur mesure en Égypte! Un voyage enrichissant répondant à 100% à nos attentes grâce à Hend , notre organisatrice! De la conception du projet aux différents prestataires rencontrés sur place , tout était parfait et ficelé pour que nous ne devions nous tracasser de rien! Le Nil est magnifique , nous avons particulièrement adoré l’équipage de notre dahabiya, des moments d’échanges gravés à jamais! Confiez vos envies les yeux fermés auprès de cette agence , pour un voyage AUTHENTIQUE! Encore merci à Hend 💛</blockquote><footer><span class="ini">AB</span><span><b>Alexandra Beaujean</b>Publié sur Google</span></footer></article>
+<article class="mur__a"><span class="mur__q" aria-hidden="true">&#8220;</span><blockquote>Nous revenons d&#x27;un voyage au Caire. L&#x27; organisation a été au delà de nos attentes ! Dès les premiers contacts jusqu&#x27;au retour, on a été pris en charge avec ponctualité, gentillesse et les visites réalisées magnifiquement documentées par un guide francophone (Mika) professionnel, érudit, prévenant et de très bons conseils. Sans compter l&#x27;expérimenté chauffeur (Nasser). C&#x27;est donc un 10/10 pour cette organisation qui nous a permis de découvrir cette ville tantaculaire et riche d&#x27;un passé inépuisable ! Bravo</blockquote><footer><span class="ini">PR</span><span><b>Ph. R</b>Publié sur Google</span></footer></article>
+<article class="mur__a"><span class="mur__q" aria-hidden="true">&#8220;</span><blockquote>Nous avons visité Le Caire avec cette agence. Nous avons établi notre programme avec eux et ils ont été très à l écoute. Dès notre arrivée à l aéroport un représentant nous attendait pour les formalités. Puis ils ont été présents plusieurs fois pendant notre séjour. La guide et les chauffeurs ont été très professionnels et très ponctuels. Merci à toute l équipe</blockquote><footer><span class="ini">A</span><span><b>Annie</b>Publié sur Google</span></footer></article>
+</div>
+<div class="mur__p" aria-hidden="true">
+<article class="mur__a"><span class="mur__q" aria-hidden="true">&#8220;</span><blockquote>&quot; Merveilleux voyage sublimé par une organisation sans faille. Les guides étaient passionnants, les correspondants dans chaque ville très compétents. La petite croisière sur le Nil fût un pur bonheur. Merci à tous et à Hend! Nous recommandons cette agence. Par contre, le harcèlement dans les souks ne sert pas le tourisme égyptien. Nous aurions certainement plus acheté si nous avions pu nous promener sereinement dans les souks. Le harcèlement ne donne pas envie d&#x27;acheter, au contraire, nous n&#x27;osions plu rentrer dans les magasins.&quot;</blockquote><footer><span class="ini">LP</span><span><b>Lhuillier Patrick</b>Publié sur Google</span></footer></article>
+<article class="mur__a"><span class="mur__q" aria-hidden="true">&#8220;</span><blockquote>Une agence a l’écoute! Organisation parfaite! Une équipe efficace et réactive.</blockquote><footer><span class="ini">BR</span><span><b>Brigitte Raffray</b>Publié sur Google</span></footer></article>
+<article class="mur__a"><span class="mur__q" aria-hidden="true">&#8220;</span><blockquote>Nous revenons d’un merveilleux circuit sur mesure en Égypte! Un voyage enrichissant répondant à 100% à nos attentes grâce à Hend , notre organisatrice! De la conception du projet aux différents prestataires rencontrés sur place , tout était parfait et ficelé pour que nous ne devions nous tracasser de rien! Le Nil est magnifique , nous avons particulièrement adoré l’équipage de notre dahabiya, des moments d’échanges gravés à jamais! Confiez vos envies les yeux fermés auprès de cette agence , pour un voyage AUTHENTIQUE! Encore merci à Hend 💛</blockquote><footer><span class="ini">AB</span><span><b>Alexandra Beaujean</b>Publié sur Google</span></footer></article>
+<article class="mur__a"><span class="mur__q" aria-hidden="true">&#8220;</span><blockquote>Nous revenons d&#x27;un voyage au Caire. L&#x27; organisation a été au delà de nos attentes ! Dès les premiers contacts jusqu&#x27;au retour, on a été pris en charge avec ponctualité, gentillesse et les visites réalisées magnifiquement documentées par un guide francophone (Mika) professionnel, érudit, prévenant et de très bons conseils. Sans compter l&#x27;expérimenté chauffeur (Nasser). C&#x27;est donc un 10/10 pour cette organisation qui nous a permis de découvrir cette ville tantaculaire et riche d&#x27;un passé inépuisable ! Bravo</blockquote><footer><span class="ini">PR</span><span><b>Ph. R</b>Publié sur Google</span></footer></article>
+<article class="mur__a"><span class="mur__q" aria-hidden="true">&#8220;</span><blockquote>Nous avons visité Le Caire avec cette agence. Nous avons établi notre programme avec eux et ils ont été très à l écoute. Dès notre arrivée à l aéroport un représentant nous attendait pour les formalités. Puis ils ont été présents plusieurs fois pendant notre séjour. La guide et les chauffeurs ont été très professionnels et très ponctuels. Merci à toute l équipe</blockquote><footer><span class="ini">A</span><span><b>Annie</b>Publié sur Google</span></footer></article>
+</div>
+</div></div></div>
 </div></div></section>
 <section class="pg-sec"><div class="wrap"><div class="devis"><div><p class="eyebrow eyebrow--clair">Votre projet</p><h2>Ce séjour vous tente ? Ajustons-le à vos dates.</h2><ul><li><svg aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l4.5 4.5L19 7"/></svg><span>Devis gratuit, détaillé jour par jour, sans engagement</span></li><li><svg aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l4.5 4.5L19 7"/></svg><span>Guide égyptologue francophone et chauffeur privatif</span></li><li><svg aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l4.5 4.5L19 7"/></svg><span>Acompte seulement une fois l&#x27;itinéraire validé</span></li></ul></div><div class="devis__act"><a class="btn btn--or btn--bloc" href="https://authentiquegypte.com/sur-mesure/">Demander mon devis</a><a class="btn btn--wa btn--bloc" href="https://wa.me/201066619098">Poser une question sur WhatsApp</a><small>Aucune carte bancaire demandée à cette étape.</small></div></div></div></section>
 <section class="pg-sec pg-sec--serre"><div class="wrap">
@@ -948,6 +1085,33 @@
     }
     cases.forEach(function(c){ c.addEventListener('change',compter); });
     compter();
+  }
+
+  // Le carrousel de l'équipe glisse déjà au doigt et aux flèches du
+  // clavier ; les deux boutons sont un confort, et on ne les montre que
+  // s'il y a vraiment quelque chose à faire défiler.
+  var piste=document.getElementById('equipe');
+  if(piste){
+    var nav=document.querySelector('.carr__nav');
+    var bts=nav?nav.querySelectorAll('.carr__b'):[];
+    function pas(){ var c=piste.querySelector('.carr__c');
+      return c?c.getBoundingClientRect().width+18:320; }
+    function etat(){
+      var deborde=piste.scrollWidth>piste.clientWidth+4;
+      if(nav) nav.hidden=!deborde;
+      if(!deborde) return;
+      var fin=piste.scrollWidth-piste.clientWidth-2;
+      bts[0].disabled=piste.scrollLeft<=2;
+      bts[1].disabled=piste.scrollLeft>=fin;
+    }
+    bts.forEach(function(b){
+      b.addEventListener('click',function(){
+        piste.scrollBy({left:pas()*(+b.dataset.carr),behavior:'smooth'});
+      });
+    });
+    piste.addEventListener('scroll',etat,{passive:true});
+    window.addEventListener('resize',etat);
+    etat();
   }
 
   // La carte suit la lecture : l'étape qu'on lit s'allume sur la carte.
