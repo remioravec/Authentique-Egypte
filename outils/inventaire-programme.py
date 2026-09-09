@@ -362,10 +362,10 @@ def deroule(blocs):
                 jours.append(jour)
                 etape = None
                 if not m:
-                    etape = {'titre': b['texte'], 'paragraphes': [], 'image': None}
+                    etape = {'titre': b['texte'], 'paragraphes': [], 'image': None, 'mentions': []}
                     jour['etapes'].append(etape)
             else:
-                etape = {'titre': b['texte'], 'paragraphes': [], 'image': None}
+                etape = {'titre': b['texte'], 'paragraphes': [], 'image': None, 'mentions': []}
                 jour['etapes'].append(etape)
             continue
         if jour is None:
@@ -374,18 +374,24 @@ def deroule(blocs):
             if re.match(r'^FAQ\b', b['texte']) or PRIX.match(b['texte']):
                 continue
             if etape is None:
-                etape = {'titre': '', 'paragraphes': [], 'image': None}
+                etape = {'titre': '', 'paragraphes': [], 'image': None, 'mentions': []}
                 jour['etapes'].append(etape)
             etape['paragraphes'].append(b['texte'])
         elif t == 'image' and etape is not None and etape['image'] is None:
             etape['image'] = {'src': b['src'], 'alt': b['alt']}
         elif t == 'image' and etape is None:
-            etape = {'titre': '', 'paragraphes': [], 'image': {'src': b['src'], 'alt': b['alt']}}
+            etape = {'titre': '', 'paragraphes': [], 'image': {'src': b['src'], 'alt': b['alt']},
+                     'mentions': []}
             jour['etapes'].append(etape)
         elif t == 'liste':
+            # « Dîner · Nuit en guesthouse » closent l'étape où la fiche
+            # les écrit, pas la journée entière : les remonter au jour
+            # perdait à quelle étape on dort et où l'on mange.
             items = [i for i in b.get('items', []) if MENTION.match(i)]
-            if items:
-                jour['mentions'] += [i for i in items if i not in jour['mentions']]
+            cible = etape['mentions'] if etape is not None else jour['mentions']
+            for i in items:
+                if i not in cible:
+                    cible.append(i)
     return jours
 
 

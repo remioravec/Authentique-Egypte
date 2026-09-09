@@ -49,6 +49,15 @@ e = H.escape
 # L'agent CONTRÔLE CONTENU reçoit cette liste : ce qui n'y est pas et
 # qui n'est pas dans l'inventaire est une invention.
 
+def _fr(t):
+    """L'espace insécable avant ? ! : ; — typographie française.
+
+    Elle ne s'applique qu'aux libellés que NOUS écrivons. Le contenu de
+    la cliente garde son espacement, comme il garde ses fautes (D17).
+    """
+    return re.sub(r' ([?!:;»])', '\u00a0\\1', t).replace('« ', '«\u00a0')
+
+
 INTERFACE = {
     'ariane_accueil': 'Accueil',                                   # D6
     'ariane_sejours': 'Nos séjours en Égypte',                     # D6
@@ -89,6 +98,10 @@ INTERFACE = {
     'titre_verifier': 'À vérifier avec l\'agence avant mise en ligne',   # D19
     'releve_du': 'Relevé sur la fiche actuelle le',                # D19
 }
+
+
+INTERFACE = {k: ([_fr(x) for x in v] if isinstance(v, list) else _fr(v))
+             for k, v in INTERFACE.items()}
 
 
 # ------------------------------------------------------------------ icônes
@@ -380,8 +393,8 @@ CSS = r"""
   margin:0 0 12px;letter-spacing:-.3px;display:flex;align-items:center;gap:10px}
 .pg .etape h4 svg{color:var(--teal-txt);flex:0 0 auto}
 .pg .etape p{color:var(--texte);font-size:1.04rem;line-height:1.8;max-width:62ch}
-.pg .mentions{display:flex;flex-wrap:wrap;gap:9px;margin:24px 0 0;padding:18px 0 0;
-  border-top:1px solid var(--ligne-2)}
+.pg .mentions{display:flex;flex-wrap:wrap;gap:9px;margin:18px 0 0;padding:0}
+.pg .jour>.mentions{margin-top:24px;padding-top:18px;border-top:1px solid var(--ligne-2)}
 .pg .mention{display:inline-flex;align-items:center;gap:7px;font-family:"Manrope",sans-serif;
   font-size:.88rem;font-weight:600;color:var(--teal-txt);background:var(--teal-fond);
   border-radius:var(--r-pill);padding:7px 14px}
@@ -685,6 +698,19 @@ def apercu(inv):
     return '\n'.join(o)
 
 
+def mentions_html(lot):
+    """Les repas et les nuits, là où la fiche les écrit.
+
+    Elles ferment l'étape qu'elles concernent : les remonter au jour
+    entier faisait perdre à quelle étape on dort et où l'on mange."""
+    if not lot:
+        return ''
+    return ('<p class="mentions">' + ''.join(
+        '<span class="mention">%s%s</span>'
+        % (ico('lit' if re.search(r'nuit|héberg', m, re.I) else 'repas', 14), e(m))
+        for m in lot) + '</p>')
+
+
 def galerie(inv):
     """Les photos de la fiche qui n'illustrent aucune étape.
 
@@ -738,12 +764,9 @@ def deroule(inv):
                 o.append('<h4>%s%s</h4>' % (ico('pin', 17), e(et['titre'])))
             for p in et['paragraphes']:
                 o.append('<p>%s</p>' % e(p))
+            o.append(mentions_html(et.get('mentions')))
             o.append('</article>')
-        if j['mentions']:
-            o.append('<div class="mentions">' + ''.join(
-                '<span class="mention">%s%s</span>'
-                % (ico('lit' if re.search(r'nuit|héberg', m, re.I) else 'repas', 14), e(m))
-                for m in j['mentions']) + '</div>')
+        o.append(mentions_html(j['mentions']))
         o.append('</div>')
     o.append('</section>')
     return '\n'.join(o)
