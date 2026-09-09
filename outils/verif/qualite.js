@@ -64,6 +64,7 @@ const CHANTIER = /lorem ipsum|à compléter|a completer|aremplir|xxx|todo|placeh
       const sections = [...document.querySelectorAll('section, main > div, article')].filter(visible);
       const vides = sections.filter(s => texte(s).length < 20 && !s.querySelector('img,svg,video')).map(sel);
       const titresOrphelins = titres.filter(t => {
+        if (t.closest('summary')) return false;     // le titre d'un accordéon : son contenu est le corps du details
         let n = t.nextElementSibling;
         return !n || /^H[1-4]$/.test(n.tagName) && Number(n.tagName[1]) <= Number(t.tagName[1]);
       }).map(t => texte(t).slice(0, 70));

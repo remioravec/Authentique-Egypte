@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="icon" href="https://authentiquegypte.com/wp-content/uploads/2026/08/authentique-egypte-logo-transparent.webp">
+<title>D&#x27;Alexandrie à Abou Simbel - Voyage en Égypte — Authentique Égypte</title>
+<meta name="description" content="Circuit 10 jours en Égypte : pyramides de Gizeh, croisière sur le Nil, vallée des Rois et temples d&#x27;Abou Simbel. Voyage privatisé avec guide francophone.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;500;600;700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   CHARTE — relevée le 21/08/2026 sur authentiquegypte.com
+   or #FBB50E · bleu #167FA4 · bleu profond #0B5170 (fonds à texte)
+   noir #000000 · texte #5D5D5D · crème #FEEDDC
+   Archivo (titres + corps) · Manrope (accents)
+
+   CONTENU : repris à l'identique de la page
+   /programs/excursion-a-loasis-de-siwa/ relevée le 21/08/2026.
+   Rien n'est réécrit ; les manques sont signalés en jaune.
+   ============================================================ */
+:root{
+  --nuit:#167FA4; --nuit-900:#0B5170; --nuit-700:#1C93BC;
+  --or:#FBB50E; --or-clair:#FFD958; --or-fond:#FEEDDC;
+  --teal:#21B0B7; --teal-txt:#0F6E73; --teal-fond:#E8F7F8;
+  --papier:#FFFFFF; --fond:#F9F9FB; --fond-2:#F6FAFE;
+  --noir:#000000; --texte:#5D5D5D; --gris:#6E7680; --gris-clair:#88929C;
+  --ligne:#E4E4EA; --ligne-2:#F1F1F5;
+  --r-s:8px; --r-m:14px; --r-l:20px; --r-pill:999px;
+  --ombre:0 1px 2px rgba(11,81,112,.06),0 8px 24px rgba(11,81,112,.08);
+  --ombre-f:0 2px 6px rgba(11,81,112,.10),0 18px 44px rgba(11,81,112,.16);
+  --max:1200px;
+  --ease:cubic-bezier(.22,.61,.36,1);
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:100px}
+body{margin:0;background:var(--papier);color:var(--texte);
+  font-family:"Archivo",system-ui,-apple-system,"Segoe UI",sans-serif;
+  font-size:17px;font-weight:300;line-height:1.75;letter-spacing:.2px;-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block;background:var(--fond)}
+[hidden]{display:none !important}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;cursor:pointer}
+h1,h2,h3,h4{font-family:"Archivo",Georgia,serif;font-weight:600;line-height:1.25;margin:0;color:var(--noir);letter-spacing:-.8px}
+h1{font-size:clamp(1.9rem,3.4vw,2.6rem);letter-spacing:-1.3px;line-height:1.18}
+h2{font-size:clamp(1.45rem,2.4vw,1.9rem)}
+h3{font-size:clamp(1.05rem,1.6vw,1.2rem);letter-spacing:-.4px}
+h4{font-size:1.02rem}
+p{margin:0 0 1em}
+:focus-visible{outline:3px solid var(--or);outline-offset:3px;border-radius:4px}
+.wrap{width:min(100% - 40px,var(--max));margin-inline:auto}
+.eyebrow{font-family:"Manrope",sans-serif;font-size:.74rem;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--teal-txt);font-weight:700;margin:0 0 12px;display:flex;align-items:center;gap:12px}
+.eyebrow::before{content:"";width:28px;height:2px;background:var(--or);flex:0 0 auto;border-radius:2px}
+.eyebrow--clair{color:var(--or)}
+.lede{font-size:clamp(1rem,1.3vw,1.08rem);color:var(--texte)}
+.lien-txt{color:var(--teal-txt);font-weight:600;text-decoration:underline;text-underline-offset:3px}
+.bloc-t{margin-top:52px}
+
+/* ---------- boutons ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;
+  font-family:"Manrope",sans-serif;padding:14px 26px;border-radius:var(--r-pill);
+  border:1.5px solid transparent;font-weight:700;font-size:.94rem;letter-spacing:.2px;
+  transition:all .22s var(--ease);white-space:nowrap}
+.btn--or{background:var(--or);color:#3D2B00;border-color:var(--or)}
+.btn--or:hover{background:var(--or-clair);border-color:var(--or-clair);transform:translateY(-2px);
+  box-shadow:0 10px 24px rgba(251,181,14,.38)}
+.btn--fantome{background:transparent;color:var(--nuit);border-color:var(--ligne)}
+.btn--fantome:hover{border-color:var(--nuit);background:#fff}
+.btn--wa{background:#25D366;color:#06341A;border-color:#25D366}
+.btn--wa:hover{background:#1FBF5A;transform:translateY(-2px)}
+.btn--bloc{width:100%}
+.btn--sm{padding:10px 18px;font-size:.86rem}
+
+/* ---------- header ---------- */
+.bandeau{background:var(--nuit-900);color:#C0D8E2;font-size:.82rem;font-family:"Manrope",sans-serif}
+.bandeau .wrap{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:9px 0;flex-wrap:wrap}
+.bandeau a:hover{color:var(--or-clair)}
+.bandeau strong{color:var(--or-clair);font-weight:700}
+.entete{position:sticky;top:0;z-index:60;background:rgba(255,255,255,.95);
+  backdrop-filter:blur(14px);border-bottom:1px solid var(--ligne-2)}
+.entete .wrap{display:flex;align-items:center;gap:24px;padding:10px 0;min-height:66px}
+.logo{flex:0 0 auto;display:block}
+.logo img{height:38px;width:auto}
+.nav{display:flex;gap:2px;margin-left:auto;align-items:center;font-family:"Manrope",sans-serif}
+.nav>a,.nav>.menu>button{display:inline-flex;align-items:center;gap:6px;padding:10px 13px;
+  border-radius:var(--r-pill);font-size:.92rem;font-weight:600;color:var(--nuit);background:none;border:0;
+  transition:background .18s}
+.nav>a:hover,.nav>.menu>button:hover{background:var(--fond)}
+.nav>.menu>button[aria-current]{background:var(--or-fond);font-weight:700;color:var(--noir)}
+.menu{position:relative}
+.menu__pan{position:absolute;top:calc(100% + 10px);left:50%;transform:translateX(-50%) translateY(-6px);
+  background:#fff;border:1px solid var(--ligne);border-radius:var(--r-l);box-shadow:var(--ombre-f);
+  padding:12px;min-width:340px;opacity:0;visibility:hidden;transition:all .2s var(--ease)}
+.menu:hover .menu__pan,.menu:focus-within .menu__pan{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0)}
+.menu__pan a{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:var(--r-m);
+  font-size:.91rem;font-weight:600;color:var(--nuit)}
+.menu__pan a:hover{background:var(--or-fond)}
+.menu__pan a[aria-current]{background:var(--or-fond);outline:1.5px solid var(--or)}
+.menu__pan i{width:34px;height:34px;border-radius:10px;background:var(--fond);display:grid;
+  place-items:center;font-style:normal;font-size:1rem;flex:0 0 auto}
+.menu__pan small{display:block;color:var(--gris);font-size:.78rem;line-height:1.4;font-weight:400}
+.burger{display:none;margin-left:auto;background:none;border:1px solid var(--ligne);
+  border-radius:var(--r-pill);padding:9px 14px;font-weight:700;font-family:"Manrope",sans-serif}
+
+/* ---------- fil d'ariane ---------- */
+.ariane{padding:14px 0 0;font-size:.83rem;color:var(--gris);font-family:"Manrope",sans-serif}
+.ariane ol{display:flex;flex-wrap:wrap;gap:8px;list-style:none;margin:0;padding:0}
+.ariane li::after{content:"›";margin-left:8px;color:var(--gris-clair)}
+.ariane li:last-child::after{content:""}
+.ariane a{font-weight:600;color:var(--teal-txt)}
+.ariane a:hover{text-decoration:underline}
+.ariane [aria-current]{color:var(--noir);font-weight:700}
+
+/* ---------- titre ---------- */
+.tete{margin:18px 0 26px;max-width:60ch}
+.tete h1{font-size:clamp(2.1rem,4vw,3.1rem)}
+.tete p{margin:12px 0 0;font-size:1.12rem;color:var(--gris);font-weight:300}
+
+/* ---------- GALERIE EN TÊTE ---------- */
+.galerie{display:grid;grid-template-columns:2fr 1fr 1fr;grid-template-rows:1fr 1fr;gap:6px;
+  height:clamp(360px,44vw,560px);overflow:hidden;margin:0 0 44px;
+  width:100vw;margin-left:calc(50% - 50vw)}
+.galerie a{display:block;overflow:hidden;position:relative;background:var(--fond)}
+.galerie a:first-child{grid-row:1 / 3}
+.galerie img{width:100%;height:100%;object-fit:cover;transition:transform .8s var(--ease)}
+.galerie a:first-child img{animation:derive 26s ease-in-out infinite alternate}
+@keyframes derive{from{transform:scale(1)}to{transform:scale(1.08)}}
+.galerie a:hover img{transform:scale(1.06)}
+.galerie a::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(11,81,112,0) 55%,rgba(11,81,112,.45) 100%);
+  opacity:0;transition:opacity .3s var(--ease)}
+.galerie a:hover::after{opacity:1}
+.galerie a:first-child .galerie__leg{position:absolute;left:24px;bottom:20px;z-index:2;color:#fff;
+  font-family:"Manrope",sans-serif;font-size:.86rem;font-weight:600;letter-spacing:.02em;
+  text-shadow:0 2px 14px rgba(11,81,112,.9);display:flex;align-items:center;gap:10px}
+.galerie a:first-child::after{opacity:1;background:linear-gradient(180deg,rgba(11,81,112,0) 55%,rgba(11,81,112,.62) 100%)}
+.galerie__plus{position:absolute;right:14px;top:14px;z-index:2;background:rgba(255,255,255,.94);color:var(--nuit-900);
+  font-family:"Manrope",sans-serif;font-size:.79rem;font-weight:700;padding:9px 16px;border-radius:var(--r-pill);
+  display:flex;align-items:center;gap:8px;box-shadow:0 4px 14px rgba(11,81,112,.24)}
+
+/* visionneuse plein écran */
+.lb{position:fixed;inset:0;z-index:120;background:rgba(6,44,60,.95);display:none;
+  align-items:center;justify-content:center;padding:40px 70px}
+.lb[data-on="1"]{display:flex}
+.lb img{max-width:100%;max-height:100%;object-fit:contain;border-radius:var(--r-m);
+  box-shadow:0 30px 80px rgba(0,0,0,.5)}
+.lb button{position:absolute;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.3);
+  color:#fff;width:46px;height:46px;border-radius:50%;display:grid;place-items:center;font-size:1.2rem;
+  transition:background .2s}
+.lb button:hover{background:rgba(255,255,255,.3)}
+.lb .prec{left:16px;top:50%;transform:translateY(-50%)}
+.lb .suiv{right:16px;top:50%;transform:translateY(-50%)}
+.lb .fermer{right:16px;top:16px}
+.lb .cpt{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);color:#fff;
+  font-family:"Manrope",sans-serif;font-size:.84rem;font-weight:600;letter-spacing:.06em}
+
+/* ---------- deux colonnes + panneau collant ---------- */
+.colonnes{display:grid;grid-template-columns:1fr 340px;gap:44px;align-items:start;
+  padding-bottom:clamp(44px,5.5vw,72px)}
+/* min-width:0 : sans lui, un contenu insécable (une URL) élargit la
+   colonne au-delà de l'écran sur mobile. */
+.colonnes>*{min-width:0}
+.colonnes>aside{position:sticky;top:84px}
+.resa{background:#fff;border:1px solid var(--ligne);border-radius:var(--r-l);
+  box-shadow:var(--ombre);padding:22px;position:relative;overflow:hidden}
+.resa::before{content:"";position:absolute;top:0;left:0;right:0;height:4px;
+  background:linear-gradient(90deg,var(--or),var(--or-clair))}
+.resa .prix b{font-size:2.4rem}
+.resa .prix{font-family:"Manrope",sans-serif;line-height:1.2}
+.resa .prix small{display:block;font-size:.74rem;color:var(--gris);letter-spacing:.04em}
+.resa .prix b{font-size:2rem;font-weight:700;color:var(--noir);letter-spacing:-1.2px}
+.resa .prix i{font-style:normal;font-size:.82rem;color:var(--gris)}
+.resa ul{list-style:none;margin:16px 0;padding:14px 0;border-top:1px solid var(--ligne-2);
+  border-bottom:1px solid var(--ligne-2);font-family:"Manrope",sans-serif;font-size:.88rem;display:grid;gap:9px}
+.resa li{display:flex;gap:10px;align-items:flex-start;color:var(--nuit-900);line-height:1.5}
+.resa li svg{flex:0 0 auto;margin-top:3px}
+.resa .act{display:grid;gap:9px}
+
+/* barre de conversion collante, toujours visible sous 1024 px */
+.resa-mob{position:fixed;left:0;right:0;bottom:0;z-index:75;background:#fff;border-top:1px solid var(--ligne);
+  box-shadow:0 -6px 20px rgba(11,81,112,.14);padding:10px 16px calc(10px + env(safe-area-inset-bottom));
+  display:none;align-items:center;gap:12px}
+.resa-mob .p{line-height:1.2;flex:1 1 auto;font-family:"Manrope",sans-serif}
+.resa-mob .p small{display:block;font-size:.7rem;color:var(--gris)}
+.resa-mob .p b{font-size:1.3rem;font-weight:700;color:var(--noir);letter-spacing:-.6px}
+.resa-mob .p i{font-style:normal;font-size:.76rem;color:var(--gris)}
+
+/* ---------- jour par jour ----------
+   Chaque jour est un accordéon (details), fermé au chargement.
+   Le fil de gauche et la pastille dorée gardent l'esprit chronologie. */
+.jour{border-left:2px solid var(--ligne);padding:0 0 0 26px;position:relative;counter-reset:et}
+.jour::before{content:"";position:absolute;left:-8px;top:20px;width:14px;height:14px;border-radius:50%;
+  background:var(--or);border:3px solid #fff;box-shadow:0 0 0 1px var(--ligne)}
+.jour>summary{list-style:none;cursor:pointer;position:relative;padding:13px 48px 13px 0;
+  display:flex;align-items:center;gap:12px;
+  font-family:"Archivo",sans-serif;font-weight:700;font-size:1.1rem;letter-spacing:-.3px;color:var(--noir)}
+.jour .no{flex:0 0 auto;width:30px;height:30px;border-radius:50%;background:var(--or-fond);
+  border:1px solid var(--or);color:#7A5605;font-family:"Manrope",sans-serif;font-size:.72rem;
+  font-weight:700;display:grid;place-items:center;letter-spacing:0}
+.jour__t{display:flex;align-items:center;gap:12px;margin:0;padding:13px 48px 13px 0;
+  font-family:"Archivo",sans-serif;font-weight:700;font-size:1.1rem;letter-spacing:-.3px;color:var(--noir)}
+.jour__intro{padding:6px 0 14px}
+.jour__intro p{font-size:.96rem}
+.jour>summary::-webkit-details-marker{display:none}
+.jour>summary::after{content:"+";position:absolute;right:8px;top:50%;transform:translateY(-50%);
+  width:28px;height:28px;border-radius:50%;background:var(--or-fond);color:#7A5605;
+  display:grid;place-items:center;font-size:1.25rem;font-weight:500;transition:transform .25s var(--ease)}
+.jour[open]>summary::after{transform:translateY(-50%) rotate(45deg)}
+.jour>summary:hover{color:var(--teal-txt)}
+.jour__c{padding:0 0 26px}
+.jour:last-of-type>.jour__c{padding-bottom:10px}
+.jour h4{margin:0 0 6px;color:var(--nuit-900)}
+.jour p{font-size:.96rem}
+.jour p:last-child{margin-bottom:0}
+.etape{padding:16px 0 0 0;position:relative;counter-increment:et}
+.etape+.etape{border-top:1px solid var(--ligne-2);margin-top:16px}
+.etape h4{display:flex;align-items:center;gap:12px}
+.etape h4::before{content:counter(et,decimal-leading-zero);flex:0 0 auto;
+  width:30px;height:30px;border-radius:50%;background:var(--or-fond);border:1px solid var(--or);
+  color:#7A5605;font-family:"Manrope",sans-serif;font-size:.72rem;font-weight:700;
+  display:grid;place-items:center;letter-spacing:0}
+.etape p{padding-left:42px}
+
+/* ---------- inclus / non inclus ----------
+   Deux cartes jumelles : la teal dit ce que le prix couvre, la neutre
+   ce qu'il faut prévoir en plus. Chaque ligne porte sa propre coche. */
+.incl{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start}
+.incl__col{border:1px solid var(--ligne);border-top:4px solid var(--gris-clair);
+  border-radius:var(--r-l);background:var(--papier);padding:22px 24px 14px}
+.incl__col--oui{border-top-color:var(--teal);
+  background:linear-gradient(180deg,var(--teal-fond),var(--papier) 130px)}
+.incl h3{font-size:1.02rem;margin-bottom:12px;display:flex;align-items:center;gap:10px}
+.incl__col--oui h3{color:var(--teal-txt)}
+.incl__col--non h3{color:var(--gris)}
+.incl h3 .ic{flex:0 0 auto;width:28px;height:28px;border-radius:50%;display:grid;place-items:center;
+  font-size:.85rem;font-weight:700;background:var(--teal-txt);color:#fff}
+.incl__col--non h3 .ic{background:var(--ligne);color:var(--gris)}
+.incl ul{list-style:none;margin:0;padding:0;font-size:.94rem}
+.incl li{padding:9px 0 9px 30px;position:relative;line-height:1.55}
+.incl li+li{border-top:1px dashed var(--ligne-2)}
+.incl .oui li::before{content:"✓";position:absolute;left:2px;top:9px;color:var(--teal-txt);font-weight:700}
+.incl .non li::before{content:"✕";position:absolute;left:2px;top:9px;color:var(--gris-clair);font-weight:700}
+.incl .non li{color:var(--gris)}
+
+/* ---------- bande devis ----------
+   Le même appel au devis que sur le reste du site (dessin d'index.html). */
+.devis{background:var(--nuit-900);color:#fff;border-radius:24px;padding:clamp(34px,5vw,56px);
+  display:grid;grid-template-columns:1.1fr .9fr;gap:44px;align-items:center}
+.devis h2{color:#fff}
+.devis ul{list-style:none;padding:0;margin:22px 0 0;display:grid;gap:11px;font-size:.95rem;color:#C3D5DA}
+.devis li{display:flex;gap:11px;align-items:flex-start}
+.devis li svg{flex:0 0 auto;margin-top:5px}
+.devis__act{display:grid;gap:12px}
+.devis__act small{color:#B0CCD9;font-size:.81rem;text-align:center;font-family:"Manrope",sans-serif}
+@media (max-width:860px){
+  .devis{grid-template-columns:1fr;gap:28px}
+}
+
+/* ---------- alerte contenu ---------- */
+.alerte{border:1px solid var(--or);background:var(--or-fond);border-radius:var(--r-l);padding:18px 20px;
+  font-family:"Manrope",sans-serif;font-size:.89rem;line-height:1.65;color:#5C4204}
+.alerte b{color:#3D2B00}
+
+/* ---------- FAQ ----------
+   Des cartes, pas des lignes : chaque question a son cadre et son
+   bouton +, pour qu'on voie au premier regard que ça se déplie. */
+.faq{display:grid;gap:10px}
+.faq details{border:1px solid var(--ligne);border-radius:var(--r-m);background:var(--papier);
+  transition:border-color .25s var(--ease),box-shadow .25s var(--ease)}
+.faq details[open]{border-color:var(--or);box-shadow:var(--ombre)}
+.faq summary{padding:15px 56px 15px 18px;font-weight:600;font-size:1rem;cursor:pointer;color:var(--noir);
+  position:relative;list-style:none;display:block;font-family:"Archivo",sans-serif;letter-spacing:-.3px}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";position:absolute;right:15px;top:50%;transform:translateY(-50%);
+  width:26px;height:26px;border-radius:50%;background:var(--or-fond);color:#7A5605;
+  display:grid;place-items:center;font-size:1.15rem;font-weight:500;transition:transform .25s var(--ease)}
+.faq details[open] summary::after{transform:translateY(-50%) rotate(45deg)}
+.faq summary:hover{color:var(--teal-txt)}
+.faq__c{padding:0 18px 16px;color:var(--texte)}
+.faq__c :last-child{margin-bottom:0}
+.faq__c ul{padding-left:20px;margin:0 0 1em}
+
+/* ---------- avis ---------- */
+.avis{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.avis article{background:#fff;border:1px solid var(--ligne);border-radius:var(--r-l);padding:20px}
+.avis .et{color:var(--or);letter-spacing:.14em;font-size:.9rem;margin-bottom:10px}
+.avis blockquote{margin:0 0 14px;font-size:.94rem;line-height:1.6}
+.avis footer{display:flex;align-items:center;gap:10px;font-family:"Manrope",sans-serif;font-size:.8rem;
+  color:var(--gris);border-top:1px solid var(--ligne-2);padding-top:12px}
+.avis footer b{color:var(--noir);display:block;font-weight:700}
+.ini{width:34px;height:34px;border-radius:50%;background:var(--nuit);color:#fff;display:grid;
+  place-items:center;font-weight:700;font-size:.8rem;flex:0 0 auto}
+
+/* ---------- cartes sœurs ---------- */
+.grille{display:grid;gap:20px;grid-template-columns:repeat(3,1fr)}
+.carte{background:#fff;border:1px solid var(--ligne);border-radius:var(--r-l);overflow:hidden;
+  display:flex;flex-direction:column;transition:transform .25s var(--ease),box-shadow .25s var(--ease)}
+.carte:hover{transform:translateY(-6px);box-shadow:var(--ombre-f)}
+.carte__img{position:relative;aspect-ratio:4/3;overflow:hidden;background:var(--fond)}
+.carte__img img{width:100%;height:100%;object-fit:cover;transition:transform .5s var(--ease)}
+.carte:hover .carte__img img{transform:scale(1.05)}
+.carte__tag{position:absolute;top:12px;left:12px;background:var(--or);color:#3D2B00;
+  font-family:"Manrope",sans-serif;font-size:.72rem;font-weight:700;padding:6px 12px;border-radius:var(--r-pill)}
+.carte__corps{padding:18px;display:flex;flex-direction:column;gap:10px;flex:1}
+.carte h3{font-size:1.04rem;line-height:1.3}
+.carte__route{font-family:"Manrope",sans-serif;font-size:.82rem;color:var(--gris);margin:0;line-height:1.5}
+.carte__route b{color:var(--noir);font-weight:700}
+.carte__pied{margin-top:auto;padding-top:12px;border-top:1px solid var(--ligne-2);
+  display:flex;align-items:flex-end;justify-content:space-between;gap:10px}
+.prix{font-family:"Manrope",sans-serif;line-height:1.2}
+.prix small{display:block;font-size:.72rem;color:var(--gris)}
+.prix b{font-size:1.3rem;font-weight:700;color:var(--noir);letter-spacing:-.6px}
+.lien-fl{display:inline-flex;align-items:center;gap:7px;font-family:"Manrope",sans-serif;
+  font-weight:700;font-size:.87rem;color:var(--teal-txt)}
+.lien-fl svg{transition:transform .2s}
+.carte:hover .lien-fl svg{transform:translateX(4px)}
+
+.section{padding:clamp(40px,5vw,64px) 0}
+.section--fond{background:var(--fond)}
+
+/* ---------- pied de page ---------- */
+.pied{background:var(--nuit-900);color:#C0D8E2;padding:56px 0 24px;font-size:.9rem}
+.pied h4{font-family:"Manrope",sans-serif;font-size:.73rem;letter-spacing:.15em;text-transform:uppercase;
+  color:var(--or);font-weight:700;margin:0 0 16px}
+.pied__g{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:40px}
+.pied ul{list-style:none;margin:0;padding:0;display:grid;gap:9px}
+.pied a:hover{color:#fff;text-decoration:underline}
+.pied img{height:36px;width:auto;margin-bottom:16px}
+.pied__bas{margin-top:36px;padding-top:20px;border-top:1px solid rgba(255,255,255,.12);
+  display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:.82rem;color:#9BBCCB}
+
+.aremplir{background:var(--or-fond);border:1px dashed var(--or);color:#7A5605;font-size:.8rem;
+  padding:.1em .5em;border-radius:6px;font-weight:700;font-family:"Manrope",sans-serif}
+
+/* ---------- calque d'annotation ---------- */
+.mm-btn{position:fixed;right:16px;bottom:16px;z-index:90;background:var(--nuit-900);color:#fff;
+  border:0;border-radius:var(--r-pill);padding:11px 18px;font-family:"Manrope",sans-serif;
+  font-size:.82rem;font-weight:700;box-shadow:var(--ombre-f);display:inline-flex;align-items:center;gap:8px}
+.mm-btn b{color:var(--or)}
+body.mm [data-mm]{outline:2px dashed var(--teal-txt);outline-offset:10px;border-radius:4px;position:relative}
+body.mm [data-mm]::before{content:attr(data-mm);position:absolute;top:-16px;left:0;z-index:40;
+  background:var(--teal-txt);color:#fff;font-family:"Manrope",sans-serif;font-size:.68rem;font-weight:700;
+  letter-spacing:.08em;text-transform:uppercase;padding:5px 11px;border-radius:var(--r-pill);white-space:nowrap}
+body.mm [data-mm="Navigation · poids 0,25"]::before{background:var(--gris-clair)}
+body.mm [data-dec]{position:relative}
+body.mm [data-dec]::after{content:attr(data-dec);position:absolute;top:-16px;right:0;z-index:40;
+  font-family:"Manrope",sans-serif;font-size:.68rem;font-weight:700;letter-spacing:.08em;
+  padding:5px 11px;border-radius:var(--r-pill);white-space:nowrap;background:var(--gris-clair);color:#fff}
+body.mm [data-dec="Conservé"]::after{background:#2F7D4F}
+body.mm [data-dec="Nouveau"]::after{background:var(--nuit)}
+body.mm [data-dec="À trancher"]::after{background:#B4402A}
+body.mm .mm-legende{display:block}
+.mm-legende{display:none;background:var(--nuit-900);color:#D5E3E7;border-radius:var(--r-l);padding:18px 22px;
+  margin-top:22px;font-family:"Manrope",sans-serif;font-size:.85rem;line-height:1.7}
+.mm-legende b{color:var(--or)}
+
+[data-rev]{opacity:0;transform:translateY(18px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+[data-rev].vu{opacity:1;transform:none}
+
+@media (max-width:860px){
+  .galerie{margin-bottom:32px}
+}
+@media (max-width:1024px){
+  .colonnes{grid-template-columns:1fr;gap:30px}
+  /* Le panneau de prix reste visible sur mobile : il vient s'incruster
+     entre la galerie et le texte, la barre basse prend le relais ensuite. */
+  .colonnes>aside{position:static;order:-1}
+  .resa-mob{display:flex}
+  body{padding-bottom:84px}
+  .incl{grid-template-columns:1fr}
+  .grille,.avis{grid-template-columns:1fr 1fr}
+  .pied__g{grid-template-columns:1fr 1fr}
+  .mm-btn{bottom:92px}
+}
+@media (max-width:860px){
+  .eyebrow{display:block}
+  .eyebrow::before{display:block;margin-bottom:8px}
+  .nav{display:none}
+  .burger{display:inline-flex}
+  .grille,.avis{grid-template-columns:1fr}
+  .pied__g{grid-template-columns:1fr}
+  .bandeau .wrap{justify-content:center}
+  .galerie{display:flex;height:auto;gap:8px;overflow-x:auto;scroll-snap-type:x mandatory;border-radius:0}
+  .galerie a{flex:0 0 84%;scroll-snap-align:center;height:220px;border-radius:var(--r-m)}
+  .mm-btn{right:12px;padding:9px 14px;font-size:.76rem}
+}
+@media (prefers-reduced-motion:reduce){
+  [data-rev]{opacity:1 !important;transform:none !important}
+  *{animation-duration:.01ms !important;transition-duration:.01ms !important;scroll-behavior:auto !important}
+}
+
+/* ===== AE-MOBILE : début du bloc généré — ne pas éditer à la main ===== */
+/* ------------------------------------------------------------------
+   NOTES DE PRODUCTION
+   Les paragraphes d'avertissement portaient leur taille en style en
+   ligne (font-size:.86rem), qu'aucune feuille ne peut battre. La taille
+   est passée dans cette classe ; l'attribut ne garde que la couleur.
+   ------------------------------------------------------------------ */
+.note{font-size:.9rem;line-height:1.6}
+
+/* ------------------------------------------------------------------
+   PLANCHER MOBILE
+   Retour cliente du 24/08/2026, mesuré au navigateur à 375/390/412 px.
+
+   Trois choses, et rien d'autre :
+   1. plus aucun texte sous 15 px — ils descendaient à 11,2 px ;
+   2. toute cible tactile isolée fait au moins 44 px de haut ;
+   3. la barre fixe du bas ne recouvre plus la fin de la page.
+
+   Le seuil est à 900 px, pas 700 : mesuré, une tablette en portrait
+   (768 px) gardait les tailles du bureau, jusqu'à 11,5 px.
+
+   Les liens en ligne dans un paragraphe gardent leur hauteur : les
+   agrandir casserait l'interligne, et la règle des 44 px ne s'applique
+   pas à eux.
+   ------------------------------------------------------------------ */
+@media (max-width:900px){
+
+  /* 1 ─ Texte ------------------------------------------------------ */
+  body{font-size:17px;line-height:1.7}
+
+  h1{font-size:clamp(1.85rem,7.2vw,2.3rem);letter-spacing:-1px;line-height:1.18}
+  h2{font-size:clamp(1.42rem,5.6vw,1.8rem);letter-spacing:-.5px}
+  h3{font-size:1.12rem}
+  h4{font-size:1.02rem}
+
+  .eyebrow{font-size:.88rem;letter-spacing:.12em}
+  .lede,.chapeau p,.chapeau .sous,.reponse,.encart,.alerte{font-size:1.04rem}
+
+  /* Tout ce qui descendait sous 15 px remonte au même palier. */
+  .bandeau,.ariane,.compte,.legende,.legende span,
+  .pied,.pied__bas,.pied ul,.mm-legende,.aremplir,
+  .carte__route,.carte__meta,.carte__tag,.puce,.prix,.prix small,.prix i,
+  .fille__nb,.fille__txt span,.guide span,.guide b,
+  .gens span,.avis footer,.avis blockquote,.avis .et,
+  .chapeau__st,.chapeau__meta,
+  .tab,.tab th,.tab td,.et,.jours,.choix,.choix th,.choix td,
+  .tag-a,.fbtn,.fbtn .n,.filtres__d,.fpan label,.fpan label span,
+  .route span,.route em,.route b,
+  .som,.som a,.som h4,.lat__b,.lat__b ul,.lat__b li a,.lat__b p,
+  .resa,.resa ul,.resa li,.resa .prix small,.resa .prix i,
+  .incl,.incl ul,.incl li,.jour p,.etape p,.etape h4,
+  .fig figcaption,.galerie__leg,.galerie__plus,
+  .faq__c,.moment,.duree,.site p,.site__meta,
+  .compo__phrase,.compo__t p,.champ>span,.opts,
+  .ruban a,.ruban a span,
+  small,.lien-fl,.lien-txt,
+  /* Ces trois-là gagnent contre `h4` seul : leur règle porte une classe. */
+  .som h4,.pied h4,.lat__b h4,.incl h3,
+  .quand,.etape .quand,.fig__sur,.mm-btn,
+  .choix tbody th,.choix thead th,.tab tbody th,.tab thead th,
+  .jours tbody th,.jours thead th,
+  .prix i,.resa .prix i,.resa .prix small,
+  .carte__pied,.filtres label,.compo__res,
+  .galerie a:first-child .galerie__leg,
+  .avis .et,.reperes .km,.site h3,
+  /* Derniers relevés à la sonde, à 375 et 768 px. */
+  .note,.jeton,.ini,.opt,.vers,.etape .vers,.vign span,.vign b,
+  .devis__act small,.resa-mob .p small,.resa-mob .p i,
+  .bande b,.bande b span,.figcaption,.fig figcaption b,
+  .som h4,.compte,.chapeau__meta span{font-size:.95rem}
+
+  /* Le ruban des douze mois est le seul endroit où l'on peut serrer :
+     il est décoratif, et le tableau qui suit dit la même chose en clair. */
+  .ruban a{font-size:.95rem;padding:13px 2px 11px}
+  .ruban a span{font-size:.9rem}
+
+  .faq summary{font-size:1.06rem}
+  .jour>summary{font-size:1.1rem}
+
+  /* 2 ─ Cibles tactiles -------------------------------------------- */
+  /* 44 px : la hauteur d'un doigt. On ne l'applique qu'aux cibles
+     isolées — un lien au milieu d'une phrase garde sa hauteur. */
+  .btn{font-size:1rem;padding:15px 24px;min-height:48px}
+  .btn--sm{font-size:.95rem;padding:13px 20px;min-height:46px}
+
+  .nav>a,.menu__pan a,.burger,
+  .pied li a,.lat__b li a,.som a,
+  .filtres button,.fbtn,.fpan label,.filtres__d select,
+  .opt,.mm-btn,.tri,#tri,
+  .lien-fl,.vers,.remonte,.carte .lien-fl,
+  .faq summary,.guide,.carte h3 a{
+    min-height:44px;
+    display:flex;
+    align-items:center;
+  }
+  .som a,.pied li a,.lat__b li a{padding-top:9px;padding-bottom:9px}
+  .opt{padding:11px 16px;justify-content:center}
+  .fpan label{padding:11px 10px}
+  .mm-btn{padding:11px 16px}
+  .carte h3 a,.guide{display:block} /* ces deux-là englobent déjà leur cible */
+  .faq summary,.jour>summary{display:block;padding-top:19px;padding-bottom:19px}
+
+  /* Les cartes entières sont cliquables : rien à agrandir dedans. */
+  a.carte,a.guide,a.fille,a.une{min-height:0}
+
+  /* Le logo doit rester une cible confortable. */
+  .logo img{height:44px}
+}
+
+/* 3 ─ Barre fixe du bas ---------------------------------------------
+   Elle n'apparaît qu'en dessous de 860 px : le rembourrage ne vaut
+   que là, sinon il ajoute du vide en bas de page sur tablette. */
+@media (max-width:860px){
+  body{padding-bottom:calc(96px + env(safe-area-inset-bottom))}
+}
+
+/* Écrans très étroits : on desserre les gouttières avant le texte. */
+@media (max-width:380px){
+  .wrap{width:calc(100% - 28px)}
+  .btn{padding:15px 18px}
+}
+/* ===== AE-MOBILE : fin du bloc généré ===== */
+/* (17)(18)(12) Mélanie : l'appel au devis du menu doit ressortir. Or foncé,
+   réservé à ce bouton — le reste du site garde l'or de la charte. */
+header .nav>a.btn--or,header .nav>a.btn--or[aria-current]{background:#E08A00;border-color:#E08A00;color:#fff}
+header .nav>a.btn--or:hover{background:#C87700;border-color:#C87700;box-shadow:0 10px 24px rgba(224,138,0,.42)}
+
+/* ---------- page programme : compléments au moule ---------- */
+.atouts{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.atouts li{display:flex;gap:10px;align-items:center;background:var(--teal-fond);border:1px solid #CFEBEC;
+  border-radius:var(--r-m);padding:12px 14px;font-family:"Manrope",sans-serif;font-weight:600;font-size:.95rem;color:var(--nuit-900)}
+.atouts li::before{content:"✓";color:var(--teal-txt);font-weight:700}
+.etapes{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.etapes li{display:flex;gap:12px;align-items:center;background:var(--fond);border-radius:var(--r-m);padding:10px 14px}
+.etapes .j{flex:0 0 auto;background:var(--nuit-900);color:#fff;font-family:"Manrope",sans-serif;font-weight:700;
+  font-size:.74rem;letter-spacing:.04em;padding:4px 10px;border-radius:var(--r-pill)}
+.etapes b{display:block;font-family:"Manrope",sans-serif;font-size:.95rem;color:var(--noir)}
+.etapes small{display:block;color:var(--gris);font-size:.82rem}
+.jour .no::before{content:attr(data-n)}
+.jour>summary h3{margin:0;font:inherit;color:inherit;letter-spacing:inherit;line-height:inherit}
+.jour__img{margin:14px 0 18px;border-radius:var(--r-m);overflow:hidden;aspect-ratio:16/9;background:var(--fond)}
+.jour__img img{width:100%;height:100%;object-fit:cover;display:block}
+.jour__lieu{font-family:"Manrope",sans-serif;font-size:.86rem;color:var(--teal-txt);font-weight:700;margin:0 0 4px}
+.etape__meta{font-family:"Manrope",sans-serif;font-size:.82rem;color:var(--gris);margin:-4px 0 10px}
+.resa .prix .depuis{display:block;font-size:.74rem;color:var(--gris);letter-spacing:.04em}
+.jour__meta{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 0}
+.chip{font-family:"Manrope",sans-serif;font-size:.8rem;font-weight:600;color:var(--nuit-900);background:var(--fond-2);
+  border:1px solid #D6E8F5;border-radius:var(--r-pill);padding:5px 12px}
+.chip--nuit{background:var(--or-fond);border-color:#F6D9A8;color:#7A5605}
+.tarifs{width:100%;border-collapse:collapse;font-family:"Manrope",sans-serif;font-size:.95rem;margin:0 0 12px}
+.tarifs td{padding:12px 14px;border-top:1px solid var(--ligne-2)}
+.tarifs tr:first-child td{border-top:0}
+.tarifs td:last-child{text-align:right;font-weight:700;color:var(--noir)}
+.tarifs tr.tarifs--min td{background:var(--teal-fond);color:var(--teal-txt)}
+.tarifs tr.tarifs--min td:last-child{color:var(--teal-txt)}
+.resa .tarifs{font-size:.88rem;margin:0}
+.resa .tarifs td{padding:9px 6px}
+.resa .repere{display:flex;justify-content:space-between;gap:12px}
+.resa .repere small{color:var(--gris);font-weight:400}
+.resa .repere b{text-align:right;font-weight:600;color:var(--noir)}
+.prat summary{font-size:1.02rem}
+.prat .faq__c h3{font-size:1rem;margin:16px 0 6px;color:var(--nuit-900)}
+.prat .faq__c p{margin:0 0 .8em}
+#mm-btn{display:none}   /* le bouton d'annotations du moule : rien à montrer ici */
+@media (max-width:760px){.atouts,.etapes{grid-template-columns:1fr}}
+</style>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[
+{"@type":"BreadcrumbList","itemListElement":[
+{"@type":"ListItem","position":1,"name":"Accueil","item":"https://authentiquegypte.com/"},
+{"@type":"ListItem","position":2,"name":"Nos séjours en Égypte","item":"https://authentiquegypte.com/nos-sejours-egypte/"},
+{"@type":"ListItem","position":3,"name":"Voyage dans le désert en Égypte","item":"https://authentiquegypte.com/nos-sejours-egypte/desert-egypte/"},
+{"@type":"ListItem","position":4,"name":"Voyage à l'oasis de Siwa","item":"https://authentiquegypte.com/programs/excursion-a-loasis-de-siwa/"}]},
+{"@type":"TouristTrip","name":"Voyage à l'oasis de Siwa","description":"L'oasis de Siwa, un havre de paix niché dans le désert occidental de l'Égypte : nature, culture et détente, sources thermales, montagnes et vestiges historiques.",
+"provider":{"@type":"TravelAgency","name":"Authentique Égypte","url":"https://authentiquegypte.com/","areaServed":{"@type":"Country","name":"Égypte"}},
+"offers":{"@type":"Offer","price":"595","priceCurrency":"EUR","availability":"https://schema.org/InStock","url":"https://authentiquegypte.com/programs/excursion-a-loasis-de-siwa/"}},
+{"@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"Qu'est-ce qui rend Siwa unique ?","acceptedAnswer":{"@type":"Answer","text":"Siwa est unique par son isolement, sa culture préservée et ses paysages exceptionnels : culture amazighe avec la langue siwi, les traditions et l'architecture en karsheef ; histoire millénaire avec le temple d'Amon et les nécropoles de Gebel al-Mawta ; paysages contrastés entre palmeraie, lacs salés et désert libyque ; ambiance préservée, loin des circuits touristiques traditionnels."}}]}]}</script>
+</head>
+<body>
+
+<div class="bandeau">
+  <div class="wrap">
+    <span>Agence locale basée au Caire · <strong>Réponse sous 48 h</strong> <small>(hors vendredi et samedi)</small></span>
+    <span style="display:flex;gap:20px;flex-wrap:wrap">
+      <a href="mailto:contact@authentiquegypte.com">✉ contact@authentiquegypte.com</a>
+      <a href="https://wa.me/201066619098">WhatsApp +20 106 661 9098</a>
+    </span>
+  </div>
+</div>
+
+<header class="entete">
+  <div class="wrap">
+    <a href="https://authentiquegypte.com/" class="logo" aria-label="Authentique Égypte, accueil">
+      <img src="https://authentiquegypte.com/wp-content/uploads/2026/08/authentique-egypte-logo-transparent.webp" alt="Authentique Égypte" width="510" height="170">
+    </a>
+    <nav class="nav" data-mm="Navigation · poids 0,25">
+      <a href="https://authentiquegypte.com/">Accueil</a>
+      <div class="menu">
+        <button aria-expanded="false" aria-current="true">Nos séjours
+          <svg width="11" height="7" viewBox="0 0 11 7" fill="none" aria-hidden="true"><path d="M1 1l4.5 4.5L10 1" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+        </button>
+        <div class="menu__pan">
+          <a href="https://authentiquegypte.com/nos-sejours-egypte/croisieres-en-egypte/"><span>Croisière sur le Nil<small>Dahabeya, felouque, bateau 5★</small></span></a>
+          <a href="https://authentiquegypte.com/nos-sejours-egypte/desert-egypte/" aria-current="page"><span>Voyage dans le désert en Égypte<small>Siwa, désert Blanc, Fayoum, Dakhla</small></span></a>
+          <a href="https://authentiquegypte.com/nos-sejours-egypte/voyage-culturel-en-egypte/"><span>Voyage culturel en Égypte<small>Le Caire, Louxor, Abou Simbel</small></span></a>
+          <a href="https://authentiquegypte.com/nos-sejours-egypte/mer-rouge/"><span>Séjour en mer Rouge<small>Hurghada, Marsa Alam, plongée</small></span></a>
+          <a href="https://authentiquegypte.com/nos-sejours-egypte/sinai-moise-et-saint-catherine/"><span>Sinaï et Sainte-Catherine<small>Mont Moïse, monastère</small></span></a>
+        </div>
+      </div>
+      <div class="menu">
+        <button aria-expanded="false">Destinations
+          <svg width="11" height="7" viewBox="0 0 11 7" fill="none" aria-hidden="true"><path d="M1 1l4.5 4.5L10 1" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+        </button>
+        <div class="menu__pan" style="min-width:300px">
+          <a href="https://authentiquegypte.com/voyage-au-caire/"><span>Voyage au Caire<small>Gizeh, Saqqara, Grand Musée</small></span></a>
+          <a href="https://authentiquegypte.com/voyage-a-louxor/"><span>Voyage à Louxor<small>Karnak, vallée des Rois</small></span></a>
+          <a href="https://authentiquegypte.com/voyage-a-assouan/"><span>Voyage à Assouan<small>Philae, Abou Simbel</small></span></a>
+          <a href="https://authentiquegypte.com/voyage-a-alexandrie/"><span>Voyage à Alexandrie<small>Méditerranée, catacombes</small></span></a>
+          <a href="https://authentiquegypte.com/voyage-a-fayoum/"><span>Voyage à Fayoum<small>Wadi El Rayan, lac Qarun</small></span></a>
+          <a href="https://authentiquegypte.com/desert-blanc/"><span>Désert Blanc<small>Formations de craie, nuit à Bahariya</small></span></a>
+          <a href="https://authentiquegypte.com/desert-noir/"><span>Désert Noir<small>Collines volcaniques, sources chaudes</small></span></a>
+          <a href="https://authentiquegypte.com/lac-nasser/"><span>Lac Nasser<small>Temples nubiens, sans la foule</small></span></a>
+        </div>
+      </div>
+      <div class="menu">
+        <button aria-expanded="false">Qui part&nbsp;?
+          <svg width="11" height="7" viewBox="0 0 11 7" fill="none" aria-hidden="true"><path d="M1 1l4.5 4.5L10 1" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+        </button>
+        <div class="menu__pan" style="min-width:290px">
+          <a href="https://authentiquegypte.com/voyage-en-famille-en-egypte/"><span>Voyage en famille en Égypte<small>Rythme adapté, enfants bienvenus</small></span></a>
+          <a href="https://authentiquegypte.com/voyage-en-couple-en-egypte/"><span>Voyage en couple en Égypte<small>Dahabeya privée, dîners sur le Nil</small></span></a>
+          <a href="https://authentiquegypte.com/voyage-solo-en-egypte/"><span>Voyage en solo en Égypte<small>Guide privatif, sécurité assurée</small></span></a>
+          <a href="https://authentiquegypte.com/voyage-pmr-en-egypte/"><span>Voyage PMR en Égypte<small>Sites accessibles, véhicule adapté</small></span></a>
+        </div>
+      </div>
+      <a href="https://authentiquegypte.com/notre-blog/">Guides</a>
+      <a href="https://authentiquegypte.com/qui-sommes-nous/">L'agence</a>
+      <a href="https://authentiquegypte.com/sur-mesure/" class="btn btn--or btn--sm" style="margin-left:10px">Obtenir mon devis</a>
+    </nav>
+    <button class="burger" aria-label="Ouvrir le menu">☰ Menu</button>
+  </div>
+</header>
+
+<main>
+<div class="wrap">
+<nav aria-label="Fil d'Ariane" class="ariane"><ol><li><a href="https://authentiquegypte.com/">Accueil</a></li><li><a href="https://authentiquegypte.com/nos-sejours-egypte/">Nos séjours en Égypte</a></li><li><a href="https://authentiquegypte.com/nos-sejours-egypte/voyage-culturel-en-egypte/">Voyage culturel</a></li><li><span aria-current="page">D&#x27;Alexandrie à Abou Simbel</span></li></ol></nav>
+<div class="tete"><p class="eyebrow">Le Caire &amp; Alexandrie · 10 jours · classique</p><h1>Égypte, de la Méditerranée aux rives du Nil</h1><p>Sur les eaux sacrées du Nil, des pyramides de Gizeh aux colosses d&#x27;Abou Simbel</p></div>
+<div class="galerie">
+<a href="https://necvlggenujydiokngfg.supabase.co/storage/v1/object/public/nomadays-images/photos/9c7ff2bb-27a0-49eb-a79e-086b4af6f52d/trips/342/b1ba6374-f4bb-45c2-ae2b-e761f6c4b7f2.avif"><img alt="Égypte, de la Méditerranée aux rives du Nil" decoding="async" fetchpriority="high" src="https://necvlggenujydiokngfg.supabase.co/storage/v1/object/public/nomadays-images/photos/9c7ff2bb-27a0-49eb-a79e-086b4af6f52d/trips/342/b1ba6374-f4bb-45c2-ae2b-e761f6c4b7f2.avif"><span class="galerie__leg">Égypte, de la Méditerranée aux rives du Nil</span></a>
+<a href="https://necvlggenujydiokngfg.supabase.co/storage/v1/object/public/nomadays-images/photos/9c7ff2bb-27a0-49eb-a79e-086b4af6f52d/media/584a6178-e8b0-4bf4-9c60-49cd0be08178/6650dd97-d068-43e5-b5cb-f3f6aace1f01.jpg"><img alt="Jour 1" decoding="async" loading="lazy" src="https://necvlggenujydiokngfg.supabase.co/storage/v1/object/public/nomadays-images/photos/9c7ff2bb-27a0-49eb-a79e-086b4af6f52d/media/584a6178-e8b0-4bf4-9c60-49cd0be08178/6650dd97-d068-43e5-b5cb-f3f6aace1f01.jpg"></a>
+<a href="https://necvlggenujydiokngfg.supabase.co/storage/v1/object/public/nomadays-images/photos/9c7ff2bb-27a0-49eb-a79e-086b4af6f52d/media/2ab6c59d-2b2e-46d3-89a5-6cc3b0ac2f30/535077e3-7e84-4ee0-b822-011622beed7d.jpg"><img alt="Jour 2" decoding="async" loading="lazy" src="https://necvlggenujydiokngfg.supabase.co/storage/v1/object/public/nomadays-images/photos/9c7ff2bb-27a0-49eb-a79e-086b4af6f52d/media/2ab6c59d-2b2e-46d3-89a5-6cc3b0ac2f30/535077e3-7e84-4ee0-b822-011622beed7d.jpg"></a>
+<a href="https://necvlggenujydiokngfg.supabase.co/storage/v1/object/public/nomadays-images/photos/9c7ff2bb-27a0-49eb-a79e-086b4af6f52d/content/4e02b308-3a92-4748-9a31-5948179f83ee/9a57d540-d903-48b0-8ec3-157ff4058eed.jpg"><img alt="Jour 3" decoding="async" loading="lazy" src="https://necvlggenujydiokngfg.supabase.co/storage/v1/object/public/nomadays-images/photos/9c7ff2bb-27a0-49eb-a79e-086b4af6f52d/content/4e02b308-3a92-4748-9a31-5948179f83ee/9a57d540-d903-48b0-8ec3-157ff4058eed.jpg"></a>
+<a href="https://necvlggenujydiokngfg.supabase.co/storage/v1/object/public/nomadays-images/photos/9c7ff2bb-27a0-49eb-a79e-086b4af6f52d/media/584a6178-e8b0-4bf4-9c60-49cd0be08178/e79c5928-a2b2-4e48-ae30-d1cdc6476454.jpg"><img alt="Jour 4" decoding="async" loading="lazy" src="https://necvlggenujydiokngfg.supabase.co/storage/v1/object/public/nomadays-images/photos/9c7ff2bb-27a0-49eb-a79e-086b4af6f52d/media/584a6178-e8b0-4bf4-9c60-49cd0be08178/e79c5928-a2b2-4e48-ae30-d1cdc6476454.jpg"></a>
+</div>
+<div class="colonnes"><div>
+<p class="eyebrow">Le circuit</p><h2>L’esprit du voyage</h2>
+<p class="lede">Partez pour <strong>10 jours à la découverte de l’Égypte</strong>, entre trésors pharaoniques, villes historiques et paysages de la vallée du Nil.</p><p class="lede">Du <strong>Caire à Alexandrie</strong>, plongez dans les différentes facettes de l’histoire égyptienne avant de rejoindre <strong>Louxor</strong>, véritable musée à ciel ouvert au cœur de l’ancienne Thèbes. Le voyage se poursuit ensuite au fil du Nil, entre temples antiques et paysages qui accompagnent votre navigation vers <strong>Assouan</strong>.</p><p class="lede">Des pyramides de Gizeh aux grands sanctuaires de Haute-Égypte, cet itinéraire offre une belle immersion dans plusieurs millénaires d’histoire, avec la possibilité de prolonger la découverte jusqu’aux célèbres <strong>temples d’Abou Simbel</strong>.</p><p class="lede">Un circuit riche et équilibré pour découvrir les grands visages de l’Égypte, de la Méditerranée aux terres de Nubie.</p>
+<div class="bloc-t"><p class="eyebrow">Ce que vous verrez</p><h2>Points forts</h2><ul class="atouts">
+<li>Pyramides de Gizeh</li><li>Croisière sur le Nil</li><li>Vallée des Rois</li><li>Temples d&#x27;Abou Simbel</li><li>Alexandrie antique</li><li>Complexe de Karnak</li>
+</ul></div>
+<div class="bloc-t"><p class="eyebrow">Le fil du voyage</p><h2>Les étapes de votre voyage</h2><ul class="etapes">
+<li><span class="j">J1–3</span><span><b>Le Caire</b><small>Le Méridien Pyramids Hotel &amp; Spa</small></span></li>
+<li><span class="j">J4</span><span><b>Louxor</b><small>Iberotel Luxor</small></span></li>
+<li><span class="j">J5</span><span><b>Louxor</b><small>Nile Style</small></span></li>
+<li><span class="j">J6</span><span><b>Esna</b><small>Nile Style</small></span></li>
+<li><span class="j">J7–8</span><span><b>Assouan</b><small>Nile Style</small></span></li>
+<li><span class="j">J9–10</span><span><b>Le Caire</b><small>Hotel Novotel Cairo Airport</small></span></li>
+</ul></div>
+<div class="bloc-t"><p class="eyebrow">Jour par jour</p><h2>Itinéraire jour par jour</h2>
+<details class="jour"><summary><b class="no" data-n="01"></b><h3>Bienvenue au Caire!</h3></summary><div class="jour__c">
+<div class="jour__img"><img alt="Jour 1" loading="lazy" decoding="async" src="https://necvlggenujydiokngfg.supabase.co/storage/v1/object/public/nomadays-images/photos/9c7ff2bb-27a0-49eb-a79e-086b4af6f52d/media/584a6178-e8b0-4bf4-9c60-49cd0be08178/6650dd97-d068-43e5-b5cb-f3f6aace1f01.jpg"></div>
+<p class="jour__lieu">Le Caire</p>
+<div class="etape"><h4>Aéroport Du Caire → Le Caire</h4><p class="etape__meta">30min · 25 km</p><p>À votre arrivée au Caire, vous êtes accueilli et assisté par notre représentant local.</p><p>Vous êtes ensuite<strong> transféré à votre hôtel </strong>pour votre installation.</p></div>
+<p class="jour__meta"><span class="chip chip--nuit">Le Méridien Pyramids Hotel &amp; Spa</span><span class="chip">Dîner</span></p>
+</div></details>
+<details class="jour"><summary><b class="no" data-n="02"></b><h3>Exploration des Pyramides de Gizeh</h3></summary><div class="jour__c">
+<div class="jour__img"><img alt="Jour 2" loading="lazy" decoding="async" src="https://necvlggenujydiokngfg.supabase.co/storage/v1/object/public/nomadays-images/photos/9c7ff2bb-27a0-49eb-a79e-086b4af6f52d/media/2ab6c59d-2b2e-46d3-89a5-6cc3b0ac2f30/535077e3-7e84-4ee0-b822-011622beed7d.jpg"></div>
+<p class="jour__lieu">Le Caire</p>
+<div class="jour__intro"><p>Après le petit-déjeuner, vous partez à la découverte du plateau Guizèh et de ses trois pyramides : <strong>Khéops, Khéphren et Mykérinos</strong>.</p><p>Vous découvrez notamment la <strong>pyramide de Khéops</strong>, la plus grande des trois, ainsi que la pyramide de <strong>Khéphren</strong>, qui conserve à sa base une partie de son revêtement d’origine. À leurs côtés se dresse le <strong>Sphinx de Gizeh</strong>, long de 57 mètres et reconnaissable à son corps de lion et sa tête humaine.</p><p>Vous poursuivez la journée avec la visite du musée national, situé dans le centre-ville du Caire.</p><p>Un déjeuner dans un restaurant typique est prévu au cours de la journée.</p></div>
+<p class="jour__meta"><span class="chip chip--nuit">Le Méridien Pyramids Hotel &amp; Spa</span><span class="chip">Petit-déjeuner</span><span class="chip">Déjeuner</span><span class="chip">Dîner</span></p>
+</div></details>
+<details class="jour"><summary><b class="no" data-n="03"></b><h3>Alexandrie: le « comptoir du monde »</h3></summary><div class="jour__c">
+<div class="jour__img"><img alt="Jour 3" loading="lazy" decoding="async" src="https://necvlggenujydiokngfg.supabase.co/storage/v1/object/public/nomadays-images/photos/9c7ff2bb-27a0-49eb-a79e-086b4af6f52d/content/4e02b308-3a92-4748-9a31-5948179f83ee/9a57d540-d903-48b0-8ec3-157ff4058eed.jpg"></div>
+<p class="jour__lieu">Le Caire</p>
+<div class="etape"><h4>Le Caire → Alexandrie</h4><p class="etape__meta">3h · 230 km</p><p>Après le petit-déjeuner, vous quittez Le Caire en voiture pour rejoindre Alexandrie.</p><p>Sur place, vous découvrez de l’extérieur le fort Qaitbay, avant de visiter les <strong>catacombes d’Alexandrie</strong>, important site funéraire romain d’Égypte et site archéologique de la ville.</p><p>Vous poursuivez avec la visite de la Bibliothèque d’Alexandrie.</p></div>
+<div class="etape"><h4>Alexandrie → Le Caire</h4><p class="etape__meta">3h · 230 km</p><p>Le déjeuner<strong> </strong>est prévu au cours de la journée, avant de reprendre la route vers Le Caire.</p><p>Dîner libre et nuit à l’hôtel.</p></div>
+<p class="jour__meta"><span class="chip chip--nuit">Le Méridien Pyramids Hotel &amp; Spa</span><span class="chip">Petit-déjeuner</span><span class="chip">Dîner</span></p>
+</div></details>
+<details class="jour"><summary><b class="no" data-n="04"></b><h3>Vieux Caire et vol vers Louxor</h3></summary><div class="jour__c">
+<div class="jour__img"><img alt="Jour 4" loading="lazy" decoding="async" src="https://necvlggenujydiokngfg.supabase.co/storage/v1/object/public/nomadays-images/photos/9c7ff2bb-27a0-49eb-a79e-086b4af6f52d/media/584a6178-e8b0-4bf4-9c60-49cd0be08178/e79c5928-a2b2-4e48-ae30-d1cdc6476454.jpg"></div>
+<p class="jour__lieu">Louxor</p>
+<div class="jour__intro"><p>À votre arrivée, vous partez à la découverte du Vieux Caire et de son patrimoine religieux. Vous visitez le Musée copte, fondé en 1910 par Marcus Simaïka, qui rassemble une importante collection d’objets, tissus, manuscrits, icônes, artefacts et textes de la période paléochrétienne.</p><p>Vous poursuivez avec <strong>l’église Sainte-Marie</strong>, dont les mosaïques de la cour retracent le voyage de la Sainte Famille en Égypte, puis avec la <strong>mosquée d’Amr</strong>, première mosquée construite sur le continent africain.</p><p>Un déjeuner dans un restaurant typique est prévu, puis vous disposez de <strong>l’après-midi libre</strong>.</p></div>
+<div class="etape"><h4>Aéroport Du Caire → Louxor</h4><p class="etape__meta">1h · 510 km</p><p>Vous êtes transféré à l’<strong>aéroport du Caire</strong> pour prendre votre vol à destination de <strong> </strong>Louxor.</p></div>
+<p class="jour__meta"><span class="chip chip--nuit">Iberotel Luxor</span><span class="chip">Petit-déjeuner</span><span class="chip">Déjeuner</span><span class="chip">Dîner</span></p>
+</div></details>
+<details class="jour"><summary><b class="no" data-n="05"></b><h3>Luxor (Ce jour d&#x27;embarquement doit etre un Lundi, Jeudi ou Samedi)</h3></summary><div class="jour__c">
+<div class="jour__img"><img alt="Jour 5" loading="lazy" decoding="async" src="https://necvlggenujydiokngfg.supabase.co/storage/v1/object/public/nomadays-images/photos/9c7ff2bb-27a0-49eb-a79e-086b4af6f52d/media/2ab6c59d-2b2e-46d3-89a5-6cc3b0ac2f30/d333e519-23be-4565-b335-979f694ec455.jpg"></div>
+<p class="jour__lieu">Louxor</p>
+<div class="jour__intro"><p>Après le petit-déjeuner, vous êtes transféré jusqu’au bateau pour l’enregistrement et l’<strong>embarquement pour votre </strong>croisière sur le Nil..</p><p>Vous partez ensuite à la découverte de la Vallée des Rois, qui compte <strong>62 sépultures</strong>, avec la visite de <strong>trois tombes</strong>. Vous poursuivez vers la Vallée des Reines, qui rassemble <strong>75 sépultures</strong>, dont <strong>deux tombes</strong> sont prévues à la visite.</p><p>Vous rejoignez ensuite le temple de Louxor, dédié au dieu Amon et construit en grande partie sous les XVIIIe et XIXe dynasties. Vous y découvrez notamment son pylône, ses deux grandes cours à péristyle et sa colonnade monumentale.</p><p><em>📍L’embarquement doit avoir lieu </em><strong><em>un lundi, un jeudi ou un samedi</em></strong>.</p></div>
+<p class="jour__meta"><span class="chip chip--nuit">Nile Style</span><span class="chip">Petit-déjeuner</span><span class="chip">Dîner</span></p>
+</div></details>
+<details class="jour"><summary><b class="no" data-n="06"></b><h3>Découverte du complexe religieux de Karnak</h3></summary><div class="jour__c">
+<div class="jour__img"><img alt="Jour 6" loading="lazy" decoding="async" src="https://necvlggenujydiokngfg.supabase.co/storage/v1/object/public/nomadays-images/photos/9c7ff2bb-27a0-49eb-a79e-086b4af6f52d/media/2ab6c59d-2b2e-46d3-89a5-6cc3b0ac2f30/d2387507-70ad-418c-bb41-ed96f7577704.jpg"></div>
+<p class="jour__lieu">Esna</p>
+<div class="etape"><h4>Louxor → Esna</h4><p class="etape__meta">6h · 55 km</p><p>Vous partez à la découverte du complexe de Karnak, vaste ensemble réunissant <strong>temples, chapelles et pylônes</strong>, développé pendant plus de <strong>2 000 ans par les pharaons successifs</strong>.</p><p>Après la visite, vous rejoignez votre bateau pour le déjeuner à bord, puis débutez votre navigation sur le Nil en direction d’Esna, avec le passage de <strong>l’écluse d’Esna</strong>.</p></div>
+<p class="jour__meta"><span class="chip chip--nuit">Nile Style</span><span class="chip">Petit-déjeuner</span><span class="chip">Dîner</span></p>
+</div></details>
+<details class="jour"><summary><b class="no" data-n="07"></b><h3>Temples d’Edfou et de Kom Ombo, navigation vers Assouan</h3></summary><div class="jour__c">
+<div class="jour__img"><img alt="Jour 7" loading="lazy" decoding="async" src="https://necvlggenujydiokngfg.supabase.co/storage/v1/object/public/nomadays-images/photos/9c7ff2bb-27a0-49eb-a79e-086b4af6f52d/media/2ab6c59d-2b2e-46d3-89a5-6cc3b0ac2f30/e212f192-7fa9-464b-be33-86a1918800e1.jpg"></div>
+<p class="jour__lieu">Assouan</p>
+<div class="etape"><h4>Esna → Edfou</h4><p class="etape__meta">6h · 55 km</p><p>Vous naviguez jusqu’à Edfou pour découvrir le temple d'Edfou, dédié au dieu Horus à tête de faucon. À l’entrée du sanctuaire, vous découvrez <strong>deux statues en granit noir</strong> représentant la divinité.</p></div>
+<div class="etape"><h4>Edfou → Kom Ombo</h4><p class="etape__meta">6h · 65 km</p><p>Vous retournez ensuite à bord et poursuivez votre <strong>navigation vers </strong>Kom Ombo. Vous visitez le Temple de Kom Ombo, datant de l’époque ptolémaïque et dédié à deux divinités : <strong>Haroëris, le dieu épervier, et Sobek, le dieu crocodile</strong>.</p></div>
+<div class="etape"><h4>Kom Ombo → Assouan</h4><p class="etape__meta">6h · 50 km</p><p>Après la visite, vous regagnez le bateau et poursuivez votre navigation en direction d’Assouan.</p></div>
+<p class="jour__meta"><span class="chip chip--nuit">Nile Style</span><span class="chip">Petit-déjeuner</span><span class="chip">Dîner</span></p>
+</div></details>
+<details class="jour"><summary><b class="no" data-n="08"></b><h3>Abou Simbel et journée libre à Assouan</h3></summary><div class="jour__c">
+<div class="jour__img"><img alt="Jour 8" loading="lazy" decoding="async" src="https://necvlggenujydiokngfg.supabase.co/storage/v1/object/public/nomadays-images/photos/9c7ff2bb-27a0-49eb-a79e-086b4af6f52d/media/2ab6c59d-2b2e-46d3-89a5-6cc3b0ac2f30/03cfaf8a-d942-43b5-9dc7-0a8de5503a1f.jpg"></div>
+<p class="jour__lieu">Assouan</p>
+<div class="etape"><h4>Assouan → Abu Simbel</h4><p class="etape__meta">3h15 · 300 km</p><p>De bon matin, vous avez la possibilité de partir en <strong>excursion facultative à Abou Simbel</strong>. Vous découvrez le grand temple construit par Ramsès II, puis le petit temple de la reine Néfertari, également bâti par Ramsès II et dédié à la <strong>déesse Hathor</strong>, déesse de l’amour, de la musique et de la beauté.</p><p>Vous retournez ensuite à Assouan pour le déjeuner.</p><p>Vous profitez du reste de la journée <strong>librement à Assouan</strong>.</p></div>
+<p class="jour__meta"><span class="chip chip--nuit">Nile Style</span><span class="chip">Petit-déjeuner</span><span class="chip">Dîner</span></p>
+</div></details>
+<details class="jour"><summary><b class="no" data-n="09"></b><h3>Philae, Haut Barrage d’Assouan et vol vers Le Caire</h3></summary><div class="jour__c">
+<div class="jour__img"><img alt="Jour 9" loading="lazy" decoding="async" src="https://necvlggenujydiokngfg.supabase.co/storage/v1/object/public/nomadays-images/photos/9c7ff2bb-27a0-49eb-a79e-086b4af6f52d/media/2ab6c59d-2b2e-46d3-89a5-6cc3b0ac2f30/7fdbea6c-7e13-4db6-930a-d88226664d88.jpg"></div>
+<p class="jour__lieu">Le Caire</p>
+<div class="jour__intro"><p>Après le petit-déjeuner à bord, vous débarquez avant de partir pour une <strong>promenade en barque autour de l’</strong>Île d'Agilkia, où a été déplacé le temple de Philae, dédié à la déesse Isis. Vous visitez ensuite le temple.</p><p>Après le déjeuner, vous poursuivez avec la découverte du Haut Barrage d’Assouan, dont la construction a été confiée à des ingénieurs soviétiques en 1960 et qui fournit de l’électricité au pays.</p><p>Vous terminez les visites de la journée par <strong>l’</strong>obélisque inachevé.</p></div>
+<div class="etape"><h4>Assouan → Le Caire</h4><p class="etape__meta">1h30</p><p>Vous êtes transféré à l’aéroport d’Assouan pour prendre votre vol à destination du Caire</p></div>
+<p class="jour__meta"><span class="chip chip--nuit">Hotel Novotel Cairo Airport</span><span class="chip">Petit-déjeuner</span><span class="chip">Déjeuner</span></p>
+</div></details>
+<details class="jour"><summary><b class="no" data-n="10"></b><h3>A bientôt en Egypte!</h3></summary><div class="jour__c">
+<div class="jour__img"><img alt="Jour 11" loading="lazy" decoding="async" src="https://necvlggenujydiokngfg.supabase.co/storage/v1/object/public/nomadays-images/photos/9c7ff2bb-27a0-49eb-a79e-086b4af6f52d/media/89280f63-2a9b-4e68-9c49-d504ffc2192f/905191fd-1f27-4406-85c0-0a034bc49148.jpg"></div>
+<p class="jour__lieu">Le Caire</p>
+<div class="etape"><h4>Le Caire → Aéroport Du Caire</h4><p>Après le petit-déjeuner, vous rejoignez l’aéroport du <strong>Caire</strong> pour prendre votre vol retour vers votre destination.</p></div>
+<p class="jour__meta"><span class="chip">Petit-déjeuner</span></p>
+</div></details>
+</div>
+<div class="bloc-t"><p class="eyebrow">Budget</p><h2>Tarif par personne</h2><table class="tarifs">
+<tr><td>2 pers.</td><td>2 275 € <small>/pers.</small></td></tr>
+<tr><td>4 pers.</td><td>2 175 € <small>/pers.</small></td></tr>
+<tr class="tarifs--min"><td>6 pers.</td><td>1 995 € <small>/pers.</small></td></tr>
+</table><p class="note">Tarif indicatif par personne, base chambre double. Chaque voyage est personnalisé selon vos envies.</p></div>
+<div class="bloc-t"><p class="eyebrow">Le détail</p><h2>Inclus et non inclus</h2><div class="incl">
+<div class="incl__col incl__col--oui"><h3><span class="ic">✓</span>Inclus</h3><ul class="oui"><li>Visa (Pour des passeports Français de validité de 6 mois et plus)</li><li>Wagon Lits première classe (Caire - Louxor / Assouan - Caire)</li><li>Les transferts en voiture privée</li><li>La pension complète commençant par le petit-déjeuner du 2ème jour terminant avec le petit-déjeuner du 10ème jour</li><li>Les excursions mentionnées dans le programme (Inclus prix d&#x27;entrées + Voiture privée)</li><li>Guide Francophone (Privé) durant les visites mentionnées</li></ul></div>
+<div class="incl__col incl__col--non"><h3><span class="ic">✕</span>Non inclus</h3><ul class="non"><li>Gratification Guide laissée à la discrétion des clients</li><li>Pourboires usuels (env. 3 Euros par personne par jour)</li><li>Vols internationaux</li></ul></div>
+</div></div>
+<div class="bloc-t prat"><p class="eyebrow">Avant de partir</p><h2>Informations pratiques</h2><div class="faq">
+<details><summary>Conditions de réservation</summary><div class="faq__c"><p>L'inscription est considérée comme ferme et définitive après le versement d'un acompte de <strong>30 %</strong> du prix total et l'acceptation des conditions particulières de vente.</p><p>Le solde doit être réglé au plus tard <strong>45 jours</strong> avant la date de départ.</p><p>Consultez nos conditions particulières de vente pour le détail complet.</p></div></details>
+<details><summary>Politique d’annulation</summary><div class="faq__c"><p>En cas d'annulation par le voyageur, les frais suivants sont retenus :</p><ul><li>Plus de 60 jours avant le départ : 40 % du prix total (acompte retenu)</li><li>Entre 60 et 30 jours avant le départ : 50 % du prix total</li><li>Moins de 30 jours avant le départ : 100 % du prix total</li></ul><p>Nous recommandons vivement la souscription d'une assurance annulation. Consultez nos conditions particulières de vente pour le détail complet.</p></div></details>
+<details><summary>Formalités et visa</summary><div class="faq__c"><p>Les informations ci-dessous concernent les voyageurs ressortissants de l'Espace économique européen (EEE), de la Suisse et du Canada se rendant en Égypte dans le cadre d'un séjour touristique. Les règles d'entrée pouvant évoluer, nous vous recommandons de vérifier les informations auprès des autorités officielles avant votre départ.</p><h3>Passeport</h3><p>Pour entrer en Égypte, votre <strong>passeport doit être valide au minimum six mois après la date d'entrée dans le pays</strong> et comporter <strong>au moins une page vierge</strong> pour les tampons d'immigration et l'apposition du visa.<br/>Le document doit être <strong>en bon état</strong> (pas de pages détériorées, déchirées ou modifiées).</p><h3>Visa touristique</h3><p>Les ressortissants de l'Espace économique européen, de la Suisse et du Canada ont l'obligation d'obtenir un <strong>visa pour entrer en Égypte</strong>. Plusieurs options sont disponibles :</p><p><strong>Visa électronique (e-visa)</strong> : il est possible de faire la demande en ligne avant le départ via le portail officiel des autorités égyptiennes. Ce visa est généralement accordé pour un séjour touristique <strong>jusqu'à 30 jours</strong> et peut être à entrée unique ou entrées multiples selon l'option choisie.</p><p><strong>Visa à l'arrivée</strong> : disponible dans la plupart des aéroports internationaux égyptiens (Le Caire, Hurghada, Charm el-Cheikh, etc.), il permet un séjour <strong>jusqu'à 30 jours</strong>. Son obtention est soumise au paiement de droits en devises étrangères (généralement en dollars américains ou en euros).</p><p>Les autorités peuvent également demander :</p><ul><li><p>un <strong>billet de sortie du territoire</strong> (vol retour ou continuation),</p></li><li><p>une preuve de <strong>ressources financières suffisantes</strong> pour la durée du séjour,</p></li><li><p>une <strong>réservation d'hébergement</strong> pour la durée du voyage.</p></li></ul><h3>Santé et vaccinations</h3><p>Aucune vaccination n'est obligatoire pour entrer en Égypte depuis l'EEE, la Suisse ou le Canada dans des conditions normales. Toutefois, certaines vaccinations sont <strong>recommandées</strong> :</p><ul><li><p>mise à jour des vaccinations courantes (diphtérie, tétanos, poliomyélite, rougeole),</p></li><li><p>hépatite A et hépatite B,</p></li><li><p>typhoïde, notamment en cas de voyage hors des zones touristiques principales.</p></li></ul><p>Il est conseillé de consulter un médecin ou un centre de vaccinations internationales <strong>au moins quatre à six semaines avant le départ</strong>.</p><h3>Voyage avec des enfants</h3><p>Les mineurs doivent être <strong>titulaires de leur propre passeport</strong> valide couvrant la durée du séjour ainsi que d'un visa en règle.</p><p>Dans certains pays européens, lorsqu'un mineur voyage <strong>sans l'un de ses parents</strong>, une <strong>autorisation de sortie du territoire</strong> peut être exigée selon la réglementation du pays de résidence.</p><h3>Autres nationalités</h3><p>Les conditions d'entrée peuvent varier selon la nationalité. Les voyageurs concernés doivent se renseigner auprès de l'ambassade ou du consulat d'Égypte de leur pays de résidence.</p></div></details>
+<details><summary>Assurances voyage</summary><div class="faq__c"><p>Pour participer à nos voyages, il est fortement conseillé d'être assuré en assistance-rapatriement et frais médicaux à l’étranger.</p><p>Votre agence locale vous encourage à prendre connaissance du contrat spécifique élaboré avec notre partenaire <strong>CHAPKA ASSURANCES et AXA ASSISTANCE</strong>.<br/>Pour souscrire à une assurance, connaître les garanties et les tarifs, suivez le lien ci-dessous.</p><p><a href="https://www.chapkadirect.fr/index.php?action=produit&amp;id=824&amp;app=cd_nomadays" rel="noopener noreferrer" target="_blank"><strong><u>CAP EXPLORER : La solution d’assurance complète conçue pour vivre sereinement votre voyage !</u></strong></a></p><p>Choisissez la formule qui vous correspond le mieux:</p><ul><li><p>Explorer'Multirisque</p></li><li><p>Explorer'Annulation</p></li><li><p>Explorer'Assistance</p></li><li><p>Explorer' Complémentaire Carte Bancaire</p></li></ul><p><strong>Spécifiques à nos voyages, nous suggérons fortement d’y souscrire</strong>.<br/>Si vous choisissez de souscrire à l’une de ces formules, la convention détaillant l’ensemble des garanties et les modalités de déclaration du sinistre sont disponibles sur le site Internet de l'assureur.</p><p>Votre agence locale en aura connaissance, mais seul le participant est responsable du respect des procédures de déclaration de tout sinistre. Le participant doit donc conserver cette convention avec lui pendant toute la durée de son voyage.</p></div></details>
+</div></div>
+<div class="bloc-t"><p class="eyebrow">On nous demande</p><h2>Questions fréquentes</h2><div class="faq">
+<details><summary>Ce circuit est-il personnalisable ?</summary><div class="faq__c"><p>Oui, ce voyage privatisé peut être adapté selon vos souhaits. Contactez notre équipe pour personnaliser les étapes, la durée ou les hébergements selon vos préférences.</p></div></details>
+<details><summary>Comment réserver ce circuit ?</summary><div class="faq__c"><p>Vous pouvez demander un devis directement en ligne ou contacter notre agence locale. Un acompte de 50% est demandé à la réservation, le solde étant dû 30 jours avant le départ.</p></div></details>
+<details><summary>Ce circuit convient-il aux enfants ?</summary><div class="faq__c"><p>Ce circuit convient aux familles avec enfants de plus de 8 ans. Les visites sont adaptables et notre guide francophone saura captiver les plus jeunes avec les légendes des pharaons.</p></div></details>
+<details><summary>Quelle est la meilleure période ?</summary><div class="faq__c"><p>La période idéale s&#x27;étend d&#x27;octobre à avril, avec des températures agréables. Évitez l&#x27;été où la chaleur peut être intense, particulièrement en Haute-Égypte.</p></div></details>
+<details><summary>Quel niveau physique est requis ?</summary><div class="faq__c"><p>Ce circuit demande un niveau physique modéré. Il faut pouvoir marcher sur des terrains inégaux dans les sites archéologiques et supporter quelques montées dans les tombes et temples.</p></div></details>
+</div></div>
+</div>
+<aside><div class="resa">
+<p class="prix" style="margin:0 0 2px"><span class="depuis">À partir de</span><b>1 995 €</b> <i>par personne</i></p>
+<ul><li class="repere"><small>Durée</small><b>10 jours</b></li><li class="repere"><small>Saisons idéales</small><b>Jan, Fév, Mar, Oct, Nov, Déc</b></li><li class="repere"><small>Style</small><b>Circuit accompagné</b></li><li class="repere"><small>Confort</small><b>classique</b></li><li class="repere"><small>Voyageurs</small><b>Couple, senior, groupe</b></li></ul>
+<table class="tarifs"><tr><td>2 pers.</td><td>2 275 € <small>/pers.</small></td></tr><tr><td>4 pers.</td><td>2 175 € <small>/pers.</small></td></tr><tr class="tarifs--min"><td>6 pers.</td><td>1 995 € <small>/pers.</small></td></tr></table>
+<p class="note" style="margin:8px 0 14px;font-family:Manrope,sans-serif;color:var(--gris);font-size:.8rem">Tarif indicatif par personne, base chambre double. Chaque voyage est personnalisé selon vos envies.</p>
+<div class="act"><a class="btn btn--or btn--bloc" href="https://authentiquegypte.com/sur-mesure/">Personnaliser ce circuit</a><a class="btn btn--wa btn--bloc" href="https://wa.me/201066619098">Poser une question sur WhatsApp</a></div>
+<p class="note" style="margin:12px 0 0;font-family:Manrope,sans-serif;color:var(--gris);text-align:center">Devis gratuit · réponse sous 48 h (hors vendredi et samedi)</p>
+</div></aside></div>
+</div>
+<section class="section"><div class="wrap"><div class="devis"><div><p class="eyebrow eyebrow--clair">Votre projet</p><h2>Ce voyage peut être adapté selon vos envies</h2><p style="margin:16px 0 0;color:#C3D5DA">Cet itinéraire constitue une excellente base de découverte, mais il peut être entièrement personnalisé. Nos conseillers locaux construisent chaque voyage sur mesure selon votre budget, vos dates et vos envies.</p></div><div class="devis__act"><a class="btn btn--or btn--bloc" href="https://authentiquegypte.com/sur-mesure/">Personnaliser ce circuit</a><a class="btn btn--wa btn--bloc" href="https://wa.me/201066619098">Poser une question sur WhatsApp</a><small>Aucune carte bancaire demandée à cette étape.</small></div></div></div></section>
+</main>
+
+<div class="resa-mob"><span class="p"><small>D&#x27;Alexandrie à Abou Simbel</small><b>1 995 €</b> <i>/ pers.</i></span><a class="btn btn--or btn--sm" href="https://authentiquegypte.com/sur-mesure/">Personnaliser ce circuit</a></div>
+    <div class="pied__bas">
+      <span>© 2026 Authentique Égypte — Maquette de refonte, charte relevée le 21/08/2026</span>
+    </div>
+  </div>
+</footer>
+
+<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Photos de l'oasis de Siwa">
+  <img id="lb-img" src="" alt="">
+  <button class="prec" type="button" aria-label="Photo précédente">‹</button>
+  <button class="suiv" type="button" aria-label="Photo suivante">›</button>
+  <button class="fermer" type="button" aria-label="Fermer">✕</button>
+  <span class="cpt" id="lb-cpt"></span>
+</div>
+<script>
+/* visionneuse de la galerie */
+(function(){
+  const liens=[...document.querySelectorAll('.galerie a')];
+  const lb=document.getElementById('lb'), img=document.getElementById('lb-img'), cpt=document.getElementById('lb-cpt');
+  if(!liens.length||!lb)return;
+  let i=0;
+  const src=n=>liens[n].getAttribute('href');
+  const alt=n=>liens[n].querySelector('img').alt;
+  function montre(n){
+    i=(n+liens.length)%liens.length;
+    img.src=src(i); img.alt=alt(i);
+    cpt.textContent=(i+1)+' / '+liens.length;
+  }
+  function ouvre(n){ montre(n); lb.dataset.on='1'; document.body.style.overflow='hidden'; }
+  function ferme(){ lb.dataset.on='0'; document.body.style.overflow=''; }
+  liens.forEach((a,n)=>a.addEventListener('click',e=>{e.preventDefault();ouvre(n);}));
+  lb.querySelector('.prec').addEventListener('click',e=>{e.stopPropagation();montre(i-1);});
+  lb.querySelector('.suiv').addEventListener('click',e=>{e.stopPropagation();montre(i+1);});
+  lb.querySelector('.fermer').addEventListener('click',ferme);
+  lb.addEventListener('click',e=>{if(e.target===lb||e.target===img)ferme();});
+  document.addEventListener('keydown',e=>{
+    if(lb.dataset.on!=='1')return;
+    if(e.key==='Escape')ferme();
+    if(e.key==='ArrowLeft')montre(i-1);
+    if(e.key==='ArrowRight')montre(i+1);
+  });
+})();
+</script>
+<script>
+/* révélation au défilement — les blocs se posent au lieu d'apparaître d'un bloc */
+(function(){
+  const cibles=document.querySelectorAll('.tete,.galerie,.colonnes>div>*,.colonnes>aside,.avis article,.grille .carte,.section .eyebrow,.section h2');
+  if(!('IntersectionObserver' in window)){return;}
+  const io=new IntersectionObserver(es=>{
+    es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('vu'); io.unobserve(e.target); } });
+  },{threshold:.08,rootMargin:'0px 0px -40px 0px'});
+  cibles.forEach((el,n)=>{
+    el.setAttribute('data-rev','');
+    el.style.transitionDelay=(Math.min(n%4,3)*60)+'ms';
+    io.observe(el);
+  });
+  /* Garde-fou : si l'observateur ne se déclenche pas (extension,
+     optimiseur de scripts…), tout redevient visible au bout de 2,5 s. */
+  setTimeout(()=>{cibles.forEach(el=>el.classList.add('vu'))},2500);
+})();
+</script>
+
+<button class="mm-btn" id="mm-btn" type="button" aria-pressed="false">Annotations <b>OFF</b></button>
+
+<script>
+document.querySelector('.burger')?.addEventListener('click',e=>{
+  const n=document.querySelector('.nav');
+  const o=getComputedStyle(n).display!=='none';
+  n.style.display=o?'none':'flex';
+  n.style.position='absolute';n.style.top='66px';n.style.left='20px';n.style.right='20px';
+  n.style.flexDirection='column';n.style.alignItems='stretch';n.style.background='#fff';
+  n.style.border='1px solid var(--ligne)';n.style.borderRadius='20px';n.style.padding='12px';
+  n.style.boxShadow='var(--ombre-f)';
+  e.currentTarget.setAttribute('aria-expanded',String(!o));
+});
+</script>
+<script>
+(function(){
+  const b=document.getElementById('mm-btn');
+  b.addEventListener('click',()=>{
+    const on=document.body.classList.toggle('mm');
+    b.setAttribute('aria-pressed',String(on));
+    b.innerHTML='Annotations <b>'+(on?'ON':'OFF')+'</b>';
+  });
+})();
+</script>
+</body>
+</html>

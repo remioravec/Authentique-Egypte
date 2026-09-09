@@ -14,7 +14,8 @@ qui a été modifié et ce qui a été inventé :
 
 usage : outils/verif/controle-contenu.py <source (URL ou fichier)> <page produite> [--json]
         [--coupe TEXTE]   ignore la source à partir de ce texte (widgets, pied de page…)
-        [--zone SÉLECTEUR-TEXTE]   ne garde de la page produite que ce qui suit ce texte
+        [--zone TEXTE]    ne garde de la page produite que ce qui suit ce texte
+        [--fin TEXTE]     ignore la page produite à partir de ce texte (pied de page commun)
 
 Aucune réécriture n'est jugée acceptable par défaut : une phrase
 altérée est signalée, l'agent décide si c'est une coquille ou un écart.
@@ -26,6 +27,7 @@ import html as H
 import json
 import re
 import sys
+import urllib.parse
 import urllib.request
 
 _p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
@@ -34,9 +36,10 @@ _p.add_argument('produit')
 _p.add_argument('--json', action='store_true')
 _p.add_argument('--coupe', default='')
 _p.add_argument('--zone', default='')
+_p.add_argument('--fin', default='', help='ignore la page produite à partir de ce texte (pied de page…)')
 _a = _p.parse_args()
 ARGS = [_a.source, _a.produit]
-OPTS = {'coupe': _a.coupe, 'zone': _a.zone}
+OPTS = {'coupe': _a.coupe, 'zone': _a.zone, 'fin': _a.fin}
 EN_JSON = _a.json
 
 
@@ -52,7 +55,7 @@ def texte_brut(h):
     h = re.sub(r'<(script|style|noscript|svg|template)[^>]*>.*?</\1>', ' ', h, flags=re.S | re.I)
     h = re.sub(r'<!--.*?-->', ' ', h, flags=re.S)
     # les fins de bloc deviennent des fins de phrase, pour ne pas coller deux paragraphes
-    h = re.sub(r'</(p|li|h[1-6]|div|section|article|td|th|tr|summary|figcaption|blockquote)\s*>', '. ', h, flags=re.I)
+    h = re.sub(r'</(p|li|h[1-6]|div|section|article|td|th|tr|summary|figcaption|blockquote|button|small|dt|dd)\s*>', '. ', h, flags=re.I)
     h = re.sub(r'<br\s*/?>', '. ', h, flags=re.I)
     h = re.sub(r'<[^>]+>', ' ', h)
     h = H.unescape(h)
@@ -97,6 +100,10 @@ def images(h):
 
 
 def base_image(u):
+    # une image servie par Next.js (/_next/image?url=…) se juge sur l'image d'origine
+    m = re.search(r'/_next/image\?.*?url=([^&]+)', u)
+    if m:
+        u = urllib.parse.unquote(m.group(1))
     b = u.split('?')[0].rsplit('/', 1)[-1]
     b = re.sub(r'-\d{2,4}x\d{2,4}(?=\.\w+$)', '', b)
     b = re.sub(r'-scaled(?=\.\w+$)', '', b)
@@ -129,6 +136,10 @@ if OPTS.get('zone') and isinstance(OPTS['zone'], str):
     i = prod_txt.find(OPTS['zone'])
     if i > 0:
         prod_txt = prod_txt[i:]
+if OPTS.get('fin') and isinstance(OPTS['fin'], str):
+    i = prod_txt.find(OPTS['fin'])
+    if i > 0:
+        prod_txt = prod_txt[:i]
 
 ps, pp = phrases(src_txt), phrases(prod_txt)
 norm_p = {normaliser(p): p for p in pp}
@@ -155,7 +166,12 @@ for p in pp:
         continue
     inventees.append(p)
 
-img_s = images(src_html)
+src_html_images = src_html
+if OPTS.get('coupe'):
+    i = src_html.find(OPTS['coupe'])
+    if i > 0:
+        src_html_images = src_html[:i]
+img_s = images(src_html_images)
 img_p = images(prod_html)
 bases_s = {base_image(u) for u in img_s}
 bases_p = {base_image(u) for u in img_p}

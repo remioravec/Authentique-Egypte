@@ -36,6 +36,8 @@ outils/verif/controle-contenu.py <source> <produit> [--coupe TEXTE] [--zone TEXT
   contenu qui n'appartient pas à la page.
 - `--zone` ne garde de la page produite que ce qui suit un texte (par
   exemple le début du contenu, après l'entête commune).
+- `--fin` ignore la page produite à partir d'un texte (le pied de page
+  commun, les sections du gabarit qui ne viennent pas de la source).
 - `--json` pour le détail exploitable.
 
 L'outil sort : phrases reprises / altérées / manquantes / inventées,
