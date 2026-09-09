@@ -269,7 +269,18 @@ body.mm .mm-legende{display:block}
   .devis{grid-template-columns:1fr;gap:28px}
   .pied__g{grid-template-columns:1fr 1fr}
 }
-@media (max-width:860px){
+/* 910 px et non 860 : la navigation de bureau a besoin de 909 px pour
+   tenir. Entre 861 et 910 elle débordait de la fenêtre — 48 px à 861,
+   28 à 880, 8 à 900, mesurés sur l'accueil comme sur les fiches et les
+   guides. C'est la largeur du menu qui commande, pas une borne ronde. */
+/* Sous 380 px, un libellé long tenu sur une seule ligne sort de l'écran :
+   « Voir les séjours qui correspondent » demandait 308 px pour 288
+   disponibles. Le bouton a le droit de passer à la ligne, la règle des
+   44 px de hauteur restant tenue. */
+@media (max-width:380px){
+  .btn{white-space:normal;text-align:center;line-height:1.35}
+}
+@media (max-width:910px){
   .nav{display:none}
   .burger{display:inline-flex}
   .barre-mob{display:flex}

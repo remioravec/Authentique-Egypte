@@ -344,7 +344,10 @@ body.mm .mm-legende{display:block}
   .pied__g{grid-template-columns:1fr 1fr}
   .ruban{grid-template-columns:repeat(6,1fr)}
 }
-@media (max-width:860px){
+@media (max-width:380px){
+  .btn{white-space:normal;text-align:center;line-height:1.35}
+}
+@media (max-width:910px){
   .nav{display:none}
   .burger{display:inline-flex}
   .barre-mob{display:flex}
@@ -386,8 +389,14 @@ body.mm .mm-legende{display:block}
    Les liens en ligne dans un paragraphe gardent leur hauteur : les
    agrandir casserait l'interligne, et la règle des 44 px ne s'applique
    pas à eux.
+   La borne est 860 px et non 900 : c'est à 860 que la charte cache la
+   navigation de bureau. Entre 861 et 900, ce bloc rallumait le burger
+   SANS que la navigation ne s'efface — les deux coexistaient, la barre
+   mesurait 1013 px pour une fenêtre de 900, l'appel au devis était
+   coupé au bord et la page défilait latéralement. Mesuré : +152 px à
+   861, +133 à 880, +113 à 900.
    ------------------------------------------------------------------ */
-@media (max-width:900px){
+@media (max-width:860px){
 
   /* 1 ─ Texte ------------------------------------------------------ */
   body{font-size:17px;line-height:1.7}

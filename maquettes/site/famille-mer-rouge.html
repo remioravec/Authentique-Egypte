@@ -96,9 +96,13 @@
 .pg .hero .ariane li::after{color:rgba(255,255,255,.45)}
 .pg .hero .ariane [aria-current]{color:#fff}
 .pg .hero__pills{display:flex;flex-wrap:wrap;gap:8px;margin:20px 0 18px}
+/* Un voile BLANC translucide sur une photo claire ne fait qu'éclaircir
+   le fond du texte blanc : les jetons tombaient à 4,03:1 sur mobile,
+   mesuré au pixel. Le voile devient sombre — même effet de verre, mais
+   il travaille dans le bon sens. */
 .pg .pill{display:inline-flex;align-items:center;gap:7px;font-family:"Manrope",sans-serif;
-  font-size:.84rem;font-weight:600;color:#fff;background:rgba(255,255,255,.16);
-  border:1px solid rgba(255,255,255,.3);backdrop-filter:blur(8px);border-radius:var(--r-pill);padding:7px 14px}
+  font-size:.84rem;font-weight:600;color:#fff;background:rgba(5,35,50,.52);
+  border:1px solid rgba(255,255,255,.34);backdrop-filter:blur(8px);border-radius:var(--r-pill);padding:7px 14px}
 .pg .hero h1{color:#fff;font-size:clamp(2rem,4.4vw,3.15rem);line-height:1.08;margin:0 0 14px;
   max-width:18ch;text-shadow:0 2px 20px rgba(0,0,0,.45);text-wrap:balance}
 .pg .hero__chapo{color:#EAF2F6;font-size:1.12rem;line-height:1.6;max-width:54ch;margin:0 0 28px;
@@ -657,9 +661,13 @@
      n'a plus de côté où s'effacer, il redevient vertical.
      Le flou garde toute la hauteur ; seule la photo NETTE se limite à
      la bande que sa propre définition permet. */
+  /* Sur mobile le texte occupe TOUTE la hauteur du bandeau : le creux
+     du voile à 22 % laissait le chapô à 4,02:1 et le « À partir de » à
+     4,17:1, mesurés au pixel. Il n'y a pas de zone sans texte où
+     s'éclaircir. */
   .pg .hero::after{background:
-    linear-gradient(180deg,rgba(6,42,58,.52) 0%,rgba(6,42,58,.40) 22%,
-    rgba(5,35,50,.72) 58%,rgba(5,35,50,.93) 100%)}
+    linear-gradient(180deg,rgba(6,42,58,.60) 0%,rgba(6,42,58,.58) 22%,
+    rgba(5,35,50,.82) 58%,rgba(5,35,50,.95) 100%)}
   .pg .hero__fond{position:absolute;top:0;left:0;right:0;height:var(--une-h,470px)}
   .pg .hero__in{padding:14px 0 34px}
   /* Le bloc titre se colle au BAS de la photo, quelle que soit la

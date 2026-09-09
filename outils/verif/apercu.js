@@ -17,10 +17,18 @@ const prefixe = process.argv[3] || '/tmp/apercu';
 const fractions = (process.argv[4] || '0,0.42,0.72').split(',').map(Number);
 const CACHE = '/tmp/imgcache';
 
+// Le cache est écrit sous le md5 NU de l'URL par les autres outils du
+// projet ; celui-ci y ajoutait l'extension et ne trouvait donc que les
+// fichiers déposés par lui-même — 15 photos sur 25 sur l'accueil, et
+// toute lecture visuelle se faisait sur des trous blancs. On accepte
+// les deux formes, la nue d'abord.
 const local = u => {
-  const nom = crypto.createHash('md5').update(u).digest('hex') + path.extname(new URL(u).pathname);
-  const p = path.join(CACHE, nom);
-  return fs.existsSync(p) ? p : null;
+  const cle = crypto.createHash('md5').update(u).digest('hex');
+  for (const nom of [cle, cle + path.extname(new URL(u).pathname)]) {
+    const p = path.join(CACHE, nom);
+    if (fs.existsSync(p)) return p;
+  }
+  return null;
 };
 const type = p => ({ '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg', '.png': 'image/png',
   '.webp': 'image/webp', '.avif': 'image/avif' })[path.extname(p).toLowerCase()] || 'image/jpeg';

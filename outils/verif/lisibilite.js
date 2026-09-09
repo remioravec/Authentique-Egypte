@@ -110,6 +110,15 @@ const VUES = [
         return { couleur: { r: 255, v: 255, b: 255, a: 1 } };
       };
 
+      // Toutes les images de la page, avec leur rectangle : sert à
+      // savoir si un texte est posé PAR-DESSUS l'une d'elles.
+      const IMAGES = [...document.querySelectorAll('img')].filter(vu)
+        .map(im => ({ el: im, r: im.getBoundingClientRect() }));
+      const surUneImage = (el, r) => IMAGES.some(im =>
+        !el.contains(im.el) && !im.el.contains(el)
+        && im.r.left < r.right && im.r.right > r.left
+        && im.r.top < r.bottom && im.r.bottom > r.top);
+
       const PORTEURS = 'p,li,h1,h2,h3,h4,h5,h6,span,b,strong,em,small,td,th,summary,figcaption,a,button,label,blockquote,dt,dd';
       const textes = [];
       for (const el of document.querySelectorAll(PORTEURS)) {
@@ -156,7 +165,12 @@ const VUES = [
             : fond.stops ? Math.round(Math.min(...fond.stops.map(c => contraste(couleur, c))) * 100) / 100
             : null,
           decoratif,
-          surPhoto: !!fond.photo,
+          // Une photo n'est pas toujours un `background-image` d'ancêtre.
+          // Le bandeau de ce projet pose la sienne dans un <img> frère,
+          // en position absolue : fondDe ne la voit jamais, s'arrête au
+          // fond opaque de la section et rend un contraste flatteur qui
+          // n'existe pas. On regarde donc aussi ce qui est DESSOUS.
+          surPhoto: !!fond.photo || surUneImage(el, r),
         });
       }
 
@@ -248,20 +262,70 @@ const VUES = [
     // se laisser piéger par un liseré isolé). C'est la seule façon de
     // savoir si un voile tient : le calculer depuis le CSS suppose de
     // connaître la photo, et la photo change à chaque fiche.
+    // On fige TOUT mouvement avant de mesurer : le mur d'avis défile en
+    // continu, et amener une carte en mouvement dans la fenêtre pour la
+    // photographier ne converge jamais. Une mesure se fait sur une image
+    // arrêtée, sans quoi elle se fait sur un flou.
+    await page.addStyleTag({ content:
+      '*,*::before,*::after{animation:none!important;transition:none!important;' +
+      'scroll-behavior:auto!important}' });
     for (const t of releve.vues[vue.nom].textes) {
       if (!t.surPhoto || t.boite.l < 2 || t.boite.h < 2) continue;
       const el = await page.$(`[data-lis="${t.rang}"]`);
       if (!el) continue;
-      await el.evaluate(e => { e.style.visibility = 'hidden'; });
+      // color:transparent et non visibility:hidden : masquer l'élément
+      // effacerait aussi SON PROPRE fond — la pastille, le jeton, le
+      // bouton — et on mesurerait le contraste contre ce qu'il y a
+      // derrière lui au lieu de ce qu'il y a derrière son texte.
+      // transition:none est indispensable, pas une précaution : la charte
+      // pose `transition:all` sur les boutons, la couleur mettait donc
+      // 200 ms à devenir transparente, et le cliché pris juste après
+      // photographiait ENCORE LE TEXTE. Le contraste rendu était alors
+      // celui du texte contre lui-même — un bouton or parfaitement
+      // lisible ressortait à 1,91:1.
+      // text-shadow part aussi : une ombre portée noircit le fond
+      // qu'on cherche à mesurer.
+      const avant = await el.evaluate(e => {
+        // Les DESCENDANTS aussi : un enfant qui pose sa propre couleur —
+        // l'auteur en gras au pied d'un avis — reste peint quand on ne
+        // masque que le parent, et il est alors compté comme du FOND.
+        const lot = [e, ...e.querySelectorAll('*')];
+        const g = lot.map(x => [x, x.style.color, x.style.transition, x.style.textShadow]);
+        for (const x of lot) {
+          x.style.setProperty('transition', 'none', 'important');
+          x.style.setProperty('text-shadow', 'none', 'important');
+          x.style.setProperty('color', 'transparent', 'important');
+        }
+        e.__lis = g;
+        return true;
+      });
       let cliche = null;
       try {
+        // On photographie la BANDE CENTRALE de la boîte, pas la boîte
+        // entière : les coins d'un bouton arrondi laissent voir ce qu'il
+        // y a derrière lui, et ce pixel-là — qui ne touche aucune lettre
+        // — faisait tomber un bouton or à 1,34:1.
+        // On amène l'élément dans la fenêtre avant de le photographier,
+        // et on reprend sa boîte : le rectangle relevé au chargement est
+        // en coordonnées de FENÊTRE, et tout ce qui vit sous la ligne de
+        // flottaison — le mur d'avis, les cartes du bas — n'était donc
+        // jamais mesuré, seulement déclaré « non mesurable ».
+        await el.scrollIntoViewIfNeeded();
+        const b = await el.boundingBox();
+        if (!b) throw new Error('hors page');
+        const mx = Math.min(b.width * 0.18, 14), my = Math.min(b.height * 0.22, 12);
         cliche = await page.screenshot({
-          clip: { x: Math.max(0, t.boite.x), y: Math.max(0, t.boite.y),
-                  width: Math.max(2, Math.min(t.boite.l, vue.largeur - Math.max(0, t.boite.x))),
-                  height: Math.max(2, t.boite.h) },
+          clip: { x: Math.max(0, b.x + mx), y: Math.max(0, b.y + my),
+                  width: Math.max(2, b.width - 2 * mx),
+                  height: Math.max(2, b.height - 2 * my) },
         });
       } catch (err) { /* hors écran : rien à mesurer */ }
-      await el.evaluate(e => { e.style.visibility = ''; });
+      await el.evaluate(e => {
+        for (const [x, c, t, o] of (e.__lis || [])) {
+          x.style.color = c || ''; x.style.transition = t || ''; x.style.textShadow = o || '';
+        }
+        delete e.__lis;
+      });
       if (!cliche) continue;
       t.contraste = await page.evaluate(async ([b64, couleur]) => {
         const img = new Image();
