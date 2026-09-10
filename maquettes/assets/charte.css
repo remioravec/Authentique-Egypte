@@ -23,7 +23,8 @@
   --teal:#21B0B7; --teal-txt:#0F6E73; --teal-fond:#E8F7F8;
   --papier:#FFFFFF; --fond:#F9F9FB; --fond-2:#F6FAFE;
   --noir:#000000; --texte:#5D5D5D; --gris:#6E7680; --gris-clair:#88929C;
-  --ligne:#E4E4EA; --ligne-2:#F1F1F5;
+  --ligne:#E4E4EA; --ligne-2:#F1F1F5; --ligne-pg:#E7E9EE;
+  --gris-lis:#5A6069; --or-fonce:#C08600;
   --vert:#2F7D4F; --vert-fond:#EAF5EE;
   --rouge:#B4402A; --rouge-fond:#FBEAE5;
   --r-s:8px; --r-m:14px; --r-l:20px; --r-pill:999px;
@@ -213,6 +214,110 @@ p{margin:0 0 1em}
 .faq summary:hover{color:var(--teal-txt)}
 .faq__c{padding:0 44px 20px 0;color:var(--texte);max-width:66ch}
 .faq__c :last-child{margin-bottom:0}
+
+/* ---------- mur d'avis Google ----------
+   Porté par la charte, donc partagé : les gabarits générés gardent
+   leur propre version, préfixée `.pg`, qui l'emporte en spécificité. */
+/* ---------- le mur d'avis : deux colonnes qui défilent ----------
+   La boucle repose sur une règle simple : chaque colonne porte DEUX
+   fois ses cartes et remonte de la moitié exacte de sa hauteur. D'où la
+   marge sur les cartes plutôt qu'un `gap` sur la piste — un `gap`
+   n'existe qu'ENTRE les enfants, la moitié de la hauteur tomberait
+   alors un demi-écart trop haut et la boucle sauterait à chaque tour.
+   La marge est portée par un <article>, donc un élément de bloc : elle
+   s'applique (ce n'est pas le cas d'un <a>, voir .etape__photo). */
+.mur__tete{display:flex;flex-wrap:wrap;align-items:flex-end;gap:16px 28px;margin:0 0 26px}
+.mur__tete>div:first-child{flex:1 1 340px}
+.mur__tete h2{margin:0}
+.mur__cpt{margin:0;font-family:"Manrope",sans-serif;line-height:1.45}
+.mur__cpt b{display:block;font-size:1.05rem;color:var(--noir);font-weight:700}
+.mur__cpt small{display:block;font-size:.94rem;color:var(--gris-lis);margin-top:2px}
+/* La case est le bouton : le défilement s'arrête donc sans JavaScript,
+   comme l'exige le critère 2.2.2. Elle reste dans le flux du clavier,
+   seulement dérobée à l'œil. */
+.mur__stop{position:absolute;width:1px;height:1px;margin:-1px;padding:0;border:0;
+  overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.mur__btn{display:inline-flex;align-items:center;gap:9px;min-height:44px;padding:0 18px;
+  border-radius:var(--r-pill);border:1px solid var(--ligne-pg);background:#fff;cursor:pointer;
+  font-family:"Manrope",sans-serif;font-size:.96rem;font-weight:600;color:var(--gris-lis);
+  transition:border-color .18s,color .18s}
+.mur__btn:hover{border-color:var(--nuit);color:var(--nuit-900)}
+.mur__btn svg{color:var(--or-fonce)}
+.mur__btn .b{display:none}
+.mur__stop:checked~.mur__tete .mur__btn .a{display:none}
+.mur__stop:checked~.mur__tete .mur__btn .b{display:inline}
+.mur__stop:focus-visible~.mur__tete .mur__btn{outline:2px solid var(--teal-txt);
+  outline-offset:3px}
+
+.mur{display:grid;grid-template-columns:1fr 1fr;gap:26px;align-items:start}
+/* Chaque colonne est un PANNEAU encadré, et la fenêtre de défilement est
+   à l'intérieur. Deux raisons, et la seconde est un défaut mesuré :
+   la fenêtre est la colonne et non la grille, sinon une grille à une
+   colonne sur téléphone effacerait cinq avis sur dix ; et le cadre est
+   séparé de la fenêtre parce que le fondu qui adoucit les bords ronge
+   tout ce qu'il traverse, cadre compris. Sans lui, sur téléphone, la
+   carte coupée en bas du premier panneau et celle coupée en haut du
+   second se lisaient comme une seule — le texte d'un voyageur suivi de
+   la signature d'un autre. */
+.mur__c{background:var(--fond-2);border:1px solid var(--ligne-pg);
+  border-radius:var(--r-l);padding:18px}
+.mur__f{height:664px;overflow:hidden;
+  -webkit-mask-image:linear-gradient(180deg,transparent,#000 48px,#000 calc(100% - 48px),transparent);
+  mask-image:linear-gradient(180deg,transparent,#000 48px,#000 calc(100% - 48px),transparent)}
+/* display:flow-root n'est pas cosmétique. Sans lui, la marge basse de
+   la DERNIÈRE carte fusionne à travers .mur__p puis .mur__d — ni l'un
+   ni l'autre n'ayant bordure, padding ou contexte de formatage — et la
+   piste mesure 2×période − 22 px. La moitié tombait alors 11 px trop
+   haut : la boucle sautait à chaque tour, mesuré sur les deux colonnes
+   et aux trois largeurs. */
+.mur__d{display:flow-root;animation:mur var(--d,90s) linear infinite;will-change:transform}
+.mur__c:nth-child(2) .mur__d{animation-direction:reverse}
+@keyframes mur{from{transform:translateY(0)}to{transform:translateY(-50%)}}
+
+/* Trois façons d'arrêter : le bouton, le survol, le focus clavier. */
+.mur:hover .mur__d,.mur:focus-within .mur__d,
+.mur__stop:checked~.mur .mur__d{animation-play-state:paused}
+.mur__a{background:#fff;border:1px solid var(--ligne-pg);border-radius:var(--r-l);
+  padding:24px;margin:0 0 22px;box-shadow:0 2px 10px rgba(16,32,48,.05)}
+.mur__q{display:block;font-family:"Archivo",serif;font-size:2.4rem;line-height:.6;
+  color:var(--or);margin:6px 0 12px}
+.mur__a blockquote{margin:0;font-size:1rem;line-height:1.7;color:var(--texte)}
+.mur__a footer{display:flex;align-items:center;gap:12px;font-family:"Manrope",sans-serif;
+  font-size:.9rem;color:var(--gris-lis);border-top:1px solid var(--ligne-2);
+  padding-top:14px;margin-top:16px}
+.mur__a footer b{color:var(--noir);display:block;font-weight:700}
+
+/* ---------- le mur au repos ----------
+   Deux situations où le défilement dessert la lecture, et la même
+   réponse : la liste entière, sans mouvement.
+
+   · mouvement réduit : le visiteur l'a demandé ;
+   · sous 861 px : mesurées à 390 px, huit des dix cartes sont plus
+     hautes que la fenêtre. Le lecteur qui met en pause au milieu d'un
+     avis n'avait aucun moyen d'en voir la fin — il fallait relancer et
+     attendre un tour de soixante secondes. Un bouton de pause qui ne
+     sert à rien ne remplit pas le critère 2.2.2.
+
+   Ces règles viennent en FIN de feuille : à spécificité égale, c'est la
+   dernière qui gagne, et les blocs responsives sont au-dessus. */
+@media (max-width:1024px){
+  .mur{grid-template-columns:1fr;gap:22px}
+  .mur__f{height:420px}
+}
+@media (prefers-reduced-motion:reduce),(max-width:860px){
+  .mur__f{height:auto;overflow:visible;-webkit-mask-image:none;mask-image:none}
+  .mur__d{animation:none}
+  .mur__p[aria-hidden]{display:none}
+  .mur__btn,.mur__stop{display:none}
+}
+
+/* Une étoile est du TEXTE : l'or de marque ne donne que 1,79:1 sur le
+   blanc de la carte. Même famille, assombrie jusqu'à 4,86:1. Et la note
+   est LUE sur le widget (comptage des `star/f.svg`), jamais déduite. */
+.mur__et{margin:0 0 10px;display:flex;align-items:center;gap:9px;color:#946A00;
+  letter-spacing:.14em;font-size:.95rem;line-height:1}
+.mur__et b{font-family:"Manrope",sans-serif;font-size:.88rem;font-weight:700;
+  letter-spacing:0;color:#5A6069}
 
 /* ---------- avis ---------- */
 .avis{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}

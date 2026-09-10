@@ -55,6 +55,30 @@ CORRECTIONS = [
 ]
 
 
+def avis_de_la_page(contenu, releve):
+    """Les avis Google de l'accueil, relevés et non recopiés.
+
+    Même widget Trustindex que sur les pages catégorie : on réutilise
+    l'extraction qui y sert déjà, y compris le comptage des étoiles."""
+    blocs = _p.blocs_du_contenu(contenu)
+    _, ecartes = _p.retirer_avis(blocs)
+    temoins = _p.temoignages(ecartes)
+    notes = _c.notes_des_avis(contenu)
+    # L'accueil porte beaucoup d'autres blocs que le widget : l'extraction
+    # ramassait aussi « Créez un voyage qui vous ressemble » et trois bouts
+    # de FAQ. Le widget, lui, se compte exactement — un `ti-review-item`
+    # par avis, cinq étoiles chacun. Un témoignage sans étoile relevée
+    # n'est pas un avis, et il ne s'affiche pas.
+    temoins = temoins[:len(notes)]
+    for i, t in enumerate(temoins):
+        if i < len(notes) and notes[i]:
+            t['note'] = notes[i]
+    temoins = [t for t in temoins if t.get('note')]
+    return {'nombre': _p.avis_google(contenu),
+            'source': "widget Google de la page d'accueil",
+            'releve': releve, 'temoignages': temoins}
+
+
 def corriger(texte):
     for motif, vers, _ in CORRECTIONS:
         texte = motif.sub(vers, texte)
@@ -132,15 +156,21 @@ def main():
         'corrections': [{'motif': m.pattern, 'vers': v, 'source': s}
                         for m, v, s in CORRECTIONS],
         'equipe': [],   # l'accueil en ligne ne nomme personne : on n'invente pas
+        # Le widget Google de l'accueil, relevé comme celui des pages
+        # catégorie : le nombre d'avis, les témoignages entiers, et la
+        # NOTE de chacun comptée sur les étoiles du widget. C'est la
+        # seule façon d'afficher une note sans l'inventer (D30, D33).
+        'avis_google': avis_de_la_page(contenu, releve),
     }
     inv['anomalies'] = anomalies(inv)
 
     os.makedirs(SORTIE, exist_ok=True)
     with open(os.path.join(SORTIE, 'accueil.json'), 'w', encoding='utf-8') as f:
         json.dump(inv, f, ensure_ascii=False, indent=1)
-    print('accueil : %d groupe(s), %d question(s), %d argument(s)'
+    print('accueil : %d groupe(s), %d question(s), %d argument(s), %d avis'
           % (len(inv['groupes']), sum(len(g['questions']) for g in inv['groupes']),
-             len(inv['arguments']['points'])))
+             len(inv['arguments']['points']),
+             len(inv['avis_google']['temoignages'])))
     for g in inv['groupes']:
         print('   %-28s %d question(s)' % (g['titre'][:28], len(g['questions'])))
     for x in inv['anomalies']:
