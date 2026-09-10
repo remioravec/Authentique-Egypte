@@ -2,7 +2,7 @@
  "slug": "mer-rouge",
  "id": 470,
  "url": "https://authentiquegypte.com/nos-sejours-egypte/mer-rouge/",
- "releve": "2026-09-09",
+ "releve": "2026-09-10",
  "modified_gmt": "2025-10-28T14:57:05",
  "title_seo": "Visiter la mer rouge - Voyage sur mesure et authentique",
  "meta_description": "loger en Égypte pour profiter de la plongée en Mer Rouge. des récifs coralliens et des sites uniques dans des hébergements confortables.",
@@ -24,30 +24,30 @@
     "alt": "",
     "media_id": 6461,
     "tailles": {
-     "medium": {
-      "url": "https://authentiquegypte.com/wp-content/uploads/2023/11/WhatsApp-Image-2025-08-14-at-13.23.16-300x169.jpeg",
-      "largeur": 300,
-      "hauteur": 169
+     "full": {
+      "hauteur": 720,
+      "largeur": 1280,
+      "url": "https://authentiquegypte.com/wp-content/uploads/2023/11/WhatsApp-Image-2025-08-14-at-13.23.16.jpeg"
      },
      "large": {
-      "url": "https://authentiquegypte.com/wp-content/uploads/2023/11/WhatsApp-Image-2025-08-14-at-13.23.16-1024x576.jpeg",
+      "hauteur": 576,
       "largeur": 1024,
-      "hauteur": 576
+      "url": "https://authentiquegypte.com/wp-content/uploads/2023/11/WhatsApp-Image-2025-08-14-at-13.23.16-1024x576.jpeg"
      },
-     "thumbnail": {
-      "url": "https://authentiquegypte.com/wp-content/uploads/2023/11/WhatsApp-Image-2025-08-14-at-13.23.16-150x150.jpeg",
-      "largeur": 150,
-      "hauteur": 150
+     "medium": {
+      "hauteur": 169,
+      "largeur": 300,
+      "url": "https://authentiquegypte.com/wp-content/uploads/2023/11/WhatsApp-Image-2025-08-14-at-13.23.16-300x169.jpeg"
      },
      "medium_large": {
-      "url": "https://authentiquegypte.com/wp-content/uploads/2023/11/WhatsApp-Image-2025-08-14-at-13.23.16-768x432.jpeg",
+      "hauteur": 432,
       "largeur": 768,
-      "hauteur": 432
+      "url": "https://authentiquegypte.com/wp-content/uploads/2023/11/WhatsApp-Image-2025-08-14-at-13.23.16-768x432.jpeg"
      },
-     "full": {
-      "url": "https://authentiquegypte.com/wp-content/uploads/2023/11/WhatsApp-Image-2025-08-14-at-13.23.16.jpeg",
-      "largeur": 1280,
-      "hauteur": 720
+     "thumbnail": {
+      "hauteur": 150,
+      "largeur": 150,
+      "url": "https://authentiquegypte.com/wp-content/uploads/2023/11/WhatsApp-Image-2025-08-14-at-13.23.16-150x150.jpeg"
      }
     },
     "etat": "ok",
@@ -103,7 +103,7 @@
  "avis_google": {
   "nombre": 23,
   "source": "widget Google de la page catégorie",
-  "releve": "2026-09-09",
+  "releve": "2026-09-10",
   "temoignages": [
    {
     "auteur": "gislaine gagey",

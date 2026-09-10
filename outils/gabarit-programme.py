@@ -43,6 +43,16 @@ WHATSAPP = 'https://wa.me/201066619098'
 e = H.escape
 
 
+def ep(texte):
+    """Échappe un texte de la cliente EN GARDANT ses retours à la ligne.
+
+    Elle écrit des `<br>` dans ses paragraphes — un intitulé d'étape sur
+    une ligne, son texte en dessous. Les avaler collait deux phrases
+    (« Arrivée au CaireAccueil à l'aéroport »), sur les quatorze fiches.
+    Le relevé les garde ; c'est ici qu'ils redeviennent des `<br>`."""
+    return e(texte or '').replace('\n', '<br>')
+
+
 # ------------------------------------------------------------------ interface
 #
 # Les seules chaînes que le gabarit écrit. Chacune porte le numéro de la
@@ -437,10 +447,10 @@ CSS = r"""
    boutons, l'autre assied le bas du bandeau sur la section suivante —
    et outils/verif/lisibilite.js les mesure sur les pixels rendus. */
 .pg .hero::after{content:"";position:absolute;inset:0;background:
-  linear-gradient(96deg,rgba(5,35,50,.90) 0%,rgba(5,35,50,.84) 38%,
-  rgba(5,35,50,.42) 68%,rgba(5,35,50,.20) 100%),
-  linear-gradient(180deg,rgba(6,42,58,.34) 0%,rgba(6,42,58,0) 26%,
-  rgba(5,35,50,.30) 72%,rgba(5,35,50,.80) 100%)}
+  linear-gradient(96deg,rgba(8,58,92,.93) 0%,rgba(8,58,92,.88) 38%,
+  rgba(8,58,92,.46) 68%,rgba(8,58,92,.22) 100%),
+  linear-gradient(180deg,rgba(10,66,104,.36) 0%,rgba(10,66,104,0) 26%,
+  rgba(8,58,92,.32) 72%,rgba(8,58,92,.84) 100%)}
 /* z-index:1 est indispensable : ::after est le DERNIER enfant peint de
    .hero, donc il passe par-dessus le texte tant que celui-ci ne monte
    pas d'un cran. Sans cette ligne, le titre et les deux boutons partent
@@ -456,23 +466,23 @@ CSS = r"""
    mesuré au pixel. Le voile devient sombre — même effet de verre, mais
    il travaille dans le bon sens. */
 .pg .pill{display:inline-flex;align-items:center;gap:7px;font-family:"Manrope",sans-serif;
-  font-size:.84rem;font-weight:600;color:#fff;background:rgba(5,35,50,.82);
+  font-size:.84rem;font-weight:600;color:#fff;background:rgba(8,58,92,.86);
   border:1px solid rgba(255,255,255,.34);backdrop-filter:blur(8px);border-radius:var(--r-pill);padding:7px 14px}
 .pg .hero h1{color:#fff;font-size:clamp(2rem,4.4vw,3.15rem);line-height:1.08;margin:0 0 14px;
   max-width:18ch;text-shadow:0 2px 20px rgba(0,0,0,.45);text-wrap:balance}
 .pg .hero__chapo{color:#fff;font-size:1.12rem;line-height:1.6;max-width:54ch;margin:0 0 28px;
   font-weight:400;text-shadow:0 1px 12px rgba(0,0,0,.45)}
 .pg .hero__bas{display:flex;flex-wrap:wrap;align-items:center;gap:16px 28px}
-.pg .hero__prix{background:rgba(5,35,50,.72);backdrop-filter:blur(10px);
+.pg .hero__prix{background:rgba(8,58,92,.78);backdrop-filter:blur(10px);
   border:1px solid rgba(255,255,255,.30);border-radius:var(--r-m);padding:12px 20px;color:#fff;
   font-family:"Manrope",sans-serif}
 .pg .hero__prix small{display:block;font-size:.82rem;color:#fff}
 .pg .hero__prix b{display:block;font-size:1.85rem;font-weight:700;letter-spacing:-1px;line-height:1.15}
 .pg .hero__prix i{font-style:normal;font-size:.84rem;color:#DCEAF0}
 .pg .hero__act{display:flex;flex-wrap:wrap;gap:12px}
-.pg .btn--verre{background:rgba(255,255,255,.15);color:#fff;border-color:rgba(255,255,255,.42);
+.pg .btn--verre{background:rgba(8,58,92,.66);color:#fff;border-color:rgba(255,255,255,.46);
   backdrop-filter:blur(8px)}
-.pg .btn--verre:hover{background:rgba(255,255,255,.28);border-color:#fff}
+.pg .btn--verre:hover{background:rgba(8,58,92,.82);border-color:#fff}
 /* Le bouton de devis de l'entête commune : la règle .nav>a de la charte
    (0-1-1) écrase la couleur de .btn--or (0-1-0) et laisse un bleu sur
    fond or, à 2,7:1. On rétablit le contraste sans toucher à la charte. */
@@ -496,7 +506,7 @@ CSS = r"""
 .pg .deux{display:grid;grid-template-columns:minmax(0,1fr) 348px;gap:56px;
   padding:64px 0;align-items:start}
 .pg .deux>.corps{min-width:0;display:grid;gap:56px}
-.pg .prose{font-size:1.06rem;line-height:1.8;color:var(--texte);max-width:62ch}
+.pg .prose{font-size:1.06rem;line-height:1.8;color:var(--texte);max-width:51ch}
 .pg .prose p:last-child{margin-bottom:0}
 .pg .prose strong{color:var(--nuit-900);font-weight:600}
 
@@ -530,10 +540,10 @@ CSS = r"""
 .pg .mod--valise .mod__intro a,.pg .mod__apres a{color:var(--teal-txt);text-decoration:underline;
   text-underline-offset:3px}
 .pg .mod__intro{font-family:"Manrope",sans-serif;font-size:1.02rem;color:var(--nuit-900);
-  font-weight:600;margin:0 0 20px;max-width:62ch}
+  font-weight:600;margin:0 0 20px;max-width:51ch}
 .pg .mod__conseil{display:flex;gap:11px;align-items:flex-start;margin:20px 0 0;padding:16px 18px;
   background:var(--or-fond);border-radius:var(--r-m);font-family:"Manrope",sans-serif;
-  font-size:.98rem;color:#6B4B04;line-height:1.6;max-width:64ch}
+  font-size:.98rem;color:#6B4B04;line-height:1.6;max-width:53ch}
 .pg .mod__conseil svg{flex:0 0 auto;color:#B8860B;margin-top:2px}
 .pg .duree{position:relative}
 .pg .duree__r{position:absolute;opacity:0;pointer-events:none}
@@ -548,7 +558,7 @@ CSS = r"""
   border-radius:var(--r-l);padding:24px 26px}
 .pg .duree__c b{display:block;font-family:"Manrope",sans-serif;font-size:1.25rem;font-weight:800;
   color:var(--teal-txt);letter-spacing:-.4px;margin-bottom:8px}
-.pg .duree__c p{margin:0;font-size:1.04rem;line-height:1.7;color:var(--texte);max-width:60ch}
+.pg .duree__c p{margin:0;font-size:1.04rem;line-height:1.7;color:var(--texte);max-width:50ch}
 /* Sans CSS ni JavaScript, les trois formats restent lisibles à la suite :
    c'est le mode dégradé qu'impose la doctrine. */
 .pg .duree__r:nth-of-type(1):checked~.duree__ong .duree__o:nth-child(1),
@@ -682,7 +692,7 @@ CSS = r"""
   font-size:.92rem;color:#8A2F1C;line-height:1.5}
 .pg .carte__hors svg{flex:0 0 auto;margin-top:2px}
 .pg .carte__note{margin:14px 0 0;font-family:"Manrope",sans-serif;font-size:.86rem;
-  color:var(--gris-lis);line-height:1.5;max-width:62ch}
+  color:var(--gris-lis);line-height:1.5;max-width:51ch}
 .pg .carte__ech path{stroke:var(--nuit-900);stroke-width:3;stroke-linecap:butt;opacity:.75}
 .pg .carte__ech text{fill:var(--nuit-900);font-family:"Manrope",sans-serif;font-size:15px;
   font-weight:700;text-anchor:middle;paint-order:stroke;stroke:rgba(255,255,255,.9);
@@ -713,7 +723,7 @@ CSS = r"""
 .pg .rep--calc svg{color:var(--teal-txt)}
 .pg .reps__src{margin:26px 0 0;padding:16px 18px;background:var(--fond);border-radius:var(--r-m);
   font-family:"Manrope",sans-serif;font-size:.9rem;color:var(--gris-lis);line-height:1.6;
-  max-width:66ch}
+  max-width:54ch}
 
 /* ---------- fil d'Ariane sous le bandeau ---------- */
 .pg .ariane--sous{border-bottom:1px solid var(--ligne-2);background:#fff}
@@ -765,7 +775,7 @@ CSS = r"""
 .pg .etape h4{font-family:"Archivo",sans-serif;font-size:1.24rem;font-weight:600;color:var(--noir);
   margin:0 0 18px;letter-spacing:-.3px;display:flex;align-items:center;gap:10px}
 .pg .etape h4 svg{color:var(--teal-txt);flex:0 0 auto}
-.pg .etape p{color:var(--texte);font-size:1.04rem;line-height:1.8;max-width:62ch}
+.pg .etape p{color:var(--texte);font-size:1.04rem;line-height:1.8;max-width:51ch}
 .pg .mentions{display:flex;flex-wrap:wrap;gap:9px;margin:18px 0 0;padding:0}
 .pg .jour>.mentions{margin-top:24px;padding-top:18px;border-top:1px solid var(--ligne-2)}
 .pg .mention{display:inline-flex;align-items:center;gap:7px;font-family:"Manrope",sans-serif;
@@ -810,7 +820,7 @@ CSS = r"""
 .pg .tarif__ligne b{font-size:1.45rem;font-weight:800;color:var(--noir);letter-spacing:-.8px}
 .pg .tarif__ligne b small{font-size:.82rem;font-weight:500;color:var(--gris-lis);letter-spacing:0}
 .pg .note{font-family:"Manrope",sans-serif;font-size:.9rem;color:var(--gris-lis);
-  margin:14px 0 0;line-height:1.6;max-width:68ch}
+  margin:14px 0 0;line-height:1.6;max-width:56ch}
 
 /* ---------- inclusions ---------- */
 .pg .incl{display:grid;grid-template-columns:1fr 1fr;gap:28px}
@@ -854,7 +864,7 @@ CSS = r"""
 .pg .acc__plus::before{width:11px;height:2px}
 .pg .acc__plus::after{width:2px;height:11px}
 .pg .acc summary::after,.pg .acc summary::before{content:none}
-.pg .acc__c{padding:0 20px 20px;color:var(--texte);font-size:1rem;line-height:1.75;max-width:64ch}
+.pg .acc__c{padding:0 20px 20px;color:var(--texte);font-size:1rem;line-height:1.75;max-width:53ch}
 .pg .acc__c :last-child{margin-bottom:0}
 .pg .acc__c p{margin:0 0 .85em}
 .pg .acc__c ul{list-style:none;margin:0 0 .9em;padding:0;display:grid;gap:9px}
@@ -1021,8 +1031,8 @@ CSS = r"""
      4,17:1, mesurés au pixel. Il n'y a pas de zone sans texte où
      s'éclaircir. */
   .pg .hero::after{background:
-    linear-gradient(180deg,rgba(6,42,58,.68) 0%,rgba(6,42,58,.66) 22%,
-    rgba(5,35,50,.82) 58%,rgba(5,35,50,.95) 100%)}
+    linear-gradient(180deg,rgba(10,66,104,.72) 0%,rgba(10,66,104,.70) 22%,
+    rgba(8,58,92,.86) 58%,rgba(8,58,92,.96) 100%)}
   .pg .hero__fond{position:absolute;top:0;left:0;right:0;height:var(--une-h,470px)}
   .pg .hero__in{padding:14px 0 34px}
   /* Le bloc titre se colle au BAS de la photo, quelle que soit la
@@ -1320,7 +1330,7 @@ def presentation(inv):
     titre = inv.get('presentation_titre') or inv['chapo']
     if titre:
         o.append('<h2>%s</h2>' % e(titre))
-    o.append('<div class="prose">' + ''.join('<p>%s</p>' % e(p) for p in inv['presentation']) + '</div>')
+    o.append('<div class="prose">' + ''.join('<p>%s</p>' % ep(p) for p in inv['presentation']) + '</div>')
     o.append('</section>')
     return '\n'.join(o)
 
@@ -2114,7 +2124,7 @@ def deroule(inv):
                 calcule = True
             o.append(reps)
             for p in et['paragraphes']:
-                o.append('<p>%s</p>' % e(p))
+                o.append('<p>%s</p>' % ep(p))
             o.append(mentions_html(et.get('mentions')))
             o.append('</article>')
         o.append(mentions_html(j['mentions']))

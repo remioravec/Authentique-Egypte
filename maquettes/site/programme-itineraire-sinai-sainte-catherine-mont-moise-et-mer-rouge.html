@@ -82,10 +82,10 @@
    boutons, l'autre assied le bas du bandeau sur la section suivante —
    et outils/verif/lisibilite.js les mesure sur les pixels rendus. */
 .pg .hero::after{content:"";position:absolute;inset:0;background:
-  linear-gradient(96deg,rgba(5,35,50,.90) 0%,rgba(5,35,50,.84) 38%,
-  rgba(5,35,50,.42) 68%,rgba(5,35,50,.20) 100%),
-  linear-gradient(180deg,rgba(6,42,58,.34) 0%,rgba(6,42,58,0) 26%,
-  rgba(5,35,50,.30) 72%,rgba(5,35,50,.80) 100%)}
+  linear-gradient(96deg,rgba(8,58,92,.93) 0%,rgba(8,58,92,.88) 38%,
+  rgba(8,58,92,.46) 68%,rgba(8,58,92,.22) 100%),
+  linear-gradient(180deg,rgba(10,66,104,.36) 0%,rgba(10,66,104,0) 26%,
+  rgba(8,58,92,.32) 72%,rgba(8,58,92,.84) 100%)}
 /* z-index:1 est indispensable : ::after est le DERNIER enfant peint de
    .hero, donc il passe par-dessus le texte tant que celui-ci ne monte
    pas d'un cran. Sans cette ligne, le titre et les deux boutons partent
@@ -101,23 +101,23 @@
    mesuré au pixel. Le voile devient sombre — même effet de verre, mais
    il travaille dans le bon sens. */
 .pg .pill{display:inline-flex;align-items:center;gap:7px;font-family:"Manrope",sans-serif;
-  font-size:.84rem;font-weight:600;color:#fff;background:rgba(5,35,50,.82);
+  font-size:.84rem;font-weight:600;color:#fff;background:rgba(8,58,92,.86);
   border:1px solid rgba(255,255,255,.34);backdrop-filter:blur(8px);border-radius:var(--r-pill);padding:7px 14px}
 .pg .hero h1{color:#fff;font-size:clamp(2rem,4.4vw,3.15rem);line-height:1.08;margin:0 0 14px;
   max-width:18ch;text-shadow:0 2px 20px rgba(0,0,0,.45);text-wrap:balance}
 .pg .hero__chapo{color:#fff;font-size:1.12rem;line-height:1.6;max-width:54ch;margin:0 0 28px;
   font-weight:400;text-shadow:0 1px 12px rgba(0,0,0,.45)}
 .pg .hero__bas{display:flex;flex-wrap:wrap;align-items:center;gap:16px 28px}
-.pg .hero__prix{background:rgba(5,35,50,.72);backdrop-filter:blur(10px);
+.pg .hero__prix{background:rgba(8,58,92,.78);backdrop-filter:blur(10px);
   border:1px solid rgba(255,255,255,.30);border-radius:var(--r-m);padding:12px 20px;color:#fff;
   font-family:"Manrope",sans-serif}
 .pg .hero__prix small{display:block;font-size:.82rem;color:#fff}
 .pg .hero__prix b{display:block;font-size:1.85rem;font-weight:700;letter-spacing:-1px;line-height:1.15}
 .pg .hero__prix i{font-style:normal;font-size:.84rem;color:#DCEAF0}
 .pg .hero__act{display:flex;flex-wrap:wrap;gap:12px}
-.pg .btn--verre{background:rgba(255,255,255,.15);color:#fff;border-color:rgba(255,255,255,.42);
+.pg .btn--verre{background:rgba(8,58,92,.66);color:#fff;border-color:rgba(255,255,255,.46);
   backdrop-filter:blur(8px)}
-.pg .btn--verre:hover{background:rgba(255,255,255,.28);border-color:#fff}
+.pg .btn--verre:hover{background:rgba(8,58,92,.82);border-color:#fff}
 /* Le bouton de devis de l'entête commune : la règle .nav>a de la charte
    (0-1-1) écrase la couleur de .btn--or (0-1-0) et laisse un bleu sur
    fond or, à 2,7:1. On rétablit le contraste sans toucher à la charte. */
@@ -141,7 +141,7 @@
 .pg .deux{display:grid;grid-template-columns:minmax(0,1fr) 348px;gap:56px;
   padding:64px 0;align-items:start}
 .pg .deux>.corps{min-width:0;display:grid;gap:56px}
-.pg .prose{font-size:1.06rem;line-height:1.8;color:var(--texte);max-width:62ch}
+.pg .prose{font-size:1.06rem;line-height:1.8;color:var(--texte);max-width:51ch}
 .pg .prose p:last-child{margin-bottom:0}
 .pg .prose strong{color:var(--nuit-900);font-weight:600}
 
@@ -175,10 +175,10 @@
 .pg .mod--valise .mod__intro a,.pg .mod__apres a{color:var(--teal-txt);text-decoration:underline;
   text-underline-offset:3px}
 .pg .mod__intro{font-family:"Manrope",sans-serif;font-size:1.02rem;color:var(--nuit-900);
-  font-weight:600;margin:0 0 20px;max-width:62ch}
+  font-weight:600;margin:0 0 20px;max-width:51ch}
 .pg .mod__conseil{display:flex;gap:11px;align-items:flex-start;margin:20px 0 0;padding:16px 18px;
   background:var(--or-fond);border-radius:var(--r-m);font-family:"Manrope",sans-serif;
-  font-size:.98rem;color:#6B4B04;line-height:1.6;max-width:64ch}
+  font-size:.98rem;color:#6B4B04;line-height:1.6;max-width:53ch}
 .pg .mod__conseil svg{flex:0 0 auto;color:#B8860B;margin-top:2px}
 .pg .duree{position:relative}
 .pg .duree__r{position:absolute;opacity:0;pointer-events:none}
@@ -193,7 +193,7 @@
   border-radius:var(--r-l);padding:24px 26px}
 .pg .duree__c b{display:block;font-family:"Manrope",sans-serif;font-size:1.25rem;font-weight:800;
   color:var(--teal-txt);letter-spacing:-.4px;margin-bottom:8px}
-.pg .duree__c p{margin:0;font-size:1.04rem;line-height:1.7;color:var(--texte);max-width:60ch}
+.pg .duree__c p{margin:0;font-size:1.04rem;line-height:1.7;color:var(--texte);max-width:50ch}
 /* Sans CSS ni JavaScript, les trois formats restent lisibles à la suite :
    c'est le mode dégradé qu'impose la doctrine. */
 .pg .duree__r:nth-of-type(1):checked~.duree__ong .duree__o:nth-child(1),
@@ -327,7 +327,7 @@
   font-size:.92rem;color:#8A2F1C;line-height:1.5}
 .pg .carte__hors svg{flex:0 0 auto;margin-top:2px}
 .pg .carte__note{margin:14px 0 0;font-family:"Manrope",sans-serif;font-size:.86rem;
-  color:var(--gris-lis);line-height:1.5;max-width:62ch}
+  color:var(--gris-lis);line-height:1.5;max-width:51ch}
 .pg .carte__ech path{stroke:var(--nuit-900);stroke-width:3;stroke-linecap:butt;opacity:.75}
 .pg .carte__ech text{fill:var(--nuit-900);font-family:"Manrope",sans-serif;font-size:15px;
   font-weight:700;text-anchor:middle;paint-order:stroke;stroke:rgba(255,255,255,.9);
@@ -358,7 +358,7 @@
 .pg .rep--calc svg{color:var(--teal-txt)}
 .pg .reps__src{margin:26px 0 0;padding:16px 18px;background:var(--fond);border-radius:var(--r-m);
   font-family:"Manrope",sans-serif;font-size:.9rem;color:var(--gris-lis);line-height:1.6;
-  max-width:66ch}
+  max-width:54ch}
 
 /* ---------- fil d'Ariane sous le bandeau ---------- */
 .pg .ariane--sous{border-bottom:1px solid var(--ligne-2);background:#fff}
@@ -410,7 +410,7 @@
 .pg .etape h4{font-family:"Archivo",sans-serif;font-size:1.24rem;font-weight:600;color:var(--noir);
   margin:0 0 18px;letter-spacing:-.3px;display:flex;align-items:center;gap:10px}
 .pg .etape h4 svg{color:var(--teal-txt);flex:0 0 auto}
-.pg .etape p{color:var(--texte);font-size:1.04rem;line-height:1.8;max-width:62ch}
+.pg .etape p{color:var(--texte);font-size:1.04rem;line-height:1.8;max-width:51ch}
 .pg .mentions{display:flex;flex-wrap:wrap;gap:9px;margin:18px 0 0;padding:0}
 .pg .jour>.mentions{margin-top:24px;padding-top:18px;border-top:1px solid var(--ligne-2)}
 .pg .mention{display:inline-flex;align-items:center;gap:7px;font-family:"Manrope",sans-serif;
@@ -455,7 +455,7 @@
 .pg .tarif__ligne b{font-size:1.45rem;font-weight:800;color:var(--noir);letter-spacing:-.8px}
 .pg .tarif__ligne b small{font-size:.82rem;font-weight:500;color:var(--gris-lis);letter-spacing:0}
 .pg .note{font-family:"Manrope",sans-serif;font-size:.9rem;color:var(--gris-lis);
-  margin:14px 0 0;line-height:1.6;max-width:68ch}
+  margin:14px 0 0;line-height:1.6;max-width:56ch}
 
 /* ---------- inclusions ---------- */
 .pg .incl{display:grid;grid-template-columns:1fr 1fr;gap:28px}
@@ -499,7 +499,7 @@
 .pg .acc__plus::before{width:11px;height:2px}
 .pg .acc__plus::after{width:2px;height:11px}
 .pg .acc summary::after,.pg .acc summary::before{content:none}
-.pg .acc__c{padding:0 20px 20px;color:var(--texte);font-size:1rem;line-height:1.75;max-width:64ch}
+.pg .acc__c{padding:0 20px 20px;color:var(--texte);font-size:1rem;line-height:1.75;max-width:53ch}
 .pg .acc__c :last-child{margin-bottom:0}
 .pg .acc__c p{margin:0 0 .85em}
 .pg .acc__c ul{list-style:none;margin:0 0 .9em;padding:0;display:grid;gap:9px}
@@ -666,8 +666,8 @@
      4,17:1, mesurés au pixel. Il n'y a pas de zone sans texte où
      s'éclaircir. */
   .pg .hero::after{background:
-    linear-gradient(180deg,rgba(6,42,58,.68) 0%,rgba(6,42,58,.66) 22%,
-    rgba(5,35,50,.82) 58%,rgba(5,35,50,.95) 100%)}
+    linear-gradient(180deg,rgba(10,66,104,.72) 0%,rgba(10,66,104,.70) 22%,
+    rgba(8,58,92,.86) 58%,rgba(8,58,92,.96) 100%)}
   .pg .hero__fond{position:absolute;top:0;left:0;right:0;height:var(--une-h,470px)}
   .pg .hero__in{padding:14px 0 34px}
   /* Le bloc titre se colle au BAS de la photo, quelle que soit la
@@ -883,9 +883,9 @@
 <a class="etape__photo" data-lb href="https://authentiquegypte.com/wp-content/uploads/2025/07/mor-shani-Jw78jFgWpYE-unsplash-1-scaled.jpg" data-alt="Au bord de la mer Rouge." aria-label="Agrandir la photo : Au bord de la mer Rouge."><img src="https://authentiquegypte.com/wp-content/uploads/2025/07/mor-shani-Jw78jFgWpYE-unsplash-1-scaled.jpg" alt="Au bord de la mer Rouge." decoding="async" srcset="https://authentiquegypte.com/wp-content/uploads/2025/07/mor-shani-Jw78jFgWpYE-unsplash-1-300x200.jpg 300w, https://authentiquegypte.com/wp-content/uploads/2025/07/mor-shani-Jw78jFgWpYE-unsplash-1-768x512.jpg 768w, https://authentiquegypte.com/wp-content/uploads/2025/07/mor-shani-Jw78jFgWpYE-unsplash-1-1024x683.jpg 1024w, https://authentiquegypte.com/wp-content/uploads/2025/07/mor-shani-Jw78jFgWpYE-unsplash-1-1536x1024.jpg 1536w, https://authentiquegypte.com/wp-content/uploads/2025/07/mor-shani-Jw78jFgWpYE-unsplash-1-2048x1365.jpg 2048w, https://authentiquegypte.com/wp-content/uploads/2025/07/mor-shani-Jw78jFgWpYE-unsplash-1-scaled.jpg 2560w" sizes="(max-width:1040px) 100vw, 780px" width="2560" height="1707" loading="lazy"></a>
 
 <p>Vous arrivez à l’aéroport de Sharm el Sheikh où vous êtes accueilli par notre représentant local, puis prenez la route en direction de votre hôtel en bord de mer pour commencer votre aventure dans le Sinaï</p>
-
-</article>
 <p class="mentions"><span class="mention"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3v7a2 2 0 0 0 4 0V3M9 3v18M17 3c-2 2-3 5-3 8h3v10"/></svg>Dîner inclus</span></p>
+</article>
+
 </div>
 <div class="jour">
 <div class="jour__tete"><h3>Découverte du parc de Ras Mohamed</h3><span class="jour__no">Jour 2</span></div>
@@ -896,9 +896,9 @@
 <p>Équipé d’un masque et d’un tuba, vous partez explorer les eaux turquoise où se déploie une incroyable barrière de corail. Une véritable explosion de couleurs et de vie sous-marine qui émerveillera les amateurs comme les curieux.</p>
 <p>Un déjeuner frais et préparé à bord vous sera servi, avant de repartir pour une nouvelle session d’exploration au cœur de cet écrin naturel.</p>
 <p>En fin d’après-midi, retour à Sharm el Sheikh et transfert à votre hôtel.</p>
-
-</article>
 <p class="mentions"><span class="mention"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3v7a2 2 0 0 0 4 0V3M9 3v18M17 3c-2 2-3 5-3 8h3v10"/></svg>Petit-déjeuner, déjeuner et dîner inclus</span></p>
+</article>
+
 </div>
 <div class="jour">
 <div class="jour__tete"><h3>Transfert vers Sainte-Catherine et repos</h3><span class="jour__no">Jour 3</span></div>
@@ -908,9 +908,9 @@
 <p>Ce matin, après le petit-déjeuner, profitez d’une matinée libre. Puis en début d’après-midi, un véhicule privé et climatisé viendra vous chercher à votre hôtel pour prendre la route en direction de Sainte-Catherine.</p>
 <p>La route en bon état menant au village vous donne l’occasion d’observer les paysages du Sinaï, des montagnes abruptes aux langues de sable, et peut-être même de croiser des dromadaires le long de la route.</p>
 <p>Vous arrivez dans votre guesthouse à Sainte-Catherine, tenue par des Bédouins de la tribu Gabalia, qui sauront vous accueillir avec toute l’hospitalité qui leur est reconnue. Le reste de l’après-midi est consacré au repos et à la contemplation du lieu. Un dîner copieux et traditionnel vous sera servi vers 19h afin d’avoir de l’énergie pour le lendemain.</p>
-
-</article>
 <p class="mentions"><span class="mention"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3v7a2 2 0 0 0 4 0V3M9 3v18M17 3c-2 2-3 5-3 8h3v10"/></svg>Petit-déjeuner et dîner inclus</span><span class="mention"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18V8M3 12h18v6M7 12V9h6v3"/></svg>Nuit en guesthouse bédouine</span></p>
+</article>
+
 </div>
 <div class="jour">
 <div class="jour__tete"><h3>Lever du soleil sur le mont Moïse et visite du monastère Sainte-Catherine</h3><span class="jour__no">Jour 4</span></div>
@@ -923,11 +923,11 @@
 <p>Sur la route, vous faites des pauses dans de petits magasins minimalistes, qui vous proposent des boissons chaudes et des collations, idéales pour garder de l’énergie et faire une pause à l’abri si besoin.</p>
 <p>Vous redescendez ensuite vers le monastère Sainte-Catherine pour en découvrir les trésors. Cette descente s’effectue en 2h00 à 2h30.</p>
 <p>À l’intérieur, vous visitez l’église de la Transfiguration avec ses mosaïques, son marbre et sa remarquable collection d’icônes. Vous poursuivez vers le Buisson ardent, puis montez jusqu’au musée de la bibliothèque (entrée 2 $) qui abrite une collection inestimable d’icônes anciennes et de textes bibliques. C’est d’ailleurs dans cette bibliothèque qu’a été découvert le Codex Sinaiticus, l’une des plus anciennes bibles complètes.</p>
-<p>C’est Hélène, la mère de l’empereur Constantin, qui fit ériger au IVe siècle une première chapelle entre ces montagnes. Il s’agit de la chapelle du Buisson ardent, située à l’arrière de l’église actuelle. Plus tard, l’empereur Justinien Ier (vers 548–565) fit construire le monastère Sainte-Catherine autour de cette chapelle pour protéger les pèlerins.Le monastère aurait ensuite été protégé par le prophète Mahomet en 625, dans un décret appelé Adhiname, puis par Napoléon Bonaparte en 1798 à travers une Lettre de Sauvegarde (visible dans la bibliothèque), et enfin en 2002 par l’UNESCO, qui l’a inscrit au Patrimoine mondial. Aujourd’hui encore, le gouvernement égyptien lui garantit sa sécurité et le reconnaît comme un haut lieu spirituel.</p>
+<p>C’est Hélène, la mère de l’empereur Constantin, qui fit ériger au IVe siècle une première chapelle entre ces montagnes. Il s’agit de la chapelle du Buisson ardent, située à l’arrière de l’église actuelle. Plus tard, l’empereur Justinien Ier (vers 548–565) fit construire le monastère Sainte-Catherine autour de cette chapelle pour protéger les pèlerins.<br>Le monastère aurait ensuite été protégé par le prophète Mahomet en 625, dans un décret appelé Adhiname, puis par Napoléon Bonaparte en 1798 à travers une Lettre de Sauvegarde (visible dans la bibliothèque), et enfin en 2002 par l’UNESCO, qui l’a inscrit au Patrimoine mondial. Aujourd’hui encore, le gouvernement égyptien lui garantit sa sécurité et le reconnaît comme un haut lieu spirituel.</p>
 <p>Après cette visite, une voiture vous attend au parking du monastère pour vous ramener à votre guesthouse. Vous profitez d’un petit-déjeuner traditionnel et complet avant de reprendre la route vers Dahab aux alentours de midi.</p>
-
-</article>
 <p class="mentions"><span class="mention"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3v7a2 2 0 0 0 4 0V3M9 3v18M17 3c-2 2-3 5-3 8h3v10"/></svg>Petit-déjeuner inclus</span></p>
+</article>
+
 </div>
 <div class="jour">
 <div class="jour__tete"><h3>et 6 : Libre exploration de Dahab et ses alentours</h3><span class="jour__no">Jour 5</span></div>
@@ -935,12 +935,12 @@
 <a class="etape__photo" data-lb href="https://authentiquegypte.com/wp-content/uploads/2026/08/writing-1-scaled.png" data-alt="" aria-label="Agrandir la photo : et 6 : Libre exploration de Dahab et ses alentours"><img src="https://authentiquegypte.com/wp-content/uploads/2026/08/writing-1-scaled.png" alt="" decoding="async" srcset="https://authentiquegypte.com/wp-content/uploads/2026/08/writing-1-300x114.png 300w, https://authentiquegypte.com/wp-content/uploads/2026/08/writing-1-768x292.png 768w, https://authentiquegypte.com/wp-content/uploads/2026/08/writing-1-1024x390.png 1024w, https://authentiquegypte.com/wp-content/uploads/2026/08/writing-1-1536x584.png 1536w, https://authentiquegypte.com/wp-content/uploads/2026/08/writing-1-2048x779.png 2048w, https://authentiquegypte.com/wp-content/uploads/2026/08/writing-1-scaled.png 2560w" sizes="(max-width:1040px) 100vw, 780px" width="2560" height="974" loading="lazy"></a>
 
 <p>Ces deux jours à Dahab sont libres pour découvrir cette ville pleine de vie et à l’ambiance si particulière. Dahab séduit aussi par son rythme paisible, ses cafés en bord de mer et son atmosphère bohème, idéale pour se détendre entre deux aventures dans le désert ou sous l’eau.</p>
-<p>En option :– Nous pouvons vous proposer des cours de poterie qui vous permettront de créer tout type d’objet et de repartir avec votre réalisation. Il s’agit d’un workshop sur plusieurs jours, car il faut jusqu’à trois jours pour compléter toutes les étapes. Cette activité peut être effectuée le matin ou en fin de journée, à raison de trois heures par jour. Une manière originale et créative de rapporter un souvenir personnel.</p>
+<p>En option :<br>– Nous pouvons vous proposer des cours de poterie qui vous permettront de créer tout type d’objet et de repartir avec votre réalisation. Il s’agit d’un workshop sur plusieurs jours, car il faut jusqu’à trois jours pour compléter toutes les étapes. Cette activité peut être effectuée le matin ou en fin de journée, à raison de trois heures par jour. Une manière originale et créative de rapporter un souvenir personnel.</p>
 <p>– Dahab est également le paradis de la plongée, réputée pour ses coraux et ses reliefs sous-marins accessibles. Il est possible de suivre un stage de plongée adapté à votre niveau, par exemple un programme de 3 à 4 jours avec passage du premier niveau PADI (Open Water Course). Dans ce cas, l’itinéraire global peut être modifié : n’hésitez pas à nous faire part de vos souhaits pour recevoir un devis personnalisé.</p>
 <p>– Enfin, profitez des nombreuses activités disponibles au départ de Dahab, que votre hôtel pourra également vous conseiller : sports nautiques, safaris dans les canyons, balades en quad ou dîners bédouins organisés dans le désert.</p>
-
-</article>
 <p class="mentions"><span class="mention"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3v7a2 2 0 0 0 4 0V3M9 3v18M17 3c-2 2-3 5-3 8h3v10"/></svg>Petit-déjeuner inclus</span></p>
+</article>
+
 </div>
 <div class="jour">
 <div class="jour__tete"><h3>Aventure à Blue Hole, Ras Abu Gallum et Blue lagoon</h3><span class="jour__no">Jour 7</span></div>
@@ -952,19 +952,19 @@
 <p>Ensuite, vous embarquez à bord d’un bateau en direction de Ras Abu Gallum, une plage isolée bordée par quelques huttes, loin de toute agitation. Une véritable invitation à la déconnexion. Un déjeuner préparé sur place vous est servi, avant de profiter à nouveau des fonds marins pour une nouvelle session de snorkeling.</p>
 <p>Enfin, votre périple vous mène vers le Blue Lagoon, cette fois célèbre pour ses sports nautiques comme le wind-surf. La couleur de son eau lui a donné son nom : un véritable lagon aux teintes irréelles. Vous pouvez y vous détendre sur la plage ou replonger à votre rythme dans ses eaux cristallines.</p>
 <p>En fin de journée, vous reprenez le bateau, puis votre jeep, pour retourner à votre hôtel à Dahab.</p>
-
-</article>
 <p class="mentions"><span class="mention"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3v7a2 2 0 0 0 4 0V3M9 3v18M17 3c-2 2-3 5-3 8h3v10"/></svg>Petit-déjeuner et déjeuner inclus</span></p>
+</article>
+
 </div>
 <div class="jour">
 <div class="jour__tete"><h3>Retour à Sharm el-Sheikh</h3><span class="jour__no">Jour 8</span></div>
 <article class="etape" id="etape-7" data-lieu="charm-el-cheikh">
 
 <p>Après votre petit-déjeuner à l’hôtel, un véhicule privatisé et climatisé vient vous chercher pour votre transfert vers l’aéroport de Sharm el Sheikh, où vous prenez votre vol retour.</p>
-<p>En option :Prolongez votre voyage en Égypte et partez à la découverte de la vallée du Nil, du Caire et des temples majestueux de la Haute-Égypte. Une extension idéale pour approfondir votre immersion culturelle après cette expérience dans le Sinaï.</p>
-
-</article>
+<p>En option :<br>Prolongez votre voyage en Égypte et partez à la découverte de la vallée du Nil, du Caire et des temples majestueux de la Haute-Égypte. Une extension idéale pour approfondir votre immersion culturelle après cette expérience dans le Sinaï.</p>
 <p class="mentions"><span class="mention"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3v7a2 2 0 0 0 4 0V3M9 3v18M17 3c-2 2-3 5-3 8h3v10"/></svg>Petit-déjeuner inclus</span></p>
+</article>
+
 </div>
 <p class="reps__src">Les distances et les temps de route sont calculés par nos soins sur les données OpenStreetMap, entre les lieux que la fiche nomme. Ils situent le trajet : ils ne remplacent pas le programme de l&#x27;agence. Les durées écrites par la fiche sont reprises telles quelles.</p>
 </section>
@@ -1007,7 +1007,7 @@
 <input type="checkbox" id="mur-stop" class="mur__stop">
 <div class="mur__tete">
 <div><p class="eyebrow">Avis Google</p><h2 id="t-avis">Ce que disent les voyageurs</h2></div>
-<p class="mur__cpt"><b>23 avis Google sur l&#x27;agence</b><small>Relevé sur la fiche le 9 septembre 2026</small></p>
+<p class="mur__cpt"><b>23 avis Google sur l&#x27;agence</b><small>Relevé sur la fiche le 10 septembre 2026</small></p>
 <label class="mur__btn" for="mur-stop"><svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5v14M15 5v14"/></svg><span class="a">Mettre en pause le défilement</span><span class="b">Reprendre le défilement</span></label>
 </div>
 <div class="mur">

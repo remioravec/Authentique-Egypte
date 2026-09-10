@@ -82,10 +82,10 @@
    boutons, l'autre assied le bas du bandeau sur la section suivante —
    et outils/verif/lisibilite.js les mesure sur les pixels rendus. */
 .pg .hero::after{content:"";position:absolute;inset:0;background:
-  linear-gradient(96deg,rgba(5,35,50,.90) 0%,rgba(5,35,50,.84) 38%,
-  rgba(5,35,50,.42) 68%,rgba(5,35,50,.20) 100%),
-  linear-gradient(180deg,rgba(6,42,58,.34) 0%,rgba(6,42,58,0) 26%,
-  rgba(5,35,50,.30) 72%,rgba(5,35,50,.80) 100%)}
+  linear-gradient(96deg,rgba(8,58,92,.93) 0%,rgba(8,58,92,.88) 38%,
+  rgba(8,58,92,.46) 68%,rgba(8,58,92,.22) 100%),
+  linear-gradient(180deg,rgba(10,66,104,.36) 0%,rgba(10,66,104,0) 26%,
+  rgba(8,58,92,.32) 72%,rgba(8,58,92,.84) 100%)}
 /* z-index:1 est indispensable : ::after est le DERNIER enfant peint de
    .hero, donc il passe par-dessus le texte tant que celui-ci ne monte
    pas d'un cran. Sans cette ligne, le titre et les deux boutons partent
@@ -101,23 +101,23 @@
    mesuré au pixel. Le voile devient sombre — même effet de verre, mais
    il travaille dans le bon sens. */
 .pg .pill{display:inline-flex;align-items:center;gap:7px;font-family:"Manrope",sans-serif;
-  font-size:.84rem;font-weight:600;color:#fff;background:rgba(5,35,50,.82);
+  font-size:.84rem;font-weight:600;color:#fff;background:rgba(8,58,92,.86);
   border:1px solid rgba(255,255,255,.34);backdrop-filter:blur(8px);border-radius:var(--r-pill);padding:7px 14px}
 .pg .hero h1{color:#fff;font-size:clamp(2rem,4.4vw,3.15rem);line-height:1.08;margin:0 0 14px;
   max-width:18ch;text-shadow:0 2px 20px rgba(0,0,0,.45);text-wrap:balance}
 .pg .hero__chapo{color:#fff;font-size:1.12rem;line-height:1.6;max-width:54ch;margin:0 0 28px;
   font-weight:400;text-shadow:0 1px 12px rgba(0,0,0,.45)}
 .pg .hero__bas{display:flex;flex-wrap:wrap;align-items:center;gap:16px 28px}
-.pg .hero__prix{background:rgba(5,35,50,.72);backdrop-filter:blur(10px);
+.pg .hero__prix{background:rgba(8,58,92,.78);backdrop-filter:blur(10px);
   border:1px solid rgba(255,255,255,.30);border-radius:var(--r-m);padding:12px 20px;color:#fff;
   font-family:"Manrope",sans-serif}
 .pg .hero__prix small{display:block;font-size:.82rem;color:#fff}
 .pg .hero__prix b{display:block;font-size:1.85rem;font-weight:700;letter-spacing:-1px;line-height:1.15}
 .pg .hero__prix i{font-style:normal;font-size:.84rem;color:#DCEAF0}
 .pg .hero__act{display:flex;flex-wrap:wrap;gap:12px}
-.pg .btn--verre{background:rgba(255,255,255,.15);color:#fff;border-color:rgba(255,255,255,.42);
+.pg .btn--verre{background:rgba(8,58,92,.66);color:#fff;border-color:rgba(255,255,255,.46);
   backdrop-filter:blur(8px)}
-.pg .btn--verre:hover{background:rgba(255,255,255,.28);border-color:#fff}
+.pg .btn--verre:hover{background:rgba(8,58,92,.82);border-color:#fff}
 /* Le bouton de devis de l'entête commune : la règle .nav>a de la charte
    (0-1-1) écrase la couleur de .btn--or (0-1-0) et laisse un bleu sur
    fond or, à 2,7:1. On rétablit le contraste sans toucher à la charte. */
@@ -141,7 +141,7 @@
 .pg .deux{display:grid;grid-template-columns:minmax(0,1fr) 348px;gap:56px;
   padding:64px 0;align-items:start}
 .pg .deux>.corps{min-width:0;display:grid;gap:56px}
-.pg .prose{font-size:1.06rem;line-height:1.8;color:var(--texte);max-width:62ch}
+.pg .prose{font-size:1.06rem;line-height:1.8;color:var(--texte);max-width:51ch}
 .pg .prose p:last-child{margin-bottom:0}
 .pg .prose strong{color:var(--nuit-900);font-weight:600}
 
@@ -175,10 +175,10 @@
 .pg .mod--valise .mod__intro a,.pg .mod__apres a{color:var(--teal-txt);text-decoration:underline;
   text-underline-offset:3px}
 .pg .mod__intro{font-family:"Manrope",sans-serif;font-size:1.02rem;color:var(--nuit-900);
-  font-weight:600;margin:0 0 20px;max-width:62ch}
+  font-weight:600;margin:0 0 20px;max-width:51ch}
 .pg .mod__conseil{display:flex;gap:11px;align-items:flex-start;margin:20px 0 0;padding:16px 18px;
   background:var(--or-fond);border-radius:var(--r-m);font-family:"Manrope",sans-serif;
-  font-size:.98rem;color:#6B4B04;line-height:1.6;max-width:64ch}
+  font-size:.98rem;color:#6B4B04;line-height:1.6;max-width:53ch}
 .pg .mod__conseil svg{flex:0 0 auto;color:#B8860B;margin-top:2px}
 .pg .duree{position:relative}
 .pg .duree__r{position:absolute;opacity:0;pointer-events:none}
@@ -193,7 +193,7 @@
   border-radius:var(--r-l);padding:24px 26px}
 .pg .duree__c b{display:block;font-family:"Manrope",sans-serif;font-size:1.25rem;font-weight:800;
   color:var(--teal-txt);letter-spacing:-.4px;margin-bottom:8px}
-.pg .duree__c p{margin:0;font-size:1.04rem;line-height:1.7;color:var(--texte);max-width:60ch}
+.pg .duree__c p{margin:0;font-size:1.04rem;line-height:1.7;color:var(--texte);max-width:50ch}
 /* Sans CSS ni JavaScript, les trois formats restent lisibles à la suite :
    c'est le mode dégradé qu'impose la doctrine. */
 .pg .duree__r:nth-of-type(1):checked~.duree__ong .duree__o:nth-child(1),
@@ -327,7 +327,7 @@
   font-size:.92rem;color:#8A2F1C;line-height:1.5}
 .pg .carte__hors svg{flex:0 0 auto;margin-top:2px}
 .pg .carte__note{margin:14px 0 0;font-family:"Manrope",sans-serif;font-size:.86rem;
-  color:var(--gris-lis);line-height:1.5;max-width:62ch}
+  color:var(--gris-lis);line-height:1.5;max-width:51ch}
 .pg .carte__ech path{stroke:var(--nuit-900);stroke-width:3;stroke-linecap:butt;opacity:.75}
 .pg .carte__ech text{fill:var(--nuit-900);font-family:"Manrope",sans-serif;font-size:15px;
   font-weight:700;text-anchor:middle;paint-order:stroke;stroke:rgba(255,255,255,.9);
@@ -358,7 +358,7 @@
 .pg .rep--calc svg{color:var(--teal-txt)}
 .pg .reps__src{margin:26px 0 0;padding:16px 18px;background:var(--fond);border-radius:var(--r-m);
   font-family:"Manrope",sans-serif;font-size:.9rem;color:var(--gris-lis);line-height:1.6;
-  max-width:66ch}
+  max-width:54ch}
 
 /* ---------- fil d'Ariane sous le bandeau ---------- */
 .pg .ariane--sous{border-bottom:1px solid var(--ligne-2);background:#fff}
@@ -410,7 +410,7 @@
 .pg .etape h4{font-family:"Archivo",sans-serif;font-size:1.24rem;font-weight:600;color:var(--noir);
   margin:0 0 18px;letter-spacing:-.3px;display:flex;align-items:center;gap:10px}
 .pg .etape h4 svg{color:var(--teal-txt);flex:0 0 auto}
-.pg .etape p{color:var(--texte);font-size:1.04rem;line-height:1.8;max-width:62ch}
+.pg .etape p{color:var(--texte);font-size:1.04rem;line-height:1.8;max-width:51ch}
 .pg .mentions{display:flex;flex-wrap:wrap;gap:9px;margin:18px 0 0;padding:0}
 .pg .jour>.mentions{margin-top:24px;padding-top:18px;border-top:1px solid var(--ligne-2)}
 .pg .mention{display:inline-flex;align-items:center;gap:7px;font-family:"Manrope",sans-serif;
@@ -455,7 +455,7 @@
 .pg .tarif__ligne b{font-size:1.45rem;font-weight:800;color:var(--noir);letter-spacing:-.8px}
 .pg .tarif__ligne b small{font-size:.82rem;font-weight:500;color:var(--gris-lis);letter-spacing:0}
 .pg .note{font-family:"Manrope",sans-serif;font-size:.9rem;color:var(--gris-lis);
-  margin:14px 0 0;line-height:1.6;max-width:68ch}
+  margin:14px 0 0;line-height:1.6;max-width:56ch}
 
 /* ---------- inclusions ---------- */
 .pg .incl{display:grid;grid-template-columns:1fr 1fr;gap:28px}
@@ -499,7 +499,7 @@
 .pg .acc__plus::before{width:11px;height:2px}
 .pg .acc__plus::after{width:2px;height:11px}
 .pg .acc summary::after,.pg .acc summary::before{content:none}
-.pg .acc__c{padding:0 20px 20px;color:var(--texte);font-size:1rem;line-height:1.75;max-width:64ch}
+.pg .acc__c{padding:0 20px 20px;color:var(--texte);font-size:1rem;line-height:1.75;max-width:53ch}
 .pg .acc__c :last-child{margin-bottom:0}
 .pg .acc__c p{margin:0 0 .85em}
 .pg .acc__c ul{list-style:none;margin:0 0 .9em;padding:0;display:grid;gap:9px}
@@ -666,8 +666,8 @@
      4,17:1, mesurés au pixel. Il n'y a pas de zone sans texte où
      s'éclaircir. */
   .pg .hero::after{background:
-    linear-gradient(180deg,rgba(6,42,58,.68) 0%,rgba(6,42,58,.66) 22%,
-    rgba(5,35,50,.82) 58%,rgba(5,35,50,.95) 100%)}
+    linear-gradient(180deg,rgba(10,66,104,.72) 0%,rgba(10,66,104,.70) 22%,
+    rgba(8,58,92,.86) 58%,rgba(8,58,92,.96) 100%)}
   .pg .hero__fond{position:absolute;top:0;left:0;right:0;height:var(--une-h,470px)}
   .pg .hero__in{padding:14px 0 34px}
   /* Le bloc titre se colle au BAS de la photo, quelle que soit la
@@ -934,6 +934,7 @@
 <a class="carte__img" href="https://authentiquegypte.com/programs/le-caire-et-croisiere-sur-un-bateau-a-voile/" tabindex="-1" aria-hidden="true"><img src="https://authentiquegypte.com/wp-content/uploads/2023/11/e235bfb4-54a3-41cf-9f55-f2ca30fc8a91-1.jpg" alt="Dahabeya" decoding="async" srcset="https://authentiquegypte.com/wp-content/uploads/2023/11/e235bfb4-54a3-41cf-9f55-f2ca30fc8a91-1-300x199.jpg 300w, https://authentiquegypte.com/wp-content/uploads/2023/11/e235bfb4-54a3-41cf-9f55-f2ca30fc8a91-1-768x510.jpg 768w, https://authentiquegypte.com/wp-content/uploads/2023/11/e235bfb4-54a3-41cf-9f55-f2ca30fc8a91-1-1024x680.jpg 1024w, https://authentiquegypte.com/wp-content/uploads/2023/11/e235bfb4-54a3-41cf-9f55-f2ca30fc8a91-1-1536x1021.jpg 1536w, https://authentiquegypte.com/wp-content/uploads/2023/11/e235bfb4-54a3-41cf-9f55-f2ca30fc8a91-1.jpg 1654w" sizes="(max-width:860px) 100vw, 380px" width="1654" height="1099" loading="lazy"></a>
 <div class="carte__c">
 <h3><a href="https://authentiquegypte.com/programs/le-caire-et-croisiere-sur-un-bateau-a-voile/">Le Caire et croisière sur un bateau à voile</a></h3>
+<p class="carte__ch">Les étapes de votre séjour :</p>
 <ul class="carte__p"><li><svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span>8 jours minimum</span></li><li><svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.5"/><path d="M5 20a7 7 0 0 1 14 0"/></svg><span>Guide francophone privatif</span></li><li><svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l4.5 4.5L19 7"/></svg><span>Chauffeur privatif dans un véhicule climatisé</span></li></ul>
 <div class="carte__b">
 <span class="carte__prix carte__prix--vide">Prix sur devis</span>
@@ -943,6 +944,7 @@
 <a class="carte__img" href="https://authentiquegypte.com/programs/croisiere-sur-le-lac-nasser/" tabindex="-1" aria-hidden="true"><img src="https://authentiquegypte.com/wp-content/uploads/2023/11/WhatsApp-Image-2023-11-07-at-12.03.37.jpeg" alt="" decoding="async" srcset="https://authentiquegypte.com/wp-content/uploads/2023/11/WhatsApp-Image-2023-11-07-at-12.03.37-300x200.jpeg 300w, https://authentiquegypte.com/wp-content/uploads/2023/11/WhatsApp-Image-2023-11-07-at-12.03.37-768x512.jpeg 768w, https://authentiquegypte.com/wp-content/uploads/2023/11/WhatsApp-Image-2023-11-07-at-12.03.37.jpeg 1024w" sizes="(max-width:860px) 100vw, 380px" width="1024" height="682" loading="lazy"></a>
 <div class="carte__c">
 <h3><a href="https://authentiquegypte.com/programs/croisiere-sur-le-lac-nasser/">Croisière sur le lac Nasser</a></h3>
+<p class="carte__ch">Votre programme de voyage</p>
 <ul class="carte__p"><li><svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span>4 jours minimum</span></li><li><svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.5"/><path d="M5 20a7 7 0 0 1 14 0"/></svg><span>Guide francophone</span></li><li><svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l4.5 4.5L19 7"/></svg><span>Chauffeur dans un véhicule climatisé</span></li></ul>
 <div class="carte__b">
 <span class="carte__prix"><small>Dès</small><b>1595 €</b><i>/ Personne</i></span>
@@ -952,6 +954,7 @@
 <a class="carte__img" href="https://authentiquegypte.com/programs/pyramides-et-croisiere-sur-le-nil/" tabindex="-1" aria-hidden="true"><img src="https://authentiquegypte.com/wp-content/uploads/2023/11/flying-carpet-Si1MFhSLNWY-unsplash-scaled.jpg" alt="" decoding="async" srcset="https://authentiquegypte.com/wp-content/uploads/2023/11/flying-carpet-Si1MFhSLNWY-unsplash-300x200.jpg 300w, https://authentiquegypte.com/wp-content/uploads/2023/11/flying-carpet-Si1MFhSLNWY-unsplash-768x512.jpg 768w, https://authentiquegypte.com/wp-content/uploads/2023/11/flying-carpet-Si1MFhSLNWY-unsplash-1024x683.jpg 1024w, https://authentiquegypte.com/wp-content/uploads/2023/11/flying-carpet-Si1MFhSLNWY-unsplash-1536x1024.jpg 1536w, https://authentiquegypte.com/wp-content/uploads/2023/11/flying-carpet-Si1MFhSLNWY-unsplash-2048x1366.jpg 2048w, https://authentiquegypte.com/wp-content/uploads/2023/11/flying-carpet-Si1MFhSLNWY-unsplash-scaled.jpg 2560w" sizes="(max-width:860px) 100vw, 380px" width="2560" height="1707" loading="lazy"></a>
 <div class="carte__c">
 <h3><a href="https://authentiquegypte.com/programs/pyramides-et-croisiere-sur-le-nil/">Pyramides et croisière sur le Nil</a></h3>
+<p class="carte__ch">Les étapes de votre séjour :</p>
 <ul class="carte__p"><li><svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span>6 jours minimum</span></li><li><svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.5"/><path d="M5 20a7 7 0 0 1 14 0"/></svg><span>Guide francophone privatif</span></li><li><svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l4.5 4.5L19 7"/></svg><span>Chauffeur privatif dans un véhicule climatisé</span></li></ul>
 <div class="carte__b">
 <span class="carte__prix"><small>Dès</small><b>1195 €</b><i>/ Personne</i></span>
@@ -961,13 +964,14 @@
 <a class="carte__img" href="https://authentiquegypte.com/programs/mer-rouge/" tabindex="-1" aria-hidden="true"><img src="https://authentiquegypte.com/wp-content/uploads/2023/11/WhatsApp-Image-2025-08-14-at-13.23.16.jpeg" alt="" decoding="async" srcset="https://authentiquegypte.com/wp-content/uploads/2023/11/WhatsApp-Image-2025-08-14-at-13.23.16-300x169.jpeg 300w, https://authentiquegypte.com/wp-content/uploads/2023/11/WhatsApp-Image-2025-08-14-at-13.23.16-768x432.jpeg 768w, https://authentiquegypte.com/wp-content/uploads/2023/11/WhatsApp-Image-2025-08-14-at-13.23.16-1024x576.jpeg 1024w, https://authentiquegypte.com/wp-content/uploads/2023/11/WhatsApp-Image-2025-08-14-at-13.23.16.jpeg 1280w" sizes="(max-width:860px) 100vw, 380px" width="1280" height="720" loading="lazy"></a>
 <div class="carte__c">
 <h3><a href="https://authentiquegypte.com/programs/mer-rouge/">Pyramides, croisière et mer rouge en famille</a></h3>
+<p class="carte__ch">Les étapes de votre séjour :</p>
 <ul class="carte__p"><li><svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span>9 jours minimum</span></li><li><svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.5"/><path d="M5 20a7 7 0 0 1 14 0"/></svg><span>Guide francophone privatif</span></li><li><svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l4.5 4.5L19 7"/></svg><span>Chauffeur privatif dans un véhicule climatisé</span></li></ul>
 <div class="carte__b">
 <span class="carte__prix"><small>Dès</small><b>1485 €</b><i>/ Personne</i></span>
 <a class="btn btn--fantome btn--sm" href="https://authentiquegypte.com/programs/mer-rouge/">Voir le séjour</a>
 </div></div></article>
 </div>
-<p class="cartes__src">Durées et prix relevés sur les fiches du site le 9 septembre 2026.</p>
+<p class="cartes__src">Durées et prix relevés sur les fiches du site le 10 septembre 2026.</p>
 </div></section>
 <section class="pg-sec pg-sec--fond"><div class="wrap">
 <p class="eyebrow">Pourquoi nous</p>
@@ -986,7 +990,7 @@
 <input type="checkbox" id="mur-stop" class="mur__stop">
 <div class="mur__tete">
 <div><p class="eyebrow">Avis Google</p><h2 id="t-avis">Ce que disent les voyageurs</h2></div>
-<p class="mur__cpt"><b>23 avis Google sur l&#x27;agence</b><small>Relevé sur la fiche le 9 septembre 2026</small></p>
+<p class="mur__cpt"><b>23 avis Google sur l&#x27;agence</b><small>Relevé sur la fiche le 10 septembre 2026</small></p>
 <label class="mur__btn" for="mur-stop"><svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5v14M15 5v14"/></svg><span class="a">Mettre en pause le défilement</span><span class="b">Reprendre le défilement</span></label>
 </div>
 <div class="mur">

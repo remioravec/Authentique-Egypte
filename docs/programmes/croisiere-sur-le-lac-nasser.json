@@ -2,12 +2,12 @@
  "slug": "croisiere-sur-le-lac-nasser",
  "id": 1198,
  "url": "https://authentiquegypte.com/programs/croisiere-sur-le-lac-nasser/",
- "releve": "2026-09-09",
+ "releve": "2026-09-10",
  "modified_gmt": "2025-09-09T13:08:27",
  "title_seo": "Croisière Lac Nasser: visitez les temples d'Abou Simbel - Voyage en Égypte sur mesure",
  "meta_description": "Vivez une magique croisière sur les rives du lac Nasser et admirez les célèbres temples d'Abou Simbel et de Wadi el-Seboua.",
  "h1": "Croisière sur le lac Nasser",
- "chapo": "",
+ "chapo": "Votre programme de voyage",
  "presentation_titre": "Vue d'ensemble",
  "presentation": [
   "Notre croisière vous emmènera à la découverte de sites incontournables tels que les célèbres temples d’Abou Simbel. Ces impressionnantes structures taillées dans la roche, construites par le pharaon Ramsès II. Vous serez émerveillé en contemplant les imposantes statues des pharaons qui gardent l’entrée des temples.",
@@ -748,7 +748,7 @@
  "avis_google": {
   "nombre": 23,
   "source": "widget Google de la fiche",
-  "releve": "2026-09-09",
+  "releve": "2026-09-10",
   "temoignages": [
    {
     "auteur": "gislaine gagey",
@@ -824,12 +824,10 @@
   "Nous avons visité Le Caire avec cette agence. Nous avons établi notre programme avec eux et ils ont été très à l écoute. Dès notre arrivée à l aéroport un représentant nous attendait pour les formalités. Puis ils ont été présents plusieurs fois pendant notre séjour. La guide et les chauffeurs ont été très professionnels et très ponctuels. Merci à toute l équipe"
  ],
  "anomalies": [
-  "la fiche n'a pas de phrase de présentation : son chapô est l'intitulé de section « Votre programme de voyage », partagé par plusieurs fiches",
   "image à la une de 1024 px de large : trop petite pour un bandeau plein écran",
   "images sans original au-delà de 720 px : mohamed-soliman.jpg, desert-egypte.jpg, aswan.jpg, abu-simbel.jpg, aswan-journee-libre.jpg, vallée-des-rois.jpg, musee-egypte.jpg, pyramides-gizeh.jpg, vol-international.jpg",
   "images non résolues dans la médiathèque : desert-egypte.jpg, aswan.jpg, abu-simbel.jpg, aswan-journee-libre.jpg, vallée-des-rois.jpg, musee-egypte.jpg, pyramides-gizeh.jpg, vol-international.jpg",
   "le déroulé ne numérote pas ses jours : tout est rendu comme un seul jour",
   "aucun déroulé jour par jour trouvé"
- ],
- "chapo_source": "Votre programme de voyage"
+ ]
 }

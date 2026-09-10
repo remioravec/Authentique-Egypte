@@ -2,7 +2,7 @@
  "slug": "sainte-catherine",
  "id": 5109,
  "url": "https://authentiquegypte.com/programs/sainte-catherine/",
- "releve": "2026-09-09",
+ "releve": "2026-09-10",
  "modified_gmt": "2025-11-30T14:22:54",
  "title_seo": "Lever du soleil au mont Sinaï, et nuit à Sainte-Catherine - Voyage en Égypte sur mesure",
  "meta_description": "2 jours d'aventures, avec une nuit dans un camp Bédouin, le lever du soleil au mont Moïse et la visite du monastère Sainte-Catherine",
@@ -51,7 +51,8 @@
       "largeur": 2560,
       "hauteur": 1707,
       "srcset": "https://authentiquegypte.com/wp-content/uploads/2025/06/mohamad-sameh-Jl6Ghf2YsFQ-unsplash-300x200.jpg 300w, https://authentiquegypte.com/wp-content/uploads/2025/06/mohamad-sameh-Jl6Ghf2YsFQ-unsplash-768x512.jpg 768w, https://authentiquegypte.com/wp-content/uploads/2025/06/mohamad-sameh-Jl6Ghf2YsFQ-unsplash-1024x683.jpg 1024w, https://authentiquegypte.com/wp-content/uploads/2025/06/mohamad-sameh-Jl6Ghf2YsFQ-unsplash-1536x1024.jpg 1536w, https://authentiquegypte.com/wp-content/uploads/2025/06/mohamad-sameh-Jl6Ghf2YsFQ-unsplash-2048x1365.jpg 2048w, https://authentiquegypte.com/wp-content/uploads/2025/06/mohamad-sameh-Jl6Ghf2YsFQ-unsplash-scaled.jpg 2560w"
-     }
+     },
+     "mentions": []
     },
     {
      "titre": "Arrivée chez votre hôte",
@@ -66,7 +67,11 @@
       "largeur": 2560,
       "hauteur": 1711,
       "srcset": "https://authentiquegypte.com/wp-content/uploads/2025/06/DSC00493-300x201.jpg 300w, https://authentiquegypte.com/wp-content/uploads/2025/06/DSC00493-768x513.jpg 768w, https://authentiquegypte.com/wp-content/uploads/2025/06/DSC00493-1024x684.jpg 1024w, https://authentiquegypte.com/wp-content/uploads/2025/06/DSC00493-1536x1027.jpg 1536w, https://authentiquegypte.com/wp-content/uploads/2025/06/DSC00493-2048x1369.jpg 2048w, https://authentiquegypte.com/wp-content/uploads/2025/06/DSC00493-scaled.jpg 2560w"
-     }
+     },
+     "mentions": [
+      "Dîner",
+      "Nuit en guesthouse"
+     ]
     },
     {
      "titre": "Départ pour l'ascension",
@@ -84,7 +89,8 @@
       "largeur": 2560,
       "hauteur": 1711,
       "srcset": "https://authentiquegypte.com/wp-content/uploads/2025/06/DSC00535-300x201.jpg 300w, https://authentiquegypte.com/wp-content/uploads/2025/06/DSC00535-768x513.jpg 768w, https://authentiquegypte.com/wp-content/uploads/2025/06/DSC00535-1024x684.jpg 1024w, https://authentiquegypte.com/wp-content/uploads/2025/06/DSC00535-1536x1027.jpg 1536w, https://authentiquegypte.com/wp-content/uploads/2025/06/DSC00535-2048x1369.jpg 2048w, https://authentiquegypte.com/wp-content/uploads/2025/06/DSC00535-scaled.jpg 2560w"
-     }
+     },
+     "mentions": []
     },
     {
      "titre": "Lever de soleil au sommet",
@@ -99,7 +105,8 @@
       "largeur": 1710,
       "hauteur": 1195,
       "srcset": "https://authentiquegypte.com/wp-content/uploads/2025/06/DSC00528-scaled-e1750597600417-300x210.jpg 300w, https://authentiquegypte.com/wp-content/uploads/2025/06/DSC00528-scaled-e1750597600417-768x537.jpg 768w, https://authentiquegypte.com/wp-content/uploads/2025/06/DSC00528-scaled-e1750597600417-1024x716.jpg 1024w, https://authentiquegypte.com/wp-content/uploads/2025/06/DSC00528-scaled-e1750597600417-1536x1073.jpg 1536w, https://authentiquegypte.com/wp-content/uploads/2025/06/DSC00528-scaled-e1750597600417.jpg 1710w"
-     }
+     },
+     "mentions": []
     },
     {
      "titre": "Descente vers le monastère",
@@ -114,14 +121,15 @@
       "largeur": 2560,
       "hauteur": 1711,
       "srcset": "https://authentiquegypte.com/wp-content/uploads/2025/06/DSC00611-300x201.jpg 300w, https://authentiquegypte.com/wp-content/uploads/2025/06/DSC00611-768x513.jpg 768w, https://authentiquegypte.com/wp-content/uploads/2025/06/DSC00611-1024x684.jpg 1024w, https://authentiquegypte.com/wp-content/uploads/2025/06/DSC00611-1536x1027.jpg 1536w, https://authentiquegypte.com/wp-content/uploads/2025/06/DSC00611-2048x1369.jpg 2048w, https://authentiquegypte.com/wp-content/uploads/2025/06/DSC00611-scaled.jpg 2560w"
-     }
+     },
+     "mentions": []
     },
     {
      "titre": "Visite du monastère",
      "paragraphes": [
       "Le monastère est construit de murs en granit épais de 2 à 3 mètres, cette fortification s’accompagnait jusqu’au XXe siècle d’absence totale de porte. Ainsi, les moines rentraient via une fenêtre à une dizaine de mètres de hauteur où était installé un système d’ascenseur tracté manuellement. Cette situation explique l’étroitesse des passages, construits plus tard et par lesquels vous passez pour rentrer dans le monastère.",
       "À l’intérieur, vous visitez l’église de la Transfiguration avec ses mosaïques, son marbre et sa collection d’icônes. Poursuivez vers le Buisson ardent, puis montez pour découvrir le musée de la bibliothèque (2$) et sa collection inestimable d’icônes préservées et de textes bibliques. C’est d’ailleurs dans la bibliothèque du monastère que fut découverte une des plus anciennes bibles complètes (Codex Sinaiticus).",
-      "C’est en premier lieu, Hélène, la mère de l’empereur Constantin qui fit ériger au IVe siècle une chapelle entre ces montagnes isolées. La chapelle du Buisson ardent qui se trouve à l’arrière de l’église. Vient ensuite l’empereur Justinien 1er (vers 548–565) qui autour de la Chapelle du Buisson ardent fit construire le monastère pour protéger les pèlerins.Le monastère aurait été ensuite protégé par Mahomet en personne en 625 dans un décret (Adhiname), puis par Napoléon Bonaparte en 1798 (La Lettre de Sauvegarde, visible dans la bibliothèque) et enfin en 2002 par le l’UNESCO qui l’ajouta à son fameux Patrimoine mondial. Aujourd’hui encore, le gouvernement égyptien lui garantit sa sécurité et le reconnaît comme un haut lieu spirituel.",
+      "C’est en premier lieu, Hélène, la mère de l’empereur Constantin qui fit ériger au IVe siècle une chapelle entre ces montagnes isolées. La chapelle du Buisson ardent qui se trouve à l’arrière de l’église. Vient ensuite l’empereur Justinien 1er (vers 548–565) qui autour de la Chapelle du Buisson ardent fit construire le monastère pour protéger les pèlerins.\nLe monastère aurait été ensuite protégé par Mahomet en personne en 625 dans un décret (Adhiname), puis par Napoléon Bonaparte en 1798 (La Lettre de Sauvegarde, visible dans la bibliothèque) et enfin en 2002 par le l’UNESCO qui l’ajouta à son fameux Patrimoine mondial. Aujourd’hui encore, le gouvernement égyptien lui garantit sa sécurité et le reconnaît comme un haut lieu spirituel.",
       "Enfin, déambulez dans le parc ombragé et verdoyant du monastère où vous pourrez peut-être faire la rencontre d’un moine. En effet, plus d’une vingtaine de moines vivent de manière permanente au monastère, ils sont pour la plupart grecs et vivent pour la prière, la copie de manuscrits et l’accueil des pèlerins."
      ],
      "image": {
@@ -131,21 +139,21 @@
       "largeur": 2560,
       "hauteur": 1708,
       "srcset": "https://authentiquegypte.com/wp-content/uploads/2025/06/raimond-klavins-8j3FvUT6yM4-unsplash-300x200.jpg 300w, https://authentiquegypte.com/wp-content/uploads/2025/06/raimond-klavins-8j3FvUT6yM4-unsplash-768x512.jpg 768w, https://authentiquegypte.com/wp-content/uploads/2025/06/raimond-klavins-8j3FvUT6yM4-unsplash-1024x683.jpg 1024w, https://authentiquegypte.com/wp-content/uploads/2025/06/raimond-klavins-8j3FvUT6yM4-unsplash-1536x1025.jpg 1536w, https://authentiquegypte.com/wp-content/uploads/2025/06/raimond-klavins-8j3FvUT6yM4-unsplash-2048x1367.jpg 2048w, https://authentiquegypte.com/wp-content/uploads/2025/06/raimond-klavins-8j3FvUT6yM4-unsplash-scaled.jpg 2560w"
-     }
+     },
+     "mentions": []
     },
     {
      "titre": "Retour à la guesthouse",
      "paragraphes": [
       "Une voiture viendra vous chercher au parking du monastère afin de vous emmener à la guesthouse. Vous profitez d’un petit-déjeuner traditionnel et complet avant de reprendre la route en direction de la côte vers 12h00."
      ],
-     "image": null
+     "image": null,
+     "mentions": [
+      "Petit-déjeuner"
+     ]
     }
    ],
-   "mentions": [
-    "Dîner",
-    "Nuit en guesthouse",
-    "Petit-déjeuner"
-   ]
+   "mentions": []
   }
  ],
  "inclus": [
@@ -663,7 +671,7 @@
  "avis_google": {
   "nombre": 23,
   "source": "widget Google de la fiche",
-  "releve": "2026-09-09",
+  "releve": "2026-09-10",
   "temoignages": [
    {
     "auteur": "gislaine gagey",
@@ -750,7 +758,7 @@
   "La ville constitue également le point de départ des ascensions vers le mont Moïse (Gebel Moussa), haut lieu spirituel pour le judaïsme, le christianisme et l’islam, identifié comme le lieu où Moïse aurait reçu les Tables de la Loi.",
   "La vie à Sainte-Catherine est simple et paisible. C’est une ville de petite taille, habitée principalement par des Bédouins de la tribu Gabaliya, qui vivent de l’agriculture, de l’élevage, de l’artisanat et du tourisme. On y trouve quelques hébergements modestes, des guesthouses tenues par des locaux, et quelques restaurants ou cafés servant une cuisine simple.",
   "L’ambiance y est à la fois spirituelle, calme et respectueuse des traditions locales. En raison de son altitude, le climat est frais, voire froid la nuit, en particulier en hiver où les températures peuvent descendre jusqu’au gel. Le réseau mobile et l’accès à Internet sont disponibles dans la ville.",
-  "Outre son importance religieuse, Sainte-Catherine attire les amateurs de montagne et de randonnée. Nous vous proposons d’ailleurs de découvrir les paysages grandioses du Sinaï, des montagnes au désert, via de nombreux circuits guidés par des Bédouins. Nous prônons un tourisme responsable et respectueux de l’environnement.Contactez-nous pour demander un devis.",
+  "Outre son importance religieuse, Sainte-Catherine attire les amateurs de montagne et de randonnée. Nous vous proposons d’ailleurs de découvrir les paysages grandioses du Sinaï, des montagnes au désert, via de nombreux circuits guidés par des Bédouins. Nous prônons un tourisme responsable et respectueux de l’environnement.\nContactez-nous pour demander un devis.",
   "Ainsi, Sainte-Catherine offre un mélange rare de spiritualité, de nature brute et de culture bédouine, dans un cadre préservé et hors du temps.",
   "Peut-on visiter le monastère Sainte-Catherine ?",
   "Vous pouvez visiter le monastère de Sainte-Catherine, ouvert tous les jours sauf le dimanche et les jours fériés chrétiens :",
@@ -768,7 +776,7 @@
   "Sainte-Catherine se trouve à environ 450 kilomètres du Caire, soit un trajet de six à huit heures par la route. Elle est également accessible depuis les villes côtières de la mer Rouge : à environ 200 kilomètres de Sharm el-Sheikh (2h30 - 3h00 de route), 130 kilomètres de Dahab (environ 2h30), et 220 kilomètres de Taba, à la frontière israélienne.",
   "Un aéroport est actuellement en cours de rénovation à quelques kilomètres de la ville de Sainte-Catherine. Il devrait permettre des vols internes et internationaux à long terme, mais sa date de remise en service n’a pas encore été communiquée.",
   "Est-il sûr de se rendre au monastère Sainte-Catherine ?",
-  "Le Sud du Sinaï est une zone particulièrement protégée et plusieurs points de contrôle sont mis en place entre la côte et la ville de Sainte-Catherine pour assurer cette sécurité. De plus, le Sud-Sinaï n’est pas une zone déconseillée par le site de la diplomatie française",
+  "Le Sud du Sinaï est une zone particulièrement protégée et plusieurs points de contrôle sont mis en place entre la côte et la ville de Sainte-Catherine pour assurer cette sécurité. De plus, le Sud-Sinaï n’est pas une zone déconseillée par\nle site de la diplomatie française",
   "Enfin, lors de votre ascension, vous serez accompagné d’un guide bédouin expérimenté. En cas d’accident — rare sur cet itinéraire — un hôpital se trouve dans la ville de Sainte-Catherine.",
   "liste",
   "Quel niveau faut-il pour tenter l’ascension du mont Sinaï ?",

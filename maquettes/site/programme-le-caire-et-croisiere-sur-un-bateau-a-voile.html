@@ -82,10 +82,10 @@
    boutons, l'autre assied le bas du bandeau sur la section suivante —
    et outils/verif/lisibilite.js les mesure sur les pixels rendus. */
 .pg .hero::after{content:"";position:absolute;inset:0;background:
-  linear-gradient(96deg,rgba(5,35,50,.90) 0%,rgba(5,35,50,.84) 38%,
-  rgba(5,35,50,.42) 68%,rgba(5,35,50,.20) 100%),
-  linear-gradient(180deg,rgba(6,42,58,.34) 0%,rgba(6,42,58,0) 26%,
-  rgba(5,35,50,.30) 72%,rgba(5,35,50,.80) 100%)}
+  linear-gradient(96deg,rgba(8,58,92,.93) 0%,rgba(8,58,92,.88) 38%,
+  rgba(8,58,92,.46) 68%,rgba(8,58,92,.22) 100%),
+  linear-gradient(180deg,rgba(10,66,104,.36) 0%,rgba(10,66,104,0) 26%,
+  rgba(8,58,92,.32) 72%,rgba(8,58,92,.84) 100%)}
 /* z-index:1 est indispensable : ::after est le DERNIER enfant peint de
    .hero, donc il passe par-dessus le texte tant que celui-ci ne monte
    pas d'un cran. Sans cette ligne, le titre et les deux boutons partent
@@ -101,23 +101,23 @@
    mesuré au pixel. Le voile devient sombre — même effet de verre, mais
    il travaille dans le bon sens. */
 .pg .pill{display:inline-flex;align-items:center;gap:7px;font-family:"Manrope",sans-serif;
-  font-size:.84rem;font-weight:600;color:#fff;background:rgba(5,35,50,.82);
+  font-size:.84rem;font-weight:600;color:#fff;background:rgba(8,58,92,.86);
   border:1px solid rgba(255,255,255,.34);backdrop-filter:blur(8px);border-radius:var(--r-pill);padding:7px 14px}
 .pg .hero h1{color:#fff;font-size:clamp(2rem,4.4vw,3.15rem);line-height:1.08;margin:0 0 14px;
   max-width:18ch;text-shadow:0 2px 20px rgba(0,0,0,.45);text-wrap:balance}
 .pg .hero__chapo{color:#fff;font-size:1.12rem;line-height:1.6;max-width:54ch;margin:0 0 28px;
   font-weight:400;text-shadow:0 1px 12px rgba(0,0,0,.45)}
 .pg .hero__bas{display:flex;flex-wrap:wrap;align-items:center;gap:16px 28px}
-.pg .hero__prix{background:rgba(5,35,50,.72);backdrop-filter:blur(10px);
+.pg .hero__prix{background:rgba(8,58,92,.78);backdrop-filter:blur(10px);
   border:1px solid rgba(255,255,255,.30);border-radius:var(--r-m);padding:12px 20px;color:#fff;
   font-family:"Manrope",sans-serif}
 .pg .hero__prix small{display:block;font-size:.82rem;color:#fff}
 .pg .hero__prix b{display:block;font-size:1.85rem;font-weight:700;letter-spacing:-1px;line-height:1.15}
 .pg .hero__prix i{font-style:normal;font-size:.84rem;color:#DCEAF0}
 .pg .hero__act{display:flex;flex-wrap:wrap;gap:12px}
-.pg .btn--verre{background:rgba(255,255,255,.15);color:#fff;border-color:rgba(255,255,255,.42);
+.pg .btn--verre{background:rgba(8,58,92,.66);color:#fff;border-color:rgba(255,255,255,.46);
   backdrop-filter:blur(8px)}
-.pg .btn--verre:hover{background:rgba(255,255,255,.28);border-color:#fff}
+.pg .btn--verre:hover{background:rgba(8,58,92,.82);border-color:#fff}
 /* Le bouton de devis de l'entête commune : la règle .nav>a de la charte
    (0-1-1) écrase la couleur de .btn--or (0-1-0) et laisse un bleu sur
    fond or, à 2,7:1. On rétablit le contraste sans toucher à la charte. */
@@ -141,7 +141,7 @@
 .pg .deux{display:grid;grid-template-columns:minmax(0,1fr) 348px;gap:56px;
   padding:64px 0;align-items:start}
 .pg .deux>.corps{min-width:0;display:grid;gap:56px}
-.pg .prose{font-size:1.06rem;line-height:1.8;color:var(--texte);max-width:62ch}
+.pg .prose{font-size:1.06rem;line-height:1.8;color:var(--texte);max-width:51ch}
 .pg .prose p:last-child{margin-bottom:0}
 .pg .prose strong{color:var(--nuit-900);font-weight:600}
 
@@ -175,10 +175,10 @@
 .pg .mod--valise .mod__intro a,.pg .mod__apres a{color:var(--teal-txt);text-decoration:underline;
   text-underline-offset:3px}
 .pg .mod__intro{font-family:"Manrope",sans-serif;font-size:1.02rem;color:var(--nuit-900);
-  font-weight:600;margin:0 0 20px;max-width:62ch}
+  font-weight:600;margin:0 0 20px;max-width:51ch}
 .pg .mod__conseil{display:flex;gap:11px;align-items:flex-start;margin:20px 0 0;padding:16px 18px;
   background:var(--or-fond);border-radius:var(--r-m);font-family:"Manrope",sans-serif;
-  font-size:.98rem;color:#6B4B04;line-height:1.6;max-width:64ch}
+  font-size:.98rem;color:#6B4B04;line-height:1.6;max-width:53ch}
 .pg .mod__conseil svg{flex:0 0 auto;color:#B8860B;margin-top:2px}
 .pg .duree{position:relative}
 .pg .duree__r{position:absolute;opacity:0;pointer-events:none}
@@ -193,7 +193,7 @@
   border-radius:var(--r-l);padding:24px 26px}
 .pg .duree__c b{display:block;font-family:"Manrope",sans-serif;font-size:1.25rem;font-weight:800;
   color:var(--teal-txt);letter-spacing:-.4px;margin-bottom:8px}
-.pg .duree__c p{margin:0;font-size:1.04rem;line-height:1.7;color:var(--texte);max-width:60ch}
+.pg .duree__c p{margin:0;font-size:1.04rem;line-height:1.7;color:var(--texte);max-width:50ch}
 /* Sans CSS ni JavaScript, les trois formats restent lisibles à la suite :
    c'est le mode dégradé qu'impose la doctrine. */
 .pg .duree__r:nth-of-type(1):checked~.duree__ong .duree__o:nth-child(1),
@@ -327,7 +327,7 @@
   font-size:.92rem;color:#8A2F1C;line-height:1.5}
 .pg .carte__hors svg{flex:0 0 auto;margin-top:2px}
 .pg .carte__note{margin:14px 0 0;font-family:"Manrope",sans-serif;font-size:.86rem;
-  color:var(--gris-lis);line-height:1.5;max-width:62ch}
+  color:var(--gris-lis);line-height:1.5;max-width:51ch}
 .pg .carte__ech path{stroke:var(--nuit-900);stroke-width:3;stroke-linecap:butt;opacity:.75}
 .pg .carte__ech text{fill:var(--nuit-900);font-family:"Manrope",sans-serif;font-size:15px;
   font-weight:700;text-anchor:middle;paint-order:stroke;stroke:rgba(255,255,255,.9);
@@ -358,7 +358,7 @@
 .pg .rep--calc svg{color:var(--teal-txt)}
 .pg .reps__src{margin:26px 0 0;padding:16px 18px;background:var(--fond);border-radius:var(--r-m);
   font-family:"Manrope",sans-serif;font-size:.9rem;color:var(--gris-lis);line-height:1.6;
-  max-width:66ch}
+  max-width:54ch}
 
 /* ---------- fil d'Ariane sous le bandeau ---------- */
 .pg .ariane--sous{border-bottom:1px solid var(--ligne-2);background:#fff}
@@ -410,7 +410,7 @@
 .pg .etape h4{font-family:"Archivo",sans-serif;font-size:1.24rem;font-weight:600;color:var(--noir);
   margin:0 0 18px;letter-spacing:-.3px;display:flex;align-items:center;gap:10px}
 .pg .etape h4 svg{color:var(--teal-txt);flex:0 0 auto}
-.pg .etape p{color:var(--texte);font-size:1.04rem;line-height:1.8;max-width:62ch}
+.pg .etape p{color:var(--texte);font-size:1.04rem;line-height:1.8;max-width:51ch}
 .pg .mentions{display:flex;flex-wrap:wrap;gap:9px;margin:18px 0 0;padding:0}
 .pg .jour>.mentions{margin-top:24px;padding-top:18px;border-top:1px solid var(--ligne-2)}
 .pg .mention{display:inline-flex;align-items:center;gap:7px;font-family:"Manrope",sans-serif;
@@ -455,7 +455,7 @@
 .pg .tarif__ligne b{font-size:1.45rem;font-weight:800;color:var(--noir);letter-spacing:-.8px}
 .pg .tarif__ligne b small{font-size:.82rem;font-weight:500;color:var(--gris-lis);letter-spacing:0}
 .pg .note{font-family:"Manrope",sans-serif;font-size:.9rem;color:var(--gris-lis);
-  margin:14px 0 0;line-height:1.6;max-width:68ch}
+  margin:14px 0 0;line-height:1.6;max-width:56ch}
 
 /* ---------- inclusions ---------- */
 .pg .incl{display:grid;grid-template-columns:1fr 1fr;gap:28px}
@@ -499,7 +499,7 @@
 .pg .acc__plus::before{width:11px;height:2px}
 .pg .acc__plus::after{width:2px;height:11px}
 .pg .acc summary::after,.pg .acc summary::before{content:none}
-.pg .acc__c{padding:0 20px 20px;color:var(--texte);font-size:1rem;line-height:1.75;max-width:64ch}
+.pg .acc__c{padding:0 20px 20px;color:var(--texte);font-size:1rem;line-height:1.75;max-width:53ch}
 .pg .acc__c :last-child{margin-bottom:0}
 .pg .acc__c p{margin:0 0 .85em}
 .pg .acc__c ul{list-style:none;margin:0 0 .9em;padding:0;display:grid;gap:9px}
@@ -666,8 +666,8 @@
      4,17:1, mesurés au pixel. Il n'y a pas de zone sans texte où
      s'éclaircir. */
   .pg .hero::after{background:
-    linear-gradient(180deg,rgba(6,42,58,.68) 0%,rgba(6,42,58,.66) 22%,
-    rgba(5,35,50,.82) 58%,rgba(5,35,50,.95) 100%)}
+    linear-gradient(180deg,rgba(10,66,104,.72) 0%,rgba(10,66,104,.70) 22%,
+    rgba(8,58,92,.86) 58%,rgba(8,58,92,.96) 100%)}
   .pg .hero__fond{position:absolute;top:0;left:0;right:0;height:var(--une-h,470px)}
   .pg .hero__in{padding:14px 0 34px}
   /* Le bloc titre se colle au BAS de la photo, quelle que soit la
@@ -811,6 +811,7 @@
 <div class="hero__in"><div class="wrap">
 <div class="hero__pills"><span class="pill"><svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s6-5.5 6-11a6 6 0 1 0-12 0c0 5.5 6 11 6 11z"/><circle cx="12" cy="10" r="2.2"/></svg>Croisières en Égypte</span><span class="pill"><svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.5"/><path d="M5 20a7 7 0 0 1 14 0"/></svg>Guide francophone privatif</span></div>
 <h1>Le Caire et croisière sur un bateau à voile</h1>
+<p class="hero__chapo">Les étapes de votre séjour :</p>
 <div class="hero__bas">
 <div class="hero__act"><a class="btn btn--or" href="https://authentiquegypte.com/sur-mesure/">Personnaliser ce séjour</a><a class="btn btn--verre" href="https://wa.me/201066619098"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6a3 3 0 0 1 3-3h10a3 3 0 0 1 3 3v8a3 3 0 0 1-3 3H9l-5 4z"/></svg> Poser une question sur WhatsApp</a></div>
 </div></div></div></section>
@@ -822,7 +823,7 @@
 <section>
 <p class="eyebrow">Le séjour</p>
 <h2>Vue d&#x27;ensemble</h2>
-<div class="prose"><p>Explorez les mystères des pyramides de Gizeh et laissez-vous émerveiller par la grandeur des monuments anciens. Partez à la rencontre du majestueux Nil en embarquant à bord d’une croisière sur le Nil, sur un bateau à voile, la dahhabeya (9 à 14 cabines) où vous pourrez profiter de panoramas à couper le souffle et découvrir l’histoire fascinante des pharaons.</p><p>Ce programme de 3 jours à l’oasis de Siwa vous promet une expérience authentique, riche en découvertes et en moments de détente au cœur d’une oasis préservée. Venez explorer Siwa avec nous et laissez-vous charmer par la beauté et la sérénité de cet endroit magique.</p><p>Arrivée à l’aéroport international du Caire et accueil de notre représentant francophone. Aide à l’obtention du visa à l’arrivée.Transfert à votre hôtel et installation</p><p>En option : Le soir, spectacle son et lumières aux pyramides de Gizeh</p><p>Commencez votre journée par une visite des pyramides de Gizeh, incluant la Grande Pyramide de Khéops, la pyramide de Khéphren, la pyramide de Mykérinos et le SphinxEnsuite, visitez le musée égyptien du Caire pour admirer les trésors de l’ancienne Égypte, y compris les célèbres trésors de Toutankhamon</p><p>Transfert à l’aéroport avec votre représentant. Vol interne pour Louxor. Accueil et transfert à votre hôtel</p><p>Vers 9 heures, votre matinée sera consacrée à la visite du plus grand temple religieux de toute l’Antiquité : le temple de Karnak. Vous prendrez ensuite la route jusqu’à Edfou, pour visiter le temple d’Horus. Enfin, vous embarquerez sur la Dahhabeya. Les visites se feront en groupe avec un guide francophone (9 à 14 cabines).</p><p>Vous naviguerez dans la matinée, puis vous commencerez une belle marche à Ramadi autour du marais et dans les cultures, à la rencontre des paysans travaillant dans leurs champs de luzerne, de canne à sucre ou les dattiers. Vous retournerez ensuite à bord, puis, après le déjeuner ou en fin de journée, vous partirez en balade dans le charmant et très accueillant village de Bassaw. Vous passerez la nuit à Bassaw ou au pied du spéos d’Horemheb (selon les disponibilités). Cette journée fait partie de la croisière, elle ne peut pas être retirée.</p><p>Après avoir visité le petit temple de Horemheb et parcouru les carrières de grès, où les anciens Egyptiens taillaient la pierre pour nombre de leurs temples les plus célèbres, vous visiterez un café pittoresque pour déguster du thé et de la chicha (pipe à eau).Vous naviguerez ensuite vers une rive pittoresque où vous vous arrêterez pour déjeuner .</p><p>La navigation continuera jusqu’à Kôm Ombo pour visiter son temple majestueux – une surprise inoubliable. Vous partirez ensuite pour un dépaysement garanti au village de Daraw, assurément un des moments les plus forts du voyage. Vous retournerez à bord pour le déjeuner et naviguerez le long des rives nubiennes jusqu’à Aswan.</p><p>En option : Tôt le matin découverte du temple d’Abu Simbel. Retour sur Aswan après 3H30 de route.</p><p>Visite du temple de PhilaeNuit à quai à Aswan</p><p>Le soir, admirez le spectacle sons et lumières au temple de Philae.</p><p>Vous serez transférés à Louxor en véhicule avec le reste du groupe (3 heures de trajet).</p><p>Une fois dans la Vallée des Rois, vous visiterez trois tombeaux remarquables creusées dans le rocher du désert. Vous découvrirez ensuite les célèbres colosses de Memnon, puis vous partirez à la découverte du temple d’Hatchepsout à El Deir El Bahary. (fin des visites à 18 heures)</p><p>Transfert à l’aéroport</p><p>FAQ Le Caire et Croisière à Voile</p></div>
+<div class="prose"><p>Explorez les mystères des pyramides de Gizeh et laissez-vous émerveiller par la grandeur des monuments anciens. Partez à la rencontre du majestueux Nil en embarquant à bord d’une croisière sur le Nil, sur un bateau à voile, la dahhabeya (9 à 14 cabines) où vous pourrez profiter de panoramas à couper le souffle et découvrir l’histoire fascinante des pharaons.</p><p>Ce programme de 3 jours à l’oasis de Siwa vous promet une expérience authentique, riche en découvertes et en moments de détente au cœur d’une oasis préservée. Venez explorer Siwa avec nous et laissez-vous charmer par la beauté et la sérénité de cet endroit magique.</p><p>Arrivée à l’aéroport international du Caire et accueil de notre représentant francophone. Aide à l’obtention du visa à l’arrivée.Transfert à votre hôtel et installation</p><p>En option : Le soir, spectacle son et lumières aux pyramides de Gizeh</p><p>Commencez votre journée par une visite des pyramides de Gizeh, incluant la Grande Pyramide de Khéops, la pyramide de Khéphren, la pyramide de Mykérinos et le Sphinx<br>Ensuite, visitez le musée égyptien du Caire pour admirer les trésors de l’ancienne Égypte, y compris les célèbres trésors de Toutankhamon</p><p>Transfert à l’aéroport avec votre représentant. Vol interne pour Louxor. Accueil et transfert à votre hôtel</p><p>Vers 9 heures, votre matinée sera consacrée à la visite du plus grand temple religieux de toute l’Antiquité : le temple de Karnak. Vous prendrez ensuite la route jusqu’à Edfou, pour visiter le temple d’Horus. Enfin, vous embarquerez sur la Dahhabeya. Les visites se feront en groupe avec un guide francophone (9 à 14 cabines).</p><p>Vous naviguerez dans la matinée, puis vous commencerez une belle marche à Ramadi autour du marais et dans les cultures, à la rencontre des paysans travaillant dans leurs champs de luzerne, de canne à sucre ou les dattiers. Vous retournerez ensuite à bord, puis, après le déjeuner ou en fin de journée, vous partirez en balade dans le charmant et très accueillant village de Bassaw. Vous passerez la nuit à Bassaw ou au pied du spéos d’Horemheb (selon les disponibilités). Cette journée fait partie de la croisière, elle ne peut pas être retirée.</p><p>Après avoir visité le petit temple de Horemheb et parcouru les carrières de grès, où les anciens Egyptiens taillaient la pierre pour nombre de leurs temples les plus célèbres, vous visiterez un café pittoresque pour déguster du thé et de la chicha (pipe à eau).<br>Vous naviguerez ensuite vers une rive pittoresque où vous vous arrêterez pour déjeuner .</p><p>La navigation continuera jusqu’à Kôm Ombo pour visiter son temple majestueux – une surprise inoubliable. Vous partirez ensuite pour un dépaysement garanti au village de Daraw, assurément un des moments les plus forts du voyage. Vous retournerez à bord pour le déjeuner et naviguerez le long des rives nubiennes jusqu’à Aswan.</p><p>En option : Tôt le matin découverte du temple d’Abu Simbel. Retour sur Aswan après 3H30 de route.</p><p>Visite du temple de Philae<br>Nuit à quai à Aswan</p><p>Le soir, admirez le spectacle sons et lumières au temple de Philae.</p><p>Vous serez transférés à Louxor en véhicule avec le reste du groupe (3 heures de trajet).</p><p>Une fois dans la Vallée des Rois, vous visiterez trois tombeaux remarquables creusées dans le rocher du désert. Vous découvrirez ensuite les célèbres colosses de Memnon, puis vous partirez à la découverte du temple d’Hatchepsout à El Deir El Bahary. (fin des visites à 18 heures)</p><p>Transfert à l’aéroport</p><p>FAQ Le Caire et Croisière à Voile</p></div>
 </section>
 <section class="galerie">
 <a data-lb href="https://authentiquegypte.com/wp-content/uploads/2023/11/egypt-3080277_1280.jpg" data-alt="egypt-3080277_1280"><img src="https://authentiquegypte.com/wp-content/uploads/2023/11/egypt-3080277_1280.jpg" alt="egypt-3080277_1280" decoding="async" srcset="https://authentiquegypte.com/wp-content/uploads/2023/11/egypt-3080277_1280-300x200.jpg 300w, https://authentiquegypte.com/wp-content/uploads/2023/11/egypt-3080277_1280-768x512.jpg 768w, https://authentiquegypte.com/wp-content/uploads/2023/11/egypt-3080277_1280-1024x682.jpg 1024w, https://authentiquegypte.com/wp-content/uploads/2023/11/egypt-3080277_1280.jpg 1280w" sizes="(max-width:860px) 45vw, 370px" width="1280" height="853" loading="lazy"></a>
@@ -886,7 +887,7 @@
 <article class="etape" id="etape-2" data-lieu="le-caire">
 <a class="etape__photo" data-lb href="https://authentiquegypte.com/wp-content/uploads/2023/11/pyramides-scaled.jpg" data-alt="" aria-label="Agrandir la photo : Découverte des Pyramides de Gizeh et du musée Egyptien"><img src="https://authentiquegypte.com/wp-content/uploads/2023/11/pyramides-scaled.jpg" alt="" decoding="async" srcset="https://authentiquegypte.com/wp-content/uploads/2023/11/pyramides-300x200.jpg 300w, https://authentiquegypte.com/wp-content/uploads/2023/11/pyramides-768x512.jpg 768w, https://authentiquegypte.com/wp-content/uploads/2023/11/pyramides-1024x683.jpg 1024w, https://authentiquegypte.com/wp-content/uploads/2023/11/pyramides-1536x1024.jpg 1536w, https://authentiquegypte.com/wp-content/uploads/2023/11/pyramides-2048x1365.jpg 2048w, https://authentiquegypte.com/wp-content/uploads/2023/11/pyramides-scaled.jpg 2560w" sizes="(max-width:1040px) 100vw, 780px" width="2560" height="1707" loading="lazy"></a>
 
-<p>Commencez votre journée par une visite des pyramides de Gizeh, incluant la Grande Pyramide de Khéops, la pyramide de Khéphren, la pyramide de Mykérinos et le SphinxEnsuite, visitez le musée égyptien du Caire pour admirer les trésors de l’ancienne Égypte, y compris les célèbres trésors de Toutankhamon</p>
+<p>Commencez votre journée par une visite des pyramides de Gizeh, incluant la Grande Pyramide de Khéops, la pyramide de Khéphren, la pyramide de Mykérinos et le Sphinx<br>Ensuite, visitez le musée égyptien du Caire pour admirer les trésors de l’ancienne Égypte, y compris les célèbres trésors de Toutankhamon</p>
 <p>Transfert à l’aéroport avec votre représentant. Vol interne pour Louxor. Accueil et transfert à votre hôtel</p>
 
 </article>
@@ -917,7 +918,7 @@
 <article class="etape" id="etape-5" data-lieu="le-caire">
 <a class="etape__photo" data-lb href="https://authentiquegypte.com/wp-content/uploads/2023/11/thales-botelho-de-sousa-OY2o1xOLfwo-unsplash-1-scaled.jpg" data-alt="" aria-label="Agrandir la photo : Gebel Silsela - Croisière"><img src="https://authentiquegypte.com/wp-content/uploads/2023/11/thales-botelho-de-sousa-OY2o1xOLfwo-unsplash-1-scaled.jpg" alt="" decoding="async" srcset="https://authentiquegypte.com/wp-content/uploads/2023/11/thales-botelho-de-sousa-OY2o1xOLfwo-unsplash-1-300x225.jpg 300w, https://authentiquegypte.com/wp-content/uploads/2023/11/thales-botelho-de-sousa-OY2o1xOLfwo-unsplash-1-768x576.jpg 768w, https://authentiquegypte.com/wp-content/uploads/2023/11/thales-botelho-de-sousa-OY2o1xOLfwo-unsplash-1-1024x768.jpg 1024w, https://authentiquegypte.com/wp-content/uploads/2023/11/thales-botelho-de-sousa-OY2o1xOLfwo-unsplash-1-1536x1152.jpg 1536w, https://authentiquegypte.com/wp-content/uploads/2023/11/thales-botelho-de-sousa-OY2o1xOLfwo-unsplash-1-2048x1536.jpg 2048w, https://authentiquegypte.com/wp-content/uploads/2023/11/thales-botelho-de-sousa-OY2o1xOLfwo-unsplash-1-scaled.jpg 2560w" sizes="(max-width:1040px) 100vw, 780px" width="2560" height="1920" loading="lazy"></a>
 
-<p>Après avoir visité le petit temple de Horemheb et parcouru les carrières de grès, où les anciens Egyptiens taillaient la pierre pour nombre de leurs temples les plus célèbres, vous visiterez un café pittoresque pour déguster du thé et de la chicha (pipe à eau).Vous naviguerez ensuite vers une rive pittoresque où vous vous arrêterez pour déjeuner .</p>
+<p>Après avoir visité le petit temple de Horemheb et parcouru les carrières de grès, où les anciens Egyptiens taillaient la pierre pour nombre de leurs temples les plus célèbres, vous visiterez un café pittoresque pour déguster du thé et de la chicha (pipe à eau).<br>Vous naviguerez ensuite vers une rive pittoresque où vous vous arrêterez pour déjeuner .</p>
 
 </article>
 
@@ -936,7 +937,7 @@
 <article class="etape" id="etape-7" data-lieu="abou-simbel">
 
 <p>En option : Tôt le matin découverte du temple d’Abu Simbel. Retour sur Aswan après 3H30 de route.</p>
-<p>Visite du temple de PhilaeNuit à quai à Aswan</p>
+<p>Visite du temple de Philae<br>Nuit à quai à Aswan</p>
 <p>Le soir, admirez le spectacle sons et lumières au temple de Philae.</p>
 
 </article>
@@ -993,7 +994,7 @@
 <input type="checkbox" id="mur-stop" class="mur__stop">
 <div class="mur__tete">
 <div><p class="eyebrow">Avis Google</p><h2 id="t-avis">Ce que disent les voyageurs</h2></div>
-<p class="mur__cpt"><b>23 avis Google sur l&#x27;agence</b><small>Relevé sur la fiche le 9 septembre 2026</small></p>
+<p class="mur__cpt"><b>23 avis Google sur l&#x27;agence</b><small>Relevé sur la fiche le 10 septembre 2026</small></p>
 <label class="mur__btn" for="mur-stop"><svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5v14M15 5v14"/></svg><span class="a">Mettre en pause le défilement</span><span class="b">Reprendre le défilement</span></label>
 </div>
 <div class="mur">

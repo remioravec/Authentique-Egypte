@@ -2,12 +2,12 @@
  "slug": "roadtrip-en-egypte",
  "id": 1369,
  "url": "https://authentiquegypte.com/programs/roadtrip-en-egypte/",
- "releve": "2026-09-09",
+ "releve": "2026-09-10",
  "modified_gmt": "2025-09-09T13:07:51",
  "title_seo": "Road trip en Égypte - Voyage en Égypte sur mesure",
  "meta_description": "Explorez les mystères des Pyramides de Gizeh et découvrez l'histoire fascinante des Pharaons avec un guide francophone en Égypte !",
  "h1": "Roadtrip en Égypte sur mesure",
- "chapo": "",
+ "chapo": "Votre programme de voyage",
  "presentation_titre": "Vue d'ensemble",
  "presentation": [
   "Explorez les mystères des pyramides de Gizeh et laissez-vous émerveiller par la grandeur des monuments anciens.Par la route , découvrez le Nil, où vous pourrez profiter de panoramas à couper le souffle et découvrir l’histoire fascinante des pharaons.",
@@ -850,7 +850,7 @@
  "avis_google": {
   "nombre": 23,
   "source": "widget Google de la fiche",
-  "releve": "2026-09-09",
+  "releve": "2026-09-10",
   "temoignages": [
    {
     "auteur": "gislaine gagey",
@@ -928,10 +928,8 @@
   "liste"
  ],
  "anomalies": [
-  "la fiche n'a pas de phrase de présentation : son chapô est l'intitulé de section « Votre programme de voyage », partagé par plusieurs fiches",
   "aucun prix lu sur la fiche",
   "le déroulé ne numérote pas ses jours : tout est rendu comme un seul jour",
   "aucun déroulé jour par jour trouvé"
- ],
- "chapo_source": "Votre programme de voyage"
+ ]
 }
