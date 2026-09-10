@@ -64,7 +64,7 @@ INTERFACE = {
     'titre_pourquoi': '',   # celui de la page : arguments.titre
     'eyebrow_pourquoi': 'Pourquoi nous',                            # D49
     'eyebrow_edito': 'Sur mesure',                                  # D49
-    'titre_faq': 'Ce qu’on nous demande sur cette famille',    # D6
+    'titre_faq': 'Ce qu’on nous demande le plus souvent',    # D6, D54
     'eyebrow_faq': 'Avant de choisir',                              # D6
     'titre_familles': 'Les autres types de séjours',                # D49
     'eyebrow_familles': 'Continuer',                                # D49
