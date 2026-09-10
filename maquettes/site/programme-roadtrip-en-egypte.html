@@ -96,18 +96,22 @@
 .pg .hero .ariane li::after{color:rgba(255,255,255,.45)}
 .pg .hero .ariane [aria-current]{color:#fff}
 .pg .hero__pills{display:flex;flex-wrap:wrap;gap:8px;margin:20px 0 18px}
+/* Un voile BLANC translucide sur une photo claire ne fait qu'éclaircir
+   le fond du texte blanc : les jetons tombaient à 4,03:1 sur mobile,
+   mesuré au pixel. Le voile devient sombre — même effet de verre, mais
+   il travaille dans le bon sens. */
 .pg .pill{display:inline-flex;align-items:center;gap:7px;font-family:"Manrope",sans-serif;
-  font-size:.84rem;font-weight:600;color:#fff;background:rgba(255,255,255,.16);
-  border:1px solid rgba(255,255,255,.3);backdrop-filter:blur(8px);border-radius:var(--r-pill);padding:7px 14px}
+  font-size:.84rem;font-weight:600;color:#fff;background:rgba(5,35,50,.82);
+  border:1px solid rgba(255,255,255,.34);backdrop-filter:blur(8px);border-radius:var(--r-pill);padding:7px 14px}
 .pg .hero h1{color:#fff;font-size:clamp(2rem,4.4vw,3.15rem);line-height:1.08;margin:0 0 14px;
   max-width:18ch;text-shadow:0 2px 20px rgba(0,0,0,.45);text-wrap:balance}
-.pg .hero__chapo{color:#EAF2F6;font-size:1.12rem;line-height:1.6;max-width:54ch;margin:0 0 28px;
+.pg .hero__chapo{color:#fff;font-size:1.12rem;line-height:1.6;max-width:54ch;margin:0 0 28px;
   font-weight:400;text-shadow:0 1px 12px rgba(0,0,0,.45)}
 .pg .hero__bas{display:flex;flex-wrap:wrap;align-items:center;gap:16px 28px}
-.pg .hero__prix{background:rgba(255,255,255,.13);backdrop-filter:blur(10px);
-  border:1px solid rgba(255,255,255,.24);border-radius:var(--r-m);padding:12px 20px;color:#fff;
+.pg .hero__prix{background:rgba(5,35,50,.72);backdrop-filter:blur(10px);
+  border:1px solid rgba(255,255,255,.30);border-radius:var(--r-m);padding:12px 20px;color:#fff;
   font-family:"Manrope",sans-serif}
-.pg .hero__prix small{display:block;font-size:.82rem;color:#DCEAF0}
+.pg .hero__prix small{display:block;font-size:.82rem;color:#fff}
 .pg .hero__prix b{display:block;font-size:1.85rem;font-weight:700;letter-spacing:-1px;line-height:1.15}
 .pg .hero__prix i{font-style:normal;font-size:.84rem;color:#DCEAF0}
 .pg .hero__act{display:flex;flex-wrap:wrap;gap:12px}
@@ -503,6 +507,10 @@
 .pg .acc__c ul li::before{content:"";position:absolute;left:2px;top:.62em;width:7px;height:7px;
   border-radius:50%;background:var(--or)}
 .pg .acc__c strong{color:var(--nuit-900);font-weight:600}
+/* Les réponses de la cliente portent parfois leurs propres titres. Sans
+   interligne, un H3 de deux lignes se serre à 1,25 — sous le plancher. */
+.pg .acc__c h3,.pg .acc__c h4{font-size:1.05rem;line-height:1.45;margin:18px 0 8px}
+.pg .acc__c h3:first-child,.pg .acc__c h4:first-child{margin-top:0}
 .pg .acc__c a{color:var(--teal-txt);text-decoration:underline;text-underline-offset:3px}
 .pg .acc__vide{color:#7A5605;background:var(--or-fond);border:1px dashed var(--or);
   border-radius:var(--r-s);padding:10px 14px;font-family:"Manrope",sans-serif;font-size:.94rem}
@@ -653,9 +661,13 @@
      n'a plus de côté où s'effacer, il redevient vertical.
      Le flou garde toute la hauteur ; seule la photo NETTE se limite à
      la bande que sa propre définition permet. */
+  /* Sur mobile le texte occupe TOUTE la hauteur du bandeau : le creux
+     du voile à 22 % laissait le chapô à 4,02:1 et le « À partir de » à
+     4,17:1, mesurés au pixel. Il n'y a pas de zone sans texte où
+     s'éclaircir. */
   .pg .hero::after{background:
-    linear-gradient(180deg,rgba(6,42,58,.52) 0%,rgba(6,42,58,.40) 22%,
-    rgba(5,35,50,.72) 58%,rgba(5,35,50,.93) 100%)}
+    linear-gradient(180deg,rgba(6,42,58,.68) 0%,rgba(6,42,58,.66) 22%,
+    rgba(5,35,50,.82) 58%,rgba(5,35,50,.95) 100%)}
   .pg .hero__fond{position:absolute;top:0;left:0;right:0;height:var(--une-h,470px)}
   .pg .hero__in{padding:14px 0 34px}
   /* Le bloc titre se colle au BAS de la photo, quelle que soit la
@@ -799,7 +811,6 @@
 <div class="hero__in"><div class="wrap">
 <div class="hero__pills"><span class="pill"><svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s6-5.5 6-11a6 6 0 1 0-12 0c0 5.5 6 11 6 11z"/><circle cx="12" cy="10" r="2.2"/></svg>Voyage culturel en Égypte</span><span class="pill"><svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.5"/><path d="M5 20a7 7 0 0 1 14 0"/></svg>Guide francophone privatif</span></div>
 <h1>Roadtrip en Égypte sur mesure</h1>
-<p class="hero__chapo">Votre programme de voyage</p>
 <div class="hero__bas">
 <div class="hero__act"><a class="btn btn--or" href="https://authentiquegypte.com/sur-mesure/">Personnaliser ce séjour</a><a class="btn btn--verre" href="https://wa.me/201066619098"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6a3 3 0 0 1 3-3h10a3 3 0 0 1 3 3v8a3 3 0 0 1-3 3H9l-5 4z"/></svg> Poser une question sur WhatsApp</a></div>
 </div></div></div></section>
@@ -853,20 +864,10 @@
 <li><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 11l1.5-4.5A2 2 0 0 1 8.4 5h7.2a2 2 0 0 1 1.9 1.5L19 11M4 11h16v6h-2a2 2 0 1 1-4 0H10a2 2 0 1 1-4 0H4z"/></svg><span>Les transferts</span></li>
 <li><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/></svg><span>L&#x27;assistance H24</span></li>
 </ul></div>
-<div class="carr">
-<div class="carr__tete"><h3>Les visages derrière votre séjour</h3><div class="carr__nav" hidden><button type="button" class="carr__b" data-carr="-1" aria-controls="equipe" aria-label="Personne précédente"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13M12 6l6 6-6 6"/></svg></button><button type="button" class="carr__b" data-carr="1" aria-controls="equipe" aria-label="Personne suivante"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13M12 6l6 6-6 6"/></svg></button></div></div>
-<div class="carr__p" id="equipe" tabindex="0" role="group" aria-label="Les visages derrière votre séjour">
-<article class="carr__c"><span class="carr__m" aria-hidden="true">H</span><b>Hossam</b><span class="carr__r">Guide égyptologue</span><ul class="carr__f"><li>14 ans</li><li>français, arabe, anglais</li></ul></article>
-<article class="carr__c"><span class="carr__m" aria-hidden="true">N</span><b>Nour</b><span class="carr__r">Conception d&#x27;itinéraires</span><ul class="carr__f"><li>votre interlocutrice du devis au retour</li></ul></article>
-<article class="carr__c"><span class="carr__m" aria-hidden="true">A</span><b>Ahmed</b><span class="carr__r">Chauffeur privatif</span><ul class="carr__f"><li>Le Caire, Delta et vallée du Nil</li></ul></article>
-<article class="carr__c"><span class="carr__m" aria-hidden="true">M</span><b>Mariam</b><span class="carr__r">Assistance sur place</span><ul class="carr__f"><li>joignable 24 h/24 pendant le séjour</li></ul></article>
-</div>
-<p class="carr__aide">Faites défiler pour rencontrer toute l&#x27;équipe.</p>
-</div>
 </div></section>
 <section class="pg-sec pg-sec--fond"><div class="wrap"><div class="faqs">
 <div><p class="eyebrow">La destination</p><h2>Tout savoir sur ce séjour</h2><div class="acc"><details open><summary><span class="q">Pourquoi cette combinaison ?</span><span class="acc__plus"></span></summary><div class="acc__c"><p><strong>Cette combinaison offre deux facettes de l'Égypte :</strong> l'effervescence urbaine du Caire avec ses pyramides et son histoire millénaire, puis la sérénité du Nil à bord d'un bateau traditionnel.</p> <p>Vous passez <strong>de la densité historique aux paysages apaisants,</strong> du chaos organisé de la capitale à la navigation lente sur le fleuve sacré.</p></div></details><details><summary><span class="q">Organisation du voyage</span><span class="acc__plus"></span></summary><div class="acc__c"><p><strong>Étape 1 :</strong> Séjour au Caire (2-3 jours) pour visiter les pyramides de Gizeh, le musée des antiquités, les mosquées historiques.</p> <p><strong>Étape 2 :</strong> Transfert vers Louxor ou Assouan par vol intérieur ou train couchette.</p> <p><strong>Étape 3 :</strong> Embarquement sur bateau à voile traditionnel (dahabieh) pour 4-5 jours de navigation.</p></div></details><details><summary><span class="q">Activités au Caire</span><span class="acc__plus"></span></summary><div class="acc__c"><ul> <li><strong>Pyramides de Gizeh</strong> et le Grand Sphinx</li> <li><strong>Musée des antiquités</strong> égyptiennes</li> <li><strong>Caire islamique</strong> : mosquées et ruelles historiques</li> <li><strong>Marchés traditionnels</strong> et quartiers vivants</li> </ul> <p>Voir aussi : <a href="https://authentiquegypte.com/voyage-au-caire/">Guide du Caire</a></p></div></details><details><summary><span class="q">Vie à bord du bateau</span><span class="acc__plus"></span></summary><div class="acc__c"><p><strong>Navigation lente et silencieuse</strong> au rythme du vent, arrêts dans les temples emblématiques (Karnak, Edfou, Kom Ombo, Philae).</p> <ul> <li><strong>Lectures sur le pont</strong> avec vue sur les rives</li> <li><strong>Repas cuisinés à bord</strong> dans une ambiance conviviale</li> <li><strong>Nuits étoilées</strong> sur le fleuve</li> <li><strong>Baignades occasionnelles</strong> selon les conditions</li> </ul></div></details><details><summary><span class="q">Meilleure saison</span><span class="acc__plus"></span></summary><div class="acc__c"><p><strong>Octobre à avril :</strong> températures agréables, paysages verdoyants, conditions idéales pour visiter et naviguer.</p> <p><strong>À éviter : mai à septembre</strong> - chaleur intense au Caire et dans les temples, navigation possible mais plus difficile.</p> <p>Voir : <a href="https://authentiquegypte.com/quand-partir-en-egypte/">Quand partir en Égypte</a></p></div></details><details><summary><span class="q">Conseils pratiques</span><span class="acc__plus"></span></summary><div class="acc__c"><ul> <li><strong>Tenue :</strong> vêtements modestes et couvrants, chaussures confortables</li> <li><strong>Sur le bateau :</strong> ambiance décontractée, prévoir une couche chaude pour les soirées</li> <li><strong>Réservation :</strong> anticiper pour les bateaux à voile (capacité limitée)</li> </ul> <p><strong>Recommandations :</strong> <a href="https://authentiquegypte.com/vaccins-egypte/">vaccins</a> et <a href="https://authentiquegypte.com/securite-egypte-2025/">sécurité</a></p></div></details><details><summary><span class="q">Questions fréquentes</span><span class="acc__plus"></span></summary><div class="acc__c"><p><strong>Faisable avec des enfants ?</strong> Oui, Le Caire peut être intense mais la croisière offre un cadre parfait pour se reposer.</p> <p><strong>Avantages du bateau à voile ?</strong> Silencieux, écologique, permet de vraiment vivre le Nil plutôt que de le traverser.</p> <p><strong>Sens de navigation ?</strong> Louxor→Assouan ou Assouan→Louxor selon vos préférences, les deux offrent de magnifiques paysages.</p> <p><strong>Personnalisation ?</strong> Les circuits à voile sont flexibles : escales dans des villages, arrêts baignade, visites hors foule.</p></div></details></div></div>
-<div><p class="eyebrow">Avant de réserver</p><h2>Les questions qui reviennent avant de partir</h2><div class="acc"><details><summary><span class="q">Est-ce sûr de voyager en Égypte en ce moment ?</span><span class="acc__plus"></span></summary><div class="acc__c"><p>Oui pour les zones où nous opérons : Le Caire, Louxor, Assouan, la vallée du Nil et la mer Rouge. Elles sont très fréquentées et surveillées. Nous n'organisons pas de séjour dans le Sinaï nord ni près de la frontière libyenne. Votre guide reste avec vous sur chaque site. Le détail figure dans notre point sur la <a href="https://authentiquegypte.com/securite-en-egypte-en-2026/" class="lien-txt">sécurité en Égypte en 2026</a>.</p></div></details><details><summary><span class="q">Combien coûte réellement un voyage de deux semaines ?</span><span class="acc__plus"></span></summary><div class="acc__c"><p>Comptez 1 400 à 2 200 € par personne hors vols internationaux pour 12 à 14 jours, en hôtels 4★ et 5★ avec guide privatif. Le prix bouge selon la saison, le nombre de voyageurs et le niveau d'hébergement. Nous chiffrons systématiquement deux versions pour que vous voyiez l'écart.</p></div></details><details><summary><span class="q">Réservez-vous les vols internationaux ?</span><span class="acc__plus"></span></summary><div class="acc__c"><p>Non, vous les réservez vous-même : cela vous laisse le contrôle des dates et du prix. Nous vous indiquons les créneaux d'arrivée compatibles avec l'itinéraire, et nous réservons les vols internes (Le Caire–Assouan, Louxor–Hurghada).</p></div></details><details><summary><span class="q">Faut-il un visa, et comment l&#x27;obtenir ?</span><span class="acc__plus"></span></summary><div class="acc__c"><p>Oui. Deux options : l'e-visa en ligne avant le départ, ou le visa à l'arrivée dans la plupart des aéroports (30 € en espèces ou par carte). Passeport valable 6 mois après l'arrivée. La procédure complète est dans le <a href="https://authentiquegypte.com/passeport-egypte/" class="lien-txt">guide passeport et visa pour l'Égypte</a>.</p></div></details><details><summary><span class="q">Que se passe-t-il si je dois annuler ?</span><span class="acc__plus"></span></summary><div class="acc__c"><p>Nous cherchons d'abord à reporter le séjour. Si l'annulation est définitive, des frais s'appliquent selon le délai et les prestataires déjà réservés. C'est la raison pour laquelle nous recommandons une assurance annulation dès la validation.</p></div></details></div></div>
+<div><p class="eyebrow">Avant de réserver</p><h2>Les questions qui reviennent avant de partir</h2><div class="acc"><details><summary><span class="q">Comment organiser un voyage sur mesure en Égypte ?</span><span class="acc__plus"></span></summary><div class="acc__c"><p>Nous commençons par un appel découverte pour comprendre vos envies, votre budget et vos contraintes. Une première proposition personnalisée vous est ensuite envoyée. Vous pouvez la modifier autant que nécessaire, jusqu’à validation. Nous nous occupons ensuite des réservations et restons disponibles pendant tout votre voyage.</p></div></details><details><summary><span class="q">Est-ce dangereux de venir en Égypte ?</span><span class="acc__plus"></span></summary><div class="acc__c"><p>Venir en Égypte est tout à fait sûr, surtout si vous suivez quelques recommandations simples comme dans n’importe quel pays touristique. Les zones touristiques majeures, comme Le Caire, Louxor, Assouan, et les sites du Nil, sont très bien sécurisées, avec une présence policière renforcée pour assurer la tranquillité des visiteurs.</p><p>Chaque année, des millions de voyageurs visitent l’Égypte sans rencontrer aucun problème. Notre équipe locale travaille en étroite collaboration avec les autorités pour garantir que votre séjour soit serein, authentique et mémorable. Nous vous conseillons simplement de respecter les consignes habituelles de voyage : éviter certains quartiers la nuit, garder vos effets personnels en sécurité, et suivre les conseils de votre guide.</p><p>Avec un bon accompagnement et une organisation sérieuse, vous pourrez pleinement profiter des trésors historiques, des paysages exceptionnels et de l’accueil chaleureux des Égyptiens, le tout dans un environnement sûr.</p><p>Consultez notre article dédié à la<a href="https://www.google.com/url?sa=t&amp;source=web&amp;rct=j&amp;opi=89978449&amp;url=https://authentiquegypte.com/securite-egypte-2025/&amp;ved=2ahUKEwjbz4-ozfOOAxX_UaQEHWZmILcQFnoECBYQAQ&amp;usg=AOvVaw3eeYchlsH3FBTHUJTLaKGK"> <strong>sécurité en Égypte</strong>.</a></p></div></details><details><summary><span class="q">Quels papiers d&#x27;identité faut-il pour partir ?</span><span class="acc__plus"></span></summary><div class="acc__c"><p>Passeport valable 6 mois minimum après l’arrivée en Égypte. Carte d'identité acceptée pour les ressortissants français, belges ou suisses, avec deux photos d'identité.</p></div></details><details><summary><span class="q">Ai-je besoin d’un visa pour voyager en Égypte ?</span><span class="acc__plus"></span></summary><div class="acc__c"><p>Oui, il peut être obtenu à l’arrivée (30 € en espèces ou CB) ou en ligne. Passeport requis, ou carte d’identité (+ 2 photos).</p></div></details><details><summary><span class="q">Dois-je faire des vaccins ?</span><span class="acc__plus"></span></summary><div class="acc__c"><p>Aucun vaccin n’est obligatoire, mais il est recommandé d’être à jour sur les vaccins de base.</p></div></details><details><summary><span class="q">Réservez-vous les vols internationaux ?</span><span class="acc__plus"></span></summary><div class="acc__c"><p>Non, mais nous vous accompagnons dans la recherche des meilleurs vols selon vos dates et aéroports.</p></div></details><details><summary><span class="q">Puis-je changer mes dates ou l’itinéraire après réservation ?</span><span class="acc__plus"></span></summary><div class="acc__c"><p>Oui, tant que les réservations définitives ne sont pas encore validées. Après validation, des frais peuvent s’appliquer selon les prestataires.</p></div></details><details><summary><span class="q">Que se passe-t-il si je ne peux plus partir ?</span><span class="acc__plus"></span></summary><div class="acc__c"><p>Nous faisons tout pour reprogrammer ou adapter votre voyage. Des frais peuvent s’appliquer selon le délai d’annulation. Nous vous conseillons également de prendre une assurance voyage. </p></div></details><details><summary><span class="q">Réservez-vous les vols internes ?</span><span class="acc__plus"></span></summary><div class="acc__c"><p>Oui, nous pouvons réserver vos vols internes.</p></div></details><details><summary><span class="q">Comment puis-je régler mon voyage ?</span><span class="acc__plus"></span></summary><div class="acc__c"><p>Vous pouvez payer par virement bancaire ou carte bancaire via un lien sécurisé.</p></div></details><details><summary><span class="q">Le paiement est-il fractionnable ?</span><span class="acc__plus"></span></summary><div class="acc__c"><p>Oui, un acompte est demandé à la validation, puis le solde ,<strong> 45 jours avant le départ</strong>. Le calendrier exact vous sera précisé lors de la réservation.</p></div></details><details><summary><span class="q">L’acompte est-il remboursable ?</span><span class="acc__plus"></span></summary><div class="acc__c"><p>L’acompte permet de bloquer vos hébergements et prestations. Il est remboursable uniquement si les conditions d’annulation de votre séjour le permettent.</p></div></details><details><summary><span class="q">Puis-je offrir un voyage ou un crédit à un proche ?</span><span class="acc__plus"></span></summary><div class="acc__c"><p>Oui, vous pouvez offrir un avoir voyage ou une carte-cadeau personnalisée.</p></div></details></div></div>
 </div></div></section>
 <section class="pg-sec" aria-labelledby="t-avis"><div class="wrap">
 <input type="checkbox" id="mur-stop" class="mur__stop">
@@ -928,7 +929,7 @@
         </p>
       </div>
       <div>
-        <h4>Nos séjours</h4>
+        <h3>Nos séjours</h3>
         <ul>
           <li><a href="https://authentiquegypte.com/nos-sejours-egypte/croisieres-en-egypte/">Croisière sur le Nil</a></li>
           <li><a href="https://authentiquegypte.com/nos-sejours-egypte/desert-egypte/">Voyage dans le désert en Égypte</a></li>
@@ -938,7 +939,7 @@
         </ul>
       </div>
       <div>
-        <h4>Destinations</h4>
+        <h3>Destinations</h3>
         <ul>
           <li><a href="https://authentiquegypte.com/voyage-au-caire/">Voyage au Caire</a></li>
           <li><a href="https://authentiquegypte.com/voyage-a-louxor/">Voyage à Louxor</a></li>
@@ -951,7 +952,7 @@
         </ul>
       </div>
       <div>
-        <h4>L'agence</h4>
+        <h3>L'agence</h3>
         <ul>
           <li><a href="https://authentiquegypte.com/qui-sommes-nous/">Qui sommes-nous</a></li>
           <li><a href="https://authentiquegypte.com/notre-blog/">Guides pratiques</a></li>
