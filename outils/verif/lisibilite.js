@@ -310,15 +310,57 @@ const VUES = [
         // en coordonnées de FENÊTRE, et tout ce qui vit sous la ligne de
         // flottaison — le mur d'avis, les cartes du bas — n'était donc
         // jamais mesuré, seulement déclaré « non mesurable ».
-        await el.scrollIntoViewIfNeeded();
-        const b = await el.boundingBox();
-        if (!b) throw new Error('hors page');
-        const mx = Math.min(b.width * 0.18, 14), my = Math.min(b.height * 0.22, 12);
-        cliche = await page.screenshot({
-          clip: { x: Math.max(0, b.x + mx), y: Math.max(0, b.y + my),
-                  width: Math.max(2, b.width - 2 * mx),
-                  height: Math.max(2, b.height - 2 * my) },
+        // `block:'center'` et non scrollIntoViewIfNeeded : un élément déjà
+        // DANS la fenêtre n'est pas déplacé, même quand la barre d'appel
+        // fixe du bas le recouvre. On photographiait alors le bouton de la
+        // barre à la place du texte — les libellés du composeur ressortaient
+        // à 1,3:1 sur une carte blanche. Au centre de la fenêtre, aucun
+        // élément fixe (en-tête collant, barre du bas) ne passe dessus.
+        await el.evaluate(e => e.scrollIntoView({ block: 'center', behavior: 'instant' }));
+        // On photographie le rectangle des LETTRES, pas celui de la boîte.
+        // Un <p> en bloc occupe toute la largeur de son conteneur ; le
+        // chapeau du hero fait 1200 px de large pour vingt-trois lettres
+        // posées à gauche. Photographier sa bande centrale revenait à
+        // mesurer la photo à 600 px du texte — là où le voile est presque
+        // transparent — et à rendre 2,13:1 pour un texte réellement posé
+        // sur un aplat sombre.
+        // Une LIGNE À LA FOIS, et non leur enveloppe : « avec vous » finit
+        // une ligne et en commence une autre ; leur enveloppe englobe le
+        // milieu de la première ligne, où le reste du titre est peint en
+        // blanc. On mesurait alors l'or contre du blanc — 1,79:1 pour un
+        // titre parfaitement lisible.
+        const lignes = await el.evaluate(e => {
+          const r = new Range();
+          const boites = [];
+          for (const n of e.childNodes) {
+            if (n.nodeType !== 3 || !n.nodeValue.trim()) continue;
+            r.selectNodeContents(n);
+            for (const c of r.getClientRects())
+              if (c.width > 2 && c.height > 2)
+                boites.push({ x: c.left, y: c.top, width: c.width, height: c.height });
+          }
+          return boites;
         });
+        let zones = lignes;
+        if (!zones.length) {
+          const b = await el.boundingBox();
+          if (!b) throw new Error('hors page');
+          // Faute de nœud de texte propre, on retombe sur la bande centrale
+          // de la boîte : les coins d'un bouton arrondi laissent voir ce
+          // qu'il y a derrière lui, et ce pixel-là faisait tomber un bouton
+          // or à 1,34:1.
+          const mx = Math.min(b.width * 0.18, 14), my = Math.min(b.height * 0.22, 12);
+          zones = [{ x: b.x + mx, y: b.y + my,
+                     width: Math.max(2, b.width - 2 * mx),
+                     height: Math.max(2, b.height - 2 * my) }];
+        }
+        cliche = [];
+        for (const z of zones.slice(0, 12)) {
+          const x = Math.max(0, z.x + 1), y = Math.max(0, z.y + 1);
+          cliche.push(await page.screenshot({
+            clip: { x, y, width: Math.max(2, z.width - 2), height: Math.max(2, z.height - 2) },
+          }));
+        }
       } catch (err) { /* hors écran : rien à mesurer */ }
       await el.evaluate(e => {
         for (const [x, c, t, o] of (e.__lis || [])) {
@@ -326,8 +368,8 @@ const VUES = [
         }
         delete e.__lis;
       });
-      if (!cliche) continue;
-      t.contraste = await page.evaluate(async ([b64, couleur]) => {
+      if (!cliche || !cliche.length) continue;
+      const mesure = async (b64, couleur) => await page.evaluate(async ([b64, couleur]) => {
         const img = new Image();
         await new Promise(ok => { img.onload = ok; img.onerror = ok; img.src = 'data:image/png;base64,' + b64; });
         if (!img.width) return null;
@@ -346,7 +388,12 @@ const VUES = [
         const pire = texte > 0.5 ? lum[Math.floor(lum.length * 0.95)] : lum[Math.floor(lum.length * 0.05)];
         const [x, y] = [texte, pire].sort((m, n) => n - m);
         return Math.round(((x + 0.05) / (y + 0.05)) * 100) / 100;
-      }, [cliche.toString('base64'), t.couleur]);
+      }, [b64, couleur]);
+      const lots = [];
+      for (const c of cliche) lots.push(await mesure(c.toString('base64'), t.couleur));
+      const bons = lots.filter(x => x !== null);
+      if (!bons.length) continue;
+      t.contraste = Math.min(...bons);   // la ligne la moins lisible commande
       t.surPhoto = false;          // il est mesuré : il rentre dans le rang commun
       t.mesureSurPhoto = true;
     }
