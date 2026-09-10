@@ -23,7 +23,8 @@
   --teal:#21B0B7; --teal-txt:#0F6E73; --teal-fond:#E8F7F8;
   --papier:#FFFFFF; --fond:#F9F9FB; --fond-2:#F6FAFE;
   --noir:#000000; --texte:#5D5D5D; --gris:#6E7680; --gris-clair:#88929C;
-  --ligne:#E4E4EA; --ligne-2:#F1F1F5;
+  --ligne:#E4E4EA; --ligne-2:#F1F1F5; --ligne-pg:#E7E9EE;
+  --gris-lis:#5A6069; --or-fonce:#C08600;
   --vert:#2F7D4F; --vert-fond:#EAF5EE;
   --rouge:#B4402A; --rouge-fond:#FBEAE5;
   --r-s:8px; --r-m:14px; --r-l:20px; --r-pill:999px;
@@ -50,8 +51,17 @@ h4{font-size:1.02rem}
 p{margin:0 0 1em}
 :focus-visible{outline:3px solid var(--or);outline-offset:3px;border-radius:4px}
 
+/* Lien d'évitement : visible dès qu'il prend le focus, invisible sinon.
+   Il ne se cache pas en display:none — un lien caché ainsi ne reçoit
+   jamais le focus. */
+.evite{position:absolute;left:12px;top:-60px;z-index:200;background:var(--nuit-900);color:#fff;
+  font-family:"Manrope",sans-serif;font-weight:700;font-size:.95rem;padding:12px 20px;
+  border-radius:0 0 var(--r-m) var(--r-m);transition:top .18s var(--ease)}
+.evite:focus{top:0}
+#main:focus{outline:none}
+
 .wrap{width:min(100% - 40px,var(--max));margin-inline:auto}
-.section{padding:clamp(50px,6vw,88px) 0}
+.section{padding:clamp(48px,7vw,88px) 0}
 .section--fond{background:var(--fond)}
 .section--creme{background:var(--or-fond)}
 .section--nuit{background:var(--nuit-900);color:#DCE6EA}
@@ -60,7 +70,7 @@ p{margin:0 0 1em}
 .lede{font-size:clamp(1rem,1.3vw,1.1rem);color:var(--texte);max-width:62ch}
 .eyebrow{font-family:"Manrope",sans-serif;font-size:.78rem;letter-spacing:.16em;text-transform:uppercase;
   color:var(--teal-txt);font-weight:700;margin:0 0 14px}
-.eyebrow--clair{color:var(--or)}
+.eyebrow--clair{color:var(--or-clair)}
 .lien-txt{color:var(--teal-txt);font-weight:600;text-decoration:underline;text-underline-offset:3px}
 .lien-fl{display:inline-flex;align-items:center;gap:7px;font-family:"Manrope",sans-serif;
   font-weight:700;font-size:.9rem;color:var(--teal-txt)}
@@ -109,7 +119,26 @@ p{margin:0 0 1em}
 .menu__pan{position:absolute;top:calc(100% + 10px);left:50%;transform:translateX(-50%) translateY(-6px);
   background:#fff;border:1px solid var(--ligne);border-radius:var(--r-l);box-shadow:var(--ombre-f);
   padding:12px;min-width:340px;opacity:0;visibility:hidden;transition:all .2s var(--ease)}
-.menu:hover .menu__pan,.menu:focus-within .menu__pan{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0)}
+/* Le bouton n'était qu'un décor : le panneau s'ouvrait au survol et
+   au focus, et son aria-expanded restait figé sur « false » — un
+   lecteur d'écran annonçait « replié » sur un menu ouvert, et Entrée
+   ne faisait rien. L'attribut commande maintenant l'ouverture. */
+.menu:hover .menu__pan,.menu:focus-within .menu__pan,
+.menu>button[aria-expanded="true"]+.menu__pan{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0)}
+/* Un aria-expanded posé à « false » FERME, quoi qu'en disent le survol
+   et le focus. Sans cette ligne, refermer au clavier était impossible :
+   le script rendait le focus au bouton, `:focus-within` restait vrai, et
+   le panneau tenait ouvert en annonçant « replié ».
+
+   Réservé aux pages dont le SCRIPT tient l'attribut à jour — il pose
+   `js-menu` sur la racine. Les gabarits générés écrivent
+   `aria-expanded="false"` en dur et n'ont pas ce script : sans cette
+   garde, la règle leur fermait le panneau au moment même où le clavier
+   arrivait dessus, et le menu devenait inatteignable autrement qu'à la
+   souris. */
+.js-menu .menu>button[aria-expanded="false"]:focus+.menu__pan,
+.js-menu .menu:hover>button[aria-expanded="false"]+.menu__pan{opacity:0;visibility:hidden;
+  transform:translateX(-50%) translateY(-6px)}
 .menu__pan a{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:var(--r-m);
   font-size:.92rem;font-weight:600;color:var(--nuit)}
 .menu__pan a:hover{background:var(--or-fond)}
@@ -160,25 +189,25 @@ p{margin:0 0 1em}
 .carte__img img{width:100%;height:100%;object-fit:cover;transition:transform .5s var(--ease)}
 .carte:hover .carte__img img{transform:scale(1.05)}
 .carte__tag{position:absolute;top:12px;left:12px;background:var(--or);color:var(--nuit-900);
-  font-family:"Manrope",sans-serif;font-size:.75rem;font-weight:700;letter-spacing:.04em;
+  font-family:"Manrope",sans-serif;font-size:.8rem;font-weight:700;letter-spacing:.04em;
   padding:6px 12px;border-radius:var(--r-pill)}
 .carte__corps{padding:20px 20px 22px;display:flex;flex-direction:column;flex:1;gap:12px}
-.carte h3{font-size:1.14rem;line-height:1.3}
+.carte h3{font-size:1.14rem;line-height:1.38}
 .carte h3 a:hover{color:var(--teal-txt)}
 .carte__route{display:flex;align-items:center;gap:7px;font-size:.86rem;color:var(--gris);flex-wrap:wrap;
   font-family:"Manrope",sans-serif;line-height:1.5;margin:0}
 .carte__route b{font-weight:700;color:var(--noir)}
 .carte__meta{display:flex;flex-wrap:wrap;gap:7px}
 .puce{display:inline-flex;align-items:center;gap:6px;background:var(--fond);border-radius:var(--r-pill);
-  padding:5px 12px;font-size:.8rem;font-weight:600;color:var(--nuit);font-family:"Manrope",sans-serif}
+  padding:5px 12px;font-size:.8rem;font-weight:600;color:var(--nuit-900);font-family:"Manrope",sans-serif}
 .puce--teal{background:var(--teal-fond);color:var(--teal-txt)}
 .puce--or{background:var(--or-fond);color:#7A5605}
 .carte__pied{margin-top:auto;padding-top:14px;border-top:1px solid var(--ligne-2);
-  display:flex;align-items:flex-end;justify-content:space-between;gap:12px}
-.prix{line-height:1.2;font-family:"Manrope",sans-serif}
-.prix small{display:block;font-size:.74rem;color:var(--gris);letter-spacing:.04em}
-.prix b{font-size:1.5rem;font-weight:700;color:var(--noir);letter-spacing:-.8px}
-.prix i{font-style:normal;font-size:.8rem;color:var(--gris)}
+  display:flex;align-items:flex-end;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.prix{line-height:1.38;font-family:"Manrope",sans-serif}
+.prix small{display:block;font-size:.8rem;color:var(--gris);letter-spacing:.04em}
+.prix b{display:block;font-size:1.5rem;font-weight:700;color:var(--noir);letter-spacing:-.8px;white-space:nowrap}
+.prix i{display:block;font-style:normal;font-size:.8rem;color:var(--gris)}
 
 /* ---------- FAQ ---------- */
 .faq{border-top:1px solid var(--ligne)}
@@ -190,13 +219,117 @@ p{margin:0 0 1em}
   font-size:1.6rem;color:var(--or);font-weight:400;transition:transform .25s var(--ease)}
 .faq details[open] summary::after{transform:translateY(-50%) rotate(45deg)}
 .faq summary:hover{color:var(--teal-txt)}
-.faq__c{padding:0 44px 20px 0;color:var(--texte);max-width:75ch}
+.faq__c{padding:0 44px 20px 0;color:var(--texte);max-width:66ch}
 .faq__c :last-child{margin-bottom:0}
+
+/* ---------- mur d'avis Google ----------
+   Porté par la charte, donc partagé : les gabarits générés gardent
+   leur propre version, préfixée `.pg`, qui l'emporte en spécificité. */
+/* ---------- le mur d'avis : deux colonnes qui défilent ----------
+   La boucle repose sur une règle simple : chaque colonne porte DEUX
+   fois ses cartes et remonte de la moitié exacte de sa hauteur. D'où la
+   marge sur les cartes plutôt qu'un `gap` sur la piste — un `gap`
+   n'existe qu'ENTRE les enfants, la moitié de la hauteur tomberait
+   alors un demi-écart trop haut et la boucle sauterait à chaque tour.
+   La marge est portée par un <article>, donc un élément de bloc : elle
+   s'applique (ce n'est pas le cas d'un <a>, voir .etape__photo). */
+.mur__tete{display:flex;flex-wrap:wrap;align-items:flex-end;gap:16px 28px;margin:0 0 26px}
+.mur__tete>div:first-child{flex:1 1 340px}
+.mur__tete h2{margin:0}
+.mur__cpt{margin:0;font-family:"Manrope",sans-serif;line-height:1.45}
+.mur__cpt b{display:block;font-size:1.05rem;color:var(--noir);font-weight:700}
+.mur__cpt small{display:block;font-size:.94rem;color:var(--gris-lis);margin-top:2px}
+/* La case est le bouton : le défilement s'arrête donc sans JavaScript,
+   comme l'exige le critère 2.2.2. Elle reste dans le flux du clavier,
+   seulement dérobée à l'œil. */
+.mur__stop{position:absolute;width:1px;height:1px;margin:-1px;padding:0;border:0;
+  overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.mur__btn{display:inline-flex;align-items:center;gap:9px;min-height:44px;padding:0 18px;
+  border-radius:var(--r-pill);border:1px solid var(--ligne-pg);background:#fff;cursor:pointer;
+  font-family:"Manrope",sans-serif;font-size:.96rem;font-weight:600;color:var(--gris-lis);
+  transition:border-color .18s,color .18s}
+.mur__btn:hover{border-color:var(--nuit);color:var(--nuit-900)}
+.mur__btn svg{color:var(--or-fonce)}
+.mur__btn .b{display:none}
+.mur__stop:checked~.mur__tete .mur__btn .a{display:none}
+.mur__stop:checked~.mur__tete .mur__btn .b{display:inline}
+.mur__stop:focus-visible~.mur__tete .mur__btn{outline:2px solid var(--teal-txt);
+  outline-offset:3px}
+
+.mur{display:grid;grid-template-columns:1fr 1fr;gap:26px;align-items:start}
+/* Chaque colonne est un PANNEAU encadré, et la fenêtre de défilement est
+   à l'intérieur. Deux raisons, et la seconde est un défaut mesuré :
+   la fenêtre est la colonne et non la grille, sinon une grille à une
+   colonne sur téléphone effacerait cinq avis sur dix ; et le cadre est
+   séparé de la fenêtre parce que le fondu qui adoucit les bords ronge
+   tout ce qu'il traverse, cadre compris. Sans lui, sur téléphone, la
+   carte coupée en bas du premier panneau et celle coupée en haut du
+   second se lisaient comme une seule — le texte d'un voyageur suivi de
+   la signature d'un autre. */
+.mur__c{background:var(--fond-2);border:1px solid var(--ligne-pg);
+  border-radius:var(--r-l);padding:18px}
+.mur__f{height:664px;overflow:hidden;
+  -webkit-mask-image:linear-gradient(180deg,transparent,#000 48px,#000 calc(100% - 48px),transparent);
+  mask-image:linear-gradient(180deg,transparent,#000 48px,#000 calc(100% - 48px),transparent)}
+/* display:flow-root n'est pas cosmétique. Sans lui, la marge basse de
+   la DERNIÈRE carte fusionne à travers .mur__p puis .mur__d — ni l'un
+   ni l'autre n'ayant bordure, padding ou contexte de formatage — et la
+   piste mesure 2×période − 22 px. La moitié tombait alors 11 px trop
+   haut : la boucle sautait à chaque tour, mesuré sur les deux colonnes
+   et aux trois largeurs. */
+.mur__d{display:flow-root;animation:mur var(--d,90s) linear infinite;will-change:transform}
+.mur__c:nth-child(2) .mur__d{animation-direction:reverse}
+@keyframes mur{from{transform:translateY(0)}to{transform:translateY(-50%)}}
+
+/* Trois façons d'arrêter : le bouton, le survol, le focus clavier. */
+.mur:hover .mur__d,.mur:focus-within .mur__d,
+.mur__stop:checked~.mur .mur__d{animation-play-state:paused}
+.mur__a{background:#fff;border:1px solid var(--ligne-pg);border-radius:var(--r-l);
+  padding:24px;margin:0 0 22px;box-shadow:0 2px 10px rgba(16,32,48,.05)}
+.mur__q{display:block;font-family:"Archivo",serif;font-size:2.4rem;line-height:.6;
+  color:var(--or);margin:6px 0 12px}
+.mur__a blockquote{margin:0;font-size:1rem;line-height:1.7;color:var(--texte)}
+.mur__a footer{display:flex;align-items:center;gap:12px;font-family:"Manrope",sans-serif;
+  font-size:.9rem;color:var(--gris-lis);border-top:1px solid var(--ligne-2);
+  padding-top:14px;margin-top:16px}
+.mur__a footer b{color:var(--noir);display:block;font-weight:700}
+
+/* ---------- le mur au repos ----------
+   Deux situations où le défilement dessert la lecture, et la même
+   réponse : la liste entière, sans mouvement.
+
+   · mouvement réduit : le visiteur l'a demandé ;
+   · sous 861 px : mesurées à 390 px, huit des dix cartes sont plus
+     hautes que la fenêtre. Le lecteur qui met en pause au milieu d'un
+     avis n'avait aucun moyen d'en voir la fin — il fallait relancer et
+     attendre un tour de soixante secondes. Un bouton de pause qui ne
+     sert à rien ne remplit pas le critère 2.2.2.
+
+   Ces règles viennent en FIN de feuille : à spécificité égale, c'est la
+   dernière qui gagne, et les blocs responsives sont au-dessus. */
+@media (max-width:1024px){
+  .mur{grid-template-columns:1fr;gap:22px}
+  .mur__f{height:420px}
+}
+@media (prefers-reduced-motion:reduce),(max-width:860px){
+  .mur__f{height:auto;overflow:visible;-webkit-mask-image:none;mask-image:none}
+  .mur__d{animation:none}
+  .mur__p[aria-hidden]{display:none}
+  .mur__btn,.mur__stop{display:none}
+}
+
+/* Une étoile est du TEXTE : l'or de marque ne donne que 1,79:1 sur le
+   blanc de la carte. Même famille, assombrie jusqu'à 4,86:1. Et la note
+   est LUE sur le widget (comptage des `star/f.svg`), jamais déduite. */
+.mur__et{margin:0 0 10px;display:flex;align-items:center;gap:9px;color:#946A00;
+  letter-spacing:.14em;font-size:.95rem;line-height:1}
+.mur__et b{font-family:"Manrope",sans-serif;font-size:.88rem;font-weight:700;
+  letter-spacing:0;color:#5A6069}
 
 /* ---------- avis ---------- */
 .avis{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
 .avis article{background:#fff;border:1px solid var(--ligne);border-radius:var(--r-l);padding:24px}
-.avis .et{color:var(--or);letter-spacing:.14em;font-size:.95rem;margin-bottom:12px}
+.avis .et{color:#946A00;letter-spacing:.14em;font-size:.95rem;margin-bottom:12px}
 .avis blockquote{margin:0 0 16px;font-size:.98rem;line-height:1.65;color:var(--texte)}
 .avis footer{display:flex;align-items:center;gap:12px;font-family:"Manrope",sans-serif;font-size:.85rem;
   color:var(--gris);border-top:1px solid var(--ligne-2);padding-top:14px}
@@ -216,14 +349,14 @@ p{margin:0 0 1em}
 
 /* ---------- pied de page ---------- */
 .pied{background:var(--nuit-900);color:#C0D8E2;padding:58px 0 26px;font-size:.92rem}
-.pied h4{font-family:"Manrope",sans-serif;font-size:.76rem;letter-spacing:.15em;text-transform:uppercase;
+.pied h3,.pied h4{font-family:"Manrope",sans-serif;font-size:.82rem;letter-spacing:.15em;text-transform:uppercase;
   color:var(--or);font-weight:700;margin:0 0 16px}
 .pied__g{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:40px}
 .pied ul{list-style:none;margin:0;padding:0;display:grid;gap:9px}
 .pied a:hover{color:#fff;text-decoration:underline}
 .pied img{height:38px;width:auto;margin-bottom:16px}
 .pied__bas{margin-top:38px;padding-top:22px;border-top:1px solid rgba(255,255,255,.12);
-  display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:.85rem;color:#9BBCCB}
+  display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:.85rem;color:#AFCBD9}
 
 /* ---------- barre mobile ---------- */
 .barre-mob{display:none;position:fixed;bottom:0;left:0;right:0;z-index:70;background:#fff;
@@ -269,7 +402,18 @@ body.mm .mm-legende{display:block}
   .devis{grid-template-columns:1fr;gap:28px}
   .pied__g{grid-template-columns:1fr 1fr}
 }
-@media (max-width:860px){
+/* 910 px et non 860 : la navigation de bureau a besoin de 909 px pour
+   tenir. Entre 861 et 910 elle débordait de la fenêtre — 48 px à 861,
+   28 à 880, 8 à 900, mesurés sur l'accueil comme sur les fiches et les
+   guides. C'est la largeur du menu qui commande, pas une borne ronde. */
+/* Sous 380 px, un libellé long tenu sur une seule ligne sort de l'écran :
+   « Voir les séjours qui correspondent » demandait 308 px pour 288
+   disponibles. Le bouton a le droit de passer à la ligne, la règle des
+   44 px de hauteur restant tenue. */
+@media (max-width:380px){
+  .btn{white-space:normal;text-align:center;line-height:1.35}
+}
+@media (max-width:910px){
   .nav{display:none}
   .burger{display:inline-flex}
   .barre-mob{display:flex}
@@ -301,14 +445,14 @@ body.mm .mm-legende{display:block}
   h2{font-size:clamp(1.45rem,5.8vw,1.85rem);letter-spacing:-.6px}
   h3{font-size:1.12rem}
 
-  .eyebrow{font-size:.82rem;letter-spacing:.12em}
+  .eyebrow{font-size:.95rem;letter-spacing:.12em}
   .lede,.chapeau p.sous{font-size:1.04rem}
   .bandeau{font-size:.88rem}
   .ariane{font-size:.88rem}
 
   .puce,.carte__route,.carte__tag,.prix small,.prix i,
   .avis footer,.pied,.pied__bas,.mm-legende,.aremplir{font-size:.94rem}
-  .pied h4{font-size:.82rem}
+  .pied h3,.pied h4{font-size:.94rem}
   .chapeau__st{font-size:.94rem;gap:20px}
 
   .btn{font-size:1rem;padding:15px 24px}
@@ -318,5 +462,5 @@ body.mm .mm-legende{display:block}
   .faq__c{padding-right:0}
 
   /* Cibles tactiles : 44 px de haut au minimum. */
-  .nav>a,.menu__pan a,.pied li a,.burger{min-height:44px;display:flex;align-items:center}
+  .nav>a,.menu__pan a,.pied li a,.burger,.logo{min-height:44px;display:flex;align-items:center}
 }

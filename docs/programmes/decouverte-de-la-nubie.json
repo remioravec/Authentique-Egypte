@@ -1,0 +1,985 @@
+{
+ "slug": "decouverte-de-la-nubie",
+ "id": 1337,
+ "url": "https://authentiquegypte.com/programs/decouverte-de-la-nubie/",
+ "releve": "2026-09-10",
+ "modified_gmt": "2025-09-09T13:08:12",
+ "title_seo": "Partir en Voyage en Nubie : Itinéraire d'immersions authentiques - Voyage en Égypte sur mesure",
+ "meta_description": "Laissez-vous séduire par une expérience en Nubie et découvrez l'île Kitchener, les villages Nubiens et les temples millénaires d'Abou Simbel.",
+ "h1": "Découverte de la Nubie",
+ "chapo": "Rencontres Nubiennes",
+ "presentation_titre": "Vue d'ensemble",
+ "presentation": [
+  "Partir en voyage en Nubie est une expérience authentique qui vous transporte dans un monde fascinant. Explorez les temples millénaires d’Abou Simbel, naviguez sur le majestueux fleuve Nil et découvrez la richesse culturelle de cette région aux traditions préservées. Rencontrez les habitants chaleureux, dégustez la cuisine locale savoureuse et laissez-vous émerveiller par les paysages désertiques qui vous entourent."
+ ],
+ "prix": {
+  "libelle_source": "",
+  "texte": "",
+  "valeur": 0,
+  "unite": ""
+ },
+ "reperes": [
+  "Guide francophone privatif",
+  "Chauffeur privatif dans un véhicule climatisé",
+  "Les entrées aux monuments",
+  "Les hébergements",
+  "Les transferts",
+  "Les repas mentionnés",
+  "L'assistance H24"
+ ],
+ "durees": [
+  "5 jours minimum"
+ ],
+ "jours": [],
+ "inclus": [
+  "Guide francophone privatif",
+  "Chauffeur privatif dans un véhicule climatisé",
+  "Les entrées aux monuments",
+  "Les hébergements",
+  "Les transferts",
+  "Les repas mentionnés",
+  "L'assistance H24"
+ ],
+ "exclus": [
+  "Les vols internationaux",
+  "Les pourboires",
+  "Les frais de paiement",
+  "Les dépenses personnelles",
+  "L'assurance voyage"
+ ],
+ "faq": [
+  {
+   "q": "Pourquoi la Nubie ?",
+   "reponse_html": "<p><strong>La Nubie est une terre d'histoire peu fréquentée, avec des monuments antiques, des villages colorés, des paysages désertiques, et une culture millénaire singulière.</strong></p>",
+   "source": "onglet JavaScript de la fiche"
+  },
+  {
+   "q": "Sites emblématiques",
+   "reponse_html": "<ul> <li><strong>Temples de Nubie</strong> (Kalabsha, Beit el-Wali, Dakka)</li> <li><strong>Villages nubiens typiques</strong> sur les îles du Nil</li> <li><strong>Marchés locaux et artisanat</strong> (tissages, poteries)</li> </ul> <p>Voir plus : <a href=\"https://authentiquegypte.com/programs/decouverte-de-la-nubie/\">Découverte de la Nubie</a>.</p>",
+   "source": "onglet JavaScript de la fiche"
+  },
+  {
+   "q": "Vie quotidienne nubienne",
+   "reponse_html": "<p><strong>Vie en proximité avec le Nil, maisons peintes, accueil autour du thé, musique locale et ateliers d'artisanat transmis de génération en génération.</strong></p>",
+   "source": "onglet JavaScript de la fiche"
+  },
+  {
+   "q": "Activités authentiques",
+   "reponse_html": "<ul> <li><strong>Balade en felouque</strong></li> <li><strong>Ateliers de tissage ou poterie</strong> avec artisans</li> <li><strong>Visites de fermes locales</strong> ou jardins sur les rives</li> </ul>",
+   "source": "onglet JavaScript de la fiche"
+  },
+  {
+   "q": "Hébergement & transport",
+   "reponse_html": "<p><strong>Maisons d'hôtes locales ou lodges sobrement confortables,</strong> souvent au bord du Nil, et transferts en voiture avec chauffeur entre les sites.</p>",
+   "source": "onglet JavaScript de la fiche"
+  },
+  {
+   "q": "Meilleure période",
+   "reponse_html": "<p><strong>Automne et hiver (novembre à mars) sont idéals :</strong> chaleurs modérées, lumière douce, conditions agréables pour naviguer et marcher.</p>",
+   "source": "onglet JavaScript de la fiche"
+  },
+  {
+   "q": "Adapté aux familles / couples",
+   "reponse_html": "<p><strong>Oui :</strong> les familles profitent des expériences immersives et des échanges avec les habitants, les couples bénéficient d'un calme authentique et de paysages paisibles.</p>",
+   "source": "onglet JavaScript de la fiche"
+  },
+  {
+   "q": "Préparer son voyage",
+   "reponse_html": "<ul> <li><strong>Passeport / visa :</strong> <a href=\"https://authentiquegypte.com/visa-ou-passeport-pour-legypte/\">infos utiles</a></li> <li><strong>Vaccins et conseils santé :</strong> <a href=\"https://authentiquegypte.com/vaccins-egypte/\">vaccins</a></li> <li><strong>Conseils sécurité :</strong> <a href=\"https://authentiquegypte.com/securite-egypte-2025/\">mise à jour</a></li> </ul>",
+   "source": "onglet JavaScript de la fiche"
+  }
+ ],
+ "images": [
+  {
+   "role": "corps",
+   "position": 1,
+   "base": "gonzalo-pedroviejo-gomez-vHVWERWhWA4-unsplash-1.jpg",
+   "src_page": "https://authentiquegypte.com/wp-content/uploads/2023/11/gonzalo-pedroviejo-gomez-vHVWERWhWA4-unsplash-1-200x300.jpg",
+   "alt_page": "gonzalo-pedroviejo-gomez-vHVWERWhWA4-unsplash",
+   "src_original": "https://authentiquegypte.com/wp-content/uploads/2023/11/gonzalo-pedroviejo-gomez-vHVWERWhWA4-unsplash-1-scaled.jpg",
+   "largeur": 1707,
+   "hauteur": 2560,
+   "alt": "gonzalo-pedroviejo-gomez-vHVWERWhWA4-unsplash",
+   "media_id": 1563,
+   "tailles": {
+    "1536x1536": {
+     "hauteur": 1536,
+     "largeur": 1024,
+     "url": "https://authentiquegypte.com/wp-content/uploads/2023/11/gonzalo-pedroviejo-gomez-vHVWERWhWA4-unsplash-1-1024x1536.jpg"
+    },
+    "2048x2048": {
+     "hauteur": 2048,
+     "largeur": 1365,
+     "url": "https://authentiquegypte.com/wp-content/uploads/2023/11/gonzalo-pedroviejo-gomez-vHVWERWhWA4-unsplash-1-1365x2048.jpg"
+    },
+    "full": {
+     "hauteur": 2560,
+     "largeur": 1707,
+     "url": "https://authentiquegypte.com/wp-content/uploads/2023/11/gonzalo-pedroviejo-gomez-vHVWERWhWA4-unsplash-1-scaled.jpg"
+    },
+    "large": {
+     "hauteur": 1024,
+     "largeur": 683,
+     "url": "https://authentiquegypte.com/wp-content/uploads/2023/11/gonzalo-pedroviejo-gomez-vHVWERWhWA4-unsplash-1-683x1024.jpg"
+    },
+    "medium": {
+     "hauteur": 300,
+     "largeur": 200,
+     "url": "https://authentiquegypte.com/wp-content/uploads/2023/11/gonzalo-pedroviejo-gomez-vHVWERWhWA4-unsplash-1-200x300.jpg"
+    },
+    "medium_large": {
+     "hauteur": 1152,
+     "largeur": 768,
+     "url": "https://authentiquegypte.com/wp-content/uploads/2023/11/gonzalo-pedroviejo-gomez-vHVWERWhWA4-unsplash-1-768x1152.jpg"
+    },
+    "thumbnail": {
+     "hauteur": 150,
+     "largeur": 150,
+     "url": "https://authentiquegypte.com/wp-content/uploads/2023/11/gonzalo-pedroviejo-gomez-vHVWERWhWA4-unsplash-1-150x150.jpg"
+    }
+   },
+   "etat": "ok",
+   "srcset": "https://authentiquegypte.com/wp-content/uploads/2023/11/gonzalo-pedroviejo-gomez-vHVWERWhWA4-unsplash-1-200x300.jpg 200w, https://authentiquegypte.com/wp-content/uploads/2023/11/gonzalo-pedroviejo-gomez-vHVWERWhWA4-unsplash-1-683x1024.jpg 683w, https://authentiquegypte.com/wp-content/uploads/2023/11/gonzalo-pedroviejo-gomez-vHVWERWhWA4-unsplash-1-768x1152.jpg 768w, https://authentiquegypte.com/wp-content/uploads/2023/11/gonzalo-pedroviejo-gomez-vHVWERWhWA4-unsplash-1-1024x1536.jpg 1024w, https://authentiquegypte.com/wp-content/uploads/2023/11/gonzalo-pedroviejo-gomez-vHVWERWhWA4-unsplash-1-1365x2048.jpg 1365w, https://authentiquegypte.com/wp-content/uploads/2023/11/gonzalo-pedroviejo-gomez-vHVWERWhWA4-unsplash-1-scaled.jpg 1707w"
+  },
+  {
+   "role": "corps",
+   "position": 2,
+   "base": "axp-photography-RfyqNPEU2RQ-unsplash.jpg",
+   "src_page": "https://authentiquegypte.com/wp-content/uploads/2023/11/axp-photography-RfyqNPEU2RQ-unsplash-200x300.jpg",
+   "alt_page": "axp-photography-RfyqNPEU2RQ-unsplash",
+   "src_original": "https://authentiquegypte.com/wp-content/uploads/2023/11/axp-photography-RfyqNPEU2RQ-unsplash-scaled.jpg",
+   "largeur": 1707,
+   "hauteur": 2560,
+   "alt": "axp-photography-RfyqNPEU2RQ-unsplash",
+   "media_id": 1352,
+   "tailles": {
+    "1536x1536": {
+     "hauteur": 1536,
+     "largeur": 1024,
+     "url": "https://authentiquegypte.com/wp-content/uploads/2023/11/axp-photography-RfyqNPEU2RQ-unsplash-1024x1536.jpg"
+    },
+    "2048x2048": {
+     "hauteur": 2048,
+     "largeur": 1365,
+     "url": "https://authentiquegypte.com/wp-content/uploads/2023/11/axp-photography-RfyqNPEU2RQ-unsplash-1365x2048.jpg"
+    },
+    "full": {
+     "hauteur": 2560,
+     "largeur": 1707,
+     "url": "https://authentiquegypte.com/wp-content/uploads/2023/11/axp-photography-RfyqNPEU2RQ-unsplash-scaled.jpg"
+    },
+    "large": {
+     "hauteur": 1024,
+     "largeur": 683,
+     "url": "https://authentiquegypte.com/wp-content/uploads/2023/11/axp-photography-RfyqNPEU2RQ-unsplash-683x1024.jpg"
+    },
+    "medium": {
+     "hauteur": 300,
+     "largeur": 200,
+     "url": "https://authentiquegypte.com/wp-content/uploads/2023/11/axp-photography-RfyqNPEU2RQ-unsplash-200x300.jpg"
+    },
+    "medium_large": {
+     "hauteur": 1152,
+     "largeur": 768,
+     "url": "https://authentiquegypte.com/wp-content/uploads/2023/11/axp-photography-RfyqNPEU2RQ-unsplash-768x1152.jpg"
+    },
+    "thumbnail": {
+     "hauteur": 150,
+     "largeur": 150,
+     "url": "https://authentiquegypte.com/wp-content/uploads/2023/11/axp-photography-RfyqNPEU2RQ-unsplash-150x150.jpg"
+    }
+   },
+   "etat": "ok",
+   "srcset": "https://authentiquegypte.com/wp-content/uploads/2023/11/axp-photography-RfyqNPEU2RQ-unsplash-200x300.jpg 200w, https://authentiquegypte.com/wp-content/uploads/2023/11/axp-photography-RfyqNPEU2RQ-unsplash-683x1024.jpg 683w, https://authentiquegypte.com/wp-content/uploads/2023/11/axp-photography-RfyqNPEU2RQ-unsplash-768x1152.jpg 768w, https://authentiquegypte.com/wp-content/uploads/2023/11/axp-photography-RfyqNPEU2RQ-unsplash-1024x1536.jpg 1024w, https://authentiquegypte.com/wp-content/uploads/2023/11/axp-photography-RfyqNPEU2RQ-unsplash-1365x2048.jpg 1365w, https://authentiquegypte.com/wp-content/uploads/2023/11/axp-photography-RfyqNPEU2RQ-unsplash-scaled.jpg 1707w"
+  },
+  {
+   "role": "corps",
+   "position": 3,
+   "base": "mohamed-soliman-MFgPnJOsI_I-unsplash.jpg",
+   "src_page": "https://authentiquegypte.com/wp-content/uploads/2023/11/mohamed-soliman-MFgPnJOsI_I-unsplash-269x300.jpg",
+   "alt_page": "Désert et oasis en Egypte",
+   "src_original": "https://authentiquegypte.com/wp-content/uploads/2023/11/mohamed-soliman-MFgPnJOsI_I-unsplash-scaled.jpg",
+   "largeur": 2294,
+   "hauteur": 2560,
+   "alt": "Désert et oasis en Egypte",
+   "media_id": 1566,
+   "tailles": {
+    "1536x1536": {
+     "hauteur": 1536,
+     "largeur": 1377,
+     "url": "https://authentiquegypte.com/wp-content/uploads/2023/11/mohamed-soliman-MFgPnJOsI_I-unsplash-1377x1536.jpg"
+    },
+    "2048x2048": {
+     "hauteur": 2048,
+     "largeur": 1836,
+     "url": "https://authentiquegypte.com/wp-content/uploads/2023/11/mohamed-soliman-MFgPnJOsI_I-unsplash-1836x2048.jpg"
+    },
+    "full": {
+     "hauteur": 2560,
+     "largeur": 2294,
+     "url": "https://authentiquegypte.com/wp-content/uploads/2023/11/mohamed-soliman-MFgPnJOsI_I-unsplash-scaled.jpg"
+    },
+    "large": {
+     "hauteur": 1024,
+     "largeur": 918,
+     "url": "https://authentiquegypte.com/wp-content/uploads/2023/11/mohamed-soliman-MFgPnJOsI_I-unsplash-918x1024.jpg"
+    },
+    "medium": {
+     "hauteur": 300,
+     "largeur": 269,
+     "url": "https://authentiquegypte.com/wp-content/uploads/2023/11/mohamed-soliman-MFgPnJOsI_I-unsplash-269x300.jpg"
+    },
+    "medium_large": {
+     "hauteur": 857,
+     "largeur": 768,
+     "url": "https://authentiquegypte.com/wp-content/uploads/2023/11/mohamed-soliman-MFgPnJOsI_I-unsplash-768x857.jpg"
+    },
+    "thumbnail": {
+     "hauteur": 150,
+     "largeur": 150,
+     "url": "https://authentiquegypte.com/wp-content/uploads/2023/11/mohamed-soliman-MFgPnJOsI_I-unsplash-150x150.jpg"
+    }
+   },
+   "etat": "ok",
+   "srcset": "https://authentiquegypte.com/wp-content/uploads/2023/11/mohamed-soliman-MFgPnJOsI_I-unsplash-269x300.jpg 269w, https://authentiquegypte.com/wp-content/uploads/2023/11/mohamed-soliman-MFgPnJOsI_I-unsplash-768x857.jpg 768w, https://authentiquegypte.com/wp-content/uploads/2023/11/mohamed-soliman-MFgPnJOsI_I-unsplash-918x1024.jpg 918w, https://authentiquegypte.com/wp-content/uploads/2023/11/mohamed-soliman-MFgPnJOsI_I-unsplash-1377x1536.jpg 1377w, https://authentiquegypte.com/wp-content/uploads/2023/11/mohamed-soliman-MFgPnJOsI_I-unsplash-1836x2048.jpg 1836w, https://authentiquegypte.com/wp-content/uploads/2023/11/mohamed-soliman-MFgPnJOsI_I-unsplash-scaled.jpg 2294w"
+  },
+  {
+   "role": "corps",
+   "position": 4,
+   "base": "pyramides.jpg",
+   "src_page": "https://authentiquegypte.com/wp-content/uploads/2023/11/pyramides-1024x683.jpg",
+   "alt_page": "",
+   "src_original": "https://authentiquegypte.com/wp-content/uploads/2023/11/pyramides-scaled.jpg",
+   "largeur": 2560,
+   "hauteur": 1707,
+   "alt": "",
+   "media_id": 710,
+   "tailles": {
+    "1536x1536": {
+     "hauteur": 1024,
+     "largeur": 1536,
+     "url": "https://authentiquegypte.com/wp-content/uploads/2023/11/pyramides-1536x1024.jpg"
+    },
+    "2048x2048": {
+     "hauteur": 1365,
+     "largeur": 2048,
+     "url": "https://authentiquegypte.com/wp-content/uploads/2023/11/pyramides-2048x1365.jpg"
+    },
+    "full": {
+     "hauteur": 1707,
+     "largeur": 2560,
+     "url": "https://authentiquegypte.com/wp-content/uploads/2023/11/pyramides-scaled.jpg"
+    },
+    "large": {
+     "hauteur": 683,
+     "largeur": 1024,
+     "url": "https://authentiquegypte.com/wp-content/uploads/2023/11/pyramides-1024x683.jpg"
+    },
+    "medium": {
+     "hauteur": 200,
+     "largeur": 300,
+     "url": "https://authentiquegypte.com/wp-content/uploads/2023/11/pyramides-300x200.jpg"
+    },
+    "medium_large": {
+     "hauteur": 512,
+     "largeur": 768,
+     "url": "https://authentiquegypte.com/wp-content/uploads/2023/11/pyramides-768x512.jpg"
+    },
+    "thumbnail": {
+     "hauteur": 150,
+     "largeur": 150,
+     "url": "https://authentiquegypte.com/wp-content/uploads/2023/11/pyramides-150x150.jpg"
+    }
+   },
+   "etat": "ok",
+   "srcset": "https://authentiquegypte.com/wp-content/uploads/2023/11/pyramides-300x200.jpg 300w, https://authentiquegypte.com/wp-content/uploads/2023/11/pyramides-768x512.jpg 768w, https://authentiquegypte.com/wp-content/uploads/2023/11/pyramides-1024x683.jpg 1024w, https://authentiquegypte.com/wp-content/uploads/2023/11/pyramides-1536x1024.jpg 1536w, https://authentiquegypte.com/wp-content/uploads/2023/11/pyramides-2048x1365.jpg 2048w, https://authentiquegypte.com/wp-content/uploads/2023/11/pyramides-scaled.jpg 2560w"
+  },
+  {
+   "role": "corps",
+   "position": 5,
+   "base": "axp-photography-KtodmsPJmEw-unsplash.jpg",
+   "src_page": "https://authentiquegypte.com/wp-content/uploads/2023/11/axp-photography-KtodmsPJmEw-unsplash-683x1024.jpg",
+   "alt_page": "Arrivée au Caire",
+   "src_original": "https://authentiquegypte.com/wp-content/uploads/2023/11/axp-photography-KtodmsPJmEw-unsplash-scaled.jpg",
+   "largeur": 1707,
+   "hauteur": 2560,
+   "alt": "Désert du Sinaï en Égypte",
+   "media_id": 502,
+   "tailles": {
+    "1536x1536": {
+     "hauteur": 1536,
+     "largeur": 1024,
+     "url": "https://authentiquegypte.com/wp-content/uploads/2023/11/axp-photography-KtodmsPJmEw-unsplash-1024x1536.jpg"
+    },
+    "2048x2048": {
+     "hauteur": 2048,
+     "largeur": 1365,
+     "url": "https://authentiquegypte.com/wp-content/uploads/2023/11/axp-photography-KtodmsPJmEw-unsplash-1365x2048.jpg"
+    },
+    "full": {
+     "hauteur": 2560,
+     "largeur": 1707,
+     "url": "https://authentiquegypte.com/wp-content/uploads/2023/11/axp-photography-KtodmsPJmEw-unsplash-scaled.jpg"
+    },
+    "large": {
+     "hauteur": 1024,
+     "largeur": 683,
+     "url": "https://authentiquegypte.com/wp-content/uploads/2023/11/axp-photography-KtodmsPJmEw-unsplash-683x1024.jpg"
+    },
+    "medium": {
+     "hauteur": 300,
+     "largeur": 200,
+     "url": "https://authentiquegypte.com/wp-content/uploads/2023/11/axp-photography-KtodmsPJmEw-unsplash-200x300.jpg"
+    },
+    "medium_large": {
+     "hauteur": 1152,
+     "largeur": 768,
+     "url": "https://authentiquegypte.com/wp-content/uploads/2023/11/axp-photography-KtodmsPJmEw-unsplash-768x1152.jpg"
+    },
+    "thumbnail": {
+     "hauteur": 150,
+     "largeur": 150,
+     "url": "https://authentiquegypte.com/wp-content/uploads/2023/11/axp-photography-KtodmsPJmEw-unsplash-150x150.jpg"
+    }
+   },
+   "etat": "ok",
+   "srcset": "https://authentiquegypte.com/wp-content/uploads/2023/11/axp-photography-KtodmsPJmEw-unsplash-200x300.jpg 200w, https://authentiquegypte.com/wp-content/uploads/2023/11/axp-photography-KtodmsPJmEw-unsplash-683x1024.jpg 683w, https://authentiquegypte.com/wp-content/uploads/2023/11/axp-photography-KtodmsPJmEw-unsplash-768x1152.jpg 768w, https://authentiquegypte.com/wp-content/uploads/2023/11/axp-photography-KtodmsPJmEw-unsplash-1024x1536.jpg 1024w, https://authentiquegypte.com/wp-content/uploads/2023/11/axp-photography-KtodmsPJmEw-unsplash-1365x2048.jpg 1365w, https://authentiquegypte.com/wp-content/uploads/2023/11/axp-photography-KtodmsPJmEw-unsplash-scaled.jpg 1707w"
+  },
+  {
+   "role": "corps",
+   "position": 6,
+   "base": "dmitrii-zhodzishskii-4rXHE9XeW_A-unsplash.jpg",
+   "src_page": "https://authentiquegypte.com/wp-content/uploads/2023/11/dmitrii-zhodzishskii-4rXHE9XeW_A-unsplash-1024x683.jpg",
+   "alt_page": "Musée Égyptien",
+   "src_original": "https://authentiquegypte.com/wp-content/uploads/2023/11/dmitrii-zhodzishskii-4rXHE9XeW_A-unsplash-scaled.jpg",
+   "largeur": 2560,
+   "hauteur": 1707,
+   "alt": "Musée Égyptien",
+   "media_id": 690,
+   "tailles": {
+    "1536x1536": {
+     "hauteur": 1024,
+     "largeur": 1536,
+     "url": "https://authentiquegypte.com/wp-content/uploads/2023/11/dmitrii-zhodzishskii-4rXHE9XeW_A-unsplash-1536x1024.jpg"
+    },
+    "2048x2048": {
+     "hauteur": 1365,
+     "largeur": 2048,
+     "url": "https://authentiquegypte.com/wp-content/uploads/2023/11/dmitrii-zhodzishskii-4rXHE9XeW_A-unsplash-2048x1365.jpg"
+    },
+    "full": {
+     "hauteur": 1707,
+     "largeur": 2560,
+     "url": "https://authentiquegypte.com/wp-content/uploads/2023/11/dmitrii-zhodzishskii-4rXHE9XeW_A-unsplash-scaled.jpg"
+    },
+    "large": {
+     "hauteur": 683,
+     "largeur": 1024,
+     "url": "https://authentiquegypte.com/wp-content/uploads/2023/11/dmitrii-zhodzishskii-4rXHE9XeW_A-unsplash-1024x683.jpg"
+    },
+    "medium": {
+     "hauteur": 200,
+     "largeur": 300,
+     "url": "https://authentiquegypte.com/wp-content/uploads/2023/11/dmitrii-zhodzishskii-4rXHE9XeW_A-unsplash-300x200.jpg"
+    },
+    "medium_large": {
+     "hauteur": 512,
+     "largeur": 768,
+     "url": "https://authentiquegypte.com/wp-content/uploads/2023/11/dmitrii-zhodzishskii-4rXHE9XeW_A-unsplash-768x512.jpg"
+    },
+    "thumbnail": {
+     "hauteur": 150,
+     "largeur": 150,
+     "url": "https://authentiquegypte.com/wp-content/uploads/2023/11/dmitrii-zhodzishskii-4rXHE9XeW_A-unsplash-150x150.jpg"
+    }
+   },
+   "etat": "ok",
+   "srcset": "https://authentiquegypte.com/wp-content/uploads/2023/11/dmitrii-zhodzishskii-4rXHE9XeW_A-unsplash-300x200.jpg 300w, https://authentiquegypte.com/wp-content/uploads/2023/11/dmitrii-zhodzishskii-4rXHE9XeW_A-unsplash-768x512.jpg 768w, https://authentiquegypte.com/wp-content/uploads/2023/11/dmitrii-zhodzishskii-4rXHE9XeW_A-unsplash-1024x683.jpg 1024w, https://authentiquegypte.com/wp-content/uploads/2023/11/dmitrii-zhodzishskii-4rXHE9XeW_A-unsplash-1536x1024.jpg 1536w, https://authentiquegypte.com/wp-content/uploads/2023/11/dmitrii-zhodzishskii-4rXHE9XeW_A-unsplash-2048x1365.jpg 2048w, https://authentiquegypte.com/wp-content/uploads/2023/11/dmitrii-zhodzishskii-4rXHE9XeW_A-unsplash-scaled.jpg 2560w"
+  },
+  {
+   "role": "corps",
+   "position": 7,
+   "base": "axp-photography-iZ4ovR8-jF8-unsplash-1.jpg",
+   "src_page": "https://authentiquegypte.com/wp-content/uploads/2023/11/axp-photography-iZ4ovR8-jF8-unsplash-1-683x1024.jpg",
+   "alt_page": "Saqqarah",
+   "src_original": "https://authentiquegypte.com/wp-content/uploads/2023/11/axp-photography-iZ4ovR8-jF8-unsplash-1-scaled.jpg",
+   "largeur": 1707,
+   "hauteur": 2560,
+   "alt": "Saqqarah",
+   "media_id": 629,
+   "tailles": {
+    "1536x1536": {
+     "hauteur": 1536,
+     "largeur": 1024,
+     "url": "https://authentiquegypte.com/wp-content/uploads/2023/11/axp-photography-iZ4ovR8-jF8-unsplash-1-1024x1536.jpg"
+    },
+    "2048x2048": {
+     "hauteur": 2048,
+     "largeur": 1365,
+     "url": "https://authentiquegypte.com/wp-content/uploads/2023/11/axp-photography-iZ4ovR8-jF8-unsplash-1-1365x2048.jpg"
+    },
+    "full": {
+     "hauteur": 2560,
+     "largeur": 1707,
+     "url": "https://authentiquegypte.com/wp-content/uploads/2023/11/axp-photography-iZ4ovR8-jF8-unsplash-1-scaled.jpg"
+    },
+    "large": {
+     "hauteur": 1024,
+     "largeur": 683,
+     "url": "https://authentiquegypte.com/wp-content/uploads/2023/11/axp-photography-iZ4ovR8-jF8-unsplash-1-683x1024.jpg"
+    },
+    "medium": {
+     "hauteur": 300,
+     "largeur": 200,
+     "url": "https://authentiquegypte.com/wp-content/uploads/2023/11/axp-photography-iZ4ovR8-jF8-unsplash-1-200x300.jpg"
+    },
+    "medium_large": {
+     "hauteur": 1152,
+     "largeur": 768,
+     "url": "https://authentiquegypte.com/wp-content/uploads/2023/11/axp-photography-iZ4ovR8-jF8-unsplash-1-768x1152.jpg"
+    },
+    "thumbnail": {
+     "hauteur": 150,
+     "largeur": 150,
+     "url": "https://authentiquegypte.com/wp-content/uploads/2023/11/axp-photography-iZ4ovR8-jF8-unsplash-1-150x150.jpg"
+    }
+   },
+   "etat": "ok",
+   "srcset": "https://authentiquegypte.com/wp-content/uploads/2023/11/axp-photography-iZ4ovR8-jF8-unsplash-1-200x300.jpg 200w, https://authentiquegypte.com/wp-content/uploads/2023/11/axp-photography-iZ4ovR8-jF8-unsplash-1-683x1024.jpg 683w, https://authentiquegypte.com/wp-content/uploads/2023/11/axp-photography-iZ4ovR8-jF8-unsplash-1-768x1152.jpg 768w, https://authentiquegypte.com/wp-content/uploads/2023/11/axp-photography-iZ4ovR8-jF8-unsplash-1-1024x1536.jpg 1024w, https://authentiquegypte.com/wp-content/uploads/2023/11/axp-photography-iZ4ovR8-jF8-unsplash-1-1365x2048.jpg 1365w, https://authentiquegypte.com/wp-content/uploads/2023/11/axp-photography-iZ4ovR8-jF8-unsplash-1-scaled.jpg 1707w"
+  },
+  {
+   "role": "corps",
+   "position": 8,
+   "base": "axp-photography-P-rTciinXR0-unsplash.jpg",
+   "src_page": "https://authentiquegypte.com/wp-content/uploads/2023/11/axp-photography-P-rTciinXR0-unsplash-683x1024.jpg",
+   "alt_page": "Louxor",
+   "src_original": "https://authentiquegypte.com/wp-content/uploads/2023/11/axp-photography-P-rTciinXR0-unsplash-scaled.jpg",
+   "largeur": 1707,
+   "hauteur": 2560,
+   "alt": "Louxor",
+   "media_id": 653,
+   "tailles": {
+    "1536x1536": {
+     "hauteur": 1536,
+     "largeur": 1024,
+     "url": "https://authentiquegypte.com/wp-content/uploads/2023/11/axp-photography-P-rTciinXR0-unsplash-1024x1536.jpg"
+    },
+    "2048x2048": {
+     "hauteur": 2048,
+     "largeur": 1365,
+     "url": "https://authentiquegypte.com/wp-content/uploads/2023/11/axp-photography-P-rTciinXR0-unsplash-1365x2048.jpg"
+    },
+    "full": {
+     "hauteur": 2560,
+     "largeur": 1707,
+     "url": "https://authentiquegypte.com/wp-content/uploads/2023/11/axp-photography-P-rTciinXR0-unsplash-scaled.jpg"
+    },
+    "large": {
+     "hauteur": 1024,
+     "largeur": 683,
+     "url": "https://authentiquegypte.com/wp-content/uploads/2023/11/axp-photography-P-rTciinXR0-unsplash-683x1024.jpg"
+    },
+    "medium": {
+     "hauteur": 300,
+     "largeur": 200,
+     "url": "https://authentiquegypte.com/wp-content/uploads/2023/11/axp-photography-P-rTciinXR0-unsplash-200x300.jpg"
+    },
+    "medium_large": {
+     "hauteur": 1152,
+     "largeur": 768,
+     "url": "https://authentiquegypte.com/wp-content/uploads/2023/11/axp-photography-P-rTciinXR0-unsplash-768x1152.jpg"
+    },
+    "thumbnail": {
+     "hauteur": 150,
+     "largeur": 150,
+     "url": "https://authentiquegypte.com/wp-content/uploads/2023/11/axp-photography-P-rTciinXR0-unsplash-150x150.jpg"
+    }
+   },
+   "etat": "ok",
+   "srcset": "https://authentiquegypte.com/wp-content/uploads/2023/11/axp-photography-P-rTciinXR0-unsplash-200x300.jpg 200w, https://authentiquegypte.com/wp-content/uploads/2023/11/axp-photography-P-rTciinXR0-unsplash-683x1024.jpg 683w, https://authentiquegypte.com/wp-content/uploads/2023/11/axp-photography-P-rTciinXR0-unsplash-768x1152.jpg 768w, https://authentiquegypte.com/wp-content/uploads/2023/11/axp-photography-P-rTciinXR0-unsplash-1024x1536.jpg 1024w, https://authentiquegypte.com/wp-content/uploads/2023/11/axp-photography-P-rTciinXR0-unsplash-1365x2048.jpg 1365w, https://authentiquegypte.com/wp-content/uploads/2023/11/axp-photography-P-rTciinXR0-unsplash-scaled.jpg 1707w"
+  },
+  {
+   "role": "corps",
+   "position": 9,
+   "base": "kristina-tamasauskaite-bVRArO7LwB0-unsplash.jpg",
+   "src_page": "https://authentiquegypte.com/wp-content/uploads/2023/11/kristina-tamasauskaite-bVRArO7LwB0-unsplash-1024x683.jpg",
+   "alt_page": "Vallée des Rois",
+   "src_original": "https://authentiquegypte.com/wp-content/uploads/2023/11/kristina-tamasauskaite-bVRArO7LwB0-unsplash-scaled.jpg",
+   "largeur": 2560,
+   "hauteur": 1707,
+   "alt": "Vallée des Rois",
+   "media_id": 668,
+   "tailles": {
+    "1536x1536": {
+     "hauteur": 1024,
+     "largeur": 1536,
+     "url": "https://authentiquegypte.com/wp-content/uploads/2023/11/kristina-tamasauskaite-bVRArO7LwB0-unsplash-1536x1024.jpg"
+    },
+    "2048x2048": {
+     "hauteur": 1365,
+     "largeur": 2048,
+     "url": "https://authentiquegypte.com/wp-content/uploads/2023/11/kristina-tamasauskaite-bVRArO7LwB0-unsplash-2048x1365.jpg"
+    },
+    "full": {
+     "hauteur": 1707,
+     "largeur": 2560,
+     "url": "https://authentiquegypte.com/wp-content/uploads/2023/11/kristina-tamasauskaite-bVRArO7LwB0-unsplash-scaled.jpg"
+    },
+    "large": {
+     "hauteur": 683,
+     "largeur": 1024,
+     "url": "https://authentiquegypte.com/wp-content/uploads/2023/11/kristina-tamasauskaite-bVRArO7LwB0-unsplash-1024x683.jpg"
+    },
+    "medium": {
+     "hauteur": 200,
+     "largeur": 300,
+     "url": "https://authentiquegypte.com/wp-content/uploads/2023/11/kristina-tamasauskaite-bVRArO7LwB0-unsplash-300x200.jpg"
+    },
+    "medium_large": {
+     "hauteur": 512,
+     "largeur": 768,
+     "url": "https://authentiquegypte.com/wp-content/uploads/2023/11/kristina-tamasauskaite-bVRArO7LwB0-unsplash-768x512.jpg"
+    },
+    "thumbnail": {
+     "hauteur": 150,
+     "largeur": 150,
+     "url": "https://authentiquegypte.com/wp-content/uploads/2023/11/kristina-tamasauskaite-bVRArO7LwB0-unsplash-150x150.jpg"
+    }
+   },
+   "etat": "ok",
+   "srcset": "https://authentiquegypte.com/wp-content/uploads/2023/11/kristina-tamasauskaite-bVRArO7LwB0-unsplash-300x200.jpg 300w, https://authentiquegypte.com/wp-content/uploads/2023/11/kristina-tamasauskaite-bVRArO7LwB0-unsplash-768x512.jpg 768w, https://authentiquegypte.com/wp-content/uploads/2023/11/kristina-tamasauskaite-bVRArO7LwB0-unsplash-1024x683.jpg 1024w, https://authentiquegypte.com/wp-content/uploads/2023/11/kristina-tamasauskaite-bVRArO7LwB0-unsplash-1536x1024.jpg 1536w, https://authentiquegypte.com/wp-content/uploads/2023/11/kristina-tamasauskaite-bVRArO7LwB0-unsplash-2048x1365.jpg 2048w, https://authentiquegypte.com/wp-content/uploads/2023/11/kristina-tamasauskaite-bVRArO7LwB0-unsplash-scaled.jpg 2560w"
+  },
+  {
+   "role": "corps",
+   "position": 10,
+   "base": "yasmeen-singh-sdedjURx9bs-unsplash.jpg",
+   "src_page": "https://authentiquegypte.com/wp-content/uploads/2023/11/yasmeen-singh-sdedjURx9bs-unsplash-576x1024.jpg",
+   "alt_page": "Karnak",
+   "src_original": "https://authentiquegypte.com/wp-content/uploads/2023/11/yasmeen-singh-sdedjURx9bs-unsplash-scaled.jpg",
+   "largeur": 1441,
+   "hauteur": 2560,
+   "alt": "Karnak",
+   "media_id": 689,
+   "tailles": {
+    "1536x1536": {
+     "hauteur": 1536,
+     "largeur": 865,
+     "url": "https://authentiquegypte.com/wp-content/uploads/2023/11/yasmeen-singh-sdedjURx9bs-unsplash-865x1536.jpg"
+    },
+    "2048x2048": {
+     "hauteur": 2048,
+     "largeur": 1153,
+     "url": "https://authentiquegypte.com/wp-content/uploads/2023/11/yasmeen-singh-sdedjURx9bs-unsplash-1153x2048.jpg"
+    },
+    "full": {
+     "hauteur": 2560,
+     "largeur": 1441,
+     "url": "https://authentiquegypte.com/wp-content/uploads/2023/11/yasmeen-singh-sdedjURx9bs-unsplash-scaled.jpg"
+    },
+    "large": {
+     "hauteur": 1024,
+     "largeur": 576,
+     "url": "https://authentiquegypte.com/wp-content/uploads/2023/11/yasmeen-singh-sdedjURx9bs-unsplash-576x1024.jpg"
+    },
+    "medium": {
+     "hauteur": 300,
+     "largeur": 169,
+     "url": "https://authentiquegypte.com/wp-content/uploads/2023/11/yasmeen-singh-sdedjURx9bs-unsplash-169x300.jpg"
+    },
+    "medium_large": {
+     "hauteur": 1364,
+     "largeur": 768,
+     "url": "https://authentiquegypte.com/wp-content/uploads/2023/11/yasmeen-singh-sdedjURx9bs-unsplash-768x1364.jpg"
+    },
+    "thumbnail": {
+     "hauteur": 150,
+     "largeur": 150,
+     "url": "https://authentiquegypte.com/wp-content/uploads/2023/11/yasmeen-singh-sdedjURx9bs-unsplash-150x150.jpg"
+    }
+   },
+   "etat": "ok",
+   "srcset": "https://authentiquegypte.com/wp-content/uploads/2023/11/yasmeen-singh-sdedjURx9bs-unsplash-169x300.jpg 169w, https://authentiquegypte.com/wp-content/uploads/2023/11/yasmeen-singh-sdedjURx9bs-unsplash-576x1024.jpg 576w, https://authentiquegypte.com/wp-content/uploads/2023/11/yasmeen-singh-sdedjURx9bs-unsplash-768x1364.jpg 768w, https://authentiquegypte.com/wp-content/uploads/2023/11/yasmeen-singh-sdedjURx9bs-unsplash-865x1536.jpg 865w, https://authentiquegypte.com/wp-content/uploads/2023/11/yasmeen-singh-sdedjURx9bs-unsplash-1153x2048.jpg 1153w, https://authentiquegypte.com/wp-content/uploads/2023/11/yasmeen-singh-sdedjURx9bs-unsplash-scaled.jpg 1441w"
+  },
+  {
+   "role": "corps",
+   "position": 11,
+   "base": "yuriy-kostin-cc6kWqOr790-unsplash.jpg",
+   "src_page": "https://authentiquegypte.com/wp-content/uploads/2023/11/yuriy-kostin-cc6kWqOr790-unsplash-1024x576.jpg",
+   "alt_page": "Edfou",
+   "src_original": "https://authentiquegypte.com/wp-content/uploads/2023/11/yuriy-kostin-cc6kWqOr790-unsplash-scaled.jpg",
+   "largeur": 2560,
+   "hauteur": 1440,
+   "alt": "Edfou",
+   "media_id": 606,
+   "tailles": {
+    "1536x1536": {
+     "hauteur": 864,
+     "largeur": 1536,
+     "url": "https://authentiquegypte.com/wp-content/uploads/2023/11/yuriy-kostin-cc6kWqOr790-unsplash-1536x864.jpg"
+    },
+    "2048x2048": {
+     "hauteur": 1152,
+     "largeur": 2048,
+     "url": "https://authentiquegypte.com/wp-content/uploads/2023/11/yuriy-kostin-cc6kWqOr790-unsplash-2048x1152.jpg"
+    },
+    "full": {
+     "hauteur": 1440,
+     "largeur": 2560,
+     "url": "https://authentiquegypte.com/wp-content/uploads/2023/11/yuriy-kostin-cc6kWqOr790-unsplash-scaled.jpg"
+    },
+    "large": {
+     "hauteur": 576,
+     "largeur": 1024,
+     "url": "https://authentiquegypte.com/wp-content/uploads/2023/11/yuriy-kostin-cc6kWqOr790-unsplash-1024x576.jpg"
+    },
+    "medium": {
+     "hauteur": 169,
+     "largeur": 300,
+     "url": "https://authentiquegypte.com/wp-content/uploads/2023/11/yuriy-kostin-cc6kWqOr790-unsplash-300x169.jpg"
+    },
+    "medium_large": {
+     "hauteur": 432,
+     "largeur": 768,
+     "url": "https://authentiquegypte.com/wp-content/uploads/2023/11/yuriy-kostin-cc6kWqOr790-unsplash-768x432.jpg"
+    },
+    "thumbnail": {
+     "hauteur": 150,
+     "largeur": 150,
+     "url": "https://authentiquegypte.com/wp-content/uploads/2023/11/yuriy-kostin-cc6kWqOr790-unsplash-150x150.jpg"
+    }
+   },
+   "etat": "ok",
+   "srcset": "https://authentiquegypte.com/wp-content/uploads/2023/11/yuriy-kostin-cc6kWqOr790-unsplash-300x169.jpg 300w, https://authentiquegypte.com/wp-content/uploads/2023/11/yuriy-kostin-cc6kWqOr790-unsplash-768x432.jpg 768w, https://authentiquegypte.com/wp-content/uploads/2023/11/yuriy-kostin-cc6kWqOr790-unsplash-1024x576.jpg 1024w, https://authentiquegypte.com/wp-content/uploads/2023/11/yuriy-kostin-cc6kWqOr790-unsplash-1536x864.jpg 1536w, https://authentiquegypte.com/wp-content/uploads/2023/11/yuriy-kostin-cc6kWqOr790-unsplash-2048x1152.jpg 2048w, https://authentiquegypte.com/wp-content/uploads/2023/11/yuriy-kostin-cc6kWqOr790-unsplash-scaled.jpg 2560w"
+  },
+  {
+   "role": "corps",
+   "position": 12,
+   "base": "hotel-hurghada.jpg",
+   "src_page": "https://authentiquegypte.com/wp-content/uploads/2023/11/hotel-hurghada-1024x576.jpg",
+   "alt_page": "Louxor",
+   "src_original": "https://authentiquegypte.com/wp-content/uploads/2023/11/hotel-hurghada-scaled.jpg",
+   "largeur": 2560,
+   "hauteur": 1439,
+   "alt": "Voyage senior sur mesure en Egypte",
+   "media_id": 715,
+   "tailles": {
+    "1536x1536": {
+     "hauteur": 864,
+     "largeur": 1536,
+     "url": "https://authentiquegypte.com/wp-content/uploads/2023/11/hotel-hurghada-1536x864.jpg"
+    },
+    "2048x2048": {
+     "hauteur": 1152,
+     "largeur": 2048,
+     "url": "https://authentiquegypte.com/wp-content/uploads/2023/11/hotel-hurghada-2048x1152.jpg"
+    },
+    "full": {
+     "hauteur": 1439,
+     "largeur": 2560,
+     "url": "https://authentiquegypte.com/wp-content/uploads/2023/11/hotel-hurghada-scaled.jpg"
+    },
+    "large": {
+     "hauteur": 576,
+     "largeur": 1024,
+     "url": "https://authentiquegypte.com/wp-content/uploads/2023/11/hotel-hurghada-1024x576.jpg"
+    },
+    "medium": {
+     "hauteur": 169,
+     "largeur": 300,
+     "url": "https://authentiquegypte.com/wp-content/uploads/2023/11/hotel-hurghada-300x169.jpg"
+    },
+    "medium_large": {
+     "hauteur": 432,
+     "largeur": 768,
+     "url": "https://authentiquegypte.com/wp-content/uploads/2023/11/hotel-hurghada-768x432.jpg"
+    },
+    "thumbnail": {
+     "hauteur": 150,
+     "largeur": 150,
+     "url": "https://authentiquegypte.com/wp-content/uploads/2023/11/hotel-hurghada-150x150.jpg"
+    }
+   },
+   "etat": "ok",
+   "srcset": "https://authentiquegypte.com/wp-content/uploads/2023/11/hotel-hurghada-300x169.jpg 300w, https://authentiquegypte.com/wp-content/uploads/2023/11/hotel-hurghada-768x432.jpg 768w, https://authentiquegypte.com/wp-content/uploads/2023/11/hotel-hurghada-1024x576.jpg 1024w, https://authentiquegypte.com/wp-content/uploads/2023/11/hotel-hurghada-1536x864.jpg 1536w, https://authentiquegypte.com/wp-content/uploads/2023/11/hotel-hurghada-2048x1152.jpg 2048w, https://authentiquegypte.com/wp-content/uploads/2023/11/hotel-hurghada-scaled.jpg 2560w"
+  },
+  {
+   "role": "corps",
+   "position": 13,
+   "base": "WhatsApp-Image-2025-06-27-at-15.33.21_37e02dae.jpg",
+   "src_page": "https://authentiquegypte.com/wp-content/uploads/2025/07/WhatsApp-Image-2025-06-27-at-15.33.21_37e02dae.jpg",
+   "alt_page": "Bédouin au coucher du soleil",
+   "src_original": "https://authentiquegypte.com/wp-content/uploads/2025/07/WhatsApp-Image-2025-06-27-at-15.33.21_37e02dae.jpg",
+   "largeur": 1152,
+   "hauteur": 864,
+   "alt": "Bédouin au coucher du soleil",
+   "media_id": 5413,
+   "tailles": {
+    "full": {
+     "hauteur": 864,
+     "largeur": 1152,
+     "url": "https://authentiquegypte.com/wp-content/uploads/2025/07/WhatsApp-Image-2025-06-27-at-15.33.21_37e02dae.jpg"
+    },
+    "large": {
+     "hauteur": 768,
+     "largeur": 1024,
+     "url": "https://authentiquegypte.com/wp-content/uploads/2025/07/WhatsApp-Image-2025-06-27-at-15.33.21_37e02dae-1024x768.jpg"
+    },
+    "medium": {
+     "hauteur": 225,
+     "largeur": 300,
+     "url": "https://authentiquegypte.com/wp-content/uploads/2025/07/WhatsApp-Image-2025-06-27-at-15.33.21_37e02dae-300x225.jpg"
+    },
+    "medium_large": {
+     "hauteur": 576,
+     "largeur": 768,
+     "url": "https://authentiquegypte.com/wp-content/uploads/2025/07/WhatsApp-Image-2025-06-27-at-15.33.21_37e02dae-768x576.jpg"
+    },
+    "thumbnail": {
+     "hauteur": 150,
+     "largeur": 150,
+     "url": "https://authentiquegypte.com/wp-content/uploads/2025/07/WhatsApp-Image-2025-06-27-at-15.33.21_37e02dae-150x150.jpg"
+    }
+   },
+   "etat": "ok",
+   "srcset": "https://authentiquegypte.com/wp-content/uploads/2025/07/WhatsApp-Image-2025-06-27-at-15.33.21_37e02dae-300x225.jpg 300w, https://authentiquegypte.com/wp-content/uploads/2025/07/WhatsApp-Image-2025-06-27-at-15.33.21_37e02dae-768x576.jpg 768w, https://authentiquegypte.com/wp-content/uploads/2025/07/WhatsApp-Image-2025-06-27-at-15.33.21_37e02dae-1024x768.jpg 1024w, https://authentiquegypte.com/wp-content/uploads/2025/07/WhatsApp-Image-2025-06-27-at-15.33.21_37e02dae.jpg 1152w"
+  },
+  {
+   "role": "corps",
+   "position": 14,
+   "base": "DSC00581-1.jpg",
+   "src_page": "https://authentiquegypte.com/wp-content/uploads/2025/06/DSC00581-1-scaled.jpg",
+   "alt_page": "Au sommet du mont Sinaï",
+   "src_original": "https://authentiquegypte.com/wp-content/uploads/2025/06/DSC00581-1-scaled.jpg",
+   "largeur": 2560,
+   "hauteur": 1711,
+   "alt": "Au sommet du mont Sinaï",
+   "media_id": 5117,
+   "tailles": {
+    "1536x1536": {
+     "hauteur": 1027,
+     "largeur": 1536,
+     "url": "https://authentiquegypte.com/wp-content/uploads/2025/06/DSC00581-1-1536x1027.jpg"
+    },
+    "2048x2048": {
+     "hauteur": 1369,
+     "largeur": 2048,
+     "url": "https://authentiquegypte.com/wp-content/uploads/2025/06/DSC00581-1-2048x1369.jpg"
+    },
+    "full": {
+     "hauteur": 1711,
+     "largeur": 2560,
+     "url": "https://authentiquegypte.com/wp-content/uploads/2025/06/DSC00581-1-scaled.jpg"
+    },
+    "large": {
+     "hauteur": 684,
+     "largeur": 1024,
+     "url": "https://authentiquegypte.com/wp-content/uploads/2025/06/DSC00581-1-1024x684.jpg"
+    },
+    "medium": {
+     "hauteur": 201,
+     "largeur": 300,
+     "url": "https://authentiquegypte.com/wp-content/uploads/2025/06/DSC00581-1-300x201.jpg"
+    },
+    "medium_large": {
+     "hauteur": 513,
+     "largeur": 768,
+     "url": "https://authentiquegypte.com/wp-content/uploads/2025/06/DSC00581-1-768x513.jpg"
+    },
+    "thumbnail": {
+     "hauteur": 150,
+     "largeur": 150,
+     "url": "https://authentiquegypte.com/wp-content/uploads/2025/06/DSC00581-1-150x150.jpg"
+    }
+   },
+   "etat": "ok",
+   "srcset": "https://authentiquegypte.com/wp-content/uploads/2025/06/DSC00581-1-300x201.jpg 300w, https://authentiquegypte.com/wp-content/uploads/2025/06/DSC00581-1-768x513.jpg 768w, https://authentiquegypte.com/wp-content/uploads/2025/06/DSC00581-1-1024x684.jpg 1024w, https://authentiquegypte.com/wp-content/uploads/2025/06/DSC00581-1-1536x1027.jpg 1536w, https://authentiquegypte.com/wp-content/uploads/2025/06/DSC00581-1-2048x1369.jpg 2048w, https://authentiquegypte.com/wp-content/uploads/2025/06/DSC00581-1-scaled.jpg 2560w"
+  },
+  {
+   "role": "corps",
+   "position": 15,
+   "base": "flying-carpet-Si1MFhSLNWY-unsplash.jpg",
+   "src_page": "https://authentiquegypte.com/wp-content/uploads/2023/11/flying-carpet-Si1MFhSLNWY-unsplash-scaled.jpg",
+   "alt_page": "",
+   "src_original": "https://authentiquegypte.com/wp-content/uploads/2023/11/flying-carpet-Si1MFhSLNWY-unsplash-scaled.jpg",
+   "largeur": 2560,
+   "hauteur": 1707,
+   "alt": "",
+   "media_id": 663,
+   "tailles": {
+    "1536x1536": {
+     "hauteur": 1024,
+     "largeur": 1536,
+     "url": "https://authentiquegypte.com/wp-content/uploads/2023/11/flying-carpet-Si1MFhSLNWY-unsplash-1536x1024.jpg"
+    },
+    "2048x2048": {
+     "hauteur": 1366,
+     "largeur": 2048,
+     "url": "https://authentiquegypte.com/wp-content/uploads/2023/11/flying-carpet-Si1MFhSLNWY-unsplash-2048x1366.jpg"
+    },
+    "full": {
+     "hauteur": 1707,
+     "largeur": 2560,
+     "url": "https://authentiquegypte.com/wp-content/uploads/2023/11/flying-carpet-Si1MFhSLNWY-unsplash-scaled.jpg"
+    },
+    "large": {
+     "hauteur": 683,
+     "largeur": 1024,
+     "url": "https://authentiquegypte.com/wp-content/uploads/2023/11/flying-carpet-Si1MFhSLNWY-unsplash-1024x683.jpg"
+    },
+    "medium": {
+     "hauteur": 200,
+     "largeur": 300,
+     "url": "https://authentiquegypte.com/wp-content/uploads/2023/11/flying-carpet-Si1MFhSLNWY-unsplash-300x200.jpg"
+    },
+    "medium_large": {
+     "hauteur": 512,
+     "largeur": 768,
+     "url": "https://authentiquegypte.com/wp-content/uploads/2023/11/flying-carpet-Si1MFhSLNWY-unsplash-768x512.jpg"
+    },
+    "thumbnail": {
+     "hauteur": 150,
+     "largeur": 150,
+     "url": "https://authentiquegypte.com/wp-content/uploads/2023/11/flying-carpet-Si1MFhSLNWY-unsplash-150x150.jpg"
+    }
+   },
+   "etat": "ok",
+   "srcset": "https://authentiquegypte.com/wp-content/uploads/2023/11/flying-carpet-Si1MFhSLNWY-unsplash-300x200.jpg 300w, https://authentiquegypte.com/wp-content/uploads/2023/11/flying-carpet-Si1MFhSLNWY-unsplash-768x512.jpg 768w, https://authentiquegypte.com/wp-content/uploads/2023/11/flying-carpet-Si1MFhSLNWY-unsplash-1024x683.jpg 1024w, https://authentiquegypte.com/wp-content/uploads/2023/11/flying-carpet-Si1MFhSLNWY-unsplash-1536x1024.jpg 1536w, https://authentiquegypte.com/wp-content/uploads/2023/11/flying-carpet-Si1MFhSLNWY-unsplash-2048x1366.jpg 2048w, https://authentiquegypte.com/wp-content/uploads/2023/11/flying-carpet-Si1MFhSLNWY-unsplash-scaled.jpg 2560w"
+  }
+ ],
+ "image_une": {
+  "role": "une",
+  "position": 0,
+  "base": "gonzalo-pedroviejo-gomez-_Ex6joK1ebQ-unsplash.jpg",
+  "src_page": "",
+  "alt_page": "",
+  "src_original": "https://authentiquegypte.com/wp-content/uploads/2023/11/gonzalo-pedroviejo-gomez-_Ex6joK1ebQ-unsplash-scaled.jpg",
+  "largeur": 1707,
+  "hauteur": 2560,
+  "alt": "Egypte Nubie Voyage",
+  "media_id": 246,
+  "tailles": {
+   "1536x1536": {
+    "hauteur": 1536,
+    "largeur": 1024,
+    "url": "https://authentiquegypte.com/wp-content/uploads/2023/11/gonzalo-pedroviejo-gomez-_Ex6joK1ebQ-unsplash-1024x1536.jpg"
+   },
+   "2048x2048": {
+    "hauteur": 2048,
+    "largeur": 1365,
+    "url": "https://authentiquegypte.com/wp-content/uploads/2023/11/gonzalo-pedroviejo-gomez-_Ex6joK1ebQ-unsplash-1365x2048.jpg"
+   },
+   "full": {
+    "hauteur": 2560,
+    "largeur": 1707,
+    "url": "https://authentiquegypte.com/wp-content/uploads/2023/11/gonzalo-pedroviejo-gomez-_Ex6joK1ebQ-unsplash-scaled.jpg"
+   },
+   "large": {
+    "hauteur": 1024,
+    "largeur": 683,
+    "url": "https://authentiquegypte.com/wp-content/uploads/2023/11/gonzalo-pedroviejo-gomez-_Ex6joK1ebQ-unsplash-683x1024.jpg"
+   },
+   "medium": {
+    "hauteur": 300,
+    "largeur": 200,
+    "url": "https://authentiquegypte.com/wp-content/uploads/2023/11/gonzalo-pedroviejo-gomez-_Ex6joK1ebQ-unsplash-200x300.jpg"
+   },
+   "medium_large": {
+    "hauteur": 1152,
+    "largeur": 768,
+    "url": "https://authentiquegypte.com/wp-content/uploads/2023/11/gonzalo-pedroviejo-gomez-_Ex6joK1ebQ-unsplash-768x1152.jpg"
+   },
+   "thumbnail": {
+    "hauteur": 150,
+    "largeur": 150,
+    "url": "https://authentiquegypte.com/wp-content/uploads/2023/11/gonzalo-pedroviejo-gomez-_Ex6joK1ebQ-unsplash-150x150.jpg"
+   }
+  },
+  "etat": "ok",
+  "srcset": "https://authentiquegypte.com/wp-content/uploads/2023/11/gonzalo-pedroviejo-gomez-_Ex6joK1ebQ-unsplash-200x300.jpg 200w, https://authentiquegypte.com/wp-content/uploads/2023/11/gonzalo-pedroviejo-gomez-_Ex6joK1ebQ-unsplash-683x1024.jpg 683w, https://authentiquegypte.com/wp-content/uploads/2023/11/gonzalo-pedroviejo-gomez-_Ex6joK1ebQ-unsplash-768x1152.jpg 768w, https://authentiquegypte.com/wp-content/uploads/2023/11/gonzalo-pedroviejo-gomez-_Ex6joK1ebQ-unsplash-1024x1536.jpg 1024w, https://authentiquegypte.com/wp-content/uploads/2023/11/gonzalo-pedroviejo-gomez-_Ex6joK1ebQ-unsplash-1365x2048.jpg 1365w, https://authentiquegypte.com/wp-content/uploads/2023/11/gonzalo-pedroviejo-gomez-_Ex6joK1ebQ-unsplash-scaled.jpg 1707w"
+ },
+ "avis_google": {
+  "nombre": 23,
+  "source": "widget Google de la fiche",
+  "releve": "2026-09-10",
+  "temoignages": [
+   {
+    "auteur": "gislaine gagey",
+    "texte": "Très beau séjour parfaitement organisé. Interlocuteurs agréables et toujours prêts à rendre service. Je recommande!!"
+   },
+   {
+    "auteur": "Lhuillier Patrick",
+    "texte": "\" Merveilleux voyage sublimé par une organisation sans faille. Les guides étaient passionnants, les correspondants dans chaque ville très compétents. La petite croisière sur le Nil fût un pur bonheur. Merci à tous et à Hend! Nous recommandons cette agence. Par contre, le harcèlement dans les souks ne sert pas le tourisme égyptien. Nous aurions certainement plus acheté si nous avions pu nous promener sereinement dans les souks. Le harcèlement ne donne pas envie d'acheter, au contraire, nous n'osions plu rentrer dans les magasins.\""
+   },
+   {
+    "auteur": "Daniel HEC",
+    "texte": "Nous avons passé une semaine à visiter Le Caire et ses environs (y compris le Grand Musée Egyptien à voir absolument) ainsi qu'Alexandrie. Le voyage a été très bien organisé par l'agence Authentique Egypte. Nous avons été accompagnés par un guide francophone très sympathique. Tous les intervenants étaient très professionnels. Bravo"
+   },
+   {
+    "auteur": "Brigitte Raffray",
+    "texte": "Une agence a l’écoute! Organisation parfaite! Une équipe efficace et réactive."
+   },
+   {
+    "auteur": "Brigitte CAMP",
+    "texte": "Nous avons été émerveillés chaque jour par ce beau pays et cette civilisation tellement riche. Nous avons encore des étoiles dans les yeux et ce voyage restera gravé dans notre mémoire à jamais. Organisation au top avec Hend, les représentants, les chauffeurs et les guides extrêmement gentils, avec une pensée particulière pour Marina au Caire et Mahmoud 1er à Louxor. Un grand merci à tous."
+   },
+   {
+    "auteur": "Alexandra Beaujean",
+    "texte": "Nous revenons d’un merveilleux circuit sur mesure en Égypte! Un voyage enrichissant répondant à 100% à nos attentes grâce à Hend , notre organisatrice! De la conception du projet aux différents prestataires rencontrés sur place , tout était parfait et ficelé pour que nous ne devions nous tracasser de rien! Le Nil est magnifique , nous avons particulièrement adoré l’équipage de notre dahabiya, des moments d’échanges gravés à jamais! Confiez vos envies les yeux fermés auprès de cette agence , pour un voyage AUTHENTIQUE! Encore merci à Hend 💛"
+   },
+   {
+    "auteur": "JEAN VINCENT",
+    "texte": "Enchantés de notre voyage organisé à la perfection par Hend, notre référente agence que nous remercions ici vivement pour son accompagnement. Les différents représentants, nos 2 guides ( Nabil et Mohamed) ont été d'une efficacité exemplaire. La coordination entre tous les intervenants fut impeccable. La croisière de 3 nuits sur notre Dahabiya (Safiya 2) a été superbe avec un équipage d'une gentillesse et serviabilité de tout instant. Joëlle Pittola et Jean-Vincent. 💙🤍❤️"
+   },
+   {
+    "auteur": "Ph. R",
+    "texte": "Nous revenons d'un voyage au Caire. L' organisation a été au delà de nos attentes ! Dès les premiers contacts jusqu'au retour, on a été pris en charge avec ponctualité, gentillesse et les visites réalisées magnifiquement documentées par un guide francophone (Mika) professionnel, érudit, prévenant et de très bons conseils. Sans compter l'expérimenté chauffeur (Nasser). C'est donc un 10/10 pour cette organisation qui nous a permis de découvrir cette ville tantaculaire et riche d'un passé inépuisable ! Bravo"
+   },
+   {
+    "auteur": "Edith BRESSON",
+    "texte": "Quel bonheur ! Depuis la préparation du voyage travaillé avec Hend , jusqu’à sa réalisation et son terme tout était parfait aucune fausses notes. Dès endroits et des hôtels magnifiques, des guides professionnels, adorables , bienveillants ( Menna super guide super photographe et une bonne humeur communicative , Zaki charmant , très dans l’échange, passionné avec un français parfait et le célèbre Mahamoud 1er très investit , passionné, disponible , drôle) des vacances riches en découvertes autant pour les sites que pour l’humain . Agence à recommander sans hésitation. Bravo et merci à tous Edith Morgane et Gaelle"
+   },
+   {
+    "auteur": "Annie",
+    "texte": "Nous avons visité Le Caire avec cette agence. Nous avons établi notre programme avec eux et ils ont été très à l écoute. Dès notre arrivée à l aéroport un représentant nous attendait pour les formalités. Puis ils ont été présents plusieurs fois pendant notre séjour. La guide et les chauffeurs ont été très professionnels et très ponctuels. Merci à toute l équipe"
+   }
+  ]
+ },
+ "categorie": {
+  "nom": "Voyage culturel en Égypte",
+  "url": "https://authentiquegypte.com/nos-sejours-egypte/voyage-culturel-en-egypte/"
+ },
+ "ecartes": [
+  "Authentique Egypte - Agence de voyage sur mesure en Egypte",
+  "23 avis Google",
+  "Écrire un avis",
+  "Publié sur Google",
+  "gislaine gagey",
+  "Trustindex vérifie que la source originale de l'avis est Google.",
+  "Très beau séjour parfaitement organisé. Interlocuteurs agréables et toujours prêts à rendre service. Je recommande!!",
+  "Lhuillier Patrick",
+  "\" Merveilleux voyage sublimé par une organisation sans faille. Les guides étaient passionnants, les correspondants dans chaque ville très compétents. La petite croisière sur le Nil fût un pur bonheur. Merci à tous et à Hend! Nous recommandons cette agence. Par contre, le harcèlement dans les souks ne sert pas le tourisme égyptien. Nous aurions certainement plus acheté si nous avions pu nous promener sereinement dans les souks. Le harcèlement ne donne pas envie d'acheter, au contraire, nous n'osions plu rentrer dans les magasins.\"",
+  "Daniel HEC",
+  "Nous avons passé une semaine à visiter Le Caire et ses environs (y compris le Grand Musée Egyptien à voir absolument) ainsi qu'Alexandrie. Le voyage a été très bien organisé par l'agence Authentique Egypte. Nous avons été accompagnés par un guide francophone très sympathique. Tous les intervenants étaient très professionnels. Bravo",
+  "Brigitte Raffray",
+  "Une agence a l’écoute! Organisation parfaite! Une équipe efficace et réactive.",
+  "Brigitte CAMP",
+  "Nous avons été émerveillés chaque jour par ce beau pays et cette civilisation tellement riche. Nous avons encore des étoiles dans les yeux et ce voyage restera gravé dans notre mémoire à jamais. Organisation au top avec Hend, les représentants, les chauffeurs et les guides extrêmement gentils, avec une pensée particulière pour Marina au Caire et Mahmoud 1er à Louxor. Un grand merci à tous.",
+  "Alexandra Beaujean",
+  "Nous revenons d’un merveilleux circuit sur mesure en Égypte! Un voyage enrichissant répondant à 100% à nos attentes grâce à Hend , notre organisatrice! De la conception du projet aux différents prestataires rencontrés sur place , tout était parfait et ficelé pour que nous ne devions nous tracasser de rien! Le Nil est magnifique , nous avons particulièrement adoré l’équipage de notre dahabiya, des moments d’échanges gravés à jamais! Confiez vos envies les yeux fermés auprès de cette agence , pour un voyage AUTHENTIQUE! Encore merci à Hend 💛",
+  "JEAN VINCENT",
+  "Enchantés de notre voyage organisé à la perfection par Hend, notre référente agence que nous remercions ici vivement pour son accompagnement. Les différents représentants, nos 2 guides ( Nabil et Mohamed) ont été d'une efficacité exemplaire. La coordination entre tous les intervenants fut impeccable. La croisière de 3 nuits sur notre Dahabiya (Safiya 2) a été superbe avec un équipage d'une gentillesse et serviabilité de tout instant. Joëlle Pittola et Jean-Vincent. 💙🤍❤️",
+  "Ph. R",
+  "Nous revenons d'un voyage au Caire. L' organisation a été au delà de nos attentes ! Dès les premiers contacts jusqu'au retour, on a été pris en charge avec ponctualité, gentillesse et les visites réalisées magnifiquement documentées par un guide francophone (Mika) professionnel, érudit, prévenant et de très bons conseils. Sans compter l'expérimenté chauffeur (Nasser). C'est donc un 10/10 pour cette organisation qui nous a permis de découvrir cette ville tantaculaire et riche d'un passé inépuisable ! Bravo",
+  "Edith BRESSON",
+  "Quel bonheur ! Depuis la préparation du voyage travaillé avec Hend , jusqu’à sa réalisation et son terme tout était parfait aucune fausses notes. Dès endroits et des hôtels magnifiques, des guides professionnels, adorables , bienveillants ( Menna super guide super photographe et une bonne humeur communicative , Zaki charmant , très dans l’échange, passionné avec un français parfait et le célèbre Mahamoud 1er très investit , passionné, disponible , drôle) des vacances riches en découvertes autant pour les sites que pour l’humain . Agence à recommander sans hésitation. Bravo et merci à tous Edith Morgane et Gaelle",
+  "Annie",
+  "Nous avons visité Le Caire avec cette agence. Nous avons établi notre programme avec eux et ils ont été très à l écoute. Dès notre arrivée à l aéroport un représentant nous attendait pour les formalités. Puis ils ont été présents plusieurs fois pendant notre séjour. La guide et les chauffeurs ont été très professionnels et très ponctuels. Merci à toute l équipe",
+  "liste",
+  "liste"
+ ],
+ "anomalies": [
+  "aucun prix lu sur la fiche",
+  "le déroulé ne numérote pas ses jours : tout est rendu comme un seul jour",
+  "aucun déroulé jour par jour trouvé"
+ ]
+}

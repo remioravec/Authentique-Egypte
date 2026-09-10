@@ -73,7 +73,13 @@ const CHANTIER = /lorem ipsum|à compléter|a completer|aremplir|xxx|todo|placeh
       const reduites = imgs.filter(i => /-\d{2,4}x\d{2,4}\.(jpe?g|png|webp)|elementor\/thumbs\//i.test(i.getAttribute('src') || ''))
         .map(i => (i.getAttribute('src') || '').split('/').pop());
       const sansAlt = imgs.filter(i => !i.hasAttribute('alt')).length;
-      const altFichier = imgs.filter(i => /^[\w-]+$/.test(i.getAttribute('alt') || '') && (i.getAttribute('alt') || '').length > 8).length;
+      // Un alt d'un seul mot n'est pas un nom de fichier : « Guesthouse »
+      // décrit l'image. On ne signale que ce qui EST un nom de fichier.
+      const altFichier = imgs.filter(i => {
+        const a = i.getAttribute('alt') || '';
+        return /\.(jpe?g|png|webp|avif)$/i.test(a) || /^(img|dsc|photo|capture)[-_ ]?\d+/i.test(a)
+          || /^[\w-]{10,}-\w{6,}$/.test(a);
+      }).length;
 
       const liens = [...document.querySelectorAll('a[href]')];
       const morts = liens.filter(a => { const h = a.getAttribute('href') || ''; return h === '#' || h === '' || /^javascript:/.test(h); }).length;

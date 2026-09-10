@@ -1,0 +1,49 @@
+# Questions à Mélanie — pages programme
+
+Ce que la source ne permet pas de trancher. Une page se produit quand même, fidèle à la page actuelle, et l'élément est marqué. Une question par ligne ; la colonne « Attendu » dit ce qui débloque.
+
+| n° | Page | Élément | Constat | Attendu |
+|---|---|---|---|---|
+| Q1 | Oasis de Siwa | Déroulé jour par jour | Le déroulé décrit le Sinaï (Sharm el-Sheikh, mont Moïse, Sainte-Catherine), pas Siwa (dette X1). | Le vrai déroulé de Siwa, jour par jour. |
+| Q2 | Oasis de Siwa | Durée | Trois durées coexistent : 4 jours (présentation), 3 jours minimum (encart de prix), déroulé de 2 jours. | La durée à afficher. |
+| Q3 | Oasis de Siwa | FAQ | 8 questions posées, 1 réponse rédigée (dette X2). | Les 7 réponses, ou l'accord pour retirer les questions sans réponse. |
+| Q4 | Oasis de Siwa | Présentation | La page affirme que Siwa est classée au patrimoine mondial de l'UNESCO ; elle figure sur la liste indicative. | Confirmer ou corriger la phrase. |
+| Q5 | Sainte-Catherine (×2) | Titre | Deux fiches portent le même titre et la même image à la une (dette X3). | Fusionner, ou différencier titre et contenu. |
+| Q6 | Pyramides, croisière et mer Rouge | Photo de couverture | À changer (retour du 24/08, PH1). Aucun fichier reçu. | La photo, en pleine taille (≥ 2 000 px de large). |
+| Q7 | Mer Rouge → Sinaï | Photo et programme | Photo hors sujet, programme pas à jour (PH2). | La photo et le déroulé à jour. |
+| Q8 | Lever du soleil au mont Sinaï | Photo de couverture | Ne correspond pas à l'itinéraire (PH3). | La photo. |
+| Q9 | Toutes | Interlocutrice | Le gabarit prévoit un prénom et une photo (« votre interlocutrice »). | Le prénom à afficher et une photo, ou l'accord pour un bloc générique « L'équipe ». |
+| Q10 | Toutes | Images en haute définition | Les photos des fiches font 1 000 px de large au mieux ; deux images de Siwa n'existent qu'en 300 × 200. Sur un grand écran, l'image de tête ne peut pas être affichée en pleine largeur sans flou. | Les originaux (≥ 2 000 px) des photos de couverture, en priorité. |
+| Q11 | Plusieurs | Images cassées | Dix images `-576x1024.jpg` référencées par le site répondent 404 (`docs/images-cassees.txt`). | Les retéléverser, ou confirmer qu'on les abandonne. |
+| Q12 | Toutes | Inclus / non inclus | Les titres de la source sont « Le programme inclus » et « N'inclus pas ». | Confirmer, ou donner la formulation voulue (« Le programme inclut », « Non inclus »). |
+| Q13 | Toutes | Avis Google | 23 avis affichés, lus dans le widget de la page (relevé du 09/09/2026). | Confirmer que ce chiffre peut être affiché, ou donner la note et le nombre à montrer. |
+| Q14 | Toutes | Bouton « Personaliser ce séjour » | La fiche écrit « Personaliser » avec un seul n. Le bouton de la refonte écrit « Personnaliser ». | Confirmer la correction, et corriger aussi sur le site actuel. |
+| Q15 | Oasis de Siwa | Avis affichés | Les trois avis repris sont les trois premiers du widget de la fiche. Le deuxième contient une critique sur le harcèlement dans les souks. | Dire si vous voulez choisir les avis affichés, ou garder l'ordre Google. |
+| Q16 | Oasis de Siwa | Réponse « Peut-on combiner Siwa… » | La réponse dit que l'agence n'organise pas de séjour près de la frontière libyenne. Siwa est à environ 50 km de cette frontière. | Confirmer ou reformuler la phrase sur la fiche actuelle. |
+| Q17 | Croisière sur le lac Nasser | Photos | Neuf photos de la fiche n'existent qu'en petite taille ou ne répondent plus (les `-576x1024` du relevé `docs/images-cassees.txt`). | Retéléverser les originaux, sinon la fiche ne pourra pas avoir de bandeau net. |
+| Q18 | Cinq fiches | Déroulé | Le déroulé de « Roadtrip en Égypte », « Découverte de la Nubie » et « Croisière sur le lac Nasser » n'est pas structuré en étapes sur la fiche actuelle : rien à afficher jour par jour. | Fournir le déroulé, ou confirmer qu'on affiche ces fiches sans jour par jour. |
+| Q19 | Toutes | Section « Votre guide » | Elle reprend l'équipe de la maquette d'accueil : Hossam, guide égyptologue depuis 14 ans ; Nour, conception d'itinéraires ; Ahmed, chauffeur privatif. | Confirmer ces trois personnes et leurs rôles, et fournir leurs photos. |
+| Q20 | Oasis de Siwa | Carte du trajet | La carte place les lieux que la fiche nomme. Le titre annonce Le Caire et Siwa ; le déroulé décrit Charm el-Cheikh, Sainte-Catherine et le mont Moïse. L'écart est visible sur la carte. | Le déroulé attendu (voir Q1) réglera aussi la carte. |
+
+## Relevé du 09/09/2026 — production des trois pages suivantes
+
+- **Q21.** Les fiches « Pyramides et croisière sur le Nil » (1 195 €) et « Pyramides, croisière et mer rouge en famille » (1 485 €) portent **exactement le même déroulé sur huit jours**, titre de jour par titre de jour. Deux séjours, deux prix, un seul programme : lequel des deux est à corriger ?
+- **Q22.** Sur « Pyramides, Louxor et mer rouge en famille », les **jours 5 et 6 portent le même titre**, « De Louxor à la Mer Rouge ». Est-ce un doublon, ou le jour 6 a-t-il un contenu propre qui n'a pas été saisi ?
+- **Q23.** Trois photos de galerie ont pour **texte alternatif leur nom de fichier** (`axp-photography-4-26qyioyvg-unsplash.jpg`, `axp-photography-vfd1ui3buqu-unsplash-1.jpg`, `dmitrii-zhodzishskii-yw1yrbhxpau-unsplash.jpg`). Nous ne les réécrivons pas : quelle légende leur donner ?
+- **Q24.** La photo de couverture de « Pyramides, Louxor et mer rouge en famille » ne fait que **1 280 px de large** (et une photo du séjour 612 px). La page ne les agrandit plus — elle compose autour — mais un original plus grand donnerait un bandeau plein écran net.
+- **Q25.** Le chapô de « Pyramides, Louxor et mer rouge en famille » est « Les étapes de votre séjour : ». Est-ce le texte voulu, ou une amorce restée en place ?
+- **Q26.** **Neuf fiches sur quatorze annoncent une durée qui ne correspond pas à leur déroulé.** « Pyramides et croisière sur le Nil » : *6 jours minimum* pour huit jours décrits. « Excursion dans le désert Blanc » : *2 jours minimum* pour trois jours. « Mer rouge » : *9 jours minimum* pour huit. « Le Caire et croisière sur un bateau à voile » : *3 jours* pour huit. Le voyageur qui compare un prix à une durée se trompe.
+- **Q27.** « Pyramides, Louxor et mer rouge en famille » **saute les jours 4 et 5** : la fiche numérote 1, 2, 3, 6, 7, 7, 8. Trois jours sur huit sont perdus ou mal numérotés, et le second « Jour 7 » n'a aucun texte.
+- **Q28.** « Itinéraire Sinaï » **saute le jour 6** (numérotation 1, 2, 3, 4, 5, 7, 8) et annonce quatre durées différentes : 8 jours, 4 jours, 2 jours, 8 jours minimum.
+- **Q29.** Le bloc « Vue d'ensemble » de **« Pyramides et croisière sur le Nil » recopie l'intégralité du déroulé** et se termine par « FAQ Pyramides & Croisière sur le Nil » ; celui du **désert Blanc** contient « À partir de 415 € / Personne » et « Personaliser ce séjour » en plein texte. Nous les affichons tels quels — nous ne réécrivons pas le contenu — mais le lecteur lit le séjour deux fois et voit un bouton s'écrire comme une phrase.
+- **Q30.** Les **repères de « Pyramides, Louxor et mer rouge en famille » sont, mot pour mot, sa liste d'inclusions.** La page ne les affiche donc plus deux fois, mais la fiche n'a en réalité aucun repère à elle.
+- **Q31.** La FAQ du désert Blanc affirme qu'il est « **classé au patrimoine mondial de l'UNESCO** ». Le parc national du Désert Blanc figure sur la liste indicative de l'Égypte, il n'est pas inscrit. Même nature que Q4 pour Siwa.
+
+## Relevé du 09/09/2026 — production des pages « type de séjour »
+
+- **Q32.** **Sept fiches sur quatorze n'ont pas de phrase de présentation.** Leur chapô est un intitulé de section recopié : « Les étapes de votre séjour : » (désert Blanc, Le Caire et croisière, mer rouge, Pyramides et croisière, Louxor et mer rouge en famille) ou « Votre programme de voyage » (lac Nasser, roadtrip). Il faudrait une phrase par séjour — c'est la première ligne que lit un visiteur, sur la fiche comme sur la page famille.
+- **Q33.** **Quatre séjours ne figurent sur aucune page « type de séjour »** : Découverte de la Nubie, Lever du soleil et nuit à Sainte-Catherine, Pyramides Louxor et mer rouge en famille, Roadtrip en Égypte. Ils existent, ils ont un prix, et aucune page de famille n'y mène.
+- **Q34.** La famille **Mer rouge ne range qu'un seul séjour**, alors que « Pyramides, Louxor et mer rouge en famille » et « Itinéraire Sinaï… et mer rouge » relèvent visiblement du même thème.
+- **Q35.** La page **« Nos séjours »** (la page mère) ne liste aucun séjour et n'a pas de FAQ : elle n'a pas le même gabarit que les cinq familles.
+- **Q36.** Le widget d'avis porte la **note de chaque voyageur** dans son HTML (cinq étoiles pleines ou vides). Sur la page désert, un avis sur dix est à 4 étoiles. Souhaitez-vous que les pages affichent la note relevée, avis par avis ?
+

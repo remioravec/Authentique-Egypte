@@ -1,0 +1,20 @@
+{
+ "releve": "2026-09-09",
+ "source": "OSRM sur données OpenStreetMap (router.project-osrm.org)",
+ "trajets": {
+  "charm-el-cheikh>sainte-catherine": {
+   "km": 209,
+   "minutes": 157,
+   "releve": "2026-09-09",
+   "source": "OSRM sur données OpenStreetMap (router.project-osrm.org)"
+  },
+  "sainte-catherine>mont-moise": {
+   "douteux": true,
+   "km": 23,
+   "minutes": 165,
+   "raison": "vitesse moyenne de 8 km/h : ce tronçon n'est probablement pas routier",
+   "releve": "2026-09-09",
+   "source": "OSRM sur données OpenStreetMap (router.project-osrm.org)"
+  }
+ }
+}
