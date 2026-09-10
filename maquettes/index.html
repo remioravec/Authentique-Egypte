@@ -198,7 +198,21 @@ body.mm [data-mm^="Bloc de filles"]::before{background:#B8860B}
      main toute seule. */
   .nav.nav--ouverte{display:flex;position:absolute;top:74px;left:20px;right:20px;
     flex-direction:column;align-items:stretch;background:#fff;border:1px solid var(--ligne);
-    border-radius:20px;padding:12px;box-shadow:var(--ombre-f);z-index:60}
+    border-radius:20px;padding:12px;box-shadow:var(--ombre-f);z-index:60;
+    max-height:calc(100vh - 96px);overflow-y:auto}
+  /* Dans le tiroir, le panneau se déplie DANS le flux : posé en absolu, il
+     passait sous les blocs frères suivants et ses liens n'étaient plus
+     cliquables — mesuré à 390 et 900 px. */
+  .nav--ouverte .menu{position:static}
+  .nav--ouverte .menu__pan{position:static;transform:none;min-width:0;box-shadow:none;
+    border:0;border-left:2px solid var(--or-fond);border-radius:0;margin:2px 0 6px 10px;
+    padding:2px 0 2px 10px}
+  .nav--ouverte .menu:hover .menu__pan,
+  .nav--ouverte .menu:focus-within .menu__pan{transform:none}
+  .nav--ouverte .menu>button[aria-expanded="true"]+.menu__pan{transform:none}
+  /* Replié par défaut dans le tiroir : c'est le bouton qui déplie. */
+  .nav--ouverte .menu__pan{display:none}
+  .nav--ouverte .menu>button[aria-expanded="true"]+.menu__pan{display:block;opacity:1;visibility:visible}
 }
 @media (max-width:860px){
   .filles{grid-template-columns:repeat(2,1fr)}
@@ -257,6 +271,11 @@ body.mm [data-mm^="Bloc de filles"]::before{background:#B8860B}
    est passée dans cette classe ; l'attribut ne garde que la couleur.
    ------------------------------------------------------------------ */
 .note{font-size:.9rem;line-height:1.6;color:var(--gris);max-width:56ch}
+/* Les trois groupes de questions de la cliente : « Organisation du
+   voyage », « Réservation & prestations », « Paiement ». */
+.faq__g{font-family:"Manrope",sans-serif;font-size:.85rem;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--teal-txt);font-weight:700;margin:34px 0 4px}
+.faq__g:first-child{margin-top:0}
 
 /* ------------------------------------------------------------------
    PLANCHER MOBILE
@@ -315,7 +334,7 @@ body.mm [data-mm^="Bloc de filles"]::before{background:#B8860B}
   .galerie a:first-child .galerie__leg,
   .avis .et,.reperes .km,.site h3,
   /* Derniers relevés à la sonde, à 375 et 768 px. */
-  .note,.jeton,.ini,.opt,.vers,.etape .vers,.vign span,.vign b,
+  .note,.jeton,.ini,.opt,.vers,.etape .vers,.vign span,.vign b,.faq__g,
   .devis__act small,.resa-mob .p small,.resa-mob .p i,
   .bande b,.bande b span,.figcaption,.fig figcaption b,
   .som h4,.compte,.chapeau__meta span{font-size:.95rem}
@@ -398,7 +417,9 @@ header .nav>a.btn--or:hover{background:#F09A10;border-color:#F09A10;color:#000;b
     <a href="https://authentiquegypte.com/" class="logo" aria-label="Authentique Égypte, accueil">
       <img src="https://authentiquegypte.com/wp-content/uploads/2026/08/authentique-egypte-logo-transparent.webp" alt="Authentique Égypte" width="510" height="170">
     </a>
-    <nav class="nav" data-mm="Navigation · poids 0,25">
+    <button class="burger" type="button" aria-label="Ouvrir le menu"
+      aria-expanded="false" aria-controls="nav-principale">☰ Menu</button>
+    <nav class="nav" id="nav-principale" data-mm="Navigation · poids 0,25">
       <a href="https://authentiquegypte.com/" aria-current="page">Accueil</a>
       <div class="menu">
         <button aria-expanded="false">Nos séjours
@@ -420,10 +441,10 @@ header .nav>a.btn--or:hover{background:#F09A10;border-color:#F09A10;color:#000;b
           <a href="https://authentiquegypte.com/voyage-au-caire/"><span>Voyage au Caire<small>Gizeh, Saqqara, Grand Musée</small></span></a>
           <a href="https://authentiquegypte.com/voyage-a-louxor/"><span>Voyage à Louxor<small>Karnak, vallée des Rois</small></span></a>
           <a href="https://authentiquegypte.com/voyage-a-assouan/"><span>Voyage à Assouan<small>Philae, Abou Simbel</small></span></a>
-          <a href="https://authentiquegypte.com/voyage-a-alexandrie/"><span>Voyage à Alexandrie<small>Méditerranée, catacombes</small></span></a>
-          <a href="https://authentiquegypte.com/voyage-a-fayoum/"><span>Voyage à Fayoum<small>Wadi El Rayan, lac Qarun</small></span></a>
+          <a href="https://authentiquegypte.com/voyage-a-alexandrie/"><span>Voyage à Alexandrie<small>Côte méditerranéenne</small></span></a>
+          <a href="https://authentiquegypte.com/voyage-a-fayoum/"><span>Voyage à Fayoum<small>Oasis et lacs du Fayoum</small></span></a>
           <a href="https://authentiquegypte.com/desert-blanc/"><span>Désert Blanc<small>Formations de craie, nuit à Bahariya</small></span></a>
-          <a href="https://authentiquegypte.com/desert-noir/"><span>Désert Noir<small>Collines volcaniques, sources chaudes</small></span></a>
+          <a href="https://authentiquegypte.com/desert-noir/"><span>Désert Noir<small>Sur la route du désert Blanc</small></span></a>
           <a href="https://authentiquegypte.com/lac-nasser/"><span>Lac Nasser<small>Assouan et le lac Nasser</small></span></a>
         </div>
       </div>
@@ -432,17 +453,16 @@ header .nav>a.btn--or:hover{background:#F09A10;border-color:#F09A10;color:#000;b
           <svg width="11" height="7" viewBox="0 0 11 7" fill="none" aria-hidden="true"><path d="M1 1l4.5 4.5L10 1" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
         </button>
         <div class="menu__pan" style="min-width:290px">
-          <a href="https://authentiquegypte.com/voyage-en-famille-en-egypte/"><span>Voyage en famille en Égypte<small>Rythme adapté, enfants bienvenus</small></span></a>
-          <a href="https://authentiquegypte.com/voyage-en-couple-en-egypte/"><span>Voyage en couple en Égypte<small>Dahabeya privée, dîners sur le Nil</small></span></a>
-          <a href="https://authentiquegypte.com/voyage-solo-en-egypte/"><span>Voyage en solo en Égypte<small>Guide privatif, sécurité assurée</small></span></a>
-          <a href="https://authentiquegypte.com/voyage-pmr-en-egypte/"><span>Voyage PMR en Égypte<small>Sites accessibles, véhicule adapté</small></span></a>
+          <a href="https://authentiquegypte.com/voyage-en-famille-en-egypte/"><span>Voyage en famille en Égypte<small>4 séjours de notre catalogue</small></span></a>
+          <a href="https://authentiquegypte.com/voyage-en-couple-en-egypte/"><span>Voyage en couple en Égypte<small>5 séjours de notre catalogue</small></span></a>
+          <a href="https://authentiquegypte.com/voyage-solo-en-egypte/"><span>Voyage solo en Égypte<small>4 séjours de notre catalogue</small></span></a>
+          <a href="https://authentiquegypte.com/voyage-pmr-en-egypte/"><span>Voyage PMR en Égypte<small>Itinéraire construit au cas par cas</small></span></a>
         </div>
       </div>
       <a href="https://authentiquegypte.com/notre-blog/">Guides</a>
       <a href="https://authentiquegypte.com/qui-sommes-nous/">L'agence</a>
       <a href="https://authentiquegypte.com/sur-mesure/" class="btn btn--or btn--sm" style="margin-left:10px">Obtenir mon devis</a>
     </nav>
-    <button class="burger" aria-label="Ouvrir le menu">☰ Menu</button>
   </div>
 </header>
 
@@ -470,7 +490,6 @@ header .nav>a.btn--or:hover{background:#F09A10;border-color:#F09A10;color:#000;b
             <button class="opt" aria-pressed="false" data-val="famille">En famille</button>
             <button class="opt" aria-pressed="false" data-val="couple">En couple</button>
             <button class="opt" aria-pressed="false" data-val="solo">En solo</button>
-            <button class="opt" aria-pressed="false" data-val="pmr">Mobilité réduite</button>
           </div>
         </div>
         <div class="champ" data-filtre="envie">
@@ -493,7 +512,7 @@ header .nav>a.btn--or:hover{background:#F09A10;border-color:#F09A10;color:#000;b
         </div>
       </div>
       <div class="compo__res">
-        <p class="compo__phrase" id="phrase" role="status" aria-live="polite">Aucun critère : <b>8 séjours</b> disponibles. Choisissez pour affiner.</p>
+        <p class="compo__phrase" id="phrase" role="status" aria-live="polite">Aucun critère : <b>les 8 itinéraires</b> de cette page. Choisissez pour affiner.</p>
         <div class="compo__act">
           <button type="button" id="raz">Tout effacer</button>
           <a href="#resultats" class="btn btn--or">Voir les séjours qui correspondent</a>
@@ -531,7 +550,7 @@ header .nav>a.btn--or:hover{background:#F09A10;border-color:#F09A10;color:#000;b
         <div class="fille__txt"><b>Voyage dans le désert en Égypte</b><span>Siwa, désert blanc, Fayoum</span></div>
       </a>
       <a class="fille" href="https://authentiquegypte.com/nos-sejours-egypte/mer-rouge/">
-        <div class="fille__img"><img src="https://authentiquegypte.com/wp-content/uploads/2025/07/peggy-anke-YxpoB3bvlZQ-unsplash.jpg" alt="Lagon et montagnes du littoral de la mer Rouge à Dahab" loading="lazy" decoding="async"></div>
+        <div class="fille__img"><img src="https://authentiquegypte.com/wp-content/uploads/2025/07/nassim-wahba-pb8MhOgjlEk-unsplash-scaled.jpg" alt="Littoral de la mer rouge. Nassim Wahba - Unsplash" loading="lazy" decoding="async"></div>
         <span class="fille__nb">1 séjour</span>
         <div class="fille__txt"><b>Séjour en mer Rouge</b><span>Plongée et snorkeling</span></div>
       </a>
@@ -551,12 +570,13 @@ header .nav>a.btn--or:hover{background:#F09A10;border-color:#F09A10;color:#000;b
 <section class="section section--fond" id="resultats">
   <div class="wrap">
     <p class="eyebrow">Nos itinéraires</p>
-    <h2 id="titre-res">Huit itinéraires à composer, parmi nos 14 séjours</h2>
+    <p class="lede" style="margin-bottom:10px">Partez à la découverte d’une Égypte authentique, loin des circuits touristiques classiques. Temples millénaires, oasis cachées, rencontres vraies : chaque voyage est conçu selon vos envies, votre rythme, votre façon d’explorer.</p>
+    <h2 id="titre-res">Créez un voyage qui vous ressemble</h2>
     <p class="lede" style="margin-bottom:34px">Chaque programme est un point de départ : durée, hébergements et étapes s'ajustent à votre demande.</p>
 
     <div class="grille g-4" id="liste">
 
-      <article class="carte" data-qui="famille couple solo" data-envie="croisiere culturel" data-duree="moyen">
+      <article class="carte" data-qui="couple famille solo" data-envie="croisiere culturel" data-duree="moyen">
         <div class="carte__img"><img src="https://authentiquegypte.com/wp-content/uploads/2023/11/flying-carpet-Si1MFhSLNWY-unsplash-scaled.jpg" alt="Pyramides et croisière sur le Nil" loading="lazy" decoding="async"></div>
         <div class="carte__corps">
           <h3><a href="https://authentiquegypte.com/programs/pyramides-et-croisiere-sur-le-nil/">Pyramides et croisière sur le Nil</a></h3>
@@ -569,11 +589,11 @@ header .nav>a.btn--or:hover{background:#F09A10;border-color:#F09A10;color:#000;b
         </div>
       </article>
 
-      <article class="carte" data-qui="couple solo" data-envie="croisiere culturel" data-duree="moyen">
+      <article class="carte" data-qui="couple famille solo" data-envie="croisiere culturel" data-duree="moyen">
         <div class="carte__img"><img src="https://authentiquegypte.com/wp-content/uploads/2023/11/e235bfb4-54a3-41cf-9f55-f2ca30fc8a91-1.jpg" alt="Dahabeya" loading="lazy" decoding="async"><span class="carte__tag">Capacité réduite pour plus d’intimité</span></div>
         <div class="carte__corps">
           <h3><a href="https://authentiquegypte.com/programs/le-caire-et-croisiere-sur-un-bateau-a-voile/">Le Caire et croisière sur un bateau à voile</a></h3>
-          <p class="carte__route">Le Caire <b>→</b> Louxor <b>→</b> Assouan</p>
+          <p class="carte__route">Le Caire <b>→</b> Assouan <b>→</b> Louxor</p>
           <div class="carte__meta"><span class="puce">8 jours minimum</span><span class="puce puce--teal">Dahabeya</span><span class="puce puce--teal">Sans moteur</span></div>
           <div class="carte__pied">
             <span class="prix"><small>Prix</small><b>sur devis</b></span>
@@ -582,7 +602,7 @@ header .nav>a.btn--or:hover{background:#F09A10;border-color:#F09A10;color:#000;b
         </div>
       </article>
 
-      <article class="carte" data-qui="couple solo pmr" data-envie="croisiere culturel" data-duree="court">
+      <article class="carte" data-qui="couple solo" data-envie="croisiere culturel" data-duree="court">
         <div class="carte__img"><img src="https://authentiquegypte.com/wp-content/uploads/2023/11/WhatsApp-Image-2023-11-07-at-12.03.37.jpeg" alt="Croisière sur le lac Nasser" loading="lazy" decoding="async"></div>
         <div class="carte__corps">
           <h3><a href="https://authentiquegypte.com/programs/croisiere-sur-le-lac-nasser/">Croisière sur le lac Nasser</a></h3>
@@ -594,7 +614,7 @@ header .nav>a.btn--or:hover{background:#F09A10;border-color:#F09A10;color:#000;b
         </div>
       </article>
 
-      <article class="carte" data-qui="famille couple" data-envie="croisiere mer culturel" data-duree="long">
+      <article class="carte" data-qui="couple famille solo" data-envie="croisiere mer culturel" data-duree="long">
         <div class="carte__img"><img src="https://authentiquegypte.com/wp-content/uploads/2023/11/WhatsApp-Image-2025-08-14-at-13.23.16.jpeg" alt="Pyramides, croisière et mer rouge en famille" loading="lazy" decoding="async"><span class="carte__tag">En famille</span></div>
         <div class="carte__corps">
           <h3><a href="https://authentiquegypte.com/programs/mer-rouge/">Pyramides, croisière et mer rouge en famille</a></h3>
@@ -607,7 +627,7 @@ header .nav>a.btn--or:hover{background:#F09A10;border-color:#F09A10;color:#000;b
         </div>
       </article>
 
-      <article class="carte" data-qui="couple solo" data-envie="desert culturel" data-duree="court">
+      <article class="carte" data-qui="couple" data-envie="desert culturel" data-duree="court">
         <div class="carte__img"><img src="https://authentiquegypte.com/wp-content/uploads/2023/11/Siwa_Oasis_sunset_on_Maraqi_Egypt.webp" alt="oasis de siwa" loading="lazy" decoding="async"></div>
         <div class="carte__corps">
           <h3><a href="https://authentiquegypte.com/programs/excursion-a-loasis-de-siwa/">Voyage à l’Oasis de Siwa</a></h3>
@@ -620,7 +640,7 @@ header .nav>a.btn--or:hover{background:#F09A10;border-color:#F09A10;color:#000;b
         </div>
       </article>
 
-      <article class="carte" data-qui="famille solo" data-envie="desert" data-duree="court">
+      <article class="carte" data-qui="" data-envie="desert" data-duree="court">
         <div class="carte__img"><img src="https://authentiquegypte.com/wp-content/uploads/2023/11/thales-botelho-de-sousa-mgGbLjY9jlI-unsplash-scaled.webp" alt="Découverte du désert blanc" loading="lazy" decoding="async"></div>
         <div class="carte__corps">
           <h3><a href="https://authentiquegypte.com/programs/excursion-dans-le-desert-blanc/">Excursion dans le désert blanc</a></h3>
@@ -633,7 +653,7 @@ header .nav>a.btn--or:hover{background:#F09A10;border-color:#F09A10;color:#000;b
         </div>
       </article>
 
-      <article class="carte" data-qui="couple solo" data-envie="desert sinai" data-duree="court">
+      <article class="carte" data-qui="" data-envie="desert sinai" data-duree="court">
         <div class="carte__img"><img src="https://authentiquegypte.com/wp-content/uploads/2025/06/DSC00581-1-scaled.jpg" alt="Au sommet du mont Sinaï" loading="lazy" decoding="async"></div>
         <div class="carte__corps">
           <h3><a href="https://authentiquegypte.com/programs/sainte-catherine/">Lever du soleil, monastère et nuit à Sainte-Catherine</a></h3>
@@ -646,7 +666,7 @@ header .nav>a.btn--or:hover{background:#F09A10;border-color:#F09A10;color:#000;b
         </div>
       </article>
 
-      <article class="carte" data-qui="famille couple" data-envie="sinai" data-duree="moyen">
+      <article class="carte" data-qui="" data-envie="sinai" data-duree="moyen">
         <div class="carte__img"><img src="https://authentiquegypte.com/wp-content/uploads/2025/07/peggy-anke-YxpoB3bvlZQ-unsplash-scaled.jpg" alt="Au bord du lagoon de la mer rouge" loading="lazy" decoding="async"></div>
         <div class="carte__corps">
           <h3><a href="https://authentiquegypte.com/programs/itineraire-sinai-sainte-catherine-mont-moise-et-mer-rouge/">Du littoral de la mer Rouge aux montagnes du Sinaï</a></h3>
@@ -661,7 +681,7 @@ header .nav>a.btn--or:hover{background:#F09A10;border-color:#F09A10;color:#000;b
     </div>
 
     <div id="vide" hidden style="text-align:center;padding:56px 20px;background:#fff;border:1px solid var(--ligne);border-radius:var(--r-l);margin-top:8px">
-      <h3 style="margin-bottom:10px">Aucun séjour ne coche exactement ces critères</h3>
+      <h3 style="margin-bottom:10px">Aucun itinéraire ne correspond exactement</h3>
       <p class="lede" style="margin:0 auto 22px">C'est précisément le cas où l'on construit sur mesure. Décrivez-nous votre projet, nous revenons vers vous sous 48 h, hors vendredi et samedi.</p>
       <a href="https://authentiquegypte.com/sur-mesure/" class="btn btn--nuit">Demander un voyage sur mesure en Égypte</a>
     </div>
@@ -678,9 +698,9 @@ header .nav>a.btn--or:hover{background:#F09A10;border-color:#F09A10;color:#000;b
       <a href="https://authentiquegypte.com/voyage-au-caire/"><figure><img src="https://authentiquegypte.com/wp-content/uploads/2025/06/Voyage-sur-mesure-au-Caire-en-Egypte.png" alt="Le Caire : pyramides de Gizeh et Grand Musée égyptien" loading="lazy" decoding="async"><figcaption><b>Voyage au Caire</b><span>Gizeh, Saqqara, Grand Musée</span></figcaption></figure></a>
       <a href="https://authentiquegypte.com/voyage-a-louxor/"><figure><img src="https://authentiquegypte.com/wp-content/uploads/2025/06/Voyage-sur-mesure-a-Louxor-en-Egypte.png" alt="Louxor : Karnak et la vallée des Rois" loading="lazy" decoding="async"><figcaption><b>Voyage à Louxor</b><span>Karnak, vallée des Rois</span></figcaption></figure></a>
       <a href="https://authentiquegypte.com/voyage-a-assouan/"><figure><img src="https://authentiquegypte.com/wp-content/uploads/2025/06/Voyage-sur-mesure-a-Assouan-en-Egypte.png" alt="Assouan : Philae et Abou Simbel" loading="lazy" decoding="async"><figcaption><b>Voyage à Assouan</b><span>Philae, Abou Simbel</span></figcaption></figure></a>
-      <a href="https://authentiquegypte.com/voyage-a-alexandrie/"><figure><img src="https://authentiquegypte.com/wp-content/uploads/2025/06/Voyage-sur-mesure-a-Alexandrie-en-Egypte.png" alt="Alexandrie et la côte méditerranéenne" loading="lazy" decoding="async"><figcaption><b>Voyage à Alexandrie</b><span>Méditerranée, catacombes</span></figcaption></figure></a>
+      <a href="https://authentiquegypte.com/voyage-a-alexandrie/"><figure><img src="https://authentiquegypte.com/wp-content/uploads/2025/06/Voyage-sur-mesure-a-Alexandrie-en-Egypte.png" alt="Alexandrie et la côte méditerranéenne" loading="lazy" decoding="async"><figcaption><b>Voyage à Alexandrie</b><span>Côte méditerranéenne</span></figcaption></figure></a>
       <a href="https://authentiquegypte.com/desert-blanc/"><figure><img src="https://authentiquegypte.com/wp-content/uploads/2025/07/Voyage-au-desert-blanc-en-Egypte.png" alt="Le désert Blanc et ses formations de craie" loading="lazy" decoding="async"><figcaption><b>Désert Blanc</b><span>Bivouac, formations de craie</span></figcaption></figure></a>
-      <a href="https://authentiquegypte.com/lac-nasser/"><figure><img src="https://authentiquegypte.com/wp-content/uploads/2023/10/lake-nasser-1024x683-1.jpg" alt="Le lac Nasser et ses temples nubiens" loading="lazy" decoding="async"><figcaption><b>Lac Nasser</b><span>Temples nubiens, sans la foule</span></figcaption></figure></a>
+      <a href="https://authentiquegypte.com/lac-nasser/"><figure><img src="https://authentiquegypte.com/wp-content/uploads/2023/10/lake-nasser-1024x683-1.jpg" alt="Le lac Nasser et ses temples nubiens" loading="lazy" decoding="async"><figcaption><b>Lac Nasser</b><span>Assouan et le lac Nasser</span></figcaption></figure></a>
     </div>
     <p class="note" style="margin-top:24px">Également&nbsp;: <a href="https://authentiquegypte.com/voyage-a-fayoum/" class="lien-txt">l'oasis de Fayoum</a>, <a href="https://authentiquegypte.com/desert-noir/" class="lien-txt">le désert Noir</a> et <a href="https://authentiquegypte.com/mont-sinai/" class="lien-txt">le mont Sinaï</a>.</p>
     <div class="mm-legende">
@@ -707,7 +727,7 @@ header .nav>a.btn--or:hover{background:#F09A10;border-color:#F09A10;color:#000;b
       </div>
       <div class="etape"><i class="pt"></i>
         <h3>Proposition écrite</h3>
-        <p>Un itinéraire jour par jour, avec hébergements nommés et prix ferme. Rien de caché.</p>
+        <p>Un itinéraire jour par jour, que vous pouvez modifier autant que nécessaire jusqu’à validation.</p>
         <a class="vers" href="https://authentiquegypte.com/programs/pyramides-et-croisiere-sur-le-nil/">Un exemple d'itinéraire détaillé
           <svg width="14" height="10" viewBox="0 0 15 11" fill="none" aria-hidden="true"><path d="M1 5.5h12M9 1.5l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
       </div>
@@ -743,7 +763,7 @@ header .nav>a.btn--or:hover{background:#F09A10;border-color:#F09A10;color:#000;b
         <footer><span class="ini">CM</span><span><b>Claire M.</b>Pyramides et croisière · mars 2026</span></footer>
       </article>
       <article>
-        <blockquote>Notre guide, Hossam, est égyptologue. Il nous a raconté Karnak pendant deux heures sans qu'on regarde l'heure. C'est ça qu'on venait chercher.</blockquote>
+        <blockquote>Notre guide était égyptologue. Il nous a raconté Karnak pendant deux heures sans qu'on regarde l'heure. C'est ça qu'on venait chercher.</blockquote>
         <footer><span class="ini">TB</span><span><b>Thomas B.</b>Croisière dahabeya · janvier 2026</span></footer>
       </article>
       <article>
@@ -773,7 +793,7 @@ header .nav>a.btn--or:hover{background:#F09A10;border-color:#F09A10;color:#000;b
     <div class="devis">
       <div>
         <p class="eyebrow eyebrow--clair">Votre projet</p>
-        <h2>Dites-nous où vous voulez aller, on s'occupe du reste</h2>
+        <h2>Pouvons-nous vous accompagner ?</h2>
         <ul>
           <li><svg width="17" height="17" viewBox="0 0 17 17" fill="none" aria-hidden="true"><path d="M3 8.8l3.6 3.6L14 5" stroke="#FBB50E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Devis gratuit, détaillé jour par jour, sans engagement</li>
           <li><svg width="17" height="17" viewBox="0 0 17 17" fill="none" aria-hidden="true"><path d="M3 8.8l3.6 3.6L14 5" stroke="#FBB50E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Réponse d'une personne de l'équipe sous 48 h, hors vendredi et samedi</li>
@@ -797,11 +817,11 @@ header .nav>a.btn--or:hover{background:#F09A10;border-color:#F09A10;color:#000;b
   <div class="wrap">
     <p class="eyebrow">À lire avant de partir</p>
     <h2 style="margin-bottom:14px">Trois guides qui répondent aux vraies questions</h2>
-    <p class="lede" style="margin-bottom:30px">Écrits par l'équipe au Caire. Dernière mise à jour&nbsp;: juillet 2026 pour les formalités, juin 2026 pour la sécurité, septembre 2025 pour la météo.</p>
+    <p class="lede" style="margin-bottom:30px">Dernière mise à jour&nbsp;: juillet 2026 pour le passeport, juin 2026 pour la sécurité, septembre 2025 pour la météo.</p>
     <div class="guides" data-mm="Échappatoire · après le CTA · poids 0,25">
-      <a class="guide" href="https://authentiquegypte.com/quand-partir-en-egypte/"><img src="https://authentiquegypte.com/wp-content/uploads/2023/11/kristina-tamasauskaite-bVRArO7LwB0-unsplash.jpg" alt="" loading="lazy" decoding="async"><span><b>Quand partir en Égypte&nbsp;?</b><span>Mois par mois : températures, affluence, prix et niveau du Nil.</span></span></a>
-      <a class="guide" href="https://authentiquegypte.com/securite-en-egypte-en-2026/"><img src="https://authentiquegypte.com/wp-content/uploads/2023/11/e235bfb4-54a3-41cf-9f55-f2ca30fc8a91-1.jpg" alt="" loading="lazy" decoding="async"><span><b>La sécurité en Égypte en 2026</b><span>Ce qui est réellement surveillé, et les zones que nous évitons.</span></span></a>
-      <a class="guide" href="https://authentiquegypte.com/passeport-egypte/"><img src="https://authentiquegypte.com/wp-content/uploads/2023/11/flying-carpet-Si1MFhSLNWY-unsplash.jpg" alt="" loading="lazy" decoding="async"><span><b>Passeport et visa pour l'Égypte</b><span>Conditions de validité, carte d'identité, visa à l'arrivée.</span></span></a>
+      <a class="guide" href="https://authentiquegypte.com/quand-partir-en-egypte/"><img src="https://authentiquegypte.com/wp-content/uploads/2023/11/kristina-tamasauskaite-bVRArO7LwB0-unsplash.jpg" alt="" loading="lazy" decoding="async"><span><b>Quand partir en Égypte&nbsp;?</b><span>Météo et périodes idéales selon vos envies.</span></span></a>
+      <a class="guide" href="https://authentiquegypte.com/securite-en-egypte-en-2026/"><img src="https://authentiquegypte.com/wp-content/uploads/2023/11/e235bfb4-54a3-41cf-9f55-f2ca30fc8a91-1.jpg" alt="" loading="lazy" decoding="async"><span><b>La sécurité en Égypte en 2026</b><span>Le guide pratique de notre agence locale.</span></span></a>
+      <a class="guide" href="https://authentiquegypte.com/passeport-egypte/"><img src="https://authentiquegypte.com/wp-content/uploads/2023/11/flying-carpet-Si1MFhSLNWY-unsplash.jpg" alt="" loading="lazy" decoding="async"><span><b>Passeport et visa pour l'Égypte</b><span>Conditions de validité, carte d'identité et formalités visa.</span></span></a>
     </div>
     <p style="margin-top:24px"><a href="https://authentiquegypte.com/notre-blog/" class="lien-fl">Voir les 22 guides pratiques <svg width="15" height="11" viewBox="0 0 15 11" fill="none" aria-hidden="true"><path d="M1 5.5h12M9 1.5l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></a></p>
   </div>
@@ -810,18 +830,37 @@ header .nav>a.btn--or:hover{background:#F09A10;border-color:#F09A10;color:#000;b
 <section class="section" style="padding-top:0">
   <div class="wrap" style="max-width:860px">
     <p class="eyebrow">Les questions qui bloquent</p>
-    <h2 style="margin-bottom:26px">Cinq réponses avant de nous écrire</h2>
+    <h2 style="margin-bottom:26px">Les treize réponses avant de nous écrire</h2>
     <div class="faq">
+      <h3 class="faq__g">Organisation du voyage</h3>
       <details open><summary>Comment organiser un voyage sur mesure en Égypte&nbsp;?</summary>
         <div class="faq__c"><p>Nous commençons par un appel découverte pour comprendre vos envies, votre budget et vos contraintes. Une première proposition personnalisée vous est ensuite envoyée. Vous pouvez la modifier autant que nécessaire, jusqu’à validation. Nous nous occupons ensuite des réservations et restons disponibles pendant tout votre voyage.</p></div></details>
       <details><summary>Est-ce dangereux de venir en Égypte&nbsp;?</summary>
-        <div class="faq__c"><p>Venir en Égypte est tout à fait sûr, surtout si vous suivez quelques recommandations simples comme dans n’importe quel pays touristique. Les zones touristiques majeures, comme Le Caire, Louxor, Assouan, et les sites du Nil, sont très bien sécurisées, avec une présence policière renforcée pour assurer la tranquillité des visiteurs.</p><p>Chaque année, des millions de voyageurs visitent l’Égypte sans rencontrer aucun problème. Notre équipe locale travaille en étroite collaboration avec les autorités pour garantir que votre séjour soit serein, authentique et mémorable. Nous vous conseillons simplement de respecter les consignes habituelles de voyage : éviter certains quartiers la nuit, garder vos effets personnels en sécurité, et suivre les conseils de votre guide.</p><p>Avec un bon accompagnement et une organisation sérieuse, vous pourrez pleinement profiter des trésors historiques, des paysages exceptionnels et de l’accueil chaleureux des Égyptiens, le tout dans un environnement sûr.</p><p>Consultez notre article dédié à la<a href="https://www.google.com/url?sa=t&amp;source=web&amp;rct=j&amp;opi=89978449&amp;url=https://authentiquegypte.com/securite-egypte-2025/&amp;ved=2ahUKEwjbz4-ozfOOAxX_UaQEHWZmILcQFnoECBYQAQ&amp;usg=AOvVaw3eeYchlsH3FBTHUJTLaKGK"> <strong>sécurité en Égypte</strong>.</a></p></div></details>
+        <div class="faq__c"><p>Venir en Égypte est tout à fait sûr, surtout si vous suivez quelques recommandations simples comme dans n’importe quel pays touristique. Les zones touristiques majeures, comme Le Caire, Louxor, Assouan, et les sites du Nil, sont très bien sécurisées, avec une présence policière renforcée pour assurer la tranquillité des visiteurs.</p><p>Chaque année, des millions de voyageurs visitent l’Égypte sans rencontrer aucun problème. Notre équipe locale travaille en étroite collaboration avec les autorités pour garantir que votre séjour soit serein, authentique et mémorable. Nous vous conseillons simplement de respecter les consignes habituelles de voyage : éviter certains quartiers la nuit, garder vos effets personnels en sécurité, et suivre les conseils de votre guide.</p><p>Avec un bon accompagnement et une organisation sérieuse, vous pourrez pleinement profiter des trésors historiques, des paysages exceptionnels et de l’accueil chaleureux des Égyptiens, le tout dans un environnement sûr.</p><p>Consultez notre article dédié à la<a href="https://authentiquegypte.com/securite-en-egypte-en-2026/"> <strong>sécurité en Égypte</strong>.</a></p></div></details>
+      <details><summary>Quels papiers d&#x27;identité faut-il pour partir&nbsp;?</summary>
+        <div class="faq__c"><p>Passeport valable 6 mois minimum après l’arrivée en Égypte. Carte d'identité acceptée pour les ressortissants français, belges ou suisses, avec deux photos d'identité.</p></div></details>
       <details><summary>Ai-je besoin d’un visa pour voyager en Égypte&nbsp;?</summary>
         <div class="faq__c"><p>Oui, il peut être obtenu à l’arrivée (30 € en espèces ou CB) ou en ligne. Passeport requis, ou carte d’identité (+ 2 photos).</p></div></details>
+      <details><summary>Dois-je faire des vaccins&nbsp;?</summary>
+        <div class="faq__c"><p>Aucun vaccin n’est obligatoire, mais il est recommandé d’être à jour sur les vaccins de base.</p></div></details>
+      <h3 class="faq__g">Réservation &amp; prestations</h3>
       <details><summary>Réservez-vous les vols internationaux&nbsp;?</summary>
         <div class="faq__c"><p>Non, mais nous vous accompagnons dans la recherche des meilleurs vols selon vos dates et aéroports.</p></div></details>
+      <details><summary>Puis-je changer mes dates ou l’itinéraire après réservation&nbsp;?</summary>
+        <div class="faq__c"><p>Oui, tant que les réservations définitives ne sont pas encore validées. Après validation, des frais peuvent s’appliquer selon les prestataires.</p></div></details>
       <details><summary>Que se passe-t-il si je ne peux plus partir&nbsp;?</summary>
         <div class="faq__c"><p>Nous faisons tout pour reprogrammer ou adapter votre voyage. Des frais peuvent s’appliquer selon le délai d’annulation. Nous vous conseillons également de prendre une assurance voyage. </p></div></details>
+      <details><summary>Réservez-vous les vols internes&nbsp;?</summary>
+        <div class="faq__c"><p>Oui, nous pouvons réserver vos vols internes.</p></div></details>
+      <h3 class="faq__g">Paiement</h3>
+      <details><summary>Comment puis-je régler mon voyage&nbsp;?</summary>
+        <div class="faq__c"><p>Vous pouvez payer par virement bancaire ou carte bancaire via un lien sécurisé.</p></div></details>
+      <details><summary>Le paiement est-il fractionnable&nbsp;?</summary>
+        <div class="faq__c"><p>Oui, un acompte est demandé à la validation, puis le solde ,<strong> 45 jours avant le départ</strong>. Le calendrier exact vous sera précisé lors de la réservation.</p></div></details>
+      <details><summary>L’acompte est-il remboursable&nbsp;?</summary>
+        <div class="faq__c"><p>L’acompte permet de bloquer vos hébergements et prestations. Il est remboursable uniquement si les conditions d’annulation de votre séjour le permettent.</p></div></details>
+      <details><summary>Puis-je offrir un voyage ou un crédit à un proche&nbsp;?</summary>
+        <div class="faq__c"><p>Oui, vous pouvez offrir un avoir voyage ou une carte-cadeau personnalisée.</p></div></details>
     </div>
   </div>
 </section>
@@ -833,7 +872,7 @@ header .nav>a.btn--or:hover{background:#F09A10;border-color:#F09A10;color:#000;b
     <div class="pied__g">
       <div>
         <img src="https://authentiquegypte.com/wp-content/uploads/2026/08/authentique-egypte-logo-transparent.webp" alt="Authentique Égypte" width="510" height="170" loading="lazy">
-        <p style="max-width:34ch">Agence francophone en Égypte. Structure franco-égyptienne, guides égyptologues francophones, itinéraires construits avec vous.</p>
+        <p style="max-width:34ch">Agence locale en Égypte. Guides égyptologues francophones, itinéraires construits avec vous.</p>
         <p style="margin-top:16px">
           <a href="mailto:contact@authentiquegypte.com">contact@authentiquegypte.com</a><br>
           <a href="https://wa.me/201066619098">WhatsApp +20 106 661 9098</a>
@@ -892,9 +931,17 @@ header .nav>a.btn--or:hover{background:#F09A10;border-color:#F09A10;color:#000;b
 {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
 {"@type": "Question", "name": "Comment organiser un voyage sur mesure en Égypte ?", "acceptedAnswer": {"@type": "Answer", "text": "Nous commençons par un appel découverte pour comprendre vos envies, votre budget et vos contraintes. Une première proposition personnalisée vous est ensuite envoyée. Vous pouvez la modifier autant que nécessaire, jusqu’à validation. Nous nous occupons ensuite des réservations et restons disponibles pendant tout votre voyage."}},
 {"@type": "Question", "name": "Est-ce dangereux de venir en Égypte ?", "acceptedAnswer": {"@type": "Answer", "text": "Venir en Égypte est tout à fait sûr, surtout si vous suivez quelques recommandations simples comme dans n’importe quel pays touristique. Les zones touristiques majeures, comme Le Caire, Louxor, Assouan, et les sites du Nil, sont très bien sécurisées, avec une présence policière renforcée pour assurer la tranquillité des visiteurs. Chaque année, des millions de voyageurs visitent l’Égypte sans rencontrer aucun problème. Notre équipe locale travaille en étroite collaboration avec les autorités pour garantir que votre séjour soit serein, authentique et mémorable. Nous vous conseillons simplement de respecter les consignes habituelles de voyage : éviter certains quartiers la nuit, garder vos effets personnels en sécurité, et suivre les conseils de votre guide. Avec un bon accompagnement et une organisation sérieuse, vous pourrez pleinement profiter des trésors historiques, des paysages exceptionnels et de l’accueil chaleureux des Égyptiens, le tout dans un environnement sûr. Consultez notre article dédié à la sécurité en Égypte ."}},
+{"@type": "Question", "name": "Quels papiers d'identité faut-il pour partir ?", "acceptedAnswer": {"@type": "Answer", "text": "Passeport valable 6 mois minimum après l’arrivée en Égypte. Carte d'identité acceptée pour les ressortissants français, belges ou suisses, avec deux photos d'identité."}},
 {"@type": "Question", "name": "Ai-je besoin d’un visa pour voyager en Égypte ?", "acceptedAnswer": {"@type": "Answer", "text": "Oui, il peut être obtenu à l’arrivée (30 € en espèces ou CB) ou en ligne. Passeport requis, ou carte d’identité (+ 2 photos)."}},
+{"@type": "Question", "name": "Dois-je faire des vaccins ?", "acceptedAnswer": {"@type": "Answer", "text": "Aucun vaccin n’est obligatoire, mais il est recommandé d’être à jour sur les vaccins de base."}},
 {"@type": "Question", "name": "Réservez-vous les vols internationaux ?", "acceptedAnswer": {"@type": "Answer", "text": "Non, mais nous vous accompagnons dans la recherche des meilleurs vols selon vos dates et aéroports."}},
-{"@type": "Question", "name": "Que se passe-t-il si je ne peux plus partir ?", "acceptedAnswer": {"@type": "Answer", "text": "Nous faisons tout pour reprogrammer ou adapter votre voyage. Des frais peuvent s’appliquer selon le délai d’annulation. Nous vous conseillons également de prendre une assurance voyage."}}]}
+{"@type": "Question", "name": "Puis-je changer mes dates ou l’itinéraire après réservation ?", "acceptedAnswer": {"@type": "Answer", "text": "Oui, tant que les réservations définitives ne sont pas encore validées. Après validation, des frais peuvent s’appliquer selon les prestataires."}},
+{"@type": "Question", "name": "Que se passe-t-il si je ne peux plus partir ?", "acceptedAnswer": {"@type": "Answer", "text": "Nous faisons tout pour reprogrammer ou adapter votre voyage. Des frais peuvent s’appliquer selon le délai d’annulation. Nous vous conseillons également de prendre une assurance voyage."}},
+{"@type": "Question", "name": "Réservez-vous les vols internes ?", "acceptedAnswer": {"@type": "Answer", "text": "Oui, nous pouvons réserver vos vols internes."}},
+{"@type": "Question", "name": "Comment puis-je régler mon voyage ?", "acceptedAnswer": {"@type": "Answer", "text": "Vous pouvez payer par virement bancaire ou carte bancaire via un lien sécurisé."}},
+{"@type": "Question", "name": "Le paiement est-il fractionnable ?", "acceptedAnswer": {"@type": "Answer", "text": "Oui, un acompte est demandé à la validation, puis le solde , 45 jours avant le départ . Le calendrier exact vous sera précisé lors de la réservation."}},
+{"@type": "Question", "name": "L’acompte est-il remboursable ?", "acceptedAnswer": {"@type": "Answer", "text": "L’acompte permet de bloquer vos hébergements et prestations. Il est remboursable uniquement si les conditions d’annulation de votre séjour le permettent."}},
+{"@type": "Question", "name": "Puis-je offrir un voyage ou un crédit à un proche ?", "acceptedAnswer": {"@type": "Answer", "text": "Oui, vous pouvez offrir un avoir voyage ou une carte-cadeau personnalisée."}}]}
 </script>
 
 <script>
@@ -926,6 +973,9 @@ document.querySelector('.burger')?.addEventListener('click',e=>{
   const n=document.querySelector('.nav');
   const ouvert=n.classList.toggle('nav--ouverte');
   e.currentTarget.setAttribute('aria-expanded',String(ouvert));
+  e.currentTarget.setAttribute('aria-label',ouvert?'Fermer le menu':'Ouvrir le menu');
+  if(!ouvert) n.querySelectorAll('.menu>button[aria-expanded="true"]')
+    .forEach(b=>b.setAttribute('aria-expanded','false'));
 });
 /* Échap referme, et le retour au bureau efface l'état : la classe n'a
    plus de sens dès que la navigation redevient une barre. */
@@ -934,12 +984,14 @@ addEventListener('keydown',e=>{
   const n=document.querySelector('.nav.nav--ouverte');
   if(!n)return;
   n.classList.remove('nav--ouverte');
-  document.querySelector('.burger')?.setAttribute('aria-expanded','false');
+  const bg=document.querySelector('.burger');
+  if(bg){bg.setAttribute('aria-expanded','false');bg.setAttribute('aria-label','Ouvrir le menu');}
 });
 matchMedia('(min-width:911px)').addEventListener('change',ev=>{
   if(!ev.matches)return;
   document.querySelector('.nav')?.classList.remove('nav--ouverte');
-  document.querySelector('.burger')?.setAttribute('aria-expanded','false');
+  const bg=document.querySelector('.burger');
+  if(bg){bg.setAttribute('aria-expanded','false');bg.setAttribute('aria-label','Ouvrir le menu');}
 });
 </script>
 <script>
@@ -950,7 +1002,7 @@ matchMedia('(min-width:911px)').addEventListener('change',ev=>{
   const phrase=document.getElementById('phrase');
   const titre=document.getElementById('titre-res');
   const vide=document.getElementById('vide');
-  const lib={famille:'en famille',couple:'en couple',solo:'en solo',pmr:'en mobilité réduite',
+  const lib={famille:'en famille',couple:'en couple',solo:'en solo',
     croisiere:'le Nil',culturel:'les temples',desert:'le désert',mer:'la mer Rouge',
     court:'2 à 5 jours',moyen:'6 à 8 jours',long:'9 jours et plus',sinai:'le Sinaï'};
 
@@ -974,11 +1026,11 @@ matchMedia('(min-width:911px)').addEventListener('change',ev=>{
     const bits=[...etat.qui,...etat.envie,...etat.duree].map(v=>'<mark>'+lib[v]+'</mark>');
     document.querySelector('.compo').classList.toggle('a-choix',bits.length>0);
     if(!bits.length){
-      phrase.innerHTML='Aucun critère : <b>8 séjours</b> disponibles. Choisissez pour affiner.';
-      titre.textContent='Huit itinéraires à composer, parmi nos 14 séjours';
+      phrase.innerHTML='Aucun critère : <b>les 8 itinéraires</b> de cette page. Choisissez pour affiner.';
+      titre.textContent="Créez un voyage qui vous ressemble";
     }else{
       phrase.innerHTML=bits.join(' · ')+' → <b>'+n+' séjour'+(n>1?'s':'')+'</b>';
-      titre.textContent=n===0?'Aucun séjour ne correspond exactement'
+      titre.textContent=n===0?'Aucun itinéraire ne correspond exactement'
         :n+' séjour'+(n>1?'s':'')+' : '+bits.map(b=>b.replace(/<[^>]+>/g,'')).join(', ');
     }
   }
