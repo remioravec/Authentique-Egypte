@@ -50,6 +50,15 @@ h4{font-size:1.02rem}
 p{margin:0 0 1em}
 :focus-visible{outline:3px solid var(--or);outline-offset:3px;border-radius:4px}
 
+/* Lien d'évitement : visible dès qu'il prend le focus, invisible sinon.
+   Il ne se cache pas en display:none — un lien caché ainsi ne reçoit
+   jamais le focus. */
+.evite{position:absolute;left:12px;top:-60px;z-index:200;background:var(--nuit-900);color:#fff;
+  font-family:"Manrope",sans-serif;font-weight:700;font-size:.95rem;padding:12px 20px;
+  border-radius:0 0 var(--r-m) var(--r-m);transition:top .18s var(--ease)}
+.evite:focus{top:0}
+#main:focus{outline:none}
+
 .wrap{width:min(100% - 40px,var(--max));margin-inline:auto}
 .section{padding:clamp(48px,7vw,88px) 0}
 .section--fond{background:var(--fond)}
@@ -109,7 +118,12 @@ p{margin:0 0 1em}
 .menu__pan{position:absolute;top:calc(100% + 10px);left:50%;transform:translateX(-50%) translateY(-6px);
   background:#fff;border:1px solid var(--ligne);border-radius:var(--r-l);box-shadow:var(--ombre-f);
   padding:12px;min-width:340px;opacity:0;visibility:hidden;transition:all .2s var(--ease)}
-.menu:hover .menu__pan,.menu:focus-within .menu__pan{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0)}
+/* Le bouton n'était qu'un décor : le panneau s'ouvrait au survol et
+   au focus, et son aria-expanded restait figé sur « false » — un
+   lecteur d'écran annonçait « replié » sur un menu ouvert, et Entrée
+   ne faisait rien. L'attribut commande maintenant l'ouverture. */
+.menu:hover .menu__pan,.menu:focus-within .menu__pan,
+.menu>button[aria-expanded="true"]+.menu__pan{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0)}
 .menu__pan a{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:var(--r-m);
   font-size:.92rem;font-weight:600;color:var(--nuit)}
 .menu__pan a:hover{background:var(--or-fond)}
@@ -174,11 +188,11 @@ p{margin:0 0 1em}
 .puce--teal{background:var(--teal-fond);color:var(--teal-txt)}
 .puce--or{background:var(--or-fond);color:#7A5605}
 .carte__pied{margin-top:auto;padding-top:14px;border-top:1px solid var(--ligne-2);
-  display:flex;align-items:flex-end;justify-content:space-between;gap:12px}
+  display:flex;align-items:flex-end;justify-content:space-between;gap:12px;flex-wrap:wrap}
 .prix{line-height:1.38;font-family:"Manrope",sans-serif}
 .prix small{display:block;font-size:.8rem;color:var(--gris);letter-spacing:.04em}
-.prix b{font-size:1.5rem;font-weight:700;color:var(--noir);letter-spacing:-.8px}
-.prix i{font-style:normal;font-size:.8rem;color:var(--gris)}
+.prix b{display:block;font-size:1.5rem;font-weight:700;color:var(--noir);letter-spacing:-.8px;white-space:nowrap}
+.prix i{display:block;font-style:normal;font-size:.8rem;color:var(--gris)}
 
 /* ---------- FAQ ---------- */
 .faq{border-top:1px solid var(--ligne)}
