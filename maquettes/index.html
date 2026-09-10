@@ -970,7 +970,12 @@ header .nav>a.btn--or:hover{background:#F09A10;border-color:#F09A10;color:#000;b
 </script>
 
 <script>
-/* méga menu : le bouton ouvre et ferme pour de bon */
+/* méga menu : le bouton ouvre et ferme pour de bon.
+   La classe dit à la charte que l'attribut est TENU À JOUR ici — sans
+   elle, la règle de fermeture s'appliquerait aussi aux pages qui
+   écrivent aria-expanded en dur, et leur menu deviendrait inatteignable
+   au clavier. */
+document.documentElement.classList.add('js-menu');
 document.querySelectorAll('.menu>button').forEach(b=>{
   b.addEventListener('click',()=>{
     const ouvert=b.getAttribute('aria-expanded')==='true';

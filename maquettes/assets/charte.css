@@ -128,9 +128,16 @@ p{margin:0 0 1em}
 /* Un aria-expanded posé à « false » FERME, quoi qu'en disent le survol
    et le focus. Sans cette ligne, refermer au clavier était impossible :
    le script rendait le focus au bouton, `:focus-within` restait vrai, et
-   le panneau tenait ouvert en annonçant « replié ». */
-.menu>button[aria-expanded="false"]:focus+.menu__pan,
-.menu:hover>button[aria-expanded="false"]+.menu__pan{opacity:0;visibility:hidden;
+   le panneau tenait ouvert en annonçant « replié ».
+
+   Réservé aux pages dont le SCRIPT tient l'attribut à jour — il pose
+   `js-menu` sur la racine. Les gabarits générés écrivent
+   `aria-expanded="false"` en dur et n'ont pas ce script : sans cette
+   garde, la règle leur fermait le panneau au moment même où le clavier
+   arrivait dessus, et le menu devenait inatteignable autrement qu'à la
+   souris. */
+.js-menu .menu>button[aria-expanded="false"]:focus+.menu__pan,
+.js-menu .menu:hover>button[aria-expanded="false"]+.menu__pan{opacity:0;visibility:hidden;
   transform:translateX(-50%) translateY(-6px)}
 .menu__pan a{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:var(--r-m);
   font-size:.92rem;font-weight:600;color:var(--nuit)}
