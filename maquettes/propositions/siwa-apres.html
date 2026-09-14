@@ -43,12 +43,12 @@
    du bloc devis repasse en noir sur le bleu profond (2,4:1 mesuré). */
 .pg .devis h2,.pg .pg-sec--nuit h2{color:#fff}
 .pg .eyebrow--clair{color:var(--or)}
-.pg .devis li,.pg .devis p{color:#C3D5DA}
+.pg .devis li,.pg .devis p{color:#C3D9DA}
 .pg-sec{padding:72px 0}
 .pg-sec--serre{padding:56px 0}
 .pg-sec--fond{background:var(--fond)}
 .pg-sec--creme{background:var(--or-fond)}
-.pg-sec--nuit{background:var(--nuit-900);color:#D7E4EA}
+.pg-sec--nuit{background:var(--nuit-900);color:#D7E9EA}
 .pg-sec--nuit h2,.pg-sec--nuit h3{color:#fff}
 
 /* ---------- bandeau de tête ---------- */
@@ -70,7 +70,7 @@
 /* Le voile couvre le BANDEAU ENTIER, pas la seule bande de photo nette :
    sinon la moitié basse du bandeau mobile restait en pleine lumière.
    Son plancher d'opacité est mesuré, pas choisi : le texte le plus
-   clair du bandeau (#DCEAF0, 15 px) doit tenir 4,5:1 sur la photo la
+   clair du bandeau (#DCEFF0, 15 px) doit tenir 4,5:1 sur la photo la
    plus claire possible, et outils/verif/lisibilite.js le vérifie sur
    les pixels rendus, désormais, au lieu de renoncer devant une photo. */
 /* Le voile est DIRIGÉ, pas uniforme : sombre là où le texte se pose,
@@ -82,16 +82,16 @@
    boutons, l'autre assied le bas du bandeau sur la section suivante —
    et outils/verif/lisibilite.js les mesure sur les pixels rendus. */
 .pg .hero::after{content:"";position:absolute;inset:0;background:
-  linear-gradient(96deg,rgba(8,58,92,.93) 0%,rgba(8,58,92,.88) 38%,
-  rgba(8,58,92,.46) 68%,rgba(8,58,92,.22) 100%),
-  linear-gradient(180deg,rgba(10,66,104,.36) 0%,rgba(10,66,104,0) 26%,
-  rgba(8,58,92,.32) 72%,rgba(8,58,92,.84) 100%)}
+  linear-gradient(96deg,rgba(8,88,92,.93) 0%,rgba(8,88,92,.88) 38%,
+  rgba(8,88,92,.46) 68%,rgba(8,88,92,.22) 100%),
+  linear-gradient(180deg,rgba(10,100,104,.36) 0%,rgba(10,100,104,0) 26%,
+  rgba(8,88,92,.32) 72%,rgba(8,88,92,.84) 100%)}
 /* z-index:1 est indispensable : ::after est le DERNIER enfant peint de
    .hero, donc il passe par-dessus le texte tant que celui-ci ne monte
    pas d'un cran. Sans cette ligne, le titre et les deux boutons partent
    sous le voile. */
 .pg .hero__in{position:relative;z-index:1;padding:24px 0 56px}
-.pg .hero .ariane{color:#C6DCE6;padding-top:0}
+.pg .hero .ariane{color:#C6E5E6;padding-top:0}
 .pg .hero .ariane a{color:var(--or-clair)}
 .pg .hero .ariane li::after{color:rgba(255,255,255,.45)}
 .pg .hero .ariane [aria-current]{color:#fff}
@@ -101,23 +101,23 @@
    mesuré au pixel. Le voile devient sombre — même effet de verre, mais
    il travaille dans le bon sens. */
 .pg .pill{display:inline-flex;align-items:center;gap:7px;font-family:"Manrope",sans-serif;
-  font-size:.84rem;font-weight:600;color:#fff;background:rgba(8,58,92,.86);
+  font-size:.84rem;font-weight:600;color:#fff;background:rgba(8,88,92,.86);
   border:1px solid rgba(255,255,255,.34);backdrop-filter:blur(8px);border-radius:var(--r-pill);padding:7px 14px}
 .pg .hero h1{color:#fff;font-size:clamp(2rem,4.4vw,3.15rem);line-height:1.08;margin:0 0 14px;
   max-width:18ch;text-shadow:0 2px 20px rgba(0,0,0,.45);text-wrap:balance}
 .pg .hero__chapo{color:#fff;font-size:1.12rem;line-height:1.6;max-width:54ch;margin:0 0 28px;
   font-weight:400;text-shadow:0 1px 12px rgba(0,0,0,.45)}
 .pg .hero__bas{display:flex;flex-wrap:wrap;align-items:center;gap:16px 28px}
-.pg .hero__prix{background:rgba(8,58,92,.78);backdrop-filter:blur(10px);
+.pg .hero__prix{background:rgba(8,88,92,.78);backdrop-filter:blur(10px);
   border:1px solid rgba(255,255,255,.30);border-radius:var(--r-m);padding:12px 20px;color:#fff;
   font-family:"Manrope",sans-serif}
 .pg .hero__prix small{display:block;font-size:.82rem;color:#fff}
 .pg .hero__prix b{display:block;font-size:1.85rem;font-weight:700;letter-spacing:-1px;line-height:1.15}
-.pg .hero__prix i{font-style:normal;font-size:.84rem;color:#DCEAF0}
+.pg .hero__prix i{font-style:normal;font-size:.84rem;color:#DCEFF0}
 .pg .hero__act{display:flex;flex-wrap:wrap;gap:12px}
-.pg .btn--verre{background:rgba(8,58,92,.66);color:#fff;border-color:rgba(255,255,255,.46);
+.pg .btn--verre{background:rgba(8,88,92,.66);color:#fff;border-color:rgba(255,255,255,.46);
   backdrop-filter:blur(8px)}
-.pg .btn--verre:hover{background:rgba(8,58,92,.82);border-color:#fff}
+.pg .btn--verre:hover{background:rgba(8,88,92,.82);border-color:#fff}
 /* Le bouton de devis de l'entête commune : la règle .nav>a de la charte
    (0-1-1) écrase la couleur de .btn--or (0-1-0) et laisse un bleu sur
    fond or, à 2,7:1. On rétablit le contraste sans toucher à la charte. */
@@ -149,7 +149,7 @@
 
 
 /* ---------- réponse encadrée : le module minimum de la doctrine ---------- */
-.pg .bref{background:linear-gradient(135deg,var(--nuit-900) 0%,#0E6288 100%);
+.pg .bref{background:linear-gradient(135deg,var(--nuit-900) 0%,#0E8288 100%);
   border-radius:var(--r-l);padding:32px 34px;color:#fff;position:relative;overflow:hidden}
 .pg .bref::after{content:"";position:absolute;right:-70px;top:-70px;width:220px;height:220px;
   border-radius:50%;background:radial-gradient(circle,rgba(251,181,14,.30),transparent 68%)}
@@ -159,13 +159,13 @@
   gap:22px 28px;margin:0;position:relative}
 .pg .bref__l div{display:grid;gap:6px}
 .pg .bref__l dt{display:flex;align-items:center;gap:8px;font-family:"Manrope",sans-serif;
-  font-size:.86rem;letter-spacing:.06em;text-transform:uppercase;color:#D8E8F1;margin:0}
+  font-size:.86rem;letter-spacing:.06em;text-transform:uppercase;color:#D8F0F1;margin:0}
 .pg .bref__l dt svg{color:var(--or-clair)}
 .pg .bref__l dd{margin:0;font-family:"Manrope",sans-serif;line-height:1.35}
 .pg .bref__l dd b{display:block;font-size:1.65rem;font-weight:800;letter-spacing:-.8px;color:#fff}
-.pg .bref__l dd span{display:block;font-size:.92rem;color:#D8E8F1;margin-top:4px;line-height:1.5}
+.pg .bref__l dd span{display:block;font-size:.92rem;color:#D8F0F1;margin-top:4px;line-height:1.5}
 .pg .bref__src{position:relative;margin:26px 0 0;font-family:"Manrope",sans-serif;
-  font-size:.86rem;color:#C3DAE7}
+  font-size:.86rem;color:#C3E5E7}
 
 /* ---------- module : le bon format de séjour ---------- */
 .pg .mod__aide{margin:-6px 0 18px;font-family:"Manrope",sans-serif;font-size:.96rem;
@@ -229,7 +229,7 @@
 /* ---------- votre guide : le texte, puis le carrousel de l'équipe ---------- */
 .pg .guide{display:grid;grid-template-columns:1.15fr 1fr;gap:52px;align-items:center;
   margin:0 0 44px}
-.pg .guide__intro{font-size:1.12rem;line-height:1.7;color:#C9DDE7;max-width:44ch;margin:0}
+.pg .guide__intro{font-size:1.12rem;line-height:1.7;color:#C9E6E7;max-width:44ch;margin:0}
 .pg .guide__r{list-style:none;margin:0;padding:0;display:grid;gap:14px}
 .pg .guide__r li{display:flex;gap:13px;align-items:center;font-family:"Manrope",sans-serif;
   font-size:1.02rem;color:#fff}
@@ -279,12 +279,12 @@
   font-weight:600;margin-top:3px}
 .pg .carr__f{list-style:none;margin:14px 0 0;padding:14px 0 0;display:grid;gap:7px;
   border-top:1px solid rgba(255,255,255,.16)}
-.pg .carr__f li{font-size:.97rem;line-height:1.5;color:#CFE2EC}
+.pg .carr__f li{font-size:.97rem;line-height:1.5;color:#CFEBEC}
 .pg .carr__aide{margin:16px 0 0;font-family:"Manrope",sans-serif;font-size:.95rem;
-  color:#A9C6D6;display:none}
+  color:#A9D4D6;display:none}
 
 /* ---------- carte de repérage : un bandeau large dans la lecture ---------- */
-.pg .carte{--carte-mer:#DCEBF2;--carte-nil:#4FA3C7;--carte-terre:#F2E3C4;--carte-cote:#CBAE7C;
+.pg .carte{--carte-mer:#DCF1F2;--carte-nil:#4FC1C7;--carte-terre:#F2E3C4;--carte-cote:#CBAE7C;
   margin:0;background:#fff;border:1px solid var(--ligne-pg);border-radius:var(--r-l);
   padding:22px 24px;box-shadow:var(--ombre)}
 .pg .carte figcaption{padding:0}
@@ -574,7 +574,7 @@
 .pg .mur:hover .mur__d,.pg .mur:focus-within .mur__d,
 .pg .mur__stop:checked~.mur .mur__d{animation-play-state:paused}
 .pg .mur__a{background:#fff;border:1px solid var(--ligne-pg);border-radius:var(--r-l);
-  padding:24px;margin:0 0 22px;box-shadow:0 2px 10px rgba(16,32,48,.05)}
+  padding:24px;margin:0 0 22px;box-shadow:0 2px 10px rgba(16,47,48,.05)}
 .pg .mur__q{display:block;font-family:"Archivo",serif;font-size:2.4rem;line-height:.6;
   color:var(--or);margin:6px 0 12px}
 .pg .mur__a blockquote{margin:0;font-size:1rem;line-height:1.7;color:var(--texte)}
@@ -586,7 +586,7 @@
   place-items:center;font-weight:700;font-size:.9rem;flex:0 0 auto}
 /* Le G de Google porte ses propres couleurs : il lui faut un rond clair
    et non le bleu nuit des initiales, sinon le bleu du logo s'y noie. */
-.pg .ini--g{background:#fff;border:1px solid var(--ligne-pg);box-shadow:0 1px 2px rgba(16,32,48,.06)}
+.pg .ini--g{background:#fff;border:1px solid var(--ligne-pg);box-shadow:0 1px 2px rgba(16,47,48,.06)}
 /* Le mur au repos : plus d'animation, la liste entière. Deux cas, la
    même règle — et elle est déclarée APRÈS les blocs responsives, à la
    fin de la feuille, sinon « height:420px » du bloc mobile revenait
@@ -608,7 +608,7 @@
 
 /* ---------- barre mobile ---------- */
 .pg-mob{display:none;position:fixed;left:0;right:0;bottom:0;z-index:70;background:#fff;
-  border-top:1px solid var(--ligne-pg);box-shadow:0 -6px 22px rgba(11,81,112,.15);
+  border-top:1px solid var(--ligne-pg);box-shadow:0 -6px 22px rgba(11,107,112,.15);
   padding:10px 16px calc(10px + env(safe-area-inset-bottom));align-items:center;gap:14px}
 .pg-mob .p{font-family:"Manrope",sans-serif;line-height:1.25;flex:1;min-width:0}
 .pg-mob .p small{display:block;font-size:.86rem;color:var(--gris-lis)}
@@ -616,7 +616,7 @@
 .pg-mob .p i{font-style:normal;font-size:.86rem;color:var(--gris-lis)}
 
 /* ---------- visionneuse ---------- */
-.pg-lb{position:fixed;inset:0;z-index:120;background:rgba(5,25,35,.94);display:none;
+.pg-lb{position:fixed;inset:0;z-index:120;background:rgba(5,34,35,.94);display:none;
   align-items:center;justify-content:center;padding:24px}
 .pg-lb[open],.pg-lb.on{display:flex}
 .pg-lb img{max-width:min(100%,1400px);max-height:88vh;border-radius:var(--r-m);display:block}
@@ -666,8 +666,8 @@
      4,17:1, mesurés au pixel. Il n'y a pas de zone sans texte où
      s'éclaircir. */
   .pg .hero::after{background:
-    linear-gradient(180deg,rgba(10,66,104,.72) 0%,rgba(10,66,104,.70) 22%,
-    rgba(8,58,92,.86) 58%,rgba(8,58,92,.96) 100%)}
+    linear-gradient(180deg,rgba(10,100,104,.72) 0%,rgba(10,100,104,.70) 22%,
+    rgba(8,88,92,.86) 58%,rgba(8,88,92,.96) 100%)}
   .pg .hero__fond{position:absolute;top:0;left:0;right:0;height:var(--une-h,470px)}
   .pg .hero__in{padding:14px 0 34px}
   /* Le bloc titre se colle au BAS de la photo, quelle que soit la
@@ -837,9 +837,9 @@
 .pg .equipe__av--eq{background:var(--teal-fond);color:var(--teal-txt)}
 .pg .equipe__av--eq svg{width:26px;height:26px}
 .pg .equipe__num{margin:4px 0 0}
-.pg .equipe__sur{display:grid;grid-template-columns:1.2fr 1fr;gap:22px;margin:22px 0 0;background:var(--nuit-900);color:#DCE6EA;border-radius:var(--r-l);padding:28px 30px}
+.pg .equipe__sur{display:grid;grid-template-columns:1.2fr 1fr;gap:22px;margin:22px 0 0;background:var(--nuit-900);color:#DCE9EA;border-radius:var(--r-l);padding:28px 30px}
 .pg .equipe__sur h3{color:#fff;margin:0 0 8px;font-size:1.15rem}
-.pg .equipe__sur p{margin:0;font-size:1rem;line-height:1.65;color:#C9DDE7}
+.pg .equipe__sur p{margin:0;font-size:1rem;line-height:1.65;color:#C9E6E7}
 .pg .equipe__sur a{color:var(--or-clair);font-weight:700;text-decoration:underline;text-underline-offset:3px}
 .pg .equipe__sur .eyebrow{color:var(--or-clair)}
 .pg .presse{margin:26px 0 0;display:flex;flex-wrap:wrap;gap:10px 28px;align-items:center}
@@ -929,7 +929,7 @@
 .pg .equipe__tuiles svg{width:26px;height:26px;color:var(--teal-txt);margin-bottom:4px}
 .pg .equipe__tuiles b{font-size:.92rem;color:var(--noir);line-height:1.25}
 .pg .equipe__tuiles span{font-size:.78rem;color:var(--gris-lis);line-height:1.3}
-.pg .equipe .equipe__sur{display:flex;gap:14px;align-items:center;margin:16px 0 0;background:var(--nuit-900);background-color:#0B5170;color:#DCE6EA;border-radius:var(--r-m);padding:16px 22px}
+.pg .equipe .equipe__sur{display:flex;gap:14px;align-items:center;margin:16px 0 0;background:var(--nuit-900);background-color:#0B6B70;color:#DCE9EA;border-radius:var(--r-m);padding:16px 22px}
 .pg .equipe__sur svg{flex:0 0 auto;width:26px;height:26px;color:var(--or)}
 .pg .equipe__sur p{margin:0;font-size:1rem;line-height:1.5}
 .pg .equipe__sur b{color:#fff}

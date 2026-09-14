@@ -434,5 +434,35 @@ JS = r'''
 a, b = h.rsplit('</head>', 1); h = a + CSS + '</head>' + b
 a, b = h.rsplit('</body>', 1); h = a + JS + '</body>' + b
 h = h.replace('<title>', '<title>', 1)
+# ---------------------------------------------------------------- un seul bleu
+# La page portait quatre bleus (nuit #0B5170, moyen #167FA4, teal #0F6E73,
+# marque #21B1B8). Toute couleur de teinte bleu-nuit (190° à 212°) est
+# ramenée sur la teinte du bleu de marque (183°), à clarté et saturation
+# égales : les contrastes mesurés ne bougent pas, la couleur devient une.
+import colorsys
+TEINTE = colorsys.rgb_to_hls(0x21/255, 0xB1/255, 0xB8/255)[0]
+def _unifier_rgb(r, g, b):
+    hh, l, sa = colorsys.rgb_to_hls(r/255, g/255, b/255)
+    deg = hh*360
+    if 190 <= deg <= 212 and sa >= .12:
+        r2, g2, b2 = colorsys.hls_to_rgb(TEINTE, l, sa)
+        return int(round(r2*255)), int(round(g2*255)), int(round(b2*255))
+    return None
+def _hex(m):
+    x = m.group(1)
+    if len(x) == 3: x = ''.join(c*2 for c in x)
+    r, g, b = int(x[:2], 16), int(x[2:4], 16), int(x[4:], 16)
+    n = _unifier_rgb(r, g, b)
+    return m.group(0) if n is None else '#%02X%02X%02X' % n
+def _rgba(m):
+    r, g, b = int(m.group(2)), int(m.group(3)), int(m.group(4))
+    n = _unifier_rgb(r, g, b)
+    return m.group(0) if n is None else '%s%d,%d,%d' % (m.group(1), *n)
+def unifier_bleus(txt):
+    txt = re.sub(r'#([0-9a-fA-F]{6}|[0-9a-fA-F]{3})(?![0-9a-zA-Z_-])', _hex, txt)
+    txt = re.sub(r'(rgba?\(\s*)(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})', _rgba, txt)
+    return txt
+# les data URIs (images) ne contiennent ni « # » ni « rgb( » : on peut passer sur tout le document
+h = unifier_bleus(h)
 open(dst, 'w', encoding='utf-8').write(h)
 print('écrit', dst, len(h))
