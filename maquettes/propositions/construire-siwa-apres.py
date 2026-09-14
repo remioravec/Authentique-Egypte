@@ -61,7 +61,7 @@ form = (
     '<form class="pan__form" action="https://authentiquegypte.com/sur-mesure/" method="get" data-devis>'
     '<label><span>Quand souhaitez-vous partir ?</span><select>' + opts + '</select></label>'
     '<label><span>Voyageurs</span><input type="number" min="1" max="12" value="2"></label>'
-    '<label class="pan__l2"><span>Un mot sur vos envies</span><textarea rows="2" placeholder="Rythme, hébergement, dates précises…"></textarea></label>'
+    '<label class="pan__l2"><span>Un mot sur vos envies</span><input type="text" placeholder="Rythme, hébergement, dates précises…"></label>'
     '<button class="btn btn--or btn--bloc" type="submit">Recevoir mon devis sous 48 h</button>'
     '</form>'
     '<p class="pan__alt">ou <a href="' + WA + '">' + I['chat'] + ' poser une question sur WhatsApp</a></p>'
@@ -70,13 +70,14 @@ une(r'<div class="pan__act">.*?</div>', form, flags=re.S)
 gar = ('<ul class="pan__gar"><li>' + I['shield'] + '<span>Structure enregistrée en France</span></li>'
        '<li>' + I['shield'] + '<span>Partenaire titulaire d&#x27;une licence touristique en Égypte</span></li>'
        '<li>' + I['phone'] + '<span>Représentant local et numéro d&#x27;urgence 24h/24</span></li></ul>')
-une(r'(<p class="pan__note">.*?</p>)', r'\1' + gar, flags=re.S)
+une(r'<p class="pan__note">Réponse sous 48 h, hors vendredi et samedi<br>Aucune carte bancaire demandée à cette étape.</p>',
+    '<p class="pan__note">Réponse sous 48 h, hors vendredi et samedi · aucune carte bancaire à cette étape.</p>' + gar)
 une(r'<b>23 avis Google</b> <span>Agence locale basée au Caire</span></p>',
-    '<a href="' + GOOGLE + '" target="_blank" rel="noopener"><b>23 avis Google</b></a> <span>Agence locale basée au Caire</span></p>'
-    '<p class="pan__part"><span>Partager ce programme</span>'
-    '<a href="https://wa.me/?text=' + H.escape('Voyage à l’Oasis de Siwa avec Authentique Égypte : ' + LIVE) + '" target="_blank" rel="noopener">' + I['chat'] + ' WhatsApp</a>'
-    '<a href="mailto:?subject=' + H.escape('Voyage à l’Oasis de Siwa') + '&amp;body=' + H.escape('Regarde ce programme : ' + LIVE) + '">' + I['mail'] + ' E-mail</a>'
-    '<button type="button" data-copier="' + LIVE + '">' + I['link'] + ' Copier le lien</button></p>')
+    '<a href="' + GOOGLE + '" target="_blank" rel="noopener"><b>23 avis Google</b></a> <span>· Agence au Caire</span></p>'
+    '<p class="pan__part"><span>Partager</span>'
+    '<a href="https://wa.me/?text=' + H.escape('Voyage à l’Oasis de Siwa avec Authentique Égypte : ' + LIVE) + '" target="_blank" rel="noopener">' + I['chat'] + '<i>WhatsApp</i></a>'
+    '<a href="mailto:?subject=' + H.escape('Voyage à l’Oasis de Siwa') + '&amp;body=' + H.escape('Regarde ce programme : ' + LIVE) + '">' + I['mail'] + '<i>E-mail</i></a>'
+    '<button type="button" data-copier="' + LIVE + '">' + I['link'] + '<i>Copier le lien</i></button></p>')
 
 # ---------------------------------------------------------------- navigation collante par sections
 une(r'<nav class="somm"',
@@ -168,8 +169,6 @@ CSS = r'''
 <style id="apres">
 /* ===== blocs proposés le 14/09 : confiance, UX, UI ===== */
 .pg .aremplir{display:inline-block;background:var(--or-fond);border:1px dashed var(--or);color:#7A5605;font-size:.8rem;line-height:1.4;padding:.15em .55em;border-radius:6px;font-weight:700;font-family:"Manrope",sans-serif;letter-spacing:0;vertical-align:middle}
-.pg .pan{position:static}
-.pg .pan__carte{position:sticky;top:88px;max-height:calc(100vh - 104px);overflow:auto}
 .pg .hero__conf{display:flex;flex-wrap:wrap;gap:6px 18px;margin:16px 0 0;font-family:"Manrope",sans-serif;font-size:.9rem;color:#fff}
 .pg .hero__conf svg{vertical-align:-3px;color:var(--or);margin-right:2px}
 .pg .pan__qui{display:flex;gap:12px;align-items:center;margin:0 0 14px;padding:0 0 14px;border-bottom:1px solid var(--ligne-2)}
@@ -263,6 +262,45 @@ CSS = r'''
 @media (max-width:600px){.pg .pan__form{grid-template-columns:1fr}.pg .quand__frise{grid-template-columns:repeat(3,1fr)}.pg .voyageurs ul{grid-template-columns:repeat(2,1fr)}
   .pg .hero__conf{font-size:.94rem}.pg .quand__frise .q-c,.pg .quand__frise small,.pg .pan__part,.pg .pan__gar,.pg .pg-anc{font-size:.9rem}
   .pg .equipe__av .aremplir{position:static;transform:none;margin-left:8px}}
+/* Le côté est collant en entier et tient dans la fenêtre : pas de défilement interne.
+   Les cinq repères (durée, rythme, transport, guide, hébergement) sont déjà dans la
+   bande sous le héros, le panneau ne les répète plus. */
+.pg .pan{position:sticky;top:84px;gap:8px}
+.pg .pan__carte{padding:16px 18px}
+.pg .pan__liste{display:none}
+.pg .pan__prix{line-height:1.2}
+.pg .pan__prix b{font-size:1.6rem}
+.pg .pan__qui{margin:8px 0;padding:8px 0;border-top:1px solid var(--ligne-2);gap:10px}
+.pg .pan__av{width:36px;height:36px;font-size:1.1rem}
+.pg .pan__qui b{font-size:.92rem;line-height:1.2}
+.pg .pan__qui small{font-size:.76rem;line-height:1.3}
+.pg .pan__form{gap:6px 8px}
+.pg .pan__form label{font-size:.7rem;gap:2px;line-height:1.2}
+.pg .pan__form select,.pg .pan__form input{padding:0 10px;height:38px;min-height:0;font-size:.9rem;line-height:1.2}
+.pg .pan__form .btn{padding:0 16px;min-height:42px;font-size:.92rem}
+.pg .pan__alt{margin:6px 0 0;font-size:.82rem}
+.pg .pan__note{margin:6px 0 0;font-size:.74rem;line-height:1.35}
+.pg .pan__gar{margin:6px 0 0;padding:6px 0 0;display:flex;flex-wrap:wrap;justify-content:center;gap:2px 10px;font-size:.72rem;line-height:1.3}
+.pg .pan__gar li{gap:4px;align-items:center}
+.pg .pan__gar svg{width:12px;height:12px;margin:0}
+.pg .pan__avis{margin:6px 0 0;padding:6px 0 0;font-size:.8rem;gap:3px 5px}
+.pg .pan__avis .gg{width:15px;height:15px}
+.pg .pan__part{margin:6px 0 0;padding:6px 0 0;gap:4px;font-size:.72rem;justify-content:center;align-items:center}
+.pg .pan__part>span{flex:0 0 auto;font-size:.62rem;margin-right:4px}
+.pg .pan__part a,.pg .pan__part button{min-height:30px;padding:0 8px;gap:4px}
+.pg .pan__part svg{width:13px;height:13px}
+.pg .pan__part i{font-style:normal}
+.pg .pg-anc{gap:4px;font-size:.74rem}
+.pg .pg-anc a{padding:4px 8px;min-height:28px}
+.pg .somm{padding:10px 12px}
+.pg .somm__t{margin:0 0 4px;font-size:.68rem}
+.pg .somm a{min-height:32px;padding:3px 6px;font-size:.88rem;grid-template-columns:20px 1fr;gap:8px}
+.pg .somm a>span:last-child>span{display:none}
+.pg .somm__n{width:20px;height:20px;font-size:.7rem}
+@media (max-height:920px){.pg .somm{display:none}}
+@media (max-height:700px){.pg .pan__part,.pg .pan__gar{display:none}}
+@media (max-height:600px){.pg .pan{position:static}}
+@media (max-width:1040px){.pg .pan{position:static}.pg .somm{display:block}.pg .pan__part,.pg .pan__gar{display:flex}}
 </style>
 '''
 JS = r'''
@@ -273,7 +311,7 @@ JS = r'''
   var f=pg.querySelector('[data-devis]');
   if(f){f.addEventListener('submit',function(e){
     e.preventDefault();
-    var m=f.querySelector('select').value||'dates à définir',n=f.querySelector('input[type=number]').value||'?',t=f.querySelector('textarea').value.trim();
+    var m=f.querySelector('select').value||'dates à définir',n=f.querySelector('input[type=number]').value||'?',t=(f.querySelector('input[type=text]')||{value:''}).value.trim();
     var txt='Bonjour Mélanie, je souhaite un devis pour « Voyage à l’Oasis de Siwa » (à partir de 595 €/pers.).\nPériode : '+m+' · Voyageurs : '+n+(t?'\n'+t:'');
     window.open('https://wa.me/201066619098?text='+encodeURIComponent(txt),'_blank','noopener');
   });}
@@ -281,7 +319,7 @@ JS = r'''
   var c=pg.querySelector('[data-copier]');
   if(c){c.addEventListener('click',function(){
     var u=c.getAttribute('data-copier');
-    (navigator.clipboard?navigator.clipboard.writeText(u):Promise.reject()).then(function(){c.classList.add('ok');c.lastChild.textContent=' Lien copié';},function(){window.prompt('Copiez ce lien :',u);});
+    (navigator.clipboard?navigator.clipboard.writeText(u):Promise.reject()).then(function(){c.classList.add('ok');c.querySelector('i').textContent='Lien copié';},function(){window.prompt('Copiez ce lien :',u);});
   });}
   // Carte : un clic sur un point ouvre la journée correspondante.
   pg.querySelectorAll('.carte__pt[data-lieu]').forEach(function(p){
