@@ -366,7 +366,7 @@ CSS = r'''
 /* ---- v5 : le bleu de marque #21B1B8 comme accent des nouveaux blocs.
    En aplat il ne porte pas de texte (2,6:1 sur blanc) : il souligne, colore les
    pictos et les bordures, et teinte les fonds en clair. ---- */
-.pg{--bleu:#21B1B8;--bleu-fond:#E6F6F7}
+.pg{--bleu:#079DB6;--bleu-fond:#E3F3F8}
 .pg .hero__conf svg,.pg .pan__inclus svg,.pg .pan__gar svg,.pg .equipe__tuiles svg,.pg .equipe__sur svg,.pg .carte__aide svg,
 .pg .tarif__cond h3 svg,.pg .equipe__c li svg,.pg .pan__avis .pan__part a,.pg .pan__avis .pan__part button{color:var(--bleu)}
 .pg .apercu li .ic{color:var(--bleu);border-color:var(--bleu)}
@@ -380,7 +380,7 @@ CSS = r'''
 .pg .tarif__cond article{border-top:3px solid var(--bleu)}
 .pg .equipe__portrait{border-top:4px solid var(--bleu)}
 .pg .equipe__tuiles li{border-top:3px solid var(--bleu)}
-.pg .equipe .equipe__sur{background:var(--bleu-fond);background-color:#E6F6F7;color:var(--texte);border-left:5px solid var(--bleu)}
+.pg .equipe .equipe__sur{background:var(--bleu-fond);background-color:#E3F3F8;color:var(--texte);border-left:5px solid var(--bleu)}
 .pg .equipe .equipe__sur p{color:var(--texte)}
 .pg .equipe .equipe__sur b{color:var(--nuit-900)}
 .pg .equipe .equipe__sur a{color:var(--nuit-900)}
@@ -437,15 +437,15 @@ a, b = h.rsplit('</body>', 1); h = a + JS + '</body>' + b
 h = h.replace('<title>', '<title>', 1)
 # ---------------------------------------------------------------- un seul bleu
 # La page portait quatre bleus (nuit #0B5170, moyen #167FA4, teal #0F6E73,
-# marque #21B1B8). Toute couleur de teinte bleu-nuit (190° à 212°) est
-# ramenée sur la teinte du bleu de marque (183°), à clarté et saturation
+# marque). Toute couleur de teinte bleue (176° à 212°) est
+# ramenée sur la teinte du bleu de Rémi, #079DB6 (189°), à clarté et saturation
 # égales : les contrastes mesurés ne bougent pas, la couleur devient une.
 import colorsys
-TEINTE = colorsys.rgb_to_hls(0x21/255, 0xB1/255, 0xB8/255)[0]
+TEINTE = colorsys.rgb_to_hls(0x07/255, 0x9D/255, 0xB6/255)[0]  # #079DB6, le bleu de Rémi
 def _unifier_rgb(r, g, b):
     hh, l, sa = colorsys.rgb_to_hls(r/255, g/255, b/255)
     deg = hh*360
-    if 190 <= deg <= 212 and sa >= .12:
+    if 176 <= deg <= 212 and sa >= .12:
         r2, g2, b2 = colorsys.hls_to_rgb(TEINTE, l, sa)
         return int(round(r2*255)), int(round(g2*255)), int(round(b2*255))
     return None
