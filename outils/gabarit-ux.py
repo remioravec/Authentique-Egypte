@@ -59,47 +59,36 @@ CALENDRIER = [
     ('mars', '19-27', 'très bon, début de saison', 'modérée'),
     ('avril', '23-32', 'chaud mais supportable', 'forte (vacances)'),
     ('mai', '26-36', 'chaud', 'modérée'),
-    ('juin', '29-39', 'très chaud', 'faible'),
-    ('juil.', '31-41', 'caniculaire, éviter', 'faible'),
-    ('août', '30-40', 'caniculaire', 'faible'),
-    ('sept.', '27-37', 'encore chaud', 'modérée'),
+    ('juin', '29-39', 'très chaud, mer rouge seulement', 'faible'),
+    ('juil.', '31-41', 'caniculaire, éviter circuits', 'faible'),
+    ('août', '30-40', 'caniculaire, mer rouge possible', 'faible'),
+    ('sept.', '27-37', 'encore chaud mais supportable', 'modérée'),
     ('oct.', '24-32', 'très bon', 'forte (vacances)'),
-    ('nov.', '20-28', 'excellent, idéal', 'faible'),
+    ('nov.', '20-28', 'excellent, climat idéal', 'faible'),
     ('déc.', '17-25', 'très bon', 'forte (vacances)'),
 ]
 
 # La recommandation par type de séjour, même source. mois = ceux mis en avant.
+CALMES = ("Janvier, février et novembre sont les mois les plus calmes, "
+          "hors vacances scolaires.")
+
 SAISONS = {
-    'desert': (
-        "Pour l’exploration du désert, la période conseillée va "
-        "<b>d’octobre à mars</b> : journées supportables, nuits fraîches. "
-        "Janvier, février et novembre sont les mois les plus calmes.",
-        [9, 10, 11, 0, 1, 2]),
-    'nil': (
-        "Pour une croisière sur le Nil, la période conseillée va "
-        "<b>d’octobre à avril</b> : climat doux, visites confortables. "
-        "Janvier, février et novembre sont les mois les plus calmes.",
-        [9, 10, 11, 0, 1, 2, 3]),
-    'caire': (
-        "Pour un séjour au Caire, la période conseillée va "
-        "<b>de novembre à mars</b> : températures agréables en ville. "
-        "Janvier, février et novembre sont les mois les plus calmes.",
-        [10, 11, 0, 1, 2]),
-    'rouge': (
-        "Un séjour en mer Rouge se fait <b>toute l’année</b> : la plongée est "
-        "possible en combinaison en toute saison, le snorkeling et le farniente "
-        "sont plus agréables <b>d’avril à novembre</b>.",
-        [3, 4, 5, 6, 7, 8, 9, 10]),
-    'famille': (
-        "En famille, <b>avril, octobre et décembre</b> correspondent aux "
-        "vacances scolaires et offrent de bonnes conditions climatiques : "
-        "l’affluence est alors forte, il faut anticiper.",
-        [3, 9, 11]),
-    'general': (
-        "La période idéale se situe <b>entre octobre et avril</b> : "
-        "températures douces et rythme adapté pour les visites. "
-        "Janvier, février et novembre sont les mois les plus calmes.",
-        [9, 10, 11, 0, 1, 2, 3]),
+    'desert': ("Exploration du désert : <b>octobre à mars</b>, journées "
+               "supportables, nuits fraîches. " + CALMES, [9, 10, 11, 0, 1, 2]),
+    'nil': ("Croisière sur le Nil : <b>octobre à avril</b>, climat doux, "
+            "visites confortables. " + CALMES, [9, 10, 11, 0, 1, 2, 3]),
+    'caire': ("Séjour au Caire : <b>novembre à mars</b>, températures "
+              "agréables en ville. " + CALMES, [10, 11, 0, 1, 2]),
+    'rouge': ("Séjour balnéaire en mer Rouge : <b>toute l’année</b>. Plongée : "
+              "toute l’année (combinaison). Snorkeling et farniente : "
+              "<b>avril à novembre</b>.", [3, 4, 5, 6, 7, 8, 9, 10]),
+    'famille': ("Voyage en famille : <b>avril, octobre et décembre</b> "
+                "correspondent aux vacances scolaires et offrent de bonnes "
+                "conditions climatiques, mais il faut anticiper car l’affluence "
+                "est forte.", [3, 9, 11]),
+    'general': ("La période idéale se situe <b>entre octobre et avril</b> : "
+                "températures douces, climat agréable et rythme adapté pour les "
+                "visites. " + CALMES, [9, 10, 11, 0, 1, 2, 3]),
 }
 
 # Ordre de décision : le premier thème dont un mot-clé apparaît l'emporte.
@@ -107,7 +96,7 @@ THEMES = [
     ('famille', ('en famille', 'enfants')),
     ('desert', ('désert', 'oasis', 'siwa', 'fayoum', 'sinaï', 'moïse',
                 'sainte-catherine', 'bédouin', 'bahariya', 'dakhla')),
-    ('nil', ('croisière', 'nil', 'nasser', 'nubie', 'dahabeya', 'felouque',
+    ('nil', ('croisière', 'nil', 'nubie', 'dahabeya', 'felouque',
              'louxor', 'assouan')),
     ('rouge', ('mer rouge', 'plongée', 'snorkeling', 'hurghada', 'marsa alam')),
     ('caire', ('le caire', 'gizeh', 'saqqara')),
@@ -223,14 +212,6 @@ def prix_fiche(h):
     return H.unescape(m.group(1)).strip() if m else ''
 
 
-def raccourcir(texte, limite=40):
-    texte = re.sub(r'\s*\([^)]*\)', '', texte).strip()
-    if len(texte) <= limite:
-        return texte
-    coupe = texte[:limite].rsplit(' ', 1)[0]
-    return coupe + '…'
-
-
 def inclus_panneau(h, maxi=4):
     """Quatre inclus de la fiche pour le panneau, un par famille : le guide,
     le chauffeur, le transport, l'assistance. On complète avec les plus
@@ -256,7 +237,7 @@ def inclus_panneau(h, maxi=4):
         if it not in choisis:
             choisis.append(it)
     choisis = [x for x in items if x in choisis][:maxi]
-    return [raccourcir(x) for x in choisis]
+    return choisis
 
 
 def theme_fiche(h, titre):
@@ -270,7 +251,12 @@ def theme_fiche(h, titre):
     # les vacances scolaires, un séjour sur mesure n'a pas de saison propre.
     if 'en famille' in bas or 'enfants' in bas:
         return 'famille'
-    if 'sur mesure' in bas or 'roadtrip' in bas:
+    if 'sur mesure' in bas or 'roadtrip' in bas or 'lac nasser' in bas:
+        return 'general'
+    # Une fiche qui annonce à la fois la mer Rouge et la montagne ou le désert
+    # ne relève d'aucune des deux lignes du guide : on sert la recommandation
+    # générale, vraie pour le pays entier, plutôt qu'une moitié du séjour.
+    if 'mer rouge' in bas and any(m in bas for m in ('sinaï', 'désert', 'montagne')):
         return 'general'
     zones = [(titre, 6)]
     for motif, poids in ((r'<nav class="ariane"[^>]*>(.*?)</nav>', 4),
@@ -298,10 +284,134 @@ def privatif(h):
     return txt if txt.lower().startswith('ce séjour est privatif') else ''
 
 
+def reponse_faq(h, motif):
+    """La réponse de la FAQ de la fiche, mot pour mot. Rien n'est reformulé :
+    ces phrases sont celles du client."""
+    for bloc in re.findall(r'<details[^>]*>.*?</details>', h, re.S):
+        q = re.search(r'<span class="q">(.*?)</span>', bloc, re.S)
+        if not q or not re.search(motif, _texte(q.group(1)), re.I):
+            continue
+        corps = bloc[bloc.find('acc__c'):]
+        phrases = [_texte(x) for x in re.findall(r'<p>(.*?)</p>', corps, re.S)]
+        phrases = [x for x in phrases if x]
+        if phrases:
+            return re.sub(r'\s+([,.])', r'\1', ' '.join(phrases))
+    return ''
+
+
+def phrase_fiche(h, motif):
+    """Une phrase de la fiche repérée par un fragment, rendue telle quelle."""
+    m = re.search(r'>([^<>]*%s[^<>]*)<' % motif, h)
+    return _texte(m.group(1)) if m else ''
+
+
+CHAPOS_CREUX = ('votre programme de voyage', 'les étapes de votre séjour',
+                'nos étapes', 'votre séjour')
+
+
+def reparer_source(h, journal):
+    """Défauts venus des fiches en ligne, réparables sans réécrire un mot.
+    Relevés par l'agent qualité le 14/09."""
+    faits = []
+
+    # 1. Le garde-fou de la carte écrivait en rouge, sur la page publique, un
+    #    message destiné au constructeur. Il devient une note d'atelier, visible
+    #    comme telle, au-dessus du déroulé qu'elle met en cause.
+    hors = re.search(r'<p class="carte__hors">(.*?)</p>', h, re.S)
+    if hors:
+        h = h.replace(hors.group(0), '')
+        note = ('<p class="atelier"><span class="aremplir">à remplacer</span> '
+                + H.escape(_texte(hors.group(1)))
+                + ' — le déroulé ci-dessous ne correspond pas au séjour annoncé.</p>')
+        i = h.find('<h2 id="t-jpj">')
+        if i < 0:
+            i = h.find('<h2>Le séjour jour par jour</h2>')
+        if i >= 0:
+            fin = h.find('</h2>', i) + len('</h2>')
+            h = h[:fin] + note + h[fin:]
+            # la carte place des points d'un autre séjour : on la retire
+            carte = re.search(r'<figure class="carte">.*?</figure>', h, re.S)
+            if carte:
+                h = h.replace(carte.group(0), '')
+        faits.append('déroulé signalé')
+
+    # 2. Un chapeau qui n'annonce rien : « Votre programme de voyage ».
+    def chapo(m):
+        txt = _texte(m.group(1)).rstrip(' :')
+        if txt.lower() in CHAPOS_CREUX:
+            return ''
+        return '<p class="hero__chapo">%s</p>' % H.escape(txt)
+
+    h, n = re.subn(r'<p class="hero__chapo">(.*?)</p>', chapo, h, flags=re.S)
+    if n:
+        faits.append('chapeau')
+
+    # 3. Un titre de journée cassé au découpage : « et 6 : Libre exploration… ».
+    h, n = re.subn(r'(<div class="jour__tete"><h3>)\s*et\s+\d+\s*:\s*', r'\1', h)
+    if n:
+        faits.append('titre de journée réparé')
+
+    # 4. La même fiche voisine proposée deux fois.
+    bloc = re.search(r'<div class="proches">.*?</div>\s*</div>\s*</section>', h, re.S)
+    if bloc:
+        cartes = re.findall(r'<article class="proche".*?</article>', bloc.group(0), re.S)
+        vus, garde = set(), []
+        for c in cartes:
+            t = re.search(r'<h3>(.*?)</h3>', c, re.S)
+            cle = _texte(t.group(1)) if t else c
+            if cle in vus:
+                continue
+            vus.add(cle)
+            garde.append(c)
+        if len(garde) < len(cartes):
+            neuf_bloc = bloc.group(0)
+            for c in cartes:
+                neuf_bloc = neuf_bloc.replace(c, '', 1)
+            neuf_bloc = neuf_bloc.replace('<div class="proches">',
+                                          '<div class="proches">' + ''.join(garde), 1)
+            h = h.replace(bloc.group(0), neuf_bloc)
+            faits.append('séjours voisins dédoublonnés')
+
+    # 5. Les numéros de la carte suivaient l'ordre du dessin, pas celui du
+    #    voyage : le point 1 menait au jour 2. On les renumérote sur l'étape
+    #    qu'ils ouvrent.
+    etapes = [m.group(1).split() for m in re.finditer(r'<article class="etape"[^>]*data-lieu="([^"]*)"', h)]
+    if etapes:
+        points = list(re.finditer(r'<g class="carte__pt[^"]*"[^>]*data-lieu="([^"]*)"[^>]*>(.*?)</g>', h, re.S))
+        rang = {}
+        for m in points:
+            lieux = m.group(1).split()
+            cible = next((i for i, e in enumerate(etapes) if any(x in e for x in lieux)), 99)
+            rang[m.group(0)] = cible
+        ordre = sorted((g for g in rang if re.search(r'<text[^>]*>\d+</text>', g)), key=lambda g: rang[g])
+        change = False
+        for i, g in enumerate(ordre, start=1):
+            neuf_g = re.sub(r'(<text[^>]*>)\d+(</text>)', r'\g<1>%d\g<2>' % i, g)
+            if neuf_g != g:
+                h = h.replace(g, neuf_g, 1)
+                change = True
+        if change:
+            faits.append('carte renumérotée')
+
+    # 6. Une fiche sans prix n'avait aucun appel à l'action collant sur mobile.
+    if '<div class="pg-mob">' not in h:
+        prix = prix_fiche(h)
+        barre = ('<div class="pg-mob">'
+                 + ('<span class="p"><small>À partir de</small><b>%s</b> <i>/ pers.</i></span>' % H.escape(prix) if prix else '')
+                 + '<a class="btn btn--or btn--sm" href="' + DEVIS + '">Demander mon devis</a></div>')
+        h = h.replace('</body>', barre + '</body>', 1)
+        faits.append('barre mobile')
+
+    journal.pose.extend(faits)
+    return h
+
+
 # ----------------------------------------------------------------- les blocs
 
 def bloc_panneau(h, journal, titre, prix, live):
     inclus = inclus_panneau(h)
+    reponse = phrase_fiche(h, 'Réponse sous 48')
+    sans_cb = phrase_fiche(h, 'Aucune carte bancaire')
     liste = ''
     if inclus:
         liste = ('<ul class="pan__inclus">'
@@ -312,7 +422,7 @@ def bloc_panneau(h, journal, titre, prix, live):
     form = (
         liste
         + '<div class="pan__qui"><img class="pan__av" src="{AVATAR}" alt="" width="36" height="36">'
-          '<span><b>Mélanie vous répond</b><small>sous 48 h, hors vendredi et samedi</small></span></div>'
+          '<span><b>Mélanie</b><small>' + H.escape(reponse or 'Réponse sous 48 h') + '</small></span></div>'
           '<form class="pan__form" action="' + DEVIS + '" method="get" data-devis '
           'data-sejour="' + H.escape(titre) + '" data-prix="' + H.escape(prix) + '">'
           '<select aria-label="Période souhaitée">' + options + '</select>'
@@ -320,7 +430,7 @@ def bloc_panneau(h, journal, titre, prix, live):
           '<input class="pan__l2" type="text" placeholder="Vos envies (facultatif)" aria-label="Vos envies">'
           '<button class="btn btn--or btn--bloc" type="submit">Recevoir mon devis</button>'
           '</form>'
-          '<p class="pan__note">Aucune carte bancaire à cette étape</p>'
+          '<p class="pan__note">' + H.escape(sans_cb or 'Aucune carte bancaire demandée à cette étape.') + '</p>'
           '<a class="pan__wa" href="' + WHATSAPP + '">' + I['chat'] + ' Une question ? WhatsApp</a>')
     h = poser(h, r'<div class="pan__act">.*?</div>', form, journal, 'panneau devis', re.S)
 
@@ -531,18 +641,30 @@ def bloc_tarif(h, journal):
         return h
     debut = debut_de_section(h, i)
     fin = fin_de_balise(h, debut, 'section')
-    pourquoi = privatif(h)
-    pourquoi = ((pourquoi + ' ') if pourquoi else '') + (
-        'Le devis est gratuit et sans engagement, aucune carte bancaire n’est '
-        'demandée à cette étape.')
-    cond = ('<div class="tarif__cond">'
-            '<article><h3>' + I['card'] + 'Paiement</h3><p>Virement bancaire ou carte bancaire '
-            'via un lien sécurisé. Un acompte à la validation, le solde 45 jours avant le départ.</p></article>'
-            '<article><h3>' + I['cal'] + 'Annulation</h3><p>Nous faisons tout pour reprogrammer ou '
-            'adapter votre voyage. Des frais peuvent s’appliquer selon le délai d’annulation. '
-            'Une assurance voyage est conseillée.</p></article>'
-            '<article><h3>' + I['user'] + 'Pourquoi ce prix</h3><p>' + pourquoi + '</p></article>'
-            '</div>')
+    # Chaque phrase vient de la FAQ de cette fiche, sans reformulation.
+    # « Oui, » ouvre la réponse d'une FAQ ; hors de sa question, la particule
+    # n'a plus de sens. C'est la seule coupe faite dans ces phrases.
+    def sans_oui(x):
+        x = re.sub(r'^Oui,\s*', '', x)
+        return x[:1].upper() + x[1:] if x else x
+
+    morceaux = [sans_oui(x) for x in (reponse_faq(h, r'régler mon voyage'),
+                                      reponse_faq(h, r'fractionnable')) if x]
+    paiement = ' '.join(morceaux)
+    annulation = reponse_faq(h, r'ne peux plus partir')
+    pourquoi = ' '.join(x for x in (privatif(h),
+                                    phrase_fiche(h, 'Devis gratuit'),
+                                    phrase_fiche(h, 'Aucune carte bancaire')) if x)
+    volets = [(I['card'], 'Paiement', paiement),
+              (I['cal'], 'Annulation', annulation),
+              (I['user'], 'Pourquoi ce prix', pourquoi)]
+    volets = [v for v in volets if v[2]]
+    if not volets:
+        journal.absent.append('conditions tarif')
+        return h
+    cond = ('<div class="tarif__cond">' + ''.join(
+        '<article><h3>%s%s</h3><p>%s</p></article>' % (ic, nom, H.escape(txt))
+        for ic, nom, txt in volets) + '</div>')
     if 'id="t-faq"' in h:
         cond += '<p class="tarif__lien"><a href="#t-faq">Le détail, question par question</a></p>'
     journal.pose.append('conditions tarif')
@@ -592,17 +714,24 @@ def bloc_quand(h, journal, theme):
 
 
 def bloc_agence(h, journal, photo):
+    """Les deux paragraphes sont ceux d'authentiquegypte.com/qui-sommes-nous,
+    mot pour mot. Le rôle de Mélanie n'est écrit nulle part sur le site : on ne
+    lui en prête pas un."""
     section = (
         '<section class="pg-sec equipe" id="s-equipe"><div class="wrap">'
         '<p class="eyebrow">L’agence</p><h2 id="t-equipe">Qui vous répond</h2>'
         '<div class="equipe__portrait">'
         '<div class="equipe__photo"><img src="' + photo + '" '
-        'alt="Mélanie, fondatrice d’Authentique Égypte" width="640" height="800"></div>'
+        'alt="Mélanie, Authentique Égypte" width="640" height="800"></div>'
         '<div class="equipe__txt">'
         '<p class="equipe__cit">« Une aventure née d’un regard curieux sur l’Égypte authentique »</p>'
-        '<h3>Mélanie, fondatrice</h3>'
-        '<p>Tombée sous le charme de l’Égypte lors d’un premier voyage, elle s’est entourée de '
-        'professionnels égyptiens passionnés. Structure franco-égyptienne, équipe au Caire.</p>'
+        '<h3>Mélanie</h3>'
+        '<p>Tout commence quand Mélanie, alors installée en Inde, tombe sous le charme '
+        'de l’Égypte lors d’un premier voyage. Elle décide de s’entourer de '
+        'professionnels égyptiens passionnés pour développer une approche humaine '
+        'du voyage.</p>'
+        '<p>Basée au Caire, notre équipe s’appuie sur un réseau solide de guides '
+        'francophones, chauffeurs et spécialistes logistiques.</p>'
         '<a class="btn btn--fantome btn--sm" href="' + QUI + '">Notre histoire</a></div>'
         '</div>'
         '<div class="equipe__bas"><div class="presse"><p class="eyebrow">Ils parlent de nous</p>'
@@ -658,6 +787,7 @@ def unifier_bleus(texte):
 
 def habiller(h, live, css, js, photo, avatar, nom):
     journal = Journal(nom)
+    h = reparer_source(h, journal)
     titre = titre_fiche(h)
     prix = prix_fiche(h)
 
@@ -669,10 +799,15 @@ def habiller(h, live, css, js, photo, avatar, nom):
         h = poser(h, '<h2>%s</h2>' % texte, '<h2 id="%s">%s</h2>' % (ident, texte),
                   journal, 'ancre ' + ident, obligatoire=False)
 
-    h = poser(h, r'(Poser une question sur WhatsApp</a></div>)(\s*</div></div></div></section>)',
-              '\\1 <p class="hero__conf">' + I['check'] + ' Devis gratuit sous 48 h '
-              + I['check'] + ' Aucune carte bancaire à cette étape ' + I['check']
-              + ' Équipe au Caire, assistance 24h/24</p>\\2', journal, 'réassurance héros')
+    reassurance = [phrase_fiche(h, 'Devis gratuit'),
+                   phrase_fiche(h, 'Aucune carte bancaire'),
+                   phrase_fiche(h, 'Agence locale')]
+    reassurance = [x for x in reassurance if x]
+    if reassurance:
+        h = poser(h, r'(Poser une question sur WhatsApp</a></div>)(\s*</div></div></div></section>)',
+                  '\\1 <p class="hero__conf">'
+                  + ''.join('<span>%s%s</span>' % (I['check'], H.escape(x)) for x in reassurance)
+                  + '</p>\\2', journal, 'réassurance héros')
 
     h = bloc_panneau(h, journal, titre, prix, live)
     h = bloc_ancres(h, journal)

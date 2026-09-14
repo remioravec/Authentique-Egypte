@@ -282,3 +282,46 @@
   .pg .jour + .jour{margin-top:48px}
   .pg .etape + .etape{margin-top:32px}
 }
+
+/* ---- reprises après le contrôle contenu du 14/09 ---------------------------
+   Les phrases du client sont désormais servies mot pour mot : elles sont plus
+   longues que les raccourcis qu'elles remplacent, la mise en page suit. */
+.pg .hero__conf{gap:6px 20px}
+.pg .hero__conf>span{display:inline-flex;align-items:baseline;gap:7px}
+.pg .hero__conf svg{align-self:center;margin:0}
+.pg .pan__inclus{grid-template-columns:1fr;gap:6px}
+.pg .pan__inclus li{align-items:flex-start}
+.pg .pan__inclus svg{margin-top:3px}
+.pg .quand__frise .q-c{font-size:.7rem;line-height:1.2}
+.pg .quand__frise li{padding:10px 5px}
+
+/* ---- reprises après le contrôle qualité du 14/09 ---------------------------- */
+/* « PARTAGER » tombait à 9,92 px : les rem suivent la racine à 16 px, pas le
+   corps à 17 px. Plancher à 12 px. */
+.pg .pan__part>span{font-size:.78rem}
+/* La note d'atelier : elle s'adresse au constructeur, pas au visiteur. */
+.pg .atelier{margin:0 0 20px;padding:12px 16px;border-left:3px solid var(--or);
+  background:var(--or-fond);color:#7A5605;font-family:"Manrope",sans-serif;
+  font-size:.92rem;line-height:1.5;border-radius:0 var(--r-s) var(--r-s) 0}
+.pg .atelier .aremplir{margin-right:8px}
+
+/* ---- plancher de lisibilité : 12 px --------------------------------------
+   Les rem suivent la racine à 16 px, pas le corps à 17 px : mes compactages
+   du panneau et de la frise tombaient entre 10,9 et 11,8 px. */
+.pg .quand__frise .q-c{font-size:.75rem;line-height:1.25}
+.pg .quand__frise small{font-size:.75rem}
+.pg .pan__gar{font-size:.75rem}
+.pg .pan__gar li{font-size:.75rem}
+.pg .pg-anc{font-size:.78rem}
+.pg .pg-anc a{font-size:.78rem}
+.pg .somm__t{font-size:.75rem}
+.pg .somm__n{font-size:.75rem}
+.pg .pan__part>span{font-size:.75rem}
+.pg .pan__qui small{font-size:.78rem}
+.pg .etape__sv b{font-size:.75rem}
+.pg .etape__eti{font-size:.75rem}
+/* Les inclus rendus en entier sont plus hauts que leurs raccourcis : on
+   récupère la place sur les marges du panneau, pas sur le texte. */
+.pg .pan{gap:6px}
+.pg .pan__carte{padding:14px 16px}
+.pg .pan{top:78px;gap:5px}
