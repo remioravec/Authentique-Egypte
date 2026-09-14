@@ -223,3 +223,17 @@
 /* ---- v7 : texte blanc sur les boutons jaunes (demande du 14/09) ---- */
 .pg .btn--or,.pg .btn--or:hover,.pg .btn--or:focus-visible,.pg .pg-mob .btn--or{color:#fff}
 .pg .btn--or svg{color:#fff}
+
+/* ---- largeur de lecture ----------------------------------------------------
+   Le gabarit plafonnait le texte courant à 60-62 caractères : sous une photo
+   d'étape qui fait toute la largeur de la colonne (776 px), le paragraphe
+   s'arrêtait à 656 px et laissait 120 px de blanc à droite. Le texte prend
+   maintenant la largeur de la photo, et monte d'un cran.
+   Validé par Rémi le 14/09, d'abord en surcharge, ici pour toutes les fiches. */
+.pg .prose,.pg .edito .prose,.pg .etape p,.pg .acc__c,.pg .duree__c p,
+.pg .guide__intro{max-width:none}
+.pg .prose,.pg .edito .prose p{font-size:1.16rem;line-height:1.75}
+.pg .etape p,.pg .duree__c p{font-size:1.14rem;line-height:1.75}
+.pg .acc__c{font-size:1.08rem;line-height:1.7}
+.pg .guide__intro{font-size:1.2rem}
+.pg .mur__a blockquote,.pg .incl li{font-size:1.08rem}
