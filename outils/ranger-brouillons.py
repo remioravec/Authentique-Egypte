@@ -120,10 +120,25 @@ def main():
         if page:
             liens[etape['fichier']] = '%s/?page_id=%d' % (dep.SITE, page['id'])
 
+    # Seuls les dossiers qui vont recevoir une page sont créés : sans cela, un
+    # dépôt partiel (--seulement) ressuscitait les dossiers vides mis à la
+    # corbeille, et le back-office se repeuplait de rubriques sans contenu.
+    attendus = {REFERENCE} if not a.sans_reference else set()
+    for gabarit, _, titre_dossier in FAMILLES:
+        if vise and gabarit not in vise:
+            continue
+        source = TITRES_DANS.get(gabarit, gabarit)
+        for x in inventaire:
+            if x['gabarit'] != source:
+                continue
+            if os.path.exists(os.path.join(site, '%s-%s.html' % (gabarit, x['slug'][:60]))):
+                attendus.add(titre_dossier)
+                break
+
     print('→ Dossiers', flush=True)
     dossiers = {}
     for titre in [REFERENCE] + [t for _, _, t in FAMILLES]:
-        if titre in dossiers:
+        if titre in dossiers or titre not in attendus:
             continue
         page, action = dep.poser_page(slug_dossier(titre), {
             'title': titre, 'status': 'draft', 'parent': mere['id'],
