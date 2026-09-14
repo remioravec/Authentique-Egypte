@@ -1,0 +1,6 @@
+/* Surcharge « texte large » — accueil. Corps à 18 px, chapeaux et
+   introductions à la largeur de leur grille d'images. */
+body{font-size:18px}
+.lede,.chapeau p.sous,.hero__lede,.faq__c,.note{max-width:none}
+.lede{font-size:1.14rem}
+.chapeau p.sous,.hero__lede{font-size:1.12rem}

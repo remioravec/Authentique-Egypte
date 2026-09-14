@@ -1,0 +1,9 @@
+/* Surcharge « texte large » — gabarits programme et famille (.pg).
+   Le texte courant prend toute la largeur de sa colonne, comme les photos,
+   et le corps monte d'un cran. Injectée après la feuille du gabarit. */
+.pg .prose,.pg .edito .prose,.pg .etape p,.pg .acc__c,.pg .duree__c p,.pg .guide__intro{max-width:none}
+.pg .prose,.pg .edito .prose p{font-size:1.16rem;line-height:1.75}
+.pg .etape p,.pg .duree__c p{font-size:1.14rem;line-height:1.75}
+.pg .acc__c{font-size:1.08rem;line-height:1.7}
+.pg .guide__intro{font-size:1.2rem}
+.pg .mur__a blockquote,.pg .incl li{font-size:1.08rem}
