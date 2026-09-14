@@ -470,6 +470,13 @@ def unifier_bleus(txt):
 # les data URIs (images) ne contiennent ni « # » ni « rgb( » : on peut passer sur tout le document
 h = unifier_bleus(h)
 
+# ---------------------------------------------------------------- retrait du 14/09 : dans la section agence,
+# on garde le portrait et la presse ; tuiles, bandeau « est-ce dangereux ? » et cadres photos sortent.
+if '--epure' not in sys.argv:
+    for motif in (r'<ul class="equipe__tuiles">.*?</ul>', r'<div class="equipe__sur">.*?</div>', r'<div class="voyageurs">.*?</ul></div>'):
+        assert len(re.findall(motif, h, re.S)) == 1, motif
+        h = re.sub(motif, '', h, flags=re.S)
+
 # ---------------------------------------------------------------- variante épurée (contrôle design du 14/09)
 if '--epure' in sys.argv:
     # LOOK-02 : la ligne de réassurance du héros en texte, points médians
