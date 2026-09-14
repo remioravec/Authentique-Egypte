@@ -52,13 +52,18 @@ a{color:inherit}
   <h1><small>Authentique Égypte · page programme</small>Voyage à l’Oasis de Siwa</h1>
   <div class="seg" role="group" aria-label="Vue">
     <button type="button" data-vue="avant" aria-pressed="false">Avant</button>
-    <button type="button" data-vue="apres" aria-pressed="true">Après</button>
+    <button type="button" data-vue="apres" aria-pressed="false">Après</button>
+    <button type="button" data-vue="epure" aria-pressed="true">Épuré</button>
     <button type="button" data-vue="cote" aria-pressed="false">Côte à côte</button>
   </div>
-  <p class="liens"><a href="avant.html" target="_blank" rel="noopener">Ouvrir l’avant</a><a href="apres.html" target="_blank" rel="noopener">Ouvrir l’après</a></p>
+  <p class="liens"><a href="avant.html" target="_blank" rel="noopener">Ouvrir l’avant</a><a href="apres.html" target="_blank" rel="noopener">Ouvrir l’après</a><a href="epure.html" target="_blank" rel="noopener">Ouvrir l’épuré</a></p>
 </div>
 <div class="corps">
   <aside class="liste" aria-label="Ce qui change">
+    <h2>Contrôle design</h2>
+    <ol>
+      <li><button type="button" data-cible="t-equipe" data-page="epure"><b><span class="tag tag--c">épuré</span>Moins de boîtes, moins de pictos</b><small>130 boîtes → 92, 15 surtitres → 7, section agence en portrait et texte, conditions et frise sans cadre.</small></button></li>
+    </ol>
     <h2>Confiance</h2>
     <ol>
       <li><button type="button" data-cible="t-equipe"><b><span class="tag tag--c">confiance</span>Qui vous répond</b><small>Mélanie, l’équipe au Caire, les garanties, la presse. Faits repris de la page « Qui sommes-nous ».</small></button></li>
@@ -83,21 +88,22 @@ a{color:inherit}
       <li><button type="button" data-cible="t-quand"><b><span class="tag tag--u">ui</span>Pictos sur les étapes</b><small>Arrivée, route, lever de soleil, visite : lisible d’un coup d’œil.</small></button></li>
     </ol>
     <p class="alerte"><b>Point contenu à corriger, indépendant de la refonte :</b> la page Siwa en ligne décrit les étapes du mont Sinaï (Sainte-Catherine, monastère, ascension). Les deux versions le reprennent fidèlement. À remplacer par le déroulé réel de Siwa dans WordPress.</p>
-    <p class="note">Rien n’est inventé : chaque phrase vient du site en ligne. Les éléments manquants portent une étiquette « à remplir ».</p>
+    <p class="note">« Côte à côte » compare l’après et l’épuré. Rien n’est inventé : chaque phrase vient du site en ligne. Les éléments manquants portent une étiquette « à remplir ».</p>
   </aside>
   <div class="vues" id="vues">
     <section class="vue vue--avant" id="v-avant" hidden><header>Avant · page actuelle</header><iframe src="avant.html" title="Version actuelle" loading="lazy"></iframe></section>
-    <section class="vue vue--apres" id="v-apres"><header>Après · blocs proposés</header><iframe src="apres.html" title="Version proposée"></iframe></section>
+    <section class="vue vue--apres" id="v-apres" hidden><header>Après · blocs proposés</header><iframe src="apres.html" title="Version proposée" loading="lazy"></iframe></section>
+    <section class="vue vue--apres" id="v-epure"><header>Épuré · après le contrôle design</header><iframe src="epure.html" title="Version épurée"></iframe></section>
   </div>
 </div>
 <script>
 (function(){
-  var vues=document.getElementById('vues'),av=document.getElementById('v-avant'),ap=document.getElementById('v-apres');
+  var vues=document.getElementById('vues'),av=document.getElementById('v-avant'),ap=document.getElementById('v-apres'),ep=document.getElementById('v-epure');
   var btns=[].slice.call(document.querySelectorAll('.seg button'));
   function montrer(v){
     btns.forEach(function(b){b.setAttribute('aria-pressed',String(b.getAttribute('data-vue')===v))});
     vues.classList.toggle('cote',v==='cote');
-    av.hidden=(v==='apres');ap.hidden=(v==='avant');
+    av.hidden=(v!=='avant');ap.hidden=!(v==='apres'||v==='cote');ep.hidden=!(v==='epure'||v==='cote');
     try{localStorage.setItem('siwa-vue',v)}catch(e){}
   }
   btns.forEach(function(b){b.addEventListener('click',function(){montrer(b.getAttribute('data-vue'))})});
@@ -106,9 +112,10 @@ a{color:inherit}
   document.querySelectorAll('.liste [data-cible]').forEach(function(b){
     b.addEventListener('click',function(){
       document.querySelectorAll('.liste .actif').forEach(function(x){x.classList.remove('actif')});b.classList.add('actif');
-      if(ap.hidden)montrer('apres');
-      var c=b.getAttribute('data-cible'),fr=ap.querySelector('iframe');
-      var base='apres.html';
+      var page=b.getAttribute('data-page')||'apres',sec=page==='epure'?ep:ap;
+      if(sec.hidden)montrer(page);
+      var c=b.getAttribute('data-cible'),fr=sec.querySelector('iframe');
+      var base=page+'.html';
       fr.src=base+(c==='haut'?'':'#'+c)+(c==='haut'?'?t='+Date.now():'');
     });
   });

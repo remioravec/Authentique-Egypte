@@ -469,5 +469,93 @@ def unifier_bleus(txt):
     return txt
 # les data URIs (images) ne contiennent ni « # » ni « rgb( » : on peut passer sur tout le document
 h = unifier_bleus(h)
+
+# ---------------------------------------------------------------- variante épurée (contrôle design du 14/09)
+if '--epure' in sys.argv:
+    # LOOK-02 : la ligne de réassurance du héros en texte, points médians
+    h = re.sub(r'<p class="hero__conf">.*?</p>',
+               '<p class="hero__conf">Devis gratuit sous 48 h · Aucune carte bancaire à cette étape · Équipe au Caire, assistance 24h/24</p>', h, flags=re.S)
+    # LOOK-01/03 : la section agence en portrait + texte, sans boîte ni tuile
+    a = h.find('<section class="pg-sec equipe"'); b = h.find('</section>', a) + len('</section>')
+    assert a > 0
+    equipe2 = ('<section class="pg-sec equipe equipe--epure" id="s-equipe"><div class="wrap">'
+        '<div class="equipe__portrait">'
+        '<figure class="equipe__photo"><img src="' + PHOTO + '" alt="Mélanie, fondatrice d’Authentique Égypte, à Siwa" width="640" height="800"></figure>'
+        '<div class="equipe__txt">'
+        '<p class="eyebrow">L’agence</p><h2 id="t-equipe">Qui vous répond</h2>'
+        '<p class="equipe__cit">« Une aventure née d’un regard curieux sur l’Égypte authentique »</p>'
+        '<p class="equipe__nom">Mélanie, fondatrice</p>'
+        '<div class="equipe__cols">'
+        '<p>Tombée sous le charme de l’Égypte lors d’un premier voyage, elle s’est entourée de professionnels égyptiens passionnés. Structure franco-égyptienne, l’équipe est basée au Caire : guides francophones, chauffeurs et spécialistes logistiques.</p>'
+        '<p>Guides officiellement certifiés et régulièrement évalués. Un représentant local dans chaque destination, joignable 24h/24, avec des contacts médecins et pharmacies. Paiements au partenaire égyptien certifié, interlocuteur en France, remboursements selon les CGV.</p>'
+        '</div>'
+        '<p class="equipe__gar">Enregistrée en France · Licence touristique en Égypte · Assistance 24h/24 · Guides certifiés <span class="aremplir">n° à fournir</span></p>'
+        '<a class="lien-fl" href="' + QUI + '">Notre histoire <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>'
+        '</div></div>'
+        '<p class="equipe__sur"><b>Est-ce dangereux de venir en Égypte ?</b> Venir en Égypte est tout à fait sûr : les zones touristiques majeures sont très bien sécurisées. <a href="#t-faq">Lire la réponse</a></p>'
+        '<p class="equipe__presse"><span>Ils parlent de nous</span>Le Figaro · Le Figaro Madame · Marie Claire · Partir.com · Evaneos · TripAdvisor</p>'
+        '</div></section>')
+    h = h[:a] + equipe2 + h[b:]
+    EPURE = r"""
+<style id="epure">
+/* ===== variante épurée — contrôle design du 14/09 ===== */
+/* TOUCH-01 — cibles 30 à 42 px → 44 px */
+.pg .pan__part a,.pg .pan__part button{width:44px;height:44px}
+.pg .pg-anc a{min-height:44px}
+.pg .pan__form .btn{min-height:44px}
+/* LOOK-02 — pictos décoratifs retirés */
+.pg .tarif__cond h3 svg,.pg .pan__gar svg,.pg .apercu li .ic,.pg .carte__aide svg{display:none}
+.pg .hero__conf{display:block;font-size:.92rem;color:#fff;opacity:.92}
+/* LOOK-01 — un seul rythme de boîte : le panneau devis et les accordéons gardent leur cadre */
+.pg .tarif__cond{gap:28px}
+.pg .tarif__cond article{background:none;border:0;border-top:2px solid var(--bleu);border-radius:0;padding:14px 0 0}
+.pg .tarif__cond h3{font-size:.82rem;letter-spacing:.08em;text-transform:uppercase;color:var(--nuit-900)}
+.pg .incl{gap:36px}
+.pg .incl__col{background:none;border:0;border-radius:0;padding:0}
+.pg .incl__col+.incl__col{border-left:1px solid var(--ligne-pg);padding-left:36px}
+.pg .quand__frise{gap:0;border-bottom:1px solid var(--ligne-pg)}
+.pg .quand__frise li{border:0;border-radius:0;background:none;box-shadow:inset 0 6px 0 var(--bleu-fond);padding-top:14px}
+.pg .quand__frise .q-1{box-shadow:inset 0 6px 0 var(--bleu)}
+.pg .quand__frise .q-2{box-shadow:inset 0 6px 0 var(--or)}
+.pg .quand__frise .q-3{box-shadow:inset 0 6px 0 var(--rouge)}
+.pg .quand__frise .q-ok{box-shadow:inset 0 6px 0 var(--bleu)}
+.pg .quand__leg span:not(.q-src){border:0;padding:0 0 0 14px;position:relative}
+.pg .quand__leg span:not(.q-src)::before{content:"";position:absolute;left:0;top:50%;width:9px;height:9px;margin-top:-4px}
+.pg .quand__leg .q-1{background:none}.pg .quand__leg .q-1::before{background:var(--bleu)}
+.pg .quand__leg .q-2{background:none}.pg .quand__leg .q-2::before{background:var(--or)}
+.pg .quand__leg .q-3{background:none}.pg .quand__leg .q-3::before{background:var(--rouge)}
+.pg .pan__gar{gap:2px 0;justify-content:flex-start;font-size:.74rem;color:var(--gris-lis)}
+.pg .pan__gar li{border:0;background:none;padding:0;font-weight:500}
+.pg .pan__gar li+li::before{content:"·";margin:0 7px;color:var(--bleu)}
+.pg .pg-anc{gap:2px 14px}
+.pg .pg-anc a{border:0;background:none;padding:0;text-decoration:underline;text-underline-offset:5px;text-decoration-color:transparent;color:var(--gris-lis)}
+.pg .pg-anc a.vu{box-shadow:none;background:none;color:var(--nuit-900);text-decoration-color:var(--bleu)}
+/* LOOK-03 — surtitres réservés aux grandes sections, rien de vide à l'écran */
+.pg section:not(.pg-sec):not(.hero) .eyebrow{display:none}
+.pg .voyageurs{display:none}
+/* la section agence : portrait, citation, texte en colonnes */
+.pg .equipe--epure{background:#fff;border:0;padding:clamp(56px,7vw,96px) 0 clamp(40px,5vw,64px)}
+.pg .equipe--epure .equipe__portrait{background:none;border:0;border-radius:0;padding:0;margin:0;grid-template-columns:380px 1fr;gap:56px;align-items:start}
+.pg .equipe--epure .equipe__photo{margin:0;aspect-ratio:4/5;border-radius:0;background:var(--fond)}
+.pg .equipe--epure .equipe__photo img{width:100%;height:100%;object-fit:cover;display:block}
+.pg .equipe--epure .equipe__txt{gap:14px}
+.pg .equipe--epure h2{margin:0}
+.pg .equipe--epure .equipe__cit{font-size:clamp(1.5rem,2.6vw,2.1rem);line-height:1.2;letter-spacing:-.8px;color:var(--nuit-900);max-width:22ch;margin:6px 0 0}
+.pg .equipe--epure .equipe__nom{margin:0;font-family:"Manrope",sans-serif;font-weight:700;font-size:.95rem;color:var(--noir)}
+.pg .equipe--epure .equipe__cols{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin:6px 0 0}
+.pg .equipe--epure .equipe__cols p{margin:0;font-size:1rem;line-height:1.65;color:var(--texte)}
+.pg .equipe--epure .equipe__gar{margin:10px 0 0;padding:12px 0 0;border-top:1px solid var(--ligne-pg);font-family:"Manrope",sans-serif;font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--nuit-900);font-weight:700;line-height:1.9}
+.pg .equipe--epure .equipe__gar .aremplir{text-transform:none;letter-spacing:0;margin-left:8px}
+.pg .equipe--epure .lien-fl{margin-top:4px}
+.pg .equipe--epure .equipe__sur{display:block;margin:40px 0 0;padding:0 0 0 22px;border:0;border-left:3px solid var(--bleu);background:none;border-radius:0;color:var(--texte);font-size:1.06rem;line-height:1.6;max-width:62ch}
+.pg .equipe--epure .equipe__sur b{color:var(--noir)}
+.pg .equipe--epure .equipe__sur a{color:var(--nuit-900);font-weight:700;text-decoration:underline;text-underline-offset:3px}
+.pg .equipe--epure .equipe__presse{margin:36px 0 0;padding:18px 0 0;border-top:1px solid var(--ligne-pg);font-family:"Archivo",serif;font-weight:600;font-size:1.15rem;letter-spacing:-.3px;color:var(--gris-lis);line-height:1.8}
+.pg .equipe--epure .equipe__presse span{display:block;font-family:"Manrope",sans-serif;font-size:.74rem;letter-spacing:.12em;text-transform:uppercase;color:var(--nuit-900);font-weight:700;margin:0 0 4px}
+@media (max-width:900px){.pg .equipe--epure .equipe__portrait{grid-template-columns:1fr}.pg .equipe--epure .equipe__photo{max-width:320px}.pg .equipe--epure .equipe__cols{grid-template-columns:1fr}.pg .equipe--epure .equipe__cit{max-width:none}
+  .pg .incl{gap:20px}.pg .incl__col+.incl__col{border-left:0;padding-left:0;border-top:1px solid var(--ligne-pg);padding-top:20px}}
+</style>
+"""
+    a, b = h.rsplit('</head>', 1); h = a + EPURE + '</head>' + b
 open(dst, 'w', encoding='utf-8').write(h)
 print('écrit', dst, len(h))
