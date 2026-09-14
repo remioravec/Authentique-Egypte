@@ -1,0 +1,116 @@
+<title>Siwa, avant / après</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--nuit:#167FA4;--nuit-900:#0B5170;--or:#FBB50E;--or-fond:#FEEDDC;--teal:#21B0B7;--teal-txt:#0F6E73;--teal-fond:#E8F7F8;
+  --papier:#FFFFFF;--fond:#F4F6F9;--noir:#101418;--texte:#3E454D;--gris:#6E7680;--ligne:#E1E5EB;--rouge:#B4402A;--rouge-fond:#FBEAE5;--vert:#2F7D4F;--vert-fond:#EAF5EE}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--papier:#141A21;--fond:#0E1319;--noir:#F2F5F8;--texte:#C9D1DA;--gris:#93A0AD;--ligne:#26303B;--or-fond:#3A2C0C;--teal-fond:#0F2F33;--rouge-fond:#3A1D16;--vert-fond:#13301E;--nuit-900:#5FB3D6}}
+:root[data-theme="dark"]{--papier:#141A21;--fond:#0E1319;--noir:#F2F5F8;--texte:#C9D1DA;--gris:#93A0AD;--ligne:#26303B;--or-fond:#3A2C0C;--teal-fond:#0F2F33;--rouge-fond:#3A1D16;--vert-fond:#13301E;--nuit-900:#5FB3D6}
+*,*::before,*::after{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:var(--fond);color:var(--texte);font-family:"Archivo",system-ui,sans-serif;font-size:15px;line-height:1.5;display:flex;flex-direction:column;min-height:100vh}
+a{color:inherit}
+.tete{background:var(--papier);border-bottom:1px solid var(--ligne);padding-block:12px;padding-inline:16px;display:flex;flex-wrap:wrap;align-items:center;gap:10px 22px}
+.tete h1{margin:0;font-size:1.05rem;font-weight:700;letter-spacing:-.3px;color:var(--noir)}
+.tete h1 small{display:block;font-family:"Manrope",sans-serif;font-size:.74rem;letter-spacing:.12em;text-transform:uppercase;color:var(--teal-txt);font-weight:700}
+.seg{display:inline-flex;background:var(--fond);border:1px solid var(--ligne);border-radius:999px;padding:3px;font-family:"Manrope",sans-serif;font-weight:700;font-size:.86rem}
+.seg button{border:0;background:none;color:var(--gris);padding:8px 16px;border-radius:999px;cursor:pointer;font:inherit;min-height:36px}
+.seg button[aria-pressed="true"]{background:var(--nuit-900);color:#fff}
+.seg button:focus-visible{outline:2px solid var(--or);outline-offset:2px}
+.tete .liens{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap;font-family:"Manrope",sans-serif;font-size:.82rem}
+.tete .liens a{color:var(--teal-txt);font-weight:700;text-decoration:underline;text-underline-offset:3px}
+.corps{flex:1;display:grid;grid-template-columns:300px 1fr;min-height:0}
+.liste{background:var(--papier);border-right:1px solid var(--ligne);overflow:auto;padding-block:16px;padding-inline:16px}
+.liste h2{font-size:.74rem;letter-spacing:.12em;text-transform:uppercase;color:var(--teal-txt);margin:14px 0 8px;font-family:"Manrope",sans-serif}
+.liste h2:first-child{margin-top:0}
+.liste ol{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+.liste li button{width:100%;text-align:left;border:1px solid var(--ligne);background:var(--papier);border-radius:10px;padding:9px 11px;cursor:pointer;font:inherit;color:var(--noir);display:grid;gap:2px;min-height:44px}
+.liste li button:hover,.liste li button.actif{border-color:var(--nuit-900);background:var(--teal-fond)}
+.liste li button b{font-weight:600;font-size:.92rem}
+.liste li button small{color:var(--gris);font-size:.8rem;line-height:1.35}
+.liste .tag{display:inline-block;font-family:"Manrope",sans-serif;font-size:.68rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:2px 7px;border-radius:999px;margin-right:6px}
+.tag--c{background:var(--teal-fond);color:var(--teal-txt)}.tag--x{background:var(--or-fond);color:#8A5A00}.tag--u{background:var(--vert-fond);color:var(--vert)}
+.alerte{margin:16px 0 0;background:var(--rouge-fond);border:1px solid #E7B4A6;border-radius:10px;padding:10px 12px;font-size:.86rem;color:var(--texte)}
+.alerte b{color:var(--rouge)}
+.note{margin:12px 0 0;font-size:.8rem;color:var(--gris)}
+.vues{display:grid;grid-template-columns:1fr;min-height:0}
+.vues.cote{grid-template-columns:1fr 1fr}
+.vue{display:flex;flex-direction:column;min-height:0;border-left:1px solid var(--ligne)}
+.vue[hidden]{display:none}
+.vue header{font-family:"Manrope",sans-serif;font-size:.78rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;padding:8px 14px;background:var(--papier);border-bottom:1px solid var(--ligne);color:var(--gris)}
+.vue--apres header{color:var(--teal-txt)}
+.vue iframe{flex:1;width:100%;border:0;background:#fff;min-height:70vh}
+@media (max-width:900px){
+  .corps{grid-template-columns:1fr}
+  .liste{border-right:0;border-bottom:1px solid var(--ligne);max-height:38vh}
+  .vues.cote{grid-template-columns:1fr}
+  .vue{border-left:0}
+}
+</style>
+<div class="tete">
+  <h1><small>Authentique Égypte · page programme</small>Voyage à l’Oasis de Siwa</h1>
+  <div class="seg" role="group" aria-label="Vue">
+    <button type="button" data-vue="avant" aria-pressed="false">Avant</button>
+    <button type="button" data-vue="apres" aria-pressed="true">Après</button>
+    <button type="button" data-vue="cote" aria-pressed="false">Côte à côte</button>
+  </div>
+  <p class="liens"><a href="avant.html" target="_blank" rel="noopener">Ouvrir l’avant</a><a href="apres.html" target="_blank" rel="noopener">Ouvrir l’après</a></p>
+</div>
+<div class="corps">
+  <aside class="liste" aria-label="Ce qui change">
+    <h2>Confiance</h2>
+    <ol>
+      <li><button type="button" data-cible="t-equipe"><b><span class="tag tag--c">confiance</span>Qui vous répond</b><small>Mélanie, l’équipe au Caire, les garanties, la presse. Faits repris de la page « Qui sommes-nous ».</small></button></li>
+      <li><button type="button" data-cible="t-equipe"><b><span class="tag tag--c">confiance</span>Preuves administratives</b><small>Structure en France, partenaire licencié en Égypte. Les numéros sont à fournir.</small></button></li>
+      <li><button type="button" data-cible="t-equipe"><b><span class="tag tag--c">confiance</span>Voyager sereinement</b><small>La réponse « est-ce dangereux ? » sortie de la FAQ, en clair.</small></button></li>
+      <li><button type="button" data-cible="t-equipe"><b><span class="tag tag--c">confiance</span>Photos de voyageurs</b><small>Quatre emplacements, prénom et mois. À collecter.</small></button></li>
+      <li><button type="button" data-cible="t-avis"><b><span class="tag tag--c">confiance</span>Avis reliés à Google</b><small>Lien vers la fiche, dans le panneau et sur le mur d’avis.</small></button></li>
+      <li><button type="button" data-cible="t-tarif"><b><span class="tag tag--c">confiance</span>Tarif transparent</b><small>Paiement, annulation et « pourquoi ce prix » sous le tarif.</small></button></li>
+    </ol>
+    <h2>UX</h2>
+    <ol>
+      <li><button type="button" data-cible="haut"><b><span class="tag tag--x">ux</span>Mini-formulaire devis</b><small>Période, voyageurs, un mot. Compose un message WhatsApp prérempli.</small></button></li>
+      <li><button type="button" data-cible="t-quand"><b><span class="tag tag--x">ux</span>Quand partir à Siwa</b><small>Douze mois, températures et affluence du guide « quand partir ».</small></button></li>
+      <li><button type="button" data-cible="t-jpj"><b><span class="tag tag--x">ux</span>Carte cliquable</b><small>Un point sur la carte ouvre la journée correspondante.</small></button></li>
+      <li><button type="button" data-cible="haut"><b><span class="tag tag--x">ux</span>Navigation par sections</b><small>Sept ancres sous le panneau, l’onglet suit le défilement.</small></button></li>
+      <li><button type="button" data-cible="haut"><b><span class="tag tag--x">ux</span>Partager le programme</b><small>WhatsApp, e-mail, copier le lien.</small></button></li>
+    </ol>
+    <h2>UI</h2>
+    <ol>
+      <li><button type="button" data-cible="haut"><b><span class="tag tag--u">ui</span>Héros : ligne de réassurance</b><small>Devis gratuit sous 48 h, aucune CB, assistance 24h/24.</small></button></li>
+      <li><button type="button" data-cible="haut"><b><span class="tag tag--u">ui</span>Panneau devis hiérarchisé</b><small>Un visage, un seul bouton principal, WhatsApp en second.</small></button></li>
+      <li><button type="button" data-cible="t-quand"><b><span class="tag tag--u">ui</span>Pictos sur les étapes</b><small>Arrivée, route, lever de soleil, visite : lisible d’un coup d’œil.</small></button></li>
+    </ol>
+    <p class="alerte"><b>Point contenu à corriger, indépendant de la refonte :</b> la page Siwa en ligne décrit les étapes du mont Sinaï (Sainte-Catherine, monastère, ascension). Les deux versions le reprennent fidèlement. À remplacer par le déroulé réel de Siwa dans WordPress.</p>
+    <p class="note">Rien n’est inventé : chaque phrase vient du site en ligne. Les éléments manquants portent une étiquette « à remplir ».</p>
+  </aside>
+  <div class="vues" id="vues">
+    <section class="vue vue--avant" id="v-avant" hidden><header>Avant · page actuelle</header><iframe src="avant.html" title="Version actuelle" loading="lazy"></iframe></section>
+    <section class="vue vue--apres" id="v-apres"><header>Après · blocs proposés</header><iframe src="apres.html" title="Version proposée"></iframe></section>
+  </div>
+</div>
+<script>
+(function(){
+  var vues=document.getElementById('vues'),av=document.getElementById('v-avant'),ap=document.getElementById('v-apres');
+  var btns=[].slice.call(document.querySelectorAll('.seg button'));
+  function montrer(v){
+    btns.forEach(function(b){b.setAttribute('aria-pressed',String(b.getAttribute('data-vue')===v))});
+    vues.classList.toggle('cote',v==='cote');
+    av.hidden=(v==='apres');ap.hidden=(v==='avant');
+    try{localStorage.setItem('siwa-vue',v)}catch(e){}
+  }
+  btns.forEach(function(b){b.addEventListener('click',function(){montrer(b.getAttribute('data-vue'))})});
+  var v=null;try{v=localStorage.getItem('siwa-vue')}catch(e){}
+  if(v)montrer(v);
+  document.querySelectorAll('.liste [data-cible]').forEach(function(b){
+    b.addEventListener('click',function(){
+      document.querySelectorAll('.liste .actif').forEach(function(x){x.classList.remove('actif')});b.classList.add('actif');
+      if(ap.hidden)montrer('apres');
+      var c=b.getAttribute('data-cible'),fr=ap.querySelector('iframe');
+      var base='apres.html';
+      fr.src=base+(c==='haut'?'':'#'+c)+(c==='haut'?'?t='+Date.now():'');
+    });
+  });
+})();
+</script>
