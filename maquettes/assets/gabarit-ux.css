@@ -267,3 +267,18 @@
   .pg .etape__pts li{font-size:1.06rem;padding-left:22px}
   .pg .etape__meta{gap:10px 18px}
 }
+
+/* ---- rythme vertical de l'itinéraire ----------------------------------------
+   Mesuré avant correction : 0 px entre deux jours, 0 px entre deux étapes, et
+   une tête de jour dont le filet flottait à 18 px du titre pour 26 px de vide
+   en dessous. Une seule échelle, en multiples de 8. */
+.pg .jour + .jour{margin-top:64px}
+.pg .jour__tete{margin:0 0 24px;padding:0 0 14px}
+.pg .etape + .etape{margin-top:40px}
+.pg .etape__photo{margin:0 0 24px}
+.pg .etape__t{margin:0 0 12px}
+.pg .etape__meta{margin:16px 0 0;padding:12px 0 0}
+@media (max-width:600px){
+  .pg .jour + .jour{margin-top:48px}
+  .pg .etape + .etape{margin-top:32px}
+}

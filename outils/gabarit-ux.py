@@ -397,22 +397,24 @@ def _pareil(a, b):
     return net(a) == net(b)
 
 
-def recomposer_etape(corps, titre_jour):
-    """Le gabarit aplatit en un seul paragraphe ce qui était une liste à puces :
-    une phrase par ligne, séparées par des <br>. On rend la structure, sans
-    toucher aux mots — première ligne en titre d'étape, lignes suivantes en
-    liste, « Hébergement : … » et « En option : … » en étiquettes."""
-    lignes = [x.strip() for x in re.split(r'<br\s*/?>', corps)]
-    lignes = [re.sub(r'^\s*[•·–-]\s*', '', x) for x in lignes if _texte(x)]
-    if len(lignes) < 2:
+def recomposer_etape(segments, titre_jour, titre_existant=''):
+    """Le gabarit aplatit en paragraphes ce qui était une liste à puces sur le
+    site : une phrase par ligne. On rend la structure, sans toucher aux mots —
+    une puce par ligne, un titre d'étape quand la première ligne en tient lieu,
+    « Hébergement : … » et « En option : … » en étiquettes."""
+    lignes = [re.sub(r'^\s*[•·–-]\s*', '', x.strip()) for x in segments if _texte(x)]
+    if not lignes:
         return None
 
     titre = ''
-    if len(_texte(lignes[0])) <= 80 and not re.match(r'^[A-Za-zÀ-ÿ\'’ -]{3,28}\s*:', _texte(lignes[0])):
+    if not titre_existant and len(_texte(lignes[0])) <= 80 \
+            and not re.match(r'^[A-Za-zÀ-ÿ\'’ -]{3,28}\s*:', _texte(lignes[0])):
         premiere = lignes.pop(0)
-        # La première ligne répète souvent le titre du jour : on ne l'affiche
-        # pas deux fois, l'information reste portée par le titre du jour.
+        # Cette première ligne répète souvent le titre du jour : on ne l'affiche
+        # pas deux fois, l'information reste portée par ce titre.
         titre = '' if _pareil(_texte(premiere), titre_jour) else premiere
+    elif titre_existant and _pareil(_texte(lignes[0]), titre_existant):
+        lignes.pop(0)
     if not lignes:
         return None
 
@@ -423,7 +425,7 @@ def recomposer_etape(corps, titre_jour):
         if eti:
             nom, valeur = eti.group(1).strip(), eti.group(2).strip()
             cle = nom.lower()
-            picto = next((i for m, i in META if cle.startswith(m)), '')
+            picto = next((ic for m, ic in META if cle.startswith(m)), '')
             if picto:
                 metas.append((nom, valeur, picto))
                 continue
@@ -435,35 +437,79 @@ def recomposer_etape(corps, titre_jour):
     bloc = ''
     if titre:
         bloc += '<h4 class="etape__t">%s</h4>' % titre
-    if len(points) == 1 and not points[0][0]:
-        bloc += '<p>%s</p>' % points[0][1]
-    elif points:
+    if points:
         bloc += '<ul class="etape__pts">' + ''.join(
             ('<li class="etape__opt"><span class="etape__eti">En option</span>%s</li>' % t)
             if genre == 'option' else ('<li>%s</li>' % t)
             for genre, t in points) + '</ul>'
     if metas:
         bloc += '<p class="etape__meta">' + ''.join(
-            '<span class="etape__sv">%s<b>%s</b><i>%s</i></span>' % (I[picto], H.escape(nom), H.escape(valeur))
-            for nom, valeur, picto in metas) + '</p>'
-    return bloc
+            '<span class="etape__sv">%s<b>%s</b><i>%s</i></span>' % (I[ic], H.escape(nom), H.escape(val))
+            for nom, val, ic in metas) + '</p>'
+    return bloc or None
+
+
+def fusionner_jours(h, journal):
+    """Deux blocs « jour » de suite portant le même titre et le même numéro : la
+    fiche en ligne les a en double. On garde un seul en-tête, les étapes des
+    deux blocs se suivent. Aucun contenu n'est perdu."""
+    vu = [None]
+
+    def couper(m):
+        cle = (_texte(m.group(1)), m.group(2).strip())
+        double = (cle == vu[0])
+        vu[0] = cle
+        return '' if double else m.group(0)
+
+    motif = (r'</div>\s*<div class="jour">\s*<div class="jour__tete">'
+             r'<h3>(.*?)</h3><span class="jour__no">([^<]*)</span></div>')
+    # le premier en-tête sert de référence, il n'est pas précédé d'un </div> de jour
+    premier = re.search(r'<div class="jour__tete"><h3>(.*?)</h3><span class="jour__no">([^<]*)</span></div>', h, re.S)
+    if premier:
+        vu[0] = (_texte(premier.group(1)), premier.group(2).strip())
+    h2, n = re.subn(motif, couper, h, flags=re.S)
+    (journal.pose if n else journal.absent).append('jours en double')
+    return h2
 
 
 def bloc_recit(h, journal):
-    jour = ['']
-
-    def tete(m):
-        jour[0] = _texte(m.group(1))
-        return m.group(0)
+    entetes = [(m.start(), _texte(m.group(1)))
+               for m in re.finditer(r'<div class="jour__tete"><h3>(.*?)</h3>', h, re.S)]
 
     def refaire(m):
-        for t in re.finditer(r'<div class="jour__tete"><h3>(.*?)</h3>', h[:m.start()], re.S):
-            jour[0] = _texte(t.group(1))
-        avant, corps, apres = m.group(1), m.group(2), m.group(3)
-        neuf = recomposer_etape(corps, jour[0])
-        return m.group(0) if neuf is None else avant + neuf + apres
+        art = m.group(0)
+        # Une étape sans photo ni texte n'est qu'un conteneur vide : elle
+        # creusait un blanc de 40 px au milieu du déroulé. On la retire, sauf
+        # si un lien pointe dessus.
+        if '<img' not in art and not re.search(r'<p[^>]*>\s*\S', art):
+            ident = re.search(r'id="([^"]+)"', art)
+            if not ident or ('href="#%s"' % ident.group(1)) not in h:
+                return ''
+        # Seuls les paragraphes NUS portent le récit. Ceux qui ont une classe
+        # (mentions de repas du gabarit) sont laissés où ils sont : les effacer
+        # faisait disparaître « Petit-déjeuner, déjeuner et dîner inclus ».
+        nus = [x for x in re.finditer(r'<p>(.*?)</p>', art, re.S)]
+        if not nus:
+            return art
+        segments = []
+        for para in nus:
+            segments += re.split(r'<br\s*/?>', para.group(1))
+        debut, fin = nus[0].start(), nus[0].end()
+        titre_jour = ''
+        for pos, t in entetes:
+            if pos < m.start():
+                titre_jour = t
+        h4 = re.search(r'<h4[^>]*>(.*?)</h4>', art[:debut], re.S)
+        neuf = recomposer_etape(segments, titre_jour, _texte(h4.group(1)) if h4 else '')
+        if neuf is None:
+            return art
+        # le bloc remplace le premier paragraphe nu, les suivants disparaissent
+        refait = art[:debut] + neuf + art[fin:]
+        for autre in nus[1:]:
+            refait = refait.replace(autre.group(0), '', 1)
+        return refait
 
-    h2, n = re.subn(r'(<article class="etape".*?)<p>(.*?)</p>(\s*</article>)', refaire, h, flags=re.S)
+    h2, n = re.subn(r'<article class="etape".*?</article>', refaire, h, flags=re.S)
     (journal.pose if n else journal.absent).append('étapes en liste')
     return h2
 
@@ -631,6 +677,7 @@ def habiller(h, live, css, js, photo, avatar, nom):
     h = bloc_panneau(h, journal, titre, prix, live)
     h = bloc_ancres(h, journal)
     h = bloc_etapes(h, journal)
+    h = fusionner_jours(h, journal)
     h = bloc_recit(h, journal)
     h = bloc_carte(h, journal)
     h = bloc_tarif(h, journal)
