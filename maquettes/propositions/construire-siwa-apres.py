@@ -12,6 +12,10 @@ LIVE = 'https://authentiquegypte.com/programs/excursion-a-loasis-de-siwa/'
 QUI = 'https://authentiquegypte.com/qui-sommes-nous/'
 GOOGLE = 'https://search.google.com/local/reviews?placeid=ChIJOZOsXzk5WBQRMujsdlYsBy8'
 WA = 'https://wa.me/201066619098'
+import os
+_ici = os.path.dirname(os.path.abspath(__file__))
+PHOTO = open(os.path.join(_ici, 'melanie-640.b64'), encoding='ascii').read().strip()
+AVATAR = open(os.path.join(_ici, 'melanie-96.b64'), encoding='ascii').read().strip()
 
 def une(pat, rep, flags=0, n=1):
     global h
@@ -56,34 +60,33 @@ une(r'(Poser une question sur WhatsApp</a></div>)(\s*</div></div></div></section
 MOIS = ['janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre']
 opts = '<option value="">Je ne sais pas encore</option>' + ''.join('<option>%s</option>' % m.capitalize() for m in MOIS)
 form = (
-    '<div class="pan__qui"><span class="pan__av" aria-hidden="true">M</span><span><b>Mélanie, fondatrice</b>'
-    '<small>Structure franco-égyptienne, équipe au Caire</small></span></div>'
+    '<div class="pan__qui"><img class="pan__av" src="' + AVATAR + '" alt="" width="36" height="36"><span><b>Mélanie vous répond</b>'
+    '<small>sous 48 h, hors vendredi et samedi</small></span></div>'
     '<form class="pan__form" action="https://authentiquegypte.com/sur-mesure/" method="get" data-devis>'
-    '<label><span>Quand souhaitez-vous partir ?</span><select>' + opts + '</select></label>'
-    '<label><span>Voyageurs</span><input type="number" min="1" max="12" value="2"></label>'
-    '<label class="pan__l2"><span>Un mot sur vos envies</span><input type="text" placeholder="Rythme, hébergement, dates précises…"></label>'
-    '<button class="btn btn--or btn--bloc" type="submit">Recevoir mon devis sous 48 h</button>'
+    '<select aria-label="Période souhaitée"><option value="">Quand partir ?</option>' + ''.join('<option>%s</option>' % m.capitalize() for m in MOIS) + '</select>'
+    '<input type="number" min="1" max="12" placeholder="Voyageurs" aria-label="Nombre de voyageurs">'
+    '<input class="pan__l2" type="text" placeholder="Vos envies (facultatif)" aria-label="Vos envies">'
+    '<button class="btn btn--or btn--bloc" type="submit">Recevoir mon devis</button>'
     '</form>'
-    '<p class="pan__alt">ou <a href="' + WA + '">' + I['chat'] + ' poser une question sur WhatsApp</a></p>'
+    '<p class="pan__note">Aucune carte bancaire à cette étape</p>'
+    '<a class="pan__wa" href="' + WA + '">' + I['chat'] + ' Une question ? WhatsApp</a>'
 )
 une(r'<div class="pan__act">.*?</div>', form, flags=re.S)
-gar = ('<ul class="pan__gar"><li>' + I['shield'] + '<span>Structure enregistrée en France</span></li>'
-       '<li>' + I['shield'] + '<span>Partenaire titulaire d&#x27;une licence touristique en Égypte</span></li>'
-       '<li>' + I['phone'] + '<span>Représentant local et numéro d&#x27;urgence 24h/24</span></li></ul>')
-une(r'<p class="pan__note">Réponse sous 48 h, hors vendredi et samedi<br>Aucune carte bancaire demandée à cette étape.</p>',
-    '<p class="pan__note">Réponse sous 48 h, hors vendredi et samedi · aucune carte bancaire à cette étape.</p>' + gar)
-une(r'<b>23 avis Google</b> <span>Agence locale basée au Caire</span></p>',
-    '<a href="' + GOOGLE + '" target="_blank" rel="noopener"><b>23 avis Google</b></a> <span>· Agence au Caire</span></p>'
-    '<p class="pan__part"><span>Partager</span>'
-    '<a href="https://wa.me/?text=' + H.escape('Voyage à l’Oasis de Siwa avec Authentique Égypte : ' + LIVE) + '" target="_blank" rel="noopener">' + I['chat'] + '<i>WhatsApp</i></a>'
-    '<a href="mailto:?subject=' + H.escape('Voyage à l’Oasis de Siwa') + '&amp;body=' + H.escape('Regarde ce programme : ' + LIVE) + '">' + I['mail'] + '<i>E-mail</i></a>'
-    '<button type="button" data-copier="' + LIVE + '">' + I['link'] + '<i>Copier le lien</i></button></p>')
+gar = ('<ul class="pan__gar"><li>' + I['shield'] + '<span>Enregistrée en France</span></li>'
+       '<li>' + I['shield'] + '<span>Licence en Égypte</span></li>'
+       '<li>' + I['phone'] + '<span>Assistance 24h/24</span></li></ul>')
+une(r'<p class="pan__note">Réponse sous 48 h, hors vendredi et samedi<br>Aucune carte bancaire demandée à cette étape.</p>', gar)
+une(r'<p class="pan__avis">.*?</p>',
+    '<p class="pan__avis"><a href="' + GOOGLE + '" target="_blank" rel="noopener"><svg class="gg" aria-hidden="true" width="16" height="16" viewBox="0 0 48 48"><path fill="#4285F4" d="M45.12 24.5c0-1.56-.14-3.06-.4-4.5H24v8.51h11.84c-.51 2.75-2.06 5.08-4.39 6.64v5.52h7.11c4.16-3.83 6.56-9.47 6.56-16.17z"/><path fill="#34A853" d="M24 46c5.94 0 10.92-1.97 14.56-5.33l-7.11-5.52c-1.97 1.32-4.49 2.1-7.45 2.1-5.73 0-10.58-3.87-12.31-9.07H4.34v5.7C7.96 41.07 15.4 46 24 46z"/><path fill="#FBBC05" d="M11.69 28.18C11.25 26.86 11 25.45 11 24s.25-2.86.69-4.18v-5.7H4.34C2.85 17.09 2 20.45 2 24c0 3.55.85 6.91 2.34 9.88l7.35-5.7z"/><path fill="#EA4335" d="M24 10.75c3.23 0 6.13 1.11 8.41 3.29l6.31-6.31C34.91 4.18 29.93 2 24 2 15.4 2 7.96 6.93 4.34 14.12l7.35 5.7c1.73-5.2 6.58-9.07 12.31-9.07z"/></svg><b>23 avis Google</b></a>'
+    '<span class="pan__part"><span>Partager</span>'
+    '<a href="https://wa.me/?text=' + H.escape('Voyage à l’Oasis de Siwa avec Authentique Égypte : ' + LIVE) + '" target="_blank" rel="noopener" aria-label="Partager sur WhatsApp" title="WhatsApp">' + I['chat'] + '</a>'
+    '<a href="mailto:?subject=' + H.escape('Voyage à l’Oasis de Siwa') + '&amp;body=' + H.escape('Regarde ce programme : ' + LIVE) + '" aria-label="Partager par e-mail" title="E-mail">' + I['mail'] + '</a>'
+    '<button type="button" data-copier="' + LIVE + '" aria-label="Copier le lien" title="Copier le lien">' + I['link'] + '</button></span></p>', flags=re.S)
 
 # ---------------------------------------------------------------- navigation collante par sections
 une(r'<nav class="somm"',
     '<nav class="pg-anc" aria-label="Sections de la page"><a href="#t-vue">Vue d&#x27;ensemble</a><a href="#t-quand">Quand partir</a>'
-    '<a href="#t-jpj">Jour par jour</a><a href="#t-tarif">Tarif</a><a href="#t-equipe">Qui vous répond</a>'
-    '<a href="#t-faq">Questions</a><a href="#t-avis">Avis</a></nav><nav class="somm"')
+    '<a href="#t-jpj">Jour par jour</a><a href="#t-tarif">Tarif</a><a href="#t-faq">Questions</a></nav><nav class="somm"')
 
 # ---------------------------------------------------------------- pictos sur les étapes
 def picto(m):
@@ -130,31 +133,27 @@ h = h[:j] + quand + h[j:]
 
 # ---------------------------------------------------------------- qui vous répond + garanties + presse + photos voyageurs
 equipe = ('<section class="pg-sec equipe" id="s-equipe"><div class="wrap">'
-          '<p class="eyebrow">L’agence</p><h2 id="t-equipe">Qui vous répond, et qui vous accompagne sur place</h2>'
-          '<div class="equipe__g">'
-          '<article class="equipe__c"><div class="equipe__av">M<span class="aremplir">photo à fournir</span></div><h3>Mélanie, fondatrice</h3>'
-          '<p>Tout commence quand Mélanie, alors installée en Inde, tombe sous le charme de l’Égypte lors d’un premier voyage. Elle décide de s’entourer de professionnels égyptiens passionnés pour développer une approche humaine du voyage.</p>'
-          '<a class="lien-fl" href="' + QUI + '">Lire notre histoire</a></article>'
-          '<article class="equipe__c"><div class="equipe__av equipe__av--eq">' + I['user'] + '</div><h3>L’équipe au Caire</h3>'
-          '<p>Basée au Caire, notre équipe s’appuie sur un réseau solide de guides francophones, chauffeurs et spécialistes logistiques.</p>'
-          '<ul><li>' + I['check'] + '<span>Guides officiellement certifiés et régulièrement évalués</span></li>'
-          '<li>' + I['check'] + '<span>Un représentant local dans chaque destination, numéro d’urgence 24h/24</span></li>'
-          '<li>' + I['check'] + '<span>Contacts avec des médecins et pharmacies locales</span></li></ul></article>'
-          '<article class="equipe__c equipe__c--gar"><div class="equipe__av equipe__av--eq">' + I['shield'] + '</div><h3>Nos garanties</h3>'
-          '<ul><li>' + I['check'] + '<span>Structure enregistrée légalement en France</span></li>'
-          '<li>' + I['check'] + '<span>Partenaire titulaire d’une licence touristique officielle en Égypte</span></li>'
-          '<li>' + I['check'] + '<span>Paiements au partenaire égyptien certifié, interlocuteur en France</span></li>'
-          '<li>' + I['check'] + '<span>Remboursements selon les CGV, validés par la structure française</span></li></ul>'
-          '<p class="equipe__num"><span class="aremplir">N° d’immatriculation et de licence à afficher ici</span></p></article>'
+          '<p class="eyebrow">L’agence</p><h2 id="t-equipe">Qui vous répond</h2>'
+          '<div class="equipe__portrait">'
+          '<div class="equipe__photo"><img src="' + PHOTO + '" alt="Mélanie, fondatrice d’Authentique Égypte" width="640" height="800"></div>'
+          '<div class="equipe__txt"><p class="equipe__cit">« Une aventure née d’un regard curieux sur l’Égypte authentique »</p>'
+          '<h3>Mélanie, fondatrice</h3>'
+          '<p>Tombée sous le charme de l’Égypte lors d’un premier voyage, elle s’est entourée de professionnels égyptiens passionnés. Structure franco-égyptienne, équipe au Caire.</p>'
+          '<a class="btn btn--fantome btn--sm" href="' + QUI + '">Notre histoire</a></div>'
           '</div>'
-          '<div class="equipe__sur"><div><p class="eyebrow">Voyager sereinement</p><h3>Est-ce dangereux de venir en Égypte ?</h3>'
-          '<p>Venir en Égypte est tout à fait sûr, surtout si vous suivez quelques recommandations simples comme dans n’importe quel pays touristique. Les zones touristiques majeures sont très bien sécurisées, avec une présence policière renforcée. '
-          '<a href="#t-faq">Lire la réponse complète</a></p></div>'
-          '<div><h3>Voyager seule, avec des enfants, avec un régime particulier ?</h3><p><span class="aremplir">Réponses à rédiger avec Mélanie</span> à partir des questions reçues sur WhatsApp.</p></div></div>'
+          '<ul class="equipe__tuiles">'
+          '<li>' + I['user'] + '<b>Guides certifiés</b><span>évalués régulièrement</span></li>'
+          '<li>' + I['phone'] + '<b>Assistance 24h/24</b><span>un représentant local</span></li>'
+          '<li>' + I['shield'] + '<b>Enregistrée en France</b><span class="aremplir">n° à fournir</span></li>'
+          '<li>' + I['shield'] + '<b>Licence en Égypte</b><span>partenaire officiel</span></li>'
+          '<li>' + I['card'] + '<b>Paiement sécurisé</b><span>remboursement selon CGV</span></li>'
+          '</ul>'
+          '<div class="equipe__sur">' + I['shield'] + '<p><b>Est-ce dangereux de venir en Égypte ?</b> Venir en Égypte est tout à fait sûr : les zones touristiques majeures sont très bien sécurisées. <a href="#t-faq">Lire la réponse</a></p></div>'
+          '<div class="equipe__bas">'
           '<div class="presse"><p class="eyebrow">Ils parlent de nous</p><ul><li>Le Figaro</li><li>Le Figaro Madame</li><li>Marie Claire</li><li>Partir.com</li><li>Evaneos</li><li>TripAdvisor</li></ul></div>'
-          '<div class="voyageurs"><div><p class="eyebrow">Ils sont partis avec nous</p><h3>Les photos de nos voyageurs à Siwa</h3>'
-          '<p>Quatre photos envoyées par des clients, prénom et mois du voyage. <span class="aremplir">À collecter sur WhatsApp</span></p></div>'
+          '<div class="voyageurs"><p class="eyebrow">Ils sont partis avec nous <span class="aremplir">photos à collecter</span></p>'
           '<ul>' + ''.join('<li>' + I['cam'] + '<span>Prénom, mois</span></li>' for _ in range(4)) + '</ul></div>'
+          '</div>'
           '</div></section>')
 i = h.find('<section class="pg-sec pg-sec--nuit">'); j = h.find('</section>', i) + len('</section>')
 assert i > 0
@@ -271,7 +270,7 @@ CSS = r'''
 .pg .pan__prix{line-height:1.2}
 .pg .pan__prix b{font-size:1.6rem}
 .pg .pan__qui{margin:8px 0;padding:8px 0;border-top:1px solid var(--ligne-2);gap:10px}
-.pg .pan__av{width:36px;height:36px;font-size:1.1rem}
+.pg .pan__av{width:36px;height:36px;font-size:1.1rem;object-fit:cover;background:var(--fond)}
 .pg .pan__qui b{font-size:.92rem;line-height:1.2}
 .pg .pan__qui small{font-size:.76rem;line-height:1.3}
 .pg .pan__form{gap:6px 8px}
@@ -301,6 +300,53 @@ CSS = r'''
 @media (max-height:700px){.pg .pan__part,.pg .pan__gar{display:none}}
 @media (max-height:600px){.pg .pan{position:static}}
 @media (max-width:1040px){.pg .pan{position:static}.pg .somm{display:block}.pg .pan__part,.pg .pan__gar{display:flex}}
+
+/* ---- v3 : moins de texte, plus de visuel (panneau + « Qui vous répond ») ---- */
+.pg .pan__form select,.pg .pan__form input{height:40px;font-size:.92rem}
+.pg .pan__form .pan__l2,.pg .pan__form .btn{grid-column:1/-1}
+.pg .pan__form input::placeholder{color:var(--gris)}
+.pg .pan__note{margin:8px 0 0;font-size:.78rem}
+.pg .pan__wa{display:flex;align-items:center;justify-content:center;gap:7px;margin:8px 0 0;min-height:38px;border:1px solid var(--ligne-pg);border-radius:var(--r-pill);font-family:"Manrope",sans-serif;font-size:.86rem;font-weight:700;color:#0B6B3A;background:#F0FBF4}
+.pg .pan__wa:hover{border-color:#25D366}
+.pg .pan__gar{justify-content:center;gap:5px;padding:10px 0 0;margin:10px 0 0}
+.pg .pan__gar li{border:1px solid var(--ligne-pg);border-radius:var(--r-pill);padding:3px 9px;font-size:.72rem;font-weight:600;background:var(--fond-2)}
+.pg .pan__avis{display:flex;justify-content:space-between;align-items:center;gap:8px;margin:10px 0 0;padding:10px 0 0;font-size:.82rem;text-align:left}
+.pg .pan__avis>a{display:inline-flex;align-items:center;gap:6px;text-decoration:none;color:var(--nuit-900)}
+.pg .pan__avis>a b{text-decoration:underline;text-underline-offset:3px}
+.pg .pan__part{display:inline-flex;align-items:center;gap:4px;margin:0;padding:0;border:0}
+.pg .pan__part>span{font-size:.62rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--gris-lis);margin-right:2px;flex:0 0 auto}
+.pg .pan__part a,.pg .pan__part button{width:30px;height:30px;min-height:0;padding:0;justify-content:center;border-radius:50%}
+.pg .pan__part button.ok{background:var(--vert-fond);border-color:var(--vert);color:var(--vert)}
+.pg .equipe{padding:clamp(48px,6vw,80px) 0}
+.pg .equipe__portrait{display:grid;grid-template-columns:260px 1fr;gap:34px;align-items:center;background:#fff;border:1px solid var(--ligne-pg);border-radius:var(--r-l);padding:26px;margin:8px 0 0}
+.pg .equipe__photo{position:relative;aspect-ratio:4/5;border-radius:var(--r-m);background:linear-gradient(160deg,var(--nuit-900),var(--nuit));display:grid;place-items:center;overflow:hidden}
+.pg .equipe__ini{font-family:"Archivo",serif;font-weight:700;font-size:5rem;color:var(--or);opacity:.9}
+.pg .equipe__photo img{width:100%;height:100%;object-fit:cover;display:block}
+.pg .equipe__txt{display:grid;gap:10px}
+.pg .equipe__cit{margin:0;font-family:"Archivo",serif;font-size:clamp(1.25rem,2vw,1.6rem);font-weight:600;line-height:1.3;letter-spacing:-.5px;color:var(--nuit-900)}
+.pg .equipe__txt h3{margin:0;font-size:1.05rem;color:var(--noir)}
+.pg .equipe__txt p{margin:0;font-size:1rem;line-height:1.6;color:var(--texte)}
+.pg .equipe__txt .btn{justify-self:start;margin-top:4px}
+.pg .equipe__tuiles{list-style:none;margin:16px 0 0;padding:0;display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+.pg .equipe__tuiles li{background:#fff;border:1px solid var(--ligne-pg);border-radius:var(--r-m);padding:16px 14px;display:grid;gap:4px;justify-items:center;text-align:center;font-family:"Manrope",sans-serif}
+.pg .equipe__tuiles svg{width:26px;height:26px;color:var(--teal-txt);margin-bottom:4px}
+.pg .equipe__tuiles b{font-size:.92rem;color:var(--noir);line-height:1.25}
+.pg .equipe__tuiles span{font-size:.78rem;color:var(--gris-lis);line-height:1.3}
+.pg .equipe .equipe__sur{display:flex;gap:14px;align-items:center;margin:16px 0 0;background:var(--nuit-900);background-color:#0B5170;color:#DCE6EA;border-radius:var(--r-m);padding:16px 22px}
+.pg .equipe__sur svg{flex:0 0 auto;width:26px;height:26px;color:var(--or)}
+.pg .equipe__sur p{margin:0;font-size:1rem;line-height:1.5}
+.pg .equipe__sur b{color:#fff}
+.pg .equipe__sur a{color:var(--or-clair);font-weight:700;text-decoration:underline;text-underline-offset:3px;white-space:nowrap}
+.pg .equipe__bas{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin:28px 0 0;align-items:start}
+.pg .presse{margin:0;display:grid;gap:10px}
+.pg .presse ul{gap:6px 18px}
+.pg .presse li{font-size:1.05rem}
+.pg .voyageurs{display:grid;grid-template-columns:1fr;gap:10px;margin:0}
+.pg .voyageurs .eyebrow{margin:0;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.pg .voyageurs ul{grid-template-columns:repeat(4,1fr);gap:10px}
+.pg .voyageurs li{aspect-ratio:1}
+@media (max-width:1040px){.pg .equipe__tuiles{grid-template-columns:repeat(3,1fr)}.pg .equipe__bas{grid-template-columns:1fr}}
+@media (max-width:700px){.pg .equipe__tuiles li:last-child:nth-child(odd){grid-column:1/-1}.pg .equipe__portrait{grid-template-columns:1fr;padding:18px}.pg .equipe__photo{max-width:220px}.pg .equipe__tuiles{grid-template-columns:repeat(2,1fr)}.pg .equipe__sur{flex-direction:column;align-items:flex-start}}
 </style>
 '''
 JS = r'''
@@ -319,7 +365,7 @@ JS = r'''
   var c=pg.querySelector('[data-copier]');
   if(c){c.addEventListener('click',function(){
     var u=c.getAttribute('data-copier');
-    (navigator.clipboard?navigator.clipboard.writeText(u):Promise.reject()).then(function(){c.classList.add('ok');c.querySelector('i').textContent='Lien copié';},function(){window.prompt('Copiez ce lien :',u);});
+    (navigator.clipboard?navigator.clipboard.writeText(u):Promise.reject()).then(function(){c.classList.add('ok');c.setAttribute('title','Lien copié');c.setAttribute('aria-label','Lien copié');},function(){window.prompt('Copiez ce lien :',u);});
   });}
   // Carte : un clic sur un point ouvre la journée correspondante.
   pg.querySelectorAll('.carte__pt[data-lieu]').forEach(function(p){
