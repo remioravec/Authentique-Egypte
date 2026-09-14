@@ -60,6 +60,7 @@ une(r'(Poser une question sur WhatsApp</a></div>)(\s*</div></div></div></section
 MOIS = ['janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre']
 opts = '<option value="">Je ne sais pas encore</option>' + ''.join('<option>%s</option>' % m.capitalize() for m in MOIS)
 form = (
+    '<ul class="pan__inclus">' + ''.join('<li>' + I['check'] + '<span>%s</span></li>' % x for x in ('Guide privatif', 'Chauffeur privatif', 'Transferts en 4x4 climatisé', 'Assistance H24')) + '</ul>'
     '<div class="pan__qui"><img class="pan__av" src="' + AVATAR + '" alt="" width="36" height="36"><span><b>Mélanie vous répond</b>'
     '<small>sous 48 h, hors vendredi et samedi</small></span></div>'
     '<form class="pan__form" action="https://authentiquegypte.com/sur-mesure/" method="get" data-devis>'
@@ -150,7 +151,7 @@ equipe = ('<section class="pg-sec equipe" id="s-equipe"><div class="wrap">'
           '</ul>'
           '<div class="equipe__sur">' + I['shield'] + '<p><b>Est-ce dangereux de venir en Égypte ?</b> Venir en Égypte est tout à fait sûr : les zones touristiques majeures sont très bien sécurisées. <a href="#t-faq">Lire la réponse</a></p></div>'
           '<div class="equipe__bas">'
-          '<div class="presse"><p class="eyebrow">Ils parlent de nous</p><ul><li>Le Figaro</li><li>Le Figaro Madame</li><li>Marie Claire</li><li>Partir.com</li><li>Evaneos</li><li>TripAdvisor</li></ul></div>'
+          '<div class="presse"><p class="eyebrow">Ils parlent de nous</p><ul><li><span>Le Figaro</span></li><li><span>Le Figaro Madame</span></li><li><span>Marie Claire</span></li><li><span>Partir.com</span></li><li><span>Evaneos</span></li><li><span>TripAdvisor</span></li></ul></div>'
           '<div class="voyageurs"><p class="eyebrow">Ils sont partis avec nous <span class="aremplir">photos à collecter</span></p>'
           '<ul>' + ''.join('<li>' + I['cam'] + '<span>Prénom, mois</span></li>' for _ in range(4)) + '</ul></div>'
           '</div>'
@@ -347,6 +348,45 @@ CSS = r'''
 .pg .voyageurs li{aspect-ratio:1}
 @media (max-width:1040px){.pg .equipe__tuiles{grid-template-columns:repeat(3,1fr)}.pg .equipe__bas{grid-template-columns:1fr}}
 @media (max-width:700px){.pg .equipe__tuiles li:last-child:nth-child(odd){grid-column:1/-1}.pg .equipe__portrait{grid-template-columns:1fr;padding:18px}.pg .equipe__photo{max-width:220px}.pg .equipe__tuiles{grid-template-columns:repeat(2,1fr)}.pg .equipe__sur{flex-direction:column;align-items:flex-start}}
+
+/* ---- v4 : inclus dans le sticky, presse pleine largeur ---- */
+.pg .pan__inclus{list-style:none;margin:10px 0 0;padding:10px 0 0;border-top:1px solid var(--ligne-2);display:grid;grid-template-columns:1fr 1fr;gap:5px 8px;font-family:"Manrope",sans-serif;font-size:.8rem;font-weight:600;color:var(--nuit-900)}
+.pg .pan__inclus li{display:flex;gap:6px;align-items:center;line-height:1.3}
+.pg .pan__inclus svg{flex:0 0 auto;width:14px;height:14px;color:var(--teal-txt)}
+.pg .equipe__bas{grid-template-columns:1fr;gap:24px}
+.pg .presse{gap:12px}
+.pg .presse ul{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;background:#fff;border:1px solid var(--ligne-pg);border-radius:var(--r-l);padding:22px 24px}
+.pg .presse li{display:grid;place-items:center;text-align:center;font-family:"Archivo",serif;font-weight:700;font-size:clamp(1.15rem,1.6vw,1.45rem);letter-spacing:-.6px;line-height:1.1;color:var(--nuit-900);min-height:48px}
+.pg .presse li span{border-bottom:3px solid var(--or);padding-bottom:4px}
+.pg .voyageurs ul{grid-template-columns:repeat(4,1fr)}
+.pg .voyageurs li{aspect-ratio:3/2}
+@media (max-width:1040px){.pg .presse ul{grid-template-columns:repeat(3,1fr)}.pg .voyageurs ul{grid-template-columns:repeat(4,1fr)}}
+@media (max-width:600px){.pg .presse ul{grid-template-columns:repeat(2,1fr);padding:16px}.pg .voyageurs ul{grid-template-columns:repeat(2,1fr)}}
+
+/* ---- v5 : le bleu de marque #21B1B8 comme accent des nouveaux blocs.
+   En aplat il ne porte pas de texte (2,6:1 sur blanc) : il souligne, colore les
+   pictos et les bordures, et teinte les fonds en clair. ---- */
+.pg{--bleu:#21B1B8;--bleu-fond:#E6F6F7}
+.pg .hero__conf svg,.pg .pan__inclus svg,.pg .pan__gar svg,.pg .equipe__tuiles svg,.pg .equipe__sur svg,.pg .carte__aide svg,
+.pg .tarif__cond h3 svg,.pg .equipe__c li svg,.pg .pan__avis .pan__part a,.pg .pan__avis .pan__part button{color:var(--bleu)}
+.pg .apercu li .ic{color:var(--bleu);border-color:var(--bleu)}
+.pg .pan__av{box-shadow:0 0 0 2px var(--bleu)}
+.pg .pan__gar li{border-color:var(--bleu);background:var(--bleu-fond)}
+.pg .pan__part a,.pg .pan__part button{border-color:var(--bleu)}
+.pg .pg-anc a.vu{background:var(--bleu-fond);color:var(--nuit-900);border-color:var(--bleu);box-shadow:inset 0 -3px 0 var(--bleu)}
+.pg .carte__pt:hover circle{stroke:var(--bleu)}
+.pg .etape--vise{outline-color:var(--bleu)}
+.pg .quand__frise .q-ok{box-shadow:inset 0 -3px 0 var(--bleu)}
+.pg .tarif__cond article{border-top:3px solid var(--bleu)}
+.pg .equipe__portrait{border-top:4px solid var(--bleu)}
+.pg .equipe__tuiles li{border-top:3px solid var(--bleu)}
+.pg .equipe .equipe__sur{background:var(--bleu-fond);background-color:#E6F6F7;color:var(--texte);border-left:5px solid var(--bleu)}
+.pg .equipe__sur b{color:var(--nuit-900)}
+.pg .equipe__sur a{color:var(--nuit-900)}
+.pg .presse li span{border-bottom-color:var(--bleu)}
+.pg .voyageurs li{border-color:var(--bleu);color:var(--nuit-900)}
+.pg .voyageurs li svg{color:var(--bleu)}
+.pg .pan__wa{color:#0B6B3A}
 </style>
 '''
 JS = r'''
