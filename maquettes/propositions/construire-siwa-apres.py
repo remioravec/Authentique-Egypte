@@ -388,6 +388,10 @@ CSS = r'''
 .pg .voyageurs li{border-color:var(--bleu);color:var(--nuit-900)}
 .pg .voyageurs li svg{color:var(--bleu)}
 .pg .pan__wa{color:#0B6B3A}
+
+/* ---- v7 : texte blanc sur les boutons jaunes (demande du 14/09) ---- */
+.pg .btn--or,.pg .btn--or:hover,.pg .btn--or:focus-visible,.pg .pg-mob .btn--or{color:#fff}
+.pg .btn--or svg{color:#fff}
 </style>
 '''
 JS = r'''
