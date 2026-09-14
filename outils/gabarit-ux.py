@@ -142,6 +142,11 @@ I = {
     'mail': ico('<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/>'),
     'lien': ico('<path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/>'),
     'fleche': ico('<path d="M5 12h14M13 6l6 6-6 6"/>'),
+    'lit': ico('<path d="M3 17V8M3 16h18M3 12h13a5 5 0 0 1 5 4v1"/>'
+               '<circle cx="7.5" cy="9.5" r="1.6"/>', 15),
+    'repas': ico('<path d="M7 3v7a2 2 0 0 0 4 0V3M9 3v18M17 3c-2 2-3 5-3 8h3v10"/>', 15),
+    'avion': ico('<path d="M10 3l2 7 8 2-8 2-2 7-2-7-8-2 8-2z"/>', 15),
+    'horloge': ico('<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>', 15),
 }
 
 GOOGLE_SVG = (
@@ -375,6 +380,94 @@ def bloc_etapes(h, journal):
     return h2
 
 
+# Les étiquettes qui ouvrent une ligne d'étape et valent une information de
+# service plutôt qu'un moment du séjour. Relevées sur les 14 fiches.
+META = (('hébergement', 'lit'), ('hebergement', 'lit'), ('nuit', 'lit'),
+        ('repas', 'repas'), ('petit-déjeuner', 'repas'), ('déjeuner', 'repas'),
+        ('dîner', 'repas'), ('vol', 'avion'), ('transport', 'car'),
+        ('transfert', 'car'), ('durée', 'horloge'), ('temps de trajet', 'horloge'))
+
+
+def _texte(fragment):
+    return H.unescape(re.sub(r'<[^>]+>', '', fragment)).strip()
+
+
+def _pareil(a, b):
+    net = lambda x: re.sub(r'\s+', ' ', x.lower()).strip(' .:;!?')
+    return net(a) == net(b)
+
+
+def recomposer_etape(corps, titre_jour):
+    """Le gabarit aplatit en un seul paragraphe ce qui était une liste à puces :
+    une phrase par ligne, séparées par des <br>. On rend la structure, sans
+    toucher aux mots — première ligne en titre d'étape, lignes suivantes en
+    liste, « Hébergement : … » et « En option : … » en étiquettes."""
+    lignes = [x.strip() for x in re.split(r'<br\s*/?>', corps)]
+    lignes = [re.sub(r'^\s*[•·–-]\s*', '', x) for x in lignes if _texte(x)]
+    if len(lignes) < 2:
+        return None
+
+    titre = ''
+    if len(_texte(lignes[0])) <= 80 and not re.match(r'^[A-Za-zÀ-ÿ\'’ -]{3,28}\s*:', _texte(lignes[0])):
+        premiere = lignes.pop(0)
+        # La première ligne répète souvent le titre du jour : on ne l'affiche
+        # pas deux fois, l'information reste portée par le titre du jour.
+        titre = '' if _pareil(_texte(premiere), titre_jour) else premiere
+    if not lignes:
+        return None
+
+    points, metas = [], []
+    for ligne in lignes:
+        txt = _texte(ligne)
+        eti = re.match(r'^([A-Za-zÀ-ÿ\'’ -]{3,28})\s*:\s*(.+)$', txt, re.S)
+        if eti:
+            nom, valeur = eti.group(1).strip(), eti.group(2).strip()
+            cle = nom.lower()
+            picto = next((i for m, i in META if cle.startswith(m)), '')
+            if picto:
+                metas.append((nom, valeur, picto))
+                continue
+            if cle.startswith('en option'):
+                points.append(('option', valeur))
+                continue
+        points.append(('', ligne))
+
+    bloc = ''
+    if titre:
+        bloc += '<h4 class="etape__t">%s</h4>' % titre
+    if len(points) == 1 and not points[0][0]:
+        bloc += '<p>%s</p>' % points[0][1]
+    elif points:
+        bloc += '<ul class="etape__pts">' + ''.join(
+            ('<li class="etape__opt"><span class="etape__eti">En option</span>%s</li>' % t)
+            if genre == 'option' else ('<li>%s</li>' % t)
+            for genre, t in points) + '</ul>'
+    if metas:
+        bloc += '<p class="etape__meta">' + ''.join(
+            '<span class="etape__sv">%s<b>%s</b><i>%s</i></span>' % (I[picto], H.escape(nom), H.escape(valeur))
+            for nom, valeur, picto in metas) + '</p>'
+    return bloc
+
+
+def bloc_recit(h, journal):
+    jour = ['']
+
+    def tete(m):
+        jour[0] = _texte(m.group(1))
+        return m.group(0)
+
+    def refaire(m):
+        for t in re.finditer(r'<div class="jour__tete"><h3>(.*?)</h3>', h[:m.start()], re.S):
+            jour[0] = _texte(t.group(1))
+        avant, corps, apres = m.group(1), m.group(2), m.group(3)
+        neuf = recomposer_etape(corps, jour[0])
+        return m.group(0) if neuf is None else avant + neuf + apres
+
+    h2, n = re.subn(r'(<article class="etape".*?)<p>(.*?)</p>(\s*</article>)', refaire, h, flags=re.S)
+    (journal.pose if n else journal.absent).append('étapes en liste')
+    return h2
+
+
 def bloc_carte(h, journal):
     pin = ico('<path d="M12 21s-6-5.5-6-11a6 6 0 0 1 12 0c0 5.5-6 11-6 11z"/>'
               '<circle cx="12" cy="10" r="2.5"/>', 15)
@@ -538,6 +631,7 @@ def habiller(h, live, css, js, photo, avatar, nom):
     h = bloc_panneau(h, journal, titre, prix, live)
     h = bloc_ancres(h, journal)
     h = bloc_etapes(h, journal)
+    h = bloc_recit(h, journal)
     h = bloc_carte(h, journal)
     h = bloc_tarif(h, journal)
     h = bloc_quand(h, journal, theme_fiche(h, titre))
