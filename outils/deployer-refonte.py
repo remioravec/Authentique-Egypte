@@ -40,10 +40,18 @@ TYPES = [
     ('qui-part-',    4, 'Refonte · 4 · Profils de voyageur', 'refonte-profils'),
     ('guide-',       5, 'Refonte · 5 · Guides et articles', 'refonte-guides'),
     ('hub-',         5, 'Refonte · 5 · Guides et articles', 'refonte-guides'),
-    ('accueil-',     6, 'Refonte · 6 · Pages institutionnelles', 'refonte-institutionnel'),
-    ('agence-',      6, 'Refonte · 6 · Pages institutionnelles', 'refonte-institutionnel'),
-    ('legal-',       6, 'Refonte · 6 · Pages institutionnelles', 'refonte-institutionnel'),
 ]
+
+# Ce qui ne fait plus partie de la refonte, et qu'il ne faut donc pas
+# redéployer. Les fichiers sources restent dans le dépôt — on ne supprime
+# rien — mais l'outil ne les repose plus : sans cette liste, chaque
+# déploiement ressuscitait les mentions légales et l'ancienne page d'accueil
+# que l'agence avait fait retirer, le lendemain de leur mise à la corbeille.
+HORS_REFONTE = ('legal-', 'accueil-')
+
+# La page d'accueil et la page agence ne vivent pas dans un dossier : ce
+# sont des pages uniques, filles directes de la mère, à leur rang.
+SEULES = {'agence-': (7, 'Refonte · 7 · L’agence')}
 
 # Le nom lisible d'une page, quand le titre du fichier ne suffit pas.
 def titre_de_page(nom, html):
@@ -59,6 +67,8 @@ def titre_de_page(nom, html):
 
 
 def type_de(nom):
+    if any(nom.startswith(x) for x in HORS_REFONTE):
+        return None
     for prefixe, rang, titre, slug in TYPES:
         if nom.startswith(prefixe):
             return prefixe, rang, titre, slug

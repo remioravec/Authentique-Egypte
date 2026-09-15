@@ -189,6 +189,47 @@ def _remplacer_ou_retirer(tete, motif, contenu):
     return re.sub(motif, lambda _: contenu or '', tete, count=1, flags=re.S)
 
 
+def cartes_des_guides(source, moule_section):
+    """Les cartes du hub blog, bâties sur les pages guide du même dossier.
+
+    Le hub ne listait aucun de ses articles — relevé par le contrôle de
+    contenu, qui comptait zéro des sept liens de la page en ligne. On ne
+    fabrique rien : le titre, l'adresse et l'image de chaque carte sont ceux
+    que la page guide porte elle-même, et l'extrait est son propre chapô.
+    Vingt-deux cartes, soit tout le blog, là où la page en ligne n'en montre
+    que sept.
+    """
+    modele = re.search(r'<article class="carte".*?</article>', moule_section or '', re.S)
+    cartes = []
+    for nom in sorted(os.listdir(source)):
+        if not nom.startswith('guide-') or not nom.endswith('.html'):
+            continue
+        with open(os.path.join(source, nom), encoding='utf-8') as f:
+            g = f.read()
+        titre = re.search(r'<h1[^>]*>(.*?)</h1>', g, re.S)
+        lien = re.search(r'Contenu repris de\s*<a[^>]*href="([^"]+)"', g)
+        img = (re.search(r'<div class="hero__fond"><img src="([^"]+)"', g)
+               or re.search(r'<img src="(https://authentiquegypte[^"]+)"', g))
+        chapo = (re.search(r'<p class="hero__chapo">(.*?)</p>', g, re.S)
+                 or re.search(r'<div class="prose[^"]*">\s*<p>(.*?)</p>', g, re.S))
+        if not (titre and lien):
+            continue
+        extrait = _texte(chapo.group(1))[:150] if chapo else ''
+        cartes.append(
+            '<article class="carte">'
+            '<a class="carte__img" href="%s" tabindex="-1" aria-hidden="true">'
+            '<img src="%s" alt="" loading="lazy" decoding="async"></a>'
+            '<div class="carte__c"><h3><a href="%s">%s</a></h3>'
+            '%s'
+            '<div class="carte__b"><a class="lien-fl" href="%s">Lire le guide</a></div>'
+            '</div></article>'
+            % (lien.group(1), img.group(1) if img else '', lien.group(1),
+               titre.group(1).strip(),
+               '<p class="carte__route">%s…</p>' % H.escape(extrait) if extrait else '',
+               lien.group(1)))
+    return cartes
+
+
 def reperes_des_cartes(cartes, moule_section):
     """Les repères du héros, calculés sur les cartes de la page.
 
@@ -235,10 +276,19 @@ def _compte(n):
     return '%d séjour%s' % (n, 's' if n > 1 else '') if n else 'sur mesure'
 
 
-def section_cartes(moule, p, famille):
-    """« Au choix » : les cartes de la page, ou pas de section du tout."""
+def section_cartes(moule, p, famille, source=None):
+    """« Au choix » : les cartes de la page, ou pas de section du tout.
+
+    Le hub blog n'arrive avec aucune carte — la page en ligne ne liste pas
+    ses articles. Les siennes sont bâties sur les pages guide du dossier.
+    """
     s = moule.section('Au choix')
-    if s is None or not p['cartes']:
+    if s is None:
+        return ''
+    liste = p['cartes']
+    if not liste and famille == 'Blog' and source:
+        liste = cartes_des_guides(source, s)
+    if not liste:
         return ''
     # Découpage explicite plutôt qu'expression régulière : la section se
     # termine par « </div><p class="cartes__src">…</p></div></section> », et
@@ -248,7 +298,7 @@ def section_cartes(moule, p, famille):
     dernier = s.rfind('</article>')
     if not ouvre or dernier < 0:
         return ''
-    s = s[:ouvre.end()] + ''.join(p['cartes']) + s[dernier + len('</article>'):]
+    s = s[:ouvre.end()] + ''.join(liste) + s[dernier + len('</article>'):]
     lieu = re.sub(r'^(?:Voyage|Séjour|Excursion)\s+(?:à|au|aux|en|dans le|dans la|sur le)\s+',
                   '', p['titre'])
     titre = {'Destination': 'Les séjours qui passent par %s' % lieu,
@@ -282,8 +332,8 @@ def section_faq(moule, p):
 # afficherait des circuits au bas d'une page destination.
 
 
-def monter(moule, p, famille):
-    corps = [section_cartes(moule, p, famille), p['corps']]
+def monter(moule, p, famille, source=None):
+    corps = [section_cartes(moule, p, famille, source), p['corps']]
     for surtitre in ('Pourquoi nous', 'Sur mesure'):
         bloc = moule.section(surtitre)
         if bloc:
@@ -326,7 +376,7 @@ def main():
     print('→ Moule : %s — %d section(s)\n' % (os.path.basename(a.moule), len(moule.sections)))
     for f in cibles:
         famille = FAMILLES[next(x for x in FAMILLES if f.startswith(x))][0]
-        h = _bleu.unifier(monter(moule, pages[f], famille))
+        h = _bleu.unifier(monter(moule, pages[f], famille, source))
         etat = '%d carte(s), %d question(s), corps %d o' % (
             len(pages[f]['cartes']), len(pages[f]['faq']), len(pages[f]['corps']))
         print('   %-46s %-34s %6d → %6d octets'

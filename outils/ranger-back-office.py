@@ -39,9 +39,8 @@ dep = SourceFileLoader('dep', os.path.join(RACINE, 'outils', 'deployer.py')).loa
 MERE = 7642
 
 DOSSIERS = [
-    ('circuits', 'Refonte · 1 · Circuits — pages catégorie', 1),
-    ('sejours', 'Refonte · 2 · Séjours — fiches programme', 2),
-    ('reference', 'Refonte · 7 · Maquettes de référence', 7),
+    ('circuits', 'Refonte · 2 · Circuits — pages catégorie', 2),
+    ('sejours', 'Refonte · 3 · Séjours — fiches programme', 3),
 ]
 
 # Les familles déployées par outils/deployer-refonte.py. Le rangement leur
@@ -49,10 +48,9 @@ DOSSIERS = [
 # qui ne bouge pas. « Réf » est en dernier : ce sont des pages d'essai, pas
 # des livrables, et elles n'ont pas à s'intercaler entre deux familles du site.
 FAMILLES = [
-    ('refonte-destinations',   3, 'Refonte · 3 · Destinations', 'Destination'),
-    ('refonte-profils',        4, 'Refonte · 4 · Profils de voyageur', 'Profil'),
-    ('refonte-guides',         5, 'Refonte · 5 · Guides et articles', 'Guide'),
-    ('refonte-institutionnel', 6, 'Refonte · 6 · Pages institutionnelles', 'Page'),
+    ('refonte-destinations', 4, 'Refonte · 4 · Destinations', 'Destination'),
+    ('refonte-profils',      5, 'Refonte · 5 · Profils de voyageur', 'Profil'),
+    ('refonte-guides',       6, 'Refonte · 6 · Guides et articles', 'Guide'),
 ]
 
 # Le nom court d'un circuit, tel qu'il servira de préfixe aux séjours.
@@ -194,17 +192,15 @@ def main():
         enfants[d['id']] = dep.appel(
             'GET', '/pages?parent=%d&per_page=50&status=any&context=edit' % d['id'])
 
-    def dossier_de(fragment):
-        for d in dossiers:
-            if fragment in d['slug'] or fragment in titre_de(d).lower():
-                return d
-        return None
-
-    d_sejours = dossier_de('programme')
-    d_circuits = dossier_de('type') or dossier_de('categorie')
-    d_ref = dossier_de('reference') or dossier_de('maquette')
-    if not (d_sejours and d_circuits and d_ref):
-        raise SystemExit('les trois dossiers de « Refonte 2026 » n\'ont pas été retrouvés')
+    # Les dossiers se retrouvent par leur SLUG, qui ne bouge jamais. La
+    # version précédente les cherchait par fragment de titre — « programme »,
+    # « type », « référence » — et s'est cassée le jour où la zone a été
+    # renumérotée et le dossier de référence retiré.
+    par_slug = {d['slug']: d for d in dossiers}
+    d_circuits = par_slug.get('refonte-types-de-s-jour')
+    d_sejours = par_slug.get('refonte-programmes')
+    if not (d_sejours and d_circuits):
+        raise SystemExit('dossiers « circuits » ou « séjours » introuvables sous la mère')
 
     fiches = enfants[d_sejours['id']]
     par_circuit = {c: [] for c in ORDRE_CIRCUITS}
@@ -217,7 +213,7 @@ def main():
     changes = 0
     print('→ Dossiers')
     for cle, titre, rang in DOSSIERS:
-        d = {'circuits': d_circuits, 'sejours': d_sejours, 'reference': d_ref}[cle]
+        d = {'circuits': d_circuits, 'sejours': d_sejours}[cle]
         if poser(d, titre, MERE, rang, a.essai):
             changes += 1
         print('   %-46s id %d' % (titre, d['id']))
@@ -265,46 +261,6 @@ def main():
     for page in orphelines:
         rang += 1
         print('   %-72s id %d  (circuit non lu)' % (titre_de(page)[:72], page['id']))
-
-    # Les maquettes de référence vont dans un sous-dossier par type de page.
-    # Le dossier porte le type, la page ne porte plus que son nom : sans cela
-    # « Réf · Home · HOME » répète deux fois la même information.
-    print('\n→ Maquettes de référence, en sous-dossiers par type de page')
-    # Les pages se lisent dans le dossier ET dans ses sous-dossiers : une
-    # fois rangées elles ne sont plus filles directes, et sans cette descente
-    # le script les perdrait de vue dès le passage suivant.
-    connus = {slug for _, _, slug, _ in TYPES_REFERENCE}
-    plates = []
-    for e in enfants[d_ref['id']]:
-        if e['slug'] in connus:
-            plates += dep.appel(
-                'GET', '/pages?parent=%d&per_page=50&status=any&context=edit' % e['id'])
-        else:
-            plates.append(e)
-    refs = [(type_de_reference(p), p) for p in plates]
-    for rang, nom, slug, motif in TYPES_REFERENCE:
-        lot = sorted((x for x in refs if x[0][0] == rang), key=lambda x: x[0][3])
-        if not lot:
-            continue                    # pas de dossier vide : rien à y ranger
-        titre = 'Refonte · Réf · %d · %s' % (rang, nom)
-        if a.essai:
-            sous = next((d for d in dep.appel(
-                'GET', '/pages?slug=%s&status=any&per_page=1&context=edit' % slug) or []
-                if True), None)
-            sid = sous['id'] if sous else 0
-        else:
-            sous, _ = dep.poser_page(slug, {'title': titre, 'parent': d_ref['id'],
-                                            'menu_order': rang, 'status': 'draft'})
-            sid = sous['id']
-        print('   %-64s id %s' % (titre, sid or '—'))
-        for n, ((_, _, _, propre), page) in enumerate(lot, 1):
-            t = 'Refonte · Réf · %s' % propre
-            if poser(page, t, sid, n, a.essai):
-                changes += 1
-            print('      %-68s id %d' % (t[:68], page['id']))
-    orphelins = [x for x in refs if x[0][0] == 9]
-    for (_, _, _, propre), page in orphelins:
-        print('      %-68s id %d  (type non lu)' % (titre_de(page)[:68], page['id']))
 
     # Les autres familles : destinations, profils, guides, institutionnelles.
     # Elles n'ont pas de sous-groupe — une liste alphabétique suffit à s'y
