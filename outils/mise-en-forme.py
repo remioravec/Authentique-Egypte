@@ -269,14 +269,20 @@ def _marquer(h):
     cartes. On ne marque donc qu'un conteneur qui porte des paragraphes nus,
     c'est-à-dire du contenu venu du site et non dessiné par le gabarit.
     """
-    h = h.replace('<article class="corps">', '<article class="corps mef">')
+    # Le préfixe « rp- » est celui que la greffe pose sur le contenu repris
+    # pour qu'il n'emprunte aucun nom de classe au gabarit : les conteneurs
+    # à marquer s'appellent donc « wrap » ou « rp-wrap » selon la page.
+    h = re.sub(r'<article class="(rp-)?corps">',
+               lambda m: '<article class="%scorps mef">' % (m.group(1) or ''), h)
 
     def bloc(m):
-        if '<p class=""' in m.group(0) or 'class="mef-q"' in m.group(0):
-            return m.group(0).replace('<div class="wrap">', '<div class="wrap mef">', 1)
-        return m.group(0)
+        if '<p class=""' not in m.group(0) and 'class="mef-q"' not in m.group(0):
+            return m.group(0)
+        return re.sub(r'<div class="(rp-)?wrap">',
+                      lambda w: '<div class="%swrap mef">' % (w.group(1) or ''),
+                      m.group(0), count=1)
 
-    for motif in (r'<section class="section[^"]*">.*?</section>',
+    for motif in (r'<section class="(?:rp-)?section[^"]*">.*?</section>',
                   r'<section class="pg-sec[^"]*">.*?</section>'):
         h = re.sub(motif, bloc, h, flags=re.S)
     return h

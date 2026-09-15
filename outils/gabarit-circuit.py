@@ -34,6 +34,8 @@ from importlib.machinery import SourceFileLoader
 RACINE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 _bleu = SourceFileLoader('bleu_unique',
                          os.path.join(RACINE, 'outils', 'bleu-unique.py')).load_module()
+_greffe = SourceFileLoader('greffe_css',
+                           os.path.join(RACINE, 'outils', 'greffe-css.py')).load_module()
 
 # L'image de partage que chaque guide déclare en ligne. Le hub montrait le
 # logo sur ses vingt-deux cartes, faute de mieux : le héros du guide ne
@@ -49,6 +51,18 @@ FAMILLES = {
     'hub-':         ('Blog', 'Les autres familles de séjours',
                      'Ce que l’équipe écrit depuis Le Caire, par sujet.'),
 }
+
+
+_CHARTE = []
+
+
+def _charte():
+    """La feuille commune du site, celle que les pages appellent par lien."""
+    if not _CHARTE:
+        chemin = os.path.join(RACINE, 'maquettes', 'assets', 'charte.css')
+        with open(chemin, encoding='utf-8') as f:
+            _CHARTE.append(f.read())
+    return _CHARTE[0]
 
 
 def _prem(motif, h, defaut=''):
@@ -141,6 +155,13 @@ def lire_page(h):
         'ld': ''.join(re.findall(
             r'<script type="application/ld\+json">.*?</script>', h, re.S)),
         'corps': corps_propre(h),
+        # La feuille de la page d'origine : le corps repris emporte son
+        # habillage avec lui plutôt que d'hériter de celui du moule. La
+        # charte partagée vient d'abord, le style propre à la page ensuite,
+        # dans l'ordre où le navigateur les lisait — sans la charte, un
+        # « wrap » renommé perdait sa gouttière et le texte touchait le bord.
+        'css': _charte() + ''.join(m.group(1) for m in
+                                   re.finditer(r'<style[^>]*>(.*?)</style>', h, re.S)),
     }
 
 
@@ -321,8 +342,14 @@ def cartes_des_guides(source, moule_section):
                or _prem(r'<div class="hero__fond"><img src="([^"]+)"', g)
                or _prem(r'<div class="chapeau__bg"><img src="([^"]+)"', g)
                or _prem(r'<img src="(https://authentiquegypte[^"]+)"', corps))
+        # Le chapô du guide, là où sa page le met : « hero__chapo » sur les
+        # pages à héros, « p.sous » dans le bandeau des guides, à défaut le
+        # premier paragraphe. Sans le deuxième repli, vingt cartes sur
+        # vingt-deux sortaient sans une ligne de résumé.
         chapo = (re.search(r'<p class="hero__chapo">(.*?)</p>', g, re.S)
-                 or re.search(r'<div class="prose[^"]*">\s*<p>(.*?)</p>', g, re.S))
+                 or re.search(r'<section class="chapeau">.*?<p class="sous">(.*?)</p>', g, re.S)
+                 or re.search(r'<div class="prose[^"]*">\s*<p>(.*?)</p>', g, re.S)
+                 or re.search(r'<article class="corps">.*?<p[^>]*>(.*?)</p>', g, re.S))
         if not (titre and lien):
             continue
         extrait = _texte(chapo.group(1))[:150] if chapo else ''
@@ -427,6 +454,12 @@ def section_cartes(moule, p, famille, source=None):
     if not ouvre or dernier < 0:
         return ''
     s = s[:ouvre.end()] + ''.join(liste) + s[dernier + len('</article>'):]
+    # Le moule vient d'une famille d'un seul séjour : sa grille est réglée
+    # pour une carte large. Vingt-deux guides dans cette grille sortaient
+    # en colonnes de travers ; le modificateur suit le nombre réel.
+    s = re.sub(r'(<div class="cartes)[^"]*(">)',
+               lambda m: '%s cartes--%s%s' % (m.group(1), 1 if len(liste) == 1 else 2,
+                                              m.group(2)), s, count=1)
     lieu = re.sub(r'^(?:Voyage|Séjour|Excursion)\s+(?:à|au|aux|en|dans le|dans la|sur le)\s+',
                   '', p['titre'])
     titre = p['cartes_titre'] or H.escape(
@@ -475,7 +508,12 @@ def section_faq(moule, p):
 
 
 def monter(moule, p, famille, source=None):
-    corps = [section_cartes(moule, p, famille, source), p['corps']]
+    # Le corps repris part avec son propre habillage, renommé pour qu'aucun
+    # nom de classe ne soit lu deux fois. Sans cela, « edito » — un article
+    # encadré sur une page profil, une grille de deux colonnes dans le
+    # gabarit circuit — coupait chaque question de sa réponse.
+    repris, feuille = _greffe.greffer(p['corps'], p['css'])
+    corps = [section_cartes(moule, p, famille, source), repris]
     for surtitre in ('Pourquoi nous', 'Sur mesure'):
         bloc = moule.section(surtitre)
         if bloc:
@@ -490,7 +528,10 @@ def monter(moule, p, famille, source=None):
         bloc = moule.section_par_h2(debut)
         if bloc:
             corps.append(bloc)
-    return poser_tete(moule.tete, p, famille) + ''.join(x for x in corps if x) + moule.pied
+    tete = poser_tete(moule.tete, p, famille)
+    if feuille:
+        tete = tete.replace('</head>', feuille + '\n</head>', 1)
+    return tete + ''.join(x for x in corps if x) + moule.pied
 
 
 def main():
