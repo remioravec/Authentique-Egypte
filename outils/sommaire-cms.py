@@ -21,6 +21,7 @@ import html as H
 import os
 import re
 import sys
+import time
 from importlib.machinery import SourceFileLoader
 
 RACINE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -307,16 +308,30 @@ def main():
         print('\nEssai : rien n’a été posé sur le CMS.')
         return
 
-    reponse, action = dep.poser_page(SLUG, {
-        'title': TITRE,
-        'parent': MERE,
-        'menu_order': 0,
-        'status': 'draft',
-        'template': 'elementor_canvas',
-        'content': vers.convertir(page),
-    })
-    print('\n→ Sommaire %s : #%d  %s/?page_id=%d'
-          % (action, reponse['id'], SITE, reponse['id']))
+    contenu = vers.convertir(page)
+    attendu = len(re.findall(r'\?page_id=\d+', contenu))
+    champs = {'title': TITRE, 'parent': MERE, 'menu_order': 0, 'status': 'draft',
+              'template': 'elementor_canvas', 'content': contenu}
+
+    # L'écriture est relue. Le serveur rend parfois une réponse vide : sans
+    # ce contrôle le script annonçait « mise à jour » alors que la page en
+    # ligne n'avait pas bougé, et l'écart ne se voyait qu'à l'œil.
+    for essai in range(4):
+        try:
+            reponse, action = dep.poser_page(SLUG, champs)
+        except SystemExit as motif:
+            print('   reprise %d/3 — %s' % (essai + 1, str(motif).splitlines()[0]))
+            time.sleep(2 ** essai)
+            continue
+        relu = dep.appel('GET', '/pages/%d?context=edit' % reponse['id'])
+        if len(re.findall(r'\?page_id=\d+', relu['content']['raw'])) == attendu:
+            print('\n→ Sommaire %s : #%d  %s/?page_id=%d  (%d aperçus relus)'
+                  % (action, reponse['id'], SITE, reponse['id'], attendu))
+            return
+        print('   reprise %d/3 — la page en ligne ne porte pas les %d aperçus'
+              % (essai + 1, attendu))
+        time.sleep(2 ** essai)
+    raise SystemExit('le sommaire n’a pas pu être écrit sur le CMS')
 
 
 if __name__ == '__main__':

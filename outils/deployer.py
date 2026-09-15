@@ -26,6 +26,7 @@ import os
 import re
 import subprocess
 import sys
+import time
 
 RACINE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SITE = 'https://authentiquegypte.com'
@@ -101,7 +102,16 @@ def auth():
 
 
 def appel(methode, chemin, charge=None, params=''):
-    """Un appel REST, via curl pour rester dans le proxy sortant de la session."""
+    """Un appel REST, via curl pour rester dans le proxy sortant de la session.
+
+    Le serveur rend parfois une réponse vide ou une page d'erreur HTML au
+    lieu du JSON attendu. C'est passager, mais un seul de ces ratés arrêtait
+    tout le script au milieu d'un déploiement — et laissait des pages à
+    moitié à jour. Une lecture est donc reprise jusqu'à trois fois, avec une
+    attente qui double. Une écriture n'est jamais reprise à l'aveugle : la
+    même requête rejouée peut créer un doublon, c'est à l'appelant de
+    vérifier ce qui a été écrit et de redemander s'il y a lieu.
+    """
     commande = ['curl', '-s', '--max-time', '120', '-u', auth(), '-X', methode,
                 API + chemin + params]
     fichier = None
@@ -111,11 +121,15 @@ def appel(methode, chemin, charge=None, params=''):
             json.dump(charge, f, ensure_ascii=False)
         commande += ['-H', 'Content-Type: application/json', '--data-binary', '@' + fichier]
 
-    brut = subprocess.run(commande, capture_output=True, text=True).stdout
-    try:
-        return json.loads(brut)
-    except json.JSONDecodeError:
-        sys.exit('Réponse illisible de %s :\n%s' % (chemin, brut[:400]))
+    essais = 3 if methode == 'GET' else 1
+    for essai in range(essais):
+        brut = subprocess.run(commande, capture_output=True, text=True).stdout
+        try:
+            return json.loads(brut)
+        except json.JSONDecodeError:
+            if essai + 1 < essais:
+                time.sleep(2 ** essai)
+    sys.exit('Réponse illisible de %s :\n%s' % (chemin, brut[:400]))
 
 
 def trouver_page(slug):
