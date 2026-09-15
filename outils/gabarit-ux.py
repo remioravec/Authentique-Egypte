@@ -37,6 +37,7 @@ import html as H
 import json
 import os
 import re
+import unicodedata
 import sys
 
 RACINE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -559,6 +560,149 @@ def recomposer_etape(segments, titre_jour, titre_existant=''):
     return bloc or None
 
 
+
+# ----------------------------------------------------- la vue d'ensemble
+
+def _sac(fragment):
+    """Les mots significatifs d'un fragment, accents et casse effacés."""
+    t = unicodedata.normalize('NFKD', _texte(fragment))
+    t = ''.join(c for c in t if not unicodedata.combining(c))
+    return [m for m in re.findall(r'[a-z0-9]+', t.lower()) if len(m) > 3]
+
+
+def _vue(h):
+    """Le bloc de prose de la vue d'ensemble, s'il est là."""
+    return re.search(
+        r'(<h2[^>]*>Vue d&#x27;ensemble</h2>\s*<div class="prose[^"]*">)(.*?)(</div>)',
+        h, re.S)
+
+
+def _remplacer_vue(h, m, corps):
+    return h[:m.start()] + m.group(1) + corps + m.group(3) + h[m.end():]
+
+
+def vue_itineraire(h, journal):
+    """Un jour-par-jour tombé dans la vue d'ensemble : on le remet à sa place.
+
+    Deux fiches — lac Nasser, roadtrip — passaient pour n'avoir aucun
+    déroulé. Il n'était pas absent : il était dans le bloc de résumé, aplati
+    en paragraphes, avec ses « Jour 1 : », ses options et ses hébergements.
+    Rien n'est réécrit ni inventé ; les paragraphes changent de section et
+    reçoivent la forme que le gabarit donne partout ailleurs aux étapes.
+    """
+    m = _vue(h)
+    if not m or 'class="jour"' in h:
+        return h
+    morceaux = re.findall(r'<p[^>]*>(.*?)</p>', m.group(2), re.S)
+    marques = [i for i, x in enumerate(morceaux)
+               if re.match(r'^Jour\s+\d+\s*[:\u2013-]', _texte(x))]
+    if len(marques) < 2:
+        return h
+
+    jours = []
+    for k, debut in enumerate(marques):
+        fin = marques[k + 1] if k + 1 < len(marques) else len(morceaux)
+        entete = _texte(morceaux[debut])
+        numero = re.match(r'^Jour\s+(\d+)', entete).group(1)
+        titre = re.sub(r'^Jour\s+\d+\s*[:\u2013-]\s*', '', entete).strip()
+        segments = morceaux[debut + 1:fin]
+
+        # La fiche en ligne répétait ses étiquettes de vignette sous le texte
+        # de la journée : « Arrivée », « Maison d'hôtes ». Une étiquette courte
+        # dont tous les mots figurent déjà dans le reste de SA journée sort —
+        # elle ne dit rien de neuf et ferait une puce vide de sens.
+        garde = []
+        for i, seg in enumerate(segments):
+            mots = _sac(seg)
+            autres = {x for j, autre in enumerate(segments) if j != i
+                      for x in _sac(autre)}
+            if mots and len(_texte(seg)) <= 40 and all(x in autres for x in mots):
+                continue
+            garde.append(seg)
+        jours.append((numero, titre, garde))
+
+    blocs = []
+    for rang, (numero, titre, segments) in enumerate(jours, 1):
+        etape = recomposer_etape(segments, titre)
+        if not etape:
+            continue
+        blocs.append(
+            '<div class="jour">'
+            '<div class="jour__tete"><h3>%s</h3><span class="jour__no">Jour %s</span></div>'
+            '<article class="etape" id="etape-%d">%s</article>'
+            '</div>' % (H.escape(titre), H.escape(numero), rang, etape))
+    if not blocs:
+        return h
+
+    section = ('\n<section>\n<p class="eyebrow">Dans le détail</p>\n'
+               '<h2 id="t-jpj">Le séjour jour par jour</h2>\n'
+               + '\n'.join(blocs) + '\n</section>\n')
+
+    # Le résumé garde ce qui le précède ; le reste vit désormais plus bas.
+    reste = ''.join('<p>%s</p>' % x for x in morceaux[:marques[0]])
+    h = _remplacer_vue(h, m, reste)
+    fin = h.find('</section>', h.find('<h2 id="t-vue">') if 'id="t-vue"' in h
+                 else h.find('Vue d&#x27;ensemble'))
+    h = h[:fin + len('</section>')] + section + h[fin + len('</section>'):]
+    journal.pose.append('jour par jour sorti du résumé (%d jours)' % len(blocs))
+    return h
+
+
+def vue_degager(h, journal):
+    """Le résumé rendu à son rôle : ce qui est déjà écrit plus bas en sort.
+
+    Le bloc de la vue d'ensemble sert de déversoir sur la plupart des
+    fiches : le vrai résumé, puis l'itinéraire recopié mot pour mot, puis
+    des débris d'interface — « FAQ Pyramides & Croisière sur le Nil »,
+    « À partir de415 € / Personne ». Un paragraphe n'est retiré que si
+    chacun de ses mots se retrouve plus bas dans la page : il n'est pas
+    perdu, il est déjà affiché ailleurs. Mesuré sur les 14 fiches, les vrais
+    paragraphes de résumé plafonnent à 65 % de reprise, les doublons sont à
+    100 % : la frontière est nette.
+    """
+    m = _vue(h)
+    if not m:
+        return h
+    apres = set(_sac(h[m.end():]))
+    morceaux = re.findall(r'<p[^>]*>(.*?)</p>', m.group(2), re.S)
+    if len(morceaux) < 2:
+        return h
+
+    garde, sortis = [], 0
+    for x in morceaux:
+        mots = _sac(x)
+        texte = _texte(x)
+        repris = sum(1 for w in mots if w in apres) / len(mots) if mots else 0
+        double = len(mots) >= 3 and repris == 1
+        # Une étiquette d'interface : pas une phrase, pas de ponctuation
+        # finale, et déjà écrite ailleurs.
+        etiquette = (mots and len(mots) <= 8 and not re.search(r'[.!?]', texte)
+                     and repris >= .5)
+        if double or etiquette:
+            sortis += 1
+            continue
+        garde.append(x)
+    if not sortis or not garde:
+        return h
+    h = _remplacer_vue(h, m, ''.join('<p>%s</p>' % x for x in garde))
+    journal.pose.append('résumé dégagé (%d paragraphe(s) déjà plus bas)' % sortis)
+    return h
+
+
+def vue_forme(h, journal):
+    """Une attaque, puis le corps : le résumé se lit au lieu de se subir."""
+    m = _vue(h)
+    if not m:
+        return h
+    morceaux = re.findall(r'<p[^>]*>(.*?)</p>', m.group(2), re.S)
+    if not morceaux:
+        return h
+    corps = '<p class="prose__tete">%s</p>' % morceaux[0]
+    corps += ''.join('<p>%s</p>' % x for x in morceaux[1:])
+    journal.pose.append('résumé mis en forme')
+    return _remplacer_vue(h, m, corps)
+
+
 def fusionner_jours(h, journal):
     """Deux blocs « jour » de suite portant le même titre et le même numéro : la
     fiche en ligne les a en double. On garde un seul en-tête, les étapes des
@@ -591,7 +735,12 @@ def bloc_recit(h, journal):
         # Une étape sans photo ni texte n'est qu'un conteneur vide : elle
         # creusait un blanc de 40 px au milieu du déroulé. On la retire, sauf
         # si un lien pointe dessus.
-        if '<img' not in art and not re.search(r'<p[^>]*>\s*\S', art):
+        #
+        # Le vide se mesure sur le texte rendu, pas sur la présence d'un <p> :
+        # ce test datait d'avant les listes, et il effaçait les étapes qui ne
+        # portent qu'un <ul class="etape__pts"> — c'est-à-dire tout le déroulé
+        # que vue_itineraire reconstruit pour le lac Nasser et le roadtrip.
+        if '<img' not in art and not _texte(art):
             ident = re.search(r'id="([^"]+)"', art)
             if not ident or ('href="#%s"' % ident.group(1)) not in h:
                 return ''
@@ -798,6 +947,12 @@ def habiller(h, live, css, js, photo, avatar, nom):
                          ('Les questions qui reviennent avant de partir', 't-faq')):
         h = poser(h, '<h2>%s</h2>' % texte, '<h2 id="%s">%s</h2>' % (ident, texte),
                   journal, 'ancre ' + ident, obligatoire=False)
+
+    # La vue d'ensemble d'abord : elle peut créer la section « jour par
+    # jour », que la navigation doit ensuite trouver.
+    h = vue_itineraire(h, journal)
+    h = vue_degager(h, journal)
+    h = vue_forme(h, journal)
 
     reassurance = [phrase_fiche(h, 'Devis gratuit'),
                    phrase_fiche(h, 'Aucune carte bancaire'),

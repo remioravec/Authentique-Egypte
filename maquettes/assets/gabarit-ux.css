@@ -325,3 +325,17 @@
 .pg .pan{gap:6px}
 .pg .pan__carte{padding:14px 16px}
 .pg .pan{top:78px;gap:5px}
+
+/* ── La vue d'ensemble, 15/09 ─────────────────────────────────────────────
+   Le bloc servait de déversoir : le vrai résumé, puis l'itinéraire recopié,
+   puis des débris d'interface. Le gabarit les renvoie à leur place ; reste à
+   donner une forme aux deux ou trois paragraphes qui subsistent. Une attaque
+   au-dessus du corps, appuyée sur un filet bleu — la seule marque de couleur
+   de la section, qui dit où commence la lecture sans ajouter de cadre. */
+.pg .prose__tete{font-size:1.32rem;line-height:1.58;color:var(--noir);
+  font-weight:500;letter-spacing:-.2px;margin:0 0 20px;padding:0 0 0 20px;
+  border-left:3px solid var(--bleu)}
+.pg .prose__tete + p{margin-top:0}
+@media (max-width:640px){
+  .pg .prose__tete{font-size:1.18rem;padding-left:14px}
+}
