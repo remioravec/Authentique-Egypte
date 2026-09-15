@@ -66,6 +66,14 @@ def titre_de_page(nom, html):
     return nom
 
 
+def prefixe_seul(nom):
+    """Le préfixe d'une page unique — sans dossier —, ou None."""
+    for prefixe in SEULES:
+        if nom.startswith(prefixe):
+            return prefixe
+    return None
+
+
 def type_de(nom):
     if any(nom.startswith(x) for x in HORS_REFONTE):
         return None
@@ -102,10 +110,12 @@ def main():
     a = p.parse_args()
 
     source = os.path.abspath(a.site)
+    retenu = (lambda f: not a.seulement or f.startswith(a.seulement))
     fichiers = sorted(f for f in os.listdir(source)
-                      if f.endswith('.html') and type_de(f)
-                      and (not a.seulement or f.startswith(a.seulement)))
-    if not fichiers:
+                      if f.endswith('.html') and type_de(f) and retenu(f))
+    seules = sorted(f for f in os.listdir(source)
+                    if f.endswith('.html') and prefixe_seul(f) and retenu(f))
+    if not fichiers and not seules:
         raise SystemExit('aucun fichier reconnu dans %s' % source)
 
     # Les pages déjà en ligne, pour les retrouver au lieu d'en créer des doubles.
@@ -113,8 +123,10 @@ def main():
     Q = '/pages?parent=%d&per_page=100&status=any&context=edit&_fields=id,title,slug,parent'
     existantes = {}
     dossiers_en_ligne = {}
+    existantes_mere = {}
     for d in dep.appel('GET', Q % MERE):
         dossiers_en_ligne[d['slug']] = d
+        existantes_mere[d['slug']] = d
         for e in dep.appel('GET', Q % d['id']):
             existantes[e['slug']] = e
             for pt in dep.appel('GET', Q % e['id']):
@@ -161,8 +173,19 @@ def main():
             # WordPress tronque les slugs longs : on retrouve la page par
             # préfixe, en prenant le plus long slug existant qui commence
             # comme le nôtre — sinon on créerait un doublon à chaque passage.
-            candidats = [s for s in existantes if slug.startswith(s) or s.startswith(slug)]
-            page = existantes[max(candidats, key=len)] if candidats else None
+            #
+            # Mais le préfixe SEUL fait pire que le doublon : « guide-complet »
+            # est un préfixe de « guide-complet-des-formalites-… », si bien que
+            # deux fichiers différents visaient la même page — l'un écrasant
+            # l'autre, et une troisième page restant sur une version périmée.
+            # L'égalité stricte passe donc en premier, et le préfixe ne sert
+            # que faute de mieux.
+            if slug in existantes:
+                page = existantes[slug]
+            else:
+                candidats = [s for s in existantes
+                             if slug.startswith(s) or s.startswith(slug)]
+                page = existantes[max(candidats, key=len)] if candidats else None
 
             attendu = len(re.findall(r'<img', contenu))
             if a.essai:
@@ -179,6 +202,36 @@ def main():
             (faits, rates) = (faits + 1, rates) if ok else (faits, rates + 1)
             print('   %-58s #%-6s %s  %d image(s)'
                   % (f[:58], pid, 'ok' if ok else 'ÉCHEC', attendu))
+
+    # Les pages uniques : filles directes de la mère, à leur rang. Elles
+    # n'ont pas de dossier — un dossier d'une seule page ne range rien.
+    # Cette table existait sans jamais être lue : la page agence n'était
+    # donc jamais redéployée, et gardait la version du jour où on l'avait
+    # posée à la main.
+    for f in seules:
+        rang, titre = SEULES[prefixe_seul(f)]
+        slug = 'refonte-' + f[:-len('.html')]
+        with open(os.path.join(source, f), encoding='utf-8') as fh:
+            html = fh.read()
+        contenu = conv.convertir(html, source)
+        attendu = len(re.findall(r'<img', contenu))
+        candidats = ([slug] if slug in existantes_mere else
+                     [x for x in existantes_mere if slug.startswith(x) or x.startswith(slug)])
+        page = existantes_mere[max(candidats, key=len)] if candidats else None
+        if a.essai:
+            print('   %-58s %s' % (f[:58], ('→ #%d' % page['id']) if page else '→ à créer'))
+            continue
+        champs = {'status': 'draft', 'template': 'elementor_canvas', 'content': contenu}
+        if page:
+            ok, pid = ecrire(page['id'], champs, r'<img', attendu, 'images'), page['id']
+        else:
+            r = dep.appel('POST', '/pages', dict(champs, slug=slug, title=titre,
+                                                 parent=MERE, menu_order=rang))
+            pid = r.get('id', 0)
+            ok = bool(pid)
+        (faits, rates) = (faits + 1, rates) if ok else (faits, rates + 1)
+        print('   %-58s #%-6s %s  %d image(s)'
+              % (f[:58], pid, 'ok' if ok else 'ÉCHEC', attendu))
 
     print('\n%d page(s) déployée(s), %d échec(s). Rien n\'a été publié ni supprimé.'
           % (faits, rates))
