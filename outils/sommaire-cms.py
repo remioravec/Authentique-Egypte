@@ -88,8 +88,14 @@ def relever():
             else:
                 groupe, nom = groupe_de(titre_de(e))
                 entrees.append((groupe, e, nom))
-        if entrees:              # pas une page posée seule sous la mère
+        if entrees:
             dossiers.append((d, entrees))
+        elif d['slug'] != SLUG:
+            # Une page posée seule sous la mère — l'accueil, l'agence. Elle
+            # n'a pas de dossier parce qu'un dossier d'une page ne range
+            # rien ; sans cette branche elle disparaissait du sommaire, et
+            # deux pages de la refonte n'étaient joignables par aucun lien.
+            dossiers.append((d, [('', d, nom_court(titre_de(d)))]))
     return dossiers
 
 
