@@ -205,7 +205,11 @@ def main():
     a = p.parse_args()
 
     source = os.path.abspath(a.site)
-    fichiers = sorted(f for f in os.listdir(source) if f.endswith('.html'))
+    # Les feuilles de style aussi : la règle qui rallumait l'inspecteur de
+    # maillage vivait dans charte.css, intégrée ensuite dans chaque page. En ne
+    # lisant que les .html, une première passe a corrigé les 27 copies et
+    # laissé l'original, qui les a toutes réécrites au déploiement suivant.
+    fichiers = sorted(f for f in os.listdir(source) if f.endswith(('.html', '.css')))
     compte = {nom: [0, 0] for nom, _ in REPARATIONS}      # [occurrences, pages]
 
     flux, murs = flux_google(fichiers, source)

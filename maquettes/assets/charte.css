@@ -251,7 +251,7 @@ body.mm [data-dec]::after{content:attr(data-dec);position:absolute;top:-16px;rig
 body.mm [data-dec="Conservé"]::after{background:var(--vert)}
 body.mm [data-dec="Nouveau"]::after{background:var(--nuit)}
 body.mm [data-dec="À trancher"]::after{background:var(--rouge)}
-body.mm .mm-legende{display:block}
+body.mm .mm-legende{display:none}
 .mm-legende{display:none;background:var(--nuit);color:#D4E3E6;border-radius:var(--r-l);padding:20px 24px;
   margin-top:26px;font-family:"Manrope",sans-serif;font-size:.88rem;line-height:1.7}
 .mm-legende b{color:var(--or)}
