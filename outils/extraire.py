@@ -90,6 +90,16 @@ class Decoupeur(HTMLParser):
             return
         if self.ignore:
             return
+        # Un <br> DANS un paragraphe est un retour à la ligne que la
+        # cliente a écrit. Il était purement avalé : « Arrivée au Caire
+        # <br> Accueil à l'aéroport » ressortait « Arrivée au
+        # CaireAccueil à l'aéroport », deux phrases collées, sur les
+        # quatorze fiches et dans leur présentation entière. On le garde
+        # comme saut de ligne ; les blocs qui n'en veulent pas le
+        # remplacent par une espace.
+        if balise == 'br' and self.pile and self.tampon:
+            self.tampon.append('\n')
+            return
         if balise in self.BLOCS_FLUX:
             self.flux()
         if balise == 'a' and 'tabindex' in a:
@@ -178,7 +188,9 @@ class Decoupeur(HTMLParser):
         if not self.pile or not self.tampon:
             self.tampon = []
             return
-        texte = re.sub(r'\s+', ' ', ''.join(self.tampon)).strip()
+        texte = ''.join(self.tampon)
+        texte = re.sub(r'[^\S\n]+', ' ', texte)
+        texte = re.sub(r' *\n *', '\n', texte).strip()
         self.tampon = []
         balise = self.pile[-1]
         if balise in ('td', 'th') and self.ligne is not None:
