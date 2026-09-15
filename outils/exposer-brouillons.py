@@ -46,14 +46,9 @@ def cle(url):
 
 # ── relevé ────────────────────────────────────────────────────────────────
 
-def relever():
-    q = '/pages?parent=%d&per_page=100&status=any&context=edit&orderby=menu_order&order=asc'
-    dossiers = []
-    for d in dep.appel('GET', q % MERE):
-        enfants = dep.appel('GET', q % d['id'])
-        if enfants:
-            dossiers.append((d, enfants))
-    return dossiers
+# L'arbre est relevé par sommaire-cms.py : une seule lecture du CMS pour les
+# deux sorties, donc un seul endroit à corriger quand le rangement bouge.
+relever = som.relever
 
 
 # ── images ────────────────────────────────────────────────────────────────
@@ -219,13 +214,12 @@ def sommaire(dossiers, absentes_par_page):
         o.append('<ol class="pages">')
 
         vus = {}
-        for p in enfants:
-            vus.setdefault(som.groupe_de(som.titre_de(p))[1], []).append(p['id'])
+        for _, p, nom in enfants:
+            vus.setdefault(nom, []).append(p['id'])
         doubles = {i for ids in vus.values() if len(ids) > 1 for i in ids}
 
         groupe = None
-        for p in enfants:
-            g, nom = som.groupe_de(som.titre_de(p))
+        for g, p, nom in enfants:
             if g and g != groupe:
                 o.append('<li class="groupe"><span>%s</span></li>' % H.escape(g))
                 groupe = g
@@ -281,7 +275,7 @@ def main():
 
     print('→ Relevé du CMS')
     dossiers = relever()
-    pages = [p for _, enfants in dossiers for p in enfants]
+    pages = [p for _, entrees in dossiers for _, p, _ in entrees]
     print('   %d dossier(s), %d page(s)' % (len(dossiers), len(pages)))
 
     hors = [p['id'] for p in pages if p['status'] != 'draft']
@@ -295,13 +289,14 @@ def main():
     print('   %d image(s) servie(s), %d absente(s) du site' % (len(noms), len(absentes)))
 
     print('→ Pages')
+    noms = {p['id']: nom for _, entrees in dossiers for _, p, nom in entrees}
     par_page = []
     for page in pages:
         cassees = len({u for u in re.findall(
             r'<img[^>]+src=["\']([^"\']+)["\']', page['content']['raw'], re.I)
             if u in absentes})
         if cassees:
-            par_page.append((som.groupe_de(som.titre_de(page))[1], cassees))
+            par_page.append((noms[page['id']], cassees))
         html = rendre(page, noms, absentes, '../index.html')
         with open(os.path.join(sortie, 'p', '%d.html' % page['id']), 'w',
                   encoding='utf-8') as f:

@@ -66,23 +66,33 @@ SOMMAIRE = 'refonte-sommaire'
 # Le type de page qu'une maquette de référence donne à voir, reconnu dans
 # son slug — pas dans son titre : le titre, ce script le réécrit, et au
 # passage suivant il ne retrouverait plus le mot qu'il vient d'en retirer.
-# Le rang fixe l'ordre à l'intérieur du dossier 3.
+#
+# Chaque type est un vrai sous-dossier de « Maquettes de référence », et non
+# plus un préfixe de titre : le dossier porte le type, la page ne porte que
+# son nom. Le rang ordonne les sous-dossiers entre eux.
 TYPES_REFERENCE = [
-    (1, 'Accueil', re.compile(r'accueil|home')),
-    (2, 'Programme', re.compile(r'programme|sejour|voyage')),
-    (3, 'Circuit', re.compile(r'circuit|famille|categorie')),
+    (1, 'Home', 'refonte-ref-home', re.compile(r'accueil|home')),
+    (2, 'Circuits', 'refonte-ref-circuits', re.compile(r'circuit|famille|categorie')),
+    (3, 'Programmes', 'refonte-ref-programmes', re.compile(r'programme|sejour|voyage')),
 ]
 
 
 def type_de_reference(page):
-    """Le type d'une maquette de référence, et son nom sans redite."""
-    titre = titre_de(page)
-    pose = re.match(r'^Refonte · R[ée]f · [^·]+ · (.+)$', titre)
-    nu = pose.group(1).strip() if pose else re.sub(r'^Refonte · ', '', titre)
-    for rang, nom, motif in TYPES_REFERENCE:
+    """Le type d'une maquette de référence, son sous-dossier et son nom.
+
+    Le type se lit dans le slug, qui ne bouge jamais. Le titre, lui, est
+    réécrit à chaque passage : y chercher « programme » après l'en avoir
+    retiré reclasserait la page en « Autre » dès le deuxième tour.
+
+    Les motifs se chevauchent — « refonte-programme-oasis-de-siwa » contient
+    « programme » et « refonte-circuit-test-… » contient « circuit » — donc
+    l'ordre de TYPES_REFERENCE tranche, et le premier qui répond gagne.
+    """
+    nu = re.sub(r'^Refonte · (?:R[ée]f · )?(?:[^·]+ · )?', '', titre_de(page)).strip()
+    for rang, nom, slug, motif in TYPES_REFERENCE:
         if motif.search(page['slug']):
-            return rang, nom, nu if pose else sans_redite(nom, nu)
-    return 9, 'Autre', nu
+            return rang, nom, slug, sans_redite(nom, nu)
+    return 9, 'Autre', '', nu
 
 
 def sans_redite(nom, nu):
@@ -93,9 +103,10 @@ def sans_redite(nom, nu):
     10/09 ». Mais un nom qui se réduirait à rien est gardé tel quel :
     « HOME » reste « HOME », c'est ce qui le distingue de l'autre accueil.
     """
-    reste = re.sub(r'^%s\b[^—–:-]{0,12}[—–:-]\s*' % nom, '', nu, flags=re.I)
+    singulier = nom.rstrip('s')
+    reste = re.sub(r'^%s\w{0,2}\b[^—–:-]{0,12}[—–:-]\s*' % singulier, '', nu, flags=re.I)
     if reste == nu:
-        reste = re.sub(r'^%s\b\s*' % nom, '', nu, flags=re.I)
+        reste = re.sub(r'^%s\w{0,2}\b\s*' % singulier, '', nu, flags=re.I)
     entier = re.fullmatch(r'\((.+)\)', reste.strip())
     if entier:
         reste = entier.group(1)
@@ -244,14 +255,45 @@ def main():
         rang += 1
         print('   %-72s id %d  (circuit non lu)' % (titre_de(page)[:72], page['id']))
 
-    print('\n→ Maquettes de référence, groupées par type de page')
-    refs = sorted(((type_de_reference(p), p) for p in enfants[d_ref['id']]),
-                  key=lambda x: (x[0][0], x[0][2]))
-    for rang, ((_, nom, propre), page) in enumerate(refs, 1):
-        titre = 'Refonte · Réf · %s · %s' % (nom, propre)
-        if poser(page, titre, d_ref['id'], rang, a.essai):
-            changes += 1
-        print('   %-72s id %d' % (titre[:72], page['id']))
+    # Les maquettes de référence vont dans un sous-dossier par type de page.
+    # Le dossier porte le type, la page ne porte plus que son nom : sans cela
+    # « Réf · Home · HOME » répète deux fois la même information.
+    print('\n→ Maquettes de référence, en sous-dossiers par type de page')
+    # Les pages se lisent dans le dossier ET dans ses sous-dossiers : une
+    # fois rangées elles ne sont plus filles directes, et sans cette descente
+    # le script les perdrait de vue dès le passage suivant.
+    connus = {slug for _, _, slug, _ in TYPES_REFERENCE}
+    plates = []
+    for e in enfants[d_ref['id']]:
+        if e['slug'] in connus:
+            plates += dep.appel(
+                'GET', '/pages?parent=%d&per_page=50&status=any&context=edit' % e['id'])
+        else:
+            plates.append(e)
+    refs = [(type_de_reference(p), p) for p in plates]
+    for rang, nom, slug, motif in TYPES_REFERENCE:
+        lot = sorted((x for x in refs if x[0][0] == rang), key=lambda x: x[0][3])
+        if not lot:
+            continue                    # pas de dossier vide : rien à y ranger
+        titre = 'Refonte · Réf · %d · %s' % (rang, nom)
+        if a.essai:
+            sous = next((d for d in dep.appel(
+                'GET', '/pages?slug=%s&status=any&per_page=1&context=edit' % slug) or []
+                if True), None)
+            sid = sous['id'] if sous else 0
+        else:
+            sous, _ = dep.poser_page(slug, {'title': titre, 'parent': d_ref['id'],
+                                            'menu_order': rang, 'status': 'draft'})
+            sid = sous['id']
+        print('   %-64s id %s' % (titre, sid or '—'))
+        for n, ((_, _, _, propre), page) in enumerate(lot, 1):
+            t = 'Refonte · Réf · %s' % propre
+            if poser(page, t, sid, n, a.essai):
+                changes += 1
+            print('      %-68s id %d' % (t[:68], page['id']))
+    orphelins = [x for x in refs if x[0][0] == 9]
+    for (_, _, _, propre), page in orphelins:
+        print('      %-68s id %d  (type non lu)' % (titre_de(page)[:68], page['id']))
 
     print('\n%d page(s) %s. Rien n\'a été publié ni supprimé.'
           % (changes, 'à ranger' if a.essai else 'rangée(s)'))

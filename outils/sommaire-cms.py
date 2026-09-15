@@ -55,16 +55,46 @@ def poids(page):
     return max(1, round(len(brut.encode('utf-8')) / 1024))
 
 
+Q = '/pages?parent=%d&per_page=100&status=any&context=edit&orderby=menu_order&order=asc'
+
+
 def relever():
-    """L'arbre sous « Refonte 2026 », tel qu'il est en ligne."""
-    q = '/pages?parent=%d&per_page=100&status=any&context=edit&orderby=menu_order&order=asc'
+    """L'arbre sous « Refonte 2026 », tel qu'il est en ligne.
+
+    Rend, par dossier, la liste de ses pages sous forme (groupe, page, nom).
+    Un dossier peut contenir des sous-dossiers — c'est le cas des maquettes
+    de référence, rangées par type : Home, Circuits, Programmes. Le groupe
+    est alors le nom du sous-dossier, et non plus un morceau du titre de la
+    page, puisque c'est justement le dossier qui porte le type.
+    """
     dossiers = []
-    for d in dep.appel('GET', q % MERE):
-        enfants = dep.appel('GET', q % d['id'])
-        if not enfants:          # une page posée directement sous la mère
-            continue
-        dossiers.append((d, enfants))
+    for d in dep.appel('GET', Q % MERE):
+        entrees = []
+        for e in dep.appel('GET', Q % d['id']):
+            petits = dep.appel('GET', Q % e['id'])
+            if petits:
+                for p in petits:
+                    entrees.append((nom_dossier(titre_de(e)), p, nom_page(titre_de(p))))
+            else:
+                groupe, nom = groupe_de(titre_de(e))
+                entrees.append((groupe, e, nom))
+        if entrees:              # pas une page posée seule sous la mère
+            dossiers.append((d, entrees))
     return dossiers
+
+
+def nom_dossier(titre):
+    """Le nom d'un sous-dossier, sans les préfixes de rangement."""
+    t = re.sub(r'^Refonte\s*·\s*', '', titre)
+    t = re.sub(r'^R[ée]f\s*·\s*', '', t)
+    return re.sub(r'^\d+\s*·\s*', '', t).strip()
+
+
+def nom_page(titre):
+    """Le nom d'une page rangée dans un sous-dossier : le dossier dit déjà
+    de quel type elle est, le titre n'a plus à le répéter."""
+    t = re.sub(r'^Refonte\s*·\s*(?:R[ée]f\s*·\s*)?', '', titre)
+    return re.sub(r'\s*—\s*doublon\s+/\S*$', '', t).strip()
 
 
 def numero(titre):
@@ -162,13 +192,12 @@ def corps(dossiers):
         # double relevées par le contrôle qualité. Dans une liste elles
         # seraient indiscernables, on ajoute leur adresse.
         vus = {}
-        for p in enfants:
-            vus.setdefault(groupe_de(titre_de(p))[1], []).append(p['id'])
+        for _, p, nom in enfants:
+            vus.setdefault(nom, []).append(p['id'])
         doubles = {i for ids in vus.values() if len(ids) > 1 for i in ids}
 
         groupe = None
-        for p in enfants:
-            g, nom = groupe_de(titre_de(p))
+        for g, p, nom in enfants:
             if g and g != groupe:
                 out.append('<li class="groupe"><span>%s</span></li>' % e(g))
                 groupe = g
