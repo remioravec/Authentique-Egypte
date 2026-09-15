@@ -743,7 +743,7 @@
    Ces règles viennent en FIN de feuille : à spécificité égale, c'est la
    dernière qui gagne, et les blocs responsives sont au-dessus. */
 @media (prefers-reduced-motion:reduce),(max-width:860px){
-  .pg .mur__f{height:auto;overflow:visible;-webkit-mask-image:none;mask-image:none}
+  .pg .mur__f{height:min(70vh,560px);overflow-y:auto;-webkit-overflow-scrolling:touch;-webkit-mask-image:none;mask-image:none}
   .pg .mur__d{animation:none}
   .pg .mur__p[aria-hidden]{display:none}
   .pg .mur__btn,.pg .mur__stop{display:none}

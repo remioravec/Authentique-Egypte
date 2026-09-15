@@ -176,6 +176,64 @@ def duree_detournee(h):
     return re.subn(r'\s*<[^>]*>\s*45 jours\s*(?:conseillés?)?\s*</[^>]*>', '', h)
 
 
+# Un « .*? » suffisait à croire bien faire : faute de lui interdire de
+# franchir un </h2>, il traversait trois sections pour atteindre le premier
+# titre suivi d'un paragraphe nu, et comparait des blocs qui n'existaient pas.
+BLOC_REPETE = re.compile(
+    r'<h2[^>]*>(?:(?!</h2>).)*</h2>(?:\s*<p class="">(?:(?!</p>).)*</p>)+', re.S)
+
+
+def bloc_repete(h):
+    """Un même bloc titre + paragraphes, posé plusieurs fois sur la page.
+
+    La page « qui sommes-nous » du site en ligne répète son appel au devis
+    — « Voyagez autrement avec une agence qui vous met en lien… » — à la fin
+    de chacune de ses parties. Reprise d'un bloc, la page de refonte le
+    portait six fois de suite, le même titre et le même paragraphe, ce qui
+    se lit comme un bug plutôt que comme une insistance.
+
+    On ne compare pas des sens, on compare des octets : seules disparaissent
+    les copies rigoureusement identiques à une occurrence précédente. Le
+    premier exemplaire reste, et avec lui chaque mot du texte.
+    """
+    vus, coupes = set(), []
+    for m in BLOC_REPETE.finditer(h):
+        if m.group(0) in vus:
+            coupes.append((m.start(), m.end()))
+        else:
+            vus.add(m.group(0))
+    if not coupes:
+        return h, 0
+    sortie, pos = [], 0
+    for debut, fin in coupes:
+        sortie.append(h[pos:debut])
+        pos = fin
+    sortie.append(h[pos:])
+    return ''.join(sortie), len(coupes)
+
+
+def mur_avis_mobile(h):
+    """Le mur d'avis n'est plus déplié en entier sur téléphone.
+
+    La règle visait juste : sous 860 px, et pour qui demande moins
+    d'animation, le défilement automatique du mur s'arrête. Mais en coupant
+    l'animation elle a aussi retiré la hauteur de la fenêtre —
+    « height:auto;overflow:visible » — et les soixante-dix-huit avis se
+    sont empilés : 6 317 px d'avis à faire défiler au doigt, sur chacune
+    des trente-cinq pages qui portent le mur, avant d'atteindre la suite.
+
+    La fenêtre reprend une hauteur, et c'est elle qui défile, pas la page.
+    L'animation reste arrêtée, le bouton reste caché : rien de l'intention
+    d'origine n'est perdu.
+    """
+    return re.subn(
+        r'\.pg \.mur__f\{height:auto;overflow:visible;'
+        r'-webkit-mask-image:none;mask-image:none\}',
+        '.pg .mur__f{height:min(70vh,560px);overflow-y:auto;'
+        '-webkit-overflow-scrolling:touch;'
+        '-webkit-mask-image:none;mask-image:none}', h)
+
+
 REPARATIONS = [
     ('prix du visa 30 € → 25 €', visa),
     ('inspecteur de maillage remasqué', inspecteur_maillage),
@@ -185,6 +243,8 @@ REPARATIONS = [
     ('fausse attribution Google retirée', faux_avis),
     ('H1 de page rétabli', titre_accueil),
     ('durée détournée retirée', duree_detournee),
+    ('mur d’avis replié sur mobile', mur_avis_mobile),
+    ('bloc d’appel au devis en double retiré', bloc_repete),
 ]
 
 # ── ce qui demande un arbitrage, et qu'on ne touche donc pas ─────────────
