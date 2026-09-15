@@ -165,6 +165,46 @@ def lire_page(h):
     }
 
 
+VIDES = {'br', 'hr', 'img', 'input', 'meta', 'link', 'source', 'wbr',
+         'col', 'area', 'base', 'embed', 'track', 'param'}
+
+
+def equilibrer(frag):
+    """Referme ce que le fragment ouvre, et jette ce qu'il ferme en trop.
+
+    Un corps découpé au milieu d'une page n'est pas un fragment valide : il
+    emporte le « </main> » de sa page, et les « </div> » des conteneurs dont
+    on a retiré l'ouverture en supprimant une section. Recollé dans le
+    gabarit, ce « </main> » ferme le <main class="pg"> du moule bien avant
+    la fin : tout ce qui suit — les avis, la FAQ, l'appel au devis, les
+    familles sœurs — se retrouve HORS de la portée « .pg » et perd d'un coup
+    toutes ses règles. Le mur d'avis, réglé pour tenir en 700 px, en
+    occupait 4 959. C'est ce que montrait la capture : une page qui
+    s'effondre à partir du milieu.
+
+    On ne devine rien : une fermeture sans ouverture dans le fragment est
+    retirée, une ouverture sans fermeture est refermée à la fin.
+    """
+    sortie, pile, position = [], [], 0
+    for m in re.finditer(r'<(/?)([A-Za-z][\w-]*)([^>]*)>', frag):
+        fermant, nom = m.group(1), m.group(2).lower()
+        if nom in VIDES or m.group(3).rstrip().endswith('/'):
+            continue
+        if not fermant:
+            pile.append(nom)
+            continue
+        if nom in pile:
+            while pile and pile.pop() != nom:
+                pass
+            continue
+        # Fermeture orpheline : on la saute, elle fermerait une balise du
+        # gabarit.
+        sortie.append(frag[position:m.start()])
+        position = m.end()
+    sortie.append(frag[position:])
+    return ''.join(sortie) + ''.join('</%s>' % x for x in reversed(pile))
+
+
 def corps_propre(h):
     """Le corps éditorial de la page, sans son habillage ni ses doublons.
 
@@ -202,7 +242,7 @@ def corps_propre(h):
                   r'<section[^>]*>(?:(?!</section>).)*?<div class="devis">.*?</section>',
                   r'<section[^>]*>(?:(?!</section>).)*?class="bande.*?</section>'):
         corps = re.sub(motif, '', corps, flags=re.S)
-    corps = corps.strip()
+    corps = equilibrer(corps).strip()
     if not corps:
         return ''
     # Enveloppé dans une section du gabarit : sans elle le contenu repris
