@@ -41,7 +41,18 @@ MERE = 7642
 DOSSIERS = [
     ('circuits', 'Refonte · 1 · Circuits — pages catégorie', 1),
     ('sejours', 'Refonte · 2 · Séjours — fiches programme', 2),
-    ('reference', 'Refonte · 3 · Maquettes de référence', 3),
+    ('reference', 'Refonte · 7 · Maquettes de référence', 7),
+]
+
+# Les familles déployées par outils/deployer-refonte.py. Le rangement leur
+# donne un rang et un préfixe de titre ; le dossier est retrouvé par son slug,
+# qui ne bouge pas. « Réf » est en dernier : ce sont des pages d'essai, pas
+# des livrables, et elles n'ont pas à s'intercaler entre deux familles du site.
+FAMILLES = [
+    ('refonte-destinations',   3, 'Refonte · 3 · Destinations', 'Destination'),
+    ('refonte-profils',        4, 'Refonte · 4 · Profils de voyageur', 'Profil'),
+    ('refonte-guides',         5, 'Refonte · 5 · Guides et articles', 'Guide'),
+    ('refonte-institutionnel', 6, 'Refonte · 6 · Pages institutionnelles', 'Page'),
 ]
 
 # Le nom court d'un circuit, tel qu'il servira de préfixe aux séjours.
@@ -294,6 +305,24 @@ def main():
     orphelins = [x for x in refs if x[0][0] == 9]
     for (_, _, _, propre), page in orphelins:
         print('      %-68s id %d  (type non lu)' % (titre_de(page)[:68], page['id']))
+
+    # Les autres familles : destinations, profils, guides, institutionnelles.
+    # Elles n'ont pas de sous-groupe — une liste alphabétique suffit à s'y
+    # retrouver — mais elles reçoivent le préfixe de leur famille, pour que le
+    # titre reste lisible seul, hors de son dossier, dans une recherche.
+    for slug, rang, titre, prefixe in FAMILLES:
+        d = next((x for x in dossiers if x['slug'] == slug), None)
+        if not d:
+            continue
+        if poser(d, titre, MERE, rang, a.essai):
+            changes += 1
+        pages = sorted(enfants.get(d['id'], []), key=lambda x: nom_nu(titre_de(x)))
+        print('\n→ %s (%d)' % (titre, len(pages)))
+        for n, page in enumerate(pages, 1):
+            t = 'Refonte · %s · %s' % (prefixe, nom_nu(titre_de(page)))
+            if poser(page, t, d['id'], n, a.essai):
+                changes += 1
+            print('   %-72s id %d' % (t[:72], page['id']))
 
     print('\n%d page(s) %s. Rien n\'a été publié ni supprimé.'
           % (changes, 'à ranger' if a.essai else 'rangée(s)'))

@@ -37,10 +37,19 @@ MOIS = ['janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet',
         'août', 'septembre', 'octobre', 'novembre', 'décembre']
 
 # Ce que dit chaque dossier, en une ligne, sous son titre.
+# Ce que dit chaque dossier, en une ligne, sous son titre. La clé est le
+# SLUG du dossier, pas son rang : les rangs changent quand une famille
+# s'ajoute, et une légende attachée à un rang finirait par décrire la
+# mauvaise famille — c'est arrivé, « pages d'essai » s'est retrouvé sous
+# les destinations le jour où elles ont pris le n° 3.
 LEGENDES = {
-    1: 'Les pages qui listent les séjours : la page mère et les cinq circuits.',
-    2: 'Les quatorze fiches séjour, au nouveau gabarit, groupées par circuit.',
-    3: 'Les pages d’essai qui ont servi à caler la charte et le gabarit.',
+    'refonte-types-de-s-jour': 'Les pages qui listent les séjours : la page mère et les cinq circuits.',
+    'refonte-programmes': 'Les quatorze fiches séjour, groupées par circuit.',
+    'refonte-destinations': 'Une page par lieu : ce qu’on y voit, quand y aller, combien de temps.',
+    'refonte-profils': 'Les pages qui répondent à « je pars seul, en couple, en famille, en fauteuil ».',
+    'refonte-guides': 'Les articles du blog et le sommaire qui les rassemble.',
+    'refonte-institutionnel': 'L’accueil, l’agence, les mentions légales.',
+    'refonte-maquettes-de-r-f-rence': 'Les pages d’essai qui ont servi à caler la charte et le gabarit.',
 }
 
 
@@ -159,7 +168,6 @@ def ligne(page, nom, doublon=False):
 
 def corps(dossiers):
     total = sum(len(k) for _, k in dossiers)
-    compte = {numero(titre_de(d)): len(k) for d, k in dossiers}
     aujourdhui = datetime.date.today()
 
     out = []
@@ -167,12 +175,16 @@ def corps(dossiers):
     out.append('<p class="eyebrow">Authentique Égypte · WordPress</p>')
     out.append('<h1>Refonte 2026, rangée et cliquable</h1>')
     out.append('<p class="chapo">Les %d pages de la refonte, toutes en brouillon sous '
-               "« Refonte 2026 ». Les circuits d’abord, puis les séjours groupés par "
-               'circuit, puis les maquettes de référence. Aucune page publiée n’est '
+               '« Refonte 2026 », rangées par type dans l’ordre où on les parcourt : '
+               'les circuits, les séjours, les destinations, les profils de voyageur, '
+               'les guides, les pages institutionnelles. Aucune page publiée n’est '
                'touchée.</p>' % total)
+    # Le compteur se lit sur les dossiers réellement présents : figé sur trois
+    # familles, il annonçait « 9 références » le jour où le rang 3 est passé
+    # aux destinations.
     out.append('<p class="chiffres">%s<b>0 <span>publiée</span></b></p>' % ''.join(
-        '<b>%d <span>%s</span></b>' % (compte.get(n, 0), mot)
-        for n, mot in ((1, 'circuits'), (2, 'séjours'), (3, 'références'))))
+        '<b>%d <span>%s</span></b>' % (len(k), e(nom_court(titre_de(d)).split(' —')[0].lower()))
+        for d, k in dossiers))
     out.append('<p class="avis">Les deux liens demandent d’être connecté au back-office. '
                '<b>Aperçu</b> ouvre la page telle que la verra le visiteur, '
                '<b>Modifier</b> ouvre l’éditeur.</p>')
@@ -185,8 +197,8 @@ def corps(dossiers):
                    '<span class="cpt">%d page%s</span></div>'
                    % (n, e(nom_court(titre_de(d))), len(enfants),
                       's' if len(enfants) > 1 else ''))
-        if n in LEGENDES:
-            out.append('<p class="legende">%s</p>' % e(LEGENDES[n]))
+        if d['slug'] in LEGENDES:
+            out.append('<p class="legende">%s</p>' % e(LEGENDES[d['slug']]))
         out.append('<ol class="pages">')
 
         # Deux fiches peuvent porter le même nom : ce sont les pages en
