@@ -25,6 +25,7 @@ n'apporte que ce que la page n'a pas.
 
 import argparse
 import html as H
+import json
 import os
 import re
 import sys
@@ -34,6 +35,12 @@ RACINE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 _bleu = SourceFileLoader('bleu_unique',
                          os.path.join(RACINE, 'outils', 'bleu-unique.py')).load_module()
 
+# L'image de partage que chaque guide déclare en ligne. Le hub montrait le
+# logo sur ses vingt-deux cartes, faute de mieux : le héros du guide ne
+# porte pas d'image, et la première image de la page EST le logo de
+# l'entête. Ce relevé vient des pages en ligne, une par une.
+OG = os.path.join(RACINE, 'docs', 'og-guides.json')
+
 FAMILLES = {
     'destination-': ('Destination', 'Les autres destinations',
                      'Les distances comptent : voici ce qui s’ajoute sans casser le rythme.'),
@@ -42,6 +49,11 @@ FAMILLES = {
     'hub-':         ('Blog', 'Les autres familles de séjours',
                      'Ce que l’équipe écrit depuis Le Caire, par sujet.'),
 }
+
+
+def _prem(motif, h, defaut=''):
+    m = re.search(motif, h, re.S)
+    return m.group(1).strip() if m else defaut
 
 
 def _texte(x):
@@ -94,13 +106,38 @@ def lire_page(h):
         'titre': _texte(prem(r'<h1[^>]*>(.*?)</h1>')),
         'balise_titre': prem(r'<title>(.*?)</title>'),
         'meta': prem(r'<meta name="description" content="([^"]*)"'),
-        'chapo': prem(r'<p class="hero__chapo">(.*?)</p>'),
-        'hero_img': prem(r'<div class="hero__fond"><img src="([^"]+)"'),
+        # Deux familles de pages, deux habillages : les catégories posent un
+        # « hero », les destinations, profils et guides un « chapeau ». Sans
+        # le second repli, la fiche Louxor sortait avec l'image de la mer
+        # Rouge derrière son titre, et sans chapô du tout.
+        'chapo': (prem(r'<p class="hero__chapo">(.*?)</p>')
+                  or prem(r'<section class="chapeau">.*?<p class="sous">(.*?)</p>')),
+        'hero_img': (prem(r'<div class="hero__fond"><img src="([^"]+)"')
+                     or prem(r'<div class="chapeau__bg"><img src="([^"]+)"')),
+        'stats': prem(r'(<div class="chapeau__st">.*?</div>)'),
         'cartes': re.findall(r'<article class="carte".*?</article>', h, re.S),
+        # Le chapeau que la page met au-dessus de ses cartes : surtitre,
+        # titre, phrase d'accroche. Le moule en a un aussi, mais il parle de
+        # la mer Rouge — et laisser tomber celui de la page, c'était perdre
+        # « Passer du profil au voyage » et « Tous personnalisables… » sur
+        # les treize pages qui les portent.
+        'cartes_eyebrow': prem(r'<section[^>]*>(?:(?!</section>).)*?'
+                               r'<p class="eyebrow">(.*?)</p>(?:(?!</section>).)*?'
+                               r'<article class="carte"'),
+        'cartes_titre': prem(r'<section[^>]*>(?:(?!</section>).)*?'
+                             r'<h2[^>]*>(.*?)</h2>(?:(?!</section>).)*?<article class="carte"'),
+        'cartes_lede': prem(r'<section[^>]*>(?:(?!</section>).)*?'
+                            r'<p class="lede"[^>]*>(.*?)</p>(?:(?!</section>).)*?'
+                            r'<article class="carte"'),
         'faq': re.findall(r'<details[^>]*>.*?</details>', h, re.S),
         'ariane': prem(r'(<nav class="ariane[^"]*"[^>]*>.*?</nav>)'),
         'pills': prem(r'(<div class="hero__pills">.*?</div>\s*(?=<h1))'),
         'reperes': prem(r'(<section class="[^"]*reperes[^"]*">.*?</section>)'),
+        # Le bandeau de contact au-dessus de l'entête. Le moule n'en a pas :
+        # sans ce report, « Agence locale basée au Caire · Une personne de
+        # l'équipe vous répond » disparaissait des treize pages qui le
+        # portaient — la seule phrase que la refonte perdait vraiment.
+        'bandeau': prem(r'(<div class="bandeau">.*?</div>\s*</div>)'),
         'ld': ''.join(re.findall(
             r'<script type="application/ld\+json">.*?</script>', h, re.S)),
         'corps': corps_propre(h),
@@ -115,10 +152,26 @@ def corps_propre(h):
     le mur d'avis et l'appel au devis. Ce qui reste est propre à la page et
     n'existe nulle part ailleurs — c'est ce que la première version jetait.
     """
-    m = re.search(r'</nav>\s*(.*?)\s*<footer class="pied"', h, re.S)
-    if not m:
+    # Le corps commence après le DERNIER bloc d'en-tête de la page — héros,
+    # repères, fil d'Ariane, dans l'ordre où elle les pose. Deux bornes plus
+    # naïves ont échoué : après le premier </nav> on emportait le méga-menu,
+    # et après le fil d'Ariane on emportait encore le héros, parce que sur ces
+    # pages le fil est DANS le héros. Résultat visible : un second titre, un
+    # second fil et de seconds chiffres au milieu du gabarit.
+    fin_pied = h.find('<footer class="pied"')
+    if fin_pied < 0:
         return ''
-    corps = m.group(1)
+    depart = 0
+    for motif in (r'<section class="hero[^"]*".*?</section>',
+                  r'<section class="chapeau[^"]*">.*?</section>',
+                  r'<section class="[^"]*reperes[^"]*">.*?</section>',
+                  r'<nav class="ariane[^"]*"[^>]*>.*?</nav>'):
+        for m in re.finditer(motif, h[:fin_pied], re.S):
+            depart = max(depart, m.end())
+    if not depart:
+        m = re.search(r'</nav>', h[:fin_pied])
+        depart = m.end() if m else 0
+    corps = h[depart:fin_pied]
     for motif in (r'<section[^>]*>(?:(?!</section>).)*?<article class="carte".*?</section>',
                   r'<section[^>]*>(?:(?!</section>).)*?<details.*?</section>',
                   r'<div class="mur".*?</div>\s*</div>\s*</section>',
@@ -128,7 +181,22 @@ def corps_propre(h):
                   r'<section[^>]*>(?:(?!</section>).)*?<div class="devis">.*?</section>',
                   r'<section[^>]*>(?:(?!</section>).)*?class="bande.*?</section>'):
         corps = re.sub(motif, '', corps, flags=re.S)
-    return corps.strip()
+    corps = corps.strip()
+    if not corps:
+        return ''
+    # Enveloppé dans une section du gabarit : sans elle le contenu repris
+    # s'affiche pleine largeur, sans rythme ni gouttière, collé au bloc
+    # précédent — c'est ce qui rendait les destinations illisibles.
+    nu = corps.lstrip()
+    if nu.startswith('<section'):
+        pass
+    elif nu.startswith('<div class="wrap">'):
+        # La page apporte déjà sa gouttière : en ajouter une seconde
+        # rétrécissait le texte de deux fois la marge, à chaque page.
+        corps = '<section class="pg-sec">%s</section>' % corps
+    else:
+        corps = '<section class="pg-sec"><div class="wrap">%s</div></section>' % corps
+    return corps
 
 
 # ── montage ──────────────────────────────────────────────────────────────
@@ -160,19 +228,32 @@ def poser_tete(tete, p, famille):
         tete = re.sub(r'(<div class="hero__(?:flou|fond)"[^>]*>)<img [^>]*>',
                       lambda m: '%s<img src="%s" alt="" decoding="async" '
                                 'loading="lazy">' % (m.group(1), p['hero_img']), tete)
-    tete = _remplacer_ou_retirer(tete, r'<nav class="ariane[^"]*"[^>]*>.*?</nav>', p['ariane'])
+    # Le fil du moule porte « ariane--sous », qui lui donne sa gouttière ;
+    # celui de la page vivait dans le bandeau et n'en a pas besoin. Échanger
+    # les balises collait le fil au bord gauche de l'écran : on ne remplace
+    # donc que les maillons, jamais la balise qui les porte.
+    maillons = re.search(r'<ol.*?</ol>', p['ariane'] or '', re.S)
+    tete = (re.sub(r'(<nav class="ariane[^"]*"[^>]*>)<ol.*?</ol>',
+                   lambda m: m.group(1) + maillons.group(0), tete, count=1, flags=re.S)
+            if maillons else
+            _remplacer_ou_retirer(tete, r'<nav class="ariane[^"]*"[^>]*>.*?</nav>', ''))
     tete = _remplacer_ou_retirer(tete, r'<p class="hero__chapo">.*?</p>', p['chapo'] and
                                  '<p class="hero__chapo">%s</p>' % p['chapo'])
-    tete = _remplacer_ou_retirer(tete, r'<div class="hero__pills">.*?</div>\s*(?=<h1)', p['pills'])
+    moule_pills = re.search(r'<div class="hero__pills">.*?</div>\s*(?=<h1)', tete, re.S)
+    pills = p['pills'] or pills_des_stats(
+        p['stats'], moule_pills.group(0) if moule_pills else '')
+    tete = _remplacer_ou_retirer(tete, r'<div class="hero__pills">.*?</div>\s*(?=<h1)', pills)
     moule_rep = re.search(r'<section class="[^"]*reperes[^"]*">.*?</section>', tete, re.S)
     reperes = p['reperes'] or reperes_des_cartes(
-        p['cartes'], moule_rep.group(0) if moule_rep else '')
+        p['cartes'], moule_rep.group(0) if moule_rep else '', sans_compte=bool(pills))
     tete = _remplacer_ou_retirer(tete, r'<section class="[^"]*reperes[^"]*">.*?</section>',
                                  reperes)
     # Les données structurées du moule annoncent son propre nom : laissées en
     # place, elles déclarent à Google qu'une page Louxor s'appelle
     # « Découverte de la Mer rouge ». Invisible à l'œil, fausse pour les
     # moteurs — le pire des deux mondes.
+    if p['bandeau'] and '<div class="bandeau">' not in tete:
+        tete = tete.replace('<body>', '<body>\n' + p['bandeau'], 1)
     tete = re.sub(r'<script type="application/ld\+json">.*?</script>', '', tete, flags=re.S)
     if p['ld']:
         tete = tete.replace('</head>', p['ld'] + '</head>', 1)
@@ -189,6 +270,25 @@ def _remplacer_ou_retirer(tete, motif, contenu):
     return re.sub(motif, lambda _: contenu or '', tete, count=1, flags=re.S)
 
 
+def pills_des_stats(stats, moule_pills):
+    """Les pastilles du héros, reprises des chiffres que la page affiche.
+
+    « 3 jours conseillés · 4 séjours y passent » : ces chiffres étaient au
+    milieu du bandeau de la page, un bandeau que le gabarit remplace. Ils
+    remontent dans le héros plutôt que de disparaître — même texte, place
+    du moule. Sans eux le héros sortait nu, le titre seul sur la photo.
+    """
+    if not stats:
+        return ''
+    morceaux = re.findall(r'<span[^>]*>(.*?)</span>', stats, re.S)
+    if not morceaux:
+        return ''
+    picto = re.search(r'<svg[^>]*>.*?</svg>', moule_pills or '', re.S)
+    return '<div class="hero__pills">%s</div>' % ''.join(
+        '<span class="pill">%s%s</span>' % (picto.group(0) if picto else '', x.strip())
+        for x in morceaux)
+
+
 def cartes_des_guides(source, moule_section):
     """Les cartes du hub blog, bâties sur les pages guide du même dossier.
 
@@ -200,6 +300,10 @@ def cartes_des_guides(source, moule_section):
     que sept.
     """
     modele = re.search(r'<article class="carte".*?</article>', moule_section or '', re.S)
+    vignettes = {}
+    if os.path.exists(OG):
+        with open(OG, encoding='utf-8') as f:
+            vignettes = json.load(f)
     cartes = []
     for nom in sorted(os.listdir(source)):
         if not nom.startswith('guide-') or not nom.endswith('.html'):
@@ -208,8 +312,15 @@ def cartes_des_guides(source, moule_section):
             g = f.read()
         titre = re.search(r'<h1[^>]*>(.*?)</h1>', g, re.S)
         lien = re.search(r'Contenu repris de\s*<a[^>]*href="([^"]+)"', g)
-        img = (re.search(r'<div class="hero__fond"><img src="([^"]+)"', g)
-               or re.search(r'<img src="(https://authentiquegypte[^"]+)"', g))
+        # Dans cet ordre : l'image de partage relevée en ligne, puis celle du
+        # bandeau du guide, puis la première image de son corps. Jamais celle
+        # de l'entête — c'est le logo, et c'est ce qui donnait vingt-deux
+        # cartes identiques.
+        corps = g[g.find('<article class="corps">'):g.find('<footer class="pied"')]
+        img = (vignettes.get(nom)
+               or _prem(r'<div class="hero__fond"><img src="([^"]+)"', g)
+               or _prem(r'<div class="chapeau__bg"><img src="([^"]+)"', g)
+               or _prem(r'<img src="(https://authentiquegypte[^"]+)"', corps))
         chapo = (re.search(r'<p class="hero__chapo">(.*?)</p>', g, re.S)
                  or re.search(r'<div class="prose[^"]*">\s*<p>(.*?)</p>', g, re.S))
         if not (titre and lien):
@@ -217,20 +328,21 @@ def cartes_des_guides(source, moule_section):
         extrait = _texte(chapo.group(1))[:150] if chapo else ''
         cartes.append(
             '<article class="carte">'
-            '<a class="carte__img" href="%s" tabindex="-1" aria-hidden="true">'
-            '<img src="%s" alt="" loading="lazy" decoding="async"></a>'
+            '%s'
             '<div class="carte__c"><h3><a href="%s">%s</a></h3>'
             '%s'
             '<div class="carte__b"><a class="lien-fl" href="%s">Lire le guide</a></div>'
             '</div></article>'
-            % (lien.group(1), img.group(1) if img else '', lien.group(1),
-               titre.group(1).strip(),
+            % ('<a class="carte__img" href="%s" tabindex="-1" aria-hidden="true">'
+               '<img src="%s" alt="" loading="lazy" decoding="async"></a>'
+               % (lien.group(1), img) if img else '',
+               lien.group(1), titre.group(1).strip(),
                '<p class="carte__route">%s…</p>' % H.escape(extrait) if extrait else '',
                lien.group(1)))
     return cartes
 
 
-def reperes_des_cartes(cartes, moule_section):
+def reperes_des_cartes(cartes, moule_section, sans_compte=False):
     """Les repères du héros, calculés sur les cartes de la page.
 
     Le moule en porte — « à partir de 1485 €, 9 jours, 1 séjour au choix » —
@@ -253,7 +365,10 @@ def reperes_des_cartes(cartes, moule_section):
             jours.append(int(m.group(1)))
     lignes = []
     n = len(cartes)
-    lignes.append(('Séjours', '%d au choix' % n))
+    # Le nombre de séjours figure déjà dans les pastilles du héros quand la
+    # page en porte : le répéter deux blocs plus bas se lit comme un bug.
+    if not sans_compte:
+        lignes.append(('Séjours', '%d au choix' % n))
     if prix:
         lignes.append(('À partir de', '%d €' % min(prix)))
     if jours:
@@ -262,13 +377,26 @@ def reperes_des_cartes(cartes, moule_section):
                        else '%d à %d jours' % (min(jours), max(jours))))
     if len(lignes) < 2:
         return ''
-    # On reprend le picto du moule pour chaque ligne, dans l'ordre où il les
-    # pose : la forme reste celle du gabarit, seules les valeurs changent.
-    pictos = re.findall(r'<svg[^>]*>.*?</svg>', moule_section, re.S)
-    corps = ''.join(
-        '<li>%s<small>%s</small><b>%s</b></li>'
-        % (pictos[i % len(pictos)] if pictos else '', H.escape(a), H.escape(b))
-        for i, (a, b) in enumerate(lignes))
+    # Le picto du moule suit le RÔLE de la ligne, pas son rang : une première
+    # version prenait les pictos dans l'ordre, si bien qu'un prix s'affichait
+    # sous une coche et une durée sous un symbole euro.
+    modeles = {}
+    for li in re.findall(r'<li>.*?</li>', moule_section, re.S):
+        etiquette = _texte(re.search(r'<small>(.*?)</small>', li, re.S).group(1)) \
+            if re.search(r'<small>', li) else ''
+        picto = re.search(r'<svg[^>]*>.*?</svg>', li, re.S)
+        if etiquette and picto:
+            modeles[etiquette.lower()] = (etiquette, picto.group(0))
+    def modele(role):
+        for cle, valeur in modeles.items():
+            if cle.startswith(role.lower()):
+                return valeur
+        return (role, '')
+    corps = ''
+    for role, valeur in lignes:
+        etiquette, picto = modele(role)
+        corps += ('<li>%s<small>%s</small><b>%s</b></li>'
+                  % (picto, H.escape(etiquette), H.escape(valeur)))
     return '<section class="reperes"><div class="wrap"><ul>%s</ul></div></section>' % corps
 
 
@@ -301,11 +429,25 @@ def section_cartes(moule, p, famille, source=None):
     s = s[:ouvre.end()] + ''.join(liste) + s[dernier + len('</article>'):]
     lieu = re.sub(r'^(?:Voyage|Séjour|Excursion)\s+(?:à|au|aux|en|dans le|dans la|sur le)\s+',
                   '', p['titre'])
-    titre = {'Destination': 'Les séjours qui passent par %s' % lieu,
-             'Profil': 'Les séjours pour %s' % p['titre'].lower(),
-             'Blog': 'Les guides à lire avant de partir'}[famille]
-    return re.sub(r'(<h2[^>]*>).*?(</h2>)', lambda m: m.group(1) + H.escape(titre) + m.group(2),
-                  s, count=1, flags=re.S)
+    titre = p['cartes_titre'] or H.escape(
+        {'Destination': 'Les séjours qui passent par %s' % lieu,
+         'Profil': 'Les séjours pour %s' % p['titre'].lower(),
+         'Blog': 'Les guides à lire avant de partir'}[famille])
+    s = re.sub(r'(<h2[^>]*>).*?(</h2>)', lambda m: m.group(1) + titre + m.group(2),
+               s, count=1, flags=re.S)
+    # Le surtitre de la page prend la place de celui du moule quand elle en
+    # a un. Celui du moule — « Au choix » — ne nomme aucune famille : il
+    # peut rester sans rien affirmer de faux.
+    if p['cartes_eyebrow']:
+        s = re.sub(r'<p class="eyebrow">.*?</p>',
+                   lambda _: '<p class="eyebrow">%s</p>' % p['cartes_eyebrow'],
+                   s, count=1, flags=re.S)
+    if p['cartes_lede']:
+        s = re.sub(r'(<h2[^>]*>.*?</h2>)',
+                   lambda m: '%s<p class="lede" style="margin:14px 0 30px">%s</p>'
+                             % (m.group(1), p['cartes_lede']),
+                   s, count=1, flags=re.S)
+    return s
 
 
 def section_faq(moule, p):

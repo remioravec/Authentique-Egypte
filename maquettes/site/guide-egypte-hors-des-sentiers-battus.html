@@ -504,7 +504,87 @@ header .nav>a.btn--or:hover{background:#C87700;border-color:#C87700;box-shadow:0
 {"@type":"Question","name":"Est-ce possible de voyager en Égypte en été ?","acceptedAnswer":{"@type":"Answer","text":"Oui. Nous privilégions la mer Rouge : la plongée est possible toute l'année avec une combinaison, tandis que le snorkeling et le farniente sont plus agréables d'avril à novembre. Et si vous tenez au Caire, à Louxor ou à Assouan, nous adaptons les visites — tôt le matin et en fin de journée — pour que la chaleur reste tenable."}},
 {"@type":"Question","name":"Quelle période privilégier pour un voyage en famille en Égypte ?","acceptedAnswer":{"@type":"Answer","text":"Février, avril, octobre et décembre correspondent aux vacances scolaires et offrent de bonnes conditions climatiques, mais il faut anticiper car l'affluence est forte. En février et en décembre, évitez la mer Rouge : l'eau est trop fraîche pour la baignade."}},
 {"@type":"Question","name":"Peut-on combiner plusieurs régions en 10 à 12 jours ?","acceptedAnswer":{"@type":"Answer","text":"Oui : un itinéraire classique combine Le Caire, une croisière sur le Nil (Louxor et Assouan) et 2 à 3 jours de détente en mer Rouge."}}]}]}</script>
-</head>
+<style data-mef="mef-1">
+/* Mise en forme du contenu repris — voir outils/mise-en-forme.py */
+.mef{--mef-mes:68ch}
+.mef p,.mef ul,.mef ol,.mef dl,.mef figure{max-width:var(--mef-mes)}
+/* Le tableau est une donnée, pas une lecture suivie : la mesure de confort
+   du texte l'étranglerait en colonnes de trois mots. */
+.mef .mef-tab{max-width:none}
+.mef table{max-width:none}
+.mef p{margin:0 0 1.1em;line-height:1.75;color:var(--texte)}
+.mef p:last-child{margin-bottom:0}
+.mef>h2,.mef .mef-h2{font-size:clamp(1.35rem,2.4vw,1.75rem);line-height:1.25;
+  margin:2.4em 0 .7em;color:var(--nuit);text-wrap:balance}
+.mef>h2:first-child{margin-top:0}
+.mef h3,.mef .mef-q{font-size:clamp(1.05rem,1.6vw,1.22rem);line-height:1.35;
+  margin:2em 0 .5em;color:var(--nuit);text-wrap:balance}
+.mef h4{font-size:1rem;margin:1.6em 0 .4em;color:var(--nuit)}
+/* Une question posée dans le corps : reconnaissable sans crier. */
+.mef .mef-q{position:relative;padding-left:18px;font-family:"Manrope",sans-serif;font-weight:700}
+.mef .mef-q::before{content:"";position:absolute;left:0;top:.34em;bottom:.34em;width:4px;
+  border-radius:2px;background:var(--teal)}
+.mef .mef-q+p{margin-top:0}
+/* La reprise du site laisse certaines questions en minuscule. La capitale
+   est posée à l'affichage : le texte, lui, n'est pas retouché. */
+.mef .mef-q::first-letter{text-transform:uppercase}
+/* Listes : la puce prend la couleur de marque, le texte garde son rythme. */
+.mef ul,.mef ol{margin:0 0 1.3em;padding-left:0;list-style:none}
+.mef ul>li,.mef ol>li{position:relative;padding-left:26px;margin:0 0 .55em;
+  line-height:1.7;color:var(--texte)}
+.mef ul>li::before{content:"";position:absolute;left:6px;top:.62em;width:7px;height:7px;
+  border-radius:50%;background:var(--teal)}
+.mef ol{counter-reset:mef}
+.mef ol>li{counter-increment:mef}
+.mef ol>li::before{content:counter(mef);position:absolute;left:0;top:.05em;width:20px;
+  text-align:center;font-family:"Manrope",sans-serif;font-size:.78rem;font-weight:700;
+  line-height:20px;border-radius:50%;background:var(--teal-fond);color:var(--teal-txt)}
+.mef li>b:first-child,.mef li>strong:first-child{color:var(--nuit)}
+/* Une énumération « Étiquette : texte » se lit mieux en deux temps. */
+.mef .mef-def>li{padding-left:0}
+.mef .mef-def>li::before{display:none}
+.mef .mef-def>li{border-left:3px solid var(--ligne-2);padding:2px 0 2px 16px}
+.mef .mef-def>li b:first-child{display:block;color:var(--nuit);
+  font-family:"Manrope",sans-serif;font-size:.92rem}
+.mef dl{display:grid;gap:.2em .9em;grid-template-columns:auto 1fr}
+.mef dt{font-weight:700;color:var(--nuit)}
+.mef dd{margin:0;color:var(--texte)}
+/* Tableaux : jamais de débordement horizontal de la page. */
+.mef .mef-tab{overflow-x:auto;overflow-y:hidden;margin:0 0 1.4em;
+  border:1px solid var(--ligne-2);border-radius:var(--r-m);
+  /* Une ombre portée n'apparaît qu'au bord vers lequel il reste à défiler :
+     le lecteur voit qu'il y a une colonne de plus, sans indication écrite. */
+  background:linear-gradient(90deg,var(--papier) 30%,transparent),
+             linear-gradient(90deg,transparent,var(--papier) 70%) 100% 0,
+             radial-gradient(farthest-side at 0 50%,rgba(0,0,0,.13),transparent),
+             radial-gradient(farthest-side at 100% 50%,rgba(0,0,0,.13),transparent) 100% 0;
+  background-repeat:no-repeat;background-size:40px 100%,40px 100%,14px 100%,14px 100%;
+  background-attachment:local,local,scroll,scroll}
+.mef table{border-collapse:collapse;width:100%;font-size:.94rem}
+.mef th,.mef td{padding:11px 16px;text-align:left;border-bottom:1px solid var(--ligne-2);
+  vertical-align:top;line-height:1.5}
+.mef tbody tr:nth-child(even){background:color-mix(in srgb,var(--fond) 55%,transparent)}
+.mef th{font-family:"Manrope",sans-serif;font-size:.76rem;letter-spacing:.05em;line-height:1.3;
+  text-transform:uppercase;color:var(--nuit);background:var(--fond)}
+/* L'entête ne force pas la largeur : mise sur une seule ligne, elle poussait
+   à elle seule le tableau au-delà de la colonne de lecture, et la dernière
+   colonne sortait de l'écran. */
+.mef thead th:first-child,.mef tbody th{white-space:normal}
+.mef tbody tr:last-child td{border-bottom:0}
+.mef td+td{font-variant-numeric:tabular-nums}
+.mef blockquote{margin:0 0 1.4em;padding:2px 0 2px 20px;border-left:3px solid var(--or);
+  color:var(--nuit);font-size:1.05rem}
+.mef img{max-width:100%;height:auto;border-radius:var(--r-m)}
+/* Les deux colonnes de la page reprise n'avaient aucune règle : la colonne
+   latérale tombait sous le texte, pleine largeur. */
+.colonnes{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:48px;
+  align-items:start}
+.colonnes>aside{position:sticky;top:96px}
+@media (max-width:960px){
+  .colonnes{grid-template-columns:minmax(0,1fr);gap:36px}
+  .colonnes>aside{position:static}
+}
+</style></head>
 <body>
 
 <div class="bandeau">
@@ -588,7 +668,7 @@ header .nav>a.btn--or:hover{background:#C87700;border-color:#C87700;box-shadow:0
 <div class="wrap">
 <div class="art">
 <nav class="som" aria-label="Sommaire"><h4>Sur cette page</h4><ol><li><a href="#s1">1. Oasis de Dakhla : l’authentique (Désert Occidental) {#oasis-de-dakhla}</a></li><li><a href="#s2">Activités &amp; découvertes à Dakhla</a></li><li><a href="#s3">2. Oasis de Bahariya : l’intime (Désert Occidental) {#oasis-de-bahariya}</a></li><li><a href="#s4">Activités &amp; découvertes à Bahariya</a></li><li><a href="#s5">3. Désert Blanc (Désert Occidental) : le sublime {#désert-blanc}</a></li><li><a href="#s6">Activités &amp; découvertes dans le Désert Blanc</a></li><li><a href="#s7">4. Désert Noir (Désert Occidental) : l’étonnant {#désert-noir}</a></li><li><a href="#s8">Activités &amp; découvertes dans le Désert Noir</a></li><li><a href="#s9">5. Fayoum (Basse-Égypte) : l’oasis luxuriante {#fayoum}</a></li><li><a href="#s10">Activités &amp; découvertes au Fayoum</a></li><li><a href="#s11">6. Oasis de Siwa (Désert Occidental) : la magique {#oasis-de-siwa}</a></li><li><a href="#s12">Activités &amp; découvertes à Siwa</a></li><li><a href="#s13">7. Lac Nasser (Haute-Égypte) : la nature sauvage {#lac-nasser}</a></li><li><a href="#s14">Activités &amp; découvertes sur le Lac Nasser</a></li><li><a href="#s15">8. Sud Sinaï : les montagnes et monastères {#sud-sinai}</a></li><li><a href="#s16">Activités &amp; découvertes au Sud Sinaï</a></li><li><a href="#s17">FAQ – Hors des sentiers battus</a></li></ol></nav>
-<article class="corps">
+<article class="corps mef">
 <p class="src">Contenu repris de <a href="https://authentiquegypte.com/egypte-hors-des-sentiers-battus/">https://authentiquegypte.com/egypte-hors-des-sentiers-battus/</a>, sans réécriture&nbsp;: seule la mise en page change.</p>
 <p class="lede">Loin des foules de Louxor et d&#x27;Assouan, l&#x27;Égypte recèle des trésors cachés, des lieux empreints d&#x27;une histoire millénaire et d&#x27;une beauté naturelle saisissante. Pour ceux qui aspirent à une expérience plus intime et authentique, voici 8 destinations hors des sentiers battus qui révèlent une autre facette du pays des pharaons. Ces haltes, souvent méconnues, promettent des découvertes uniques, des rencontres inoubliables et une plongée profonde dans la culture égyptienne.</p>
 <h2 id="s1">1. Oasis de Dakhla : l’authentique (Désert Occidental) {#oasis-de-dakhla}</h2>
@@ -795,7 +875,7 @@ document.querySelector('.burger')?.addEventListener('click',e=>{
   },{threshold:.06,rootMargin:'0px 0px -40px 0px'});
   cibles.forEach((el,n)=>{ el.setAttribute('data-rev','');
     el.style.transitionDelay=(Math.min(n%4,3)*60)+'ms'; io.observe(el); });
-  setTimeout(()=>{cibles.forEach(el=>el.classList.add('vu'))},2500); /* garde-fou : rien ne reste invisible */
+  setTimeout(()=>{cibles.forEach(el=>el.classList.add('vu'))},900); /* garde-fou : rien ne reste invisible */
 })();
 </script>
 <script>

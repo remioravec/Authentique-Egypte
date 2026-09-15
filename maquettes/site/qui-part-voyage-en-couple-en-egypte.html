@@ -872,8 +872,97 @@
 {"@type":"Question","name":"Quelle est la meilleure période pour le désert égyptien ?","acceptedAnswer":{"@type":"Answer","text":"D'octobre à avril. En été, les températures dépassent 45 °C en journée et les excursions deviennent éprouvantes. Les nuits d'hiver descendent près de zéro, mais vous dormez au chaud."}},
 {"@type":"Question","name":"Dort-on vraiment sous la tente dans le désert égyptien ?","acceptedAnswer":{"@type":"Answer","text":"À Fayoum seulement, où le campement est possible. Partout ailleurs — désert Blanc, désert Noir, traversée des oasis — le bivouac exige des autorisations que nous n'obtenons pas : nous vous logeons en écolodge, en maison d'hôtes ou à l'hôtel, en chambre privée."}},
 {"@type":"Question","name":"Faut-il un 4x4 et un guide agréé pour le désert en Égypte ?","acceptedAnswer":{"@type":"Answer","text":"Oui, et ce n'est pas négociable : le désert occidental est une zone contrôlée, l'accès exige un permis et un guide agréé. Nos circuits incluent les deux, avec chauffeur francophone. Un voyageur seul ne peut pas y entrer."}},
-{"@type":"Question","name":"Peut-on combiner le désert avec une croisière sur le Nil ?","acceptedAnswer":{"@type":"Answer","text":"C'est le format le plus demandé : Le Caire, deux jours de désert Blanc, puis vol intérieur vers Louxor pour la croisière. Comptez dix jours au total."}}]}]}</script></head>
+{"@type":"Question","name":"Peut-on combiner le désert avec une croisière sur le Nil ?","acceptedAnswer":{"@type":"Answer","text":"C'est le format le plus demandé : Le Caire, deux jours de désert Blanc, puis vol intérieur vers Louxor pour la croisière. Comptez dix jours au total."}}]}]}</script><style data-mef="mef-1">
+/* Mise en forme du contenu repris — voir outils/mise-en-forme.py */
+.mef{--mef-mes:68ch}
+.mef p,.mef ul,.mef ol,.mef dl,.mef figure{max-width:var(--mef-mes)}
+/* Le tableau est une donnée, pas une lecture suivie : la mesure de confort
+   du texte l'étranglerait en colonnes de trois mots. */
+.mef .mef-tab{max-width:none}
+.mef table{max-width:none}
+.mef p{margin:0 0 1.1em;line-height:1.75;color:var(--texte)}
+.mef p:last-child{margin-bottom:0}
+.mef>h2,.mef .mef-h2{font-size:clamp(1.35rem,2.4vw,1.75rem);line-height:1.25;
+  margin:2.4em 0 .7em;color:var(--nuit);text-wrap:balance}
+.mef>h2:first-child{margin-top:0}
+.mef h3,.mef .mef-q{font-size:clamp(1.05rem,1.6vw,1.22rem);line-height:1.35;
+  margin:2em 0 .5em;color:var(--nuit);text-wrap:balance}
+.mef h4{font-size:1rem;margin:1.6em 0 .4em;color:var(--nuit)}
+/* Une question posée dans le corps : reconnaissable sans crier. */
+.mef .mef-q{position:relative;padding-left:18px;font-family:"Manrope",sans-serif;font-weight:700}
+.mef .mef-q::before{content:"";position:absolute;left:0;top:.34em;bottom:.34em;width:4px;
+  border-radius:2px;background:var(--teal)}
+.mef .mef-q+p{margin-top:0}
+/* La reprise du site laisse certaines questions en minuscule. La capitale
+   est posée à l'affichage : le texte, lui, n'est pas retouché. */
+.mef .mef-q::first-letter{text-transform:uppercase}
+/* Listes : la puce prend la couleur de marque, le texte garde son rythme. */
+.mef ul,.mef ol{margin:0 0 1.3em;padding-left:0;list-style:none}
+.mef ul>li,.mef ol>li{position:relative;padding-left:26px;margin:0 0 .55em;
+  line-height:1.7;color:var(--texte)}
+.mef ul>li::before{content:"";position:absolute;left:6px;top:.62em;width:7px;height:7px;
+  border-radius:50%;background:var(--teal)}
+.mef ol{counter-reset:mef}
+.mef ol>li{counter-increment:mef}
+.mef ol>li::before{content:counter(mef);position:absolute;left:0;top:.05em;width:20px;
+  text-align:center;font-family:"Manrope",sans-serif;font-size:.78rem;font-weight:700;
+  line-height:20px;border-radius:50%;background:var(--teal-fond);color:var(--teal-txt)}
+.mef li>b:first-child,.mef li>strong:first-child{color:var(--nuit)}
+/* Une énumération « Étiquette : texte » se lit mieux en deux temps. */
+.mef .mef-def>li{padding-left:0}
+.mef .mef-def>li::before{display:none}
+.mef .mef-def>li{border-left:3px solid var(--ligne-2);padding:2px 0 2px 16px}
+.mef .mef-def>li b:first-child{display:block;color:var(--nuit);
+  font-family:"Manrope",sans-serif;font-size:.92rem}
+.mef dl{display:grid;gap:.2em .9em;grid-template-columns:auto 1fr}
+.mef dt{font-weight:700;color:var(--nuit)}
+.mef dd{margin:0;color:var(--texte)}
+/* Tableaux : jamais de débordement horizontal de la page. */
+.mef .mef-tab{overflow-x:auto;overflow-y:hidden;margin:0 0 1.4em;
+  border:1px solid var(--ligne-2);border-radius:var(--r-m);
+  /* Une ombre portée n'apparaît qu'au bord vers lequel il reste à défiler :
+     le lecteur voit qu'il y a une colonne de plus, sans indication écrite. */
+  background:linear-gradient(90deg,var(--papier) 30%,transparent),
+             linear-gradient(90deg,transparent,var(--papier) 70%) 100% 0,
+             radial-gradient(farthest-side at 0 50%,rgba(0,0,0,.13),transparent),
+             radial-gradient(farthest-side at 100% 50%,rgba(0,0,0,.13),transparent) 100% 0;
+  background-repeat:no-repeat;background-size:40px 100%,40px 100%,14px 100%,14px 100%;
+  background-attachment:local,local,scroll,scroll}
+.mef table{border-collapse:collapse;width:100%;font-size:.94rem}
+.mef th,.mef td{padding:11px 16px;text-align:left;border-bottom:1px solid var(--ligne-2);
+  vertical-align:top;line-height:1.5}
+.mef tbody tr:nth-child(even){background:color-mix(in srgb,var(--fond) 55%,transparent)}
+.mef th{font-family:"Manrope",sans-serif;font-size:.76rem;letter-spacing:.05em;line-height:1.3;
+  text-transform:uppercase;color:var(--nuit);background:var(--fond)}
+/* L'entête ne force pas la largeur : mise sur une seule ligne, elle poussait
+   à elle seule le tableau au-delà de la colonne de lecture, et la dernière
+   colonne sortait de l'écran. */
+.mef thead th:first-child,.mef tbody th{white-space:normal}
+.mef tbody tr:last-child td{border-bottom:0}
+.mef td+td{font-variant-numeric:tabular-nums}
+.mef blockquote{margin:0 0 1.4em;padding:2px 0 2px 20px;border-left:3px solid var(--or);
+  color:var(--nuit);font-size:1.05rem}
+.mef img{max-width:100%;height:auto;border-radius:var(--r-m)}
+/* Les deux colonnes de la page reprise n'avaient aucune règle : la colonne
+   latérale tombait sous le texte, pleine largeur. */
+.colonnes{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:48px;
+  align-items:start}
+.colonnes>aside{position:sticky;top:96px}
+@media (max-width:960px){
+  .colonnes{grid-template-columns:minmax(0,1fr);gap:36px}
+  .colonnes>aside{position:static}
+}
+</style></head>
 <body>
+<div class="bandeau">
+  <div class="wrap">
+    <span>Agence locale basée au Caire · <strong>Réponse sous 48 h</strong> <small>(hors vendredi et samedi)</small></span>
+    <span style="display:flex;gap:20px;flex-wrap:wrap">
+      <a href="mailto:contact@authentiquegypte.com">✉ contact@authentiquegypte.com</a>
+      <a href="https://wa.me/201066619098">WhatsApp +20 106 661 9098</a>
+    </span>
+  </div>
+</div>
 <header class="entete">
   <div class="wrap">
     <a href="https://authentiquegypte.com/" class="logo" aria-label="Authentique Égypte, accueil">
@@ -928,21 +1017,17 @@
 </header>
 <main class="pg">
 <section class="hero" style="--une-l:1280px;--une-h:360px">
-<div class="hero__flou" data-flou="oui" aria-hidden="true"><img src="https://authentiquegypte.com/wp-content/uploads/2023/11/WhatsApp-Image-2025-08-14-at-13.23.16.jpeg" alt="" decoding="async" srcset="https://authentiquegypte.com/wp-content/uploads/2023/11/WhatsApp-Image-2025-08-14-at-13.23.16-300x169.jpeg 300w, https://authentiquegypte.com/wp-content/uploads/2023/11/WhatsApp-Image-2025-08-14-at-13.23.16-768x432.jpeg 768w, https://authentiquegypte.com/wp-content/uploads/2023/11/WhatsApp-Image-2025-08-14-at-13.23.16-1024x576.jpeg 1024w, https://authentiquegypte.com/wp-content/uploads/2023/11/WhatsApp-Image-2025-08-14-at-13.23.16.jpeg 1280w" sizes="100vw" width="1280" height="720" loading="lazy"></div>
-<div class="hero__fond"><img src="https://authentiquegypte.com/wp-content/uploads/2023/11/WhatsApp-Image-2025-08-14-at-13.23.16.jpeg" alt="" decoding="async" srcset="https://authentiquegypte.com/wp-content/uploads/2023/11/WhatsApp-Image-2025-08-14-at-13.23.16-300x169.jpeg 300w, https://authentiquegypte.com/wp-content/uploads/2023/11/WhatsApp-Image-2025-08-14-at-13.23.16-768x432.jpeg 768w, https://authentiquegypte.com/wp-content/uploads/2023/11/WhatsApp-Image-2025-08-14-at-13.23.16-1024x576.jpeg 1024w, https://authentiquegypte.com/wp-content/uploads/2023/11/WhatsApp-Image-2025-08-14-at-13.23.16.jpeg 1280w" sizes="(max-width:1280px) 100vw, 1280px" width="1280" height="720" fetchpriority="high"></div>
+<div class="hero__flou" data-flou="oui" aria-hidden="true"><img src="https://authentiquegypte.com/wp-content/uploads/2023/11/Siwa_Oasis_sunset_on_Maraqi_Egypt.webp" alt="" decoding="async" loading="lazy"></div>
+<div class="hero__fond"><img src="https://authentiquegypte.com/wp-content/uploads/2023/11/Siwa_Oasis_sunset_on_Maraqi_Egypt.webp" alt="" decoding="async" loading="lazy"></div>
 <div class="hero__in"><div class="wrap">
-<h1>Voyage en couple en Égypte</h1>
-
+<div class="hero__pills"><span class="pill"><svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s6-5.5 6-11a6 6 0 1 0-12 0c0 5.5 6 11 6 11z"/><circle cx="12" cy="10" r="2.2"/></svg><b>5</b> séjours</span><span class="pill"><svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s6-5.5 6-11a6 6 0 1 0-12 0c0 5.5 6 11 6 11z"/><circle cx="12" cy="10" r="2.2"/></svg><b>4 à 9</b> jours</span><span class="pill"><svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s6-5.5 6-11a6 6 0 1 0-12 0c0 5.5 6 11 6 11z"/><circle cx="12" cy="10" r="2.2"/></svg><b>595 €</b> à partir de</span></div><h1>Voyage en couple en Égypte</h1>
+<p class="hero__chapo">En Égypte, chaque étape devient une histoire à partager à deux. Admirer un hiéroglyphe de près, voguer sur une felouque, écouter un guide raconter la reine Hatchepsout comme une héroïne… Ce ne sont pas de simples visites, mais des moments de vie à savourer ensemble. Le soir, autour d’un dîner traditionnel, les échanges continuent : rires, émerveillement et complicité sont au rendez‑vous.</p>
 <div class="hero__bas"><div class="hero__act"><a class="btn btn--or" href="https://authentiquegypte.com/sur-mesure/">Construire mon séjour</a><a class="btn btn--verre" href="https://wa.me/201066619098"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6a3 3 0 0 1 3-3h10a3 3 0 0 1 3 3v8a3 3 0 0 1-3 3H9l-5 4z"/></svg> Poser une question sur WhatsApp</a></div></div>
 </div></div></section>
-<section class="reperes"><div class="wrap"><ul><li><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l4.5 4.5L19 7"/></svg><small>Séjours</small><b>5 au choix</b></li><li><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M17 6.5A6 6 0 0 0 7 12a6 6 0 0 0 10 5.5M5 10h8M5 14h8"/></svg><small>À partir de</small><b>595 €</b></li><li><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><small>Durée</small><b>4 à 9 jours</b></li></ul></div></section>
-<nav class="ariane" aria-label="Fil d'Ariane"><ol>
-<li><a href="../index.html">Accueil</a></li>
-<li><a href="../index.html">Qui part</a></li>
-<li><span aria-current="page">Voyage en couple en Égypte</span></li>
-</ol></nav>
+<section class="reperes"><div class="wrap"><ul><li><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M17 6.5A6 6 0 0 0 7 12a6 6 0 0 0 10 5.5M5 10h8M5 14h8"/></svg><small>À partir de</small><b>595 €</b></li><li><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><small>Durée annoncée</small><b>4 à 9 jours</b></li></ul></div></section>
+<nav class="ariane ariane--sous" aria-label="Fil d'Ariane"><div class="wrap"><ol><li><a href="https://authentiquegypte.com/">Accueil</a></li><li><a href="https://authentiquegypte.com/nos-sejours-egypte/">Nos séjours en Égypte</a></li><li><span aria-current="page">Découverte de la Mer rouge</span></li></ol></div></nav>
 <section class="pg-sec" id="sejours"><div class="wrap">
-<p class="eyebrow">Au choix</p><h2>Les séjours pour voyage en couple en égypte</h2>
+<p class="eyebrow">Passer du profil au voyage</p><h2>Les séjours « couple en Égypte »</h2><p class="lede" style="margin:14px 0 30px">Tous personnalisables&nbsp;: la durée s'ajuste à ce que vous voulez voir.</p>
 <div class="cartes cartes--1"><article class="carte">
 <div class="carte__img"><img src="https://authentiquegypte.com/wp-content/uploads/2023/11/Oasis-de-siwa-2.png" alt="Oasis de siwa" loading="lazy" decoding="async"></div>
 <div class="carte__corps">
@@ -1002,27 +1087,8 @@
 </div>
 <p class="cartes__src">Durées et prix relevés sur les fiches du site le 10 septembre 2026.</p>
 </div></section>
-<button class="burger" aria-label="Ouvrir le menu">☰ Menu</button>
-  </div>
-</header>
-
-<main>
-<section class="chapeau">
-<div class="chapeau__bg"><img src="https://authentiquegypte.com/wp-content/uploads/2023/11/Siwa_Oasis_sunset_on_Maraqi_Egypt.webp" alt="" fetchpriority="high" decoding="async"></div>
-<div class="wrap">
-<nav class="ariane" aria-label="Fil d'Ariane"><ol>
-<li><a href="../index.html">Accueil</a></li>
-<li><a href="../index.html">Qui part</a></li>
-<li><span aria-current="page">Voyage en couple en Égypte</span></li>
-</ol></nav>
-<h1>Voyage en couple en Égypte</h1>
-<p class="sous">En Égypte, chaque étape devient une histoire à partager à deux. Admirer un hiéroglyphe de près, voguer sur une felouque, écouter un guide raconter la reine Hatchepsout comme une héroïne… Ce ne sont pas de simples visites, mais des moments de vie à savourer ensemble. Le soir, autour d’un dîner traditionnel, les échanges continuent : rires, émerveillement et complicité sont au rendez‑vous.</p>
-<div class="chapeau__st"><span><b>5</b> séjours</span><span><b>4 à 9</b> jours</span><span><b>595 €</b> à partir de</span></div>
-</div>
-</section>
-
 <section class="section section--creme">
-<div class="wrap">
+<div class="wrap mef">
 <div class="edito">
 <p class="src">Contenu repris de <a href="https://authentiquegypte.com/voyage-en-couple-en-egypte/">https://authentiquegypte.com/voyage-en-couple-en-egypte/</a>, sans réécriture&nbsp;: seule la mise en page change.</p>
 <p class="">Le voyage en couple, entre découvertes et liberté</p>
@@ -1030,41 +1096,41 @@
 <p class="">Partez à la découverte d’une Égypte authentique, loin des circuits touristiques classiques. Temples millénaires, oasis cachées, rencontres vraies : chaque voyage est conçu selon vos envies, votre rythme, votre façon d’explorer.</p>
 <p class="">Demande de devis</p>
 <h2>L&#x27;organisation du voyage !</h2>
-<p class="">L’Égypte est-elle une destination sûre pour voyager à deux ?</p>
+<h3 class="mef-q">L’Égypte est-elle une destination sûre pour voyager à deux ?</h3>
 <p class="">Oui, les zones touristiques (Le Caire, Louxor, Assouan, Mer Rouge) sont fréquentées et sûres. Dans notre accompagnement, nous prenons en charge la sécurité et la logistique en continu : transferts privés, guides locaux de confiance, hôtels confortables et intimistes. Les couples voyagent sereinement, car nous organisons chaque détail du séjour pour que vous profitiez pleinement de votre expérience à deux.</p>
-<p class="">Y a-t-il un âge idéal pour voyager en Égypte à deux ?</p>
+<h3 class="mef-q">Y a-t-il un âge idéal pour voyager en Égypte à deux ?</h3>
 <p class="">Il n’y a pas de contrainte particulière. Nous adaptons chaque itinéraire pour maximiser votre confort et vos envies : moments de détente, expériences culturelles immersives ou activités uniques à deux. Notre rôle est de concevoir un programme fluide et sur mesure pour que votre voyage reste totalement agréable et inoubliable.</p>
-<p class="">Quelles activités plaisent le plus aux voyageurs à deux ?</p>
+<h3 class="mef-q">Quelles activités plaisent le plus aux voyageurs à deux ?</h3>
 <p class="">Les couples adorent :</p>
 <p class="">Explorer les pyramides et temples, et se laisser émerveiller par leur grandeur.</p>
 <p class="">Faire une balade en felouque sur le Nil, au rythme tranquille de l’eau.</p>
 <p class="">Participer à des ateliers artisanaux (papyrus, poterie) pour une expérience immersive.</p>
 <p class="">Profiter des plages et de la mer Rouge, entre baignade et snorkeling parmi les poissons colorés.</p>
 <p class="">👉 Nous sélectionnons des activités uniques et authentiques, pour que chaque moment partagé à deux soit un vrai plaisir.</p>
-<p class="">Le rythme des visites est-il adapté pour un voyage à deux ?</p>
+<h3 class="mef-q">Le rythme des visites est-il adapté pour un voyage à deux ?</h3>
 <p class="">Oui. Nous organisons des programmes pensés pour les couples, avec un équilibre parfait entre découvertes, détente et moments à partager. Vous n’avez rien à gérer : nous coordonnons horaires, transferts et pauses, pour que vous profitiez pleinement de chaque instant de votre voyage à deux.</p>
-<p class="">Quelle est la meilleure période pour voyager en Égypte à deux ?</p>
+<h3 class="mef-q">Quelle est la meilleure période pour voyager en Égypte à deux ?</h3>
 <p class="">Les périodes idéales sont d’octobre à avril, lorsque le climat est doux et les visites agréables. Nous vous conseillons sur la période la plus adaptée à vos envies et prenons en charge toute la préparation en amont pour un séjour parfaitement organisé à deux.</p>
-<p class="">Quelles précautions alimentaires prendre pour voyager en Égypte à deux ?</p>
+<h3 class="mef-q">Quelles précautions alimentaires prendre pour voyager en Égypte à deux ?</h3>
 <p class="">Nous vous accompagnons avec des recommandations claires :</p>
 <p class="">Privilégier l’eau en bouteille.</p>
 <p class="">Choisir des plats bien cuits et adaptés à vos goûts.</p>
 <p class="">Sélectionner des hôtels et restaurants fiables.</p>
 <p class="">👉 Vous êtes encadrés, nous anticipons et sécurisons ces aspects pour que vous voyagiez à deux en toute sérénité.</p>
-<p class="">Y a-t-il des hébergements adaptés pour un voyage à deux ?</p>
+<h3 class="mef-q">Y a-t-il des hébergements adaptés pour un voyage à deux ?</h3>
 <p class="">Oui, nous sélectionnons des hôtels confortables et intimistes : chambres agréables pour deux, piscines et espaces détente, options pour vos repas. Nous validons chaque hébergement en amont pour garantir confort, sécurité et une expérience agréable à deux.</p>
-<p class="">Les trajets sont-ils longs pour un voyage à deux en Égypte ?</p>
+<h3 class="mef-q">Les trajets sont-ils longs pour un voyage à deux en Égypte ?</h3>
 <p class="">Certains trajets peuvent être longs, mais nous organisons tout : vols internes, transferts privés, étapes intermédiaires. Notre rôle est de simplifier la logistique pour que votre voyage à deux reste fluide et agréable.</p>
-<p class="">Comment gérer la chaleur lors d’un voyage à deux en Égypte ?</p>
+<h3 class="mef-q">Comment gérer la chaleur lors d’un voyage à deux en Égypte ?</h3>
 <p class="">Nous planifions les visites tôt le matin ou en fin de journée, et nous aménageons des pauses à l’ombre ou à l’hôtel. Nous vous fournissons un accompagnement pratique pour gérer eau, encas et confort, afin que votre voyage à deux reste agréable malgré la chaleur.</p>
-<p class="">Quels sont les documents nécessaires pour voyager en Égypte à deux ?</p>
+<h3 class="mef-q">Quels sont les documents nécessaires pour voyager en Égypte à deux ?</h3>
 <p class="">Passeport valide (6 mois après la date de retour).</p>
 <p class="">Visa touristique (en ligne ou à l’arrivée).👉 Nous vous accompagnons dans toutes ces démarches administratives pour que votre voyage à deux se déroule en toute sérénité.</p>
-<p class="">Les soins médicaux sont-ils accessibles en Égypte lors d’un voyage à deux ?</p>
+<h3 class="mef-q">Les soins médicaux sont-ils accessibles en Égypte lors d’un voyage à deux ?</h3>
 <p class="">Oui, les grandes villes disposent de cliniques modernes. Nous vous conseillons de souscrire une assurance voyage adaptée. En cas de besoin, nous organisons et coordonnons les soins sur place pour que vous soyez sereins à deux.</p>
-<p class="">Peut-on se déplacer facilement en Égypte lors d’un voyage à deux ?</p>
+<h3 class="mef-q">Peut-on se déplacer facilement en Égypte lors d’un voyage à deux ?</h3>
 <p class="">Oui, mais certaines zones peuvent être moins accessibles. Nous vous conseillons et prévoyons des alternatives pratiques (transports privés, pauses adaptées) pour que votre voyage à deux reste confortable et agréable.</p>
-<p class="">Y a-t-il des activités spécialement adaptées pour un voyage à deux ?</p>
+<h3 class="mef-q">Y a-t-il des activités spécialement adaptées pour un voyage à deux ?</h3>
 <p class="">Oui, et nous intégrons dans nos programmes des expériences uniques pour deux : plongée, snorkeling, excursions dans le désert, et immersion dans les légendes des pharaons. Chaque activité est pensée pour créer des souvenirs partagés et équilibrer découvertes et moments de détente à deux.</p>
 <p style="margin-top:26px"><a href="https://authentiquegypte.com/sur-mesure/" class="btn btn--or">Demander mon devis</a></p>
 </div>

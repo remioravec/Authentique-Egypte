@@ -866,8 +866,97 @@
 {"@type":"TouristAttraction","name":"Plateau de Gizeh"},
 {"@type":"TouristAttraction","name":"Grand Musée égyptien"},
 {"@type":"TouristAttraction","name":"Nécropole de Saqqara"},
-{"@type":"TouristAttraction","name":"Khan el-Khalili"}]}]}</script></head>
+{"@type":"TouristAttraction","name":"Khan el-Khalili"}]}]}</script><style data-mef="mef-1">
+/* Mise en forme du contenu repris — voir outils/mise-en-forme.py */
+.mef{--mef-mes:68ch}
+.mef p,.mef ul,.mef ol,.mef dl,.mef figure{max-width:var(--mef-mes)}
+/* Le tableau est une donnée, pas une lecture suivie : la mesure de confort
+   du texte l'étranglerait en colonnes de trois mots. */
+.mef .mef-tab{max-width:none}
+.mef table{max-width:none}
+.mef p{margin:0 0 1.1em;line-height:1.75;color:var(--texte)}
+.mef p:last-child{margin-bottom:0}
+.mef>h2,.mef .mef-h2{font-size:clamp(1.35rem,2.4vw,1.75rem);line-height:1.25;
+  margin:2.4em 0 .7em;color:var(--nuit);text-wrap:balance}
+.mef>h2:first-child{margin-top:0}
+.mef h3,.mef .mef-q{font-size:clamp(1.05rem,1.6vw,1.22rem);line-height:1.35;
+  margin:2em 0 .5em;color:var(--nuit);text-wrap:balance}
+.mef h4{font-size:1rem;margin:1.6em 0 .4em;color:var(--nuit)}
+/* Une question posée dans le corps : reconnaissable sans crier. */
+.mef .mef-q{position:relative;padding-left:18px;font-family:"Manrope",sans-serif;font-weight:700}
+.mef .mef-q::before{content:"";position:absolute;left:0;top:.34em;bottom:.34em;width:4px;
+  border-radius:2px;background:var(--teal)}
+.mef .mef-q+p{margin-top:0}
+/* La reprise du site laisse certaines questions en minuscule. La capitale
+   est posée à l'affichage : le texte, lui, n'est pas retouché. */
+.mef .mef-q::first-letter{text-transform:uppercase}
+/* Listes : la puce prend la couleur de marque, le texte garde son rythme. */
+.mef ul,.mef ol{margin:0 0 1.3em;padding-left:0;list-style:none}
+.mef ul>li,.mef ol>li{position:relative;padding-left:26px;margin:0 0 .55em;
+  line-height:1.7;color:var(--texte)}
+.mef ul>li::before{content:"";position:absolute;left:6px;top:.62em;width:7px;height:7px;
+  border-radius:50%;background:var(--teal)}
+.mef ol{counter-reset:mef}
+.mef ol>li{counter-increment:mef}
+.mef ol>li::before{content:counter(mef);position:absolute;left:0;top:.05em;width:20px;
+  text-align:center;font-family:"Manrope",sans-serif;font-size:.78rem;font-weight:700;
+  line-height:20px;border-radius:50%;background:var(--teal-fond);color:var(--teal-txt)}
+.mef li>b:first-child,.mef li>strong:first-child{color:var(--nuit)}
+/* Une énumération « Étiquette : texte » se lit mieux en deux temps. */
+.mef .mef-def>li{padding-left:0}
+.mef .mef-def>li::before{display:none}
+.mef .mef-def>li{border-left:3px solid var(--ligne-2);padding:2px 0 2px 16px}
+.mef .mef-def>li b:first-child{display:block;color:var(--nuit);
+  font-family:"Manrope",sans-serif;font-size:.92rem}
+.mef dl{display:grid;gap:.2em .9em;grid-template-columns:auto 1fr}
+.mef dt{font-weight:700;color:var(--nuit)}
+.mef dd{margin:0;color:var(--texte)}
+/* Tableaux : jamais de débordement horizontal de la page. */
+.mef .mef-tab{overflow-x:auto;overflow-y:hidden;margin:0 0 1.4em;
+  border:1px solid var(--ligne-2);border-radius:var(--r-m);
+  /* Une ombre portée n'apparaît qu'au bord vers lequel il reste à défiler :
+     le lecteur voit qu'il y a une colonne de plus, sans indication écrite. */
+  background:linear-gradient(90deg,var(--papier) 30%,transparent),
+             linear-gradient(90deg,transparent,var(--papier) 70%) 100% 0,
+             radial-gradient(farthest-side at 0 50%,rgba(0,0,0,.13),transparent),
+             radial-gradient(farthest-side at 100% 50%,rgba(0,0,0,.13),transparent) 100% 0;
+  background-repeat:no-repeat;background-size:40px 100%,40px 100%,14px 100%,14px 100%;
+  background-attachment:local,local,scroll,scroll}
+.mef table{border-collapse:collapse;width:100%;font-size:.94rem}
+.mef th,.mef td{padding:11px 16px;text-align:left;border-bottom:1px solid var(--ligne-2);
+  vertical-align:top;line-height:1.5}
+.mef tbody tr:nth-child(even){background:color-mix(in srgb,var(--fond) 55%,transparent)}
+.mef th{font-family:"Manrope",sans-serif;font-size:.76rem;letter-spacing:.05em;line-height:1.3;
+  text-transform:uppercase;color:var(--nuit);background:var(--fond)}
+/* L'entête ne force pas la largeur : mise sur une seule ligne, elle poussait
+   à elle seule le tableau au-delà de la colonne de lecture, et la dernière
+   colonne sortait de l'écran. */
+.mef thead th:first-child,.mef tbody th{white-space:normal}
+.mef tbody tr:last-child td{border-bottom:0}
+.mef td+td{font-variant-numeric:tabular-nums}
+.mef blockquote{margin:0 0 1.4em;padding:2px 0 2px 20px;border-left:3px solid var(--or);
+  color:var(--nuit);font-size:1.05rem}
+.mef img{max-width:100%;height:auto;border-radius:var(--r-m)}
+/* Les deux colonnes de la page reprise n'avaient aucune règle : la colonne
+   latérale tombait sous le texte, pleine largeur. */
+.colonnes{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:48px;
+  align-items:start}
+.colonnes>aside{position:sticky;top:96px}
+@media (max-width:960px){
+  .colonnes{grid-template-columns:minmax(0,1fr);gap:36px}
+  .colonnes>aside{position:static}
+}
+</style></head>
 <body>
+<div class="bandeau">
+  <div class="wrap">
+    <span>Agence locale basée au Caire · <strong>Une personne de l'équipe vous répond</strong></span>
+    <span style="display:flex;gap:20px;flex-wrap:wrap">
+      <a href="mailto:contact@authentiquegypte.com">✉ contact@authentiquegypte.com</a>
+      <a href="https://wa.me/201066619098">WhatsApp +20 106 661 9098</a>
+    </span>
+  </div>
+</div>
 <header class="entete">
   <div class="wrap">
     <a href="https://authentiquegypte.com/" class="logo" aria-label="Authentique Égypte, accueil">
@@ -922,21 +1011,17 @@
 </header>
 <main class="pg">
 <section class="hero" style="--une-l:1280px;--une-h:360px">
-<div class="hero__flou" data-flou="oui" aria-hidden="true"><img src="https://authentiquegypte.com/wp-content/uploads/2023/11/WhatsApp-Image-2025-08-14-at-13.23.16.jpeg" alt="" decoding="async" srcset="https://authentiquegypte.com/wp-content/uploads/2023/11/WhatsApp-Image-2025-08-14-at-13.23.16-300x169.jpeg 300w, https://authentiquegypte.com/wp-content/uploads/2023/11/WhatsApp-Image-2025-08-14-at-13.23.16-768x432.jpeg 768w, https://authentiquegypte.com/wp-content/uploads/2023/11/WhatsApp-Image-2025-08-14-at-13.23.16-1024x576.jpeg 1024w, https://authentiquegypte.com/wp-content/uploads/2023/11/WhatsApp-Image-2025-08-14-at-13.23.16.jpeg 1280w" sizes="100vw" width="1280" height="720" loading="lazy"></div>
-<div class="hero__fond"><img src="https://authentiquegypte.com/wp-content/uploads/2023/11/WhatsApp-Image-2025-08-14-at-13.23.16.jpeg" alt="" decoding="async" srcset="https://authentiquegypte.com/wp-content/uploads/2023/11/WhatsApp-Image-2025-08-14-at-13.23.16-300x169.jpeg 300w, https://authentiquegypte.com/wp-content/uploads/2023/11/WhatsApp-Image-2025-08-14-at-13.23.16-768x432.jpeg 768w, https://authentiquegypte.com/wp-content/uploads/2023/11/WhatsApp-Image-2025-08-14-at-13.23.16-1024x576.jpeg 1024w, https://authentiquegypte.com/wp-content/uploads/2023/11/WhatsApp-Image-2025-08-14-at-13.23.16.jpeg 1280w" sizes="(max-width:1280px) 100vw, 1280px" width="1280" height="720" fetchpriority="high"></div>
+<div class="hero__flou" data-flou="oui" aria-hidden="true"><img src="https://authentiquegypte.com/wp-content/uploads/2025/06/DSC00581-1-scaled.jpg" alt="" decoding="async" loading="lazy"></div>
+<div class="hero__fond"><img src="https://authentiquegypte.com/wp-content/uploads/2025/06/DSC00581-1-scaled.jpg" alt="" decoding="async" loading="lazy"></div>
 <div class="hero__in"><div class="wrap">
-<h1>Voyage à Alexandrie</h1>
-
+<div class="hero__pills"><span class="pill"><svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s6-5.5 6-11a6 6 0 1 0-12 0c0 5.5 6 11 6 11z"/><circle cx="12" cy="10" r="2.2"/></svg><b>2 jours</b> conseillés</span><span class="pill"><svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s6-5.5 6-11a6 6 0 1 0-12 0c0 5.5 6 11 6 11z"/><circle cx="12" cy="10" r="2.2"/></svg><b>8</b> séjours y passent</span></div><h1>Voyage à Alexandrie</h1>
+<p class="hero__chapo">Confiez l&#x27;organisation de votre voyage en Égypte à nos agents locaux. Nos guides francophones sont là pour vous accompagner tout au long de votre séjour. Nous organisons des séjours sur mesure en Egypte et nous les personnalisons selon vos préférences et vos envies.</p>
 <div class="hero__bas"><div class="hero__act"><a class="btn btn--or" href="https://authentiquegypte.com/sur-mesure/">Construire mon séjour</a><a class="btn btn--verre" href="https://wa.me/201066619098"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6a3 3 0 0 1 3-3h10a3 3 0 0 1 3 3v8a3 3 0 0 1-3 3H9l-5 4z"/></svg> Poser une question sur WhatsApp</a></div></div>
 </div></div></section>
-<section class="reperes"><div class="wrap"><ul><li><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l4.5 4.5L19 7"/></svg><small>Séjours</small><b>6 au choix</b></li><li><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M17 6.5A6 6 0 0 0 7 12a6 6 0 0 0 10 5.5M5 10h8M5 14h8"/></svg><small>À partir de</small><b>290 €</b></li><li><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><small>Durée</small><b>2 à 8 jours</b></li></ul></div></section>
-<nav class="ariane" aria-label="Fil d'Ariane"><ol>
-<li><a href="../index.html">Accueil</a></li>
-<li><a href="../index.html">Destinations</a></li>
-<li><span aria-current="page">Voyage à Alexandrie</span></li>
-</ol></nav>
+<section class="reperes"><div class="wrap"><ul><li><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M17 6.5A6 6 0 0 0 7 12a6 6 0 0 0 10 5.5M5 10h8M5 14h8"/></svg><small>À partir de</small><b>290 €</b></li><li><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><small>Durée annoncée</small><b>2 à 8 jours</b></li></ul></div></section>
+<nav class="ariane ariane--sous" aria-label="Fil d'Ariane"><div class="wrap"><ol><li><a href="https://authentiquegypte.com/">Accueil</a></li><li><a href="https://authentiquegypte.com/nos-sejours-egypte/">Nos séjours en Égypte</a></li><li><span aria-current="page">Découverte de la Mer rouge</span></li></ol></div></nav>
 <section class="pg-sec" id="sejours"><div class="wrap">
-<p class="eyebrow">Au choix</p><h2>Les séjours qui passent par Alexandrie</h2>
+<p class="eyebrow">Passer du guide au voyage</p><h2>Les séjours qui passent par Alexandrie</h2><p class="lede" style="margin:14px 0 30px">Tous personnalisables&nbsp;: la durée s'ajuste à ce que vous voulez voir.</p>
 <div class="cartes cartes--1"><article class="carte">
 <div class="carte__img"><img src="https://authentiquegypte.com/wp-content/uploads/2025/06/DSC00535-scaled.jpg" alt="Lever du soleil sur le Sinaï" loading="lazy" decoding="async"></div>
 <div class="carte__corps">
@@ -1007,27 +1092,9 @@
 </div>
 <p class="cartes__src">Durées et prix relevés sur les fiches du site le 10 septembre 2026.</p>
 </div></section>
-<button class="burger" aria-label="Ouvrir le menu">☰ Menu</button>
-  </div>
-</header>
-
-<main>
-<section class="chapeau">
-<div class="chapeau__bg"><img src="https://authentiquegypte.com/wp-content/uploads/2025/06/DSC00581-1-scaled.jpg" alt="" fetchpriority="high" decoding="async"></div>
-<div class="wrap">
-<nav class="ariane" aria-label="Fil d'Ariane"><ol>
-<li><a href="../index.html">Accueil</a></li>
-<li><a href="../index.html">Destinations</a></li>
-<li><span aria-current="page">Voyage à Alexandrie</span></li>
-</ol></nav>
-<h1>Voyage à Alexandrie</h1>
-<p class="sous">Confiez l&#x27;organisation de votre voyage en Égypte à nos agents locaux. Nos guides francophones sont là pour vous accompagner tout au long de votre séjour. Nous organisons des séjours sur mesure en Egypte et nous les personnalisons selon vos préférences et vos envies.</p>
-<div class="chapeau__st"><span><b>2 jours</b> conseillés</span><span><b>8</b> séjours y passent</span></div>
-</div>
-</section>
-<div class="wrap">
+<section class="pg-sec"><div class="wrap mef">
 <div class="colonnes">
-<article class="corps">
+<article class="corps mef">
 <p class="src">Contenu repris de <a href="https://authentiquegypte.com/voyage-a-alexandrie/">https://authentiquegypte.com/voyage-a-alexandrie/</a>, sans réécriture&nbsp;: seule la mise en page change.</p>
 <div class="atouts">
 <div class="atout"><h3>Privées &amp; personnalisées</h3><p>Chaque itinéraire est conçu selon vos envies, votre rythme et votre façon de voyager. Explorez l’Égypte à votre image.</p></div>
@@ -1036,38 +1103,36 @@
 </div>
 
 <h2>Organisation du voyage</h2>
-<p class="">Pourquoi visiter Alexandrie lors d’un séjour en Égypte ?</p>
+<h3 class="mef-q">Pourquoi visiter Alexandrie lors d’un séjour en Égypte ?</h3>
 <p class="">Alexandrie est connue pour son héritage gréco-romain, son histoire méditerranéenne et son importance culturelle. Fondée par Alexandre le Grand, elle se distingue des autres grandes villes égyptiennes par son architecture plus européenne, son accès à la mer et sa dimension littéraire.</p>
-<p class="">Que voir à Alexandrie ?</p>
+<h3 class="mef-q">Que voir à Alexandrie ?</h3>
 <p class="">Les lieux les plus souvent visités sont :</p>
-<p class="">Bibliothèque d’Alexandrie : institution culturelle moderne, conçue sur le site de l’ancienne bibliothèque antique</p>
-<p class="">Fort Qaitbay : construit à l’emplacement supposé du phare d’Alexandrie</p>
-<p class="">Catacombes de Kom el-Shoqafa : site funéraire souterrain mêlant influences égyptienne, grecque et romaine</p>
+<ul class="mef-def"><li><b>Bibliothèque d’Alexandrie</b> institution culturelle moderne, conçue sur le site de l’ancienne bibliothèque antique</li><li><b>Fort Qaitbay</b> construit à l’emplacement supposé du phare d’Alexandrie</li><li><b>Catacombes de Kom el-Shoqafa</b> site funéraire souterrain mêlant influences égyptienne, grecque et romaine</li></ul>
 <p class="">Amphithéâtre romain</p>
 <p class="">Colonne de Pompée</p>
 <p class="">Corniche et front de mer : promenade emblématique</p>
 <p class="">Jardins de Montaza</p>
-<p class="">Combien de jours faut-il pour visiter Alexandrie ?</p>
+<h3 class="mef-q">Combien de jours faut-il pour visiter Alexandrie ?</h3>
 <p class="">Un séjour de 1 à 2 jours est suffisant pour couvrir les principaux points d’intérêt. Alexandrie est souvent intégrée en excursion depuis Le Caire, ou comme escale plus longue pour les amateurs de culture ou de bord de mer.</p>
-<p class="">Quelle est la meilleure période pour aller à Alexandrie ?</p>
+<h3 class="mef-q">Quelle est la meilleure période pour aller à Alexandrie ?</h3>
 <p class="">Alexandrie bénéficie d’un climat méditerranéen, plus tempéré que celui du Caire ou d’Assouan. Les mois d’octobre à avril sont les plus agréables. L’été reste possible, avec des températures rarement extrêmes, mais une forte humidité peut être présente.</p>
-<p class="">Peut-on visiter Alexandrie depuis Le Caire dans la journée ?</p>
+<h3 class="mef-q">Peut-on visiter Alexandrie depuis Le Caire dans la journée ?</h3>
 <p class="">Oui. Alexandrie se situe à environ 220 km au nord du Caire :</p>
 <p class="">Train : environ 2h à 3h selon les lignes</p>
 <p class="">Voiture : 2h30 en moyenne selon le traficCela permet d’envisager une excursion à la journée, bien que rester une nuit sur place offre plus de confort.</p>
-<p class="">La bibliothèque d’Alexandrie peut-elle se visiter ?</p>
+<h3 class="mef-q">La bibliothèque d’Alexandrie peut-elle se visiter ?</h3>
 <p class="">Oui. La bibliothèque moderne propose :</p>
 <p class="">Une visite libre ou guidée</p>
 <p class="">Plusieurs expositions permanentes et temporaires</p>
 <p class="">Des espaces de lecture, une salle des manuscrits, des musées internesElle est ouverte tous les jours sauf le vendredi, avec des horaires variables.</p>
-<p class="">Existe-t-il encore des vestiges de l’Alexandrie antique ?</p>
+<h3 class="mef-q">Existe-t-il encore des vestiges de l’Alexandrie antique ?</h3>
 <p class="">Peu de structures de l’Alexandrie antique sont visibles en surface. Cependant, des vestiges comme :</p>
 <p class="">les catacombes de Kom el-Shoqafa</p>
 <p class="">la colonne de Pompée</p>
 <p class="">le théâtre romaintémoignent de son passé gréco-romain. De nombreux objets sont conservés au musée national d’Alexandrie.</p>
-<p class="">Peut-on se baigner à Alexandrie ?</p>
+<h3 class="mef-q">Peut-on se baigner à Alexandrie ?</h3>
 <p class="">Il existe plusieurs plages urbaines et privées, mais la qualité de l’eau peut varier selon la saison et la zone. Les plages les plus fréquentées sont situées dans les quartiers est, comme Maamoura ou Montaza. Il ne s’agit pas d’une station balnéaire comme la mer Rouge, mais la baignade est possible à certains endroits.</p>
-<p class="">Alexandrie est-elle une bonne alternative au Caire ?</p>
+<h3 class="mef-q">Alexandrie est-elle une bonne alternative au Caire ?</h3>
 <p class="">Alexandrie n’a pas la densité historique du Caire (pas de pyramides, ni de musées pharaoniques), mais elle offre :</p>
 <p class="">un cadre plus aéré</p>
 <p class="">une ambiance méditerranéenne</p>
@@ -1124,7 +1189,7 @@
 </div>
 </div>
 </section>
-</main><section class="pg-sec pg-sec--fond"><div class="wrap">
+</main></section><section class="pg-sec pg-sec--fond"><div class="wrap">
 <p class="eyebrow">Pourquoi nous</p>
 <h2>Pourquoi voyager en Égypte avec nous ?</h2>
 <ul class="args">

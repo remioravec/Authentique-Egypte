@@ -866,7 +866,87 @@
 {"@type":"TouristAttraction","name":"Plateau de Gizeh"},
 {"@type":"TouristAttraction","name":"Grand Musée égyptien"},
 {"@type":"TouristAttraction","name":"Nécropole de Saqqara"},
-{"@type":"TouristAttraction","name":"Khan el-Khalili"}]}]}</script></head>
+{"@type":"TouristAttraction","name":"Khan el-Khalili"}]}]}</script><style data-mef="mef-1">
+/* Mise en forme du contenu repris — voir outils/mise-en-forme.py */
+.mef{--mef-mes:68ch}
+.mef p,.mef ul,.mef ol,.mef dl,.mef figure{max-width:var(--mef-mes)}
+/* Le tableau est une donnée, pas une lecture suivie : la mesure de confort
+   du texte l'étranglerait en colonnes de trois mots. */
+.mef .mef-tab{max-width:none}
+.mef table{max-width:none}
+.mef p{margin:0 0 1.1em;line-height:1.75;color:var(--texte)}
+.mef p:last-child{margin-bottom:0}
+.mef>h2,.mef .mef-h2{font-size:clamp(1.35rem,2.4vw,1.75rem);line-height:1.25;
+  margin:2.4em 0 .7em;color:var(--nuit);text-wrap:balance}
+.mef>h2:first-child{margin-top:0}
+.mef h3,.mef .mef-q{font-size:clamp(1.05rem,1.6vw,1.22rem);line-height:1.35;
+  margin:2em 0 .5em;color:var(--nuit);text-wrap:balance}
+.mef h4{font-size:1rem;margin:1.6em 0 .4em;color:var(--nuit)}
+/* Une question posée dans le corps : reconnaissable sans crier. */
+.mef .mef-q{position:relative;padding-left:18px;font-family:"Manrope",sans-serif;font-weight:700}
+.mef .mef-q::before{content:"";position:absolute;left:0;top:.34em;bottom:.34em;width:4px;
+  border-radius:2px;background:var(--teal)}
+.mef .mef-q+p{margin-top:0}
+/* La reprise du site laisse certaines questions en minuscule. La capitale
+   est posée à l'affichage : le texte, lui, n'est pas retouché. */
+.mef .mef-q::first-letter{text-transform:uppercase}
+/* Listes : la puce prend la couleur de marque, le texte garde son rythme. */
+.mef ul,.mef ol{margin:0 0 1.3em;padding-left:0;list-style:none}
+.mef ul>li,.mef ol>li{position:relative;padding-left:26px;margin:0 0 .55em;
+  line-height:1.7;color:var(--texte)}
+.mef ul>li::before{content:"";position:absolute;left:6px;top:.62em;width:7px;height:7px;
+  border-radius:50%;background:var(--teal)}
+.mef ol{counter-reset:mef}
+.mef ol>li{counter-increment:mef}
+.mef ol>li::before{content:counter(mef);position:absolute;left:0;top:.05em;width:20px;
+  text-align:center;font-family:"Manrope",sans-serif;font-size:.78rem;font-weight:700;
+  line-height:20px;border-radius:50%;background:var(--teal-fond);color:var(--teal-txt)}
+.mef li>b:first-child,.mef li>strong:first-child{color:var(--nuit)}
+/* Une énumération « Étiquette : texte » se lit mieux en deux temps. */
+.mef .mef-def>li{padding-left:0}
+.mef .mef-def>li::before{display:none}
+.mef .mef-def>li{border-left:3px solid var(--ligne-2);padding:2px 0 2px 16px}
+.mef .mef-def>li b:first-child{display:block;color:var(--nuit);
+  font-family:"Manrope",sans-serif;font-size:.92rem}
+.mef dl{display:grid;gap:.2em .9em;grid-template-columns:auto 1fr}
+.mef dt{font-weight:700;color:var(--nuit)}
+.mef dd{margin:0;color:var(--texte)}
+/* Tableaux : jamais de débordement horizontal de la page. */
+.mef .mef-tab{overflow-x:auto;overflow-y:hidden;margin:0 0 1.4em;
+  border:1px solid var(--ligne-2);border-radius:var(--r-m);
+  /* Une ombre portée n'apparaît qu'au bord vers lequel il reste à défiler :
+     le lecteur voit qu'il y a une colonne de plus, sans indication écrite. */
+  background:linear-gradient(90deg,var(--papier) 30%,transparent),
+             linear-gradient(90deg,transparent,var(--papier) 70%) 100% 0,
+             radial-gradient(farthest-side at 0 50%,rgba(0,0,0,.13),transparent),
+             radial-gradient(farthest-side at 100% 50%,rgba(0,0,0,.13),transparent) 100% 0;
+  background-repeat:no-repeat;background-size:40px 100%,40px 100%,14px 100%,14px 100%;
+  background-attachment:local,local,scroll,scroll}
+.mef table{border-collapse:collapse;width:100%;font-size:.94rem}
+.mef th,.mef td{padding:11px 16px;text-align:left;border-bottom:1px solid var(--ligne-2);
+  vertical-align:top;line-height:1.5}
+.mef tbody tr:nth-child(even){background:color-mix(in srgb,var(--fond) 55%,transparent)}
+.mef th{font-family:"Manrope",sans-serif;font-size:.76rem;letter-spacing:.05em;line-height:1.3;
+  text-transform:uppercase;color:var(--nuit);background:var(--fond)}
+/* L'entête ne force pas la largeur : mise sur une seule ligne, elle poussait
+   à elle seule le tableau au-delà de la colonne de lecture, et la dernière
+   colonne sortait de l'écran. */
+.mef thead th:first-child,.mef tbody th{white-space:normal}
+.mef tbody tr:last-child td{border-bottom:0}
+.mef td+td{font-variant-numeric:tabular-nums}
+.mef blockquote{margin:0 0 1.4em;padding:2px 0 2px 20px;border-left:3px solid var(--or);
+  color:var(--nuit);font-size:1.05rem}
+.mef img{max-width:100%;height:auto;border-radius:var(--r-m)}
+/* Les deux colonnes de la page reprise n'avaient aucune règle : la colonne
+   latérale tombait sous le texte, pleine largeur. */
+.colonnes{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:48px;
+  align-items:start}
+.colonnes>aside{position:sticky;top:96px}
+@media (max-width:960px){
+  .colonnes{grid-template-columns:minmax(0,1fr);gap:36px}
+  .colonnes>aside{position:static}
+}
+</style></head>
 <body>
 <header class="entete">
   <div class="wrap">
@@ -935,7 +1015,7 @@
 <li><a href="../index.html">L’agence</a></li>
 <li><span aria-current="page">Qui sommes nous</span></li>
 </ol></nav>
-<section class="pg-sec"><div class="wrap"><p class="eyebrow">En bref</p><h2>L’agence en quelques repères</h2><p class="lede">Notre structure franco-égyptienne s&#x27;appuie sur des années de terrain, de rencontres, d&#x27;expérimentations et de passion commune pour ce pays à l&#x27;histoire millénaire.</p><p class="atelier"><span class="aremplir">à remplir</span> année de création de l’agence</p><p class="atelier"><span class="aremplir">à remplir</span> nombre de voyageurs accompagnés</p></div></section><section class="pg-sec pg-sec--fond"><div class="wrap"><p class="eyebrow">Notre histoire</p><h2>Une aventure née d’un regard curieux</h2><h3>Notre histoire</h3>
+<section class="pg-sec"><div class="wrap"><p class="eyebrow">En bref</p><h2>L’agence en quelques repères</h2><p class="lede">Notre structure franco-égyptienne s&#x27;appuie sur des années de terrain, de rencontres, d&#x27;expérimentations et de passion commune pour ce pays à l&#x27;histoire millénaire.</p><p class="atelier"><span class="aremplir">à remplir</span> année de création de l’agence</p><p class="atelier"><span class="aremplir">à remplir</span> nombre de voyageurs accompagnés</p></div></section><section class="pg-sec pg-sec--fond"><div class="wrap mef"><p class="eyebrow">Notre histoire</p><h2>Une aventure née d’un regard curieux</h2><h3>Notre histoire</h3>
 <p class="">&quot;Une aventure née d&#x27;un regard curieux sur l&#x27;Égypte authentique&quot;</p>
 <p class="">Tout commence quand Mélanie, alors installée en Inde, tombe sous le charme de l&#x27;Égypte lors d&#x27;un premier voyage. Elle décide de s&#x27;entourer de professionnels égyptiens passionnés pour développer une approche humaine du voyage.</p>
 </div>
@@ -958,15 +1038,15 @@
 <p class="">Avis voyageurs</p>
 <p class="">FAQ - Authentique Égypte</p>
 <h3>FAQ - Questions fréquentes</h3>
-<p class="">Qui prend en charge les paiements ?</p>
+<h3 class="mef-q">Qui prend en charge les paiements ?</h3>
 <p class="">Les paiements sont effectués directement à notre partenaire en Égypte, une agence reconnue et certifiée. Vous bénéficiez d&#x27;un suivi personnalisé et d&#x27;un interlocuteur en France pour toute question.</p>
-<p class="">Quelles garanties de remboursement ?</p>
+<h3 class="mef-q">Quelles garanties de remboursement ?</h3>
 <p class="">Nous garantissons des conditions claires et transparentes. En cas d&#x27;annulation selon nos CGV, les remboursements sont traités rapidement avec notre partenaire local et validés par notre structure française.</p>
-<p class="">Que faire en cas de problème sur place ?</p>
+<h3 class="mef-q">Que faire en cas de problème sur place ?</h3>
 <p class="">Notre équipe locale est disponible 24h/24 et 7j/7. Nous avons des représentants dans chaque destination ainsi que des contacts avec des médecins et pharmacies locales pour votre sécurité.</p>
-<p class="">Est-ce que les guides sont certifiés ?</p>
+<h3 class="mef-q">Est-ce que les guides sont certifiés ?</h3>
 <p class="">Oui, tous nos guides sont officiellement certifiés et régulièrement évalués pour garantir des visites enrichissantes et sécurisées.</p>
-<p class="">Comment se passe le suivi avant et pendant le voyage ?</p>
+<h3 class="mef-q">Comment se passe le suivi avant et pendant le voyage ?</h3>
 <p class="">Avant le départ, un conseiller en France vous accompagne dans la préparation. Sur place, un représentant local reste disponible 24h/24 pour toute demande ou assistance.</p>
 <h2>Voyagez autrement avec une agence qui vous met en lien avec des acteurs locaux en Égypte.</h2>
 <p class="">Confiez l&#x27;organisation de votre voyage en Égypte à nos agents locaux. Nos guides francophones sont là pour vous accompagner tout au long de votre séjour. Nous organisons des séjours sur mesure en Egypte et nous les personnalisons selon vos préférences et vos envies</p>
@@ -984,7 +1064,7 @@
 </aside>
 </div>
 </div>
-<p class="atelier"><span class="aremplir">à remplir</span> année de création de l’agence</p></div></section><section class="pg-sec"><div class="wrap"><p class="eyebrow">Notre approche</p><h2>Ce qui fait un voyage avec nous</h2><h3>Privées &amp; personnalisées</h3><p>Chaque itinéraire est conçu selon vos envies, votre rythme et votre façon de voyager. Explorez l’Égypte à votre image.</p></div>
+<p class="atelier"><span class="aremplir">à remplir</span> année de création de l’agence</p></div></section><section class="pg-sec"><div class="wrap mef"><p class="eyebrow">Notre approche</p><h2>Ce qui fait un voyage avec nous</h2><h3>Privées &amp; personnalisées</h3><p>Chaque itinéraire est conçu selon vos envies, votre rythme et votre façon de voyager. Explorez l’Égypte à votre image.</p></div>
 <div class="atout"><h3>Avec un expert local</h3><p>Guidé par des passionnés égyptiens, vous découvrez l’histoire, les traditions et les secrets bien gardés du pays. Un voyage authentique, raconté par ceux qui le vivent.</p></div>
 <div class="atout"><h3>Loin de la foule</h3><p>Nous vous emmenons hors des sentiers battus, dans des lieux confidentiels, loin du tourisme de masse. Rencontrez l’Égypte vraie, en toute sérénité.</p></div>
 </div>
@@ -992,36 +1072,36 @@
 <h2>Créez un voyage qui vous ressemble</h2>
 <p class="">Partez à la découverte d’une Égypte authentique, loin des circuits touristiques classiques. Temples millénaires, oasis cachées, rencontres vraies : chaque voyage est conçu selon vos envies, votre rythme, votre façon d’explorer.</p>
 <h2>Organisation du voyage</h2>
-<p class="">Comment organiser un voyage sur mesure en Égypte ?</p>
+<h3 class="mef-q">Comment organiser un voyage sur mesure en Égypte ?</h3>
 <p class="">Nous commençons par un appel découverte pour comprendre vos envies, votre budget et vos contraintes. Une première proposition personnalisée vous est ensuite envoyée. Vous pouvez la modifier autant que nécessaire, jusqu’à validation. Nous nous occupons ensuite des réservations et restons disponibles pendant tout votre voyage.</p>
-<p class="">Est-ce dangereux de venir en Égypte ?</p>
+<h3 class="mef-q">Est-ce dangereux de venir en Égypte ?</h3>
 <p class="">Venir en Égypte est tout à fait sûr, surtout si vous suivez quelques recommandations simples comme dans n’importe quel pays touristique. Les zones touristiques majeures, comme Le Caire, Louxor, Assouan, et les sites du Nil, sont très bien sécurisées, avec une présence policière renforcée pour assurer la tranquillité des visiteurs.</p>
 <p class="">Chaque année, des millions de voyageurs visitent l’Égypte sans rencontrer aucun problème. Notre équipe locale travaille en étroite collaboration avec les autorités pour garantir que votre séjour soit serein, authentique et mémorable. Nous vous conseillons simplement de respecter les consignes habituelles de voyage : éviter certains quartiers la nuit, garder vos effets personnels en sécurité, et suivre les conseils de votre guide.</p>
 <p class="">Avec un bon accompagnement et une organisation sérieuse, vous pourrez pleinement profiter des trésors historiques, des paysages exceptionnels et de l’accueil chaleureux des Égyptiens, le tout dans un environnement sûr.</p>
 <p class="">Consultez notre article dédié à la sécurité en Égypte.</p>
-<p class="">Quels papiers d&#x27;identité faut-il pour partir ?</p>
+<h3 class="mef-q">Quels papiers d&#x27;identité faut-il pour partir ?</h3>
 <p class="">Passeport valable 6 mois minimum après l’arrivée en Égypte. Carte d&#x27;identité acceptée pour les ressortissants français, belges ou suisses, avec deux photos d&#x27;identité.</p>
-<p class="">Ai-je besoin d’un visa pour voyager en Égypte ?</p>
+<h3 class="mef-q">Ai-je besoin d’un visa pour voyager en Égypte ?</h3>
 <p class="">Oui, il peut être obtenu à l’arrivée (25 € en espèces ou CB) ou en ligne. Passeport requis, ou carte d’identité (+ 2 photos).</p>
-<p class="">Dois-je faire des vaccins ?</p>
+<h3 class="mef-q">Dois-je faire des vaccins ?</h3>
 <p class="">Aucun vaccin n’est obligatoire, mais il est recommandé d’être à jour sur les vaccins de base.</p>
 <h2>Réservation &amp; prestations</h2>
-<p class="">Réservez-vous les vols internationaux ?</p>
+<h3 class="mef-q">Réservez-vous les vols internationaux ?</h3>
 <p class="">Non, mais nous vous accompagnons dans la recherche des meilleurs vols selon vos dates et aéroports.</p>
-<p class="">Puis-je changer mes dates ou l’itinéraire après réservation ?</p>
+<h3 class="mef-q">Puis-je changer mes dates ou l’itinéraire après réservation ?</h3>
 <p class="">Oui, tant que les réservations définitives ne sont pas encore validées. Après validation, des frais peuvent s’appliquer selon les prestataires.</p>
-<p class="">Que se passe-t-il si je ne peux plus partir ?</p>
+<h3 class="mef-q">Que se passe-t-il si je ne peux plus partir ?</h3>
 <p class="">Nous faisons tout pour reprogrammer ou adapter votre voyage. Des frais peuvent s’appliquer selon le délai d’annulation. Nous vous conseillons également de prendre une assurance voyage.</p>
-<p class="">Réservez-vous les vols internes ?</p>
+<h3 class="mef-q">Réservez-vous les vols internes ?</h3>
 <p class="">Oui, nous pouvons réserver vos vols internes.</p>
 <h2>Paiement</h2>
-<p class="">Comment puis-je régler mon voyage ?</p>
+<h3 class="mef-q">Comment puis-je régler mon voyage ?</h3>
 <p class="">Vous pouvez payer par virement bancaire ou carte bancaire via un lien sécurisé.</p>
-<p class="">Le paiement est-il fractionnable ?</p>
+<h3 class="mef-q">Le paiement est-il fractionnable ?</h3>
 <p class="">Oui, un acompte est demandé à la validation, puis le solde , 45 jours avant le départ. Le calendrier exact vous sera précisé lors de la réservation.</p>
-<p class="">L’acompte est-il remboursable ?</p>
+<h3 class="mef-q">L’acompte est-il remboursable ?</h3>
 <p class="">L’acompte permet de bloquer vos hébergements et prestations. Il est remboursable uniquement si les conditions d’annulation de votre séjour le permettent.</p>
-<p class="">Puis-je offrir un voyage ou un crédit à un proche ?</p>
+<h3 class="mef-q">Puis-je offrir un voyage ou un crédit à un proche ?</h3>
 <p class="">Oui, vous pouvez offrir un avoir voyage ou une carte-cadeau personnalisée.</p>
 </article>
 <aside>
@@ -1036,7 +1116,7 @@
 </aside>
 </div>
 </div>
-<p class="prov">Repris de <a href="https://authentiquegypte.com/" target="_blank" rel="noopener">la page d’accueil du site</a>.</p></div></section><section class="pg-sec pg-sec--fond"><div class="wrap"><p class="eyebrow">Qui vous répond</p><h2>Notre équipe</h2><h3>Une équipe locale engagée</h3><p>Basée au Caire, notre équipe s&#x27;appuie sur un réseau solide de guides francophones, chauffeurs et spécialistes logistiques. Nous collaborons avec des partenaires locaux de confiance pour garantir la qualité des prestations.</p></div>
+<p class="prov">Repris de <a href="https://authentiquegypte.com/" target="_blank" rel="noopener">la page d’accueil du site</a>.</p></div></section><section class="pg-sec pg-sec--fond"><div class="wrap mef"><p class="eyebrow">Qui vous répond</p><h2>Notre équipe</h2><h3>Une équipe locale engagée</h3><p>Basée au Caire, notre équipe s&#x27;appuie sur un réseau solide de guides francophones, chauffeurs et spécialistes logistiques. Nous collaborons avec des partenaires locaux de confiance pour garantir la qualité des prestations.</p></div>
 <div class="atout"><h3>Guides francophones</h3><p>Des experts passionnés par leur pays</p></div>
 <div class="atout"><h3>Chauffeurs expérimentés</h3><p>Connaissant parfaitement le terrain</p></div>
 <div class="atout"><h3>Hébergements sélectionnés</h3><p>À taille humaine et authentiques</p></div>
@@ -1074,15 +1154,15 @@
 <p class="">Avis voyageurs</p>
 <p class="">FAQ - Authentique Égypte</p>
 <h3>FAQ - Questions fréquentes</h3>
-<p class="">Qui prend en charge les paiements ?</p>
+<h3 class="mef-q">Qui prend en charge les paiements ?</h3>
 <p class="">Les paiements sont effectués directement à notre partenaire en Égypte, une agence reconnue et certifiée. Vous bénéficiez d&#x27;un suivi personnalisé et d&#x27;un interlocuteur en France pour toute question.</p>
-<p class="">Quelles garanties de remboursement ?</p>
+<h3 class="mef-q">Quelles garanties de remboursement ?</h3>
 <p class="">Nous garantissons des conditions claires et transparentes. En cas d&#x27;annulation selon nos CGV, les remboursements sont traités rapidement avec notre partenaire local et validés par notre structure française.</p>
-<p class="">Que faire en cas de problème sur place ?</p>
+<h3 class="mef-q">Que faire en cas de problème sur place ?</h3>
 <p class="">Notre équipe locale est disponible 24h/24 et 7j/7. Nous avons des représentants dans chaque destination ainsi que des contacts avec des médecins et pharmacies locales pour votre sécurité.</p>
-<p class="">Est-ce que les guides sont certifiés ?</p>
+<h3 class="mef-q">Est-ce que les guides sont certifiés ?</h3>
 <p class="">Oui, tous nos guides sont officiellement certifiés et régulièrement évalués pour garantir des visites enrichissantes et sécurisées.</p>
-<p class="">Comment se passe le suivi avant et pendant le voyage ?</p>
+<h3 class="mef-q">Comment se passe le suivi avant et pendant le voyage ?</h3>
 <p class="">Avant le départ, un conseiller en France vous accompagne dans la préparation. Sur place, un représentant local reste disponible 24h/24 pour toute demande ou assistance.</p>
 <h2>Voyagez autrement avec une agence qui vous met en lien avec des acteurs locaux en Égypte.</h2>
 <p class="">Confiez l&#x27;organisation de votre voyage en Égypte à nos agents locaux. Nos guides francophones sont là pour vous accompagner tout au long de votre séjour. Nous organisons des séjours sur mesure en Egypte et nous les personnalisons selon vos préférences et vos envies</p>
@@ -1100,7 +1180,7 @@
 </aside>
 </div>
 </div>
-<p class="atelier"><span class="aremplir">à remplir</span> photos et biographies de l’équipe</p></div></section><section class="pg-sec"><div class="wrap"><p class="eyebrow">Comment ça se passe</p><h2>De votre premier message au départ</h2><h3>Contact initial</h3><p>Échange avec un expert local pour comprendre vos envies</p></div>
+<p class="atelier"><span class="aremplir">à remplir</span> photos et biographies de l’équipe</p></div></section><section class="pg-sec"><div class="wrap mef"><p class="eyebrow">Comment ça se passe</p><h2>De votre premier message au départ</h2><h3>Contact initial</h3><p>Échange avec un expert local pour comprendre vos envies</p></div>
 <div class="atout"><h3>Programme interactif</h3><p>Création d&#x27;un itinéraire modifiable à volonté</p></div>
 <div class="atout"><h3>Le Figaro</h3><p>Voyage en famille en Égypte</p></div>
 <div class="atout"><h3>Partir.com</h3><p>Fiche agence Authentique Égypte</p></div>
@@ -1134,15 +1214,15 @@
 <p class="">Avis voyageurs</p>
 <p class="">FAQ - Authentique Égypte</p>
 <h3>FAQ - Questions fréquentes</h3>
-<p class="">Qui prend en charge les paiements ?</p>
+<h3 class="mef-q">Qui prend en charge les paiements ?</h3>
 <p class="">Les paiements sont effectués directement à notre partenaire en Égypte, une agence reconnue et certifiée. Vous bénéficiez d&#x27;un suivi personnalisé et d&#x27;un interlocuteur en France pour toute question.</p>
-<p class="">Quelles garanties de remboursement ?</p>
+<h3 class="mef-q">Quelles garanties de remboursement ?</h3>
 <p class="">Nous garantissons des conditions claires et transparentes. En cas d&#x27;annulation selon nos CGV, les remboursements sont traités rapidement avec notre partenaire local et validés par notre structure française.</p>
-<p class="">Que faire en cas de problème sur place ?</p>
+<h3 class="mef-q">Que faire en cas de problème sur place ?</h3>
 <p class="">Notre équipe locale est disponible 24h/24 et 7j/7. Nous avons des représentants dans chaque destination ainsi que des contacts avec des médecins et pharmacies locales pour votre sécurité.</p>
-<p class="">Est-ce que les guides sont certifiés ?</p>
+<h3 class="mef-q">Est-ce que les guides sont certifiés ?</h3>
 <p class="">Oui, tous nos guides sont officiellement certifiés et régulièrement évalués pour garantir des visites enrichissantes et sécurisées.</p>
-<p class="">Comment se passe le suivi avant et pendant le voyage ?</p>
+<h3 class="mef-q">Comment se passe le suivi avant et pendant le voyage ?</h3>
 <p class="">Avant le départ, un conseiller en France vous accompagne dans la préparation. Sur place, un représentant local reste disponible 24h/24 pour toute demande ou assistance.</p>
 <h2>Voyagez autrement avec une agence qui vous met en lien avec des acteurs locaux en Égypte.</h2>
 <p class="">Confiez l&#x27;organisation de votre voyage en Égypte à nos agents locaux. Nos guides francophones sont là pour vous accompagner tout au long de votre séjour. Nous organisons des séjours sur mesure en Egypte et nous les personnalisons selon vos préférences et vos envies</p>
@@ -1160,7 +1240,7 @@
 </aside>
 </div>
 </div>
-<p class="atelier"><span class="aremplir">à remplir</span> délai réel d’envoi du premier devis</p></div></section><section class="pg-sec pg-sec--fond"><div class="wrap"><p class="eyebrow">Nos engagements</p><h2>Un voyage local, souple et respectueux</h2><h3>Des voyages flexibles et respectueux</h3>
+<p class="atelier"><span class="aremplir">à remplir</span> délai réel d’envoi du premier devis</p></div></section><section class="pg-sec pg-sec--fond"><div class="wrap mef"><p class="eyebrow">Nos engagements</p><h2>Un voyage local, souple et respectueux</h2><h3>Des voyages flexibles et respectueux</h3>
 <p class="">Nos circuits sont entièrement personnalisés selon vos envies et contraintes. Nous privilégions :</p>
 <ul><li>Les hébergements à taille humaine</li><li>Les déplacements en dahabieh ou felouque</li><li>Les ateliers culturels (cuisine, hiéroglyphes...)</li><li>Les rencontres avec artisans et familles locales</li><li>Les expériences immersives dans les oasis</li></ul>
 <p class="">Nous collaborons avec l&#x27;ONG Planeterra pour des expériences à faible impact environnemental.</p>
@@ -1171,15 +1251,15 @@
 <p class="">Avis voyageurs</p>
 <p class="">FAQ - Authentique Égypte</p>
 <h3>FAQ - Questions fréquentes</h3>
-<p class="">Qui prend en charge les paiements ?</p>
+<h3 class="mef-q">Qui prend en charge les paiements ?</h3>
 <p class="">Les paiements sont effectués directement à notre partenaire en Égypte, une agence reconnue et certifiée. Vous bénéficiez d&#x27;un suivi personnalisé et d&#x27;un interlocuteur en France pour toute question.</p>
-<p class="">Quelles garanties de remboursement ?</p>
+<h3 class="mef-q">Quelles garanties de remboursement ?</h3>
 <p class="">Nous garantissons des conditions claires et transparentes. En cas d&#x27;annulation selon nos CGV, les remboursements sont traités rapidement avec notre partenaire local et validés par notre structure française.</p>
-<p class="">Que faire en cas de problème sur place ?</p>
+<h3 class="mef-q">Que faire en cas de problème sur place ?</h3>
 <p class="">Notre équipe locale est disponible 24h/24 et 7j/7. Nous avons des représentants dans chaque destination ainsi que des contacts avec des médecins et pharmacies locales pour votre sécurité.</p>
-<p class="">Est-ce que les guides sont certifiés ?</p>
+<h3 class="mef-q">Est-ce que les guides sont certifiés ?</h3>
 <p class="">Oui, tous nos guides sont officiellement certifiés et régulièrement évalués pour garantir des visites enrichissantes et sécurisées.</p>
-<p class="">Comment se passe le suivi avant et pendant le voyage ?</p>
+<h3 class="mef-q">Comment se passe le suivi avant et pendant le voyage ?</h3>
 <p class="">Avant le départ, un conseiller en France vous accompagne dans la préparation. Sur place, un représentant local reste disponible 24h/24 pour toute demande ou assistance.</p>
 <h2>Voyagez autrement avec une agence qui vous met en lien avec des acteurs locaux en Égypte.</h2>
 <p class="">Confiez l&#x27;organisation de votre voyage en Égypte à nos agents locaux. Nos guides francophones sont là pour vous accompagner tout au long de votre séjour. Nous organisons des séjours sur mesure en Egypte et nous les personnalisons selon vos préférences et vos envies</p>
@@ -1197,7 +1277,7 @@
 </aside>
 </div>
 </div>
-<p class="atelier"><span class="aremplir">à remplir</span> formulation de l’engagement tarifaire</p></div></section><section class="pg-sec"><div class="wrap"><p class="eyebrow">Garanties</p><h2>Qui nous sommes, juridiquement</h2><ul class="garanties"><li><b>Authentique Égypte (OREYA)</b></li><li>SIRET&nbsp;: 928 008 226 00013</li><li>Siège social&nbsp;: 17 Avenue Gambetta, 82000 Montauban, France</li></ul><p class="prov">Repris de <a href="https://authentiquegypte.com/mentions-legales-agence-voyage-egypte/" target="_blank" rel="noopener">les mentions légales du site</a>.</p><p class="atelier"><span class="aremplir">à remplir</span> numéro de licence touristique égyptienne et nom du partenaire qui la détient</p><p class="atelier"><span class="aremplir">à remplir</span> immatriculation Atout France, garantie financière, responsabilité civile — à vérifier avant toute publication</p></div></section><section class="pg-sec pg-sec--fond"><div class="wrap"><p class="eyebrow">Où nous trouver</p><h2>Nos bureaux</h2><p class="atelier"><span class="aremplir">à remplir</span> adresse du bureau du Caire, si elle est communicable</p></div></section><section class="pg-sec"><div class="wrap"><p class="eyebrow">Ils parlent de nous</p><h2>La presse et les plateformes</h2><h3>Le Figaro</h3><p>Voyage en famille en Égypte</p></div>
+<p class="atelier"><span class="aremplir">à remplir</span> formulation de l’engagement tarifaire</p></div></section><section class="pg-sec"><div class="wrap"><p class="eyebrow">Garanties</p><h2>Qui nous sommes, juridiquement</h2><ul class="garanties"><li><b>Authentique Égypte (OREYA)</b></li><li>SIRET&nbsp;: 928 008 226 00013</li><li>Siège social&nbsp;: 17 Avenue Gambetta, 82000 Montauban, France</li></ul><p class="prov">Repris de <a href="https://authentiquegypte.com/mentions-legales-agence-voyage-egypte/" target="_blank" rel="noopener">les mentions légales du site</a>.</p><p class="atelier"><span class="aremplir">à remplir</span> numéro de licence touristique égyptienne et nom du partenaire qui la détient</p><p class="atelier"><span class="aremplir">à remplir</span> immatriculation Atout France, garantie financière, responsabilité civile — à vérifier avant toute publication</p></div></section><section class="pg-sec pg-sec--fond"><div class="wrap"><p class="eyebrow">Où nous trouver</p><h2>Nos bureaux</h2><p class="atelier"><span class="aremplir">à remplir</span> adresse du bureau du Caire, si elle est communicable</p></div></section><section class="pg-sec"><div class="wrap mef"><p class="eyebrow">Ils parlent de nous</p><h2>La presse et les plateformes</h2><h3>Le Figaro</h3><p>Voyage en famille en Égypte</p></div>
 <div class="atout"><h3>Partir.com</h3><p>Fiche agence Authentique Égypte</p></div>
 <div class="atout"><h3>Le Figaro Madame</h3><p>Adresses Incontournables</p></div>
 <div class="atout"><h3>Evaneos</h3><p>Profil agence Égypte</p></div>
@@ -1229,15 +1309,15 @@
 <p class="">Avis voyageurs</p>
 <p class="">FAQ - Authentique Égypte</p>
 <h3>FAQ - Questions fréquentes</h3>
-<p class="">Qui prend en charge les paiements ?</p>
+<h3 class="mef-q">Qui prend en charge les paiements ?</h3>
 <p class="">Les paiements sont effectués directement à notre partenaire en Égypte, une agence reconnue et certifiée. Vous bénéficiez d&#x27;un suivi personnalisé et d&#x27;un interlocuteur en France pour toute question.</p>
-<p class="">Quelles garanties de remboursement ?</p>
+<h3 class="mef-q">Quelles garanties de remboursement ?</h3>
 <p class="">Nous garantissons des conditions claires et transparentes. En cas d&#x27;annulation selon nos CGV, les remboursements sont traités rapidement avec notre partenaire local et validés par notre structure française.</p>
-<p class="">Que faire en cas de problème sur place ?</p>
+<h3 class="mef-q">Que faire en cas de problème sur place ?</h3>
 <p class="">Notre équipe locale est disponible 24h/24 et 7j/7. Nous avons des représentants dans chaque destination ainsi que des contacts avec des médecins et pharmacies locales pour votre sécurité.</p>
-<p class="">Est-ce que les guides sont certifiés ?</p>
+<h3 class="mef-q">Est-ce que les guides sont certifiés ?</h3>
 <p class="">Oui, tous nos guides sont officiellement certifiés et régulièrement évalués pour garantir des visites enrichissantes et sécurisées.</p>
-<p class="">Comment se passe le suivi avant et pendant le voyage ?</p>
+<h3 class="mef-q">Comment se passe le suivi avant et pendant le voyage ?</h3>
 <p class="">Avant le départ, un conseiller en France vous accompagne dans la préparation. Sur place, un représentant local reste disponible 24h/24 pour toute demande ou assistance.</p>
 <h2>Voyagez autrement avec une agence qui vous met en lien avec des acteurs locaux en Égypte.</h2>
 <p class="">Confiez l&#x27;organisation de votre voyage en Égypte à nos agents locaux. Nos guides francophones sont là pour vous accompagner tout au long de votre séjour. Nous organisons des séjours sur mesure en Egypte et nous les personnalisons selon vos préférences et vos envies</p>
@@ -1298,16 +1378,16 @@
 </div>
 </div></div></div>
 </div></div></section>
-<section class="pg-sec pg-sec--fond"><div class="wrap"><p class="eyebrow">Avant de nous écrire</p><h2>Les questions qu’on nous pose</h2><h3>FAQ - Questions fréquentes</h3>
-<p class="">Qui prend en charge les paiements ?</p>
+<section class="pg-sec pg-sec--fond"><div class="wrap mef"><p class="eyebrow">Avant de nous écrire</p><h2>Les questions qu’on nous pose</h2><h3>FAQ - Questions fréquentes</h3>
+<h3 class="mef-q">Qui prend en charge les paiements ?</h3>
 <p class="">Les paiements sont effectués directement à notre partenaire en Égypte, une agence reconnue et certifiée. Vous bénéficiez d&#x27;un suivi personnalisé et d&#x27;un interlocuteur en France pour toute question.</p>
-<p class="">Quelles garanties de remboursement ?</p>
+<h3 class="mef-q">Quelles garanties de remboursement ?</h3>
 <p class="">Nous garantissons des conditions claires et transparentes. En cas d&#x27;annulation selon nos CGV, les remboursements sont traités rapidement avec notre partenaire local et validés par notre structure française.</p>
-<p class="">Que faire en cas de problème sur place ?</p>
+<h3 class="mef-q">Que faire en cas de problème sur place ?</h3>
 <p class="">Notre équipe locale est disponible 24h/24 et 7j/7. Nous avons des représentants dans chaque destination ainsi que des contacts avec des médecins et pharmacies locales pour votre sécurité.</p>
-<p class="">Est-ce que les guides sont certifiés ?</p>
+<h3 class="mef-q">Est-ce que les guides sont certifiés ?</h3>
 <p class="">Oui, tous nos guides sont officiellement certifiés et régulièrement évalués pour garantir des visites enrichissantes et sécurisées.</p>
-<p class="">Comment se passe le suivi avant et pendant le voyage ?</p>
+<h3 class="mef-q">Comment se passe le suivi avant et pendant le voyage ?</h3>
 <p class="">Avant le départ, un conseiller en France vous accompagne dans la préparation. Sur place, un représentant local reste disponible 24h/24 pour toute demande ou assistance.</p>
 <h2>Voyagez autrement avec une agence qui vous met en lien avec des acteurs locaux en Égypte.</h2>
 <p class="">Confiez l&#x27;organisation de votre voyage en Égypte à nos agents locaux. Nos guides francophones sont là pour vous accompagner tout au long de votre séjour. Nous organisons des séjours sur mesure en Egypte et nous les personnalisons selon vos préférences et vos envies</p>

@@ -866,8 +866,97 @@
 {"@type":"TouristAttraction","name":"Plateau de Gizeh"},
 {"@type":"TouristAttraction","name":"Grand Musée égyptien"},
 {"@type":"TouristAttraction","name":"Nécropole de Saqqara"},
-{"@type":"TouristAttraction","name":"Khan el-Khalili"}]}]}</script></head>
+{"@type":"TouristAttraction","name":"Khan el-Khalili"}]}]}</script><style data-mef="mef-1">
+/* Mise en forme du contenu repris — voir outils/mise-en-forme.py */
+.mef{--mef-mes:68ch}
+.mef p,.mef ul,.mef ol,.mef dl,.mef figure{max-width:var(--mef-mes)}
+/* Le tableau est une donnée, pas une lecture suivie : la mesure de confort
+   du texte l'étranglerait en colonnes de trois mots. */
+.mef .mef-tab{max-width:none}
+.mef table{max-width:none}
+.mef p{margin:0 0 1.1em;line-height:1.75;color:var(--texte)}
+.mef p:last-child{margin-bottom:0}
+.mef>h2,.mef .mef-h2{font-size:clamp(1.35rem,2.4vw,1.75rem);line-height:1.25;
+  margin:2.4em 0 .7em;color:var(--nuit);text-wrap:balance}
+.mef>h2:first-child{margin-top:0}
+.mef h3,.mef .mef-q{font-size:clamp(1.05rem,1.6vw,1.22rem);line-height:1.35;
+  margin:2em 0 .5em;color:var(--nuit);text-wrap:balance}
+.mef h4{font-size:1rem;margin:1.6em 0 .4em;color:var(--nuit)}
+/* Une question posée dans le corps : reconnaissable sans crier. */
+.mef .mef-q{position:relative;padding-left:18px;font-family:"Manrope",sans-serif;font-weight:700}
+.mef .mef-q::before{content:"";position:absolute;left:0;top:.34em;bottom:.34em;width:4px;
+  border-radius:2px;background:var(--teal)}
+.mef .mef-q+p{margin-top:0}
+/* La reprise du site laisse certaines questions en minuscule. La capitale
+   est posée à l'affichage : le texte, lui, n'est pas retouché. */
+.mef .mef-q::first-letter{text-transform:uppercase}
+/* Listes : la puce prend la couleur de marque, le texte garde son rythme. */
+.mef ul,.mef ol{margin:0 0 1.3em;padding-left:0;list-style:none}
+.mef ul>li,.mef ol>li{position:relative;padding-left:26px;margin:0 0 .55em;
+  line-height:1.7;color:var(--texte)}
+.mef ul>li::before{content:"";position:absolute;left:6px;top:.62em;width:7px;height:7px;
+  border-radius:50%;background:var(--teal)}
+.mef ol{counter-reset:mef}
+.mef ol>li{counter-increment:mef}
+.mef ol>li::before{content:counter(mef);position:absolute;left:0;top:.05em;width:20px;
+  text-align:center;font-family:"Manrope",sans-serif;font-size:.78rem;font-weight:700;
+  line-height:20px;border-radius:50%;background:var(--teal-fond);color:var(--teal-txt)}
+.mef li>b:first-child,.mef li>strong:first-child{color:var(--nuit)}
+/* Une énumération « Étiquette : texte » se lit mieux en deux temps. */
+.mef .mef-def>li{padding-left:0}
+.mef .mef-def>li::before{display:none}
+.mef .mef-def>li{border-left:3px solid var(--ligne-2);padding:2px 0 2px 16px}
+.mef .mef-def>li b:first-child{display:block;color:var(--nuit);
+  font-family:"Manrope",sans-serif;font-size:.92rem}
+.mef dl{display:grid;gap:.2em .9em;grid-template-columns:auto 1fr}
+.mef dt{font-weight:700;color:var(--nuit)}
+.mef dd{margin:0;color:var(--texte)}
+/* Tableaux : jamais de débordement horizontal de la page. */
+.mef .mef-tab{overflow-x:auto;overflow-y:hidden;margin:0 0 1.4em;
+  border:1px solid var(--ligne-2);border-radius:var(--r-m);
+  /* Une ombre portée n'apparaît qu'au bord vers lequel il reste à défiler :
+     le lecteur voit qu'il y a une colonne de plus, sans indication écrite. */
+  background:linear-gradient(90deg,var(--papier) 30%,transparent),
+             linear-gradient(90deg,transparent,var(--papier) 70%) 100% 0,
+             radial-gradient(farthest-side at 0 50%,rgba(0,0,0,.13),transparent),
+             radial-gradient(farthest-side at 100% 50%,rgba(0,0,0,.13),transparent) 100% 0;
+  background-repeat:no-repeat;background-size:40px 100%,40px 100%,14px 100%,14px 100%;
+  background-attachment:local,local,scroll,scroll}
+.mef table{border-collapse:collapse;width:100%;font-size:.94rem}
+.mef th,.mef td{padding:11px 16px;text-align:left;border-bottom:1px solid var(--ligne-2);
+  vertical-align:top;line-height:1.5}
+.mef tbody tr:nth-child(even){background:color-mix(in srgb,var(--fond) 55%,transparent)}
+.mef th{font-family:"Manrope",sans-serif;font-size:.76rem;letter-spacing:.05em;line-height:1.3;
+  text-transform:uppercase;color:var(--nuit);background:var(--fond)}
+/* L'entête ne force pas la largeur : mise sur une seule ligne, elle poussait
+   à elle seule le tableau au-delà de la colonne de lecture, et la dernière
+   colonne sortait de l'écran. */
+.mef thead th:first-child,.mef tbody th{white-space:normal}
+.mef tbody tr:last-child td{border-bottom:0}
+.mef td+td{font-variant-numeric:tabular-nums}
+.mef blockquote{margin:0 0 1.4em;padding:2px 0 2px 20px;border-left:3px solid var(--or);
+  color:var(--nuit);font-size:1.05rem}
+.mef img{max-width:100%;height:auto;border-radius:var(--r-m)}
+/* Les deux colonnes de la page reprise n'avaient aucune règle : la colonne
+   latérale tombait sous le texte, pleine largeur. */
+.colonnes{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:48px;
+  align-items:start}
+.colonnes>aside{position:sticky;top:96px}
+@media (max-width:960px){
+  .colonnes{grid-template-columns:minmax(0,1fr);gap:36px}
+  .colonnes>aside{position:static}
+}
+</style></head>
 <body>
+<div class="bandeau">
+  <div class="wrap">
+    <span>Agence locale basée au Caire · <strong>Une personne de l'équipe vous répond</strong></span>
+    <span style="display:flex;gap:20px;flex-wrap:wrap">
+      <a href="mailto:contact@authentiquegypte.com">✉ contact@authentiquegypte.com</a>
+      <a href="https://wa.me/201066619098">WhatsApp +20 106 661 9098</a>
+    </span>
+  </div>
+</div>
 <header class="entete">
   <div class="wrap">
     <a href="https://authentiquegypte.com/" class="logo" aria-label="Authentique Égypte, accueil">
@@ -922,21 +1011,17 @@
 </header>
 <main class="pg">
 <section class="hero" style="--une-l:1280px;--une-h:360px">
-<div class="hero__flou" data-flou="oui" aria-hidden="true"><img src="https://authentiquegypte.com/wp-content/uploads/2023/11/WhatsApp-Image-2025-08-14-at-13.23.16.jpeg" alt="" decoding="async" srcset="https://authentiquegypte.com/wp-content/uploads/2023/11/WhatsApp-Image-2025-08-14-at-13.23.16-300x169.jpeg 300w, https://authentiquegypte.com/wp-content/uploads/2023/11/WhatsApp-Image-2025-08-14-at-13.23.16-768x432.jpeg 768w, https://authentiquegypte.com/wp-content/uploads/2023/11/WhatsApp-Image-2025-08-14-at-13.23.16-1024x576.jpeg 1024w, https://authentiquegypte.com/wp-content/uploads/2023/11/WhatsApp-Image-2025-08-14-at-13.23.16.jpeg 1280w" sizes="100vw" width="1280" height="720" loading="lazy"></div>
-<div class="hero__fond"><img src="https://authentiquegypte.com/wp-content/uploads/2023/11/WhatsApp-Image-2025-08-14-at-13.23.16.jpeg" alt="" decoding="async" srcset="https://authentiquegypte.com/wp-content/uploads/2023/11/WhatsApp-Image-2025-08-14-at-13.23.16-300x169.jpeg 300w, https://authentiquegypte.com/wp-content/uploads/2023/11/WhatsApp-Image-2025-08-14-at-13.23.16-768x432.jpeg 768w, https://authentiquegypte.com/wp-content/uploads/2023/11/WhatsApp-Image-2025-08-14-at-13.23.16-1024x576.jpeg 1024w, https://authentiquegypte.com/wp-content/uploads/2023/11/WhatsApp-Image-2025-08-14-at-13.23.16.jpeg 1280w" sizes="(max-width:1280px) 100vw, 1280px" width="1280" height="720" fetchpriority="high"></div>
+<div class="hero__flou" data-flou="oui" aria-hidden="true"><img src="https://authentiquegypte.com/wp-content/uploads/2023/11/WhatsApp-Image-2023-11-07-at-12.03.37.jpeg" alt="" decoding="async" loading="lazy"></div>
+<div class="hero__fond"><img src="https://authentiquegypte.com/wp-content/uploads/2023/11/WhatsApp-Image-2023-11-07-at-12.03.37.jpeg" alt="" decoding="async" loading="lazy"></div>
 <div class="hero__in"><div class="wrap">
-<h1>Voyage au Lac Nasser</h1>
-
+<div class="hero__pills"><span class="pill"><svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s6-5.5 6-11a6 6 0 1 0-12 0c0 5.5 6 11 6 11z"/><circle cx="12" cy="10" r="2.2"/></svg><b>1</b> séjour y passe</span></div><h1>Voyage au Lac Nasser</h1>
+<p class="hero__chapo">Confiez l&#x27;organisation de votre voyage en Égypte à nos agents locaux. Nos guides francophones sont là pour vous accompagner tout au long de votre séjour. Nous organisons des séjours sur mesure en Egypte et nous les personnalisons selon vos préférences et vos envies.</p>
 <div class="hero__bas"><div class="hero__act"><a class="btn btn--or" href="https://authentiquegypte.com/sur-mesure/">Construire mon séjour</a><a class="btn btn--verre" href="https://wa.me/201066619098"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6a3 3 0 0 1 3-3h10a3 3 0 0 1 3 3v8a3 3 0 0 1-3 3H9l-5 4z"/></svg> Poser une question sur WhatsApp</a></div></div>
 </div></div></section>
-<section class="reperes"><div class="wrap"><ul><li><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l4.5 4.5L19 7"/></svg><small>Séjours</small><b>1 au choix</b></li><li><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M17 6.5A6 6 0 0 0 7 12a6 6 0 0 0 10 5.5M5 10h8M5 14h8"/></svg><small>À partir de</small><b>1595 €</b></li><li><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><small>Durée</small><b>4 jours</b></li></ul></div></section>
-<nav class="ariane" aria-label="Fil d'Ariane"><ol>
-<li><a href="../index.html">Accueil</a></li>
-<li><a href="../index.html">Destinations</a></li>
-<li><span aria-current="page">Voyage au Lac Nasser</span></li>
-</ol></nav>
+<section class="reperes"><div class="wrap"><ul><li><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M17 6.5A6 6 0 0 0 7 12a6 6 0 0 0 10 5.5M5 10h8M5 14h8"/></svg><small>À partir de</small><b>1595 €</b></li><li><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><small>Durée annoncée</small><b>4 jours</b></li></ul></div></section>
+<nav class="ariane ariane--sous" aria-label="Fil d'Ariane"><div class="wrap"><ol><li><a href="https://authentiquegypte.com/">Accueil</a></li><li><a href="https://authentiquegypte.com/nos-sejours-egypte/">Nos séjours en Égypte</a></li><li><span aria-current="page">Découverte de la Mer rouge</span></li></ol></div></nav>
 <section class="pg-sec" id="sejours"><div class="wrap">
-<p class="eyebrow">Au choix</p><h2>Les séjours qui passent par Lac Nasser</h2>
+<p class="eyebrow">Passer du guide au voyage</p><h2>Les séjours qui passent par Lac Nasser</h2><p class="lede" style="margin:14px 0 30px">Tous personnalisables&nbsp;: la durée s'ajuste à ce que vous voulez voir.</p>
 <div class="cartes cartes--1"><article class="carte">
 <div class="carte__img"><img src="https://authentiquegypte.com/wp-content/uploads/2023/11/jorge-fernandez-salas-59eU1QM4znI-unsplash.jpg" alt="jorge-fernandez-salas-59eU1QM4znI-unsplash" loading="lazy" decoding="async"></div>
 <div class="carte__corps">
@@ -952,27 +1037,9 @@
 </div>
 <p class="cartes__src">Durées et prix relevés sur les fiches du site le 10 septembre 2026.</p>
 </div></section>
-<button class="burger" aria-label="Ouvrir le menu">☰ Menu</button>
-  </div>
-</header>
-
-<main>
-<section class="chapeau">
-<div class="chapeau__bg"><img src="https://authentiquegypte.com/wp-content/uploads/2023/11/WhatsApp-Image-2023-11-07-at-12.03.37.jpeg" alt="" fetchpriority="high" decoding="async"></div>
-<div class="wrap">
-<nav class="ariane" aria-label="Fil d'Ariane"><ol>
-<li><a href="../index.html">Accueil</a></li>
-<li><a href="../index.html">Destinations</a></li>
-<li><span aria-current="page">Voyage au Lac Nasser</span></li>
-</ol></nav>
-<h1>Voyage au Lac Nasser</h1>
-<p class="sous">Confiez l&#x27;organisation de votre voyage en Égypte à nos agents locaux. Nos guides francophones sont là pour vous accompagner tout au long de votre séjour. Nous organisons des séjours sur mesure en Egypte et nous les personnalisons selon vos préférences et vos envies.</p>
-<div class="chapeau__st"><span><b>1</b> séjour y passe</span></div>
-</div>
-</section>
-<div class="wrap">
+<section class="pg-sec"><div class="wrap mef">
 <div class="colonnes">
-<article class="corps">
+<article class="corps mef">
 <p class="src">Contenu repris de <a href="https://authentiquegypte.com/lac-nasser/">https://authentiquegypte.com/lac-nasser/</a>, sans réécriture&nbsp;: seule la mise en page change.</p>
 <div class="atouts">
 <div class="atout"><h3>Privées &amp; personnalisées</h3><p>Chaque itinéraire est conçu selon vos envies, votre rythme et votre façon de voyager. Explorez l’Égypte à votre image.</p></div>
@@ -983,49 +1050,49 @@
 <p class="">Nous vous emmenons hors des sentiers battus, dans des lieux confidentiels, loin du tourisme de masse. Rencontrez l’Égypte vraie, en toute sérénité.</p>
 <p class="">Un voyage au Lac Nasser combine sérénité absolue et immersion dans l’histoire. Créé avec la construction du Haut-Barrage d’Assouan, il dévoile des paysages désertiques saisissants et des trésors archéologiques déplacés pour être préservés.</p>
 <h2>Organisation du voyage</h2>
-<p class="">Où se situe le Lac Nasser ?</p>
+<h3 class="mef-q">Où se situe le Lac Nasser ?</h3>
 <p class="">Le Lac Nasser se trouve au sud de l’Égypte, s’étendant depuis Assouan jusqu’à la frontière avec le Soudan. C’est l’un des plus grands lacs artificiels au monde, né après la construction du Haut Barrage.</p>
-<p class="">Proposez-vous des voyages sur mesure au Lac Nasser ?</p>
+<h3 class="mef-q">Proposez-vous des voyages sur mesure au Lac Nasser ?</h3>
 <p class="">Oui. Chez Authentique Égypte, tous nos voyages sont privés et sur mesure. Le Lac Nasser peut être intégré dans votre itinéraire si vous souhaitez découvrir cette région spectaculaire, hors des circuits habituels.</p>
-<p class="">Qu’est-ce qui rend le Lac Nasser unique ?</p>
+<h3 class="mef-q">Qu’est-ce qui rend le Lac Nasser unique ?</h3>
 <p class="">Calme absolu, loin du tourisme de masse.</p>
 <p class="">Paysages désertiques incroyables au bord de l’eau.</p>
 <p class="">Sites archéologiques rares, accessibles uniquement par bateau.</p>
 <p class="">Présence d’oiseaux et faune sauvage.</p>
 <p class="">Atmosphère très confidentielle, parfaite pour un voyage exclusif.</p>
-<p class="">Peut-on faire une croisière sur le Lac Nasser ?</p>
+<h3 class="mef-q">Peut-on faire une croisière sur le Lac Nasser ?</h3>
 <p class="">Oui. Il existe deux façons de découvrir le Lac Nasser :</p>
 <p class="">Croisière privée → adaptée à votre rythme, à vos intérêts.</p>
 <p class="">Croisière en petit groupe → mais chez Authentique Égypte, nous privilégions le sur mesure.</p>
 <p class="">Nous travaillons uniquement avec des partenaires sérieux et expérimentés.</p>
-<p class="">Quels sites peut-on visiter au Lac Nasser ?</p>
+<h3 class="mef-q">Quels sites peut-on visiter au Lac Nasser ?</h3>
 <p class="">Parmi les sites les plus connus :</p>
 <p class="">Abou Simbel (immanquable)</p>
 <p class="">Temples déplacés (Amada, Derr, Wadi Es Seboua)</p>
 <p class="">Petites criques désertiques et îles peu fréquentées</p>
 <p class="">Observation de la faune</p>
-<p class="">Est-ce adapté aux familles ?</p>
+<h3 class="mef-q">Est-ce adapté aux familles ?</h3>
 <p class="">Oui, sous réserve :</p>
 <p class="">Que les enfants aiment le bateau et les trajets parfois longs.</p>
 <p class="">Que le programme soit adapté (possibilité de réduire les étapes).</p>
 <p class="">Nous concevons le voyage en fonction de votre rythme familial.</p>
-<p class="">Quelle est la meilleure période pour visiter le Lac Nasser ?</p>
+<h3 class="mef-q">Quelle est la meilleure période pour visiter le Lac Nasser ?</h3>
 <p class="">Octobre à avril → températures plus douces.</p>
 <p class="">Été déconseillé : chaleur intense et confort moindre sur le bateau.</p>
-<p class="">Est-ce un voyage physique ou difficile ?</p>
+<h3 class="mef-q">Est-ce un voyage physique ou difficile ?</h3>
 <p class="">Non. Le voyage se fait en bateau, souvent dans un grand confort. Seules certaines visites demandent un peu de marche, mais rien de très physique.</p>
-<p class="">Peut-on combiner le Lac Nasser avec d’autres lieux ?</p>
+<h3 class="mef-q">Peut-on combiner le Lac Nasser avec d’autres lieux ?</h3>
 <p class="">Absolument. Il s’intègre souvent dans un voyage :</p>
 <p class="">à Assouan,</p>
 <p class="">à Abou Simbel,</p>
 <p class="">ou plus largement en Nubie,</p>
 <p class="">voire combiné avec Louxor pour un itinéraire plus complet.</p>
-<p class="">Proposez-vous un itinéraire fixe ?</p>
+<h3 class="mef-q">Proposez-vous un itinéraire fixe ?</h3>
 <p class="">Non. Chez Authentique Égypte, tout est sur mesure. Nous élaborons un itinéraire selon :</p>
 <p class="">vos envies culturelles,</p>
 <p class="">votre rythme,</p>
 <p class="">votre intérêt pour la faune ou l’archéologie.</p>
-<p class="">Est-ce sécurisé de voyager sur le Lac Nasser ?</p>
+<h3 class="mef-q">Est-ce sécurisé de voyager sur le Lac Nasser ?</h3>
 <p class="">Oui, dans les zones autorisées.</p>
 <p class="">Les itinéraires sont contrôlés et encadrés.</p>
 <p class="">Nous travaillons uniquement avec équipages expérimentés.</p>
@@ -1095,7 +1162,7 @@
 </div>
 </div>
 </section>
-</main><section class="pg-sec pg-sec--fond"><div class="wrap">
+</main></section><section class="pg-sec pg-sec--fond"><div class="wrap">
 <p class="eyebrow">Pourquoi nous</p>
 <h2>Pourquoi voyager en Égypte avec nous ?</h2>
 <ul class="args">
@@ -1109,7 +1176,7 @@
 <p>Nous créons votre itinéraire unique : choisissez votre rythme, vos escales et vos expériences sous-marines. Du snorkeling parmi les récifs coralliens aux plongées profondes , des villages côtiers aux sites sous-marins spectaculaires , chaque détail est pensé pour vous.</p>
 <p>Avec nos équipages locaux passionnés , vivez une expérience de plongée authentique , celle qui vous ressemble.</p>
 </div></div></div></section>
-<section class="pg-sec pg-sec--fond"><div class="wrap"><div class="faqs">
+<section class="pg-sec pg-sec--fond"><div class="wrap mef"><div class="faqs">
 <div><p class="eyebrow">Avant de choisir</p><h2>Ce qu’on nous demande le plus souvent</h2><div class="acc"><details open><summary>1) Pourquoi le Lac Nasser est-il si particulier ?</summary><div class="faq__c"><p class="">Sa création a nécessité le déplacement de monuments pharaoniques, dont Abu Simbel, offrant un témoignage unique d’ingénierie et de préservation patrimoniale.</p></div></details><details><summary>2) Quelles sont les principales étapes d’un voyage au Lac Nasser ?</summary><div class="faq__c"><p class="">Une croisière ponctuée d’escales aux temples de Kalabsha, Amada, Wadi el-Seboua et au site de Qasr Ibrim.</p></div></details><details><summary>3) Quelle faune observer ?</summary><div class="faq__c"><p class="">Des crocodiles du Nil, une diversité d’oiseaux migrateurs, ainsi qu’une faune aquatique variée.</p></div></details><details><summary>4) Quelle est la meilleure période pour visiter ?</summary><div class="faq__c"><p class="">De novembre à mars, période idéale pour éviter les fortes chaleurs et profiter d’une navigation confortable.</p></div></details><details><summary>5) Combien de jours faut-il prévoir ?</summary><div class="faq__c"><p class="">Quatre à cinq jours permettent de découvrir les sites majeurs tout en savourant la tranquillité des eaux.</p></div></details><details><summary>6) Est-ce adapté aux amateurs de photographie ?</summary><div class="faq__c"><p class="">Oui, avec ses temples baignés par la lumière dorée de l’aube et ses paysages désertiques, le Lac Nasser est un paradis pour les photographes.</p></div></details><details><summary>7) Quelles autres destinations combiner ?</summary><div class="faq__c"><p class="">Assouan comme point de départ ou Louxor pour prolonger la découverte des temples et tombeaux.</p></div></details><details><summary>8) Comment vivre une expérience authentique ?</summary><div class="faq__c"><p class="">Opter pour une petite embarcation ou un bateau traditionnel afin de naviguer au plus près des rives et à un rythme apaisé.</p>
 <p class="">Découvrez aussi :</p>
 <ul><li>Croisières sur le Nil</li><li>Voyages culturels</li><li>Égypte hors des sentiers battus</li></ul></div></details></div></details><details><summary><span class="q">Quelle est la durée idéale pour un séjour plongée en Mer Rouge ?</span><span class="acc__plus"></span></summary><div class="acc__c"><p><strong>👉 4 à 7 nuits suffisent</strong> pour profiter des <strong>meilleurs spots de plongée</strong> et explorer certains <strong>sites culturels</strong> sans se presser. Pour un rythme plus lent ou un séjour plus complet, nous recommandons un <strong>séjour de 10 jours</strong>, permettant de combiner <strong data-is-only-node="">plongée, snorkeling et découvertes culturelles</strong>.</p></div></details><details><summary><span class="q">Quelle est la différence entre les types de bateaux pour un séjour plongée ?</span><span class="acc__plus"></span></summary><div class="acc__c"><h3><strong>Quelle est l</strong></h3><ul><li><p><strong>Bateau intimiste (type “dahabeya”)</strong> : petit groupe, charme et confort, idéal pour une expérience personnalisée de plongée.</p></li><li><p><strong>Bateau rustique (type “felouque”)</strong> : approche simple et authentique, parfait pour les aventuriers du snorkeling et de la plongée.</p></li><li><p><strong>Bateau classique</strong> : plus grand, tout le confort moderne, souvent en groupe, avec itinéraire standardisé.</p></li></ul><p><strong>👉 Pas sûr de la meilleure option ?</strong><br />Contactez-nous directement sur <strong>WhatsApp</strong> pour clarifier votre projet et choisir le bateau le mieux adapté à votre séjour plongée.</p><h3><strong>a différence entre dahabeya, felouque et bateau classique ?</strong></h3><ul><li><p><strong>Dahabeya</strong> : bateau traditionnel, charme, confort, 8-12 passagers max</p></li><li><p><strong>Felouque</strong> : voile uniquement, rustique, idéal pour aventuriers</p></li><li><p><strong>Bateau classique</strong> : plus grand, avec tout le confort moderne, souvent en groupe</p></li></ul><p><strong>👉 <em>Pas sûr de la bonne option ?<br /></em></strong><br />Contactez-nous directement sur Whatsapp pour clarifier le projet !</p></div></details><details><summary><span class="q">Est-ce qu’un guide est inclus pendant les sorties plongée et excursions ?</span><span class="acc__plus"></span></summary><div class="acc__c"><p>Oui, chez <strong>Authentique Égypte</strong>, un <strong>guide francophone</strong> vous accompagne sur chaque <strong>site culturel et sortie plongée majeure</strong>. L’idée : ne pas simplement <strong>observer</strong>, mais <strong>comprendre et vivre pleinement</strong> chaque expérience, que ce soit sous l’eau ou lors des visites des sites historiques côtiers.</p></div></details><details><summary><span class="q">Faut-il un visa pour un séjour plongée en Égypte ?</span><span class="acc__plus"></span></summary><div class="acc__c"><p>Oui, le <strong>visa est obligatoire</strong> mais simple à obtenir :</p><ul><li><p><strong>E-visa officiel</strong> à demander en ligne avant le départ</p></li><li><p><strong>Visa à l’arrivée</strong> dans la plupart des aéroports égyptiens</p></li></ul><p>Notre équipe vous <strong>accompagne à chaque étape</strong>, pour que vos formalités soient rapides et sans stress, et que votre <strong>séjour plongée en Mer Rouge</strong> commence en toute sérénité.</p></div></details></div></div>
