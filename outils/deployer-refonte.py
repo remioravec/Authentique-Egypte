@@ -1,0 +1,180 @@
+#!/usr/bin/env python3
+"""
+Déploie tout le site repris en brouillon sous « Refonte 2026 », rangé par type.
+
+    WP_AUTH='compte:mot de passe' ./outils/deployer-refonte.py \\
+        --site DIR [--seulement prefixe] [--essai]
+
+Un dossier par type de page, numéroté pour que le back-office les affiche
+dans l'ordre. Le nom de fichier porte le type : `guide-quand-partir.html`
+va dans les guides, `destination-lac-nasser.html` dans les destinations.
+
+Rien n'est publié, rien n'est supprimé. Relancé, l'outil met à jour les
+mêmes pages : la reconnaissance se fait sur le slug, et WordPress tronque
+les slugs longs, donc une page déjà en ligne est retrouvée par préfixe
+plutôt que par égalité stricte — sans quoi chaque passage créerait un
+doublon des fiches au nom à rallonge.
+
+Chaque écriture est relue. Le serveur rend parfois une réponse vide, et une
+page laissée à moitié à jour ne se voit pas autrement qu'à l'œil.
+"""
+
+import argparse
+import os
+import re
+import sys
+import time
+from importlib.machinery import SourceFileLoader
+
+RACINE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+dep = SourceFileLoader('dep', os.path.join(RACINE, 'outils', 'deployer.py')).load_module()
+conv = SourceFileLoader('conv', os.path.join(RACINE, 'outils', 'vers-page-wp.py')).load_module()
+
+MERE = 7642
+
+# préfixe de fichier → (rang du dossier, titre du dossier, slug du dossier)
+TYPES = [
+    ('famille-',     1, 'Refonte · 1 · Circuits — pages catégorie', 'refonte-types-de-s-jour'),
+    ('programme-',   2, 'Refonte · 2 · Séjours — fiches programme', 'refonte-programmes'),
+    ('destination-', 3, 'Refonte · 3 · Destinations', 'refonte-destinations'),
+    ('qui-part-',    4, 'Refonte · 4 · Profils de voyageur', 'refonte-profils'),
+    ('guide-',       5, 'Refonte · 5 · Guides et articles', 'refonte-guides'),
+    ('hub-',         5, 'Refonte · 5 · Guides et articles', 'refonte-guides'),
+    ('accueil-',     6, 'Refonte · 6 · Pages institutionnelles', 'refonte-institutionnel'),
+    ('agence-',      6, 'Refonte · 6 · Pages institutionnelles', 'refonte-institutionnel'),
+    ('legal-',       6, 'Refonte · 6 · Pages institutionnelles', 'refonte-institutionnel'),
+]
+
+# Le nom lisible d'une page, quand le titre du fichier ne suffit pas.
+def titre_de_page(nom, html):
+    """Le titre de la page, pris dans son <title> ou son <h1>."""
+    for motif in (r'<title>(.*?)</title>', r'<h1[^>]*>(.*?)</h1>'):
+        m = re.search(motif, html, re.S | re.I)
+        if m:
+            t = re.sub(r'\s+', ' ', re.sub(r'<[^>]+>', '', m.group(1))).strip()
+            t = re.sub(r'\s*[|–—-]\s*Authentique\s*Égypte.*$', '', t, flags=re.I)
+            if t:
+                return t[:120]
+    return nom
+
+
+def type_de(nom):
+    for prefixe, rang, titre, slug in TYPES:
+        if nom.startswith(prefixe):
+            return prefixe, rang, titre, slug
+    return None
+
+
+def ecrire(page_id, champs, marqueur, attendu, etiquette):
+    """Une écriture relue. Rend True si la page en ligne porte bien le contenu."""
+    for essai in range(3):
+        try:
+            dep.appel('POST', '/pages/%d' % page_id, champs)
+        except SystemExit as motif:
+            print('      reprise %d/2 — %s' % (essai + 1, str(motif).splitlines()[0][:60]))
+            time.sleep(2 ** essai)
+            continue
+        relu = dep.appel('GET', '/pages/%d?context=edit' % page_id)['content']['raw']
+        if len(re.findall(marqueur, relu)) == attendu:
+            return True
+        print('      reprise %d/2 — %s : %d au lieu de %d'
+              % (essai + 1, etiquette, len(re.findall(marqueur, relu)), attendu))
+        time.sleep(2 ** essai)
+    return False
+
+
+def main():
+    p = argparse.ArgumentParser(description=__doc__,
+                                formatter_class=argparse.RawDescriptionHelpFormatter)
+    p.add_argument('--site', required=True, help='dossier des pages à déployer')
+    p.add_argument('--seulement', help='ne traiter que les fichiers de ce préfixe')
+    p.add_argument('--essai', action='store_true', help='montrer sans rien écrire')
+    a = p.parse_args()
+
+    source = os.path.abspath(a.site)
+    fichiers = sorted(f for f in os.listdir(source)
+                      if f.endswith('.html') and type_de(f)
+                      and (not a.seulement or f.startswith(a.seulement)))
+    if not fichiers:
+        raise SystemExit('aucun fichier reconnu dans %s' % source)
+
+    # Les pages déjà en ligne, pour les retrouver au lieu d'en créer des doubles.
+    print('→ Relevé de la zone')
+    Q = '/pages?parent=%d&per_page=100&status=any&context=edit&_fields=id,title,slug,parent'
+    existantes = {}
+    dossiers_en_ligne = {}
+    for d in dep.appel('GET', Q % MERE):
+        dossiers_en_ligne[d['slug']] = d
+        for e in dep.appel('GET', Q % d['id']):
+            existantes[e['slug']] = e
+            for pt in dep.appel('GET', Q % e['id']):
+                existantes[pt['slug']] = pt
+    print('   %d dossier(s), %d page(s) déjà en ligne' % (len(dossiers_en_ligne), len(existantes)))
+
+    print('\n→ Dossiers de type')
+    dossiers = {}
+    for _, rang, titre, slug in TYPES:
+        if slug in dossiers:
+            continue
+        if a.essai:
+            d = dossiers_en_ligne.get(slug)
+            dossiers[slug] = d['id'] if d else 0
+        else:
+            d, action = dep.poser_page(slug, {'title': titre, 'status': 'draft',
+                                              'parent': MERE, 'menu_order': rang})
+            dossiers[slug] = d['id']
+        print('   %-46s id %s' % (titre, dossiers[slug] or '—'))
+
+    print('\n→ Pages')
+    par_type = {}
+    for f in fichiers:
+        par_type.setdefault(type_de(f)[0], []).append(f)
+
+    faits = rates = 0
+    for prefixe in [t[0] for t in TYPES]:
+        for rang, f in enumerate(par_type.get(prefixe, []), 1):
+            base = f[:-len('.html')]
+            slug = 'refonte-' + base
+            _, _, _, slug_dossier = type_de(f)
+            with open(os.path.join(source, f), encoding='utf-8') as fh:
+                html = fh.read()
+            contenu = conv.convertir(html, source)
+            # Une page déjà en ligne ne reçoit que son contenu. Son titre, son
+            # dossier et son rang sont l'œuvre de ranger-back-office.py : les
+            # réécrire ici depuis le <title> du fichier déferait le rangement
+            # à chaque déploiement.
+            champs = {'status': 'draft', 'template': 'elementor_canvas',
+                      'content': contenu}
+            champs_neufs = dict(champs, title=titre_de_page(base, html),
+                                parent=dossiers[slug_dossier], menu_order=rang)
+
+            # WordPress tronque les slugs longs : on retrouve la page par
+            # préfixe, en prenant le plus long slug existant qui commence
+            # comme le nôtre — sinon on créerait un doublon à chaque passage.
+            candidats = [s for s in existantes if slug.startswith(s) or s.startswith(slug)]
+            page = existantes[max(candidats, key=len)] if candidats else None
+
+            attendu = len(re.findall(r'<img', contenu))
+            if a.essai:
+                print('   %-58s %s' % (f[:58],
+                      ('→ #%d' % page['id']) if page else '→ à créer'))
+                continue
+            if page:
+                ok = ecrire(page['id'], champs, r'<img', attendu, 'images')
+                pid = page['id']
+            else:
+                r = dep.appel('POST', '/pages', dict(champs_neufs, slug=slug))
+                pid = r.get('id', 0)
+                ok = bool(pid)
+            (faits, rates) = (faits + 1, rates) if ok else (faits, rates + 1)
+            print('   %-58s #%-6s %s  %d image(s)'
+                  % (f[:58], pid, 'ok' if ok else 'ÉCHEC', attendu))
+
+    print('\n%d page(s) déployée(s), %d échec(s). Rien n\'a été publié ni supprimé.'
+          % (faits, rates))
+    if rates:
+        sys.exit(1)
+
+
+if __name__ == '__main__':
+    main()

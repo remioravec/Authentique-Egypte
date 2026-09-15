@@ -31,7 +31,6 @@ avec outils/ranger-brouillons.py ou outils/surcharger-brouillons.py.
 
 import argparse
 import base64
-import colorsys
 import glob
 import html as H
 import json
@@ -39,6 +38,7 @@ import os
 import re
 import unicodedata
 import sys
+from importlib.machinery import SourceFileLoader
 
 RACINE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ASSETS = os.path.join(RACINE, 'maquettes', 'assets')
@@ -901,35 +901,12 @@ def bloc_agence(h, journal, photo):
 
 # ----------------------------------------------------------------- un seul bleu
 
-TEINTE = colorsys.rgb_to_hls(0x07 / 255, 0x9D / 255, 0xB6 / 255)[0]
-
-
-def _teinte(r, g, b):
-    h, l, s = colorsys.rgb_to_hls(r / 255, g / 255, b / 255)
-    if 176 <= h * 360 <= 212 and s >= .12:
-        r2, g2, b2 = colorsys.hls_to_rgb(TEINTE, l, s)
-        return int(round(r2 * 255)), int(round(g2 * 255)), int(round(b2 * 255))
-    return None
-
-
-def unifier_bleus(texte):
-    """La page portait quatre bleus. Toute couleur de teinte bleue est ramenée
-    sur celle du bleu de marque, à clarté et saturation égales : la couleur
-    devient une, les contrastes mesurés ne bougent pas. Le « G » de Google
-    n'est pas concerné, il est hors de la plage de teintes."""
-    def hexa(m):
-        x = m.group(1)
-        if len(x) == 3:
-            x = ''.join(c * 2 for c in x)
-        n = _teinte(int(x[:2], 16), int(x[2:4], 16), int(x[4:], 16))
-        return m.group(0) if n is None else '#%02X%02X%02X' % n
-
-    def rgb(m):
-        n = _teinte(int(m.group(2)), int(m.group(3)), int(m.group(4)))
-        return m.group(0) if n is None else '%s%d,%d,%d' % (m.group(1), *n)
-
-    texte = re.sub(r'#([0-9a-fA-F]{6}|[0-9a-fA-F]{3})(?![0-9a-zA-Z_-])', hexa, texte)
-    return re.sub(r'(rgba?\(\s*)(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})', rgb, texte)
+# L'unification vit dans outils/bleu-unique.py : elle sert aussi aux guides,
+# aux destinations et aux pages catégorie, et une règle de couleur écrite à
+# deux endroits finit par diverger.
+_bleu = SourceFileLoader('bleu_unique',
+                         os.path.join(RACINE, 'outils', 'bleu-unique.py')).load_module()
+unifier_bleus = _bleu.unifier
 
 
 # ----------------------------------------------------------------- la page entière
