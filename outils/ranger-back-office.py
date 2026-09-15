@@ -15,7 +15,11 @@ rangement, pas seulement le rang. Trois dossiers, numérotés pour se suivre :
         les quatorze fiches, chacune préfixée par son circuit, de sorte que
         la liste se lit par groupes sans rien déplier
     Refonte · 3 · Maquettes de référence
-        la home, la page programme « UX concurrent », le circuit test
+        les pages d'essai, préfixées par le type de page qu'elles montrent
+        — accueil, programme, circuit — pour qu'on sache ce qu'on ouvre
+
+La page « Refonte · 0 · Sommaire », posée par outils/sommaire-cms.py, reste
+au rang 0 sous la mère : elle n'appartient à aucun dossier, elle les liste.
 
 Le circuit d'un séjour n'est pas deviné : il est lu dans le fil d'Ariane de
 la fiche, qui vient du site en ligne. Rien n'est publié, rien n'est
@@ -57,6 +61,45 @@ PAGES_CIRCUIT = {
     'Voyage culturel en Égypte': 'voyage-culturel',
 }
 HUB = 'nos-sejours'
+SOMMAIRE = 'refonte-sommaire'
+
+# Le type de page qu'une maquette de référence donne à voir, reconnu dans
+# son slug — pas dans son titre : le titre, ce script le réécrit, et au
+# passage suivant il ne retrouverait plus le mot qu'il vient d'en retirer.
+# Le rang fixe l'ordre à l'intérieur du dossier 3.
+TYPES_REFERENCE = [
+    (1, 'Accueil', re.compile(r'accueil|home')),
+    (2, 'Programme', re.compile(r'programme|sejour|voyage')),
+    (3, 'Circuit', re.compile(r'circuit|famille|categorie')),
+]
+
+
+def type_de_reference(page):
+    """Le type d'une maquette de référence, et son nom sans redite."""
+    titre = titre_de(page)
+    pose = re.match(r'^Refonte · R[ée]f · [^·]+ · (.+)$', titre)
+    nu = pose.group(1).strip() if pose else re.sub(r'^Refonte · ', '', titre)
+    for rang, nom, motif in TYPES_REFERENCE:
+        if motif.search(page['slug']):
+            return rang, nom, nu if pose else sans_redite(nom, nu)
+    return 9, 'Autre', nu
+
+
+def sans_redite(nom, nu):
+    """Le nom d'une maquette sans répéter le type qu'on vient d'annoncer.
+
+    « Circuit test — D'Alexandrie » sous le type Circuit devient
+    « D'Alexandrie » ; « Accueil (version du 10/09) » devient « version du
+    10/09 ». Mais un nom qui se réduirait à rien est gardé tel quel :
+    « HOME » reste « HOME », c'est ce qui le distingue de l'autre accueil.
+    """
+    reste = re.sub(r'^%s\b[^—–:-]{0,12}[—–:-]\s*' % nom, '', nu, flags=re.I)
+    if reste == nu:
+        reste = re.sub(r'^%s\b\s*' % nom, '', nu, flags=re.I)
+    entier = re.fullmatch(r'\((.+)\)', reste.strip())
+    if entier:
+        reste = entier.group(1)
+    return reste.strip() or nu
 ORDRE_CIRCUITS = ['Croisières en Égypte', 'Déserts et Oasis égyptiens',
                   'Mer rouge et plongée', 'Découverte du Sinaï',
                   'Voyage culturel en Égypte']
@@ -64,6 +107,18 @@ ORDRE_CIRCUITS = ['Croisières en Égypte', 'Déserts et Oasis égyptiens',
 
 def texte(x):
     return re.sub(r'\s+', ' ', H.unescape(re.sub(r'<[^>]+>', ' ', x))).strip()
+
+
+def nom_nu(titre):
+    """Le nom d'une fiche, sans le préfixe ni la marque posés ici.
+
+    Le script est relancé après chaque déploiement : il doit lire ses
+    propres titres sans se laisser abuser par ce qu'il y a lui-même
+    écrit, sinon « — doublon /slug » devient une part du nom et les deux
+    pages sœurs cessent de se ressembler.
+    """
+    nu = re.sub(r'^Refonte · (?:[^·]+ · )?', '', titre)
+    return re.sub(r'\s*—\s*doublon\s+/\S*$', '', nu).strip()
 
 
 def titre_de(page):
@@ -109,7 +164,9 @@ def main():
     if not circuits:
         raise SystemExit('aucune fiche programme dans %s' % a.site)
 
-    dossiers = dep.appel('GET', '/pages?parent=%d&per_page=50&status=any&context=edit' % MERE)
+    dossiers = [d for d in dep.appel(
+        'GET', '/pages?parent=%d&per_page=50&status=any&context=edit' % MERE)
+        if d['slug'] != SOMMAIRE]
     enfants = {}
     for d in dossiers:
         enfants[d['id']] = dep.appel(
@@ -167,15 +224,16 @@ def main():
     vus = {}
     for lot in par_circuit.values():
         for page in lot:
-            vus.setdefault(re.sub(r'^Refonte · (?:[^·]+ · )?', '', titre_de(page)), []).append(page['id'])
+            vus.setdefault(nom_nu(titre_de(page)), []).append(page['id'])
     doublons = {i for ids in vus.values() if len(ids) > 1 for i in ids}
 
     print('\n→ Séjours, groupés par circuit')
     rang = 0
     for nom in ORDRE_CIRCUITS:
-        for page in sorted(par_circuit[nom], key=lambda x: titre_de(x)):
+        for page in sorted(par_circuit[nom],
+                           key=lambda x: (nom_nu(titre_de(x)), x['slug'])):
             rang += 1
-            propre = re.sub(r'^Refonte · (?:[^·]+ · )?', '', titre_de(page))
+            propre = nom_nu(titre_de(page))
             if page['id'] in doublons:
                 propre += ' — doublon /%s' % page['slug'].replace('refonte-programme-', '')
             titre = 'Refonte · %s · %s' % (COURTS[nom], propre)
@@ -185,6 +243,15 @@ def main():
     for page in orphelines:
         rang += 1
         print('   %-72s id %d  (circuit non lu)' % (titre_de(page)[:72], page['id']))
+
+    print('\n→ Maquettes de référence, groupées par type de page')
+    refs = sorted(((type_de_reference(p), p) for p in enfants[d_ref['id']]),
+                  key=lambda x: (x[0][0], x[0][2]))
+    for rang, ((_, nom, propre), page) in enumerate(refs, 1):
+        titre = 'Refonte · Réf · %s · %s' % (nom, propre)
+        if poser(page, titre, d_ref['id'], rang, a.essai):
+            changes += 1
+        print('   %-72s id %d' % (titre[:72], page['id']))
 
     print('\n%d page(s) %s. Rien n\'a été publié ni supprimé.'
           % (changes, 'à ranger' if a.essai else 'rangée(s)'))
