@@ -14,21 +14,21 @@
 /* ============================================================
    CHARTE RÉELLE DU CLIENT — relevée le 21/08/2026 sur
    authentiquegypte.com (kit Elementor post-4658).
-   or #FBB50E · bleu #167FA4 · bleu profond #0B5170 (fonds à texte)
+   or #FBB50E · bleu #148194 · bleu profond #095360 (fonds à texte)
    noir #000000 · texte #5D5D5D
-   crème #FEEDDC · teal #21B0B7 (#0F6E73 en texte, AA)
+   crème #FEEDDC · teal #24AEC6 (#106D7C en texte, AA)
    Archivo (titres + corps) · Manrope (accents)
    ============================================================ */
 :root{
-  --nuit:#167FA4; --nuit-900:#0B5170; --nuit-700:#1C93BC;
+  --nuit:#148194; --nuit-900:#095360; --nuit-700:#1995AA;
   --or:#FBB50E; --or-clair:#FFD958; --or-fond:#FEEDDC;
-  --teal:#21B0B7; --teal-txt:#0F6E73; --teal-fond:#E8F7F8;
-  --papier:#FFFFFF; --fond:#F9F9FB; --fond-2:#F6FAFE;
+  --teal:#24AEC6; --teal-txt:#106D7C; --teal-fond:#EAF6F9;
+  --papier:#FFFFFF; --fond:#F9F9FB; --fond-2:#F0FCFD;
   --noir:#000000; --texte:#5D5D5D; --gris:#6E7680; --gris-clair:#88929C;
   --ligne:#E4E4EA; --ligne-2:#F1F1F5;
   --r-s:8px; --r-m:14px; --r-l:20px; --r-pill:999px;
-  --ombre:0 1px 2px rgba(11,81,112,.06),0 8px 24px rgba(11,81,112,.08);
-  --ombre-f:0 2px 6px rgba(11,81,112,.10),0 18px 44px rgba(11,81,112,.16);
+  --ombre:0 1px 2px rgba(9,83,96,.06),0 8px 24px rgba(9,83,96,.08);
+  --ombre-f:0 2px 6px rgba(9,83,96,.10),0 18px 44px rgba(9,83,96,.16);
   --max:1200px;
   --ease:cubic-bezier(.22,.61,.36,1);
 }
@@ -56,7 +56,7 @@ p{margin:0 0 1em}
 .section{padding:clamp(56px,7vw,92px) 0}
 .section--fond{background:var(--fond)}
 .section--creme{background:var(--or-fond)}
-.section--nuit{background:var(--nuit-900);color:#DCE6EA}
+.section--nuit{background:var(--nuit-900);color:#DAE7E9}
 .section--nuit h2,.section--nuit h3{color:#fff}
 .lede{font-size:clamp(1rem,1.3vw,1.1rem);color:var(--texte);max-width:62ch}
 .lien-txt{color:var(--teal-txt);font-weight:600;text-decoration:underline;text-underline-offset:3px}
@@ -79,7 +79,7 @@ p{margin:0 0 1em}
 .btn--sm{padding:10px 18px;font-size:.86rem}
 
 /* ---------- header ---------- */
-.bandeau{background:var(--nuit-900);color:#C0D8E2;font-size:.82rem;font-family:"Manrope",sans-serif}
+.bandeau{background:var(--nuit-900);color:#B9DADF;font-size:.82rem;font-family:"Manrope",sans-serif}
 .bandeau .wrap{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:9px 0;flex-wrap:wrap}
 .bandeau a{display:inline-flex;align-items:center;gap:7px}
 .bandeau a:hover{color:var(--or-clair)}
@@ -176,11 +176,11 @@ p{margin:0 0 1em}
 .devis{background:var(--nuit-900);color:#fff;border-radius:24px;padding:clamp(34px,5vw,56px);
   display:grid;grid-template-columns:1.1fr .9fr;gap:44px;align-items:center}
 .devis h2{color:#fff}
-.devis ul{list-style:none;padding:0;margin:22px 0 0;display:grid;gap:11px;font-size:.95rem;color:#C3D5DA}
+.devis ul{list-style:none;padding:0;margin:22px 0 0;display:grid;gap:11px;font-size:.95rem;color:#C1D6D9}
 .devis li{display:flex;gap:11px;align-items:flex-start}
 .devis li svg{flex:0 0 auto;margin-top:5px}
 .devis__act{display:grid;gap:12px}
-.devis__act small{color:#B0CCD9;font-size:.81rem;text-align:center;font-family:"Manrope",sans-serif}
+.devis__act small{color:#A8CED5;font-size:.81rem;text-align:center;font-family:"Manrope",sans-serif}
 @media (max-width:860px){
   .devis{grid-template-columns:1fr;gap:28px}
 }
@@ -212,7 +212,7 @@ p{margin:0 0 1em}
 }
 
 /* ---------- pied de page ---------- */
-.pied{background:var(--nuit-900);color:#C0D8E2;padding:60px 0 26px;font-size:.9rem}
+.pied{background:var(--nuit-900);color:#B9DADF;padding:60px 0 26px;font-size:.9rem}
 .pied h4{font-family:"Manrope",sans-serif;font-size:.73rem;letter-spacing:.15em;text-transform:uppercase;
   color:var(--or);font-weight:700;margin:0 0 16px}
 .pied__g{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:40px}
@@ -220,26 +220,26 @@ p{margin:0 0 1em}
 .pied a:hover{color:#fff;text-decoration:underline}
 .pied img{height:38px;width:auto;margin-bottom:16px}
 .pied__bas{margin-top:40px;padding-top:22px;border-top:1px solid rgba(255,255,255,.12);
-  display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:.82rem;color:#9BBCCB}
+  display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:.82rem;color:#91BFC6}
 
 .barre-mob{display:none;position:fixed;bottom:0;left:0;right:0;z-index:70;background:#fff;
   border-top:1px solid var(--ligne);padding:10px 16px calc(10px + env(safe-area-inset-bottom));
-  gap:10px;box-shadow:0 -6px 20px rgba(11,81,112,.12)}
+  gap:10px;box-shadow:0 -6px 20px rgba(9,83,96,.12)}
 
 /* ---------- chapeau ---------- */
 .chapeau{background:var(--nuit-900);color:#fff;padding:26px 0 46px;position:relative;overflow:hidden}
 .chapeau__bg{position:absolute;inset:0}
 .chapeau__bg img{width:100%;height:100%;object-fit:cover;opacity:1}
 .chapeau__bg::after{content:"";position:absolute;inset:0;background:
-  linear-gradient(100deg,rgba(11,81,112,.94) 0%,rgba(11,81,112,.86) 38%,rgba(22,127,164,.56) 68%,rgba(22,127,164,.30) 100%),
-  linear-gradient(180deg,rgba(11,81,112,.55) 0%,rgba(11,81,112,0) 34%,rgba(11,81,112,.55) 100%)}
+  linear-gradient(100deg,rgba(9,83,96,.94) 0%,rgba(9,83,96,.86) 38%,rgba(20,129,148,.56) 68%,rgba(20,129,148,.30) 100%),
+  linear-gradient(180deg,rgba(9,83,96,.55) 0%,rgba(9,83,96,0) 34%,rgba(9,83,96,.55) 100%)}
 .chapeau .wrap{position:relative}
-.chapeau .ariane{color:#B7D2DE;padding-top:0}
+.chapeau .ariane{color:#B0D4DB;padding-top:0}
 .chapeau .ariane [aria-current]{color:#fff}
 .chapeau h1{color:#fff;max-width:20ch}
-.chapeau p{color:#C3D5DA;max-width:64ch;margin-top:16px;font-size:1.05rem}
+.chapeau p{color:#C1D6D9;max-width:64ch;margin-top:16px;font-size:1.05rem}
 .chapeau__st{display:flex;gap:26px;flex-wrap:wrap;margin-top:26px;font-family:"Manrope",sans-serif;
-  font-size:.86rem;color:#B7D2DE}
+  font-size:.86rem;color:#B0D4DB}
 .chapeau__st b{display:block;font-size:1.4rem;color:var(--or);font-weight:700;letter-spacing:-.6px}
 .remonte{display:inline-flex;align-items:center;gap:8px;margin-top:22px;font-family:"Manrope",sans-serif;
   font-size:.9rem;font-weight:700;color:var(--or);border-bottom:1.5px solid rgba(251,181,14,.35);padding-bottom:2px}
@@ -316,8 +316,8 @@ body.mm [data-mm]::before{content:attr(data-mm);position:absolute;top:-16px;left
   letter-spacing:.08em;text-transform:uppercase;padding:5px 11px;border-radius:var(--r-pill);white-space:nowrap}
 body.mm [data-mm="Navigation · poids 0,25"]::before{background:var(--gris-clair)}
 body.mm [data-mm^="Bloc de filles"]::before{background:#B8860B}
-body.mm .mm-legende{display:block}
-.mm-legende{display:none;background:var(--nuit);color:#D5E3E7;border-radius:var(--r-l);padding:20px 24px;
+body.mm .mm-legende{display:none}
+.mm-legende{display:none;background:var(--nuit);color:#D4E3E6;border-radius:var(--r-l);padding:20px 24px;
   margin-top:26px;font-family:"Manrope",sans-serif;font-size:.85rem;line-height:1.7}
 .mm-legende b{color:var(--or)}
 
@@ -340,8 +340,8 @@ body.mm .mm-legende{display:block}
 }
 @media (max-width:860px){
   .chapeau__bg::after{background:
-    linear-gradient(180deg,rgba(11,81,112,.70) 0%,rgba(11,81,112,.58) 45%,rgba(11,81,112,.88) 100%)}
-  .chapeau h1,.chapeau p,.chapeau .ariane,.chapeau__st{text-shadow:0 2px 14px rgba(11,81,112,.85)}
+    linear-gradient(180deg,rgba(9,83,96,.70) 0%,rgba(9,83,96,.58) 45%,rgba(9,83,96,.88) 100%)}
+  .chapeau h1,.chapeau p,.chapeau .ariane,.chapeau__st{text-shadow:0 2px 14px rgba(9,83,96,.85)}
 }
 @media (prefers-reduced-motion:reduce){
   *{animation-duration:.01ms !important;transition-duration:.01ms !important;scroll-behavior:auto !important}
@@ -640,7 +640,7 @@ header .nav>a.btn--or:hover{background:#C87700;border-color:#C87700;box-shadow:0
 <p class="">Le voyage en solo, entre découvertes et liberté</p>
 <h2>Créez un voyage qui vous ressemble !</h2>
 <p class="">Partez à la découverte d’une Égypte authentique, loin des circuits touristiques classiques. Temples millénaires, oasis cachées, rencontres vraies : chaque voyage est conçu selon vos envies, votre rythme, votre façon d’explorer.</p>
-<p class="">Demande de devis [trustindex no-registration=google]</p>
+<p class="">Demande de devis</p>
 <h2>L&#x27;organisation du voyage !</h2>
 <p class="">L’Égypte est-elle une destination sûre pour voyager seul ?</p>
 <p class="">Oui, les zones touristiques (Le Caire, Louxor, Assouan, Mer Rouge) sont fréquentées et sûres. Dans notre accompagnement, nous prenons en charge la sécurité et la logistique en continu : transferts privés, guides locaux de confiance, hôtels adaptés. Vous voyagez sereinement, chaque détail étant organisé pour que votre séjour en solo soit pleinement agréable.</p>
