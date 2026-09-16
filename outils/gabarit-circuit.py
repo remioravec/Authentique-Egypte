@@ -289,15 +289,14 @@ def poser_tete(tete, p, famille):
         tete = re.sub(r'(<div class="hero__(?:flou|fond)"[^>]*>)<img [^>]*>',
                       lambda m: '%s<img src="%s" alt="" decoding="async" '
                                 'loading="lazy">' % (m.group(1), p['hero_img']), tete)
-    # Le fil du moule porte « ariane--sous », qui lui donne sa gouttière ;
-    # celui de la page vivait dans le bandeau et n'en a pas besoin. Échanger
-    # les balises collait le fil au bord gauche de l'écran : on ne remplace
-    # donc que les maillons, jamais la balise qui les porte.
-    maillons = re.search(r'<ol.*?</ol>', p['ariane'] or '', re.S)
-    tete = (re.sub(r'(<nav class="ariane[^"]*"[^>]*>)<ol.*?</ol>',
-                   lambda m: m.group(1) + maillons.group(0), tete, count=1, flags=re.S)
-            if maillons else
-            _remplacer_ou_retirer(tete, r'<nav class="ariane[^"]*"[^>]*>.*?</nav>', ''))
+    # Le fil du moule porte sa propre gouttière — une <div class="wrap">
+    # posée ENTRE le <nav> et le <ol>. Échanger les balises collait le fil
+    # au bord gauche ; ne remplacer que ce qui suit immédiatement le <nav>
+    # ne remplaçait rien du tout, à cause de ce wrap : les neuf
+    # destinations sortaient avec le fil du moule, « Découverte de la Mer
+    # rouge » au bas d'une page « Voyage Désert blanc ». On remplace donc
+    # le <ol> là où il se trouve, à l'intérieur du fil.
+    tete = _poser_ariane(tete, p['ariane'])
     tete = _remplacer_ou_retirer(tete, r'<p class="hero__chapo">.*?</p>', p['chapo'] and
                                  '<p class="hero__chapo">%s</p>' % p['chapo'])
     moule_pills = re.search(r'<div class="hero__pills">.*?</div>\s*(?=<h1)', tete, re.S)
@@ -319,6 +318,40 @@ def poser_tete(tete, p, famille):
     if p['ld']:
         tete = tete.replace('</head>', p['ld'] + '</head>', 1)
     return tete
+
+
+# Les rubriques du méga-menu — « Destinations », « Qui part » — n'ont pas
+# de page à elles : sur la maquette, leur maillon pointait vers
+# « ../index.html », qui ne mène nulle part une fois la page dans le CMS.
+ACCUEIL = 'https://authentiquegypte.com/'
+
+
+def _poser_ariane(tete, ariane):
+    """Le fil de la page prend la place de celui du moule, liens compris."""
+    nav = re.search(r'<nav class="ariane[^"]*"[^>]*>.*?</nav>', tete, re.S)
+    maillons = re.search(r'<ol.*?</ol>', ariane or '', re.S)
+    if not nav:
+        return tete
+    if not maillons:
+        # Pas de fil sur la page : celui du moule nomme une AUTRE page, le
+        # garder serait mentir. On le retire.
+        return tete[:nav.start()] + tete[nav.end():]
+
+    def maillon(m):
+        lien, texte = m.group(1), m.group(2)
+        if lien.startswith(('http://', 'https://')):
+            return m.group(0)
+        if _texte(texte).lower().startswith('accueil'):
+            return '<a href="%s">%s</a>' % (ACCUEIL, texte)
+        # Un lien mort se lit plus mal qu'un maillon sans lien.
+        return texte
+
+    corrige = re.sub(r'<a href="([^"]*)">(.*?)</a>', maillon, maillons.group(0), flags=re.S)
+    ancien = re.search(r'<ol.*?</ol>', nav.group(0), re.S)
+    if not ancien:
+        return tete
+    neuf = nav.group(0)[:ancien.start()] + corrige + nav.group(0)[ancien.end():]
+    return tete[:nav.start()] + neuf + tete[nav.end():]
 
 
 def _remplacer_ou_retirer(tete, motif, contenu):
@@ -467,6 +500,29 @@ def reperes_des_cartes(cartes, moule_section, sans_compte=False):
     return '<section class="reperes"><div class="wrap"><ul>%s</ul></div></section>' % corps
 
 
+# Le nom d'un lieu porte son article, et le français ne le devine pas : on
+# ne peut pas fabriquer « le Désert blanc » à partir de « Voyage Désert
+# blanc » sans savoir qu'il est masculin. Les cas que le titre ne donne pas
+# sont donc écrits ici, une fois, plutôt que tirés au jugé à chaque appel.
+LIEUX = {
+    'Voyage Désert blanc': 'le Désert blanc',
+    'Voyage dans le Désert noir': 'le Désert noir',
+    'Voyage au Lac Nasser': 'le lac Nasser',
+    'Voyage au Mont Sinaï sur mesure': 'le mont Sinaï',
+    'Voyage au Caire': 'Le Caire',
+}
+
+
+def lieu_de(titre):
+    """Le lieu, tel qu'on l'écrit après « qui passent par »."""
+    if titre in LIEUX:
+        return LIEUX[titre]
+    m = re.match(r'(?:Voyage|Séjour|Excursion)\s+'
+                 r'(?:à l\'|à la |au |aux |à |en |dans (?:le |la |les )?|sur (?:le |la )?)(.+)$',
+                 titre)
+    return m.group(1).strip() if m else titre
+
+
 def _compte(n):
     return '%d séjour%s' % (n, 's' if n > 1 else '') if n else 'sur mesure'
 
@@ -500,12 +556,18 @@ def section_cartes(moule, p, famille, source=None):
     s = re.sub(r'(<div class="cartes)[^"]*(">)',
                lambda m: '%s cartes--%s%s' % (m.group(1), 1 if len(liste) == 1 else 2,
                                               m.group(2)), s, count=1)
-    lieu = re.sub(r'^(?:Voyage|Séjour|Excursion)\s+(?:à|au|aux|en|dans le|dans la|sur le)\s+',
-                  '', p['titre'])
     titre = p['cartes_titre'] or H.escape(
-        {'Destination': 'Les séjours qui passent par %s' % lieu,
+        {'Destination': 'Les séjours qui passent par %s' % lieu_de(p['titre']),
          'Profil': 'Les séjours pour %s' % p['titre'].lower(),
          'Blog': 'Les guides à lire avant de partir'}[famille])
+    # Le titre que la page porte est lui-même issu d'une passe précédente, et
+    # trois destinations sur neuf en sortaient bancales : « par Voyage Désert
+    # blanc », « par Caire », « par Mont Sinaï sur mesure ». Quand il suit ce
+    # moule-là, on le refait proprement — c'est un titre calculé, pas une
+    # phrase du client.
+    if famille == 'Destination' and re.match(
+            r'Les séjours qui passent par\b', _texte(titre)):
+        titre = H.escape('Les séjours qui passent par %s' % lieu_de(p['titre']))
     s = re.sub(r'(<h2[^>]*>).*?(</h2>)', lambda m: m.group(1) + titre + m.group(2),
                s, count=1, flags=re.S)
     # Le surtitre de la page prend la place de celui du moule quand elle en

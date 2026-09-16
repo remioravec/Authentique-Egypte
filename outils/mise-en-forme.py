@@ -278,6 +278,14 @@ def _marquer(h):
     def bloc(m):
         if '<p class=""' not in m.group(0) and 'class="mef-q"' not in m.group(0):
             return m.group(0)
+        # Si la section porte déjà sa colonne de lecture, c'est ELLE qu'on
+        # marque, pas la section entière : la colonne latérale contient une
+        # carte sur fond sombre, et les couleurs de la feuille — un gris de
+        # texte, un bleu de titre, pensés pour du papier blanc — y tombaient
+        # sur du bleu nuit. Mesuré : le titre du bloc devis à 1,90:1 et son
+        # paragraphe à 1,32:1, pour un seuil de 4,5:1. Illisible.
+        if re.search(r'<article class="(rp-)?corps', m.group(0)):
+            return m.group(0)
         return re.sub(r'<div class="(rp-)?wrap">',
                       lambda w: '<div class="%swrap mef">' % (w.group(1) or ''),
                       m.group(0), count=1)

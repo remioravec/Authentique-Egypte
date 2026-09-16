@@ -183,6 +183,39 @@ BLOC_REPETE = re.compile(
     r'<h2[^>]*>(?:(?!</h2>).)*</h2>(?:\s*<p class="">(?:(?!</p>).)*</p>)+', re.S)
 
 
+def contraste_pied(h):
+    """Les titres de colonne du pied de page, noirs sur bleu nuit.
+
+    Aucune règle ne leur donnait de couleur : ils prenaient donc le noir par
+    défaut du navigateur, sur le fond #095360 du pied. Mesuré sur le rendu :
+    2,42:1, pour un seuil WCAG AA de 4,5:1 à cette taille. En blanc, 9,8:1.
+    Le défaut est sur les cinquante-sept pages, la page de référence
+    comprise — il ne vient pas de la refonte, il y était déjà.
+    """
+    if '.pg .mur__q,.mur__q' in h:
+        return h, 0
+    regle = (
+        # Mesures faites sur le rendu, pas sur la règle : c'est la couleur
+        # réellement composée à l'écran qui compte, pas celle qu'on déclare.
+        '.pied h3{color:#fff}'                 # 2,42:1 → 8,69:1
+        '.pied span{color:#B9DADF}'            # 4,33:1 → 5,86:1
+        # Le gabarit pose « .pg .mur__q » : une règle de classe seule y perd,
+        # et le guillemet restait or. Même portée, donc même poids.
+        '.pg .mur__q,.mur__q{color:#7A5605}'   # 1,79:1 → 6,64:1 (seuil 3)
+        # La pastille de durée des cartes manquait le seuil de seize
+        # centièmes. Même teinte, même saturation : seule la clarté baisse,
+        # pour que le bleu de marque reste le bleu de marque.
+        '.puce{color:#137C8F}'                 # 4,34:1 → 4,64:1
+        # Cibles tactiles : au doigt, le seuil est 44 px. « Voir le détail »
+        # en faisait 25, les liens du pied 24 — le minimum absolu, pas une
+        # cible confortable. On n'agrandit QUE sur pointeur grossier : la
+        # densité de la page reste celle de la charte sur écran.
+        '@media (pointer:coarse){'
+        '.lien-fl,.pied a{min-height:44px;display:inline-flex;align-items:center}'
+        '}')
+    return re.subn(r'(</style>)', lambda m: regle + m.group(1), h, count=1)
+
+
 def bloc_repete(h):
     """Un même bloc titre + paragraphes, posé plusieurs fois sur la page.
 
@@ -245,6 +278,7 @@ REPARATIONS = [
     ('durée détournée retirée', duree_detournee),
     ('mur d’avis replié sur mobile', mur_avis_mobile),
     ('bloc d’appel au devis en double retiré', bloc_repete),
+    ('contraste du pied et des avis', contraste_pied),
 ]
 
 # ── ce qui demande un arbitrage, et qu'on ne touche donc pas ─────────────
