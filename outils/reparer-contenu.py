@@ -179,8 +179,274 @@ def duree_detournee(h):
 # Un « .*? » suffisait à croire bien faire : faute de lui interdire de
 # franchir un </h2>, il traversait trois sections pour atteindre le premier
 # titre suivi d'un paragraphe nu, et comparait des blocs qui n'existaient pas.
+VIDES = {'br', 'hr', 'img', 'input', 'meta', 'link', 'source', 'wbr',
+         'col', 'area', 'base', 'embed', 'track', 'param'}
+
+
+def equilibre(frag):
+    """Vrai si le fragment ouvre et ferme exactement les mêmes balises.
+
+    Un bloc qu'on retire doit se suffire : s'il emporte une fermeture sans
+    son ouverture, la page se déforme à partir de là. On ne retire donc que
+    des blocs équilibrés — c'est la seule garantie qui tienne sans analyser
+    tout le document.
+    """
+    pile = []
+    for m in re.finditer(r'<(/?)([A-Za-z][\w-]*)([^>]*)>', frag):
+        fermant, nom = m.group(1), m.group(2).lower()
+        if nom in VIDES or m.group(3).rstrip().endswith('/'):
+            continue
+        if not fermant:
+            pile.append(nom)
+        elif nom in pile:
+            while pile and pile.pop() != nom:
+                pass
+        else:
+            return False
+    return not pile
+
+
+def blocs_dupliques(h, minimum=700):
+    """Un même bloc de contenu posé plusieurs fois dans la même page.
+
+    La page agence en portait un de 3 514 octets, recopié quatre fois :
+    l'histoire de Mélanie, l'équipe, les garanties, le bloc devis — tout
+    revenait à l'identique d'une section à l'autre. Ce n'est pas de
+    l'insistance, c'est un défaut de montage, et le lecteur le voit tout de
+    suite.
+
+    On ne compare pas des sens, on compare des octets : seules disparaissent
+    les copies rigoureusement identiques à une occurrence précédente, et
+    seulement si le bloc est équilibré. La première reste, et avec elle
+    chaque mot du texte.
+    """
+    debut = h.find('<main')
+    fin = h.find('<footer class="pied"')
+    if debut < 0 or fin < 0:
+        return h, 0
+    corps, retires = h[debut:fin], 0
+
+    def sous_boucle(position, texte):
+        """Vrai si la position est dans un bloc dont la répétition est voulue.
+
+        Le mur d'avis recopie ses cartes pour que le défilement boucle sans
+        couture : les deux moitiés SONT identiques, et c'est le procédé, pas
+        un défaut. Une première version retirait 6 786 octets d'avis sur
+        chaque page et cassait l'animation. Même chose pour un carrousel.
+        """
+        for m in re.finditer(r'<div class="(?:mur|carrousel)[^"]*"', texte):
+            profondeur, i = 0, m.start()
+            for t in re.finditer(r'<(/?)div\b', texte[m.start():]):
+                profondeur += 1 if not t.group(1) else -1
+                if profondeur == 0:
+                    i = m.start() + t.end()
+                    break
+            if m.start() <= position < i:
+                return True
+        return False
+
+    for _ in range(12):        # quelques passes suffisent ; garde-fou
+        vus, trouve = {}, None
+        for m in re.finditer(r'<(?:section|div|article|aside|h[1-6])\b', corps):
+            cle = corps[m.start():m.start() + minimum]
+            if len(cle) < minimum:
+                continue
+            if sous_boucle(m.start(), corps):
+                continue
+            if cle in vus:
+                trouve = (vus[cle], m.start())
+                break
+            vus[cle] = m.start()
+        if not trouve:
+            break
+        a, b = trouve
+        # La fenêtre identique s'étend des deux côtés. Ne l'étendre que vers
+        # l'avant partait du milieu d'un conteneur : le bloc emportait un
+        # </div> sans son ouverture, ne s'équilibrait jamais, et la page
+        # agence gardait ses quatre copies malgré la détection.
+        avant = 0
+        while a - avant > 0 and b - avant > a and corps[a - avant - 1] == corps[b - avant - 1]:
+            avant += 1
+        apres = 0
+        while b + apres < len(corps) and corps[a + apres] == corps[b + apres]:
+            apres += 1
+        fenetre = corps[b - avant:b + apres]
+        decalage = b - avant
+
+        # Dans cette fenêtre, on cherche le plus long fragment qui soit une
+        # suite complète de frères — il commence sur une balise ouvrante et
+        # se termine là où la pile des balises se vide.
+        bloc, depart = '', 0
+        for ouverture in [m.start() for m in
+                          re.finditer(r'<[A-Za-z][\w-]*', fenetre)][:30]:
+            pile, fin_eq = [], None
+            for m in re.finditer(r'<(/?)([A-Za-z][\w-]*)([^>]*)>', fenetre[ouverture:]):
+                fermant, nom = m.group(1), m.group(2).lower()
+                if nom in VIDES or m.group(3).rstrip().endswith('/'):
+                    continue
+                if not fermant:
+                    pile.append(nom)
+                elif pile and nom in pile:
+                    while pile and pile.pop() != nom:
+                        pass
+                    if not pile:
+                        fin_eq = ouverture + m.end()
+                else:
+                    break
+            if fin_eq and fin_eq - ouverture > len(bloc):
+                bloc, depart = fenetre[ouverture:fin_eq], decalage + ouverture
+        if len(bloc) < minimum:
+            break
+        b = depart
+
+        corps = corps[:b] + corps[b + len(bloc):]
+        retires += 1
+
+    return (h[:debut] + corps + h[fin:], retires) if retires else (h, 0)
+
+
 BLOC_REPETE = re.compile(
     r'<h2[^>]*>(?:(?!</h2>).)*</h2>(?:\s*<p class="">(?:(?!</p>).)*</p>)+', re.S)
+
+
+# La feuille du composant « colonne latérale ». Elle vit dans le style des
+# pages guide et n'a jamais été mise en commun : la page agence porte le
+# balisage sans une seule règle pour le tenir. Relevée telle quelle sur
+# guide-quand-partir-en-egypte.html, dont elle vient.
+FEUILLE_LAT = '.lat{display:grid;gap:16px}.lat__b{background:#fff;border:1px solid var(--ligne);border-radius:var(--r-l);padding:22px;position:relative;overflow:hidden}.lat__b h4{font-family:"Archivo",sans-serif;font-size:1.04rem;font-weight:600;margin:0 0 12px;letter-spacing:-.4px}.lat__b ul{list-style:none;margin:0;padding:0;display:grid;font-family:"Manrope",sans-serif;font-size:.89rem}.lat__b li a{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 0;border-bottom:1px solid var(--ligne-2);color:var(--nuit-900);font-weight:600}.lat__b li:last-child a{border-bottom:0}.lat__b li a:hover{color:var(--teal-txt)}.lat__b li a svg{flex:0 0 auto;transition:transform .2s}.lat__b li a:hover svg{transform:translateX(3px)}.lat--devis{background:var(--nuit-900);border-color:var(--nuit-900);color:#C1D6D9}.lat--devis::before{content:"";position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--or),var(--or-clair))}.lat--devis h4{color:#fff}.lat--devis p{font-size:.9rem;margin-bottom:16px}@media (max-width:900px){.lat__b,.lat__b ul,.lat__b li a,.lat__b p,.lat__b h4{font-size:.95rem}.lat__b li a{min-height:44px;display:flex;align-items:center;}.lat__b li a{padding-top:9px;padding-bottom:9px}}.lat__b h3{font-family:"Archivo",sans-serif;font-size:1.05rem;font-weight:600;margin:0 0 13px;letter-spacing:-.4px}.lat--devis h3{color:#fff}'
+
+
+# Le bleu de titre du site rendait 4,34:1 sur blanc — seize centièmes sous
+# le seuil. Même teinte, même saturation, deux crans de clarté en moins.
+# Un premier choix à #137C8F passait sur blanc (4,88:1) mais pas sur les
+# fonds teintés du site — 4,42:1 sur le bleu pâle des aperçus. On descend
+# donc au cran qui tient partout : 5,98:1 au pire, sur le fond le plus
+# clair du site. Teinte et saturation inchangées.
+BLEU_AVANT, BLEU_APRES = '#148194', '#116676'
+
+
+def bleu_des_titres(h):
+    """Corrige la VALEUR, pas les sélecteurs qui l'emploient.
+
+    Une première approche listait les règles à reprendre une à une : à
+    chaque passage la mesure en trouvait de nouvelles — « Le programme
+    inclus », « TripAdvisor », les entêtes de tableau… La couleur est la
+    même partout ; c'est elle qu'on remplace, une fois, dans la feuille.
+    """
+    n = 0
+    for avant in (BLEU_AVANT, BLEU_AVANT.lower(), '#137C8F', '#137c8f',
+                  'rgb(20, 129, 148)', 'rgb(20,129,148)'):
+        n += h.count(avant)
+        h = h.replace(avant, BLEU_APRES)
+    return h, n
+
+
+# Un plancher posé sur des sélecteurs se contourne tout seul : il suffit
+# qu'une règle non listée descende plus bas. Posé sur les VALEURS, il tient.
+PLANCHER_PX = 14.0
+RACINE_PX = 16.0
+
+
+def plancher_typo(h):
+    """Remonte à 14 px toute taille de police déclarée en dessous.
+
+    Les unités relatives sont converties sur la racine de 16 px du site —
+    « .72rem » vaut 11,5 px et remonte à « .875rem ». On ne touche ni aux
+    tailles déjà au-dessus du plancher, ni aux valeurs en pourcentage ou en
+    mots-clés, qui dépendent d'un contexte qu'on ne peut pas lire ici.
+    """
+    n = [0]
+
+    def une(m):
+        valeur, unite = float(m.group(1)), m.group(2)
+        px = valeur * (RACINE_PX if unite in ('rem', 'em') else 1)
+        if unite not in ('px', 'rem', 'em') or px >= PLANCHER_PX:
+            return m.group(0)
+        n[0] += 1
+        if unite == 'px':
+            return 'font-size:%dpx' % PLANCHER_PX
+        return 'font-size:%grem' % (PLANCHER_PX / RACINE_PX)
+
+    return re.sub(r'font-size:\s*(\d*\.?\d+)(px|rem|em|%)', une, h), n[0]
+
+
+def bouton_annotations(h):
+    """Le bouton d'annotation des maquettes n'a rien à faire sur une page montrée.
+
+    « Annotations OFF » / « Maillage OFF », posé en bas à droite de
+    quarante-quatre pages : c'est l'inspecteur qui sert à relire une
+    maquette, pas un élément du site. Une passe précédente avait remasqué
+    la légende qu'il révèle, mais laissé le bouton lui-même, qui reste
+    donc visible et cliquable pour un visiteur.
+
+    Le script qui l'écoute part avec lui : laissé seul, il cherche un
+    élément absent et lève une erreur au chargement de chaque page.
+    """
+    n = 0
+    h, k = re.subn(r'\s*<button class="mm-btn"[^>]*>.*?</button>', '', h, flags=re.S)
+    n += k
+    h, k = re.subn(r"\s*<script>\s*\(function\(\)\{\s*"
+                   r"const b=document\.getElementById\('mm-btn'\);.*?</script>",
+                   '', h, flags=re.S)
+    n += k
+    return h, n
+
+
+def colonne_sans_style(h):
+    """La colonne latérale rendue visible là où rien ne la stylait.
+
+    Sur la page agence, le bloc « Un projet de voyage ? » sortait en texte
+    blanc sur fond blanc — 1,00:1 — et sur toute la largeur de la page :
+    le balisage avait été transplanté, pas la feuille qui va avec. Mesuré,
+    c'était le défaut le plus grave de la page.
+
+    On ne pose la feuille que si la page porte le balisage ET ne porte
+    aucune règle pour lui : ailleurs, c'est celle de la page qui commande.
+    """
+    if 'class="lat__b' not in h or re.search(r'\.lat__b\s*\{', h):
+        return h, 0
+    feuille = '<style data-reparation="lat-1">%s</style>' % FEUILLE_LAT
+    if '</head>' not in h:
+        return h, 0
+    return h.replace('</head>', feuille + '</head>', 1), 1
+
+
+# Chaque entrée : où chercher, de quelle balise vers quelle balise. Un
+# niveau de titre sauté annonce, pour un lecteur d'écran, une section qui
+# n'existe pas — c'est le seul motif de ces échanges. Le texte ne bouge
+# pas ; la feuille posée plus bas rend à la nouvelle balise l'apparence
+# exacte de l'ancienne, faute de quoi le titre changerait de taille.
+NIVEAUX = [
+    (r'<nav class="som"[^>]*>', 'h4', 'h2'),          # « Sur cette page », juste après le h1
+    (r'<footer class="pied"', 'h4', 'h3'),            # colonnes du pied, après un h2
+    (r'<figcaption class="carte__tete"', 'h3', 'h2'),  # légende de la carte d'itinéraire
+    (r'<div class="atouts"', 'h3', 'h2'),             # les trois atouts de l'accueil
+]
+
+
+def niveaux_de_titres(h):
+    """Rétablit l'échelle des titres là où un niveau était sauté."""
+    n = 0
+    for ancre, avant, apres in NIVEAUX:
+        m = re.search(ancre, h)
+        if not m:
+            continue
+        # La portée s'arrête à la fin du bloc ouvert par l'ancre : on ne
+        # renomme pas des titres qui n'ont rien à voir, plus bas dans la page.
+        fin = h.find('</footer>', m.start()) if 'footer' in ancre else None
+        if fin is None:
+            fin = h.find('</nav>', m.start()) if '<nav' in ancre else None
+        if fin is None:
+            fin = h.find('</figcaption>', m.start()) if 'figcaption' in ancre else None
+        if fin is None:
+            fin = h.find('</div>', h.find('</div>', m.start()) + 6)
+        bloc, k = re.subn(r'<%s([^>]*)>(.*?)</%s>' % (avant, avant),
+                          r'<%s\1>\2</%s>' % (apres, apres),
+                          h[m.start():fin], flags=re.S)
+        if k:
+            h = h[:m.start()] + bloc + h[fin:]
+            n += k
+    return h, n
 
 
 def titres_colonne(h):
@@ -230,7 +496,7 @@ def contraste_pied(h):
         # La pastille de durée des cartes manquait le seuil de seize
         # centièmes. Même teinte, même saturation : seule la clarté baisse,
         # pour que le bleu de marque reste le bleu de marque.
-        '.puce{color:#137C8F}'                 # 4,34:1 → 4,64:1
+        '.puce{color:#116676}'                 # 4,34:1 → 6,27:1
         # ── Plancher typographique : 14 px, décision de Rémi du 17/09.
         # La charte descendait à 11,8 px sur « À partir de ». Ce sont des
         # étiquettes, jamais du texte courant, mais la règle d'accessibilité
@@ -266,6 +532,49 @@ def contraste_pied(h):
         '.ariane span{font-size:14px}'
         '.pg .carte__route,.carte__route,.rp-carte__route,.src,.rp-src,'
         '.cartes__src,.rp-cartes__src{font-size:14px}'
+        # Les h4 des sommaires et des colonnes descendaient à 11,5 px : ce
+        # sont des titres, pas des mentions, et ils passaient sous le
+        # plancher sans que la règle sur « small » les voie.
+        '.som h4,.pied h4,.lat__b h4,.rp-som h4,.rp-lat__b h4,'
+        '.lat__b ul,.rp-lat__b ul{font-size:14px}'
+        # Les titres qui ont changé de balise pour ne plus sauter de niveau
+        # gardent l'apparence exacte qu'ils avaient : la mise en forme était
+        # accrochée à « h4 » ou « h3 », elle se serait perdue au change.
+        '.som h2,.rp-som h2{font-size:14px;letter-spacing:.15em;'
+        'text-transform:uppercase;color:var(--gris);font-weight:700;'
+        'margin:0 0 14px;font-family:"Manrope",sans-serif}'
+        '.pied h3{font-family:"Manrope",sans-serif;font-size:14px;'
+        'letter-spacing:.15em;text-transform:uppercase;color:var(--or);'
+        'font-weight:700;margin:0 0 14px}'
+        '.atouts h2,.rp-atouts h2{font-size:.98rem;margin:0 0 8px;'
+        'display:flex;gap:10px;align-items:center}'
+        # Le bleu de titre #148194 rendait 4,34:1 sur blanc — seize
+        # centièmes sous le seuil. Même teinte, même saturation, deux crans
+        # de clarté en moins : le bleu de marque reste le bleu de marque.
+        '.mef th,th,.mef h2,.mef h3,.mef .mef-q,.pg h2,.pg h3,'
+        'h2,h3,.rp-corps h2,.rp-corps h3{color:#116676}'
+        # Un titre posé sur un bloc sombre doit rester clair : la règle
+        # précédente le repeignait en bleu sur le bleu nuit du bloc devis
+        # — 1,78:1. C'est moi qui l'avais cassé en corrigeant le reste.
+        '.devis h2,.devis h3,.rp-devis h2,.rp-devis h3,'
+        '.pg .devis h2,.pg .devis h3,.mur h2,.pg .mur h2,'
+        '.pg-sec--nuit h2,.pg-sec--nuit h3,.bande h2,.bande h3{color:#fff}'
+        '.pg .pied h3,.pied h3{color:var(--or)}'
+        '.pg .hero h1,.hero h1,.pg .hero h2,.lat--devis h3,.rp-lat--devis h3,'
+        '.pg-sec--nuit h2,.pg-sec--nuit h3{color:#fff}'
+        '.mef th,.mef td,th,td,figcaption,.fig__leg,.pan__note,.pan__avis,'
+        '.pan__avis b,.pg-anc a,.quand__frise small,.devis__act small,'
+        '.guide span,.rp-guide span{font-size:14px}'
+        # La frise « quand partir » code l'affluence en gris clair : 2,71:1
+        # sur son fond. C'est une donnée, pas une mention discrète.
+        '.quand__frise small,.pg .quand__frise small{color:#5A6069}'
+        # Deux cibles de l'aside des fiches séjour restaient sous le doigt.
+        '@media (pointer:coarse){'
+        '.pan__avis a,.pg-anc a,.pan a,.pan button,.pg .pan a,.pg .pan button,'
+        '.pg .pg-anc a,.galerie a,.pg .galerie a'
+        '{min-height:44px;min-width:44px;display:inline-flex;'
+        'align-items:center;justify-content:center}'
+        '}'
         # ── Cibles tactiles : au doigt, le seuil est 44 px. On n'agrandit
         # QUE sur pointeur grossier — la densité de la charte reste celle
         # prévue pour un écran. Les liens DANS une phrase sont laissés tels
@@ -348,7 +657,13 @@ REPARATIONS = [
     ('durée détournée retirée', duree_detournee),
     ('mur d’avis replié sur mobile', mur_avis_mobile),
     ('bloc d’appel au devis en double retiré', bloc_repete),
+    ('bloc de contenu dupliqué retiré', blocs_dupliques),
+    ('bleu des titres au seuil de contraste', bleu_des_titres),
+    ('plancher typographique à 14 px', plancher_typo),
+    ('bouton d’annotation des maquettes retiré', bouton_annotations),
+    ('colonne latérale sans feuille de style', colonne_sans_style),
     ('titres de colonne latérale en h3', titres_colonne),
+    ('échelle des titres rétablie', niveaux_de_titres),
     ('contraste, plancher 14 px, cibles tactiles', contraste_pied),
 ]
 

@@ -115,7 +115,17 @@ const MESURE = () => {
   const coherence = {
     h1: h1 ? propre(h1.textContent) : null,
     fil: fil ? propre(fil.textContent) : null,
-    filFaux: !!(h1 && fil && propre(fil.textContent) !== propre(h1.textContent)),
+    // Le fil tronque les longs titres avec des points de suspension :
+    // « 10 choses à ne pas faire… » sous « 10 choses à ne pas faire en
+    // Égypte ! » n'est pas un fil emprunté, c'est le même titre abrégé.
+    // Sans cette nuance la sonde criait au loup sur dix guides.
+    filFaux: (() => {
+      if (!h1 || !fil) return false;
+      const a = propre(h1.textContent), b = propre(fil.textContent);
+      if (a === b) return false;
+      const nu = b.replace(/[…\.]+$/, '').trim();
+      return !(nu && a.startsWith(nu));
+    })(),
     h2Doubles: Object.entries(compte).filter(([, n]) => n > 1).map(([t, n]) => t.slice(0, 44) + ' ×' + n),
     sautsTitres: [...new Set(sauts)],
     liensMorts: [...new Set([...document.querySelectorAll('a[href]')]

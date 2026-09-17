@@ -31,6 +31,7 @@ import os
 import shutil
 import subprocess
 import sys
+from importlib.machinery import SourceFileLoader
 
 RACINE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SONDE = os.path.join(RACINE, 'outils', 'audit', 'sonde.js')
@@ -41,6 +42,17 @@ SONDE = os.path.join(RACINE, 'outils', 'audit', 'sonde.js')
 # met le mur d'avis en pause, elle, fait 1×1 px : elle se commande par son
 # étiquette, ce n'est pas une cible.
 TOLERES = {'input.mur__stop'}
+
+# Les liens relatifs des maquettes sont réécrits au DÉPLOIEMENT, vers le
+# brouillon de la refonte quand il existe. Les signaler ici reviendrait à
+# mesurer un fichier que personne ne consulte : on lit la table du
+# déployeur plutôt que de la recopier, pour qu'elles ne divergent jamais.
+def liens_reecrits():
+    chemin = os.path.join(RACINE, 'outils', 'deployer-refonte.py')
+    if not os.path.exists(chemin):
+        return set()
+    dep = SourceFileLoader('dep_refonte', chemin).load_module()
+    return set(dep.LIENS) | {'../' + x for x in dep.LIENS}
 
 
 def node_path():
@@ -113,27 +125,57 @@ def defauts(page, vue):
         out.append(('COHÉRENCE', 'titre en double', t))
     if c['sautsTitres']:
         out.append(('COHÉRENCE', 'saut de niveau de titre', ' '.join(c['sautsTitres'])))
-    if c['liensMorts']:
-        out.append(('COHÉRENCE', '%d lien sans destination' % len(c['liensMorts']),
-                    ' '.join(c['liensMorts'][:4])))
+    morts = [x for x in c['liensMorts'] if x not in REECRITS]
+    if morts:
+        out.append(('COHÉRENCE', '%d lien sans destination' % len(morts),
+                    ' '.join(morts[:4])))
     if c['imgSansAlt']:
         out.append(('COHÉRENCE', '%d image sans attribut alt' % c['imgSansAlt'], ''))
     return out
+
+
+REECRITS = liens_reecrits()
+
+
+def gabarits_deployes():
+    """Les préfixes que le déploiement pose réellement sous « Refonte 2026 »."""
+    chemin = os.path.join(RACINE, 'outils', 'deployer-refonte.py')
+    if not os.path.exists(chemin):
+        return []
+    dep = SourceFileLoader('dep_refonte2', chemin).load_module()
+    return dep.TYPES
+
+
+DEPLOYES = gabarits_deployes()
 
 
 def main():
     p = argparse.ArgumentParser(description=__doc__,
                                 formatter_class=argparse.RawDescriptionHelpFormatter)
     p.add_argument('--site', required=True)
-    p.add_argument('--gabarit', default='*', help='préfixe de fichier, ou * pour tout')
+    p.add_argument('--gabarit', default='*',
+                   help='préfixe de fichier, « * » pour tout le dossier, '
+                        '« deploye » pour les seules pages de la refonte')
     p.add_argument('--sortie', help='où écrire le relevé brut (JSON)')
     p.add_argument('--detail', action='store_true', help='une ligne par écart, page par page')
     a = p.parse_args()
 
     site = os.path.abspath(a.site)
+    # « * » lit le dossier entier, y compris les gabarits remplacés — les
+    # fiches « voyage- » et les catégories « categorie- », que le
+    # déploiement ne pose plus. Les compter fausse le bilan : une page que
+    # personne ne verra n'a pas de défaut.
+    if a.gabarit == 'deploye':
+        a.gabarit = '*'
+        deployes = True
+    else:
+        deployes = False
     sortie = a.sortie or os.path.join(RACINE, 'audit-%s.json'
                                       % (a.gabarit.strip('-*') or 'tout'))
     pages = sonder(site, a.gabarit, sortie)
+    if deployes:
+        garde = tuple(t[0] for t in DEPLOYES) + ('agence-',)
+        pages = [x for x in pages if x['f'].startswith(garde)]
     if not pages:
         raise SystemExit('aucune page pour le préfixe « %s »' % a.gabarit)
 

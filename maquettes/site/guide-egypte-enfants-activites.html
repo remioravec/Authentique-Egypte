@@ -13,7 +13,7 @@
 <style>
 /* ============================================================
    CHARTE — relevée le 21/08/2026 sur authentiquegypte.com
-   or #FBB50E · bleu #148194 · bleu profond #095360 (fonds à texte)
+   or #FBB50E · bleu #116676 · bleu profond #095360 (fonds à texte)
    noir #000000 · texte #5D5D5D · crème #FEEDDC
    Archivo (titres + corps) · Manrope (accents)
 
@@ -21,7 +21,7 @@
    Les trois tableaux et la FAQ sont ceux du client, valeur par valeur.
    ============================================================ */
 :root{
-  --nuit:#148194; --nuit-900:#095360; --nuit-700:#1995AA;
+  --nuit:#116676; --nuit-900:#095360; --nuit-700:#1995AA;
   --or:#FBB50E; --or-clair:#FFD958; --or-fond:#FEEDDC;
   --teal:#24AEC6; --teal-txt:#106D7C; --teal-fond:#EAF6F9;
   --chaud:#B07A00; --chaud-fond:#FFF3D6;
@@ -51,7 +51,7 @@ h3{font-size:clamp(1.05rem,1.6vw,1.2rem);letter-spacing:-.4px}
 p{margin:0 0 1em}
 :focus-visible{outline:3px solid var(--or);outline-offset:3px;border-radius:4px}
 .wrap{width:min(100% - 40px,var(--max));margin-inline:auto}
-.eyebrow{font-family:"Manrope",sans-serif;font-size:.74rem;letter-spacing:.18em;text-transform:uppercase;
+.eyebrow{font-family:"Manrope",sans-serif;font-size:0.875rem;letter-spacing:.18em;text-transform:uppercase;
   color:var(--teal-txt);font-weight:700;margin:0 0 12px;display:flex;align-items:center;gap:12px}
 .eyebrow::before{content:"";width:28px;height:2px;background:var(--or);flex:0 0 auto;border-radius:2px}
 .eyebrow--clair{color:var(--or)}
@@ -77,10 +77,10 @@ p{margin:0 0 1em}
 .btn--wa{background:#25D366;color:#06341A;border-color:#25D366}
 .btn--wa:hover{background:#1FBF5A;transform:translateY(-2px)}
 .btn--bloc{width:100%}
-.btn--sm{padding:10px 18px;font-size:.86rem}
+.btn--sm{padding:10px 18px;font-size:0.875rem}
 
 /* ---------- header ---------- */
-.bandeau{background:var(--nuit-900);color:#B9DADF;font-size:.82rem;font-family:"Manrope",sans-serif}
+.bandeau{background:var(--nuit-900);color:#B9DADF;font-size:0.875rem;font-family:"Manrope",sans-serif}
 .bandeau .wrap{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:9px 0;flex-wrap:wrap}
 .bandeau a:hover{color:var(--or-clair)}
 .bandeau strong{color:var(--or-clair);font-weight:700}
@@ -105,7 +105,7 @@ p{margin:0 0 1em}
 .menu__pan a:hover{background:var(--or-fond)}
 .menu__pan i{width:34px;height:34px;border-radius:10px;background:var(--fond);display:grid;
   place-items:center;font-style:normal;font-size:1rem;flex:0 0 auto}
-.menu__pan small{display:block;color:var(--gris);font-size:.78rem;line-height:1.4;font-weight:400}
+.menu__pan small{display:block;color:var(--gris);font-size:0.875rem;line-height:1.4;font-weight:400}
 .burger{display:none;margin-left:auto;background:none;border:1px solid var(--ligne);
   border-radius:var(--r-pill);padding:9px 14px;font-weight:700;font-family:"Manrope",sans-serif}
 
@@ -121,7 +121,7 @@ p{margin:0 0 1em}
 .chapeau .wrap{position:relative}
 .chapeau h1{color:#fff;max-width:22ch}
 .chapeau .sous{color:#C1D6D9;max-width:62ch;margin-top:14px;font-size:1.06rem}
-.ariane{padding:0 0 14px;font-size:.83rem;color:#B0D4DB;font-family:"Manrope",sans-serif}
+.ariane{padding:0 0 14px;font-size:0.875rem;color:#B0D4DB;font-family:"Manrope",sans-serif}
 .ariane ol{display:flex;flex-wrap:wrap;gap:8px;list-style:none;margin:0;padding:0}
 .ariane li::after{content:"›";margin-left:8px;color:rgba(255,255,255,.4)}
 .ariane li:last-child::after{content:""}
@@ -129,7 +129,7 @@ p{margin:0 0 1em}
 .ariane a:hover{text-decoration:underline}
 .ariane [aria-current]{color:#fff;font-weight:700}
 .chapeau__meta{display:flex;align-items:center;gap:12px;margin-top:22px;
-  font-family:"Manrope",sans-serif;font-size:.86rem;color:#B0D4DB}
+  font-family:"Manrope",sans-serif;font-size:0.875rem;color:#B0D4DB}
 .chapeau__meta .med{width:42px;height:42px;border-radius:50%;background:var(--or);color:#3D2B00;
   display:grid;place-items:center;font-family:"Archivo",sans-serif;font-weight:600;flex:0 0 auto}
 .chapeau__meta b{color:#fff;display:block;font-weight:700}
@@ -138,7 +138,7 @@ p{margin:0 0 1em}
 .art{display:grid;grid-template-columns:222px 1fr 300px;gap:44px;align-items:start;
   padding:clamp(36px,4.5vw,56px) 0 clamp(44px,5.5vw,72px)}
 .som{position:sticky;top:88px;font-family:"Manrope",sans-serif;font-size:.88rem}
-.som h4{font-size:.72rem;letter-spacing:.15em;text-transform:uppercase;color:var(--gris);
+.som h4{font-size:0.875rem;letter-spacing:.15em;text-transform:uppercase;color:var(--gris);
   font-weight:700;margin:0 0 14px;font-family:"Manrope",sans-serif}
 .som ol{list-style:none;margin:0;padding:0;display:grid;gap:2px;border-left:2px solid var(--ligne)}
 .som a{display:block;padding:8px 0 8px 15px;margin-left:-2px;border-left:2px solid transparent;
@@ -161,15 +161,15 @@ p{margin:0 0 1em}
 /* ---------- ruban des 12 mois ---------- */
 .ruban{display:grid;grid-template-columns:repeat(12,1fr);gap:4px;margin:24px 0 10px}
 .ruban a{display:block;text-align:center;padding:12px 2px 10px;border-radius:var(--r-s);
-  font-family:"Manrope",sans-serif;font-size:.74rem;font-weight:700;letter-spacing:.02em;
+  font-family:"Manrope",sans-serif;font-size:0.875rem;font-weight:700;letter-spacing:.02em;
   transition:transform .2s var(--ease),box-shadow .2s var(--ease);position:relative}
 .ruban a:hover{transform:translateY(-3px);box-shadow:var(--ombre)}
-.ruban a span{display:block;font-size:.66rem;font-weight:600;opacity:.75;margin-top:3px}
+.ruban a span{display:block;font-size:0.875rem;font-weight:600;opacity:.75;margin-top:3px}
 .ruban .ex{background:var(--teal-fond);color:var(--teal-txt)}
 .ruban .bon{background:#EAF5EE;color:#2F7D4F}
 .ruban .ch{background:var(--chaud-fond);color:var(--chaud)}
 .ruban .br{background:var(--brulant-fond);color:var(--brulant)}
-.legende{display:flex;gap:16px;flex-wrap:wrap;font-family:"Manrope",sans-serif;font-size:.79rem;
+.legende{display:flex;gap:16px;flex-wrap:wrap;font-family:"Manrope",sans-serif;font-size:0.875rem;
   color:var(--gris);margin-bottom:26px}
 .legende span{display:inline-flex;align-items:center;gap:7px}
 .legende i{width:12px;height:12px;border-radius:3px;display:block}
@@ -185,7 +185,7 @@ p{margin:0 0 1em}
 .tab tbody tr:hover{background:var(--fond-2)}
 .tab .t{font-family:"Manrope",sans-serif;font-weight:700;white-space:nowrap}
 .et{display:inline-flex;align-items:center;gap:6px;border-radius:var(--r-pill);padding:4px 11px;
-  font-family:"Manrope",sans-serif;font-size:.77rem;font-weight:700;white-space:nowrap}
+  font-family:"Manrope",sans-serif;font-size:0.875rem;font-weight:700;white-space:nowrap}
 .et--ex{background:var(--teal-fond);color:var(--teal-txt)}
 .et--bon{background:#EAF5EE;color:#2F7D4F}
 .et--ch{background:var(--chaud-fond);color:var(--chaud)}
@@ -200,10 +200,10 @@ p{margin:0 0 1em}
 .fig a::after{content:"";position:absolute;inset:0;
   background:linear-gradient(180deg,rgba(9,83,96,0) 55%,rgba(9,83,96,.55) 100%)}
 .fig__sur{position:absolute;left:20px;bottom:16px;z-index:2;color:#fff;font-family:"Manrope",sans-serif;
-  font-size:.84rem;font-weight:700;letter-spacing:.02em;text-shadow:0 2px 12px rgba(9,83,96,.9);
+  font-size:0.875rem;font-weight:700;letter-spacing:.02em;text-shadow:0 2px 12px rgba(9,83,96,.9);
   display:flex;align-items:center;gap:10px}
 .fig__sur i{width:22px;height:2px;background:var(--or);display:block;border-radius:2px;flex:0 0 auto}
-.fig figcaption{margin-top:12px;font-family:"Manrope",sans-serif;font-size:.85rem;color:var(--gris);
+.fig figcaption{margin-top:12px;font-family:"Manrope",sans-serif;font-size:0.875rem;color:var(--gris);
   line-height:1.6;padding-left:14px;border-left:2px solid var(--or)}
 .fig figcaption b{color:var(--noir);font-weight:700}
 @media (min-width:1025px){
@@ -219,9 +219,9 @@ p{margin:0 0 1em}
 .bande a::after{content:"";position:absolute;inset:0;
   background:linear-gradient(180deg,rgba(9,83,96,0) 45%,rgba(9,83,96,.72) 100%)}
 .bande b{position:absolute;left:14px;right:14px;bottom:12px;z-index:2;color:#fff;
-  font-family:"Manrope",sans-serif;font-size:.82rem;font-weight:700;line-height:1.35;
+  font-family:"Manrope",sans-serif;font-size:0.875rem;font-weight:700;line-height:1.35;
   text-shadow:0 2px 12px rgba(9,83,96,.9)}
-.bande b span{display:block;font-weight:600;font-size:.74rem;color:var(--or-clair);margin-top:3px}
+.bande b span{display:block;font-weight:600;font-size:0.875rem;color:var(--or-clair);margin-top:3px}
 @media (max-width:600px){
   .bande{grid-template-columns:1fr 1fr;gap:6px}
   .bande a:last-child{grid-column:1 / -1}
@@ -258,7 +258,7 @@ p{margin:0 0 1em}
 .devis li{display:flex;gap:11px;align-items:flex-start}
 .devis li svg{flex:0 0 auto;margin-top:5px}
 .devis__act{display:grid;gap:12px}
-.devis__act small{color:#A8CED5;font-size:.81rem;text-align:center;font-family:"Manrope",sans-serif}
+.devis__act small{color:#A8CED5;font-size:0.875rem;text-align:center;font-family:"Manrope",sans-serif}
 @media (max-width:860px){
   .devis{grid-template-columns:1fr;gap:28px}
 }
@@ -288,46 +288,46 @@ p{margin:0 0 1em}
 .guide img{width:92px;height:92px;flex:0 0 auto;border-radius:var(--r-m);object-fit:cover}
 .guide b{display:block;font-family:"Archivo",sans-serif;font-size:1rem;font-weight:600;
   color:var(--noir);letter-spacing:-.4px;margin-bottom:5px}
-.guide span{font-family:"Manrope",sans-serif;font-size:.82rem;color:var(--gris);line-height:1.5}
+.guide span{font-family:"Manrope",sans-serif;font-size:0.875rem;color:var(--gris);line-height:1.5}
 
 /* ---------- pied de page ---------- */
 .pied{background:var(--nuit-900);color:#B9DADF;padding:56px 0 24px;font-size:.9rem}
-.pied h4{font-family:"Manrope",sans-serif;font-size:.73rem;letter-spacing:.15em;text-transform:uppercase;
+.pied h4{font-family:"Manrope",sans-serif;font-size:0.875rem;letter-spacing:.15em;text-transform:uppercase;
   color:var(--or);font-weight:700;margin:0 0 16px}
 .pied__g{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:40px}
 .pied ul{list-style:none;margin:0;padding:0;display:grid;gap:9px}
 .pied a:hover{color:#fff;text-decoration:underline}
 .pied img{height:36px;width:auto;margin-bottom:16px}
 .pied__bas{margin-top:36px;padding-top:20px;border-top:1px solid rgba(255,255,255,.12);
-  display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:.82rem;color:#91BFC6}
+  display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:0.875rem;color:#91BFC6}
 
 .barre-mob{display:none;position:fixed;bottom:0;left:0;right:0;z-index:75;background:#fff;
   border-top:1px solid var(--ligne);padding:10px 16px calc(10px + env(safe-area-inset-bottom));
   gap:10px;align-items:center;box-shadow:0 -6px 20px rgba(9,83,96,.14)}
 
-.aremplir{background:var(--or-fond);border:1px dashed var(--or);color:#7A5605;font-size:.8rem;
+.aremplir{background:var(--or-fond);border:1px dashed var(--or);color:#7A5605;font-size:0.875rem;
   padding:.1em .5em;border-radius:6px;font-weight:700;font-family:"Manrope",sans-serif}
 
 /* ---------- calque d'annotation ---------- */
 .mm-btn{position:fixed;right:16px;bottom:16px;z-index:90;background:var(--nuit-900);color:#fff;
   border:0;border-radius:var(--r-pill);padding:11px 18px;font-family:"Manrope",sans-serif;
-  font-size:.82rem;font-weight:700;box-shadow:var(--ombre-f);display:inline-flex;align-items:center;gap:8px}
+  font-size:0.875rem;font-weight:700;box-shadow:var(--ombre-f);display:inline-flex;align-items:center;gap:8px}
 .mm-btn b{color:var(--or)}
 body.mm [data-mm]{outline:2px dashed var(--teal-txt);outline-offset:10px;border-radius:4px;position:relative}
 body.mm [data-mm]::before{content:attr(data-mm);position:absolute;top:-16px;left:0;z-index:40;
-  background:var(--teal-txt);color:#fff;font-family:"Manrope",sans-serif;font-size:.68rem;font-weight:700;
+  background:var(--teal-txt);color:#fff;font-family:"Manrope",sans-serif;font-size:0.875rem;font-weight:700;
   letter-spacing:.08em;text-transform:uppercase;padding:5px 11px;border-radius:var(--r-pill);white-space:nowrap}
 body.mm [data-mm="Navigation · poids 0,25"]::before{background:var(--gris-clair)}
 body.mm [data-dec]{position:relative}
 body.mm [data-dec]::after{content:attr(data-dec);position:absolute;top:-16px;right:0;z-index:40;
-  font-family:"Manrope",sans-serif;font-size:.68rem;font-weight:700;letter-spacing:.08em;
+  font-family:"Manrope",sans-serif;font-size:0.875rem;font-weight:700;letter-spacing:.08em;
   padding:5px 11px;border-radius:var(--r-pill);white-space:nowrap;background:var(--gris-clair);color:#fff}
 body.mm [data-dec="Conservé"]::after{background:#2F7D4F}
 body.mm [data-dec="Nouveau"]::after{background:var(--nuit)}
 body.mm [data-dec="À trancher"]::after{background:#B4402A}
 body.mm .mm-legende{display:none}
 .mm-legende{display:none;background:var(--nuit-900);color:#D4E3E6;border-radius:var(--r-l);padding:18px 22px;
-  margin-top:22px;font-family:"Manrope",sans-serif;font-size:.85rem;line-height:1.7}
+  margin-top:22px;font-family:"Manrope",sans-serif;font-size:0.875rem;line-height:1.7}
 .mm-legende b{color:var(--or)}
 
 [data-rev]{opacity:0;transform:translateY(18px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
@@ -355,7 +355,7 @@ body.mm .mm-legende{display:none}
   .eyebrow::before{display:block;margin-bottom:8px}
   .ruban{grid-template-columns:repeat(4,1fr)}
   .tab{display:block;overflow-x:auto;white-space:nowrap}
-  .mm-btn{right:12px;bottom:88px;padding:9px 14px;font-size:.76rem}
+  .mm-btn{right:12px;bottom:88px;padding:9px 14px;font-size:0.875rem}
 }
 @media (prefers-reduced-motion:reduce){
   [data-rev]{opacity:1 !important;transform:none !important}
@@ -366,7 +366,7 @@ body.mm .mm-legende{display:none}
 /* ------------------------------------------------------------------
    NOTES DE PRODUCTION
    Les paragraphes d'avertissement portaient leur taille en style en
-   ligne (font-size:.86rem), qu'aucune feuille ne peut battre. La taille
+   ligne (font-size:0.875rem), qu'aucune feuille ne peut battre. La taille
    est passée dans cette classe ; l'attribut ne garde que la couleur.
    ------------------------------------------------------------------ */
 .note{font-size:.9rem;line-height:1.6}
@@ -489,7 +489,7 @@ body.mm .mm-legende{display:none}
 header .nav>a.btn--or,header .nav>a.btn--or[aria-current]{background:#E08A00;border-color:#E08A00;color:#fff}
 header .nav>a.btn--or:hover{background:#C87700;border-color:#C87700;box-shadow:0 10px 24px rgba(224,138,0,.42)}
 
-.src{margin:0 0 24px;padding:11px 15px;background:var(--or-fond);border-radius:var(--r-s);font-size:.86rem;color:#7A5605;line-height:1.5}
+.src{margin:0 0 24px;padding:11px 15px;background:var(--or-fond);border-radius:var(--r-s);font-size:0.875rem;color:#7A5605;line-height:1.5}
 .src a{color:inherit;overflow-wrap:anywhere}
 </style>
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[
@@ -537,7 +537,7 @@ header .nav>a.btn--or:hover{background:#C87700;border-color:#C87700;box-shadow:0
 .mef ol{counter-reset:mef}
 .mef ol>li{counter-increment:mef}
 .mef ol>li::before{content:counter(mef);position:absolute;left:0;top:.05em;width:20px;
-  text-align:center;font-family:"Manrope",sans-serif;font-size:.78rem;font-weight:700;
+  text-align:center;font-family:"Manrope",sans-serif;font-size:0.875rem;font-weight:700;
   line-height:20px;border-radius:50%;background:var(--teal-fond);color:var(--teal-txt)}
 .mef li>b:first-child,.mef li>strong:first-child{color:var(--nuit)}
 /* Une énumération « Étiquette : texte » se lit mieux en deux temps. */
@@ -564,7 +564,7 @@ header .nav>a.btn--or:hover{background:#C87700;border-color:#C87700;box-shadow:0
 .mef th,.mef td{padding:11px 16px;text-align:left;border-bottom:1px solid var(--ligne-2);
   vertical-align:top;line-height:1.5}
 .mef tbody tr:nth-child(even){background:color-mix(in srgb,var(--fond) 55%,transparent)}
-.mef th{font-family:"Manrope",sans-serif;font-size:.76rem;letter-spacing:.05em;line-height:1.3;
+.mef th{font-family:"Manrope",sans-serif;font-size:0.875rem;letter-spacing:.05em;line-height:1.3;
   text-transform:uppercase;color:var(--nuit);background:var(--fond)}
 /* L'entête ne force pas la largeur : mise sur une seule ligne, elle poussait
    à elle seule le tableau au-delà de la colonne de lecture, et la dernière
@@ -584,7 +584,7 @@ header .nav>a.btn--or:hover{background:#C87700;border-color:#C87700;box-shadow:0
   .colonnes{grid-template-columns:minmax(0,1fr);gap:36px}
   .colonnes>aside{position:static}
 }
-</style><style data-reparation="ae-1">.pied h3{color:#fff}.pied span{color:#B9DADF}.pg .mur__q,.mur__q{color:#7A5605}.puce{color:#137C8F}.pg small,.pg .reperes small,.pg .prix small,.pg .carte__prix small,.pg .tarif__ligne b small,.pg .devis__act small,.pied small,small{font-size:14px}.pg .eyebrow,.pg .eyebrow--clair,.eyebrow,.rp-eyebrow,.rp-eyebrow--clair{font-size:14px}.pg .puce,.pg .pill,.pg .pill b,.puce,.pill,.rp-puce,.rp-pill{font-size:14px}.pg .prix i,.pg .carte__prix i,.prix i,.rp-prix i{font-size:14px}.pg dl dt,.pg dl dd,.pg .somm b,.pg .som a,dl dt,dl dd,.rp-som a{font-size:14px}.pied span,.pied a,.pied li,.bandeau span,.bandeau strong,.bandeau a{font-size:14px}.lat__b h3,.rp-lat__b h3{font-family:"Archivo",sans-serif;font-size:1.05rem;font-weight:600;margin:0 0 13px;letter-spacing:-.4px}.lat--devis h3,.rp-lat--devis h3{color:#fff}.pg .ariane a,.pg .ariane li,.pg .ariane span,.ariane a,.ariane li,.ariane span{font-size:14px}.pg .carte__route,.carte__route,.rp-carte__route,.src,.rp-src,.cartes__src,.rp-cartes__src{font-size:14px}@media (pointer:coarse){.lien-fl,.pied a,.ariane a,.bandeau a,.logo,.som a,.rp-som a,.carte__corps h3 a,.carte__c h3 a,.rp-carte__corps h3 a{min-height:44px;display:inline-flex;align-items:center}}</style></head>
+</style><style data-reparation="ae-1">.pied h3{color:#fff}.pied span{color:#B9DADF}.pg .mur__q,.mur__q{color:#7A5605}.puce{color:#116676}.pg small,.pg .reperes small,.pg .prix small,.pg .carte__prix small,.pg .tarif__ligne b small,.pg .devis__act small,.pied small,small{font-size:14px}.pg .eyebrow,.pg .eyebrow--clair,.eyebrow,.rp-eyebrow,.rp-eyebrow--clair{font-size:14px}.pg .puce,.pg .pill,.pg .pill b,.puce,.pill,.rp-puce,.rp-pill{font-size:14px}.pg .prix i,.pg .carte__prix i,.prix i,.rp-prix i{font-size:14px}.pg dl dt,.pg dl dd,.pg .somm b,.pg .som a,dl dt,dl dd,.rp-som a{font-size:14px}.pied span,.pied a,.pied li,.bandeau span,.bandeau strong,.bandeau a{font-size:14px}.lat__b h3,.rp-lat__b h3{font-family:"Archivo",sans-serif;font-size:1.05rem;font-weight:600;margin:0 0 13px;letter-spacing:-.4px}.lat--devis h3,.rp-lat--devis h3{color:#fff}.pg .ariane a,.pg .ariane li,.pg .ariane span,.ariane a,.ariane li,.ariane span{font-size:14px}.pg .carte__route,.carte__route,.rp-carte__route,.src,.rp-src,.cartes__src,.rp-cartes__src{font-size:14px}.som h4,.pied h4,.lat__b h4,.rp-som h4,.rp-lat__b h4,.lat__b ul,.rp-lat__b ul{font-size:14px}.som h2,.rp-som h2{font-size:14px;letter-spacing:.15em;text-transform:uppercase;color:var(--gris);font-weight:700;margin:0 0 14px;font-family:"Manrope",sans-serif}.pied h3{font-family:"Manrope",sans-serif;font-size:14px;letter-spacing:.15em;text-transform:uppercase;color:var(--or);font-weight:700;margin:0 0 14px}.atouts h2,.rp-atouts h2{font-size:.98rem;margin:0 0 8px;display:flex;gap:10px;align-items:center}.mef th,th,.mef h2,.mef h3,.mef .mef-q,.pg h2,.pg h3,h2,h3,.rp-corps h2,.rp-corps h3{color:#116676}.devis h2,.devis h3,.rp-devis h2,.rp-devis h3,.pg .devis h2,.pg .devis h3,.mur h2,.pg .mur h2,.pg-sec--nuit h2,.pg-sec--nuit h3,.bande h2,.bande h3{color:#fff}.pg .pied h3,.pied h3{color:var(--or)}.pg .hero h1,.hero h1,.pg .hero h2,.lat--devis h3,.rp-lat--devis h3,.pg-sec--nuit h2,.pg-sec--nuit h3{color:#fff}.mef th,.mef td,th,td,figcaption,.fig__leg,.pan__note,.pan__avis,.pan__avis b,.pg-anc a,.quand__frise small,.devis__act small,.guide span,.rp-guide span{font-size:14px}.quand__frise small,.pg .quand__frise small{color:#5A6069}@media (pointer:coarse){.pan__avis a,.pg-anc a,.pan a,.pan button,.pg .pan a,.pg .pan button,.pg .pg-anc a,.galerie a,.pg .galerie a{min-height:44px;min-width:44px;display:inline-flex;align-items:center;justify-content:center}}@media (pointer:coarse){.lien-fl,.pied a,.ariane a,.bandeau a,.logo,.som a,.rp-som a,.carte__corps h3 a,.carte__c h3 a,.rp-carte__corps h3 a{min-height:44px;display:inline-flex;align-items:center}}</style></head>
 <body>
 
 <div class="bandeau">
@@ -667,7 +667,7 @@ header .nav>a.btn--or:hover{background:#C87700;border-color:#C87700;box-shadow:0
 
 <div class="wrap">
 <div class="art">
-<nav class="som" aria-label="Sommaire"><h4>Sur cette page</h4><ol><li><a href="#s1">Sécurité &amp; confort</a></li><li><a href="#s2">Climat &amp; meilleure période</a></li><li><a href="#s3">Transports &amp; organisation pour familles</a></li><li><a href="#s4">Moins de 5 ans</a></li><li><a href="#s5">6–10 ans</a></li><li><a href="#s6">Hébergements pour familles</a></li><li><a href="#s7">Pharmacie &amp; assistance sur place</a></li><li><a href="#s8">Tarifs enfants &amp; équipements fournis</a></li><li><a href="#s9">La montgolfière à Louxor : à partir de quel âge ?</a></li><li><a href="#s10">Les spectacles son &amp; lumière conviennent-ils aux tout-petits ?</a></li><li><a href="#s11">Peut-on circuler en poussette sur les sites ?</a></li><li><a href="#s12">Proposez-vous des sièges auto et lits bébé ?</a></li><li><a href="#s13">Y a-t-il des pharmacies facilement accessibles ?</a></li><li><a href="#s14">Baignade en hiver pour les enfants ?</a></li></ol></nav>
+<nav class="som" aria-label="Sommaire"><h2>Sur cette page</h2><ol><li><a href="#s1">Sécurité &amp; confort</a></li><li><a href="#s2">Climat &amp; meilleure période</a></li><li><a href="#s3">Transports &amp; organisation pour familles</a></li><li><a href="#s4">Moins de 5 ans</a></li><li><a href="#s5">6–10 ans</a></li><li><a href="#s6">Hébergements pour familles</a></li><li><a href="#s7">Pharmacie &amp; assistance sur place</a></li><li><a href="#s8">Tarifs enfants &amp; équipements fournis</a></li><li><a href="#s9">La montgolfière à Louxor : à partir de quel âge ?</a></li><li><a href="#s10">Les spectacles son &amp; lumière conviennent-ils aux tout-petits ?</a></li><li><a href="#s11">Peut-on circuler en poussette sur les sites ?</a></li><li><a href="#s12">Proposez-vous des sièges auto et lits bébé ?</a></li><li><a href="#s13">Y a-t-il des pharmacies facilement accessibles ?</a></li><li><a href="#s14">Baignade en hiver pour les enfants ?</a></li></ol></nav>
 <article class="corps mef">
 <p class="src">Contenu repris de <a href="https://authentiquegypte.com/egypte-enfants-activites/">https://authentiquegypte.com/egypte-enfants-activites/</a>, sans réécriture&nbsp;: seule la mise en page change.</p>
 <p class="lede">L’Égypte est une destination accueillante pour les familles lorsque le séjour est bien préparé. Les zones touristiques comme Le Caire, Louxor ou Assouan sont adaptées, avec des itinéraires que nos guides ajustent au rythme des enfants (durée des visites, pauses, siestes).</p>
@@ -771,7 +771,7 @@ header .nav>a.btn--or:hover{background:#C87700;border-color:#C87700;box-shadow:0
         </p>
       </div>
       <div>
-        <h4>Nos séjours</h4>
+        <h3>Nos séjours</h3>
         <ul>
           <li><a href="categorie.html">Croisière sur le Nil</a></li>
           <li><a href="categorie-desert.html">Voyage dans le désert en Égypte</a></li>
@@ -781,7 +781,7 @@ header .nav>a.btn--or:hover{background:#C87700;border-color:#C87700;box-shadow:0
         </ul>
       </div>
       <div>
-        <h4>Destinations</h4>
+        <h3>Destinations</h3>
         <ul>
           <li><a href="destination.html">Voyage au Caire</a></li>
           <li><a href="https://authentiquegypte.com/voyage-a-louxor/">Voyage à Louxor</a></li>
@@ -794,7 +794,7 @@ header .nav>a.btn--or:hover{background:#C87700;border-color:#C87700;box-shadow:0
         </ul>
       </div>
       <div>
-        <h4>L'agence</h4>
+        <h3>L'agence</h3>
         <ul>
           <li><a href="qui-sommes-nous.html">Qui sommes-nous</a></li>
           <li><a href="blog.html">Guides pratiques</a></li>
@@ -813,8 +813,6 @@ header .nav>a.btn--or:hover{background:#C87700;border-color:#C87700;box-shadow:0
   <a href="https://wa.me/201066619098" class="btn btn--fantome btn--sm" style="flex:0 0 auto">WhatsApp</a>
   <a href="https://authentiquegypte.com/sur-mesure/" class="btn btn--or" style="flex:1">Demander mon devis</a>
 </div>
-
-<button class="mm-btn" id="mm-btn" type="button" aria-pressed="false">Annotations <b>OFF</b></button>
 
 <script>
 document.querySelector('.burger')?.addEventListener('click',e=>{
@@ -854,16 +852,6 @@ document.querySelector('.burger')?.addEventListener('click',e=>{
   cibles.forEach((el,n)=>{ el.setAttribute('data-rev','');
     el.style.transitionDelay=(Math.min(n%4,3)*60)+'ms'; io.observe(el); });
   setTimeout(()=>{cibles.forEach(el=>el.classList.add('vu'))},900); /* garde-fou : rien ne reste invisible */
-})();
-</script>
-<script>
-(function(){
-  const b=document.getElementById('mm-btn');
-  b.addEventListener('click',()=>{
-    const on=document.body.classList.toggle('mm');
-    b.setAttribute('aria-pressed',String(on));
-    b.innerHTML='Annotations <b>'+(on?'ON':'OFF')+'</b>';
-  });
 })();
 </script>
 </body>

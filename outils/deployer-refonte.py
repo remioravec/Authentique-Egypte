@@ -53,6 +53,70 @@ HORS_REFONTE = ('legal-', 'accueil-')
 # sont des pages uniques, filles directes de la mère, à leur rang.
 SEULES = {'agence-': (7, 'Refonte · 7 · L’agence')}
 
+# Les liens relatifs des maquettes — « index.html », « devis.html »… — ne
+# mènent nulle part une fois la page dans WordPress. Mesurés : 44 à 58
+# pages les portent, dans le méga-menu, l'entête et le pied. Chaque entrée
+# du menu était donc morte.
+#
+# On les réécrit au déploiement plutôt que dans le dépôt : le nom de
+# fichier reste la vérité côté maquette, et la cible suit le CMS. Quand la
+# refonte porte la page, le lien va vers SON brouillon — la relecture reste
+# dans la refonte au lieu d'éjecter vers le site en ligne. À défaut, il va
+# vers l'adresse en ligne, vérifiée une à une (les trois premières
+# redirigent : on pose la destination finale, pas la redirection).
+LIENS = {
+    'index.html':            ('accueil-', 'https://authentiquegypte.com/'),
+    'devis.html':            (None, 'https://authentiquegypte.com/sur-mesure/'),
+    'blog.html':             ('hub-', 'https://authentiquegypte.com/notre-blog/'),
+    'qui-sommes-nous.html':  ('agence-', 'https://authentiquegypte.com/qui-sommes-nous/'),
+    'categorie.html':        ('famille-croisieres-en-egypte',
+                              'https://authentiquegypte.com/nos-sejours-egypte/croisieres-en-egypte/'),
+    'categorie-desert.html': ('famille-desert-egypte',
+                              'https://authentiquegypte.com/nos-sejours-egypte/desert-egypte/'),
+    'destination.html':      ('destination-voyage-au-caire',
+                              'https://authentiquegypte.com/voyage-au-caire/'),
+    'legal.html':            (None,
+                              'https://authentiquegypte.com/mentions-legales-agence-voyage-egypte/'),
+}
+
+
+def carte_des_liens(*relevés):
+    """Chaque lien de maquette vers sa destination réelle.
+
+    On cherche dans TOUS les relevés : l'accueil et la page agence n'ont pas
+    de dossier — ce sont des filles directes de la mère — et un premier jet
+    qui ne lisait que les dossiers renvoyait le menu vers le site en ligne
+    pour ces deux-là précisément, celles qu'on veut le plus relire.
+    """
+    carte = {}
+    for fichier, (prefixe, secours) in LIENS.items():
+        cible = secours
+        if prefixe:
+            for relevé in relevés:
+                trouve = next((p for slug, p in sorted(relevé.items())
+                               if slug.startswith('refonte-' + prefixe)), None)
+                if trouve:
+                    cible = '%s/?page_id=%d' % (dep.SITE, trouve['id'])
+                    break
+        carte[fichier] = cible
+        carte['../' + fichier] = cible
+    return carte
+
+
+def poser_liens(contenu, carte):
+    """Remplace les liens de maquette, et EUX SEULS.
+
+    Une réécriture large attraperait « https://…/index.html » d'un site
+    tiers : on n'agit que sur la valeur exacte de l'attribut.
+    """
+    n = 0
+    for depart, arrivee in carte.items():
+        motif = 'href="%s"' % depart
+        n += contenu.count(motif)
+        contenu = contenu.replace(motif, 'href="%s"' % arrivee)
+    return contenu, n
+
+
 # Le nom lisible d'une page, quand le titre du fichier ne suffit pas.
 def titre_de_page(nom, html):
     """Le titre de la page, pris dans son <title> ou son <h1>."""
@@ -147,6 +211,11 @@ def main():
             dossiers[slug] = d['id']
         print('   %-46s id %s' % (titre, dossiers[slug] or '—'))
 
+    carte = carte_des_liens(existantes, existantes_mere)
+    print('\n→ Liens de maquette')
+    for fichier in sorted(LIENS):
+        print('   %-24s → %s' % (fichier, carte[fichier][:62]))
+
     print('\n→ Pages')
     par_type = {}
     for f in fichiers:
@@ -160,7 +229,7 @@ def main():
             _, _, _, slug_dossier = type_de(f)
             with open(os.path.join(source, f), encoding='utf-8') as fh:
                 html = fh.read()
-            contenu = conv.convertir(html, source)
+            contenu, morts = poser_liens(conv.convertir(html, source), carte)
             # Une page déjà en ligne ne reçoit que son contenu. Son titre, son
             # dossier et son rang sont l'œuvre de ranger-back-office.py : les
             # réécrire ici depuis le <title> du fichier déferait le rangement
@@ -200,8 +269,8 @@ def main():
                 pid = r.get('id', 0)
                 ok = bool(pid)
             (faits, rates) = (faits + 1, rates) if ok else (faits, rates + 1)
-            print('   %-58s #%-6s %s  %d image(s)'
-                  % (f[:58], pid, 'ok' if ok else 'ÉCHEC', attendu))
+            print('   %-58s #%-6s %s  %d image(s), %d lien(s)'
+                  % (f[:58], pid, 'ok' if ok else 'ÉCHEC', attendu, morts))
 
     # Les pages uniques : filles directes de la mère, à leur rang. Elles
     # n'ont pas de dossier — un dossier d'une seule page ne range rien.
@@ -213,7 +282,7 @@ def main():
         slug = 'refonte-' + f[:-len('.html')]
         with open(os.path.join(source, f), encoding='utf-8') as fh:
             html = fh.read()
-        contenu = conv.convertir(html, source)
+        contenu, _ = poser_liens(conv.convertir(html, source), carte)
         attendu = len(re.findall(r'<img', contenu))
         candidats = ([slug] if slug in existantes_mere else
                      [x for x in existantes_mere if slug.startswith(x) or x.startswith(slug)])
