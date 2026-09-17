@@ -9,3 +9,4 @@ docs/contenus.json
 docs/extraits.json
 
 outils/__pycache__/
+audit-*.json

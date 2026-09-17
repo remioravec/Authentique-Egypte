@@ -183,8 +183,33 @@ BLOC_REPETE = re.compile(
     r'<h2[^>]*>(?:(?!</h2>).)*</h2>(?:\s*<p class="">(?:(?!</p>).)*</p>)+', re.S)
 
 
+def titres_colonne(h):
+    """Les titres de la colonne latérale passent de h4 à h3.
+
+    La page pose des h2, puis la colonne latérale ouvre en h4 : le niveau
+    h3 est sauté. Pour un lecteur d'écran, un niveau sauté veut dire qu'un
+    titre manque — il annonce une section qui n'existe pas. Le rendu ne
+    change pas d'un pixel : c'est la feuille qui décide de la taille, pas
+    la balise.
+    """
+    # Le compteur porte sur les TITRES convertis, pas sur les blocs
+    # parcourus : « re.subn » sur les <aside> comptait une substitution même
+    # quand le remplacement était identique à l'original, et annonçait
+    # soixante-huit corrections à chaque passage, y compris sur une page
+    # déjà corrigée.
+    n = [0]
+
+    def dans_aside(m):
+        bloc, k = re.subn(r'<h4([^>]*)>(.*?)</h4>', r'<h3\1>\2</h3>',
+                          m.group(0), flags=re.S)
+        n[0] += k
+        return bloc
+
+    return re.sub(r'<aside\b.*?</aside>', dans_aside, h, flags=re.S), n[0]
+
+
 def contraste_pied(h):
-    """Les titres de colonne du pied de page, noirs sur bleu nuit.
+    """Contraste, plancher typographique et cibles tactiles — le bloc commun.
 
     Aucune règle ne leur donnait de couleur : ils prenaient donc le noir par
     défaut du navigateur, sur le fond #095360 du pied. Mesuré sur le rendu :
@@ -192,7 +217,7 @@ def contraste_pied(h):
     Le défaut est sur les cinquante-sept pages, la page de référence
     comprise — il ne vient pas de la refonte, il y était déjà.
     """
-    if '.pg .mur__q,.mur__q' in h:
+    if 'data-reparation="ae-1"' in h:
         return h, 0
     regle = (
         # Mesures faites sur le rendu, pas sur la règle : c'est la couleur
@@ -206,13 +231,58 @@ def contraste_pied(h):
         # centièmes. Même teinte, même saturation : seule la clarté baisse,
         # pour que le bleu de marque reste le bleu de marque.
         '.puce{color:#137C8F}'                 # 4,34:1 → 4,64:1
-        # Cibles tactiles : au doigt, le seuil est 44 px. « Voir le détail »
-        # en faisait 25, les liens du pied 24 — le minimum absolu, pas une
-        # cible confortable. On n'agrandit QUE sur pointeur grossier : la
-        # densité de la page reste celle de la charte sur écran.
+        # ── Plancher typographique : 14 px, décision de Rémi du 17/09.
+        # La charte descendait à 11,8 px sur « À partir de ». Ce sont des
+        # étiquettes, jamais du texte courant, mais la règle d'accessibilité
+        # ne fait pas cette distinction et le client a tranché.
+        #
+        # Deux précautions. La portée « .pg » est répétée parce que le
+        # gabarit écrit « .pg .reperes small » : une règle de classe seule y
+        # perd, et le premier jet n'a rien changé du tout. Et le préfixe
+        # « rp- » — celui que la greffe pose sur le contenu repris — a sa
+        # propre ligne, sans quoi le plancher s'arrêtait à la porte du corps
+        # transplanté.
+        '.pg small,.pg .reperes small,.pg .prix small,.pg .carte__prix small,'
+        '.pg .tarif__ligne b small,.pg .devis__act small,.pied small,small'
+        '{font-size:14px}'
+        '.pg .eyebrow,.pg .eyebrow--clair,.eyebrow,.rp-eyebrow,'
+        '.rp-eyebrow--clair{font-size:14px}'
+        '.pg .puce,.pg .pill,.pg .pill b,.puce,.pill,.rp-puce,.rp-pill'
+        '{font-size:14px}'
+        '.pg .prix i,.pg .carte__prix i,.prix i,.rp-prix i{font-size:14px}'
+        '.pg dl dt,.pg dl dd,.pg .somm b,.pg .som a,dl dt,dl dd,.rp-som a'
+        '{font-size:14px}'
+        '.pied span,.pied a,.pied li,.bandeau span,.bandeau strong,.bandeau a'
+        '{font-size:14px}'
+        # Le titre de la colonne latérale est passé de h4 à h3 pour ne plus
+        # sauter de niveau. Sa mise en forme était accrochée à la balise :
+        # sans ces deux lignes il reprenait la couleur des h3 du corps —
+        # du bleu sur le bleu nuit de la carte, 2,42:1. On rend à la balise
+        # ce que la précédente avait, à l'identique.
+        '.lat__b h3,.rp-lat__b h3{font-family:"Archivo",sans-serif;'
+        'font-size:1.05rem;font-weight:600;margin:0 0 13px;letter-spacing:-.4px}'
+        '.lat--devis h3,.rp-lat--devis h3{color:#fff}'
+        '.pg .ariane a,.pg .ariane li,.pg .ariane span,.ariane a,.ariane li,'
+        '.ariane span{font-size:14px}'
+        '.pg .carte__route,.carte__route,.rp-carte__route,.src,.rp-src,'
+        '.cartes__src,.rp-cartes__src{font-size:14px}'
+        # ── Cibles tactiles : au doigt, le seuil est 44 px. On n'agrandit
+        # QUE sur pointeur grossier — la densité de la charte reste celle
+        # prévue pour un écran. Les liens DANS une phrase sont laissés tels
+        # quels : la règle les excepte, et les étirer casserait le texte.
         '@media (pointer:coarse){'
-        '.lien-fl,.pied a{min-height:44px;display:inline-flex;align-items:center}'
+        '.lien-fl,.pied a,.ariane a,.bandeau a,.logo,.som a,.rp-som a,'
+        '.carte__corps h3 a,.carte__c h3 a,.rp-carte__corps h3 a'
+        '{min-height:44px;display:inline-flex;align-items:center}'
         '}')
+    # Le bloc correctif se pose EN DERNIER, juste avant </head>, et pas dans
+    # la première feuille venue : la greffe du contenu repris ajoute la
+    # sienne après celle du gabarit, et à poids égal c'est la dernière qui
+    # gagne. Posé trop tôt, le plancher s'arrêtait à la porte du corps
+    # transplanté — « Poursuivre le voyage » restait à 12,5 px.
+    feuille = '<style data-reparation="ae-1">%s</style>' % regle
+    if '</head>' in h:
+        return h.replace('</head>', feuille + '</head>', 1), 1
     return re.subn(r'(</style>)', lambda m: regle + m.group(1), h, count=1)
 
 
@@ -278,7 +348,8 @@ REPARATIONS = [
     ('durée détournée retirée', duree_detournee),
     ('mur d’avis replié sur mobile', mur_avis_mobile),
     ('bloc d’appel au devis en double retiré', bloc_repete),
-    ('contraste du pied et des avis', contraste_pied),
+    ('titres de colonne latérale en h3', titres_colonne),
+    ('contraste, plancher 14 px, cibles tactiles', contraste_pied),
 ]
 
 # ── ce qui demande un arbitrage, et qu'on ne touche donc pas ─────────────
