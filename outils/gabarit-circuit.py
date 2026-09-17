@@ -81,7 +81,7 @@ def _interieur(html, ouvrant):
     if not m:
         return None
     profondeur, i = 1, m.end()
-    for t in re.finditer(r'<(/?)div\b', html[m.end():]):
+    for t in re.finditer(r'<(/?)div\b[^>]*>', html[m.end():]):
         profondeur += 1 if not t.group(1) else -1
         if profondeur == 0:
             return m.end(), m.end() + t.start()

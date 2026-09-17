@@ -237,7 +237,7 @@ def blocs_dupliques(h, minimum=700):
         """
         for m in re.finditer(r'<div class="(?:mur|carrousel)[^"]*"', texte):
             profondeur, i = 0, m.start()
-            for t in re.finditer(r'<(/?)div\b', texte[m.start():]):
+            for t in re.finditer(r'<(/?)div\b[^>]*>', texte[m.start():]):
                 profondeur += 1 if not t.group(1) else -1
                 if profondeur == 0:
                     i = m.start() + t.end()
@@ -591,6 +591,11 @@ def contraste_pied(h):
         '{font-size:14px}'
         '.pied span,.pied a,.pied li,.bandeau span,.bandeau strong,.bandeau a'
         '{font-size:14px}'
+        # Le marqueur « à remplir » et les titres du pied de colonne
+        # restaient sous le plancher, et le doré du pied ne tenait pas le
+        # seuil sur le fond clair du bloc « guide de voyage ».
+        '.aremplir,.rp-aremplir{font-size:14px}'
+        '.guide h4,.rp-guide h4,.guide__t,.rp-guide__t{color:#116676}'
         # Le titre de la colonne latérale est passé de h4 à h3 pour ne plus
         # sauter de niveau. Sa mise en forme était accrochée à la balise :
         # sans ces deux lignes il reprenait la couleur des h3 du corps —
