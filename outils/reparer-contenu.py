@@ -16,6 +16,7 @@ que portent les pages, et qu'il faut la relire plutôt que la garder au chaud.
 """
 
 import argparse
+import html as H
 import os
 import re
 
@@ -370,6 +371,76 @@ def plancher_typo(h):
     return re.sub(r'font-size:\s*(\d*\.?\d+)(px|rem|em|%)', une, h), n[0]
 
 
+# Les quatre fiches dont la refonte avait perdu le prix. Relevé sur les
+# pages en ligne le 17 septembre 2026, avec leur mention « / Personne » :
+#   /programs/campement-au-coeur-du-mont-moise/            290 €
+#   /programs/decouverte-de-la-nubie/                      895 €
+#   /programs/le-caire-et-croisiere-sur-un-bateau-a-voile/ 1895 €
+#   /programs/roadtrip-en-egypte/                          1635 €
+# Rien n'est calculé ni déduit : ce sont les montants que le site affiche.
+PRIX_MANQUANTS = {
+    'Coucher de soleil et nuit sur le mont Moïse': '290 €',
+    'Découverte de la Nubie': '895 €',
+    'Le Caire et croisière sur un bateau à voile': '1895 €',
+    'Roadtrip en Égypte sur mesure': '1635 €',
+}
+
+
+def _texte(x):
+    return re.sub(r'\s+', ' ', H.unescape(re.sub(r'<[^>]+>', ' ', x))).strip()
+
+
+def prix_par_personne(h):
+    """Le prix, par personne, visible sur chaque fiche séjour.
+
+    Quatre fiches sur quatorze sortaient sans prix — sur les pages qui
+    vendent. Et là où il apparaissait, le repère disait « À partir de »
+    sans dire de quoi : le site en ligne précise « / Personne », la refonte
+    l'avait laissé tomber.
+
+    Le repère manquant est posé AVANT la durée, comme sur les dix autres
+    fiches, pour que les quatorze se lisent de la même façon.
+    """
+    m = re.search(r'<section class="[^"]*reperes[^"]*">.*?</section>', h, re.S)
+    if not m:
+        return h, 0
+    bloc, n = m.group(0), 0
+
+    # Le libellé, sur toutes les fiches qui portent déjà un prix.
+    bloc, k = re.subn(r'<small>À partir de</small>',
+                      '<small>Par personne, à partir de</small>', bloc)
+    n += k
+
+    if '<small>Par personne' not in bloc:
+        titre = re.search(r'<h1[^>]*>(.*?)</h1>', h, re.S)
+        nom = _texte(titre.group(1)) if titre else ''
+        prix = PRIX_MANQUANTS.get(nom)
+        if prix:
+            picto = re.search(r'<svg[^>]*>.*?</svg>', bloc, re.S)
+            li = ('<li>%s<small>Par personne, à partir de</small><b>%s</b></li>'
+                  % (picto.group(0) if picto else '', prix))
+            bloc = bloc.replace('<ul>', '<ul>' + li, 1)
+            n += 1
+    return (h[:m.start()] + bloc + h[m.end():], n) if n else (h, 0)
+
+
+def hero_sans_photo(h):
+    """Les articles de blog n'ont plus de photo dans leur bandeau de titre.
+
+    Demande de Rémi du 17/09 : pas d'image en avant sur les guides, et des
+    images dans le corps seulement là où elles apportent quelque chose. Le
+    bandeau ne perd rien à l'œil — il porte déjà un fond bleu nuit, et la
+    photo vivait sous un dégradé à 94 % d'opacité qui la rendait presque
+    invisible.
+
+    On reconnaît un guide à son fil d'Ariane : « Guides pratiques ». C'est
+    plus sûr que le nom du fichier, que cette fonction ne voit pas.
+    """
+    if 'Guides pratiques' not in h:
+        return h, 0
+    return re.subn(r'<div class="chapeau__bg">.*?</div>\s*', '', h, flags=re.S)
+
+
 def bouton_annotations(h):
     """Le bouton d'annotation des maquettes n'a rien à faire sur une page montrée.
 
@@ -660,6 +731,8 @@ REPARATIONS = [
     ('bloc de contenu dupliqué retiré', blocs_dupliques),
     ('bleu des titres au seuil de contraste', bleu_des_titres),
     ('plancher typographique à 14 px', plancher_typo),
+    ('prix par personne sur les fiches séjour', prix_par_personne),
+    ('photo du bandeau retirée sur les guides', hero_sans_photo),
     ('bouton d’annotation des maquettes retiré', bouton_annotations),
     ('colonne latérale sans feuille de style', colonne_sans_style),
     ('titres de colonne latérale en h3', titres_colonne),

@@ -65,6 +65,29 @@ def _charte():
     return _CHARTE[0]
 
 
+def _interieur(html, ouvrant):
+    """Les bornes du contenu d'un conteneur, comptées en profondeur.
+
+    « <div class="acc">.*?</div> » paraît juste et ne l'est pas : le point
+    d'interrogation arrête la recherche au PREMIER </div>, qui est celui du
+    premier accordéon, pas celui du conteneur. La FAQ de la page remplaçait
+    donc un morceau de la première question, et les quatre questions
+    suivantes du moule restaient là — sans conteneur pour les habiller, et
+    surtout parlant de plongée en Mer Rouge au bas d'une page Désert noir.
+
+    Rend (début du contenu, fin du contenu), ou None.
+    """
+    m = re.search(re.escape(ouvrant), html)
+    if not m:
+        return None
+    profondeur, i = 1, m.end()
+    for t in re.finditer(r'<(/?)div\b', html[m.end():]):
+        profondeur += 1 if not t.group(1) else -1
+        if profondeur == 0:
+            return m.end(), m.end() + t.start()
+    return None
+
+
 def _prem(motif, h, defaut=''):
     m = re.search(motif, h, re.S)
     return m.group(1).strip() if m else defaut
@@ -597,9 +620,11 @@ def section_faq(moule, p):
         return '<section class="pg-sec pg-sec--fond"><div class="wrap">' + s[coupe:] if coupe > 0 else ''
     fin = s.find('<p class="eyebrow">Avant de réserver</p>')
     tete, reste = (s[:fin], s[fin:]) if fin > 0 else (s, '')
-    tete = re.sub(r'(<div class="acc">).*?(</div>)',
-                  lambda m: m.group(1) + ''.join(p['faq']) + m.group(2),
-                  tete, count=1, flags=re.S)
+    bornes = _interieur(tete, '<div class="acc">')
+    if not bornes:
+        return s
+    debut, fin_acc = bornes
+    tete = tete[:debut] + ''.join(p['faq']) + tete[fin_acc:]
     return tete + reste
 
 
@@ -615,6 +640,17 @@ def monter(moule, p, famille, source=None):
     # encadré sur une page profil, une grille de deux colonnes dans le
     # gabarit circuit — coupait chaque question de sa réponse.
     repris, feuille = _greffe.greffer(p['corps'], p['css'])
+    # La grille des guides tient trois colonnes : le rail du sommaire, la
+    # colonne de lecture, la colonne latérale. Une page qui n'a pas de
+    # sommaire n'a que deux enfants : son texte tombait alors dans le rail
+    # — 222 px de large — et sa colonne latérale prenait la place de la
+    # lecture. C'est ce qui rendait le hub blog illisible sous ses cartes.
+    if 'rp-art' in repris and 'rp-som' not in repris:
+        feuille = feuille.replace(
+            '</style>',
+            '.rp-art{grid-template-columns:minmax(0,1fr) 300px}'
+            '@media (max-width:900px){.rp-art{grid-template-columns:minmax(0,1fr)}}'
+            '</style>')
     corps = [section_cartes(moule, p, famille, source), repris]
     for surtitre in ('Pourquoi nous', 'Sur mesure'):
         bloc = moule.section(surtitre)
