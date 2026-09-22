@@ -73,7 +73,7 @@ SOUS_TITRE = 'Organiser, payer, modifier son voyage'
 
 FEUILLE = (
     '<style data-faq="unique">'
-    '.pg-sec .faq{margin:26px 0 0;max-width:820px;'
+    '.pg-sec .faqu{margin:26px 0 0;max-width:820px;'
     'border:1px solid var(--ligne);border-radius:var(--r-l);background:#fff;overflow:hidden}'
     '.pg-sec .faq__q{border-bottom:1px solid var(--ligne)}'
     '.pg-sec .faq__q:last-child{border-bottom:0}'
@@ -84,7 +84,7 @@ FEUILLE = (
     '.pg-sec .faq__q>summary::after{content:"+";flex:0 0 auto;'
     'font-family:"Manrope",sans-serif;font-size:1.3rem;font-weight:700;'
     'line-height:1;color:var(--teal-txt)}'
-    '.pg-sec .faq__q[open]>summary::after{content:"\2212"}'
+    '.pg-sec .faq__q[open]>summary::after{content:"\\2212"}'
     '.pg-sec .faq__q>summary:hover{background:var(--teal-fond)}'
     '.pg-sec .faq__q>summary:focus-visible{outline:3px solid var(--or);outline-offset:-3px}'
     '.pg-sec .faq__r{padding:0 20px 18px}'
@@ -93,7 +93,7 @@ FEUILLE = (
     '.pg-sec .faq__r ul,.pg-sec .faq__r ol{margin:0 0 10px;padding-left:22px;color:var(--texte)}'
     '.pg-sec .faq__t{margin:26px 0 0;font-family:"Manrope",sans-serif;font-size:.78rem;'
     'font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--teal-txt)}'
-    '.pg-sec .faq__t+.faq{margin-top:10px}'
+    '.pg-sec .faq__t+.faqu{margin-top:10px}'
     '</style>')
 
 
@@ -149,7 +149,12 @@ def questions_de(bloc):
     # Forme 2 : <h3 class="mef-q">Q</h3> puis les <p>/<ul> jusqu'au titre suivant
     for m in re.finditer(r'<h3[^>]*class="[^"]*mef-q[^"]*"[^>]*>(.*?)</h3>', bloc, re.S):
         suite = bloc[m.end():]
-        fin = re.search(r'<(?:h[1-4]|details|section)\b', suite)
+        # La borne doit aussi reconnaître une balise FERMANTE : « </section »
+        # ne correspond pas à « <section\b ». Sans elle, la réponse de la
+        # dernière question d'une section avalait le </section> qui la
+        # suivait — et la section unifiée le reposait ailleurs, laissant la
+        # page avec une fermeture de plus que d'ouvertures.
+        fin = re.search(r'<(?:h[1-4]|details|section)\b|</(?:section|main|article)\b', suite)
         out.append((m.group(1), suite[:fin.start()] if fin else suite[:2500]))
     return out
 
@@ -166,7 +171,7 @@ def est_faq(section):
 def rendre(propres, communes):
     """La section unique, dans la forme que toutes les pages partagent."""
     def accordeon(couples):
-        return '<div class="faq">%s</div>' % ''.join(
+        return '<div class="faqu">%s</div>' % ''.join(
             '<details class="faq__q"><summary>%s</summary>'
             '<div class="faq__r">%s</div></details>'
             % (q, r) for q, r in couples)
@@ -183,10 +188,33 @@ def rendre(propres, communes):
 
 def unifier(h):
     """Une page, une FAQ. Rend (page, nombre de blocs fondus, questions)."""
-    bornes = []
-    for m in re.finditer(r'<section\b[^>]*>.*?</section>', h, re.S):
-        if est_faq(m.group(0)):
-            bornes.append((m.start(), m.end(), m.group(0)))
+    # Les <section> sont IMBRIQUÉES sur plusieurs pages. Un
+    # « <section…>.*?</section> » non gourmand s'arrête à la première
+    # fermeture venue — celle de la section INTÉRIEURE. La section
+    # extérieure était alors coupée en deux : la moitié qui portait treize
+    # questions n'était vue par personne, et surtout, en retirant la
+    # « section » ainsi délimitée on emportait une ouverture sans sa
+    # fermeture. Le balisage des pages profil est passé de 10 ouvertures
+    # et 10 fermetures à 9 et 10. Le navigateur rattrape, pas les outils.
+    #
+    # On relève donc TOUTES les sections, à tous les niveaux, en comptant
+    # la profondeur ; on garde celles qui posent des questions ; puis on
+    # écarte celles qui en contiennent une autre déjà gardée. Reste la
+    # section la plus intérieure qui porte vraiment la FAQ.
+    toutes = []
+    i = 0
+    while True:
+        d = h.find('<section', i)
+        if d < 0:
+            break
+        f_ = _fin_balise(h, d, 'section')
+        if f_ > 0:
+            toutes.append((d, f_, h[d:f_]))
+        i = d + 8
+    gardees = [t for t in toutes if est_faq(t[2])]
+    bornes = [t for t in gardees
+              if not any(u is not t and t[0] < u[0] and u[1] <= t[1] for u in gardees)]
+    bornes.sort()
     if not bornes:
         return h, 0, 0
 
@@ -205,9 +233,10 @@ def unifier(h):
     # De la dernière à la première, pour que les positions restent justes.
     for n, (deb, fin, _) in enumerate(reversed(bornes)):
         h = h[:deb] + (neuve if n == len(bornes) - 1 else '') + h[fin:]
-    if 'data-faq="unique"' not in h:
-        h = h.replace('</head>', FEUILLE + '</head>', 1) if '</head>' in h \
-            else FEUILLE + h
+    h = re.sub(r'<style data-faq="unique">.*?</style>', '', h, flags=re.S)
+    # En DERNIER : à égalité de spécificité, c'est l'ordre qui tranche, et
+    # le moule pose ses propres règles d'accordéon plus bas dans la page.
+    h = h + FEUILLE
     return h, len(bornes), len(vues)
 
 
