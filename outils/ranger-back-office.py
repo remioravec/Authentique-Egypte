@@ -56,7 +56,8 @@ FAMILLES = [
     ('refonte-guides',       5, 'Refonte · 5 · Gabarit guide — les articles du blog', 'Guide'),
     ('refonte-blog',         6, 'Refonte · 6 · Gabarit blog — le sommaire des guides', 'Blog'),
     ('refonte-accueil',      7, 'Refonte · 7 · Gabarit accueil', 'Accueil'),
-    ('refonte-agence',       8, 'Refonte · 8 · Gabarit qui sommes-nous', 'Agence'),
+    # Le gabarit « qui sommes-nous » est mis de côté depuis le 22/09/2026,
+    # à la demande de Rémi. Page et dossier sont à la corbeille du CMS.
 ]
 
 # Le nom court d'un circuit, tel qu'il servira de préfixe aux séjours.

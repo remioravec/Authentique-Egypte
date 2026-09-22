@@ -54,7 +54,6 @@ TYPES = [
     ('guide-',       5, 'Refonte · 5 · Gabarit guide — les articles du blog', 'refonte-guides'),
     ('hub-',         6, 'Refonte · 6 · Gabarit blog — le sommaire des guides', 'refonte-blog'),
     ('accueil-',     7, 'Refonte · 7 · Gabarit accueil', 'refonte-accueil'),
-    ('agence-',      8, 'Refonte · 8 · Gabarit qui sommes-nous', 'refonte-agence'),
 ]
 
 # Ce qui ne fait plus partie de la refonte, et qu'il ne faut donc pas
@@ -62,7 +61,14 @@ TYPES = [
 # rien — mais l'outil ne les repose plus : sans cette liste, chaque
 # déploiement ressuscitait les mentions légales et l'ancienne page d'accueil
 # que l'agence avait fait retirer, le lendemain de leur mise à la corbeille.
-HORS_REFONTE = ('legal-',)
+#
+# « agence- » : Rémi a mis la page « qui sommes-nous » de côté le
+# 22/09/2026 — « retire la page agence de la refonte pour le moment ».
+# La page et son dossier sont à la corbeille du CMS, pas supprimés, et
+# outils/gabarit-agence.py reste au dépôt avec son travail : photos,
+# carrousel, apparition au défilement. Pour la remettre, il suffit de
+# rendre son préfixe à TYPES au rang 8 et de relancer le déploiement.
+HORS_REFONTE = ('legal-', 'agence-')
 
 # L'accueil garde la version que Rémi a choisie le 10/09 : son dossier est
 # créé et la page y est rangée, mais son CONTENU n'est jamais réécrit. Le
