@@ -38,9 +38,12 @@ dep = SourceFileLoader('dep', os.path.join(RACINE, 'outils', 'deployer.py')).loa
 
 MERE = 7642
 
+# Un dossier par GABARIT, et le même titre que celui que pose le déploiement
+# — les deux outils écrivaient des titres différents pour les mêmes dossiers,
+# et le dernier passé gagnait.
 DOSSIERS = [
-    ('circuits', 'Refonte · 2 · Circuits — pages catégorie', 2),
-    ('sejours', 'Refonte · 3 · Séjours — fiches programme', 3),
+    ('circuits', 'Refonte · 1 · Gabarit circuit — les pages qui LISTENT des séjours', 1),
+    ('sejours', 'Refonte · 2 · Gabarit programme — la FICHE d’un séjour, prix et itinéraire', 2),
 ]
 
 # Les familles déployées par outils/deployer-refonte.py. Le rangement leur
@@ -48,9 +51,12 @@ DOSSIERS = [
 # qui ne bouge pas. « Réf » est en dernier : ce sont des pages d'essai, pas
 # des livrables, et elles n'ont pas à s'intercaler entre deux familles du site.
 FAMILLES = [
-    ('refonte-destinations', 4, 'Refonte · 4 · Destinations', 'Destination'),
-    ('refonte-profils',      5, 'Refonte · 5 · Profils de voyageur', 'Profil'),
-    ('refonte-guides',       6, 'Refonte · 6 · Guides et articles', 'Guide'),
+    ('refonte-destinations', 3, 'Refonte · 3 · Gabarit destination — un lieu', 'Destination'),
+    ('refonte-profils',      4, 'Refonte · 4 · Gabarit qui part — un profil de voyageur', 'Profil'),
+    ('refonte-guides',       5, 'Refonte · 5 · Gabarit guide — les articles du blog', 'Guide'),
+    ('refonte-blog',         6, 'Refonte · 6 · Gabarit blog — le sommaire des guides', 'Blog'),
+    ('refonte-accueil',      7, 'Refonte · 7 · Gabarit accueil', 'Accueil'),
+    ('refonte-agence',       8, 'Refonte · 8 · Gabarit qui sommes-nous', 'Agence'),
 ]
 
 # Le nom court d'un circuit, tel qu'il servira de préfixe aux séjours.
@@ -275,7 +281,15 @@ def main():
         pages = sorted(enfants.get(d['id'], []), key=lambda x: nom_nu(titre_de(x)))
         print('\n→ %s (%d)' % (titre, len(pages)))
         for n, page in enumerate(pages, 1):
-            t = 'Refonte · %s · %s' % (prefixe, nom_nu(titre_de(page)))
+            nom = nom_nu(titre_de(page))
+            # Le préfixe de famille sert à reconnaître une page hors de son
+            # dossier, dans une recherche. Il ne sert à rien quand il répète
+            # le nom — « Refonte · Accueil · Accueil » — ni quand la famille
+            # n'a qu'une page : là, le dossier dit déjà tout.
+            if len(pages) == 1 or nom.lower().startswith(prefixe.lower()):
+                t = 'Refonte · %s' % nom
+            else:
+                t = 'Refonte · %s · %s' % (prefixe, nom)
             if poser(page, t, d['id'], n, a.essai):
                 changes += 1
             print('   %-72s id %d' % (t[:72], page['id']))

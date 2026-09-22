@@ -43,11 +43,16 @@ MOIS = ['janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet',
 # mauvaise famille — c'est arrivé, « pages d'essai » s'est retrouvé sous
 # les destinations le jour où elles ont pris le n° 3.
 LEGENDES = {
-    'refonte-types-de-s-jour': 'Les pages qui listent les séjours : la page mère et les cinq circuits.',
-    'refonte-programmes': 'Les quatorze fiches séjour, groupées par circuit.',
+    'refonte-types-de-s-jour': 'Les pages qui LISTENT des séjours : la mère et les cinq circuits. '
+                               'On y compare des listes.',
+    'refonte-programmes': 'La FICHE d’un séjour : son prix, ses étapes jour par jour, ce qui est '
+                          'inclus. On y compare des produits.',
     'refonte-destinations': 'Une page par lieu : ce qu’on y voit, quand y aller, combien de temps.',
     'refonte-profils': 'Les pages qui répondent à « je pars seul, en couple, en famille, en fauteuil ».',
-    'refonte-guides': 'Les articles du blog et le sommaire qui les rassemble.',
+    'refonte-guides': 'Les vingt-deux articles du blog, tous sur le même gabarit.',
+    'refonte-blog': 'Le sommaire qui rassemble les guides — gabarit circuit, pas article.',
+    'refonte-accueil': 'La page d’accueil, version du 10 septembre.',
+    'refonte-agence': 'La page « qui sommes-nous », bâtie sur l’ordre du marché.',
     'refonte-institutionnel': 'L’accueil, l’agence, les mentions légales.',
     'refonte-maquettes-de-r-f-rence': 'Les pages d’essai qui ont servi à caler la charte et le gabarit.',
 }

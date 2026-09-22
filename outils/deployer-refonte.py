@@ -32,14 +32,29 @@ conv = SourceFileLoader('conv', os.path.join(RACINE, 'outils', 'vers-page-wp.py'
 
 MERE = 7642
 
+# Un dossier par GABARIT, et son titre dit ce qu'il contient. « Circuit »
+# et « programme » ne se distinguaient pas à la lecture — les deux parlent
+# de séjours. Le titre tranche désormais : l'un LISTE, l'autre est la FICHE
+# d'un seul séjour, avec son prix et son itinéraire.
+#
+# Un dossier par GABARIT, et rien d'autre. Le back-office se lit alors
+# comme la refonte se pense : chaque dossier réunit des pages sœurs, bâties
+# sur le même moule, qu'on peut donc comparer l'une à l'autre sans les
+# chercher. Le hub blog quitte les guides — il porte le gabarit circuit,
+# eux le gabarit article — et l'accueil comme la page agence reçoivent leur
+# dossier plutôt que de flotter parmi les dossiers, où l'œil les prenait
+# pour des rubriques vides.
+#
 # préfixe de fichier → (rang du dossier, titre du dossier, slug du dossier)
 TYPES = [
-    ('famille-',     1, 'Refonte · 1 · Circuits — pages catégorie', 'refonte-types-de-s-jour'),
-    ('programme-',   2, 'Refonte · 2 · Séjours — fiches programme', 'refonte-programmes'),
-    ('destination-', 3, 'Refonte · 3 · Destinations', 'refonte-destinations'),
-    ('qui-part-',    4, 'Refonte · 4 · Profils de voyageur', 'refonte-profils'),
-    ('guide-',       5, 'Refonte · 5 · Guides et articles', 'refonte-guides'),
-    ('hub-',         5, 'Refonte · 5 · Guides et articles', 'refonte-guides'),
+    ('famille-',     1, 'Refonte · 1 · Gabarit circuit — les pages qui LISTENT des séjours', 'refonte-types-de-s-jour'),
+    ('programme-',   2, 'Refonte · 2 · Gabarit programme — la FICHE d’un séjour, prix et itinéraire', 'refonte-programmes'),
+    ('destination-', 3, 'Refonte · 3 · Gabarit destination — un lieu', 'refonte-destinations'),
+    ('qui-part-',    4, 'Refonte · 4 · Gabarit qui part — un profil de voyageur', 'refonte-profils'),
+    ('guide-',       5, 'Refonte · 5 · Gabarit guide — les articles du blog', 'refonte-guides'),
+    ('hub-',         6, 'Refonte · 6 · Gabarit blog — le sommaire des guides', 'refonte-blog'),
+    ('accueil-',     7, 'Refonte · 7 · Gabarit accueil', 'refonte-accueil'),
+    ('agence-',      8, 'Refonte · 8 · Gabarit qui sommes-nous', 'refonte-agence'),
 ]
 
 # Ce qui ne fait plus partie de la refonte, et qu'il ne faut donc pas
@@ -47,11 +62,15 @@ TYPES = [
 # rien — mais l'outil ne les repose plus : sans cette liste, chaque
 # déploiement ressuscitait les mentions légales et l'ancienne page d'accueil
 # que l'agence avait fait retirer, le lendemain de leur mise à la corbeille.
-HORS_REFONTE = ('legal-', 'accueil-')
+HORS_REFONTE = ('legal-',)
 
-# La page d'accueil et la page agence ne vivent pas dans un dossier : ce
-# sont des pages uniques, filles directes de la mère, à leur rang.
-SEULES = {'agence-': (7, 'Refonte · 7 · L’agence')}
+# L'accueil garde la version que Rémi a choisie le 10/09 : son dossier est
+# créé et la page y est rangée, mais son CONTENU n'est jamais réécrit. Le
+# fichier local en porte une autre, plus ancienne.
+NE_PAS_REECRIRE = ('accueil-',)
+
+# Plus de page posée seule sous la mère : chaque gabarit a son dossier.
+SEULES = {}
 
 # Les liens relatifs des maquettes — « index.html », « devis.html »… — ne
 # mènent nulle part une fois la page dans WordPress. Mesurés : 44 à 58
@@ -249,12 +268,20 @@ def main():
             # l'autre, et une troisième page restant sur une version périmée.
             # L'égalité stricte passe donc en premier, et le préfixe ne sert
             # que faute de mieux.
-            if slug in existantes:
-                page = existantes[slug]
+            #
+            # On cherche aussi parmi les filles directes de la mère : jusqu'ici
+            # l'accueil et la page agence y vivaient sans dossier, avec un slug
+            # qui ne suit pas la règle — « refonte-accueil-version-artefact ».
+            # Sans cette recherche, le passage au rangement par gabarit en
+            # aurait créé des doubles au lieu de les déplacer.
+            ou = dict(existantes_mere, **existantes)
+            if slug in ou:
+                page = ou[slug]
             else:
-                candidats = [s for s in existantes
-                             if slug.startswith(s) or s.startswith(slug)]
-                page = existantes[max(candidats, key=len)] if candidats else None
+                candidats = [x for x in ou
+                             if slug.startswith(x) or x.startswith(slug)
+                             or x.startswith('refonte-' + prefixe.rstrip('-'))]
+                page = ou[max(candidats, key=len)] if candidats else None
 
             attendu = len(re.findall(r'<img', contenu))
             if a.essai:
@@ -262,7 +289,19 @@ def main():
                       ('→ #%d' % page['id']) if page else '→ à créer'))
                 continue
             if page:
-                ok = ecrire(page['id'], champs, r'<img', attendu, 'images')
+                # Le rangement par gabarit : on repose le dossier et le rang
+                # à chaque passage, sinon une page déplacée à la main y
+                # resterait. Le titre, lui, reste l'œuvre du rangement.
+                champs = dict(champs, parent=dossiers[slug_dossier], menu_order=rang)
+                # L'accueil garde la version choisie par Rémi : on la range,
+                # on ne la réécrit pas.
+                if prefixe in NE_PAS_REECRIRE:
+                    champs.pop('content', None)
+                    champs.pop('template', None)
+                    dep.appel('POST', '/pages/%d' % page['id'], champs)
+                    ok, attendu = True, 0
+                else:
+                    ok = ecrire(page['id'], champs, r'<img', attendu, 'images')
                 pid = page['id']
             else:
                 r = dep.appel('POST', '/pages', dict(champs_neufs, slug=slug))
