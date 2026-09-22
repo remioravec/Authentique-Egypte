@@ -162,6 +162,13 @@ def plier_faq(h):
     bloc = re.sub(r'<button type="button" class="faq__plus".*?</button>', '',
                   bloc, flags=re.S)
 
+    # Le titre de la FAQ a perdu son ancre quand la FAQ a été refondue, et
+    # le lien « Le détail, question par question » de la section tarif
+    # pointe toujours dessus : dix fiches avec un lien qui ne mène nulle
+    # part. On la repose.
+    if 'id="t-faq"' not in bloc:
+        bloc = re.sub(r'<h2(?![^>]*\bid=)>', '<h2 id="t-faq">', bloc, count=1)
+
     ouvertures = [m.start() for m in re.finditer(r'<details class="faq__q">', bloc)]
     total = len(ouvertures)
     if not total:
@@ -187,7 +194,10 @@ def plier_faq(h):
 
     if bloc == h[s_:f_]:
         return h, []
-    return h[:s_] + bloc + h[f_:], ['FAQ pliée (%d/%d)' % (min(VISIBLES, total), total)]
+    quoi = ['FAQ pliée (%d/%d)' % (min(VISIBLES, total), total)]
+    if 'id="t-faq"' not in h[s_:f_] and 'id="t-faq"' in bloc:
+        quoi.append('ancre #t-faq reposée')
+    return h[:s_] + bloc + h[f_:], quoi
 
 
 def sans_titre_milieu(h):
