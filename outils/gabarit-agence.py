@@ -33,6 +33,7 @@ personne ne la relise.
 
 import argparse
 import html as H
+import json
 import os
 import re
 import sys
@@ -92,8 +93,14 @@ def a_remplir(cle):
 
 
 def source(url, quoi):
-    return ('<p class="prov">Repris de <a href="%s" target="_blank" rel="noopener">%s</a>.</p>'
-            % (url, H.escape(quoi)))
+    """D'où vient le bloc, en légende.
+
+    « Repris de » imposait un complément féminin singulier : le renvoi aux
+    mentions légales s'affichait « Repris de les mentions légales du site ».
+    Deux points ne se trompent jamais de genre.
+    """
+    return ('<p class="prov">Source&nbsp;: <a href="%s" target="_blank" '
+            'rel="noopener">%s</a></p>' % (url, H.escape(quoi)))
 
 
 # Les morceaux déjà pris. Sans ce registre, deux ancres proches rendaient
@@ -154,6 +161,7 @@ def bloc_apres(h, ancre, fin='</section>', bornes=()):
                     break
                 fin_boite = f2
             bloc = h[boite:fin_boite]
+            bloc = re.sub(r'<p class="(?:atelier|prov)">.*?</p>', '', bloc, flags=re.S)
             for vu in _PRIS:
                 if vu and vu in bloc:
                     bloc = bloc.replace(vu, '')
@@ -174,6 +182,13 @@ def bloc_apres(h, ancre, fin='</section>', bornes=()):
         if prochaine > debut and (j < 0 or prochaine < j):
             j, fin = prochaine, ''
     bloc = h[debut:j + len(fin)] if j > 0 else h[debut:debut + 1600]
+    # La page reprise a déjà servi de source à une génération précédente :
+    # elle en a gardé nos marqueurs d'atelier (« à remplir ») et nos
+    # légendes de provenance. Retransplantés, ils s'ajoutaient à ceux que
+    # le gabarit repose lui-même — la section « engagements » affichait
+    # deux fois « formulation de l'engagement tarifaire ». Ces marques
+    # appartiennent au gabarit, pas au contenu : il les remet où il faut.
+    bloc = re.sub(r'<p class="(?:atelier|prov)">.*?</p>', '', bloc, flags=re.S)
     # La colonne latérale de la page reprise n'a rien à faire dans une
     # section : celle-ci est posée une fois, à sa place, par le gabarit.
     # Quatre exemplaires traînaient encore après la correction du
@@ -206,13 +221,41 @@ def bloc_apres(h, ancre, fin='</section>', bornes=()):
     return bloc
 
 
+def _cle(x):
+    """Un titre réduit à ce qui permet de le reconnaître : la casse et la
+    ponctuation de fin ne distinguent pas deux fois le même titre."""
+    return re.sub(r'[\s.:!?…]+$', '', texte(x)).casefold()
+
+
+def sans_titre_repete(corps, *titres):
+    """Retire du bloc les titres qui redisent celui de la section.
+
+    Les blocs viennent de la page en ligne AVEC leur propre titre. Posés
+    dans une section qui porte déjà le sien, ils le donnaient à lire deux
+    fois de suite : « Notre histoire / Une aventure née d'un regard
+    curieux » puis, trois lignes plus bas, « Notre histoire / Une aventure
+    née d'un regard curieux ». La page reprise laissait en plus traîner un
+    « Notre Histoire » seul, sans rien après — une étiquette, pas un titre.
+
+    On ne retire QUE l'égalité stricte : un titre qui dit autre chose,
+    même de près, reste. C'est du dédoublonnage, pas de la réécriture.
+    """
+    cles = {_cle(t) for t in titres if t}
+
+    def juger(m):
+        return '' if _cle(m.group(2)) in cles else m.group(0)
+
+    return re.sub(r'<(h[1-4]|p)\b[^>]*>(.*?)</\1>', juger, corps, flags=re.S)
+
+
 def section(surtitre, titre, corps, fond=False):
     # « creme » est le fond doré de la charte : Mélanie l'a demandé pour les
     # engagements, fil #8511. « True » reste le gris clair d'alternance.
     variante = {'creme': ' pg-sec--creme', True: ' pg-sec--fond'}.get(fond, '')
     return ('<section class="pg-sec%s"><div class="wrap">'
             '<p class="eyebrow">%s</p><h2>%s</h2>%s</div></section>'
-            % (variante, H.escape(surtitre), H.escape(titre), corps))
+            % (variante, H.escape(surtitre), H.escape(titre),
+               sans_titre_repete(corps, surtitre, titre)))
 
 
 def accroche(agence):
@@ -239,24 +282,276 @@ def accroche(agence):
 # Les titres qui servent d'ancre dans la page reprise, dans l'ordre. Chaque
 # bloc s'arrête au suivant : c'est ce qui empêche un morceau de partir deux
 # fois.
-ANCRES = ('Notre histoire', 'Une équipe locale engagée', 'Contact initial',
+ANCRES = ('Notre histoire', 'Notre engagement envers vous',
+          'Une équipe locale engagée', 'Contact initial',
           'Des voyages flexibles', 'Le Figaro', 'FAQ - Questions')
 
 
-# Les fiches de l'équipe n'existaient pas dans la charte : elles suivent la
-# forme des cartes du site — fond blanc, filet, même rayon — pour ne pas
-# introduire un objet de plus.
-FEUILLE_EQUIPE = (
-    '<style data-agence="equipe">'
-    '.equipe{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));'
-    'gap:20px;margin:26px 0 0}'
-    '.pers{background:#fff;border:1px solid var(--ligne);border-radius:var(--r-l);'
-    'padding:22px}'
-    '.pers h3{margin:0 0 4px;font-size:1.08rem;color:var(--nuit-900)}'
-    '.pers__r{margin:0 0 10px;font-family:"Manrope",sans-serif;font-size:14px;'
-    'font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:#116676}'
-    '.pers p{margin:0;color:var(--texte);line-height:1.65}'
-    '</style>')
+# ---------------------------------------------------------------------------
+# La mise en page
+# ---------------------------------------------------------------------------
+#
+# Le montage produisait un balisage juste et une page illisible : sur les
+# soixante-deux classes du corps, CINQ n'avaient aucune règle — « atout »
+# treize fois, « atelier » six, « prov », « chiffres », « garanties ». Les
+# trois piliers, les quatre médias, les étapes de la méthode : tout tombait
+# en <h3> et <p> empilés sur 1180 px de large, soit cent quarante signes par
+# ligne, la moitié droite vide. Une page « montée » n'est pas une page
+# « mise en page ».
+#
+# Tout est scopé sous « .pg-sec » : le moule ne définit pour cette classe
+# que le fond et les marges, mais une règle d'élément nue perdrait contre
+# n'importe laquelle des siennes. Deux niveaux suffisent et évitent la
+# surenchère.
+FEUILLE_AGENCE = (
+    '<style data-agence="mise-en-page">'
+
+    # La mesure de lecture. C'est la correction qui se voit le plus : une
+    # colonne de texte qui court sur toute la largeur ne se lit pas.
+    '.pg-sec .wrap>p,.pg-sec .wrap>ul,.pg-sec .wrap>ol{max-width:68ch}'
+    '.pg-sec .wrap>h2+p,.pg-sec .lede{max-width:62ch}'
+    '.pg-sec .lede{margin:0 0 4px;font-size:1.14rem;line-height:1.6;color:var(--nuit-900)}'
+    '.pg-sec .wrap>h3,.pg-sec .wrap>h4{margin:28px 0 6px;font-family:"Archivo",system-ui,sans-serif;'
+    'font-size:1.12rem;font-weight:700;line-height:1.3;color:var(--nuit-900)}'
+    '.pg-sec .wrap>h3+p,.pg-sec .wrap>h4+p{margin-top:0}'
+
+    # Les chiffres-clés. Ils étaient en paragraphes courants : « 3493
+    # voyageurs accompagnés » se lisait comme une phrase perdue.
+    '.pg-sec .chiffres{display:flex;flex-wrap:wrap;gap:14px;margin:24px 0 20px;padding:0;max-width:none}'
+    '.pg-sec .chiffres b{display:flex;flex-direction:column;gap:2px;min-width:170px;'
+    'background:#fff;border:1px solid var(--ligne);border-top:3px solid var(--or);'
+    'border-radius:var(--r-l);padding:18px 22px;'
+    'font-family:"Manrope",sans-serif;font-size:2rem;font-weight:800;'
+    'line-height:1.1;color:var(--nuit-900);font-variant-numeric:tabular-nums}'
+    '.pg-sec .chiffres b span{font-size:.8rem;font-weight:700;letter-spacing:.08em;'
+    'text-transform:uppercase;color:var(--teal-txt)}'
+
+    # Les atouts : la grille de cartes. « auto-fit » plutôt qu'un nombre fixe
+    # de colonnes, parce que les suites vont de deux à quatre selon la
+    # section, et qu'une colonne vide est pire qu'une colonne de moins.
+    '.pg-sec .atouts{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));'
+    'gap:18px;margin:26px 0 0}'
+    '.pg-sec .atout{background:#fff;border:1px solid var(--ligne);border-radius:var(--r-l);'
+    'padding:24px;margin:0}'
+    '.pg-sec--fond .atout,.pg-sec--creme .atout{background:#fff}'
+    '.pg-sec .atout h3{margin:0 0 8px;font-size:1.08rem;line-height:1.3;'
+    'font-weight:700;color:var(--nuit-900)}'
+    '.pg-sec .atout p{margin:0;max-width:none;color:var(--texte);line-height:1.65}'
+
+    # Les étapes. Un parcours se numérote : « Contact initial » puis
+    # « Programme interactif » ne disaient pas qu'il y avait un ordre.
+    '.pg-sec .atouts--etapes{counter-reset:etape}'
+    '.pg-sec .atouts--etapes .atout{counter-increment:etape;padding-top:22px}'
+    '.pg-sec .atouts--etapes .atout::before{content:counter(etape);display:grid;'
+    'place-items:center;width:34px;height:34px;margin:0 0 12px;border-radius:50%;'
+    'background:var(--or-fond);color:#7A5605;'
+    'font-family:"Manrope",sans-serif;font-weight:800;font-size:.95rem}'
+
+    # La presse. Le nom du média est l'information, le titre de l'article
+    # vient après : on inverse donc la hiérarchie typographique.
+    '.pg-sec .atouts--presse{grid-template-columns:repeat(auto-fit,minmax(210px,1fr))}'
+    '.pg-sec .atouts--presse .atout{padding:20px 22px}'
+    '.pg-sec .atouts--presse .atout h3{margin:0 0 6px;'
+    'font-family:"Manrope",sans-serif;font-size:.8rem;font-weight:800;'
+    'letter-spacing:.1em;text-transform:uppercase;color:var(--teal-txt)}'
+    '.pg-sec .atouts--presse .atout p{font-size:1rem;color:var(--nuit-900);font-weight:500}'
+
+    # Les mentions juridiques : des lignes, pas des puces.
+    '.pg-sec .garanties{list-style:none;margin:22px 0 0;padding:0;max-width:640px;'
+    'background:#fff;border:1px solid var(--ligne);border-radius:var(--r-l)}'
+    '.pg-sec .garanties li{padding:14px 22px;border-bottom:1px solid var(--ligne);'
+    'color:var(--texte);line-height:1.5}'
+    '.pg-sec .garanties li:last-child{border-bottom:0}'
+    '.pg-sec .garanties b{color:var(--nuit-900)}'
+
+    # D'où vient le bloc. C'est une note de travail : elle doit se lire
+    # comme une légende, pas comme une phrase de la page.
+    '.pg-sec .prov{margin:18px 0 0;padding:0 0 0 12px;border-left:2px solid var(--ligne);'
+    'font-size:.86rem;line-height:1.5;color:#6B7A82}'
+    '.pg-sec .prov a{color:var(--teal-txt)}'
+
+    # Ce qui manque encore, et qu'on ne devine pas.
+    '.pg-sec .atelier{display:flex;align-items:flex-start;gap:10px;margin:18px 0 0;'
+    'padding:12px 16px;max-width:68ch;border:1px dashed var(--or);border-radius:10px;'
+    'background:var(--or-fond);color:#7A5605;font-size:.92rem;line-height:1.5}'
+    '.pg-sec .aremplir{flex:0 0 auto;border:0;background:#7A5605;color:#fff;'
+    'border-radius:999px;padding:2px 10px;'
+    'font-family:"Manrope",sans-serif;font-size:.7rem;font-weight:800;'
+    'letter-spacing:.06em;text-transform:uppercase}'
+
+    # L'équipe : les fiches suivent la forme des cartes du site — fond
+    # blanc, filet, même rayon — pour ne pas introduire un objet de plus.
+    '.pg-sec .equipe{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));'
+    'gap:18px;margin:26px 0 0}'
+    '.pg-sec .pers{background:#fff;border:1px solid var(--ligne);'
+    'border-radius:var(--r-l);padding:24px}'
+    '.pg-sec .pers h3{margin:0 0 4px;font-size:1.14rem;color:var(--nuit-900)}'
+    '.pg-sec .pers__r{margin:0 0 12px;font-family:"Manrope",sans-serif;font-size:14px;'
+    'font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--teal-txt)}'
+    '.pg-sec .pers p{margin:0;max-width:none;color:var(--texte);line-height:1.65}'
+
+    '@media (max-width:640px){'
+    '.pg-sec .chiffres b{min-width:0;flex:1 1 100%;font-size:1.7rem}'
+    '.pg-sec .atout,.pg-sec .pers{padding:20px}'
+    '}'
+    '</style>'
+)
+
+# Le nom court de la variante de grille, lu sur le surtitre de la section.
+# Il est lu là et pas posé au montage parce que les blocs viennent de la
+# page reprise : le gabarit sait ce qu'est la section, le bloc ne le sait pas.
+VARIANTES = {
+    'Comment ça se passe': ' atouts--etapes',
+    'Ils parlent de nous': ' atouts--presse',
+}
+
+
+def _fin_de_div(h, debut):
+    """La position juste après le </div> qui ferme le div ouvert en `debut`.
+
+    Compté en profondeur : un « .*?</div> » s'arrête au premier </div>
+    rencontré, qui n'est pas forcément le bon.
+    """
+    profondeur = 0
+    for t in re.finditer(r'<(/?)div\b[^>]*>', h[debut:]):
+        profondeur += 1 if not t.group(1) else -1
+        if profondeur == 0:
+            return debut + t.end()
+    return -1
+
+
+def grouper_atouts(bloc, variante=''):
+    """Enferme chaque suite de frères « atout » dans une grille.
+
+    Ils sortent du montage comme des div frères posés à plat dans la
+    gouttière : sans conteneur, aucune règle de grille ne peut les
+    atteindre, et ils s'empilent sur toute la largeur.
+    """
+    out, i = [], 0
+    while True:
+        d = bloc.find('<div class="atout"', i)
+        if d < 0:
+            out.append(bloc[i:])
+            break
+        out.append(bloc[i:d])
+        j, dernier = d, -1
+        while bloc.startswith('<div class="atout"', j):
+            f = _fin_de_div(bloc, j)
+            if f < 0:
+                break
+            dernier = f
+            j = f
+            while j < len(bloc) and bloc[j] in ' \n\t\r':
+                j += 1
+        if dernier < 0:                       # div non fermé : on ne touche à rien
+            out.append(bloc[d:d + 18])
+            i = d + 18
+            continue
+        out.append('<div class="atouts%s">%s</div>' % (variante, bloc[d:dernier]))
+        i = j
+    return ''.join(out)
+
+
+def poser_schema(h):
+    """Le balisage structuré d'une page agence.
+
+    Le moule est une page destination : son JSON-LD décrivait « Voyage au
+    Caire » — un TouristDestination, avec un fil d'ariane Accueil ›
+    Destinations › Voyage au Caire, et la liste des attractions de Gizeh.
+    Transplanté tel quel sur la page agence, il annonçait aux moteurs une
+    page qui n'existe pas. Un balisage faux est pire qu'aucun balisage :
+    celui-ci se remplace, il ne se supprime pas.
+
+    Rien n'est inventé : la raison sociale, le SIRET et le siège viennent
+    des mentions légales, le reste de l'en-tête du site.
+    """
+    graphe = {
+        '@context': 'https://schema.org',
+        '@graph': [
+            {'@type': 'BreadcrumbList', 'itemListElement': [
+                {'@type': 'ListItem', 'position': 1, 'name': 'Accueil',
+                 'item': 'https://authentiquegypte.com/'},
+                {'@type': 'ListItem', 'position': 2, 'name': 'L’agence',
+                 'item': 'https://authentiquegypte.com/qui-sommes-nous/'}]},
+            {'@type': 'TravelAgency',
+             'name': 'Authentique Égypte',
+             'legalName': 'OREYA',
+             'url': 'https://authentiquegypte.com/',
+             'email': 'contact@authentiquegypte.com',
+             'telephone': '+20 106 661 9098',
+             'areaServed': {'@type': 'Country', 'name': 'Égypte'},
+             'availableLanguage': ['fr', 'ar', 'en'],
+             'taxID': SIRET,
+             'address': {'@type': 'PostalAddress',
+                         'streetAddress': '17 Avenue Gambetta',
+                         'postalCode': '82000',
+                         'addressLocality': 'Montauban',
+                         'addressCountry': 'FR'}},
+        ],
+    }
+    rendu = ('<script type="application/ld+json">%s</script>'
+             % json.dumps(graphe, ensure_ascii=False, separators=(',', ':')))
+    h, combien = re.subn(r'<script type="application/ld\+json">.*?</script>',
+                         lambda _: rendu, h, count=1, flags=re.S)
+    if not combien:
+        h = h.replace('</head>', rendu + '</head>', 1)
+    # Un moule peut en porter plusieurs : ceux qui restent décrivent encore
+    # la destination du moule, on les retire.
+    tete, _, reste = h.partition(rendu)
+    reste = re.sub(r'<script type="application/ld\+json">.*?</script>', '', reste, flags=re.S)
+    return tete + rendu + reste
+
+
+def sans_paragraphe_repete(h):
+    """Un même paragraphe ne se lit pas deux fois dans la page.
+
+    La date de fondation arrivait par deux chemins : la table des réponses
+    de Mélanie, qui la pose sous les chiffres, et la page reprise, qui la
+    porte aussi dans le bloc « engagement ». Aucun des deux n'a tort ; les
+    deux ensemble donnent à lire la même phrase deux fois.
+
+    On ne compare que des paragraphes ENTIERS et longs : deux phrases
+    courtes identiques (« Le Caire », une légende) peuvent légitimement se
+    répéter. Et on laisse le mur d'avis tranquille — il duplique ses cartes
+    exprès, c'est ce qui fait tourner la boucle.
+    """
+    vus = set()
+
+    def juger(m):
+        t = _cle(m.group(1))
+        if len(t) < 60:
+            return m.group(0)
+        if t in vus:
+            return ''
+        vus.add(t)
+        return m.group(0)
+
+    out, i = [], 0
+    for m in re.finditer(r'<section\b.*?</section>', h, re.S):
+        out.append(h[i:m.start()])
+        bloc = m.group(0)
+        if 'class="mur' not in bloc:
+            bloc = re.sub(r'<p(?![^>]*class=)[^>]*>(.*?)</p>', juger, bloc, flags=re.S)
+        out.append(bloc)
+        i = m.end()
+    out.append(h[i:])
+    return ''.join(out)
+
+
+def mettre_en_page(h):
+    """Passe de mise en page, section par section.
+
+    Elle ne touche pas aux mots : elle groupe, elle range, elle habille.
+    """
+    out, i = [], 0
+    for m in re.finditer(r'<section class="pg-sec[^"]*">.*?</section>', h, re.S):
+        surtitre = re.search(r'<p class="eyebrow">([^<]*)</p>', m.group(0))
+        variante = VARIANTES.get(texte(surtitre.group(1)) if surtitre else '', '')
+        out.append(h[i:m.start()])
+        out.append(grouper_atouts(m.group(0), variante))
+        i = m.end()
+    out.append(h[i:])
+    return ''.join(out)
 
 
 def fiche_equipe(prenom, role, bio):
@@ -266,7 +561,7 @@ def fiche_equipe(prenom, role, bio):
             '</article>' % (H.escape(prenom), H.escape(role), H.escape(bio)))
 
 
-def monter(moule, agence, accueil):
+def monter(moule, agence, accueil, chapo=''):
     """Les douze sections, dans l'ordre du marché."""
     del _PRIS[:]
     s = []
@@ -282,17 +577,26 @@ def monter(moule, agence, accueil):
                 '%s</p>'
                 % (H.escape(MELANIE['voyageurs']),
                    '<b>%s <span>avis Google</span></b>' % H.escape(avis.group(1)) if avis else ''))
+    # Le chapô du hero disait DÉJÀ cette phrase, à trois cents pixels de
+    # là : la reprendre en tête de « En bref » donnait à lire deux fois le
+    # même paragraphe. On ne la retire que si le hero la porte vraiment —
+    # sinon elle disparaîtrait de la page, et c'est la seule phrase qui dit
+    # ce qu'est l'agence.
+    lede = ('<p class="lede">%s</p>' % H.escape(phrase)
+            if phrase and texte(phrase) != texte(chapo) else '')
     s.append(section('En bref', 'L’agence en quelques repères',
-                     ('<p class="lede">%s</p>' % H.escape(phrase) if phrase else '')
-                     + chiffres
+                     lede + chiffres
                      + '<p>%s</p>' % H.escape(MELANIE['fondation'])
                      + a_remplir('note')))
 
     # 3. L'histoire, telle qu'elle est écrite, avec sa date.
     hist = bloc_apres(agence, 'Notre histoire', bornes=ANCRES)
     if hist:
+        # La date de fondation est déjà donnée en tête, sous les chiffres :
+        # la répéter ici la faisait lire deux fois à trois cents pixels
+        # d'intervalle, et une troisième fois en fin de section.
         s.append(section('Notre histoire', 'Une aventure née d’un regard curieux',
-                         hist + '<p>%s</p>' % H.escape(MELANIE['fondation']), fond=True))
+                         hist, fond=True))
 
     # 4. Les trois piliers, rapatriés de l'accueil où ils sont déjà rédigés.
     piliers = bloc_apres(accueil, 'Privées')
@@ -324,7 +628,11 @@ def monter(moule, agence, accueil):
                          eng + a_remplir('tarif'), fond='creme'))
 
     # 8. Les garanties. Uniquement ce qui est publié aux mentions légales.
-    juridique = ('<ul class="garanties">'
+    # « Notre engagement envers vous » parle du statut juridique, des
+    # garanties et de la sécurité des paiements : il était jusqu'ici avalé
+    # par la section « histoire », où il ne voulait rien dire.
+    engagement = bloc_apres(agence, 'Notre engagement envers vous', bornes=ANCRES)
+    juridique = (engagement + '<ul class="garanties">'
                  '<li><b>Authentique Égypte (OREYA)</b></li>'
                  '<li>SIRET&nbsp;: %s</li>'
                  '<li>Siège social&nbsp;: %s</li></ul>%s'
@@ -381,9 +689,11 @@ def main():
 
     page = _circ.lire_page(agence)
     tete = _circ.poser_tete(moule.tete, page, 'Agence')
-    corps = monter(moule, agence, accueil)
-    tete = tete.replace('</head>', FEUILLE_EQUIPE + '</head>', 1)
+    corps = monter(moule, agence, accueil, page.get('chapo', ''))
+    tete = tete.replace('</head>', FEUILLE_AGENCE + '</head>', 1)
     h = _bleu.unifier(tete + ''.join(corps) + moule.pied)
+    h = sans_paragraphe_repete(mettre_en_page(h))
+    h = poser_schema(h)
 
     manquants = len(re.findall(r'class="aremplir"', h))
     print('→ %d section(s) montées, %d emplacement(s) « à remplir »' % (len(corps), manquants))
