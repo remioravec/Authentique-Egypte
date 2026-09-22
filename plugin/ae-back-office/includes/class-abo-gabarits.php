@@ -23,23 +23,127 @@ class ABO_Gabarits {
 
 	/**
 	 * Le vocabulaire. L'ordre compte : c'est celui de l'écran Contenus,
-	 * du plus structurant au plus périphérique.
+	 * et c'est exactement celui du sommaire de la refonte — les huit
+	 * gabarits d'abord, dans l'ordre où on parcourt le site, puis ce qui
+	 * n'est pas un gabarit de page. Deux listes qui disent la même chose
+	 * dans deux ordres différents, c'est ce qui empêchait de comparer le
+	 * back-office au sommaire.
+	 *
+	 * Les CLÉS ne changent pas. « categorie » et « voyage » sont écrites
+	 * dans la base depuis le premier rangement, et un classement posé à
+	 * la main s'y réfère : les renommer reviendrait à perdre ces choix.
+	 * Seul le libellé bouge, et il dit désormais « circuit » et
+	 * « programme » — les deux mots que rien ne distinguait à l'écran.
+	 *
+	 * « detail » complète le titre du bloc sans alourdir les onglets ni
+	 * la liste déroulante, qui n'affichent que « nom ».
 	 */
 	const VOCABULAIRE = array(
-		'accueil'     => array( 'nom' => 'Accueil', 'icone' => '🏠', 'aide' => 'La page d\'accueil du site.' ),
-		'categorie'   => array( 'nom' => 'Catégorie de séjours', 'icone' => '🗂', 'aide' => 'Les familles de séjours : croisière, désert, culturel, mer Rouge, Sinaï.' ),
-		'voyage'      => array( 'nom' => 'Voyage', 'icone' => '🧭', 'aide' => 'Les itinéraires vendus, un par page. C\'est l\'unité d\'achat.' ),
-		'destination' => array( 'nom' => 'Destination', 'icone' => '📍', 'aide' => 'Les pages géographiques : Le Caire, Louxor, le désert Blanc…' ),
-		'qui-part'    => array( 'nom' => 'Qui part', 'icone' => '👥', 'aide' => 'Famille, couple, solo, mobilité réduite.' ),
-		'hub-guides'  => array( 'nom' => 'Hub des guides', 'icone' => '📚', 'aide' => 'La page qui liste les guides pratiques.' ),
-		'guide'       => array( 'nom' => 'Guide pratique', 'icone' => '📄', 'aide' => 'Les articles : quand partir, formalités, sécurité…' ),
-		'devis'       => array( 'nom' => 'Devis', 'icone' => '✉️', 'aide' => 'La page de demande de devis.' ),
-		'agence'      => array( 'nom' => 'Agence', 'icone' => '🏛', 'aide' => 'Qui sommes-nous, l\'équipe, les engagements.' ),
-		'legal'       => array( 'nom' => 'Mentions et légal', 'icone' => '⚖️', 'aide' => 'Mentions légales, confidentialité, CGV.' ),
-		'maquette'    => array( 'nom' => 'Maquette de référence', 'icone' => '🎨', 'aide' => 'Les gabarits dessinés à la main. Ce sont les modèles.' ),
-		'dossier'     => array( 'nom' => 'Dossier de rangement', 'icone' => '📁', 'aide' => 'Une page qui ne sert qu\'à en contenir d\'autres.' ),
-		'technique'   => array( 'nom' => 'Technique', 'icone' => '⚙️', 'aide' => 'Newsletter, remerciements, pages de service.' ),
-		'autre'       => array( 'nom' => 'Non rangé', 'icone' => '❓', 'aide' => 'À classer à la main.' ),
+		'categorie'   => array(
+			'nom'    => 'Gabarit circuit',
+			'detail' => 'les pages qui LISTENT des séjours',
+			'icone'  => '🗂',
+			'aide'   => 'Les pages qui LISTENT des séjours : la page mère et les cinq circuits. On y compare des listes.',
+		),
+		'voyage'      => array(
+			'nom'    => 'Gabarit programme',
+			'detail' => 'la FICHE d’un séjour, prix et itinéraire',
+			'icone'  => '🧭',
+			'aide'   => 'La FICHE d’un séjour : son prix, ses étapes jour par jour, ce qui est inclus. On y compare des produits.',
+		),
+		'destination' => array(
+			'nom'    => 'Gabarit destination',
+			'detail' => 'un lieu',
+			'icone'  => '📍',
+			'aide'   => 'Une page par lieu : ce qu’on y voit, quand y aller, combien de temps.',
+		),
+		'qui-part'    => array(
+			'nom'    => 'Gabarit qui part',
+			'detail' => 'un profil de voyageur',
+			'icone'  => '👥',
+			'aide'   => 'Les pages qui répondent à « je pars seul, en couple, en famille, en fauteuil ».',
+		),
+		'guide'       => array(
+			'nom'    => 'Gabarit guide',
+			'detail' => 'les articles du blog',
+			'icone'  => '📄',
+			'aide'   => 'Les articles du blog, tous sur le même gabarit : quand partir, formalités, sécurité…',
+		),
+		'hub-guides'  => array(
+			'nom'    => 'Gabarit blog',
+			'detail' => 'le sommaire des guides',
+			'icone'  => '📚',
+			'aide'   => 'Le sommaire qui rassemble les guides — gabarit circuit, pas article.',
+		),
+		'accueil'     => array(
+			'nom'    => 'Gabarit accueil',
+			'detail' => '',
+			'icone'  => '🏠',
+			'aide'   => 'La page d’accueil du site.',
+		),
+		'agence'      => array(
+			'nom'    => 'Gabarit qui sommes-nous',
+			'detail' => '',
+			'icone'  => '🏛',
+			'aide'   => 'Qui sommes-nous : l’équipe, les engagements, les preuves.',
+		),
+		'devis'       => array(
+			'nom'    => 'Devis',
+			'detail' => '',
+			'icone'  => '✉️',
+			'aide'   => 'La page de demande de devis.',
+		),
+		'legal'       => array(
+			'nom'    => 'Mentions et légal',
+			'detail' => '',
+			'icone'  => '⚖️',
+			'aide'   => 'Mentions légales, confidentialité, CGV.',
+		),
+		'maquette'    => array(
+			'nom'    => 'Maquette de référence',
+			'detail' => '',
+			'icone'  => '🎨',
+			'aide'   => 'Les gabarits dessinés à la main. Ce sont les modèles.',
+		),
+		'dossier'     => array(
+			'nom'    => 'Dossier de rangement',
+			'detail' => '',
+			'icone'  => '📁',
+			'aide'   => 'Une page qui ne sert qu’à en contenir d’autres.',
+		),
+		'technique'   => array(
+			'nom'    => 'Technique',
+			'detail' => '',
+			'icone'  => '⚙️',
+			'aide'   => 'Newsletter, remerciements, pages de service.',
+		),
+		'autre'       => array(
+			'nom'    => 'Non rangé',
+			'detail' => '',
+			'icone'  => '❓',
+			'aide'   => 'À classer à la main.',
+		),
+	);
+
+	/**
+	 * Ce que le slug annonce, et le gabarit que cela désigne.
+	 *
+	 * Lu de haut en bas : le premier préfixe reconnu gagne. Les entrées
+	 * les plus longues viennent donc en tête.
+	 */
+	const PREFIXES_DE_SLUG = array(
+		'hub-guides'  => 'hub-guides',
+		'qui-part'    => 'qui-part',
+		'destination' => 'destination',
+		'programme'   => 'voyage',
+		'categorie'   => 'categorie',
+		'famille'     => 'categorie',
+		'accueil'     => 'accueil',
+		'agence'      => 'agence',
+		'guide'       => 'guide',
+		'legal'       => 'legal',
+		'devis'       => 'devis',
+		'voyage'      => 'voyage',
 	);
 
 	/** Les types de contenu réunis dans l'écran Contenus. */
@@ -153,14 +257,30 @@ class ABO_Gabarits {
 			if ( self::est_dossier( $post ) ) {
 				return 'dossier';
 			}
-			// Les pages reprises du site portent leur gabarit dans le slug.
-			if ( preg_match( '/^refonte-(qui-part|hub-guides|accueil|categorie|voyage|destination|guide|devis|agence|legal)-/', $slug, $t ) ) {
-				return $t[1];
+			// Les pages de la refonte portent leur gabarit en tête de slug.
+			//
+			// Le mot du slug n'est pas toujours la clé du vocabulaire : le
+			// déployeur écrit « famille- » et « programme- » là où le
+			// vocabulaire dit « categorie » et « voyage ». Sans cette
+			// table, les six pages de circuit et les quatorze fiches de
+			// programme ne reconnaissaient aucun préfixe et tombaient
+			// toutes les vingt dans le repli « maquette » — l'écran
+			// Contenus montrait donc « Maquette de référence » là où le
+			// sommaire montre deux gabarits distincts.
+			//
+			// L'ordre compte : « hub-guides » s'essaie avant « guide »,
+			// sans quoi /refonte-hub-guides-notre-blog/ serait rangé parmi
+			// les articles.
+			$prefixes = self::PREFIXES_DE_SLUG;
+
+			foreach ( $prefixes as $prefixe => $gabarit ) {
+				if ( 0 === strpos( $slug, 'refonte-' . $prefixe . '-' ) ) {
+					return $gabarit;
+				}
 			}
-			// Les huit maquettes dessinées portent le leur en tête de slug.
-			foreach ( array( 'hub-guides' => 'hub-guides', 'qui-part' => 'qui-part',
-				'categorie' => 'categorie', 'voyage' => 'voyage', 'destination' => 'destination',
-				'guide' => 'guide', 'agence' => 'agence', 'accueil' => 'accueil' ) as $prefixe => $gabarit ) {
+			// Les maquettes dessinées portent le leur en tête de slug, sans
+			// le préfixe « refonte- ».
+			foreach ( $prefixes as $prefixe => $gabarit ) {
 				if ( 0 === strpos( $slug, $prefixe ) ) {
 					return $gabarit;
 				}

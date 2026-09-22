@@ -72,8 +72,17 @@ class ABO_Contenus {
 			'post_type'      => $types,
 			'post_status'    => array( 'publish', 'draft', 'pending', 'private', 'future' ),
 			'posts_per_page' => -1,
-			'orderby'        => 'title',
-			'order'          => 'ASC',
+			// L'ordre du sommaire, pas l'alphabet : sous « Refonte 2026 »
+			// les pages portent un rang (menu_order) qui dit dans quel
+			// ordre on les parcourt — la page mère avant ses circuits, les
+			// croisières avant le désert. Trié par titre, « Nos séjours »
+			// arrivait au milieu de ses propres enfants. Les pages du site
+			// en ligne ont toutes un rang à 0 : pour elles, le tri retombe
+			// sur le titre, comme avant.
+			'orderby'        => array(
+				'menu_order' => 'ASC',
+				'title'      => 'ASC',
+			),
 		);
 		if ( '' !== $recherche ) {
 			$args['s'] = $recherche;
@@ -193,7 +202,15 @@ class ABO_Contenus {
 				?>
 				<section class="abo-bloc" id="z-<?php echo esc_attr( $cle_zone . '-' . $gabarit ); ?>">
 					<header>
-						<h2><?php echo esc_html( $entree['icone'] . ' ' . $entree['nom'] ); ?>
+						<h2><?php
+						// Le titre complet du gabarit, exactement comme le
+						// sommaire de la refonte l'écrit : « Gabarit
+						// circuit — les pages qui LISTENT des séjours ».
+						// Les onglets et la liste déroulante gardent le nom
+						// court, sans quoi ils deviendraient illisibles.
+						$detail = $entree['detail'] ?? '';
+						echo esc_html( $entree['icone'] . ' ' . $entree['nom'] . ( '' !== $detail ? ' — ' . $detail : '' ) );
+						?>
 							<span class="abo-compte"><?php echo count( $liste ); ?></span></h2>
 						<p><?php echo esc_html( $entree['aide'] ); ?></p>
 					</header>

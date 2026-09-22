@@ -27,7 +27,14 @@ function get_posts( $a = array() ) {
 		$p['post_title'] = $p['titre']; $p['post_status'] = $p['statut'];
 		$out[] = (object) $p;
 	}
-	usort( $out, function ( $x, $y ) { return strcasecmp( $x->post_title, $y->post_title ); } );
+	// Le banc trie comme WordPress trierait : le rang d'abord, le titre
+	// ensuite. Trié par le seul titre, il ne voyait pas l'ordre du
+	// sommaire et validait un écran que le site n'aurait pas rendu.
+	usort( $out, function ( $x, $y ) {
+		$rx = (int) ( $x->menu_order ?? 0 );
+		$ry = (int) ( $y->menu_order ?? 0 );
+		return $rx === $ry ? strcasecmp( $x->post_title, $y->post_title ) : $rx - $ry;
+	} );
 	return $out;
 }
 function get_post_type_object( $t ) {

@@ -2,8 +2,8 @@
 /**
  * Plugin Name:       AE Back-office — contenus rangés par gabarit
  * Plugin URI:        https://github.com/remioravec/Authentique-Egypte
- * Description:       Remplace « Articles » et « Pages » par un écran unique « Contenus », rangé par gabarit (accueil, catégorie, voyage, destination, guide, devis, agence…). Masque les entrées de menu inutiles pour ne laisser que l'essentiel : contenus, demandes, voyages, médiathèque, WPForms, apparence, extensions, comptes, réglages.
- * Version:           0.1.0
+ * Description:       Remplace « Articles » et « Pages » par un écran unique « Contenus », rangé par gabarit (circuit, programme, destination, qui part, guide, blog, accueil, qui sommes-nous…), dans l’ordre du sommaire de la refonte. Masque les entrées de menu inutiles pour ne laisser que l'essentiel : contenus, demandes, voyages, médiathèque, WPForms, apparence, extensions, comptes, réglages.
+ * Version:           0.2.0
  * Requires at least: 6.0
  * Requires PHP:      7.4
  * Author:            Rémi Oravec
@@ -35,7 +35,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'ABO_VERSION', '0.1.0' );
+define( 'ABO_VERSION', '0.2.0' );
 define( 'ABO_FILE', __FILE__ );
 define( 'ABO_DIR', plugin_dir_path( __FILE__ ) );
 define( 'ABO_URL', plugin_dir_url( __FILE__ ) );

@@ -20,23 +20,35 @@ contredisent, c'est une source d'erreurs de plus.
 
 | Gabarit | Ce que c'est |
 |---|---|
-| 🏠 Accueil | La page d'accueil |
-| 🗂 Catégorie de séjours | Croisière, désert, culturel, mer Rouge, Sinaï |
-| 🧭 Voyage | Les itinéraires vendus — l'unité d'achat |
-| 📍 Destination | Les pages géographiques : Le Caire, Louxor, désert Blanc… |
-| 👥 Qui part | Famille, couple, solo, mobilité réduite |
-| 📚 Hub des guides | La page qui liste les guides |
-| 📄 Guide pratique | Les articles |
+| 🗂 Gabarit circuit | Les pages qui **listent** des séjours : la page mère et les cinq circuits |
+| 🧭 Gabarit programme | La **fiche** d'un séjour : son prix, ses étapes, ce qui est inclus |
+| 📍 Gabarit destination | Un lieu : Le Caire, Louxor, le désert Blanc… |
+| 👥 Gabarit qui part | Famille, couple, solo, mobilité réduite |
+| 📄 Gabarit guide | Les articles du blog |
+| 📚 Gabarit blog | Le sommaire qui rassemble les guides |
+| 🏠 Gabarit accueil | La page d'accueil |
+| 🏛 Gabarit qui sommes-nous | L'agence, l'équipe, les engagements |
 | ✉️ Devis | La demande de devis |
-| 🏛 Agence | Qui sommes-nous |
 | ⚖️ Mentions et légal | Mentions légales, confidentialité, CGV |
-| 🎨 Maquette de refonte | Les pages de la zone de refonte |
+| 🎨 Maquette de référence | Les gabarits dessinés à la main |
+| 📁 Dossier de rangement | Une page qui ne sert qu'à en contenir d'autres |
 | ⚙️ Technique | Newsletter, remerciements, pages de service |
 | ❓ Non rangé | À classer à la main |
 
+L'ordre de ce tableau est celui de l'écran, et c'est **exactement celui du
+sommaire de la refonte** : deux listes qui disent la même chose dans deux ordres
+différents, on ne peut plus les comparer.
+
+*Circuit* et *programme* portaient jusqu'ici les noms « catégorie de séjours » et
+« voyage » — deux mots qui ne disaient pas lequel liste et lequel vend. Les clés
+techniques n'ont pas bougé (`categorie`, `voyage`) : un classement posé à la main
+s'y réfère, les renommer l'aurait perdu.
+
 Le classement est **déduit automatiquement** : type de contenu, page d'accueil et
 page des articles désignées par WordPress, parent, puis motifs de slug. Relevé sur
-le contenu réel du site au 24/08/2026 : **61 contenus classés, 0 non rangé.**
+le contenu réel du site au 22/09/2026 : **134 contenus, dont les 58 pages de la
+refonte rangées dans les huit gabarits du sommaire, 3 non rangés côté site en
+ligne.**
 
 Un classement posé à la main (✋) devient définitif : le recalcul ne l'écrase
 jamais.
