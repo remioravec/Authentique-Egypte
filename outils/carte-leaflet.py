@@ -154,8 +154,11 @@ def corriger(h):
     # Earth ». Ce fond n'existe plus : la laisser, c'est créditer une
     # source qu'on n'utilise pas. Leaflet affiche sa propre attribution
     # dans la carte, comme la licence d'OpenStreetMap l'exige.
-    h = re.sub(r'<p[^>]*class="carte__(?:note|aide)"[^>]*>(?:(?!</p>).)*?'
-               r'(?:Natural Earth|naturalearthdata)(?:(?!</p>).)*?</p>', '', h, flags=re.S)
+    # C'est un <figcaption>, pas un <p> : le premier jet cherchait la
+    # mauvaise balise et laissait la mention en place.
+    h = re.sub(r'<(figcaption|p)[^>]*class="carte__(?:note|aide)"[^>]*>'
+               r'(?:(?!</\1>).)*?(?:Natural Earth|naturalearthdata)'
+               r'(?:(?!</\1>).)*?</\1>', '', h, flags=re.S)
     h = re.sub(r'<link[^>]*leaflet[^>]*>|<style data-carte-css="leaflet">.*?</style>', '', h, flags=re.S)
     h = re.sub(r'<script[^>]*leaflet[^>]*></script>', '', h)
     h = TETE + h + SCRIPT
