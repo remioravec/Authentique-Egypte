@@ -113,6 +113,17 @@ def sans_emoji(x):
     return re.sub(r'  +', ' ', EMOJI.sub('', x))
 
 
+# Le marqueur « + » que le moule dessine dans ses propres accordéons. Il
+# voyage avec la question, et la nouvelle FAQ en pose déjà un : deux « + »
+# par ligne, l'un cerclé, l'autre non. Un décor d'accordéon appartient à
+# l'accordéon, pas à la question.
+DECOR = re.compile(r'<span class="(?:acc__plus|acc__[a-z-]+)"\s*></span>')
+
+
+def sans_decor(x):
+    return DECOR.sub('', x)
+
+
 def _fin_balise(h, debut, nom):
     """La fin de l'élément ouvert en `debut`, comptée en profondeur."""
     p = 0
@@ -143,7 +154,7 @@ def questions_de(bloc):
             reste = re.sub(r'</details>\s*$', '', reste)
             # La coquille intérieure du moule n'apporte rien à la réponse.
             reste = re.sub(r'^\s*<div[^>]*>(.*)</div>\s*$', r'\1', reste, flags=re.S)
-            out.append((s.group(1), reste))
+            out.append((sans_decor(s.group(1)), reste))
         i = f
 
     # Forme 2 : <h3 class="mef-q">Q</h3> puis les <p>/<ul> jusqu'au titre suivant
