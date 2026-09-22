@@ -108,6 +108,19 @@ def corriger(h):
             h = h[:m.start()] + h[f:]
             faits.append('liste d’inclusions en double retirée du sticky')
 
+    # 1ter. Le bloc « L'agence / Qui vous répond » quitte les fiches de
+    #       séjour. Mélanie, fil #9570 : « ce n'est pas moi qui gère les
+    #       demandes, donc enlever cette partie ». Mettre un visage et un
+    #       délai de réponse sur quelqu'un qui ne répond pas est une
+    #       promesse qu'on ne tient pas. La colonne collante garde le
+    #       contact, qui lui est juste.
+    m = re.search(r'<section class="pg-sec equipe"', h)
+    if m:
+        f = _fin(h, m.start(), 'section')
+        if f > 0:
+            h = h[:m.start()] + h[f:]
+            faits.append('bloc « Qui vous répond » retiré')
+
     # 2. « Quand partir » descend au-dessus de « Ce que le prix comprend ».
     q = re.search(r'<section class="quand"[^>]*>', h)
     if q:

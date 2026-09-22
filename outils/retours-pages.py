@@ -80,6 +80,38 @@ EDITS = {
          'decoding="async" loading="lazy"></div>'
          '<div class="hero__in">'),
     ],
+    8598: [   # Circuit · Nos séjours (page mère)
+        # Le compteur annonçait « 0 séjour » alors que la page en porte
+        # quatorze. Un zéro affiché en tête de page dit au visiteur qu'il
+        # n'y a rien à voir.
+        ('9547', 'remplacer', '>0 séjour</span>', '>14 séjours</span>'),
+        # La phrase de Mélanie, fil #9551 : les séjours sont une base, pas
+        # un catalogue figé. Elle manquait, et c'est ce qui distingue une
+        # agence sur mesure d'un tour-opérateur.
+        ('9551', 'ajouter_apres', '<h1>Nos séjours</h1>',
+         '<p class="hero__chapo">Tous nos séjours sont entièrement modifiables selon '
+         'vos envies : ce n’est qu’une première base pour construire le vôtre.</p>'),
+    ],
+    8596: [   # Circuit · Déserts et Oasis
+        # La question que Mélanie demande d'ajouter, fil #9563, avec sa
+        # réponse telle qu'elle l'a écrite.
+        ('9563', 'ajouter_apres', '<div class="faqu">',
+         '<details class="faq__q"><summary>Organisez-vous les autorisations '
+         'nécessaires pour les déserts&nbsp;?</summary><div class="faq__r">'
+         '<p>Oui, nous organisons bien les autorisations nécessaires auprès du '
+         'ministère du tourisme égyptien.</p></div></details>'),
+    ],
+    8923: [   # Destination · Fayoum
+        # « Il n'y a qu'un seul séjour sur Fayoum, faire attention à
+        # l'affichage et à la conjugaison » : la pastille accordait
+        # « conseillés » au masculin pluriel derrière « 1 nuit ».
+        ('9533', 'remplacer', '<b>1 nuit</b>conseillés', '<b>1 nuit</b>conseillée'),
+    ],
+    8595: [   # Circuit · Croisières
+        ('9560', 'remplacer',
+         'plus grand, avec tout le confort moderne, souvent en groupe',
+         'plus grand, tout le confort moderne, mais très touristique'),
+    ],
     8921: [   # Destination · Alexandrie
         # L'image que Mélanie a jointe elle-même au fil #9498. Le visuel en
         # place était une photo du Sinaï — elle n'a jamais montré
@@ -93,8 +125,27 @@ EDITS = {
         ('9505', 'remplacer',
          'Voiture : 2h30 en moyenne selon le traficCela permet',
          'Voiture : 2h30 en moyenne selon le trafic. Cela permet'),
+        ('9513', 'remplacer', '<b>2 jours</b>conseillés', '<b>1 à 2 jours</b>conseillés'),
+        # « Il n'y a pas vraiment de snorkeling que nous organisons à
+        # Alexandrie » : la phrase promettait des plongées et des sites
+        # sous-marins. On retire ce qui n'est pas proposé, on garde la
+        # promesse qui reste vraie.
+        ('9509', 'remplacer',
+         'choisissez votre rythme, vos escales et vos expériences sous-marines. '
+         'Du snorkeling parmi les récifs coralliens aux plongées profondes , '
+         'des villages côtiers aux sites sous-marins spectaculaires ,',
+         'choisissez votre rythme, vos escales et vos visites. Des sites antiques '
+         'aux quartiers du bord de mer, des musées aux marchés,'),
     ],
 }
+
+# Les pastilles du hero à retirer, repérées par le texte qu'elles portent.
+# Mélanie : « 8 séjours y passent » → « enlever » (fil #9512). Le chiffre
+# vient des liens de la page en ligne, et aucun des séjours listés ne
+# passe réellement par Alexandrie : afficher le compte, c'est afficher une
+# promesse fausse.
+PASTILLES = {8921: [('9512', 'séjours y passent')]}
+
 
 # Les sections entières à retirer, repérées par leur titre exact.
 SECTIONS = {
@@ -189,6 +240,11 @@ def corriger(pid, h):
     for fil, titre in SECTIONS.get(pid, []):
         h, ok = retirer_section(h, titre)
         (faits if ok else deja).append(fil)
+    for fil, mot in PASTILLES.get(pid, []):
+        n = len(h)
+        h = re.sub(r'<span class="pill">(?:(?!</span>).)*?%s(?:(?!</span>).)*?</span>' % re.escape(mot),
+                   '', h, flags=re.S)
+        (faits if len(h) < n else deja).append(fil)
     if pid in ALLEGER_VOILE and 'data-hero="voile"' not in h:
         h += VOILE
         faits.append(ALLEGER_VOILE[pid])

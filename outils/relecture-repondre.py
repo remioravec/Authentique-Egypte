@@ -92,6 +92,49 @@ REPONSES = {
             'travers le désert, reste peu fréquenté ; un tour en felouque complète '
             'bien la journée. »',
 
+    # ——— second lot, fait après le vocal de Rémi
+    '9511': 'C’est fait, et sur les 57 pages. Le fichier n’était pas en cause : il '
+            'est doré sur fond transparent. C’est la charte qui posait un fond clair '
+            'sur TOUTE image, ce qui transformait le logo détouré en rectangle blanc. '
+            'Corrigé dans l’en-tête comme dans le pied de page.',
+    '9537': 'C’est fait : le fond clair posé derrière le logo est retiré, partout.',
+    '9542': 'C’est fait : le fond clair posé derrière le logo est retiré, partout.',
+    '9546': 'C’est fait : le fond clair posé derrière le logo est retiré, partout.',
+    '9550': 'C’est fait : le fond clair posé derrière le logo est retiré, partout.',
+    '9556': 'C’est fait : le fond clair posé derrière le logo est retiré, partout.',
+    '9566': 'C’est fait : le fond clair posé derrière le logo est retiré, partout.',
+    '9498': 'C’est fait : votre image est en visuel de une, et le voile sombre posé '
+            'par-dessus a été allégé pour qu’on la voie.',
+    '9553': 'C’est fait : votre image est posée en visuel de une sur la page.',
+    '9512': 'Retiré. Le compte venait des liens de la page actuelle, et aucun des '
+            'séjours listés ne passe réellement par Alexandrie — afficher le chiffre '
+            'revenait à annoncer quelque chose d’inexact.',
+    '9513': 'Corrigé : « 1 à 2 jours ».',
+    '9509': 'Corrigé. La phrase promettait du snorkeling, des plongées et des sites '
+            'sous-marins : elle parle maintenant des sites antiques, des quartiers du '
+            'bord de mer, des musées et des marchés.',
+    '9533': 'Corrigé : « 1 nuit conseillée », accordé au singulier. Le compte des '
+            'séjours était déjà juste.',
+    '9547': 'Corrigé : la page annonçait « 0 séjour » alors qu’elle en porte quatorze.',
+    '9551': 'Ajouté sous le titre : « Tous nos séjours sont entièrement modifiables '
+            'selon vos envies : ce n’est qu’une première base pour construire le '
+            'vôtre. »',
+    '9560': 'Corrigé : « plus grand, tout le confort moderne, mais très touristique ».',
+    '9563': 'Ajoutée à la FAQ de la page, avec votre réponse : « Oui, nous organisons '
+            'bien les autorisations nécessaires auprès du ministère du tourisme '
+            'égyptien. »',
+    '9570': 'Retiré des quatorze fiches de séjour. Mettre un visage et un délai de '
+            'réponse sur quelqu’un qui ne gère pas les demandes est une promesse qu’on '
+            'ne tient pas. La colonne de droite garde le contact, qui lui est juste.',
+    '9569': 'C’est fait : la carte est plus petite et devient interactive — on peut '
+            'zoomer et déplacer, chaque étape est numérotée et cliquable. Nous avons '
+            'écarté Google Maps, qui impose une clé facturée et des traceurs, donc une '
+            'bannière de consentement ; la carte s’appuie sur OpenStreetMap, sans '
+            'cookie ni compte.',
+    '9507': 'Cette partie n’existe plus : la colonne latérale a été retirée des pages '
+            'destination lors de la refonte du gabarit.',
+    '9516': 'Cette partie n’existe plus : la colonne latérale a été retirée des pages '
+            'destination lors de la refonte du gabarit.',
     # ——— Alexandrie
     '9505': 'Corrigé : « selon le trafic. Cela permet… ».',
     '9508': 'Retiré, la section entière.',
@@ -107,6 +150,7 @@ REPONSES = {
 # contient une : « dites-nous » sans rien proposer renvoie la charge
 # entière à la cliente.
 A_PRECISER = {
+
     # ——— les photos
     '9504': 'Il me faut vos photos : la médiathèque ne contient qu’une seule image '
             'd’Alexandrie (« Voyage sur mesure à Alexandrie en Egypte »), rien sur la '
