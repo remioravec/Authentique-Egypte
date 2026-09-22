@@ -73,27 +73,71 @@ SOUS_TITRE = 'Organiser, payer, modifier son voyage'
 
 FEUILLE = (
     '<style data-faq="unique">'
-    '.pg-sec .faqu{margin:26px 0 0;max-width:820px;'
-    'border:1px solid var(--ligne);border-radius:var(--r-l);background:#fff;overflow:hidden}'
-    '.pg-sec .faq__q{border-bottom:1px solid var(--ligne)}'
-    '.pg-sec .faq__q:last-child{border-bottom:0}'
-    '.pg-sec .faq__q>summary{display:flex;justify-content:space-between;align-items:baseline;'
-    'gap:16px;padding:16px 20px;cursor:pointer;list-style:none;'
-    'font-size:1rem;font-weight:600;line-height:1.45;color:var(--nuit-900)}'
+    # Le dessin. Rémi : « plus moderne, regarde ce que font les SaaS en
+    # 2026, mais gardez notre police et notre code couleur ».
+    #
+    # Ce que ces interfaces ont en commun, et qu'on reprend : des cartes
+    # détachées plutôt qu'un bloc bordé d'un seul trait, un rayon
+    # généreux, une ombre presque invisible qui se lève au survol, un
+    # chevron dans une pastille qui pivote, et une carte ouverte qui se
+    # distingue par sa bordure plutôt que par un aplat criard.
+    #
+    # Ce qu'on n'en reprend pas : le dégradé violet, la police à la mode
+    # et l'aplat sombre. La charte reste Archivo, Manrope, le teal et l'or.
+    '.pg-sec .faqu{display:grid;gap:10px;margin:26px 0 0;max-width:840px}'
+
+    '.pg-sec .faq__q{background:#fff;border:1px solid var(--ligne,#E4E4EA);'
+    'border-radius:16px;overflow:hidden;'
+    'transition:border-color .18s ease,box-shadow .18s ease,background .18s ease}'
+    '.pg-sec .faq__q:hover{border-color:var(--teal,#24AEC6);'
+    'box-shadow:0 6px 18px rgba(9,83,96,.07)}'
+    '.pg-sec .faq__q[open]{border-color:var(--teal-txt,#106D7C);'
+    'box-shadow:0 10px 26px rgba(9,83,96,.09)}'
+
+    '.pg-sec .faq__q>summary{display:flex;align-items:center;justify-content:space-between;'
+    'gap:18px;padding:18px 20px;cursor:pointer;list-style:none;'
+    'font-family:"Archivo",system-ui,sans-serif;font-size:1.02rem;font-weight:600;'
+    'line-height:1.45;color:var(--nuit-900,#095360)}'
     '.pg-sec .faq__q>summary::-webkit-details-marker{display:none}'
-    '.pg-sec .faq__q>summary::after{content:"+";flex:0 0 auto;'
-    'font-family:"Manrope",sans-serif;font-size:1.3rem;font-weight:700;'
-    'line-height:1;color:var(--teal-txt)}'
-    '.pg-sec .faq__q[open]>summary::after{content:"\\2212"}'
-    '.pg-sec .faq__q>summary:hover{background:var(--teal-fond)}'
-    '.pg-sec .faq__q>summary:focus-visible{outline:3px solid var(--or);outline-offset:-3px}'
-    '.pg-sec .faq__r{padding:0 20px 18px}'
-    '.pg-sec .faq__r p{margin:0 0 10px;max-width:68ch;color:var(--texte);line-height:1.65}'
+    '.pg-sec .faq__q>summary::marker{content:""}'
+
+    # Le chevron, dessiné en CSS : deux traits, pas une police d'icônes
+    # ni un SVG de plus à charger pour trente questions.
+    '.pg-sec .faq__q>summary::after{content:"";flex:0 0 auto;width:30px;height:30px;'
+    'border-radius:50%;background:var(--teal-fond,#EAF6F9) '
+    'url("data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'14\' '
+    'height=\'14\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'%23106D7C\' '
+    'stroke-width=\'2.4\' stroke-linecap=\'round\' stroke-linejoin=\'round\'%3E'
+    '%3Cpath d=\'M6 9l6 6 6-6\'/%3E%3C/svg%3E") center/14px no-repeat;'
+    'transition:transform .22s ease,background-color .18s ease}'
+    '.pg-sec .faq__q[open]>summary::after{transform:rotate(180deg);'
+    'background-color:var(--or-fond,#FEEDDC)}'
+    '.pg-sec .faq__q>summary:focus-visible{outline:3px solid var(--or,#FBB50E);'
+    'outline-offset:-3px;border-radius:16px}'
+
+    '.pg-sec .faq__r{padding:0 20px 20px;animation:faq-ouvre .22s ease both}'
+    '@keyframes faq-ouvre{from{opacity:0;transform:translateY(-4px)}'
+    'to{opacity:1;transform:none}}'
+    '.pg-sec .faq__r p{margin:0 0 10px;max-width:66ch;color:var(--texte,#5D5D5D);'
+    'font-size:.98rem;line-height:1.7}'
     '.pg-sec .faq__r p:last-child{margin-bottom:0}'
-    '.pg-sec .faq__r ul,.pg-sec .faq__r ol{margin:0 0 10px;padding-left:22px;color:var(--texte)}'
-    '.pg-sec .faq__t{margin:26px 0 0;font-family:"Manrope",sans-serif;font-size:.78rem;'
-    'font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--teal-txt)}'
-    '.pg-sec .faq__t+.faqu{margin-top:10px}'
+    '.pg-sec .faq__r ul,.pg-sec .faq__r ol{margin:0 0 10px;padding-left:20px;'
+    'color:var(--texte,#5D5D5D);line-height:1.7}'
+    '.pg-sec .faq__r a{color:var(--teal-txt,#106D7C)}'
+
+    # L'intertitre du tronc commun : une respiration, pas un second titre
+    # de section.
+    '.pg-sec .faq__t{display:flex;align-items:center;gap:12px;margin:22px 0 2px;'
+    'font-family:"Manrope",sans-serif;font-size:.76rem;font-weight:800;'
+    'letter-spacing:.11em;text-transform:uppercase;color:var(--teal-txt,#106D7C)}'
+    '.pg-sec .faq__t::after{content:"";flex:1;height:1px;background:var(--ligne,#E4E4EA)}'
+
+    '@media (prefers-reduced-motion:reduce){'
+    '.pg-sec .faq__q,.pg-sec .faq__q>summary::after{transition:none}'
+    '.pg-sec .faq__r{animation:none}}'
+    '@media (max-width:640px){'
+    '.pg-sec .faq__q>summary{padding:16px;font-size:.98rem;gap:12px}'
+    '.pg-sec .faq__r{padding:0 16px 16px}}'
     '</style>')
 
 

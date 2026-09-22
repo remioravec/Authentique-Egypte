@@ -63,7 +63,33 @@ EDITS = {
          'le désert, reste peu fréquenté ; un tour en felouque complète bien la '
          'journée.</p>'),
     ],
+
+    8598: [   # Circuits · Nos séjours (page mère)
+        # Le hero n'avait aucune image. Celle-ci est jointe par Mélanie au
+        # fil #9553. On reprend la structure exacte des autres heros :
+        # un fond net, et le même visuel flouté derrière pour habiller les
+        # bords quand la photo ne couvre pas toute la largeur.
+        ('9553', 'remplacer',
+         '<section class="hero"><div class="hero__in">',
+         '<section class="hero" style="--une-l:1280px;--une-h:360px">'
+         '<div class="hero__flou" data-flou="oui" aria-hidden="true">'
+         '<img src="https://authentiquegypte.com/wp-content/uploads/2026/09/flo-p-zpmvpEXM_Qc-unsplash-1-scaled.jpg" alt="" '
+         'decoding="async" loading="lazy"></div>'
+         '<div class="hero__fond">'
+         '<img src="https://authentiquegypte.com/wp-content/uploads/2026/09/flo-p-zpmvpEXM_Qc-unsplash-1-scaled.jpg" alt="" '
+         'decoding="async" loading="lazy"></div>'
+         '<div class="hero__in">'),
+    ],
     8921: [   # Destination · Alexandrie
+        # L'image que Mélanie a jointe elle-même au fil #9498. Le visuel en
+        # place était une photo du Sinaï — elle n'a jamais montré
+        # Alexandrie.
+        ('9498', 'remplacer',
+         'https://authentiquegypte.com/wp-content/uploads/2025/06/DSC00581-1-scaled.jpg',
+         'https://authentiquegypte.com/wp-content/uploads/2026/09/flo-p-zpmvpEXM_Qc-unsplash-scaled.jpg'),
+        ('9498b', 'remplacer',
+         'https://authentiquegypte.com/wp-content/uploads/2025/06/DSC00581-1-scaled.jpg',
+         'https://authentiquegypte.com/wp-content/uploads/2026/09/flo-p-zpmvpEXM_Qc-unsplash-scaled.jpg'),
         ('9505', 'remplacer',
          'Voiture : 2h30 en moyenne selon le traficCela permet',
          'Voiture : 2h30 en moyenne selon le trafic. Cela permet'),
@@ -80,6 +106,20 @@ QUESTIONS = {
     8922: [('9524', 'Quels sont les avantages de visiter Assouan par rapport à '
                     'Louxor ou au Caire ?')],
 }
+
+
+# Le voile du hero. La charte le pose à 93 % d'opacité : le titre est
+# parfaitement lisible, mais la photo disparaît dessous — « le fond est
+# trop sombre » (#9496), « photo trop sombre » (#9538). On l'allège, sans
+# descendre au point que le titre blanc cesse de passer : le contraste
+# est mesuré sur la couleur composée après coup, pas supposé.
+VOILE = ('<style data-hero="voile">'
+         '.pg .hero::after{background:linear-gradient(96deg,'
+         'rgba(6,61,71,.80) 0%,rgba(6,61,71,.62) 52%,rgba(6,61,71,.46) 100%)}'
+         '@media (max-width:860px){.pg .hero::after{background:linear-gradient(180deg,'
+         'rgba(8,70,80,.58) 0%,rgba(6,61,71,.78) 100%)}}'
+         '</style>')
+ALLEGER_VOILE = {8921: '9496', 8926: '9538'}
 
 
 def _fin(h, debut, nom):
@@ -119,8 +159,23 @@ def retirer_question(h, intitule):
 
 def corriger(pid, h):
     """Rend (page, [fils appliqués], [fils NON appliqués])."""
-    faits, rates = [], []
+    faits, rates, deja = [], [], []
     for fil, action, cible, remp in EDITS.get(pid, []):
+        # Relancé, l'outil ne doit RIEN refaire : un « ajouter_apres » dont
+        # l'ancre est toujours là parce qu'elle survit à l'ajout poserait
+        # le texte une seconde fois. On reconnaît donc d'abord ce qui est
+        # déjà en place, et on ne confond plus « déjà fait » avec
+        # « ancre introuvable » — les deux se lisaient pareil dans le
+        # rapport, et c'est justement la différence qui compte.
+        if action == 'ajouter_apres' and remp in h:
+            deja.append(fil)
+            continue
+        if action == 'remplacer' and cible not in h and remp in h:
+            deja.append(fil)
+            continue
+        if action == 'retirer' and cible not in h:
+            deja.append(fil)
+            continue
         if cible not in h:
             rates.append((fil, action, cible[:58]))
             continue
@@ -133,11 +188,14 @@ def corriger(pid, h):
         faits.append(fil)
     for fil, titre in SECTIONS.get(pid, []):
         h, ok = retirer_section(h, titre)
-        (faits if ok else rates).append(fil if ok else (fil, 'section', titre[:58]))
+        (faits if ok else deja).append(fil)
+    if pid in ALLEGER_VOILE and 'data-hero="voile"' not in h:
+        h += VOILE
+        faits.append(ALLEGER_VOILE[pid])
     for fil, intitule in QUESTIONS.get(pid, []):
         h, ok = retirer_question(h, intitule)
-        (faits if ok else rates).append(fil if ok else (fil, 'question', intitule[:58]))
-    return h, faits, rates
+        (faits if ok else deja).append(fil)
+    return h, faits, rates, deja
 
 
 def main():
@@ -152,10 +210,12 @@ def main():
     for pid in cibles:
         p_ = dep.appel('GET', '/pages/%d?context=edit' % pid)
         brut = re.sub(r'<!-- /?wp:html -->\n?', '', p_['content']['raw'])
-        neuf, faits, rates = corriger(pid, brut)
+        neuf, faits, rates, deja = corriger(pid, brut)
         titre = (p_.get('title') or {}).get('raw', '')
         print('\n#%d %s' % (pid, titre[:52]))
         print('   appliqués (%d) : %s' % (len(faits), ', '.join(str(f) for f in faits) or '—'))
+        if deja:
+            print('   déjà en place (%d) : %s' % (len(deja), ', '.join(str(f) for f in deja)))
         total_f += len(faits)
         for r in rates:
             total_r += 1

@@ -38,20 +38,42 @@ Q = '/pages?parent=%d&per_page=100&status=any&context=edit&orderby=menu_order&or
 
 FEUILLE = (
     '<style data-avis="statique">'
-    # La grille remplace les deux colonnes défilantes. Même règle que les
-    # autres grilles du site : auto-fit, pour qu'aucune carte ne reste
-    # seule sur sa ligne.
-    '.pg .mur{display:grid;grid-template-columns:repeat(auto-fit,minmax(310px,1fr));'
-    'gap:18px;align-items:start}'
+    # QUATRE colonnes, demande de Rémi. La règle du moule
+    # « .elementor-template-canvas .pg .mur » pèse trois classes : une
+    # règle à deux classes perd, même posée en dernier. On double la
+    # classe — « .mur.mur » — pour peser autant, et l'ordre tranche alors
+    # en notre faveur. C'est plus honnête qu'un !important, qui gagnerait
+    # aussi contre une correction future qu'on aurait oubliée.
+    # QUATRE colonnes typographiques, pas une grille. Les avis vont de
+    # deux lignes à quinze : en grille, chaque rangée prend la hauteur du
+    # plus long et laisse des trous béants — la première rangée montrait
+    # une case vide au milieu. Les colonnes CSS font couler les cartes les
+    # unes sous les autres, sans trou, et « break-inside » interdit qu'un
+    # avis soit coupé en deux d'une colonne à l'autre.
+    '.pg .mur.mur{display:block;columns:4;column-gap:16px}'
+    '@media (max-width:1180px){.pg .mur.mur{columns:3}}'
+    '@media (max-width:900px){.pg .mur.mur{columns:2}}'
+    '@media (max-width:620px){.pg .mur.mur{columns:1}}'
     '.pg .mur__a{background:#fff;border:1px solid var(--ligne-pg,#E4E4EA);'
-    'border-radius:var(--r-l,20px);padding:22px;margin:0}'
-    '.pg .mur__a blockquote{margin:0 0 16px;font-size:1rem;line-height:1.7;color:var(--texte)}'
-    '.pg .mur__q{display:block;font-size:2.2rem;line-height:.6;color:var(--or);margin:0 0 6px}'
-    '.pg .mur__a footer{display:flex;align-items:center;gap:12px;'
-    'font-family:"Manrope",sans-serif;font-size:.88rem;color:var(--gris-lis,#5B6870)}'
-    # Ce qui ne servait qu'au défilement n'a plus lieu d'être affiché.
+    'border-radius:var(--r-l,20px);padding:20px;margin:0 0 16px;'
+    'break-inside:avoid;-webkit-column-break-inside:avoid}'
+    '.pg .mur__a blockquote{margin:0 0 14px;font-size:.95rem;line-height:1.65;color:var(--texte)}'
+    '.pg .mur__q{display:block;font-size:2rem;line-height:.6;color:var(--or);margin:0 0 6px}'
+    '.pg .mur__a footer{display:flex;align-items:center;gap:10px;'
+    'font-family:"Manrope",sans-serif;font-size:.84rem;color:var(--gris-lis,#5B6870)}'
     '.pg .mur__f,.pg .mur__d,.pg .mur__c{display:contents}'
     '.pg .mur__stop,.pg .mur__btn{display:none}'
+
+    # Le logo dans un bloc blanc sur le bleu du pied de page. La charte
+    # pose « background:var(--fond) » sur TOUTE image — un fond de
+    # chargement, utile sous une photo, désastreux sous un PNG détouré :
+    # le logo doré traînait un rectangle blanc sur le bleu nuit. On rend
+    # leur transparence aux images qui en ont une.
+    '.elementor-template-canvas .pied img,'
+    '.elementor-template-canvas .entete img,'
+    '.elementor-template-canvas .logo img,'
+    '.elementor-template-canvas img[src$=".png"],'
+    '.elementor-template-canvas img[src$=".svg"]{background:transparent}'
     '</style>')
 
 
@@ -108,8 +130,8 @@ def corriger(h):
     # La case à cocher et son bouton ne commandaient que le défilement.
     h = re.sub(r'<input[^>]*class="[^"]*mur__stop[^"]*"[^>]*>', '', h)
     h = re.sub(r'<label[^>]*class="[^"]*mur__btn[^"]*".*?</label>', '', h, flags=re.S)
-    if 'data-avis="statique"' not in h:
-        h = h + FEUILLE          # en dernier : c'est lui qui doit l'emporter
+    h = re.sub(r'<style data-avis="statique">.*?</style>', '', h, flags=re.S)
+    h = h + FEUILLE              # en dernier : c'est lui qui doit l'emporter
     return h, len(avis), total - len(avis)
 
 
