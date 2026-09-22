@@ -44,6 +44,10 @@ FEUILLE = (
     'letter-spacing:.06em;text-transform:uppercase;color:var(--teal-txt,#106D7C)}'
     '.pg .pan__cle b{font-family:"Manrope",sans-serif;font-size:1.28rem;font-weight:800;'
     'line-height:1.1;color:var(--nuit-900,#095360);font-variant-numeric:tabular-nums}'
+    # La colonne, plus aérée : les repères respirent, le reste se serre.
+    '.pg .pan__inclus{display:grid;gap:7px;margin:0;padding:0;list-style:none;'
+    'font-size:.92rem;line-height:1.45}'
+    '.pg .pan__qui{padding-top:14px}'
     # La carte : bornée, centrée.
     '.pg .carte__svg{max-width:560px;margin-inline:auto}'
     '@media (max-width:900px){.pg .carte__svg{max-width:100%}}'
@@ -89,6 +93,20 @@ def corriger(h):
             a = re.search(r'<aside class="pan">\s*<div class="pan__carte">', h)
             h = h[:a.end()] + bloc_cles + h[a.end():]
             faits.append('repères → colonne collante (%d)' % len(cles))
+
+    # 1bis. Le sticky disait deux fois la même chose. « pan__liste » (sept
+    #       lignes) et « pan__inclus » (quatre) listent tous deux ce qui
+    #       est inclus, et le corps de la page porte déjà « Ce que le prix
+    #       comprend » avec ses douze lignes. Trois fois la même
+    #       information, dont deux dans une colonne qu'on veut lisible
+    #       d'un coup d'œil. On garde la plus courte, dans la colonne ;
+    #       la longue vit dans le corps, à sa place.
+    m = re.search(r'<ul class="pan__liste">', h)
+    if m and '<ul class="pan__inclus">' in h:
+        f = _fin(h, m.start(), 'ul')
+        if f > 0:
+            h = h[:m.start()] + h[f:]
+            faits.append('liste d’inclusions en double retirée du sticky')
 
     # 2. « Quand partir » descend au-dessus de « Ce que le prix comprend ».
     q = re.search(r'<section class="quand"[^>]*>', h)

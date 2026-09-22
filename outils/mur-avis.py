@@ -57,7 +57,17 @@ FEUILLE = (
     '.pg .mur__a{background:#fff;border:1px solid var(--ligne-pg,#E4E4EA);'
     'border-radius:var(--r-l,20px);padding:20px;margin:0 0 16px;'
     'break-inside:avoid;-webkit-column-break-inside:avoid}'
-    '.pg .mur__a blockquote{margin:0 0 14px;font-size:.95rem;line-height:1.65;color:var(--texte)}'
+    # « Pas des avis à rallonge. » Certains font quinze lignes et écrasent
+    # les autres. On les borne à huit lignes, avec un dégradé qui dit que
+    # le texte continue. Le texte entier reste dans la page — il n'est pas
+    # coupé, il est replié : un avis tronqué pour de bon serait un
+    # témoignage modifié, et le bouton « Voir les avis sur Google » mène
+    # de toute façon à la source.
+    '.pg .mur__a blockquote{position:relative;margin:0 0 14px;font-size:.95rem;'
+    'line-height:1.65;color:var(--texte);display:-webkit-box;-webkit-box-orient:vertical;'
+    '-webkit-line-clamp:8;overflow:hidden}'
+    '.pg .mur__a blockquote::after{content:"";position:absolute;inset:auto 0 0 0;height:1.6em;'
+    'background:linear-gradient(180deg,rgba(255,255,255,0),#fff)}'
     '.pg .mur__q{display:block;font-size:2rem;line-height:.6;color:var(--or);margin:0 0 6px}'
     '.pg .mur__a footer{display:flex;align-items:center;gap:10px;'
     'font-family:"Manrope",sans-serif;font-size:.84rem;color:var(--gris-lis,#5B6870)}'

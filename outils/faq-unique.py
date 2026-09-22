@@ -141,6 +141,58 @@ FEUILLE = (
     '</style>')
 
 
+# Les intitulés à réécrire. Ce ne sont pas des questions mais des
+# étiquettes de rubrique — « Meilleure saison », « Itinéraire type »,
+# « Sens De Navigation » — reprises telles quelles du site. Posées dans
+# un accordéon de FAQ, elles n'annoncent rien : on ne sait pas ce qu'on
+# va lire en les ouvrant. Et trois d'entre elles portent des majuscules
+# au milieu de la phrase, ce qui ne s'écrit pas en français.
+#
+# Chaque réécriture est tirée de SA PROPRE RÉPONSE, lue avant d'écrire :
+# la question dit exactement ce que la réponse apporte, rien de plus.
+# Aucune réponse n'est modifiée.
+REECRITURES = {
+    'Meilleure saison': 'Quelle est la meilleure saison pour ce séjour ?',
+    'Meilleure période': 'Quelle est la meilleure période pour partir ?',
+    'Préparer son voyage': 'Comment préparer son voyage ?',
+    'Respect des récifs &amp; bonnes pratiques':
+        'Comment respecter les récifs pendant le snorkeling ?',
+    'Combiner mer &amp; culture': 'Peut-on combiner la mer Rouge et les sites culturels ?',
+    'Familles, santé &amp; sécurité':
+        'Le snorkeling convient-il aux familles, et quelles précautions prendre ?',
+    'Faisable Avec Enfants ?': 'Ce séjour est-il faisable avec des enfants ?',
+    'Réserver À L&#x27;avance ?': 'Faut-il réserver à l’avance ?',
+    'Réserver À L’avance ?': 'Faut-il réserver à l’avance ?',
+    'Intérêt Bateau À Voile': 'Quel est l’intérêt du bateau à voile ?',
+    'Sens De Navigation': 'Dans quel sens naviguer, de Louxor à Assouan ou l’inverse ?',
+    'Personnaliser Itinéraire': 'Peut-on personnaliser l’itinéraire ?',
+    'Itinéraire type': 'À quoi ressemble l’itinéraire type ?',
+    'Journée sur le Nil': 'À quoi ressemble une journée sur le Nil ?',
+    'Visites culturelles incluses': 'Quelles visites culturelles sont incluses ?',
+    'Confort &amp; ambiance': 'Quel confort et quelle ambiance à bord ?',
+    'Hébergement &amp; transferts': 'Quels hébergements et quels transferts ?',
+    'Hébergement &amp; transport': 'Quels hébergements et quels transports ?',
+    'Adapté aux familles &amp; couples': 'Ce séjour convient-il aux familles et aux couples ?',
+    'Adapté aux familles / couples': 'Ce séjour convient-il aux familles et aux couples ?',
+    'Qu&#x27;est-ce que le Désert Blanc ?': 'Qu’est-ce que le désert Blanc ?',
+    'Conseils de sécurité': 'Quelles règles de sécurité suivre sur place ?',
+    'Conseils de sécurité et santé': 'Quelles précautions de sécurité et de santé prendre ?',
+    'Sites emblématiques': 'Quels sites emblématiques va-t-on voir ?',
+    'Vie quotidienne nubienne': 'À quoi ressemble la vie quotidienne en Nubie ?',
+    'Activités authentiques': 'Quelles activités authentiques peut-on vivre sur place ?',
+    'Organisation du voyage': 'Comment le voyage s’organise-t-il, étape par étape ?',
+    'Activités au Caire': 'Que faire au Caire pendant le séjour ?',
+    'Vie à bord du bateau': 'À quoi ressemble la vie à bord ?',
+    'Conseils pratiques': 'Quels conseils pratiques avant de partir ?',
+    'Questions fréquentes': 'Les questions qu’on nous pose le plus souvent',
+    'Le Désert noir vaut-il le détour par rapport au Désert blanc ?':
+        'Le désert Noir vaut-il le détour par rapport au désert Blanc ?',
+    'Le Désert noir est-il aussi photogénique que le Désert blanc ?':
+        'Le désert Noir est-il aussi photogénique que le désert Blanc ?',
+    'Qu’est-ce que Tunis Village à Fayoum ?': 'Qu’est-ce que Tunis Village, à Fayoum ?',
+}
+
+
 def texte(x):
     return re.sub(r'\s+', ' ', H.unescape(re.sub(r'<[^>]+>', ' ', x))).strip()
 
@@ -165,7 +217,15 @@ DECOR = re.compile(r'<span class="(?:acc__plus|acc__[a-z-]+)"\s*></span>')
 
 
 def sans_decor(x):
-    return DECOR.sub('', x)
+    """Une question, c'est du texte. Tout ce qui l'enveloppe est du décor.
+
+    Les <summary> du moule emballent l'intitulé dans un « <span class="q"> »
+    et y glissent une pastille « + ». Gardé tel quel, ce balisage empêchait
+    de reconnaître la question — la table de réécriture cherchait
+    « Faisable Avec Enfants ? » et trouvait « <span class="q">Faisable Avec
+    Enfants ?</span> » — et il redoublait le marqueur de l'accordéon.
+    """
+    return re.sub(r'\s+', ' ', re.sub(r'<[^>]+>', '', DECOR.sub('', x))).strip()
 
 
 def _fin_balise(h, debut, nom):
@@ -210,7 +270,7 @@ def questions_de(bloc):
         # suivait — et la section unifiée le reposait ailleurs, laissant la
         # page avec une fermeture de plus que d'ouvertures.
         fin = re.search(r'<(?:h[1-4]|details|section)\b|</(?:section|main|article)\b', suite)
-        out.append((m.group(1), suite[:fin.start()] if fin else suite[:2500]))
+        out.append((sans_decor(m.group(1)), suite[:fin.start()] if fin else suite[:2500]))
     return out
 
 
@@ -277,6 +337,7 @@ def unifier(h):
     for _, _, bloc in bornes:
         for q, r in questions_de(bloc):
             q = sans_emoji(re.sub(r'^\s*\d+[).]\s*', '', q.strip()))
+            q = REECRITURES.get(q.strip(), q)
             r = sans_emoji(r).strip()
             k = _cle(q)
             if not k or k in vues:
