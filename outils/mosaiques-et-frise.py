@@ -94,8 +94,11 @@ FEUILLE = (
     'letter-spacing:.01em;text-align:center;padding:8px}'
     # Deux colonnes seulement sur petit écran : 4, 8, 12… restent des
     # multiples de 2, donc les rangées restent pleines.
-    '@media (max-width:900px){' + H + '.pg .galerie.galerie,'
-    + H + '.pg .galerie.galerie[data-col="3"]{grid-template-columns:repeat(2,1fr)}}'
+    # Sous 900px la grille retombe à deux colonnes — sauf les galeries de
+    # moins de quatre photos, qui n'auraient plus de rangée pleine.
+    '@media (max-width:900px){' + H + '.pg .galerie.galerie:not([data-petit]),'
+    + H + '.pg .galerie.galerie[data-col="3"]:not([data-petit])'
+    '{grid-template-columns:repeat(2,1fr)}}'
 
     # --- Les flèches de la visionneuse.
     + H + '.pg-lb .lb__nav{position:absolute;top:50%;transform:translateY(-50%);'
@@ -120,9 +123,7 @@ FEUILLE = (
     'border-top:1px solid var(--ligne-2,#EFEFF3)}'
     '@media (max-width:900px){' + H + '.pg .mur.mur.mur{grid-template-columns:repeat(2,1fr)}}'
     '@media (max-width:620px){' + H + '.pg .mur.mur.mur{grid-template-columns:1fr}'
-    + H + '.pg .mur.mur.mur .mur__a{aspect-ratio:auto}'
-    + H + '.pg .mur.mur.mur .mur__a blockquote{-webkit-line-clamp:none;display:block}'
-    + H + '.pg .mur.mur.mur .mur__a blockquote::after{display:none}}'
+    + H + '.pg .mur.mur.mur .mur__a blockquote{-webkit-line-clamp:9}}'
 
     # --- Les blocs repêchés du mur d'avis.
     + H + '.pg .asavoir__l{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;'
@@ -252,8 +253,9 @@ def carrer_galerie(h):
             '<span class="gal__plus">%s</span></a>' % libelle
     caches = [a.replace('<a ', '<a class="gal__hors" hidden ', 1) for a in photos[montrees:]]
 
-    neuf = ('<section class="galerie" data-col="%d">%s</section>'
-            % (colonnes, ''.join(visibles + caches)))
+    neuf = ('<section class="galerie" data-col="%d"%s>%s</section>'
+            % (colonnes, ' data-petit="1"' if n < 4 else '',
+               ''.join(visibles + caches)))
     if neuf == bloc:
         return h, []
     quoi = 'galerie carrée (%d/%d)' % (montrees, n)
@@ -406,6 +408,13 @@ def corriger(h, corpus=''):
         faits += f
     h, f = carrer_mur(h, corpus)
     faits += f
+    # Une feuille posée par un passage précédent peut être périmée : le
+    # damier corrigé sur téléphone, par exemple, ne change pas le balisage.
+    # Sans ce test, la correction n'atteindrait jamais les pages qui n'ont
+    # que le mur d'avis.
+    ancienne = re.search(r'<style data-mosaique="carre">.*?</style>', h, re.S)
+    if ancienne and ancienne.group(0) != FEUILLE:
+        faits.append('feuille mise à jour')
     if not faits:
         return h, faits
     h = re.sub(r'<style data-mosaique="carre">.*?</style>', '', h, flags=re.S)
