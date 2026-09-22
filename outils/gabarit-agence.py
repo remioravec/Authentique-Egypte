@@ -303,14 +303,69 @@ ANCRES = ('Notre histoire', 'Notre engagement envers vous',
 # que le fond et les marges, mais une règle d'élément nue perdrait contre
 # n'importe laquelle des siennes. Deux niveaux suffisent et évitent la
 # surenchère.
+SCRIPT_AGENCE = (
+    '<script>(function(){'
+    'var doux=window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches;'
+
+    # L'apparition au défilement, si et seulement si on a de quoi la faire
+    # proprement. Sans observateur, on ne cache rien.
+    'if(!doux&&"IntersectionObserver" in window){'
+    'document.documentElement.className+=" js-anim";'
+    'var io=new IntersectionObserver(function(es){es.forEach(function(e){'
+    'if(e.isIntersecting){e.target.className+=" vu";io.unobserve(e.target)}})},'
+    '{rootMargin:"0px 0px -12% 0px",threshold:.08});'
+    'Array.prototype.forEach.call(document.querySelectorAll(".rev"),function(n){io.observe(n)});'
+    # Et quoi qu'il arrive, tout finit par s'afficher. Un observateur qui
+    # ne se déclenche pas laisserait des blocs invisibles pour de bon : le
+    # défaut le plus coûteux d'une animation à l'apparition, parce qu'il
+    # ne se voit pas chez celui qui l'écrit.
+    'setTimeout(function(){Array.prototype.forEach.call('
+    'document.querySelectorAll(".rev:not(.vu)"),function(n){n.className+=" vu"})},4000);'
+    '}'
+
+    # Le carrousel. Les flèches poussent le ruban d'une vignette ; le
+    # défilement automatique s'arrête au survol, au clavier et quand
+    # l'onglet passe derrière.
+    'var c=document.querySelector("[data-carr]");if(!c)return;'
+    'var piste=c.querySelector("[data-piste]"),'
+    'prec=c.querySelector("[data-carr-prec]"),suiv=c.querySelector("[data-carr-suiv]"),'
+    'pause=c.querySelector("[data-carr-pause]"),arrete=doux,dedans=false,minuteur=null;'
+    'function pas(){var d=piste.querySelector(".carr__d");'
+    'return d?d.getBoundingClientRect().width+16:320}'
+    'function pousser(sens){'
+    'var fin=piste.scrollWidth-piste.clientWidth-2;'
+    'if(sens>0&&piste.scrollLeft>=fin){piste.scrollLeft=0;return}'
+    'if(sens<0&&piste.scrollLeft<=2){piste.scrollLeft=fin;return}'
+    'piste.scrollLeft+=sens*pas()}'
+    'prec.addEventListener("click",function(){pousser(-1)});'
+    'suiv.addEventListener("click",function(){pousser(1)});'
+    'pause.addEventListener("click",function(){arrete=!arrete;'
+    'pause.setAttribute("aria-pressed",arrete?"true":"false");'
+    'pause.textContent=arrete?"Lecture":"Pause"});'
+    'c.addEventListener("mouseenter",function(){dedans=true});'
+    'c.addEventListener("mouseleave",function(){dedans=false});'
+    'c.addEventListener("focusin",function(){dedans=true});'
+    'c.addEventListener("focusout",function(){dedans=false});'
+    'piste.addEventListener("keydown",function(e){'
+    'if(e.key==="ArrowRight"){e.preventDefault();pousser(1)}'
+    'if(e.key==="ArrowLeft"){e.preventDefault();pousser(-1)}});'
+    'if(doux){pause.textContent="Lecture";pause.setAttribute("aria-pressed","true")}'
+    'minuteur=setInterval(function(){'
+    'if(!arrete&&!dedans&&!document.hidden)pousser(1)},5000);'
+    '})();</script>'
+)
+
+
 FEUILLE_AGENCE = (
     '<style data-agence="mise-en-page">'
 
     # La mesure de lecture. C'est la correction qui se voit le plus : une
     # colonne de texte qui court sur toute la largeur ne se lit pas.
-    '.pg-sec .wrap>p,.pg-sec .wrap>ul,.pg-sec .wrap>ol{max-width:68ch}'
-    '.pg-sec .wrap>h2+p,.pg-sec .lede{max-width:62ch}'
+    '.pg-sec .wrap>p,.pg-sec .wrap>ul,.pg-sec .wrap>ol{max-width:60ch}'
+    '.pg-sec .wrap>h2+p,.pg-sec .lede{max-width:56ch}'
     '.pg-sec .lede{margin:0 0 4px;font-size:1.14rem;line-height:1.6;color:var(--nuit-900)}'
+    '.pg-sec .cit{margin:2px 0 18px;padding:0 0 0 16px;border-left:3px solid var(--or);'
+    'font-size:1.16rem;line-height:1.55;color:var(--nuit-900);max-width:52ch}'
     '.pg-sec .wrap>h3,.pg-sec .wrap>h4{margin:28px 0 6px;font-family:"Archivo",system-ui,sans-serif;'
     'font-size:1.12rem;font-weight:700;line-height:1.3;color:var(--nuit-900)}'
     '.pg-sec .wrap>h3+p,.pg-sec .wrap>h4+p{margin-top:0}'
@@ -330,7 +385,11 @@ FEUILLE_AGENCE = (
     # de colonnes, parce que les suites vont de deux à quatre selon la
     # section, et qu'une colonne vide est pire qu'une colonne de moins.
     '.pg-sec .atouts{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));'
-    'gap:18px;margin:26px 0 0}'
+    # Chaque carte à sa hauteur. Étirées sur la plus haute, les trois
+    # cartes d'une ligne de l'équipe — une ligne de texte chacune —
+    # s'alignaient sur une carte de sept lignes : 70 % de blanc dans
+    # trois cartes sur quatre.
+    'gap:18px;margin:26px 0 0;align-items:start}'
     '.pg-sec .atout{background:#fff;border:1px solid var(--ligne);border-radius:var(--r-l);'
     'padding:24px;margin:0}'
     '.pg-sec--fond .atout,.pg-sec--creme .atout{background:#fff}'
@@ -367,12 +426,12 @@ FEUILLE_AGENCE = (
     # D'où vient le bloc. C'est une note de travail : elle doit se lire
     # comme une légende, pas comme une phrase de la page.
     '.pg-sec .prov{margin:18px 0 0;padding:0 0 0 12px;border-left:2px solid var(--ligne);'
-    'font-size:.86rem;line-height:1.5;color:#6B7A82}'
+    'font-size:.86rem;line-height:1.5;color:#5B6870}'
     '.pg-sec .prov a{color:var(--teal-txt)}'
 
     # Ce qui manque encore, et qu'on ne devine pas.
     '.pg-sec .atelier{display:flex;align-items:flex-start;gap:10px;margin:18px 0 0;'
-    'padding:12px 16px;max-width:68ch;border:1px dashed var(--or);border-radius:10px;'
+    'padding:12px 16px;max-width:62ch;border:1px dashed var(--or);border-radius:10px;'
     'background:var(--or-fond);color:#7A5605;font-size:.92rem;line-height:1.5}'
     '.pg-sec .aremplir{flex:0 0 auto;border:0;background:#7A5605;color:#fff;'
     'border-radius:999px;padding:2px 10px;'
@@ -389,6 +448,54 @@ FEUILLE_AGENCE = (
     '.pg-sec .pers__r{margin:0 0 12px;font-family:"Manrope",sans-serif;font-size:14px;'
     'font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--teal-txt)}'
     '.pg-sec .pers p{margin:0;max-width:none;color:var(--texte);line-height:1.65}'
+
+    # Texte et photo côte à côte. La colonne de texte garde sa mesure de
+    # lecture ; l'image prend le reste, et passe dessous sous 860 px.
+    '.pg-sec .duo{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.78fr);'
+    'gap:34px;align-items:start;margin:22px 0 0}'
+    '.pg-sec .duo__t>p{max-width:none}'
+    '.pg-sec .duo__i{margin:0}'
+    '.pg-sec .duo__i img{display:block;width:100%;height:auto;border-radius:var(--r-l)}'
+    '.pg-sec .duo__i figcaption{margin:10px 2px 0;font-size:.86rem;line-height:1.45;color:#5B6870}'
+    '@media (max-width:860px){.pg-sec .duo{grid-template-columns:1fr;gap:22px}}'
+
+    # Le carrousel. « scroll-snap » suffit : la molette, le doigt et les
+    # flèches poussent le même ruban, et il reste utilisable sans script.
+    '.pg-sec--photos{background:var(--nuit-900);color:#D4E5E8}'
+    '.pg-sec--photos h2{color:#fff}'
+    '.pg-sec--photos .eyebrow{color:var(--or)}'
+    '.pg-sec--photos .lede{color:#BBD4D9}'
+    '.carr{position:relative;margin:26px 0 0}'
+    '.carr__piste{display:flex;gap:16px;margin:0;padding:0 0 10px;list-style:none;'
+    'overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;'
+    'scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.35) transparent}'
+    '.carr__piste:focus-visible{outline:3px solid var(--or);outline-offset:4px;border-radius:var(--r-l)}'
+    '.carr__d{flex:0 0 clamp(240px,32vw,380px);scroll-snap-align:start;margin:0}'
+    '.carr__d img{display:block;width:100%;height:auto;aspect-ratio:3/2;object-fit:cover;'
+    'border-radius:var(--r-l);background:#0b3f4a}'
+    '.carr__d span{display:block;margin:10px 2px 0;font-size:.86rem;line-height:1.45;color:#BBD4D9}'
+    '.carr__nav{display:flex;gap:10px;align-items:center;margin:16px 0 0}'
+    '.carr__b{min-width:44px;min-height:44px;padding:0 14px;border-radius:999px;'
+    'border:1px solid rgba(255,255,255,.4);background:transparent;color:#fff;cursor:pointer;'
+    'font-family:"Manrope",sans-serif;font-size:1.1rem;font-weight:700;line-height:1}'
+    '.carr__b--stop{font-size:.84rem;letter-spacing:.06em;text-transform:uppercase}'
+    '.carr__b:hover{background:rgba(255,255,255,.12)}'
+    '.carr__b:focus-visible{outline:3px solid var(--or);outline-offset:2px}'
+
+    # L'apparition au défilement. L'état AU REPOS est visible : si le script
+    # ne tourne pas, ou si la personne a demandé moins d'animations, la page
+    # s'affiche entière. C'est le script qui pose « js-anim », et seulement
+    # s'il a le droit d'animer — une section cachée en attendant un
+    # observateur qui ne vient jamais, c'est une page blanche.
+    'html.js-anim .pg-sec .rev{opacity:0;transform:translateY(14px);'
+    'transition:opacity .55s ease,transform .55s ease}'
+    'html.js-anim .pg-sec .rev.vu{opacity:1;transform:none}'
+    'html.js-anim .pg-sec .rev.vu>*:nth-child(2){transition-delay:.07s}'
+    'html.js-anim .pg-sec .rev.vu>*:nth-child(3){transition-delay:.14s}'
+    'html.js-anim .pg-sec .rev.vu>*:nth-child(4){transition-delay:.21s}'
+    '@media (prefers-reduced-motion:reduce){'
+    'html.js-anim .pg-sec .rev{opacity:1;transform:none;transition:none}'
+    '.carr__piste{scroll-behavior:auto}}'
 
     '@media (max-width:640px){'
     '.pg-sec .chiffres b{min-width:0;flex:1 1 100%;font-size:1.7rem}'
@@ -447,9 +554,105 @@ def grouper_atouts(bloc, variante=''):
             out.append(bloc[d:d + 18])
             i = d + 18
             continue
-        out.append('<div class="atouts%s">%s</div>' % (variante, bloc[d:dernier]))
+        out.append('<div class="atouts%s rev">%s</div>' % (variante, bloc[d:dernier]))
         i = j
     return ''.join(out)
+
+
+# ---------------------------------------------------------------------------
+# Les photos
+# ---------------------------------------------------------------------------
+#
+# Toutes viennent de la médiathèque de l'agence — aucune n'est empruntée
+# ailleurs, aucune n'est ajoutée au site. La légende est le texte
+# alternatif que l'agence a elle-même écrit sur l'image : c'est la seule
+# légende qu'on ait le droit d'afficher, et c'est aussi ce qui la rend
+# accessible. Les images sans texte alternatif sont écartées — en inventer
+# un reviendrait à écrire à la place de la cliente.
+#
+# Relevé dans la médiathèque le 22/09/2026, format « large » (1024 px).
+SITE_IMG = 'https://authentiquegypte.com/wp-content/uploads/'
+
+PHOTOS = [
+    (4967, '2025/06/Couple-dans-un-marche-en-Egypte-1024x683.png',
+     'Couple dans un marché en Egypte', 1024, 683),
+    (1561, '2023/11/e235bfb4-54a3-41cf-9f55-f2ca30fc8a91-1-1024x680.jpg',
+     'Dahabeya', 1024, 680),
+    (5416, '2025/07/mohamad-sameh-FGPo7AOnvv8-unsplash-1024x683.jpg',
+     'Bédouins dans le désert', 1024, 683),
+    (2400, '2023/11/Siwa_Oasis_sunset_on_Maraqi_Egypt-1024x577.webp',
+     'oasis de siwa', 1024, 577),
+    (5520, '2025/07/peggy-anke-YxpoB3bvlZQ-unsplash-1024x683.jpg',
+     'Au bord du lagoon de la mer rouge', 1024, 683),
+    (5121, '2025/06/raimond-klavins-8j3FvUT6yM4-unsplash-1024x683.jpg',
+     'Monastère Sainte-Catherine, Raimond Klavins', 1024, 683),
+    (4965, '2025/06/Photo-dune-famille-dans-le-desert-Egyptiens-1024x683.png',
+     'Photo d’une famille dans le désert Egyptiens', 1024, 683),
+    (2143, '2023/11/peter-ragheb-naYLQxASRTE-unsplash-1024x768.webp',
+     'Désert dans l’Oasis de Fayoum', 1024, 768),
+    (3138, '2023/11/WhatsApp-Image-2024-02-22-at-17.03.03-1024x768.webp',
+     'Voyage culturel en Egypte', 1024, 768),
+    (5119, '2025/06/DSC00493-1024x684.jpg', 'Guesthouse', 1024, 684),
+]
+
+# La photo qui accompagne le récit des débuts.
+PHOTO_HISTOIRE = (5523, '2025/07/DSC00551_01-scaled-e1751464241518-1024x683.jpg',
+                  'Spiritualité au sommet du mont Moïse au lever du soleil', 1024, 683)
+
+
+def image(photo, classe='', paresseuse=True):
+    """Une image de la médiathèque, avec ses dimensions.
+
+    Les dimensions sont posées pour que le navigateur réserve la place
+    avant de charger : sans elles, chaque photo qui arrive pousse le texte
+    vers le bas et la page saute sous le curseur.
+    """
+    _, chemin, texte_alt, l, h = photo
+    return ('<img%s src="%s%s" alt="%s" width="%d" height="%d"%s decoding="async">'
+            % (' class="%s"' % classe if classe else '', SITE_IMG, chemin,
+               H.escape(texte_alt), l, h, ' loading="lazy"' if paresseuse else ''))
+
+
+def duo(corps, photo):
+    """Un texte et une photo côte à côte.
+
+    Une section de prose seule laisse la moitié droite de l'écran vide :
+    c'est ce qui donnait à la page son air de document Word.
+    """
+    return ('<div class="duo"><div class="duo__t">%s</div>'
+            '<figure class="duo__i">%s<figcaption>%s</figcaption></figure></div>'
+            % (corps, image(photo), H.escape(photo[2])))
+
+
+def carrousel():
+    """Le carrousel de photos, en défilement à l'accroché.
+
+    Pas de bibliothèque : « scroll-snap » fait le travail, la molette et le
+    doigt marchent d'origine, et les deux flèches ne font que pousser le
+    ruban. Une page qui charge un carrousel de cinquante kilo-octets pour
+    montrer dix photos a déjà perdu.
+
+    Le défilement automatique s'arrête au survol, au clavier, quand l'onglet
+    passe à l'arrière-plan, et ne démarre jamais si la personne a demandé
+    moins d'animations.
+    """
+    vignettes = ''.join(
+        '<li class="carr__d">%s<span>%s</span></li>' % (image(p), H.escape(p[2]))
+        for p in PHOTOS)
+    return (
+        '<section class="pg-sec pg-sec--photos"><div class="wrap">'
+        '<p class="eyebrow">En images</p>'
+        '<h2>Nos voyages en photos</h2>'
+        '<p class="lede">Dix images prises pendant nos séjours, du Sinaï aux oasis.</p>'
+        '<div class="carr" data-carr>'
+        '<ul class="carr__piste" data-piste tabindex="0" role="region" '
+        'aria-label="Photos de nos voyages">%s</ul>'
+        '<div class="carr__nav">'
+        '<button class="carr__b" type="button" data-carr-prec aria-label="Photo précédente">‹</button>'
+        '<button class="carr__b carr__b--stop" type="button" data-carr-pause '
+        'aria-pressed="false">Pause</button>'
+        '<button class="carr__b" type="button" data-carr-suiv aria-label="Photo suivante">›</button>'
+        '</div></div></div></section>' % vignettes)
 
 
 def poser_schema(h):
@@ -502,6 +705,31 @@ def poser_schema(h):
     return tete + rendu + reste
 
 
+def _normaliser_titres(bloc):
+    """Trois défauts de titre que la page reprise transporte.
+
+    1. Un titre de carte rendu en <h2>. Deux des trois piliers sortent de
+       l'accueil en <h2> et le troisième en <h3> : côte à côte, deux titres
+       plus petits que le voisin, et un <h2> imbriqué sous le <h2> de
+       section. Tout titre de carte est un <h3>.
+    2. Un titre suivi immédiatement d'un autre titre de même niveau ou
+       plus haut ne porte rien : c'est une étiquette de la page d'origine,
+       pas un titre. « FAQ - Questions fréquentes » posé juste sous « Les
+       questions qu'on nous pose » en est une.
+    3. Un paragraphe entièrement entre guillemets est une citation, et se
+       lit comme telle.
+    """
+    bloc = re.sub(r'(<div class="atout"[^>]*>\s*)<h[12]([^>]*)>(.*?)</h[12]>',
+                  lambda m: '%s<h3%s>%s</h3>' % (m.group(1), m.group(2), m.group(3)),
+                  bloc, flags=re.S)
+    bloc = re.sub(r'<h([34])\b[^>]*>[^<]*</h\1>\s*(?=<h[1-3]\b)', '', bloc)
+    bloc = re.sub(r'<p(?![^>]*class="(?:atelier|prov|eyebrow|lede)")[^>]*>\s*'
+                  r'(&quot;|"|«)(.{10,300}?)(&quot;|"|»)\s*</p>',
+                  lambda m: '<p class="cit">%s%s%s</p>' % (m.group(1), m.group(2), m.group(3)),
+                  bloc, flags=re.S)
+    return bloc
+
+
 def sans_paragraphe_repete(h):
     """Un même paragraphe ne se lit pas deux fois dans la page.
 
@@ -548,10 +776,14 @@ def mettre_en_page(h):
         surtitre = re.search(r'<p class="eyebrow">([^<]*)</p>', m.group(0))
         variante = VARIANTES.get(texte(surtitre.group(1)) if surtitre else '', '')
         out.append(h[i:m.start()])
-        out.append(grouper_atouts(m.group(0), variante))
+        out.append(_normaliser_titres(grouper_atouts(m.group(0), variante)))
         i = m.end()
     out.append(h[i:])
-    return ''.join(out)
+    h = ''.join(out)
+    # Les autres objets qui arrivent en bloc apparaissent de la même façon.
+    for classe in ('chiffres', 'equipe', 'garanties', 'duo', 'carr'):
+        h = h.replace('class="%s"' % classe, 'class="%s rev"' % classe)
+    return h
 
 
 def fiche_equipe(prenom, role, bio):
@@ -596,7 +828,7 @@ def monter(moule, agence, accueil, chapo=''):
         # la répéter ici la faisait lire deux fois à trois cents pixels
         # d'intervalle, et une troisième fois en fin de section.
         s.append(section('Notre histoire', 'Une aventure née d’un regard curieux',
-                         hist, fond=True))
+                         duo(hist, PHOTO_HISTOIRE), fond=True))
 
     # 4. Les trois piliers, rapatriés de l'accueil où ils sont déjà rédigés.
     piliers = bloc_apres(accueil, 'Privées')
@@ -604,6 +836,11 @@ def monter(moule, agence, accueil, chapo=''):
         s.append(section('Notre approche', 'Ce qui fait un voyage avec nous',
                          piliers + source('https://authentiquegypte.com/',
                                           'la page d’accueil du site')))
+
+    # 4bis. Les photos. La page n'en portait qu'une, celle du hero : dix
+    #       sections de prose d'affilée, sur un métier qui se vend par
+    #       l'image. Elles viennent toutes de la médiathèque de l'agence.
+    s.append(carrousel())
 
     # 5. L'équipe. C'était le manque le plus net face au marché — quatre
     #    agences et demie sur sept montrent des visages et des noms. Mélanie a
@@ -639,10 +876,8 @@ def monter(moule, agence, accueil, chapo=''):
                  % (H.escape(SIRET), H.escape(SIEGE),
                     source(MENTIONS, 'les mentions légales du site')))
     s.append(section('Garanties', 'Qui nous sommes, juridiquement',
-                     juridique + a_remplir('licence') + a_remplir('garanties')))
-
-    # 9. Les bureaux.
-    s.append(section('Où nous trouver', 'Nos bureaux', a_remplir('bureau'), fond=True))
+                     juridique + a_remplir('licence') + a_remplir('garanties')
+                     + a_remplir('bureau')))
 
     # 10. La presse : l'atout que personne d'autre n'a. Elle remonte.
     presse = bloc_apres(agence, 'Le Figaro', bornes=ANCRES)
@@ -693,6 +928,7 @@ def main():
     tete = tete.replace('</head>', FEUILLE_AGENCE + '</head>', 1)
     h = _bleu.unifier(tete + ''.join(corps) + moule.pied)
     h = sans_paragraphe_repete(mettre_en_page(h))
+    h = h.replace('</body>', SCRIPT_AGENCE + '</body>', 1)
     h = poser_schema(h)
 
     manquants = len(re.findall(r'class="aremplir"', h))
