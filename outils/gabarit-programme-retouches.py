@@ -63,22 +63,52 @@ def _fin(h, debut, nom):
     return -1
 
 
+# Ce qu'un repère de tête a le droit d'être. Les bandeaux d'origine en
+# portaient de un à six selon les fiches : certains annonçaient le prix et
+# la durée, d'autres y ajoutaient « Rythme », « Transport », « Guide »,
+# « Hébergement » — qui répètent mot pour mot la liste des inclusions
+# juste en dessous. Une colonne qu'on veut lisible d'un coup d'œil ne
+# porte que ce qui décide : combien, et combien de temps.
+CLES = ('prix', 'personne', 'durée', 'duree')
+
+
 def reperes_de(bloc):
-    """Les couples (étiquette, valeur) du bandeau, sans ses icônes."""
+    """Les couples (étiquette, valeur) du bandeau, sans ses icônes.
+
+    Lit indifféremment le bandeau d'origine (<li><small>/<b>) et le bloc
+    déjà posé dans la colonne (<div class="pan__cle">), pour que l'outil
+    puisse repasser sur une fiche déjà traitée sans la casser.
+    """
     out = []
-    for li in re.findall(r'<li\b.*?</li>', bloc, re.S):
-        s = re.search(r'<small[^>]*>(.*?)</small>', li, re.S)
-        b = re.search(r'<b[^>]*>(.*?)</b>', li, re.S)
+    for m in re.finditer(r'<li\b.*?</li>|<div class="pan__cle">.*?</div>', bloc, re.S):
+        e = m.group(0)
+        s = re.search(r'<small[^>]*>(.*?)</small>', e, re.S)
+        b = re.search(r'<b[^>]*>(.*?)</b>', e, re.S)
         if s and b:
             out.append((re.sub(r'<[^>]+>', '', s.group(1)).strip(),
                         re.sub(r'<[^>]+>', '', b.group(1)).strip()))
-    return out
+    return [(a, v) for a, v in out if any(k in a.lower() for k in CLES)]
 
 
 def corriger(h):
     faits = []
 
     # 1. Le bandeau monte dans la colonne collante.
+    # Une fiche déjà traitée repasse : on refait le bloc à partir de ce
+    # qu'elle porte, plutôt que de le laisser tel quel. C'est ce qui permet
+    # de resserrer les repères après coup sans tout redéployer.
+    d = re.search(r'<div class="pan__cles">', h)
+    if d:
+        fd = _fin(h, d.start(), 'div')
+        if fd > 0:
+            garde = reperes_de(h[d.start():fd])
+            neuf_bloc = ('<div class="pan__cles">%s</div>' % ''.join(
+                '<div class="pan__cle"><small>%s</small><b>%s</b></div>' % (e, v)
+                for e, v in garde))
+            if neuf_bloc != h[d.start():fd]:
+                h = h[:d.start()] + neuf_bloc + h[fd:]
+                faits.append('repères resserrés à %d' % len(garde))
+
     m = re.search(r'<section class="reperes">', h)
     if m and 'pan__cles' not in h:
         f = _fin(h, m.start(), 'section')
