@@ -98,6 +98,68 @@ REPONSES = {
 }
 
 
+# Les fils qui ne peuvent pas être clos : il manque une photo, ou la
+# demande est trop ouverte pour qu'on agisse sans se tromper. Ils
+# reçoivent une réponse mais RESTENT OUVERTS — un fil clos est un fil
+# qu'on ne relit plus, et ceux-là attendent une réponse de l'agence.
+#
+# Chaque question propose une piste concrète quand la médiathèque en
+# contient une : « dites-nous » sans rien proposer renvoie la charge
+# entière à la cliente.
+A_PRECISER = {
+    # ——— les photos
+    '9504': 'Il me faut vos photos : la médiathèque ne contient qu’une seule image '
+            'd’Alexandrie (« Voyage sur mesure à Alexandrie en Egypte »), rien sur la '
+            'colonne de Pompée, les catacombes, la bibliothèque ou le fort Qaitbay. '
+            'Envoyez-les et je les place sous chaque site. À défaut, je peux mettre '
+            'l’unique photo existante en tête de section et laisser les sites sans '
+            'visuel — dites-moi ce que vous préférez.',
+    '9506': 'Je n’ai aucune photo de la colonne de Pompée dans la médiathèque. '
+            'Pouvez-vous m’en envoyer une ? En attendant je ne mets rien plutôt qu’une '
+            'image qui ne serait pas le bon monument.',
+    '9526': 'Laquelle souhaitez-vous ? Je peux proposer « Voyage sur mesure à Assouan '
+            'en Egypte » (déjà dans votre médiathèque) ou « Egypte Nubie Voyage ». '
+            'Dites-moi, ou envoyez la vôtre.',
+    '9527': 'Pouvez-vous me dire laquelle ne va pas, et par quoi la remplacer ? Je vois '
+            'dans la médiathèque « Voyage sur mesure à Assouan en Egypte » et « Egypte '
+            'Nubie Voyage » qui pourraient convenir.',
+    '9543': 'Je propose « Voyage authentique en famille », déjà dans votre médiathèque, '
+            'ou « Photo d’une famille dans le désert Egyptiens ». Laquelle vous '
+            'conviendrait, ou en avez-vous une autre ?',
+    '9538': 'Je peux éclaircir le voile sombre posé sur la photo, ou changer la photo. '
+            'Je propose « Couple dans un marché en Egypte », déjà dans votre '
+            'médiathèque. Que préférez-vous ?',
+    '9496': 'Je vais éclaircir le voile. Vous avez joint une image à un autre '
+            'commentaire de cette page : je la pose en visuel de une, et j’allège le '
+            'voile pour que le titre reste lisible.',
+
+    # ——— les demandes qu'il faut préciser
+    '9528': 'Vous avez raison, ces textes sont identiques d’une catégorie à l’autre : '
+            'ils viennent tels quels du site actuel. Les différencier demande de les '
+            'réécrire, et c’est à vous de dire ce que chaque catégorie doit raconter. '
+            'Voulez-vous nous envoyer un paragraphe par catégorie ?',
+    '9529': 'Même remarque que plus haut : il nous faut un texte propre à chaque '
+            'catégorie pour remplacer celui qui se répète.',
+    '9530': 'Même remarque : un texte par catégorie, et nous les mettons en place.',
+    '9531': 'Par quoi remplacer « Découvrir » ? Nous pouvons écrire ce que la page vise '
+            '— « Voir le séjour », « Voir la destination » — ce qui supprimerait la '
+            'répétition. Cela vous convient-il ?',
+    '9548': 'Quelles informations manquent exactement sur cette carte ? La durée, le '
+            'nombre d’étapes, ce qui est inclus ? Dites-nous lesquelles et nous les '
+            'ajoutons à toutes les cartes de séjour.',
+    '9544': 'Qu’est-ce qui ne va pas dans cette section : le titre, les pages listées, '
+            'ou la façon dont elles sont présentées ?',
+    '9499': 'Nous n’avons pas compris cette remarque. S’agit-il du titre « Passer du '
+            'guide au voyage », de ce qu’il annonce, ou de sa place dans la page ?',
+    '9568': 'Sur quelle page faut-il déplacer « Quand partir » ? Nous pensons au guide '
+            '« Quand partir en Égypte ? », qui traite déjà le sujet en détail — '
+            'confirmez-vous ?',
+    '9571': 'Qu’est-ce qui ne va pas dans le jour par jour : la longueur des journées, '
+            'le fait qu’elles soient repliées, l’absence de photos, autre chose ? Avec '
+            'une précision nous le reprenons.',
+}
+
+
 def appel(methode, chemin, charge=None):
     dep = appel.dep
     cmd = ['curl', '-s', '--max-time', '90', '-u', dep.auth(), '-X', methode, BASE + chemin]
@@ -131,8 +193,20 @@ def main():
         if a.essai:
             print('   %s → %s' % (fil, message[:76]))
             continue
-        r = appel('POST', '/fils/%s/reponses' % fil, {'message': message})
-        if '_brut' in r or r.get('code'):
+        # Relancé après un incident, l'outil ne redouble pas ce qui est
+        # déjà posté : Mélanie lirait deux fois la même réponse.
+        if par_id[fil].get('reponses'):
+            continue
+        # Le serveur rend parfois une redirection au lieu du JSON. Sans
+        # reprise, un fil restait sans réponse au milieu du lot — et c'est
+        # précisément le fil dont Mélanie n'aurait jamais su qu'il est
+        # traité.
+        for essai in range(4):
+            r = appel('POST', '/fils/%s/reponses' % fil, {'message': message})
+            if '_brut' not in r and not r.get('code'):
+                break
+            time.sleep(2 ** essai)
+        else:
             print('   ✗ fil %s : %s' % (fil, str(r)[:80]))
             rate += 1
             continue
@@ -140,10 +214,32 @@ def main():
         time.sleep(0.2)
         ok += 1
     if a.essai:
-        print('\nessai : %d réponse(s) prête(s).' % len(REPONSES))
+        for fil, message in A_PRECISER.items():
+            print('   %s (reste ouvert) → %s' % (fil, message[:64]))
+        print('\nessai : %d clôture(s) + %d question(s).' % (len(REPONSES), len(A_PRECISER)))
         return
 
     # Relecture : le statut est-il vraiment passé, la réponse vraiment posée ?
+    # Les fils à préciser : une réponse, mais pas de clôture.
+    for fil, message in A_PRECISER.items():
+        if fil not in par_id:
+            print('   ✗ fil %s introuvable' % fil)
+            rate += 1
+            continue
+        if par_id[fil].get('reponses'):
+            continue
+        for essai in range(4):
+            r = appel('POST', '/fils/%s/reponses' % fil, {'message': message})
+            if '_brut' not in r and not r.get('code'):
+                break
+            time.sleep(2 ** essai)
+        else:
+            print('   ✗ fil %s : %s' % (fil, str(r)[:80]))
+            rate += 1
+            continue
+        ok += 1
+        time.sleep(0.2)
+
     tout = appel('GET', '/tout')
     par_id = {str(x['id']): x for x in tout}
     clos = sum(1 for f in REPONSES if par_id.get(f, {}).get('statut') == 'resolu')
