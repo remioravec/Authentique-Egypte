@@ -1,0 +1,683 @@
+{
+ "releve": "2026-09-23",
+ "ouverts": 74,
+ "pages": {
+  "8922": "Destination · Assouan",
+  "8921": "Destination · Alexandrie",
+  "8595": "Circuit · Croisières en Égypte",
+  "8598": "Circuit · Nos séjours (mère)",
+  "8596": "Circuit · Déserts et Oasis",
+  "8923": "Destination · Fayoum",
+  "8926": "Profil · Voyage en couple",
+  "8588": "Programme · Le Caire et croisière",
+  "8927": "Profil · Voyage en famille"
+ },
+ "fils": [
+  {
+   "id": 9567,
+   "post": 8588,
+   "ancre": "Guide francophone privatifChauffeur privatif dans un véhicule climatiséLes entrées aux monumentsLes hébergementsLes tran",
+   "message": "le format de quand partir : modifier pour que les voyageurs peuvent sélectionner leur date",
+   "date": "2026-09-21T15:11:18+00:00",
+   "image": "",
+   "reponses": []
+  },
+  {
+   "id": 9568,
+   "post": 8588,
+   "ancre": "Quand partir ?",
+   "message": "merci de le déplacer, ce n'est pas forcement la page ou mettre ce type d'information",
+   "date": "2026-09-21T15:12:15+00:00",
+   "image": "",
+   "reponses": []
+  },
+  {
+   "id": 9569,
+   "post": 8588,
+   "ancre": "",
+   "message": "la carte ne convient pas faire beaucoup plus petit et interactif si possible",
+   "date": "2026-09-21T15:12:41+00:00",
+   "image": "",
+   "reponses": []
+  },
+  {
+   "id": 9570,
+   "post": 8588,
+   "ancre": "L’agenceQui vous répond« Une aventure née d’un regard curieux sur l’Égypte authentique »MélanieTout commence quand Mélan",
+   "message": "oui et non ce n'est pas moi qui gère les demande donc enlever cette partie",
+   "date": "2026-09-21T15:13:18+00:00",
+   "image": "",
+   "reponses": []
+  },
+  {
+   "id": 9571,
+   "post": 8588,
+   "ancre": "Croisières en ÉgypteGuide francophone privatif Le Caire et croisière sur un bateau à voile Personnaliser ce séjour Pose",
+   "message": "modifier le jour par jour le design ne convient pas",
+   "date": "2026-09-21T15:13:32+00:00",
+   "image": "",
+   "reponses": []
+  },
+  {
+   "id": 9554,
+   "post": 8595,
+   "ancre": "Avant de choisirCe qu’on nous demande le plus souventQuelle est la meilleure période pour faire une croisière en Égypte",
+   "message": "2 FAQ cote a cote - c'est trop réorganiser",
+   "date": "2026-09-21T15:05:49+00:00",
+   "image": "",
+   "reponses": []
+  },
+  {
+   "id": 9555,
+   "post": 8595,
+   "ancre": "Ce que disent les voyageurs",
+   "message": "a refaire les commentaires le format en convient pas",
+   "date": "2026-09-21T15:06:07+00:00",
+   "image": "",
+   "reponses": []
+  },
+  {
+   "id": 9556,
+   "post": 8595,
+   "ancre": "",
+   "message": "logo",
+   "date": "2026-09-21T15:06:13+00:00",
+   "image": "",
+   "reponses": []
+  },
+  {
+   "id": 9557,
+   "post": 8595,
+   "ancre": "Sur tous les séjoursLes transferts Par personne, à partir de1195 € Durée annoncéeDe 4 à 9 jours Séjours4 au choix",
+   "message": "enlever ce bandeau",
+   "date": "2026-09-21T15:06:24+00:00",
+   "image": "",
+   "reponses": []
+  },
+  {
+   "id": 9558,
+   "post": 8595,
+   "ancre": "",
+   "message": "enlever emoji",
+   "date": "2026-09-21T15:07:04+00:00",
+   "image": "",
+   "reponses": []
+  },
+  {
+   "id": 9559,
+   "post": 8595,
+   "ancre": "",
+   "message": "enlever emoji",
+   "date": "2026-09-21T15:07:10+00:00",
+   "image": "",
+   "reponses": []
+  },
+  {
+   "id": 9560,
+   "post": 8595,
+   "ancre": "Bateau classique : plus grand, avec tout le confort moderne, souvent en groupe",
+   "message": "non en privatif mais bateau très touristique",
+   "date": "2026-09-21T15:07:27+00:00",
+   "image": "",
+   "reponses": []
+  },
+  {
+   "id": 9561,
+   "post": 8596,
+   "ancre": "Sur tous les séjoursL'assistance H24 Par personne, à partir de185 € Durée annoncéeDe 1 à 3 jours Séjours4 au choix",
+   "message": "enlever le bandeau",
+   "date": "2026-09-21T15:07:51+00:00",
+   "image": "",
+   "reponses": []
+  },
+  {
+   "id": 9562,
+   "post": 8596,
+   "ancre": "Combien de jours voulez-vous partir ?",
+   "message": "enlever ce bandeau",
+   "date": "2026-09-21T15:09:24+00:00",
+   "image": "",
+   "reponses": []
+  },
+  {
+   "id": 9563,
+   "post": 8596,
+   "ancre": "Avant de choisirCe qu’on nous demande le plus souventQuelle est la meilleure période pour explorer le désert et les oasi",
+   "message": "ajouter dans FAQ si on fait les autorisations nécessaires pour les déserts. Oui, nous organisons bien les autorisations nécessaires auprès du ministère du tourisme égyptien.",
+   "date": "2026-09-21T15:10:03+00:00",
+   "image": "",
+   "reponses": []
+  },
+  {
+   "id": 9564,
+   "post": 8596,
+   "ancre": "Avant de choisirCe qu’on nous demande le plus souventQuelle est la meilleure période pour explorer le désert et les oasi",
+   "message": "deux faq cote à cote : modifier",
+   "date": "2026-09-21T15:10:16+00:00",
+   "image": "",
+   "reponses": []
+  },
+  {
+   "id": 9565,
+   "post": 8596,
+   "ancre": "Ce que disent les voyageurs",
+   "message": "le format des commentaires ne convient pas",
+   "date": "2026-09-21T15:10:31+00:00",
+   "image": "",
+   "reponses": []
+  },
+  {
+   "id": 9566,
+   "post": 8596,
+   "ancre": "",
+   "message": "logo",
+   "date": "2026-09-21T15:10:36+00:00",
+   "image": "",
+   "reponses": []
+  },
+  {
+   "id": 9547,
+   "post": 8598,
+   "ancre": "Séjours0 au choix",
+   "message": "changer mettre du texte ou des filètes",
+   "date": "2026-09-21T15:03:24+00:00",
+   "image": "",
+   "reponses": []
+  },
+  {
+   "id": 9548,
+   "post": 8598,
+   "ancre": "Pyramides, Louxor et mer rouge en familleÀ partir de1485 €Voir le séjour",
+   "message": "il manque les informations du programme",
+   "date": "2026-09-21T15:04:10+00:00",
+   "image": "",
+   "reponses": []
+  },
+  {
+   "id": 9549,
+   "post": 8598,
+   "ancre": "Avis GoogleCe que disent les voyageurs 23 avis Google sur l'agenceRelevé sur la fiche le 10 septembre 2026 Mettre en pau",
+   "message": "format avis qui ne convient pas",
+   "date": "2026-09-21T15:04:20+00:00",
+   "image": "",
+   "reponses": []
+  },
+  {
+   "id": 9550,
+   "post": 8598,
+   "ancre": "",
+   "message": "logo",
+   "date": "2026-09-21T15:04:27+00:00",
+   "image": "",
+   "reponses": []
+  },
+  {
+   "id": 9551,
+   "post": 8598,
+   "ancre": "Nos séjours",
+   "message": "ajouter qu'ils sont entièrement modifiable selon les envies des voyageurs, que ce n'est qu'une première base pour leur séjour",
+   "date": "2026-09-21T15:04:53+00:00",
+   "image": "",
+   "reponses": []
+  },
+  {
+   "id": 9553,
+   "post": 8598,
+   "ancre": "0 séjour Nos séjours Construire mon séjour Poser une question sur WhatsApp",
+   "message": "mettre une image",
+   "date": "2026-09-21T15:05:13+00:00",
+   "image": "https://authentiquegypte.com/wp-content/uploads/2026/09/flo-p-zpmvpEXM_Qc-unsplash-1-scaled.jpg",
+   "reponses": []
+  },
+  {
+   "id": 9496,
+   "post": 8921,
+   "ancre": "2 jours conseillés8 séjours y passentVoyage à Alexandrie Confiez l'organisation de votre voyage en Égypte à nos agents l",
+   "message": "le fond est trop sombre",
+   "date": "2026-09-21T14:29:39+00:00",
+   "image": "",
+   "reponses": []
+  },
+  {
+   "id": 9498,
+   "post": 8921,
+   "ancre": "2 jours conseillés8 séjours y passentVoyage à Alexandrie Confiez l'organisation de votre voyage en Égypte à nos agents l",
+   "message": "ajouter cette image à la place",
+   "date": "2026-09-21T14:30:26+00:00",
+   "image": "https://authentiquegypte.com/wp-content/uploads/2026/09/flo-p-zpmvpEXM_Qc-unsplash-scaled.jpg",
+   "reponses": []
+  },
+  {
+   "id": 9499,
+   "post": 8921,
+   "ancre": "Passer du guide au voyage",
+   "message": "????",
+   "date": "2026-09-21T14:30:36+00:00",
+   "image": "",
+   "reponses": []
+  },
+  {
+   "id": 9500,
+   "post": 8921,
+   "ancre": "",
+   "message": "ce programme n'a pas Alexandrie",
+   "date": "2026-09-21T14:30:52+00:00",
+   "image": "",
+   "reponses": []
+  },
+  {
+   "id": 9501,
+   "post": 8921,
+   "ancre": "",
+   "message": "ce programme n'a pas Alexandrie",
+   "date": "2026-09-21T14:30:57+00:00",
+   "image": "",
+   "reponses": []
+  },
+  {
+   "id": 9502,
+   "post": 8921,
+   "ancre": "",
+   "message": "ce programme n'a pas Alexandrie",
+   "date": "2026-09-21T14:31:01+00:00",
+   "image": "",
+   "reponses": []
+  },
+  {
+   "id": 9503,
+   "post": 8921,
+   "ancre": "",
+   "message": "ce programme n'a pas Alexandrie",
+   "date": "2026-09-21T14:31:04+00:00",
+   "image": "",
+   "reponses": []
+  },
+  {
+   "id": 9504,
+   "post": 8921,
+   "ancre": "Que voir à Alexandrie ?",
+   "message": "ajouter des photos pour chaque sites",
+   "date": "2026-09-21T14:31:30+00:00",
+   "image": "",
+   "reponses": []
+  },
+  {
+   "id": 9505,
+   "post": 8921,
+   "ancre": "Voiture : 2h30 en moyenne selon le traficCela permet d’envisager une excursion à la journée, bien que rester une nuit su",
+   "message": "mettre un espace attention fautes orthographes",
+   "date": "2026-09-21T14:31:54+00:00",
+   "image": "",
+   "reponses": []
+  },
+  {
+   "id": 9506,
+   "post": 8921,
+   "ancre": "la colonne de Pompée",
+   "message": "mettre une photo",
+   "date": "2026-09-21T14:32:10+00:00",
+   "image": "",
+   "reponses": []
+  },
+  {
+   "id": 9507,
+   "post": 8921,
+   "ancre": "Séjours qui y passent",
+   "message": "enlever toute cette partie d'Alexandrie en bref",
+   "date": "2026-09-21T14:32:31+00:00",
+   "image": "",
+   "reponses": []
+  },
+  {
+   "id": 9508,
+   "post": 8921,
+   "ancre": "Pourquoi voyager en Égypte avec nous ?",
+   "message": "enlever cette partie",
+   "date": "2026-09-21T14:32:43+00:00",
+   "image": "",
+   "reponses": []
+  },
+  {
+   "id": 9509,
+   "post": 8921,
+   "ancre": "Nous créons votre itinéraire unique : choisissez votre rythme, vos escales et vos expériences sous-marines. Du snorkelin",
+   "message": "modifier car il n'y pas vraiment de snorkeling que nous organisons à alexandrie",
+   "date": "2026-09-21T14:33:02+00:00",
+   "image": "",
+   "reponses": []
+  },
+  {
+   "id": 9510,
+   "post": 8921,
+   "ancre": "Avis GoogleCe que disent les voyageurs 23 avis Google sur l'agenceRelevé sur la fiche le 10 septembre 2026 Mettre en pau",
+   "message": "le format et les couleurs ne conviennent pas , le texte n'est pas statique difficile de lire",
+   "date": "2026-09-21T14:33:41+00:00",
+   "image": "",
+   "reponses": []
+  },
+  {
+   "id": 9511,
+   "post": 8921,
+   "ancre": "",
+   "message": "fond logo ne convient toujours pas",
+   "date": "2026-09-21T14:33:51+00:00",
+   "image": "",
+   "reponses": []
+  },
+  {
+   "id": 9512,
+   "post": 8921,
+   "ancre": "8 séjours y passent",
+   "message": "enlever",
+   "date": "2026-09-21T14:34:05+00:00",
+   "image": "",
+   "reponses": []
+  },
+  {
+   "id": 9513,
+   "post": 8921,
+   "ancre": "2 jours conseillés",
+   "message": "1 a 2 jours",
+   "date": "2026-09-21T14:34:13+00:00",
+   "image": "",
+   "reponses": []
+  },
+  {
+   "id": 9514,
+   "post": 8922,
+   "ancre": "Durée annoncée",
+   "message": "Aswan c'est 1 à 3 jours souvent voir +",
+   "date": "2026-09-21T14:34:48+00:00",
+   "image": "",
+   "reponses": []
+  },
+  {
+   "id": 9515,
+   "post": 8922,
+   "ancre": "1175 €",
+   "message": "enlever a partir de... on parle d'une destination impossible de donner un prix",
+   "date": "2026-09-21T14:35:07+00:00",
+   "image": "",
+   "reponses": []
+  },
+  {
+   "id": 9516,
+   "post": 8922,
+   "ancre": "Assouan en bref",
+   "message": "enlever cette partie",
+   "date": "2026-09-21T14:36:10+00:00",
+   "image": "",
+   "reponses": []
+  },
+  {
+   "id": 9517,
+   "post": 8922,
+   "ancre": "Depuis Louxor :",
+   "message": "souligner",
+   "date": "2026-09-21T14:36:49+00:00",
+   "image": "",
+   "reponses": []
+  },
+  {
+   "id": 9518,
+   "post": 8922,
+   "ancre": "Croisière sur le Nil (2 à 4 jours selon l’itinéraire)",
+   "message": "croisière 3 nuits minimum",
+   "date": "2026-09-21T14:37:00+00:00",
+   "image": "",
+   "reponses": []
+  },
+  {
+   "id": 9519,
+   "post": 8922,
+   "ancre": "Contenu repris de https://authentiquegypte.com/voyage-a-assouan/, sans réécriture : seule la mise en page change. Privé",
+   "message": "ajouter de Louxor à Aswan par la route en 4 heures de temps (possibilité d visites temples de Kom Ombo et d'Edfu)",
+   "date": "2026-09-21T14:37:25+00:00",
+   "image": "",
+   "reponses": []
+  },
+  {
+   "id": 9520,
+   "post": 8922,
+   "ancre": "Le choix dépend du temps disponible et de la manière dont le voyage est structuré.",
+   "message": "enlever",
+   "date": "2026-09-21T14:37:33+00:00",
+   "image": "",
+   "reponses": []
+  },
+  {
+   "id": 9521,
+   "post": 8922,
+   "ancre": "Le départ a souvent lieu très tôt le matin (vers 4h) pour un retour en début d’après-midi.",
+   "message": "OUi , et ajouter que le mieux c'est de dormir sur place pour couper la route et assister au spectacle son et lumières aux temples d'Abu simbel et déoucvirr les temps sans trop de monde",
+   "date": "2026-09-21T14:38:04+00:00",
+   "image": "",
+   "reponses": []
+  },
+  {
+   "id": 9522,
+   "post": 8922,
+   "ancre": "Le temple de Philae est dédié à la déesse Isis. Il a été déplacé pierre par pierre dans les années 70 vers l’île voisine",
+   "message": "ajouter par l'UNESCO et ajouter photos du temple de Philae",
+   "date": "2026-09-21T14:38:24+00:00",
+   "image": "",
+   "reponses": []
+  },
+  {
+   "id": 9523,
+   "post": 8922,
+   "ancre": "Oui, Assouan est le point de départ classique des croisières vers Louxor. Les croisières durent en général 3 à 4 jours,",
+   "message": "ajouter que les croisières sont en dahhabeya, ou bateau à moteur ou felouque",
+   "date": "2026-09-21T14:38:42+00:00",
+   "image": "",
+   "reponses": []
+  },
+  {
+   "id": 9524,
+   "post": 8922,
+   "ancre": "Quels sont les avantages de visiter Assouan par rapport à Louxor ou au Caire ?",
+   "message": "enlever cette partie",
+   "date": "2026-09-21T14:38:50+00:00",
+   "image": "",
+   "reponses": []
+  },
+  {
+   "id": 9525,
+   "post": 8922,
+   "ancre": "Une escapade en pays nubien, une balade en felouque au coucher du soleil entre les îles Éléphantine et Kitchener, ou enc",
+   "message": "ajouter le monastère de saint Siméon à dos de dromadaire dans le désert - peu fréquenté, mais aussi faire un tour en felouque",
+   "date": "2026-09-21T14:39:20+00:00",
+   "image": "",
+   "reponses": []
+  },
+  {
+   "id": 9526,
+   "post": 8922,
+   "ancre": "",
+   "message": "ajouter une photo",
+   "date": "2026-09-21T14:39:36+00:00",
+   "image": "",
+   "reponses": []
+  },
+  {
+   "id": 9527,
+   "post": 8922,
+   "ancre": "",
+   "message": "la photo ne correspond pas",
+   "date": "2026-09-21T14:39:43+00:00",
+   "image": "",
+   "reponses": []
+  },
+  {
+   "id": 9528,
+   "post": 8922,
+   "ancre": "Confiez l'organisation de votre voyage en Égypte à nos agents…",
+   "message": "les textes sont les mêmes dans chaque catégories a revoir",
+   "date": "2026-09-21T14:40:13+00:00",
+   "image": "",
+   "reponses": []
+  },
+  {
+   "id": 9529,
+   "post": 8922,
+   "ancre": "Voyage au CaireConfiez l'organisation de votre voyage en Égypte à nos agents… Découvrir",
+   "message": "les textes sont les mêmes dans chaque catégories a revoir",
+   "date": "2026-09-21T14:40:16+00:00",
+   "image": "",
+   "reponses": []
+  },
+  {
+   "id": 9530,
+   "post": 8922,
+   "ancre": "Confiez l'organisation de votre voyage en Égypte à nos agents…",
+   "message": "les textes sont les mêmes dans chaque catégories a revoir",
+   "date": "2026-09-21T14:40:20+00:00",
+   "image": "",
+   "reponses": []
+  },
+  {
+   "id": 9531,
+   "post": 8922,
+   "ancre": "Découvrir",
+   "message": "Découvrir : trop de fois écrit les textes sont les mêmes dans chaque catégories a revoir",
+   "date": "2026-09-21T14:40:37+00:00",
+   "image": "",
+   "reponses": []
+  },
+  {
+   "id": 9532,
+   "post": 8922,
+   "ancre": "Avant de choisir",
+   "message": "il y a trop de FAQ",
+   "date": "2026-09-21T14:41:01+00:00",
+   "image": "",
+   "reponses": []
+  },
+  {
+   "id": 9533,
+   "post": 8923,
+   "ancre": "Les séjours qui passent par Fayoum",
+   "message": "il n'y a qu'un seul séjour sur fayoum donc faire attention, à l'affichage et conjugaison",
+   "date": "2026-09-21T14:45:23+00:00",
+   "image": "",
+   "reponses": []
+  },
+  {
+   "id": 9534,
+   "post": 8923,
+   "ancre": "Durées et prix relevés sur les fiches du site le 10 septembre 2026.",
+   "message": "?? enlever",
+   "date": "2026-09-21T14:58:43+00:00",
+   "image": "",
+   "reponses": []
+  },
+  {
+   "id": 9535,
+   "post": 8923,
+   "ancre": "Contenu repris de https://authentiquegypte.com/voyage-a-fayoum/, sans réécriture : seule la mise en page change. Privée",
+   "message": "la FAQ n'est pas la même sur chaque page",
+   "date": "2026-09-21T14:58:54+00:00",
+   "image": "",
+   "reponses": []
+  },
+  {
+   "id": 9536,
+   "post": 8923,
+   "ancre": "“Très beau séjour parfaitement organisé. Interlocuteurs agréables et toujours prêts à rendre service. Je recommande!!gis",
+   "message": "les commentaires bouge, pas le format que je souhaite",
+   "date": "2026-09-21T14:59:22+00:00",
+   "image": "",
+   "reponses": []
+  },
+  {
+   "id": 9537,
+   "post": 8923,
+   "ancre": "",
+   "message": "logo qui ne convient pas",
+   "date": "2026-09-21T14:59:29+00:00",
+   "image": "",
+   "reponses": []
+  },
+  {
+   "id": 9538,
+   "post": 8926,
+   "ancre": "5 séjours4 à 9 jours595 € à partir deVoyage en couple en Égypte En Égypte, chaque étape devient une histoire à partager",
+   "message": "photo trop sombre changer le fond",
+   "date": "2026-09-21T14:59:52+00:00",
+   "image": "",
+   "reponses": []
+  },
+  {
+   "id": 9539,
+   "post": 8926,
+   "ancre": "Contenu repris de https://authentiquegypte.com/voyage-en-couple-en-egypte/, sans réécriture : seule la mise en page chan",
+   "message": "le code couleur ne va pas",
+   "date": "2026-09-21T15:00:24+00:00",
+   "image": "",
+   "reponses": []
+  },
+  {
+   "id": 9540,
+   "post": 8926,
+   "ancre": "Contenu repris de https://authentiquegypte.com/voyage-en-couple-en-egypte/, sans réécriture : seule la mise en page chan",
+   "message": "le format de la FAQ ne convient pas",
+   "date": "2026-09-21T15:01:27+00:00",
+   "image": "",
+   "reponses": []
+  },
+  {
+   "id": 9541,
+   "post": 8926,
+   "ancre": "Avis GoogleCe que disent les voyageurs 23 avis Google sur l'agenceRelevé sur la fiche le 10 septembre 2026 Mettre en pau",
+   "message": "commentaire format qui ne convient pas",
+   "date": "2026-09-21T15:01:52+00:00",
+   "image": "",
+   "reponses": []
+  },
+  {
+   "id": 9542,
+   "post": 8926,
+   "ancre": "",
+   "message": "logo qui ne vas pas",
+   "date": "2026-09-21T15:01:58+00:00",
+   "image": "",
+   "reponses": []
+  },
+  {
+   "id": 9543,
+   "post": 8927,
+   "ancre": "",
+   "message": "attention photo qui ne convient pas",
+   "date": "2026-09-21T15:02:20+00:00",
+   "image": "",
+   "reponses": []
+  },
+  {
+   "id": 9544,
+   "post": 8927,
+   "ancre": "Les autres façons de partir",
+   "message": "a changer",
+   "date": "2026-09-21T15:02:28+00:00",
+   "image": "",
+   "reponses": []
+  },
+  {
+   "id": 9545,
+   "post": 8927,
+   "ancre": "Avis GoogleCe que disent les voyageurs 23 avis Google sur l'agenceRelevé sur la fiche le 10 septembre 2026 Mettre en pau",
+   "message": "commentaires qui ne vont pas",
+   "date": "2026-09-21T15:02:40+00:00",
+   "image": "",
+   "reponses": []
+  },
+  {
+   "id": 9546,
+   "post": 8927,
+   "ancre": "",
+   "message": "logo..",
+   "date": "2026-09-21T15:02:45+00:00",
+   "image": "",
+   "reponses": []
+  }
+ ]
+}
