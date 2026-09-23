@@ -90,7 +90,7 @@ FEUILLE = (
     # La zone : filtres à gauche, cartes à droite.
     + H + '.pg .fac{display:grid;grid-template-columns:248px minmax(0,1fr);'
     'gap:34px;align-items:start;margin:26px 0 0}'
-    + H + '.pg .fac__col{position:sticky;top:96px;display:grid;gap:18px}'
+    + H + '.pg .fac__col{display:grid;gap:18px}'
     + H + '.pg .fac__tete{display:flex;align-items:baseline;justify-content:space-between;gap:10px}'
     + H + '.pg .fac__tete p{margin:0;font-family:"Manrope",sans-serif;font-size:.78rem;'
     'font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:var(--teal-txt,#106D7C)}'
@@ -157,14 +157,20 @@ FEUILLE = (
     'font-size:.88rem;font-weight:700;color:var(--teal-txt,#106D7C);white-space:nowrap}'
     + H + '.pg .fac .carte[hidden]{display:none}'
     # Au bureau, le <details> n'est qu'un conteneur : ni cadre, ni résumé.
-    + H + '.pg .fac__pli{border:0;padding:0}'
+    # Au bureau, le <details> n'est qu'un conteneur : ni cadre, ni résumé.
+    # C'est lui, et non la colonne qu'il enveloppe, qui colle — le sticky
+    # d'un enfant se calerait sur la hauteur du <details>, qui est celle de
+    # son contenu : il n'aurait jamais de quoi défiler.
+    + H + '.pg .fac__pli{border:0;padding:0;position:sticky;top:96px;'
+    'max-height:calc(100vh - 120px);overflow-y:auto;overscroll-behavior:contain}'
     + H + '.pg .fac__pli>summary{display:none}'
 
     # Sur tablette et téléphone : les filtres se replient au-dessus.
     '@media (max-width:1040px){'
     + H + '.pg .fac{grid-template-columns:1fr;gap:20px}'
     + H + '.pg .fac__col{position:static}'
-    + H + '.pg .fac__pli{border:1px solid var(--ligne-pg,#E4E4EA);border-radius:14px;'
+    + H + '.pg .fac__pli{position:static;max-height:none;overflow:visible;'
+    'border:1px solid var(--ligne-pg,#E4E4EA);border-radius:14px;'
     'background:#fff;padding:0 16px}'
     + H + '.pg .fac__pli>summary{display:flex;list-style:none;cursor:pointer;padding:15px 0;min-height:48px;'
     'display:flex;align-items:center;justify-content:space-between;gap:10px;'
