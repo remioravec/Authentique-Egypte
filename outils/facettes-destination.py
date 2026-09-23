@@ -269,6 +269,88 @@ def _tranche(options, valeur):
     return ''
 
 
+# Les deux sections qui n'ont jamais suivi le gabarit programme portent un
+# préfixe plus ancien, rp-. Plutôt que de récrire leur balisage — la
+# maquette du dépôt date d'avant l'unification de la FAQ, s'y fier
+# recasserait ce que Mélanie a demandé — on aligne leur mise en forme sur
+# celle du gabarit. Les valeurs sont relevées dans la maquette programme,
+# pas inventées : pg-sec à 72px, wrap à min(100% - 40px, --pg-max), h2 en
+# Archivo 600 à -.7px, chapô à filet bleu.
+FORME = (
+    '<style data-forme="destination">'
+    # Le rythme des sections.
+    + H + '.pg .rp-section{padding:72px 0}'
+    + H + '.pg .rp-wrap{width:min(100% - 40px,var(--pg-max,1180px));margin-inline:auto}'
+    + H + '.pg .rp-eyebrow{font-family:"Manrope",sans-serif;font-size:.78rem;font-weight:800;'
+    'letter-spacing:.09em;text-transform:uppercase;color:var(--teal-txt,#106D7C);margin:0 0 10px}'
+    + H + '.pg .rp-section h2,' + H + '.pg .rp-colonnes h2{'
+    'font-family:"Archivo",sans-serif;font-weight:600;letter-spacing:-.7px;'
+    'font-size:clamp(1.6rem,2.6vw,2.15rem);line-height:1.18;margin:0 0 18px;'
+    'color:var(--noir,#12211F)}'
+    + H + '.pg .rp-lede{font-size:1.32rem;line-height:1.58;color:var(--noir,#12211F);'
+    'font-weight:500;letter-spacing:-.2px;margin:0 0 20px;padding:0 0 0 20px;'
+    'border-left:3px solid var(--bleu,#106D7C)}'
+    # La colonne latérale colle, comme celle des fiches séjour.
+    + H + '.pg .rp-colonnes{gap:34px}'
+    + H + '.pg .rp-lat{position:sticky;top:96px;align-self:start}'
+    + H + '.pg .rp-lat__b{background:#fff;border:1px solid var(--ligne-pg,#E4E4EA);'
+    'border-radius:18px;padding:20px 22px;box-shadow:0 1px 2px rgba(12,34,37,.04)}'
+    # Le même vocabulaire de carte que la grille des séjours.
+    + H + '.pg .rp-atout,' + H + '.pg .rp-site{background:#fff;'
+    'border:1px solid var(--ligne-pg,#E4E4EA);border-radius:18px;'
+    'box-shadow:0 1px 2px rgba(12,34,37,.04)}'
+    + H + '.pg .rp-atout{padding:18px 20px}'
+    + H + '.pg .rp-atout h3,' + H + '.pg .rp-site__t h3{margin:0 0 8px;font-size:1.05rem;'
+    'line-height:1.3;color:var(--nuit-900,#095360)}'
+    + H + '.pg .rp-site{overflow:hidden;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr)}'
+    + H + '.pg .rp-site>img{width:100%;height:100%;aspect-ratio:4/3;object-fit:cover;display:block}'
+    + H + '.pg .rp-site__t{padding:20px 22px}'
+    + H + '.pg .rp-carte{border-radius:18px;border:1px solid var(--ligne-pg,#E4E4EA);'
+    'box-shadow:0 1px 2px rgba(12,34,37,.04)}'
+    + H + '.pg .rp-carte:hover{box-shadow:0 10px 28px rgba(12,34,37,.10);transform:translateY(-3px)}'
+    + H + '.pg .rp-carte__img{aspect-ratio:4/3;overflow:hidden}'
+    + H + '.pg .rp-carte__img img{width:100%;height:100%;object-fit:cover;display:block;'
+    'transition:transform .6s var(--ease,ease)}'
+    + H + '.pg .rp-carte:hover .rp-carte__img img{transform:scale(1.06)}'
+    # Le bouton or reprend la couleur de la charte : blanc sur or, on ne
+    # lit rien (1,79:1 mesuré sur les fiches séjour le 22/09).
+    + H + '.pg .rp-btn--or{color:var(--nuit-900,#095360)}'
+    '@media (max-width:1040px){'
+    + H + '.pg .rp-colonnes{grid-template-columns:1fr}'
+    + H + '.pg .rp-lat{position:static}'
+    + H + '.pg .rp-site{grid-template-columns:1fr}}'
+    '@media (prefers-reduced-motion:reduce){'
+    + H + '.pg .rp-carte,' + H + '.pg .rp-carte__img img{transition:none}'
+    + H + '.pg .rp-carte:hover{transform:none}}'
+    '</style>'
+)
+
+
+def titre_en_tete(h):
+    """« Organisation du voyage » se lisait au milieu de sa propre section.
+
+    Le h2 arrivait après les deux atouts et le bloc photo : la section
+    n'avait pas de tête, et le rythme du gabarit — sur-titre, titre, puis
+    le contenu — ne tenait pas. On le remonte avec son sur-titre, sans
+    toucher à une ligne du texte.
+    """
+    m = re.search(r'<h2[^>]*>\s*Organisation du voyage\s*</h2>', h)
+    if not m:
+        return h, []
+    # Le corps est un <article class="rp-corps mef">, pas un <div> : viser
+    # la balise plutôt que le nom d'élément.
+    ouvertures = [x for x in re.finditer(r'<(?:div|article)[^>]*class="[^"]*rp-corps[^"]*"[^>]*>', h)
+                  if x.start() < m.start()]
+    if not ouvertures:
+        return h, []
+    ouvre = ouvertures[-1].end()
+    if 'rp-eyebrow' in h[ouvre:m.start()]:
+        return h, []
+    tete = '<p class="rp-eyebrow">Préparer sa venue</p>' + m.group(0)
+    h = h[:m.start()] + h[m.end():]
+    return h[:ouvre] + tete + h[ouvre:], ['titre remonté en tête de section']
+
+
 def sans_bandeau(h):
     """Le bandeau de repères entre le hero et le fil d'Ariane.
 
@@ -355,6 +437,8 @@ def refaire_section(bloc):
 
 def corriger(h):
     h, faits_b = sans_bandeau(h)
+    h, faits_t = titre_en_tete(h)
+    faits_b += faits_t
     d = h.find('<div class="cartes')
     if d < 0:
         return h, faits_b
@@ -369,13 +453,17 @@ def corriger(h):
                      + (' + facettes' if 'fac__g' in neuf else ' — sans facettes'))
 
     ancienne = re.search(r'<style data-facettes="v1">.*?</style>', h, re.S)
-    if ancienne and ancienne.group(0) != FEUILLE:
+    forme = re.search(r'<style data-forme="destination">.*?</style>', h, re.S)
+    if (ancienne and ancienne.group(0) != FEUILLE) or (forme and forme.group(0) != FORME):
         faits.append('feuille mise à jour')
+    elif not forme:
+        faits.append('mise en forme des sections posée')
     if not faits:
         return h, faits
     h = re.sub(r'<style data-facettes="v1">.*?</style>', '', h, flags=re.S)
     h = re.sub(r'<script data-facettes="v1">.*?</script>', '', h, flags=re.S)
-    return h + FEUILLE + SCRIPT, faits
+    h = re.sub(r'<style data-forme="destination">.*?</style>', '', h, flags=re.S)
+    return h + FEUILLE + FORME + SCRIPT, faits
 
 
 def main():
