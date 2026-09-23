@@ -269,6 +269,29 @@ def _tranche(options, valeur):
     return ''
 
 
+def sans_bandeau(h):
+    """Le bandeau de repères entre le hero et le fil d'Ariane.
+
+    Il annonçait « à partir de 895 € » et « durée annoncée 4 à 8 jours » :
+    deux agrégats sur les séjours listés plus bas. Depuis que chaque carte
+    porte sa durée et son prix, et que les facettes s'étendent exactement
+    sur ces valeurs, le bandeau ne dit plus rien que la page ne dise mieux
+    — et il séparait le hero de son fil d'Ariane. Même retrait que sur les
+    pages circuit.
+    """
+    faits = []
+    while True:
+        d = h.find('<section class="reperes"')
+        if d < 0:
+            break
+        f = _fin(h, d, 'section')
+        if f < 0:
+            break
+        h = h[:d] + h[f:]
+        faits = ['bandeau de repères retiré']
+    return h, faits
+
+
 def refaire_section(bloc):
     """La section des séjours : filtres à gauche, cartes à droite."""
     cartes = re.findall(r'<article class="carte">.*?</article>', bloc, re.S)
@@ -331,14 +354,15 @@ def refaire_section(bloc):
 
 
 def corriger(h):
+    h, faits_b = sans_bandeau(h)
     d = h.find('<div class="cartes')
     if d < 0:
-        return h, []
+        return h, faits_b
     f = _fin(h, d, 'div')
     if f < 0:
-        return h, []
+        return h, faits_b
     neuf, n = refaire_section(h[d:f])
-    faits = []
+    faits = list(faits_b)
     if neuf != h[d:f]:
         h = h[:d] + neuf + h[f:]
         faits.append('cartes redessinées (%d)' % n
