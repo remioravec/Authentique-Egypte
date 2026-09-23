@@ -175,6 +175,11 @@ FEUILLE = (
     + H_ + '.pg .situe__map{width:100%;height:340px;border-radius:14px;'
     'border:1px solid var(--ligne-pg,#E4E4EA);background:var(--teal-fond,#EAF6F9);z-index:0}'
     + H_ + '.pg .situe__map .leaflet-container{font-family:"Manrope",sans-serif}'
+    + H_ + '.pg .situe__pin{display:grid;place-items:center;width:26px;height:26px;'
+    'border-radius:50%;background:var(--nuit-900,#095360);color:#fff;'
+    'border:2px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,.25)}'
+    + H_ + '.pg .situe__pin span{display:block;width:8px;height:8px;'
+    'border-radius:50%;background:#fff}'
     + H_ + '.pg .situe__note{margin:12px 0 0;text-align:center;'
     'font-family:"Manrope",sans-serif;font-size:.82rem;color:var(--gris-lis,#5B6870)}'
     + H_ + '.pg .situe__note a{color:var(--teal-txt,#106D7C)}'
@@ -193,7 +198,9 @@ SCRIPT = """<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/
                .setView([p.lat, p.lon], 7);
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
               {maxZoom:17}).addTo(carte);
-  L.marker([p.lat, p.lon]).addTo(carte).bindPopup(p.nom);
+  L.marker([p.lat, p.lon], {icon: L.divIcon({className:'',
+    html:'<span class="situe__pin"><span></span></span>',
+    iconSize:[26,26], iconAnchor:[13,13]})}).addTo(carte).bindPopup(p.nom);
   // La molette reste à la page : on ne piège pas le défilement.
   carte.on('click', function(){ carte.scrollWheelZoom.enable(); });
   carte.on('mouseout', function(){ carte.scrollWheelZoom.disable(); });
