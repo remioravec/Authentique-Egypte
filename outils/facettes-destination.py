@@ -79,8 +79,16 @@ def _nombre(t):
 
 
 def lire_carte(c):
-    """La durée en jours et le prix en euros, tels qu'ils sont écrits."""
-    d = re.search(r'<span class="puce">(.*?)</span>', c, re.S)
+    """La durée en jours et le prix en euros, tels qu'ils sont écrits.
+
+    La durée se lit dans la pastille d'origine — <span class="puce"> —
+    ou dans celle que cet outil a posée sur la photo au passage
+    précédent. Ne chercher que la première rendait toute durée nulle sur
+    une carte déjà traitée : plus aucune tranche, donc plus de filtres,
+    sur une page qui venait d'en gagner six.
+    """
+    d = (re.search(r'<span class="puce">(.*?)</span>', c, re.S)
+         or re.search(r'<span class="carte__duree">(.*?)</span>', c, re.S))
     p = re.search(r'<b>([\d   ]+)\s*€</b>', c)
     return _nombre(d.group(1) if d else ''), _nombre(p.group(1) if p else '')
 
@@ -374,9 +382,36 @@ def sans_bandeau(h):
     return h, faits
 
 
+def sans_filtres_si_vide(h):
+    """Une page sans séjour n'offre pas de filtres sur une liste vide.
+
+    Alexandrie et le désert Noir sont tombés à zéro séjour quand les
+    listes ont été refaites depuis les itinéraires réels. Leur colonne de
+    filtres est restée : trois cases à cocher au-dessus d'un message qui
+    dit qu'il n'y a rien. Elle vit dans l'enveloppe .fac, pas dans le bloc
+    des cartes — la retirer depuis le bloc ne trouvait rien.
+    """
+    d = h.find('<div class="fac"')
+    if d < 0:
+        return h, []
+    f = _fin(h, d, 'div')
+    if f < 0:
+        return h, []
+    zone = h[d:f]
+    if re.search(r'<article class="carte"[^>]*>', zone):
+        return h, []
+    neuf = re.sub(r'<details class="fac__pli"[^>]*>.*?</details>', '', zone, flags=re.S)
+    neuf = re.sub(r'<p class="fac__cpt"[^>]*>.*?</p>', '', neuf, flags=re.S)
+    neuf = re.sub(r'<div class="fac" data-fac[^>]*>',
+                  '<div class="fac" data-fac style="grid-template-columns:1fr">', neuf, count=1)
+    if neuf == zone:
+        return h, []
+    return h[:d] + neuf + h[f:], ['aucun séjour : filtres retirés']
+
+
 def refaire_section(bloc):
     """La section des séjours : filtres à gauche, cartes à droite."""
-    cartes = re.findall(r'<article class="carte">.*?</article>', bloc, re.S)
+    cartes = re.findall(r'<article class="carte"[^>]*>.*?</article>', bloc, re.S)
     if not cartes:
         return bloc, None
 
@@ -394,10 +429,9 @@ def refaire_section(bloc):
             pastille = ('<span class="carte__duree">%d jour%s</span>'
                         % (x['duree'], 's' if x['duree'] > 1 else ''))
             c = re.sub(r'(<div class="carte__img">)', r'\1' + pastille, c, count=1)
-        c = c.replace(
-            '<article class="carte">',
-            '<article class="carte" data-duree="%s" data-prix="%s">'
-            % (_tranche(DUREES, x['duree']), _tranche(BUDGETS, x['prix'])), 1)
+        c = re.sub(r'<article class="carte"[^>]*>',
+                   '<article class="carte" data-duree="%s" data-prix="%s">'
+                   % (_tranche(DUREES, x['duree']), _tranche(BUDGETS, x['prix'])), c, count=1)
         neuves.append(c)
 
     grille = '<div class="cartes cartes--2">%s</div>' % ''.join(neuves)
@@ -439,6 +473,8 @@ def corriger(h):
     h, faits_b = sans_bandeau(h)
     h, faits_t = titre_en_tete(h)
     faits_b += faits_t
+    h, faits_v = sans_filtres_si_vide(h)
+    faits_b += faits_v
     d = h.find('<div class="cartes')
     if d < 0:
         return h, faits_b
