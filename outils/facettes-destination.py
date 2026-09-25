@@ -382,14 +382,15 @@ def sans_bandeau(h):
     return h, faits
 
 
-def sans_filtres_si_vide(h):
-    """Une page sans séjour n'offre pas de filtres sur une liste vide.
+def sans_filtres_si_peu(h):
+    """La colonne de filtres disparaît dès qu'il n'y a pas de quoi filtrer.
 
-    Alexandrie et le désert Noir sont tombés à zéro séjour quand les
-    listes ont été refaites depuis les itinéraires réels. Leur colonne de
-    filtres est restée : trois cases à cocher au-dessus d'un message qui
-    dit qu'il n'y a rien. Elle vit dans l'enveloppe .fac, pas dans le bloc
-    des cartes — la retirer depuis le bloc ne trouvait rien.
+    Deux cas, une même cause : la colonne vit dans l'enveloppe .fac, pas
+    dans le bloc des cartes, et la reconstruction ne remplace que le bloc.
+    Elle survivait donc là où elle n'a plus lieu d'être — trois cases
+    au-dessus d'un message disant qu'il n'y a aucun séjour (Alexandrie,
+    désert Noir), deux cases au-dessus de trois séjours (Assouan), alors
+    que le seuil est de quatre.
     """
     d = h.find('<div class="fac"')
     if d < 0:
@@ -398,7 +399,8 @@ def sans_filtres_si_vide(h):
     if f < 0:
         return h, []
     zone = h[d:f]
-    if re.search(r'<article class="carte"[^>]*>', zone):
+    n = len(re.findall(r'<article class="carte"[^>]*>', zone))
+    if n >= MINIMUM:
         return h, []
     neuf = re.sub(r'<details class="fac__pli"[^>]*>.*?</details>', '', zone, flags=re.S)
     neuf = re.sub(r'<p class="fac__cpt"[^>]*>.*?</p>', '', neuf, flags=re.S)
@@ -406,14 +408,29 @@ def sans_filtres_si_vide(h):
                   '<div class="fac" data-fac style="grid-template-columns:1fr">', neuf, count=1)
     if neuf == zone:
         return h, []
-    return h[:d] + neuf + h[f:], ['aucun séjour : filtres retirés']
+    quoi = ('aucun séjour : filtres retirés' if not n
+            else '%d séjours : filtres retirés (seuil %d)' % (n, MINIMUM))
+    return h[:d] + neuf + h[f:], [quoi]
 
 
 def refaire_section(bloc):
     """La section des séjours : filtres à gauche, cartes à droite."""
     cartes = re.findall(r'<article class="carte"[^>]*>.*?</article>', bloc, re.S)
     if not cartes:
-        return bloc, None
+        # Zéro séjour : on garde le message tel quel, sans colonne de
+        # filtres — il n'y a rien à filtrer.
+        # Le bloc des cartes, borné par comptage : un motif non gourmand
+        # s'arrêtait au premier </div> venu et emportait la fermeture de
+        # l'enveloppe, qui se retrouvait fermée deux fois.
+        i = bloc.find('<div class="cartes')
+        if i < 0:
+            return bloc, None
+        j = _fin(bloc, i, 'div')
+        if j < 0:
+            return bloc, None
+        zone = ('<div class="fac" data-fac style="grid-template-columns:1fr">%s</div>'
+                % bloc[i:j])
+        return (zone, 0) if zone != bloc else (bloc, None)
 
     lues = []
     for c in cartes:
@@ -425,6 +442,9 @@ def refaire_section(bloc):
     for x in lues:
         c = x['html']
         c = re.sub(r'<div class="carte__meta">.*?</div>', '', c, flags=re.S)
+        # La pastille posée au passage précédent : on la retire avant d'en
+        # poser une, sinon elle s'empile à chaque exécution.
+        c = re.sub(r'<span class="carte__duree">.*?</span>', '', c, flags=re.S)
         if x['duree'] is not None:
             pastille = ('<span class="carte__duree">%d jour%s</span>'
                         % (x['duree'], 's' if x['duree'] > 1 else ''))
@@ -473,9 +493,13 @@ def corriger(h):
     h, faits_b = sans_bandeau(h)
     h, faits_t = titre_en_tete(h)
     faits_b += faits_t
-    h, faits_v = sans_filtres_si_vide(h)
-    faits_b += faits_v
-    d = h.find('<div class="cartes')
+    # La zone entière, pas le seul bloc de cartes : refaire_section rend
+    # une enveloppe .fac complète, et la poser à la place du bloc
+    # l'emboîtait dans celle du passage précédent — trois enveloppes et
+    # deux colonnes de filtres sur la page du Caire.
+    d = h.find('<div class="fac"')
+    if d < 0:
+        d = h.find('<div class="cartes')
     if d < 0:
         return h, faits_b
     f = _fin(h, d, 'div')
