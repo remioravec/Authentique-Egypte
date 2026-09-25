@@ -45,8 +45,27 @@ class AEC_Admin {
 		);
 	}
 
+	/**
+	 * Les trois vues de l'écran, et celle qu'on ouvre par défaut.
+	 *
+	 * Deux cents fils dont cent quarante clos, tous affichés à la suite :
+	 * on ne retrouvait plus ce qui restait à faire. On ne supprime pas les
+	 * fils clos pour autant — ils portent les réponses, et une remarque
+	 * rouverte doit retrouver son histoire. On les range.
+	 */
+	const VUES = array(
+		'ouvert' => 'À traiter',
+		'resolu' => 'Traités',
+		'tout'   => 'Tout',
+	);
+
 	public static function ecran() {
-		$fils = get_posts( array(
+		$vue = isset( $_GET['etat'] ) ? sanitize_key( wp_unslash( $_GET['etat'] ) ) : 'ouvert';
+		if ( ! isset( self::VUES[ $vue ] ) ) {
+			$vue = 'ouvert';
+		}
+
+		$tous = get_posts( array(
 			'post_type'      => AEC_Types::TYPE,
 			'post_status'    => 'publish',
 			'post_parent'    => 0,
@@ -54,6 +73,16 @@ class AEC_Admin {
 			'orderby'        => 'date',
 			'order'          => 'DESC',
 		) );
+
+		$comptes = array( 'ouvert' => 0, 'resolu' => 0, 'tout' => count( $tous ) );
+		$fils    = array();
+		foreach ( $tous as $fil ) {
+			$etat = get_post_meta( $fil->ID, '_aec_statut', true ) === 'resolu' ? 'resolu' : 'ouvert';
+			$comptes[ $etat ]++;
+			if ( 'tout' === $vue || $etat === $vue ) {
+				$fils[] = $fil;
+			}
+		}
 
 		$par_page = array();
 		foreach ( $fils as $fil ) {
@@ -64,6 +93,12 @@ class AEC_Admin {
 			$par_page[ $cle ]['url']   = $post_id ? get_permalink( $post_id ) : home_url( $url );
 			$par_page[ $cle ]['fils'][] = $fil;
 		}
+
+		// La page qui a le plus à traiter passe en tête : c'est par elle
+		// qu'on commence, pas par celle dont le titre vient en premier.
+		uasort( $par_page, function ( $a, $b ) {
+			return count( $b['fils'] ) <=> count( $a['fils'] );
+		} );
 
 		$nonce = wp_create_nonce( 'wp_rest' );
 		?>
@@ -76,10 +111,31 @@ class AEC_Admin {
 				l'élément à changer. Cet écran n'est qu'une vue d'ensemble.
 			</p>
 
+			<ul class="subsubsub">
+				<?php $sep = count( self::VUES ); foreach ( self::VUES as $cle => $nom ) : ?>
+					<li>
+						<a href="<?php echo esc_url( add_query_arg( array( 'page' => self::MENU, 'etat' => $cle ), admin_url( 'admin.php' ) ) ); ?>"
+						   class="<?php echo $cle === $vue ? 'current' : ''; ?>"
+						   <?php echo $cle === $vue ? 'aria-current="page"' : ''; ?>>
+							<?php echo esc_html( $nom ); ?>
+							<span class="count">(<?php echo (int) $comptes[ $cle ]; ?>)</span>
+						</a><?php echo --$sep ? ' |' : ''; ?>
+					</li>
+				<?php endforeach; ?>
+			</ul>
+			<div style="clear:both"></div>
+
 			<?php if ( empty( $fils ) ) : ?>
 				<div class="notice notice-info inline"><p>
-					Aucun commentaire pour l'instant.
-					<a href="<?php echo esc_url( home_url( '/' ) ); ?>">Ouvrir le site</a> et poser le premier.
+					<?php if ( 'ouvert' === $vue && $comptes['tout'] ) : ?>
+						Rien à traiter : les <?php echo (int) $comptes['resolu']; ?> commentaires
+						sont tous clos.
+					<?php elseif ( $comptes['tout'] ) : ?>
+						Aucun commentaire dans cette vue.
+					<?php else : ?>
+						Aucun commentaire pour l'instant.
+						<a href="<?php echo esc_url( home_url( '/' ) ); ?>">Ouvrir le site</a> et poser le premier.
+					<?php endif; ?>
 				</p></div>
 			<?php endif; ?>
 
