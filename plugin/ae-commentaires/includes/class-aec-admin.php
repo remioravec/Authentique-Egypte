@@ -151,8 +151,8 @@ class AEC_Admin {
 				<div class="notice notice-info inline"><p>
 					<?php if ( 'equipe' === $vue && $comptes['tout'] ) : ?>
 						Rien qui attende de nous. <?php echo (int) $comptes['ouvert']; ?> fil(s)
-						restent ouverts, mais chacun porte déjà notre réponse : la balle est
-						chez la relectrice.
+						restent ouverts, mais chacun porte déjà notre réponse : ils sont en
+						attente d'Authentique Égypte.
 					<?php elseif ( 'ouvert' === $vue && $comptes['tout'] ) : ?>
 						Rien à traiter : les <?php echo (int) $comptes['resolu']; ?> commentaires
 						sont tous clos.
@@ -221,7 +221,7 @@ class AEC_Admin {
 								<?php elseif ( AEC_Types::attend_equipe( $fil ) ) : ?>
 									<span style="color:#8a5700;font-weight:600">● Pour nous</span>
 								<?php else : ?>
-									<span style="color:#606a73;font-weight:600">○ Chez elle</span>
+									<span style="color:#606a73;font-weight:600">○ En attente d'Authentique Égypte</span>
 								<?php endif; ?>
 							</td>
 						</tr>

@@ -3,7 +3,7 @@
  * Plugin Name:       AE Commentaires — relecture façon Google Docs
  * Plugin URI:        https://github.com/remioravec/Authentique-Egypte
  * Description:       Un calque de commentaires sur n'importe quelle page du site. On active le mode commentaire, on clique sur l'élément à changer, on écrit — avec une image si besoin. Les fils s'épinglent sur la page, se répondent et se résolvent. Invisible pour les visiteurs.
- * Version:           1.2.0
+ * Version:           1.2.1
  * Requires at least: 6.0
  * Requires PHP:      7.4
  * Author:            Rémi Oravec
@@ -40,7 +40,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'AEC_VERSION', '1.2.0' );
+define( 'AEC_VERSION', '1.2.1' );
 define( 'AEC_FILE', __FILE__ );
 define( 'AEC_DIR', plugin_dir_path( __FILE__ ) );
 define( 'AEC_URL', plugin_dir_url( __FILE__ ) );
