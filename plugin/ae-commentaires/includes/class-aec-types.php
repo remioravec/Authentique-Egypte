@@ -141,4 +141,123 @@ class AEC_Types {
 			)
 		);
 	}
+
+	/* ---------------------------------------------------------------- */
+	/* Ce qui est lu, et ce qui ne l'est pas                             */
+	/* ---------------------------------------------------------------- */
+
+	/**
+	 * La clé où chaque compte range ce qu'il a déjà vu.
+	 *
+	 * Un tableau { id du fil => date de la dernière réponse vue }, en
+	 * horodatage GMT. On ne stocke pas « lu / non lu » par réponse :
+	 * une date par fil suffit, ne grossit pas avec la discussion, et
+	 * survit à la suppression d'une réponse.
+	 */
+	const VU = '_aec_vu';
+
+	public static function vu( $utilisateur_id = 0 ) {
+		$utilisateur_id = $utilisateur_id ?: get_current_user_id();
+		$vu = get_user_meta( $utilisateur_id, self::VU, true );
+
+		return is_array( $vu ) ? $vu : array();
+	}
+
+	public static function marquer_vu( $fil_id, $utilisateur_id = 0 ) {
+		$utilisateur_id = $utilisateur_id ?: get_current_user_id();
+		if ( ! $utilisateur_id ) {
+			return;
+		}
+		$vu = self::vu( $utilisateur_id );
+		$vu[ (int) $fil_id ] = time();
+		// On ne garde pas la trace des fils disparus : la table resterait
+		// à grossir pour rien.
+		update_user_meta( $utilisateur_id, self::VU, array_slice( $vu, -400, null, true ) );
+	}
+
+	/**
+	 * Combien de réponses ce compte n'a pas encore vues sur ce fil.
+	 *
+	 * Les siennes ne comptent pas : on ne se notifie pas soi-même. C'est
+	 * la règle qui évite le compteur qui monte dès qu'on répond.
+	 */
+	public static function non_lues( $fil_id, $utilisateur_id = 0 ) {
+		$utilisateur_id = $utilisateur_id ?: get_current_user_id();
+		if ( ! $utilisateur_id ) {
+			return 0;
+		}
+		$vu = self::vu( $utilisateur_id );
+		$depuis = isset( $vu[ (int) $fil_id ] ) ? (int) $vu[ (int) $fil_id ] : 0;
+
+		$n = 0;
+		foreach ( self::reponses( $fil_id ) as $reponse ) {
+			if ( (int) $reponse->post_author === (int) $utilisateur_id ) {
+				continue;
+			}
+			if ( (int) get_post_time( 'U', true, $reponse ) > $depuis ) {
+				$n++;
+			}
+		}
+
+		return $n;
+	}
+
+	/**
+	 * Les réponses non lues de TOUS les fils, en une requête.
+	 *
+	 * non_lues() interroge la base une fois par fil. Appelée depuis
+	 * /pages, qui parcourt les trois cents fils du site, elle faisait
+	 * trois cents requêtes à chaque chargement de page. Ici on demande
+	 * toutes les réponses d'un coup et on compte en mémoire.
+	 *
+	 * @return array { id du fil => nombre de réponses non lues }
+	 */
+	public static function non_lues_toutes( $utilisateur_id = 0 ) {
+		global $wpdb;
+
+		$utilisateur_id = $utilisateur_id ?: get_current_user_id();
+		if ( ! $utilisateur_id ) {
+			return array();
+		}
+
+		$lignes = $wpdb->get_results( $wpdb->prepare(
+			"SELECT post_parent AS fil, post_date_gmt
+			 FROM {$wpdb->posts}
+			 WHERE post_type = %s AND post_status = 'publish'
+			   AND post_parent > 0 AND post_author <> %d",
+			self::TYPE,
+			$utilisateur_id
+		) );
+
+		$vu = self::vu( $utilisateur_id );
+		$n  = array();
+		foreach ( $lignes as $ligne ) {
+			$fil    = (int) $ligne->fil;
+			$depuis = isset( $vu[ $fil ] ) ? (int) $vu[ $fil ] : 0;
+			if ( strtotime( $ligne->post_date_gmt . ' UTC' ) > $depuis ) {
+				$n[ $fil ] = ( isset( $n[ $fil ] ) ? $n[ $fil ] : 0 ) + 1;
+			}
+		}
+
+		return $n;
+	}
+
+	/**
+	 * Le fil attend-il une réponse de l'équipe ?
+	 *
+	 * Vrai quand il est ouvert et que le dernier mot revient à quelqu'un
+	 * qui ne modère pas. C'est la seule mesure qui dise « la balle est
+	 * dans notre camp » : compter tous les fils ouverts mélange ce qu'on
+	 * doit traiter et ce qu'on a déjà renvoyé à la relectrice.
+	 */
+	public static function attend_equipe( $fil ) {
+		$fil = is_object( $fil ) ? $fil : get_post( (int) $fil );
+		if ( ! $fil || 'resolu' === get_post_meta( $fil->ID, '_aec_statut', true ) ) {
+			return false;
+		}
+		$reponses = self::reponses( $fil->ID );
+		$dernier  = $reponses ? end( $reponses ) : $fil;
+
+		return ! user_can( (int) $dernier->post_author, AEC_Roles::CAP_MODERER );
+	}
 }

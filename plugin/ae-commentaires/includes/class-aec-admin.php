@@ -19,19 +19,35 @@ class AEC_Admin {
 		add_action( 'admin_menu', array( __CLASS__, 'menu' ) );
 	}
 
+	/**
+	 * La pastille ne compte plus les fils ouverts, mais ceux qui
+	 * attendent l'équipe.
+	 *
+	 * Sur trois cents fils, quatre-vingt-dix restaient « ouverts » dont
+	 * soixante portaient déjà notre réponse et attendaient la
+	 * relectrice. Une pastille à 90 ne dit rien de ce qu'il y a à faire ;
+	 * celle-ci compte les fils dont le dernier mot ne vient pas de
+	 * l'équipe — c'est-à-dire ceux où la balle est dans notre camp.
+	 */
 	public static function menu() {
-		$ouverts = count( get_posts( array(
+		$fils = get_posts( array(
 			'post_type'      => AEC_Types::TYPE,
 			'post_status'    => 'publish',
 			'post_parent'    => 0,
 			'posts_per_page' => -1,
-			'fields'         => 'ids',
 			'meta_query'     => array( array( 'key' => '_aec_statut', 'value' => 'ouvert' ) ),
-		) ) );
+		) );
+
+		$a_traiter = 0;
+		foreach ( $fils as $fil ) {
+			if ( AEC_Types::attend_equipe( $fil ) ) {
+				$a_traiter++;
+			}
+		}
 
 		$titre = 'Relecture';
-		if ( $ouverts ) {
-			$titre .= sprintf( ' <span class="awaiting-mod"><span class="pending-count">%d</span></span>', $ouverts );
+		if ( $a_traiter ) {
+			$titre .= sprintf( ' <span class="awaiting-mod"><span class="pending-count">%d</span></span>', $a_traiter );
 		}
 
 		add_menu_page(
@@ -54,15 +70,16 @@ class AEC_Admin {
 	 * rouverte doit retrouver son histoire. On les range.
 	 */
 	const VUES = array(
-		'ouvert' => 'À traiter',
+		'equipe' => 'Pour nous',
+		'ouvert' => 'Ouverts',
 		'resolu' => 'Traités',
 		'tout'   => 'Tout',
 	);
 
 	public static function ecran() {
-		$vue = isset( $_GET['etat'] ) ? sanitize_key( wp_unslash( $_GET['etat'] ) ) : 'ouvert';
+		$vue = isset( $_GET['etat'] ) ? sanitize_key( wp_unslash( $_GET['etat'] ) ) : 'equipe';
 		if ( ! isset( self::VUES[ $vue ] ) ) {
-			$vue = 'ouvert';
+			$vue = 'equipe';
 		}
 
 		$tous = get_posts( array(
@@ -74,12 +91,17 @@ class AEC_Admin {
 			'order'          => 'DESC',
 		) );
 
-		$comptes = array( 'ouvert' => 0, 'resolu' => 0, 'tout' => count( $tous ) );
+		$comptes = array( 'equipe' => 0, 'ouvert' => 0, 'resolu' => 0, 'tout' => count( $tous ) );
 		$fils    = array();
 		foreach ( $tous as $fil ) {
-			$etat = get_post_meta( $fil->ID, '_aec_statut', true ) === 'resolu' ? 'resolu' : 'ouvert';
+			$etat   = get_post_meta( $fil->ID, '_aec_statut', true ) === 'resolu' ? 'resolu' : 'ouvert';
+			$equipe = AEC_Types::attend_equipe( $fil );
 			$comptes[ $etat ]++;
-			if ( 'tout' === $vue || $etat === $vue ) {
+			if ( $equipe ) {
+				$comptes['equipe']++;
+			}
+			$garde = ( 'tout' === $vue ) || ( 'equipe' === $vue ? $equipe : $etat === $vue );
+			if ( $garde ) {
 				$fils[] = $fil;
 			}
 		}
@@ -127,7 +149,11 @@ class AEC_Admin {
 
 			<?php if ( empty( $fils ) ) : ?>
 				<div class="notice notice-info inline"><p>
-					<?php if ( 'ouvert' === $vue && $comptes['tout'] ) : ?>
+					<?php if ( 'equipe' === $vue && $comptes['tout'] ) : ?>
+						Rien qui attende de nous. <?php echo (int) $comptes['ouvert']; ?> fil(s)
+						restent ouverts, mais chacun porte déjà notre réponse : la balle est
+						chez la relectrice.
+					<?php elseif ( 'ouvert' === $vue && $comptes['tout'] ) : ?>
 						Rien à traiter : les <?php echo (int) $comptes['resolu']; ?> commentaires
 						sont tous clos.
 					<?php elseif ( $comptes['tout'] ) : ?>
@@ -192,8 +218,10 @@ class AEC_Admin {
 							<td>
 								<?php if ( 'resolu' === $d['statut'] ) : ?>
 									<span style="color:#1d6b34;font-weight:600">✓ Résolu</span>
+								<?php elseif ( AEC_Types::attend_equipe( $fil ) ) : ?>
+									<span style="color:#8a5700;font-weight:600">● Pour nous</span>
 								<?php else : ?>
-									<span style="color:#8a5700;font-weight:600">● Ouvert</span>
+									<span style="color:#606a73;font-weight:600">○ Chez elle</span>
 								<?php endif; ?>
 							</td>
 						</tr>

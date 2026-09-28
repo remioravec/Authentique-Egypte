@@ -481,3 +481,77 @@ body.aec-mode .aec textarea { cursor: text !important; }
 }
 
 @media print { .aec { display: none !important; } }
+
+/* ============================================================
+   CE QUI N'A PAS ÉTÉ LU
+
+   La relectrice n'a pas accès au back-office : la pastille du
+   menu d'administration ne lui est jamais montrée. Sans les
+   règles qui suivent, rien sur le site ne lui signale qu'on lui
+   a répondu — et la conversation repart par courriel.
+
+   Le rouge n'est pas décoratif : c'est la seule couleur du
+   calque qui ne serve à rien d'autre. L'or marque les fils
+   ouverts, le vert les fils clos ; il fallait un troisième
+   signal, qui ne se confonde avec aucun des deux.
+   ============================================================ */
+
+.aec .aec-jeton[data-neuf="1"] {
+  background: var(--aec-rouge) !important;
+  color: #FFFFFF !important;
+}
+
+.aec .aec-epingle[data-neuf="1"] {
+  box-shadow: 0 0 0 3px #FFFFFF, 0 0 0 6px var(--aec-rouge) !important;
+}
+
+.aec .aec-carte.aec-a-lire {
+  border-left: 3px solid var(--aec-rouge) !important;
+  background: #FDF4F2 !important;
+}
+
+.aec .aec-neuf {
+  margin: 8px 0 0 !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  line-height: 1.45 !important;
+  color: var(--aec-rouge) !important;
+}
+
+/* Le rappel des autres pages, en tête de la liste des pages. */
+.aec .aec-rappel {
+  margin: 0 0 12px !important;
+  padding: 12px 14px !important;
+  border-radius: 10px !important;
+  background: #FDF4F2 !important;
+  border: 1px solid #F0CFC7 !important;
+  font-size: 12px !important;
+  line-height: 1.5 !important;
+  color: var(--aec-encre) !important;
+}
+.aec .aec-rappel strong { color: var(--aec-rouge) !important; font-weight: 700 !important; }
+
+.aec .aec-rappel-l {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 4px !important;
+  margin-top: 9px !important;
+}
+.aec .aec-rappel-l a {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 10px !important;
+  padding: 6px 9px !important;
+  border-radius: 7px !important;
+  background: #FFFFFF !important;
+  border: 1px solid var(--aec-ligne) !important;
+  color: var(--aec-encre) !important;
+  font-size: 12px !important;
+  text-decoration: none !important;
+}
+.aec .aec-rappel-l a:hover { border-color: var(--aec-rouge) !important; }
+
+@media (prefers-reduced-motion: reduce) {
+  .aec .aec-epingle[data-neuf="1"] { transition: none !important; }
+}

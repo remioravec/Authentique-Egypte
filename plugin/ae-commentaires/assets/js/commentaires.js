@@ -204,6 +204,7 @@
       b.appendChild(el('span', 'aec-pastille-n', String(rang + 1)));
       b.setAttribute('data-statut', fil.statut);
       b.setAttribute('data-fil', fil.id);
+      if (neuves(fil)) { b.setAttribute('data-neuf', '1'); }
       b.title = fil.message.slice(0, 140);
       b.style.left = (boite.left + window.scrollX + boite.width * (fil.x || 0.5)) + 'px';
       b.style.top = (boite.top + window.scrollY + boite.height * (fil.y || 0.5)) + 'px';
@@ -575,6 +576,26 @@
     var fil = etat.fils.find(function (f) { return f.id === id; });
     if (!fil) { return; }
 
+    // Ouvrir, c'est lire. On le dit au serveur sans attendre sa réponse
+    // pour ne pas retarder l'affichage, et on remet le compteur à zéro
+    // localement — si l'appel échoue, la marque revient au rechargement,
+    // ce qui est le bon sens de l'erreur.
+    //
+    // placerEpingles() vide la couche et la reconstruit : l'épingle
+    // passée en `ancrage` se retrouve détachée du document, et
+    // getBoundingClientRect() ne rend plus que des zéros — la bulle
+    // partait se coller dans le coin haut-gauche. On la retrouve donc
+    // par son identifiant après le redessin.
+    if (neuves(fil)) {
+      fil.nouvelles = 0;
+      api('/fils/' + id + '/vu', { method: 'POST' }).catch(function () {});
+      dessinerPanneau();
+      placerEpingles();
+      if (ancrage && !ancrage.isConnected) {
+        ancrage = coucheEpingles.querySelector('[data-fil="' + id + '"]') || null;
+      }
+    }
+
     fermerBulle();
     etat.actif = id;
 
@@ -746,11 +767,27 @@
     ouvrirPanneau(panneau.getAttribute('data-ouvert') !== '1');
   });
 
+  function neuves(fil) { return Math.max(0, parseInt(fil.nouvelles, 10) || 0); }
+
+  function totalNeuves() {
+    return etat.fils.reduce(function (n, f) { return n + neuves(f); }, 0);
+  }
+
   function dessinerPanneau() {
     var liste = visibles();
     var ouverts = etat.fils.filter(function (f) { return f.statut === 'ouvert'; }).length;
-    jeton.textContent = String(ouverts);
-    jeton.setAttribute('data-zero', ouverts ? '0' : '1');
+    var aLire = totalNeuves();
+
+    // Une réponse qu'on n'a pas lue passe devant le nombre de fils
+    // ouverts : c'est la seule chose qui demande une action tout de
+    // suite, et c'est précisément ce que l'ancienne pastille ne disait
+    // pas. Le compte des fils ouverts reste en titre.
+    jeton.textContent = String(aLire || ouverts);
+    jeton.setAttribute('data-zero', (aLire || ouverts) ? '0' : '1');
+    jeton.setAttribute('data-neuf', aLire ? '1' : '0');
+    btnListe.title = aLire
+      ? (aLire > 1 ? aLire + ' réponses non lues sur cette page' : '1 réponse non lue sur cette page')
+      : 'Voir tous les commentaires de la page';
 
     corpsPanneau.innerHTML = '';
     if (!liste.length) {
@@ -775,8 +812,13 @@
       if (fil.ancre) { carte.appendChild(el('p', 'aec-cible', '« ' + fil.ancre.slice(0, 70) + ' »')); }
       carte.appendChild(el('p', 'aec-texte', fil.message));
       if (fil.reponses.length) {
-        carte.appendChild(el('p', 'aec-aide',
-          fil.reponses.length + (fil.reponses.length > 1 ? ' réponses' : ' réponse')));
+        var n = neuves(fil);
+        var ligne = el('p', n ? 'aec-neuf' : 'aec-aide',
+          n
+            ? (n > 1 ? n + ' nouvelles réponses' : '1 nouvelle réponse')
+            : fil.reponses.length + (fil.reponses.length > 1 ? ' réponses' : ' réponse'));
+        carte.appendChild(ligne);
+        if (n) { carte.classList.add('aec-a-lire'); }
       }
 
       carte.addEventListener('click', function () {
@@ -793,13 +835,41 @@
   }
 
   function dessinerPages(pages) {
+    // Le rappel qui manquait. La relectrice n'a pas accès au
+    // back-office : sans cette ligne, rien sur le site ne lui dit qu'on
+    // lui a répondu ailleurs, et elle repart par courriel.
+    var ailleurs = pages.filter(function (p) {
+      return p.nouvelles > 0 && !(p.post && p.post === AEC.post);
+    });
+    var ancien = racine.querySelector('.aec-rappel');
+    if (ancien) { ancien.remove(); }
+    if (ailleurs.length) {
+      var total = ailleurs.reduce(function (n, p) { return n + p.nouvelles; }, 0);
+      var avis = el('div', 'aec-rappel');
+      avis.appendChild(el('strong', '',
+        total > 1 ? total + ' réponses vous attendent' : 'Une réponse vous attend'));
+      avis.appendChild(el('span', '',
+        ailleurs.length > 1 ? ' sur ' + ailleurs.length + ' autres pages.' : ' sur une autre page.'));
+      var ul = el('div', 'aec-rappel-l');
+      ailleurs.slice(0, 8).forEach(function (p) {
+        var lien = document.createElement('a');
+        lien.href = p.url;
+        lien.textContent = p.titre;
+        lien.appendChild(el('span', 'aec-jeton', String(p.nouvelles)));
+        ul.appendChild(lien);
+      });
+      avis.appendChild(ul);
+      zonePages.parentNode.insertBefore(avis, zonePages);
+    }
+
     pages.forEach(function (page) {
       var a = document.createElement('a');
       a.href = page.url;
       a.textContent = page.titre;
       if (page.post && page.post === AEC.post) { a.setAttribute('aria-current', 'page'); }
-      var n = el('span', 'aec-jeton', String(page.ouverts));
-      n.setAttribute('data-zero', page.ouverts ? '0' : '1');
+      var n = el('span', 'aec-jeton', String(page.nouvelles || page.ouverts));
+      n.setAttribute('data-zero', (page.nouvelles || page.ouverts) ? '0' : '1');
+      if (page.nouvelles) { n.setAttribute('data-neuf', '1'); }
       a.appendChild(n);
       zonePages.appendChild(a);
     });

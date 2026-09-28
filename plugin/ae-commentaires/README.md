@@ -111,3 +111,42 @@ Ajouter → Téléverser → Activer.
 > remplace : l'ancienne ne fonctionnait que sur huit maquettes servies depuis
 > ses propres fichiers, et demandait de choisir un type de demande avant
 > d'écrire. Celle-ci marche partout et ne demande rien.
+
+## Ce qui n'a pas été lu (1.1.0)
+
+La relectrice n'a pas accès au back-office : le rôle `Relecteur` ne
+porte ni `edit_posts` ni `read` sur l'administration. La pastille du
+menu ne lui a donc jamais été montrée, et rien sur le site ne lui
+signalait qu'on lui avait répondu. Sur trois cents fils, elle a
+redemandé par courriel des choses auxquelles la réponse était dans le
+calque depuis des jours.
+
+Trois signaux, tous côté site :
+
+- **La pastille du lanceur** affiche les réponses non lues de la page,
+  en rouge, et passe devant le nombre de fils ouverts. Sans réponse en
+  attente, elle reprend son compte habituel en or.
+- **L'épingle et la carte** d'un fil qui porte une réponse non lue sont
+  cerclées de rouge.
+- **Le rappel des autres pages**, en tête de la liste : « N réponses
+  vous attendent sur M autres pages », avec le lien vers chacune. C'est
+  le seul endroit qui donne une vue du site entier à quelqu'un qui n'a
+  pas le back-office.
+
+Ouvrir un fil le marque lu. Ce qui est retenu, c'est une date par fil
+et par compte (`_aec_vu` en méta utilisateur), pas un état par réponse :
+le stockage ne grossit pas avec la discussion et survit à la suppression
+d'une réponse. Ses propres réponses ne comptent jamais comme non lues —
+sans cette règle le compteur monterait dès qu'elle écrit.
+
+## La pastille du back-office compte autre chose (1.1.0)
+
+Elle comptait les fils ouverts. Sur trois cent seize fils, quatre-vingt-
+neuf étaient ouverts dont soixante portaient déjà notre réponse et
+attendaient la relectrice : une pastille à 89 ne disait rien de ce qu'il
+y avait à faire.
+
+Elle compte maintenant les fils dont **le dernier mot ne vient pas de
+l'équipe** — ceux où la balle est dans notre camp. L'écran s'ouvre sur
+une vue « Pour nous » qui applique le même filtre, et chaque ligne dit
+si le fil attend l'équipe ou la relectrice.

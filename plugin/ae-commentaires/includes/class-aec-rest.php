@@ -46,6 +46,10 @@ class AEC_Rest {
 			'methods' => WP_REST_Server::CREATABLE, 'callback' => array( __CLASS__, 'repondre' ), 'permission_callback' => $ecrire,
 		) );
 
+		register_rest_route( self::NS, '/fils/(?P<id>\d+)/vu', array(
+			'methods' => WP_REST_Server::CREATABLE, 'callback' => array( __CLASS__, 'marquer_vu' ), 'permission_callback' => $lecture,
+		) );
+
 		register_rest_route( self::NS, '/image', array(
 			'methods' => WP_REST_Server::CREATABLE, 'callback' => array( __CLASS__, 'image' ), 'permission_callback' => $ecrire,
 		) );
@@ -91,6 +95,10 @@ class AEC_Rest {
 			'url'       => get_post_meta( $fil->ID, '_aec_url', true ),
 			'post'      => (int) get_post_meta( $fil->ID, '_aec_post', true ),
 			'image'     => $image_id ? wp_get_attachment_url( $image_id ) : '',
+			// Ce que CE compte-là n'a pas encore vu. C'est la donnée qui
+			// manquait : la relectrice n'a pas accès au back-office, rien
+			// ne lui disait qu'on lui avait répondu.
+			'nouvelles' => AEC_Types::non_lues( $fil->ID ),
 		);
 
 		if ( $avec_reponses ) {
@@ -133,6 +141,9 @@ class AEC_Rest {
 	public static function pages() {
 		global $wpdb;
 
+		// Une seule requête pour tout le site, au lieu d'une par fil.
+		$neuves_par_fil = AEC_Types::non_lues_toutes();
+
 		$lignes = $wpdb->get_results(
 			"SELECT pm.meta_value AS cle, pm2.meta_value AS post_id, COUNT(*) AS n
 			 FROM {$wpdb->postmeta} pm
@@ -145,12 +156,19 @@ class AEC_Rest {
 		$pages = array();
 		foreach ( $lignes as $ligne ) {
 			$post_id = (int) $ligne->post_id;
+			$ouverts = AEC_Types::fils( $post_id, $ligne->cle, 'ouvert' );
+			$neuves  = 0;
+			foreach ( AEC_Types::fils( $post_id, $ligne->cle, 'tous' ) as $fil ) {
+				$neuves += isset( $neuves_par_fil[ $fil->ID ] ) ? $neuves_par_fil[ $fil->ID ] : 0;
+			}
 			$pages[ $ligne->cle ] = array(
-				'url'     => home_url( $ligne->cle ),
-				'post'    => $post_id,
-				'titre'   => $post_id ? get_the_title( $post_id ) : $ligne->cle,
-				'fils'    => (int) $ligne->n,
-				'ouverts' => count( AEC_Types::fils( $post_id, $ligne->cle, 'ouvert' ) ),
+				'url'       => home_url( $ligne->cle ),
+				'post'      => $post_id,
+				'titre'     => $post_id ? get_the_title( $post_id ) : $ligne->cle,
+				'fils'      => (int) $ligne->n,
+				'ouverts'   => count( $ouverts ),
+				// Les réponses qui attendent d'être lues sur cette page.
+				'nouvelles' => $neuves,
 			);
 		}
 
@@ -171,11 +189,12 @@ class AEC_Rest {
 					continue;
 				}
 				$pages[ $url ] = array(
-					'url'     => get_permalink( $enfant ),
-					'post'    => $enfant->ID,
-					'titre'   => $enfant->post_title,
-					'fils'    => 0,
-					'ouverts' => 0,
+					'url'       => get_permalink( $enfant ),
+					'post'      => $enfant->ID,
+					'titre'     => $enfant->post_title,
+					'fils'      => 0,
+					'ouverts'   => 0,
+					'nouvelles' => 0,
 				);
 			}
 		}
@@ -324,6 +343,23 @@ class AEC_Rest {
 		do_action( 'aec_reponse_ajoutee', get_post( $id ), $fil );
 
 		return rest_ensure_response( self::formater( get_post( $fil->ID ) ) );
+	}
+
+	/**
+	 * « J'ai lu. » Appelé quand la relectrice ouvre un fil.
+	 *
+	 * On rend le fil reformaté plutôt qu'un simple accusé : l'interface
+	 * a besoin du compteur remis à zéro pour se redessiner sans
+	 * redemander la liste entière.
+	 */
+	public static function marquer_vu( WP_REST_Request $r ) {
+		$fil = get_post( (int) $r['id'] );
+		if ( ! $fil || AEC_Types::TYPE !== $fil->post_type || $fil->post_parent ) {
+			return new WP_Error( 'aec_introuvable', 'Fil introuvable.', array( 'status' => 404 ) );
+		}
+		AEC_Types::marquer_vu( $fil->ID );
+
+		return rest_ensure_response( self::formater( $fil ) );
 	}
 
 	public static function modifier( WP_REST_Request $r ) {
