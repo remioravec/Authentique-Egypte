@@ -150,3 +150,28 @@ Elle compte maintenant les fils dont **le dernier mot ne vient pas de
 l'équipe** — ceux où la balle est dans notre camp. L'écran s'ouvre sur
 une vue « Pour nous » qui applique le même filtre, et chaque ligne dit
 si le fil attend l'équipe ou la relectrice.
+
+## Les courriels, enfin branchés (1.2.0)
+
+`aec_fil_ouvert` et `aec_reponse_ajoutee` étaient émis depuis le
+début et personne ne s'y branchait : aucun courriel n'est jamais parti.
+
+Un fil ouvert prévient l'équipe, une réponse prévient l'auteur du fil et
+ceux qui y ont parlé. On ne s'écrit jamais à soi-même — sans cette
+règle, répondre à quelqu'un vous renvoie votre propre texte.
+
+**Le groupement.** Une relecture se fait par salves : cent quatorze
+remarques en trois jours, parfois vingt sur une page en dix minutes. Un
+courriel par remarque ferait un envoi toutes les trente secondes. Chaque
+destinataire a donc un quart d'heure de grâce : le premier message
+programme l'envoi, tout ce qui arrive pendant l'attente s'y ajoute, et
+un seul courriel part — « sept nouvelles remarques sur trois pages »,
+avec le détail et un lien par remarque.
+
+**Le silence.** Chaque compte peut couper ses courriels depuis son
+profil. C'est une case, pas un réglage caché : qui reçoit un message non
+désiré doit pouvoir l'arrêter sans passer par nous.
+
+À la désactivation du plugin, les envois encore programmés sont retirés
+— sinon un courriel préparé juste avant la coupure partirait au réveil,
+des jours plus tard, pour des remarques que tout le monde a oubliées.
