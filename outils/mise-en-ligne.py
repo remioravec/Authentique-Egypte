@@ -71,6 +71,17 @@ FORCE = {8660: ('pages', 38), 8589: ('programs', 5864), 8594: ('programs', 5109)
 
 CANVAS = 'elementor_canvas'
 
+# Trois pages n'ont pas leur contenu, et ce n'est pas un défaut de forme :
+# « Découverte de la Nubie » n'a ni carte, ni jour-par-jour, ni tarif
+# alors que les treize autres fiches les ont ; « Désert noir » et
+# « Alexandrie » n'exposent aucun séjour, seulement le message qui dit
+# qu'il n'y en a pas. Leurs pages en ligne, elles, ont du contenu.
+# Rémi a tranché : on bascule à 55 et on les laisse en l'état jusqu'à ce
+# que Mélanie fournisse l'itinéraire et tranche les deux destinations.
+ECARTEES = {8583: 'Découverte de la Nubie — ni carte, ni jour-par-jour, ni tarif',
+            8918: 'Désert noir — aucun séjour exposé',
+            8921: 'Alexandrie — aucun séjour exposé'}
+
 
 def _cle(t):
     t = H.unescape(re.sub(r'<[^>]+>', '', t or ''))
@@ -145,6 +156,8 @@ def apparier(brouillons, vivants):
                 cible, comment = (c[0], 'slug tronqué') if len(c) == 1 else (None, comment)
         if not cible:
             perdus.append((b, 'sans cible')); continue
+        if b['id'] in ECARTEES:
+            continue
         couples.append({'b': b, 'c': cible, 'comment': comment})
     vus = [x['c']['id'] for x in couples]
     doubles = sorted({i for i in vus if vus.count(i) > 1})
@@ -254,6 +267,12 @@ def main():
     couples, perdus, doubles = apparier(brouillons, vivants)
     print('%d brouillon(s) · %d contenu(s) en ligne · %d apparié(s)'
           % (len(brouillons), len(vivants), len(couples)))
+    if ECARTEES:
+        print('\n%d page(s) écartée(s) de la bascule, leur version en ligne reste :'
+              % len(ECARTEES))
+        for i, motif in sorted(ECARTEES.items()):
+            print('   #%-6d %s' % (i, motif))
+        print()
     if perdus or doubles:
         for b, motif in perdus:
             print('   ✗ #%-6d %-50s %s' % (b['id'], b['titre'][:50], motif))
