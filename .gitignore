@@ -11,3 +11,6 @@ docs/extraits.json
 outils/__pycache__/
 audit-*.json
 plugin/*.zip
+
+# La sauvegarde est versionnée compressée, pas en clair.
+sauvegarde/avant-mise-en-ligne/*/
