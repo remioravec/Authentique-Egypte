@@ -1,13 +1,12 @@
 # Ce qu’il nous manque, de votre côté
 
-Mélanie — voici, en une seule liste, tout ce qui attend une réponse de
-votre part sur la refonte. Soixante-douze points, rangés par nature.
-Le reste est fait.
+Mélanie — voici en une seule liste tout ce qui attend une réponse de
+votre part sur la refonte. 69 points, rangés par nature. Le reste est fait.
 
-Chaque ligne donne le numéro du fil, la page, votre remarque, et ce que
+Chaque entrée donne le numéro du fil, la page, votre remarque, et ce que
 je vous demande précisément.
 
-## Des photos — 32 point(s)
+## Des photos — 30 point(s)
 
 **#10744 · Circuits · 0 · Nos séjours (page mère)**
 > « il manque la photo et la structure ne convient pas »
@@ -34,11 +33,6 @@ Je retire volontiers ce bloc, mais ce que vous voulez à la place — une explic
 
 Quelle image voulez-vous à la place ? Envoyez-la ici. Pour l'envoyer : rouvrez cette bulle sur la page et glissez la photo dedans, ou collez-la directement (Ctrl+V).
 
-**#10428 · Croisières · Croisière sur le lac Nasser**
-> « toutes les photos ne s'affichent pas bien »
-
-Je veux bien corriger, mais il me faut le détail : quelles photos, et sur quel écran ? Si vous pouvez joindre une capture, c'est le plus simple. Pour l'envoyer : rouvrez cette bulle sur la page et glissez la photo dedans, ou collez-la directement (Ctrl+V) — le champ accepte les images.
-
 **#10438 · Croisières · Croisière sur le lac Nasser**
 > « mettre des photos de chaque étapes du programmes sur tout les programmes »
 
@@ -47,22 +41,22 @@ Il me faut vos photos pour le faire : la médiathèque n'a aucune image par éta
 **#10753 · Croisières · Croisière sur le lac Nasser**
 > « enlever l'image »
 
-Je ne sais pas laquelle vous visez : le commentaire n'a pas accroché d'élément, et cette page porte une douzaine d'images. Reposez la bulle en cliquant directement sur l'image à retirer, ou envoyez-moi une capture.
+Huit vignettes de cette page pointaient vers des fichiers supprimés de la médiathèque : elles s'affichaient en image cassée. Je les ai retirées, après avoir vérifié une par une qu'aucune ne répondait. Est-ce que c'était l'une de celles-là que vous vouliez enlever ? S'il en reste une à retirer, reposez la bulle dessus : la page n'en porte plus que onze, ce sera plus facile à désigner.
 
 **#10754 · Croisières · Croisière sur le lac Nasser**
 > « enlever l'image »
 
-Même chose que #10753 : il me faut savoir quelle image.
+Même réponse qu'au fil #10753 : huit images cassées ont été retirées de cette page. Dites-moi si celle que vous visiez en faisait partie.
 
 **#10755 · Croisières · Croisière sur le lac Nasser**
 > « enlever l'image et le texte »
 
-Le commentaire a accroché du code au lieu de l'élément — l'image de Louxor. Confirmez-moi que c'est bien celle-là, avec son texte, et je retire les deux.
+Je comprends maintenant pourquoi votre bulle s'était accrochée à du code au lieu de l'image : l'adresse de cette image était corrompue. Une de mes passes de mise en gras avait écrit une balise à l'intérieur de l'attribut — « Voyage-sur-mesure-a-<b>Louxor</b>-en-Egypte.png » — ce qui cassait le repère autant que l'affichage. C'est réparé. L'image de Louxor s'affiche de nouveau. Reposez la bulle dessus si vous voulez toujours la retirer avec son texte : elle s'accrochera correctement cette fois.
 
 **#10756 · Croisières · Croisière sur le lac Nasser**
 > « enlever l'image »
 
-Même chose que #10753 : il me faut savoir quelle image.
+Même réponse qu'au fil #10753 : huit images cassées ont été retirées de cette page. Dites-moi si celle que vous visiez en faisait partie.
 
 **#10761 · Croisières · Croisière sur le lac Nasser**
 > « Puis pour le design du jour par jour j'aimerai une photo à coté de chque journée pour illustrer les étapes et un lien qui renvoie vers la carte. Il faudrait différencier par des petits icones les hébergements et les repas inclus ou pas inclus selon la journée, car parfois c'est marqué parfois non. Est-ce possible également de faire une sorte de sommaire avec les différentes étapes pour chaque programme? »
@@ -72,7 +66,7 @@ Les icônes sont posées, et je vous dois une correction : je vous avais écrit 
 **#10852 · Croisières · Croisière sur le lac Nasser**
 > « enlever cette photo »
 
-Même chose que #10753 : il me faut savoir quelle photo.
+Même réponse qu'au fil #10753 : huit images cassées ont été retirées de cette page. Dites-moi si celle que vous visiez en faisait partie.
 
 **#9571 · Croisières · Le Caire et croisière sur un bateau à voile**
 > « modifier le jour par jour le design ne convient pas »
@@ -153,11 +147,6 @@ Le voile sombre est repensé, et vous aviez raison de revenir dessus : l'allége
 > « photo trop sombre changer le fond »
 
 Le voile est allégé sur toutes les pages, la photo ressort beaucoup mieux. Si c'est le fond que vous voulez changer, envoyez-moi l'image ici.
-
-**#10791 · Profil · Voyage en couple en Égypte**
-> « attention la FAQ vers le mimleu a un bug et n'est pas alignée »
-
-Je n'ai pas réussi à reproduire le défaut d'alignement : la FAQ de cette page s'affiche correctement chez moi sur ordinateur et sur téléphone. Pouvez-vous m'envoyer une capture, en me disant sur quel appareil et quel navigateur ? Pour l'envoyer : rouvrez cette bulle sur la page et glissez la photo dedans, ou collez-la directement (Ctrl+V).
 
 **#9543 · Profil · Voyage en famille en Égypte**
 > « attention photo qui ne convient pas »
@@ -260,12 +249,17 @@ Vous avez raison, et j'ai vérifié les quatorze séjours un par un. Le filtre s
 
 Fait, avec deux critères sur trois. Le filtre trie par type de séjour, durée et budget. Le type de bateau manque, et je ne peux pas l'inventer : felouque, dahabieh et croisière 5★ n'apparaissent sur aucune fiche de séjour. Donnez-le-moi séjour par séjour et je l'ajoute comme quatrième critère.
 
-## Un choix — 13 point(s)
+## Un choix — 14 point(s)
 
 **#7696 · #7658**
 > « il serait percutant de demander quel type de bateau et expliquer rapidement ces types de bateaux. »
 
 Je rouvre ce fil : ma réponse disait « à valider par vos soins » et je l'avais pourtant marqué résolu. C'était à moi de vous laisser le dernier mot. Le bloc est en ligne, dites-moi s'il vous convient.
+
+**#10481 · Accueil**
+> « changer pour la couleur bleu du site ce n'est pas la bonne couleur »
+
+Je me suis trompé en vous répondant, et il faut que je le dise clairement. Je vous citais #095360 comme « le bleu de la charte ». Il n'est plus nulle part dans le site, et il n'aurait jamais dû y être : ce n'était pas le vôtre. En reprenant la charte graphique que vous nous avez envoyée, j'ai relevé votre bleu — #094D60 — et votre or — #ECAA24 — et j'ai réaligné les 58 pages dessus. Le bloc que vous visiez porte donc maintenant votre bleu et non le mien. Dites-moi si c'est le bon.
 
 **#9548 · Circuits · 0 · Nos séjours (page mère)**
 > « il manque les informations du programme »
@@ -327,7 +321,7 @@ Même question que #10788 : dites-moi ce qui ne va pas dans la présentation et 
 
 Fait : un bloc « Nos guides pour voyager en famille » est posé sous « Les autres façons de partir », avec vos trois guides existants — « Que faire en Égypte avec des enfants », « Peut-on voyager en Égypte en famille ? » et « Sécurité en Égypte pour un voyage en famille ». Vous avez un quatrième guide, « Le voyage en Égypte en famille : tout savoir ! », que je n'ai pas mis : son lien source pointe vers la page des formalités, pas vers lui. Donnez-moi sa bonne adresse et je l'ajoute.
 
-## À relire — 10 point(s)
+## À relire — 8 point(s)
 
 **#10475 · Accueil**
 > « ajouter : en groupe , en entre amis »
@@ -339,20 +333,10 @@ Fait : un bloc « Nos guides pour voyager en famille » est posé sous « Les au
 
 Je rouvre : j'ai renommé « Le Nil » en « Croisière sur le Nil » plutôt qu'ouvrir un second bouton sur la même sélection, et j'ai clos le fil sans votre accord. Si vous vouliez deux entrées distinctes, dites-le.
 
-**#10481 · Accueil**
-> « changer pour la couleur bleu du site ce n'est pas la bonne couleur »
-
-Le bleu de ce bloc est #095360, celui de la charte — c'est aussi celui du pied de page, du bandeau du haut et du fond du hero. Si ce n'est pas le bon, il ne l'est nulle part sur le site : donnez-moi le bleu que vous voulez (une référence, ou une capture où il apparaît) et je le change partout d'un coup plutôt que sur ce seul bloc.
-
 **#10740 · Circuits · 0 · Nos séjours (page mère)**
 > « il manque le prix sur certains programmes »
 
 Voir #10738.
-
-**#11277 · Circuits · 0 · Nos séjours (page mère)**
-> « mettre un lien pour nos commentaires google directement et un lien pour nos commentaires tripadvisor »
-
-C'était déjà en place avant votre commentaire : les deux liens, Google et TripAdvisor, sont sur cette page depuis hier soir, sous les avis. Rechargez la page si vous ne les voyez pas. Une petite vérification à faire de votre côté sur TripAdvisor : leur site refuse les requêtes automatiques, je n'ai donc pas pu ouvrir la fiche moi-même pour confirmer que c'est bien la vôtre. Un clic suffira.
 
 **#10430 · Croisières · Croisière sur le lac Nasser**
 > « ajouter un autre programme pour avoir 3 programmes »
