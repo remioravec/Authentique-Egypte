@@ -1,0 +1,51 @@
+{
+ "regle": {
+  "titre": "60 caractères au plus, suffixe compris. Le sujet d'abord, dans les mots qu'on cherche, pas un verbe de vente. Pas d'emoji, pas de millésime entre crochets qui périme la page. Aucun titre identique à un autre.",
+  "description": "120 à 155 caractères, écrite depuis le contenu de la page, finissant sur un élément concret — une durée, un prix, un lieu. Rien qui promette ce que la page ne tient pas.",
+  "marque": "Pas de suffixe de marque. Six cohabitaient, le plus long mangeait trente caractères sur soixante, et Google ajoute déjà le nom du site."
+ },
+ "pages": {
+  "pages-5556":  {"url": "/lac-nasser/", "desc": "Temples nubiens d’Abou Simbel et Kalabsha, croisière sur le lac Nasser au départ d’Assouan, loin de la foule. Séjours dès 1 595 €."},
+  "pages-5399":  {"url": "/nos-sejours-egypte/sinai-moise-et-saint-catherine/", "titre": "Découverte du Sinaï : montagnes sacrées et mer Rouge"},
+  "pages-5011":  {"url": "/nos-sejours-egypte/voyage-culturel-en-egypte/", "titre": "Voyage culturel en Égypte : temples, musées et vallées", "desc": "Nos séjours culturels en Égypte, du Caire à Abou Simbel : pyramides, vallée des Rois et musées, avec guide égyptologue francophone."},
+  "pages-2368":  {"url": "/notre-blog/", "titre": "Guides pratiques pour préparer son voyage en Égypte", "desc": "Vingt-deux guides écrits par notre agence locale : quand partir, formalités, sécurité, budget, que voir avec des enfants."},
+  "pages-5219":  {"url": "/voyage-a-alexandrie/", "titre": "Voyage à Alexandrie : que voir et quand partir"},
+  "pages-5210":  {"url": "/voyage-a-assouan/", "titre": "Voyage à Assouan : sites à visiter, accès et durée"},
+  "pages-5229":  {"url": "/voyage-a-fayoum/", "titre": "Voyage à Fayoum : que faire et comment y aller"},
+  "pages-5201":  {"url": "/voyage-a-louxor/", "titre": "Voyage à Louxor : que voir et combien de jours prévoir"},
+  "pages-5044":  {"url": "/voyage-en-couple-en-egypte/", "desc": "Nos séjours pour partir à deux en Égypte : dahabieh privative, dîners sur le Nil et nuits dans le désert. Itinéraires dès 595 €."},
+  "pages-5035":  {"url": "/voyage-en-famille-en-egypte/", "desc": "Nos séjours pensés pour les familles : rythme adapté aux enfants, hébergements choisis et guide francophone. Itinéraires dès 185 €."},
+  "pages-5095":  {"url": "/voyage-pmr-en-egypte/", "titre": "Voyage PMR en Égypte : circuits accessibles en fauteuil"},
+  "pages-5052":  {"url": "/voyage-solo-en-egypte/", "desc": "Partir seul en Égypte avec un guide privatif et un itinéraire construit à votre rythme. Nos séjours en solo dès 1 895 €."},
+
+  "posts-5744":  {"url": "/comment-shabiller-en-egypte/", "titre": "Comment s’habiller en Égypte : conseils par saison"},
+  "posts-5904":  {"url": "/croisiere-egypte-dahabieh-bateau-felouque/", "titre": "Croisière en Égypte : dahabieh, bateau à moteur ou felouque"},
+  "posts-5908":  {"url": "/egypte-circuits-pour-passionnes-histoire/", "titre": "Égypte et histoire : 5 circuits thématiques à suivre"},
+  "posts-6015":  {"url": "/egypte-en-hiver/", "titre": "L’Égypte en hiver : que voir, que faire, que prévoir"},
+  "posts-6011":  {"url": "/egypte-enfants-activites/", "titre": "Que faire en Égypte avec des enfants : idées et conseils"},
+  "posts-5906":  {"url": "/egypte-hors-des-sentiers-battus/", "titre": "Égypte hors des sentiers battus : 8 lieux confidentiels"},
+  "posts-6013":  {"url": "/erreurs-voyage-egypte/", "titre": "Les 10 erreurs à éviter pour un premier voyage en Égypte"},
+  "posts-6005":  {"url": "/experiences-egypte-au-dela-des-pyramides/", "titre": "Que vivre en Égypte au-delà des pyramides ?"},
+  "posts-3918":  {"url": "/guide-complet-des-formalites-pour-un-voyage-en-egypte-pour-un-francophone/", "titre": "Le voyage en Égypte en famille : tout savoir"},
+  "posts-5656":  {"url": "/guide-complet/", "titre": "Préparer son voyage sur mesure en Égypte : le guide"},
+  "posts-5824":  {"url": "/quand-partir-en-egypte/", "titre": "Quand partir en Égypte ? Météo mois par mois"},
+  "posts-7365":  {"url": "/securite-en-egypte-en-2026/", "titre": "Sécurité en Égypte en 2026 : le guide de notre agence"},
+  "posts-5746":  {"url": "/vaccins-egypte/", "titre": "Vaccins pour l’Égypte : le guide santé et formalités"},
+  "posts-5820":  {"url": "/voyager-en-egypte-en-famille/", "titre": "Voyager en Égypte en famille : conseils et itinéraires"},
+  "posts-5822":  {"url": "/voyager-en-egypte-fauteuil-roulant/", "titre": "Voyager en Égypte en fauteuil roulant : le guide"},
+
+  "programs-5412": {"url": "/programs/campement-au-coeur-du-mont-moise/", "titre": "Coucher de soleil et nuit sur le mont Moïse", "desc": "Montée au coucher du soleil, nuit sous les étoiles au sommet du mont Moïse et descente au monastère Sainte-Catherine. Dès 290 € par personne."},
+  "programs-1198": {"url": "/programs/croisiere-sur-le-lac-nasser/", "titre": "Croisière sur le lac Nasser et temples d’Abou Simbel", "desc": "Quatre jours de navigation sur le lac Nasser, d’Assouan à Abou Simbel, avec guide égyptologue francophone. Dès 1 595 € par personne."},
+  "programs-1337": {"url": "/programs/decouverte-de-la-nubie/", "titre": "Découverte de la Nubie : villages, temples et felouque", "desc": "Cinq jours en Nubie : villages nubiens des îles du Nil, temples de Kalabsha et Beit el-Wali, balade en felouque. Dès 895 € par personne."},
+  "programs-2054": {"url": "/programs/excursion-a-loasis-de-fayoum/", "titre": "Excursion à l’oasis de Fayoum depuis Le Caire", "desc": "Une journée au Fayoum depuis Le Caire : lac Qarun, Wadi El Rayan et vallée des Baleines, avec guide francophone. Dès 185 € par personne."},
+  "programs-2393": {"url": "/programs/excursion-a-loasis-de-siwa/", "titre": "Voyage à l’oasis de Siwa : 3 jours dans le désert", "desc": "Trois jours à Siwa : sources chaudes, dunes de la grande mer de sable et nuit en campement, avec guide francophone. Dès 595 € par personne."},
+  "programs-2193": {"url": "/programs/excursion-dans-le-desert-blanc/", "titre": "Excursion dans le désert Blanc : 2 jours de bivouac", "desc": "Deux jours entre Désert Noir et Désert Blanc, nuit en bivouac sous les formations de craie, départ en 4x4 depuis Bahariya. Dès 415 € par personne."},
+  "programs-5515": {"url": "/programs/itineraire-sinai-sainte-catherine-mont-moise-et-mer-rouge/", "titre": "De la mer Rouge aux montagnes du Sinaï en 8 jours", "desc": "Huit jours entre Sharm el-Sheikh, Sainte-Catherine, le mont Moïse et Dahab : snorkeling, désert et nuits bédouines. Dès 990 € par personne."},
+  "programs-1408": {"url": "/programs/le-caire-et-croisiere-sur-un-bateau-a-voile/", "titre": "Le Caire et croisière sur un bateau à voile", "desc": "Huit jours du Caire à Assouan, avec embarquement sur une dahabieh à voile pour quatre à cinq jours de navigation sans moteur. Dès 1 895 €."},
+  "programs-5864": {"url": "/programs/lever-du-soleil-monastere-et-nuit-a-sainte-catherine/", "titre": "Lever du soleil au mont Moïse et monastère Sainte-Catherine", "desc": "Deux jours au Sinaï : ascension nocturne du mont Moïse, lever du soleil au sommet et visite du monastère Sainte-Catherine. Dès 320 €."},
+  "programs-5109": {"url": "/programs/sainte-catherine/", "titre": "Nuit à Sainte-Catherine et lever du soleil sur le Sinaï", "desc": "Deux jours au Sinaï, nuit à Sainte-Catherine et ascension du mont Moïse pour le lever du soleil. Dès 320 € par personne."},
+  "programs-540":  {"url": "/programs/mer-rouge/", "titre": "Pyramides, croisière et mer Rouge en famille", "desc": "Neuf jours en famille : pyramides de Gizeh, croisière sur le Nil jusqu’à Louxor, puis plage et snorkeling à Hurghada. Dès 1 485 €."},
+  "programs-1168": {"url": "/programs/pyramides-et-croisiere-sur-le-nil/", "titre": "Pyramides de Gizeh et croisière sur le Nil en 6 jours", "desc": "Six jours du Caire à Hurghada : pyramides de Gizeh, croisière d’Assouan à Louxor, temples de Philae et Karnak. Dès 1 195 € par personne."},
+  "programs-7336": {"url": "/programs/pyramides-louxor-et-mer-rouge-en-famille/", "titre": "Pyramides, Louxor et mer Rouge en famille", "desc": "Un circuit familial du Caire à Hurghada : pyramides, vallée des Rois à Louxor, puis détente et snorkeling en mer Rouge. Dès 1 485 €."}
+ }
+}
