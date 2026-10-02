@@ -14,3 +14,9 @@ plugin/*.zip
 
 # La sauvegarde est versionnée compressée, pas en clair.
 sauvegarde/avant-mise-en-ligne/*/
+
+# Paquet de transport des commits non poussés : il contient l'historique
+# du dépôt, il n'a donc rien à faire dedans. Régénéré à la demande par
+#   git bundle create refonte-commits-en-attente.bundle \
+#       origin/<branche>..HEAD --branches=<branche>
+refonte-commits-en-attente.bundle
