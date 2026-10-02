@@ -151,12 +151,68 @@ puis vérification sur le CMS, puis non-régression sur les pages publiées.
   menu Elementor actuel, qui contient un séjour disparu, un lien mort
   et aucune des neuf destinations.
 
+### Ce que le contrôle des gabarits a sorti *(vérifié de mon côté)*
+
+**Bloquant — le balisage structuré ment sur 36 pages**
+
+Le JSON-LD a été recopié de gabarit en gabarit sans être régénéré. Trois
+paquets de pages portent un bloc **identique octet pour octet** : les 23
+guides et le blog décrivent tous *« Quand partir en Égypte »*, les 9
+destinations décrivent toutes *« Le Caire »*, les 4 profils décrivent
+tous *« Itinéraires désert et oasis »*.
+
+Le plus grave est le `FAQPage` : **36 pages déclarent à Google des
+questions qui ne figurent pas sur la page**. Vingt-trois guides en
+annoncent cinq, aucune n'y est. Les quatre profils en annoncent cinq,
+quatre n'y sont pas. Huit fiches programme en annoncent huit, quatre à
+cinq n'y sont pas. C'est le cas d'école du *structured data mismatch* :
+ce n'est pas une imprécision, c'est le motif d'une action manuelle.
+
+**Bloquant — trois pages n'ont pas leur contenu**
+
+- **8583, « Découverte de la Nubie »** n'a ni carte, ni jour-par-jour,
+  ni tarif — alors que son JSON-LD annonce un `TouristTrip` et que les
+  treize autres fiches programme les ont.
+- **8918, « Désert noir »** et **8921, « Alexandrie »** n'exposent
+  **aucun séjour** : la section existe, elle ne contient que le message
+  « Aucun de nos séjours ne passe aujourd'hui par… ». Deux pages
+  destination sans chemin vers un programme.
+
+**Important**
+
+- **Le cœur du gabarit programme donne douze ossatures pour quatorze
+  pages** : la vue d'ensemble manque sur deux, la carte est balisée de
+  deux façons et absente d'une, la navigation jour-par-jour manque sur
+  six, le tarif sur quatre, et l'ordre « ce que le prix comprend » /
+  « quand partir » est inversé sur cinq.
+- **Le pied de page est à l'intérieur de `<main>` sur 21 pages**, frère
+  de `<main>` sur les autres. Cela casse le repère ARIA `contentinfo`.
+- **Vingt pages affichent une FAQ sans balisage `FAQPage`** — l'inverse
+  exact du défaut précédent.
+- **Les six pages circuit et l'accueil n'ont aucun fil d'Ariane
+  structuré** alors qu'ils en affichent un ; **8598 n'a aucun JSON-LD**,
+  seule page des 58 dans ce cas.
+- **8589 et 8594 sont le même contenu à 95,6 %**, destinés à deux URL
+  distinctes. Duplication interne à trancher : canonique ou 301.
+- **Les annotations de rédaction partent en production** : `data-mm`
+  sur les 57 pages (140 occurrences) et des légendes de travail dans le
+  DOM de 24 pages, masquées à l'affichage mais lisibles dans le code
+  source.
+- **Deux compteurs de FAQ annoncent un nombre faux** (8924, 8925).
+- **L'accessibilité de l'en-tête n'est bonne que sur l'accueil** :
+  `aria-expanded`, `aria-controls`, lien d'évitement. Les 56 autres ne
+  les ont pas.
+
 **Ce qui est sain, et qui compte** : les 57 cibles répondent toutes 200,
 les 404 URL de médias répondent toutes 200, les 253 `srcset` sont
 cohérents, les 388 ancres internes trouvent toutes leur destination,
 aucune page n'est orpheline, aucun lien relatif, aucune chaîne de
 redirection, et Yoast fournit bien le canonical attendu sans concurrent
-dans le contenu.
+dans le contenu. Côté gabarits : un seul `<h1>` sur chacune des 58
+pages, aucun identifiant dupliqué, aucune ancre morte, en-tête et pied
+présents partout, les sommaires des 22 guides parfaitement cohérents
+avec leurs ancres, et la famille guide identique au premier niveau sur
+22 pages sur 22.
 
 ---
 

@@ -57,7 +57,7 @@ SAUVE = os.path.join(RACINE, 'sauvegarde', 'avant-mise-en-ligne')
 GABARIT_TYPE = {'1 · Gabarit circuit': 'pages', '2 · Gabarit programme': 'programs',
                 '3 · Gabarit destination': 'pages', '4 · Gabarit qui part': 'pages',
                 '5 · Gabarit guide': 'posts', '6 · Gabarit blog': 'pages',
-                '7 · Gabarit accueil': 'pages'}
+                '7 · Gabarit accueil': 'pages', '8 · Gabarit qui sommes-nous': 'pages'}
 PREFIXES = ('refonte-famille-', 'refonte-programme-', 'refonte-destination-',
             'refonte-qui-part-', 'refonte-guide-', 'refonte-hub-guides-',
             'refonte-accueil-')
@@ -67,7 +67,7 @@ PREFIXES = ('refonte-famille-', 'refonte-programme-', 'refonte-destination-',
 # publie en double ; et mer-rouge, qui est à la fois une famille et un
 # séjour.
 FORCE = {8660: ('pages', 38), 8589: ('programs', 5864), 8594: ('programs', 5109),
-         8597: ('pages', 470), 8590: ('programs', 540)}
+         8597: ('pages', 470), 8590: ('programs', 540), 9126: ('pages', 105)}
 
 CANVAS = 'elementor_canvas'
 
