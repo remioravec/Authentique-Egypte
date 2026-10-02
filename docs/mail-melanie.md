@@ -1,13 +1,14 @@
 # Mail à Mélanie — mise en ligne de la refonte
 
-Préparé le 2 octobre 2026. Brouillon Gmail créé dans le compte connecté
-(`orvcremi@gmail.com`), avec `remi-oravec@seo-monkey.fr` en copie. Le
-connecteur ne peut créer un brouillon que dans le compte auquel il est
-relié : pour envoyer depuis l'adresse SEO Monkey, le texte ci-dessous est
-à coller dans un nouveau message depuis cette boîte.
+Préparé le 2 octobre 2026. Le brouillon est dans **remi.oravec@seo-monkey.fr**,
+et nulle part ailleurs : celui qui avait d'abord été créé dans le compte
+Gmail personnel a été supprimé.
+
+Deux connexions Gmail coexistent dans cette session — le connecteur
+Gmail de claude.ai, relié au compte personnel, et Composio, relié au
+compte SEO Monkey. C'est par Composio que passe ce brouillon.
 
 **À :** melanie.jaipur@gmail.com
-**Copie :** remi-oravec@seo-monkey.fr
 **Objet :** Le nouveau site est en ligne — vos retours avant lundi
 
 ---
