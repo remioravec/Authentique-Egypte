@@ -247,20 +247,44 @@ def main():
         return r.json()
 
     if a.revenir:
-        jours = sorted(os.listdir(SAUVE)) if os.path.isdir(SAUVE) else []
+        # Le manifeste commande, pas le contenu du dossier : lui seul dit
+        # quels couples la bascule a touchés. Un fichier de travail égaré
+        # dans la sauvegarde ne doit pas partir en écriture, et surtout pas
+        # un fichier au contenu vide, qui viderait la page.
+        jours = sorted(j for j in (os.listdir(SAUVE) if os.path.isdir(SAUVE) else [])
+                       if re.fullmatch(r'\d{4}-\d{2}-\d{2}', j))
         if not jours:
-            sys.exit('Aucune sauvegarde. Rien à remettre.')
+            sys.exit('Aucune sauvegarde datée. Rien à remettre.')
         d = os.path.join(SAUVE, jours[-1])
-        print('Je remets la sauvegarde du %s.' % jours[-1])
+        man = json.load(open(os.path.join(d, 'MANIFESTE.json')))
+        print('Je remets la sauvegarde du %s (%d couples au manifeste).'
+              % (jours[-1], len(man['couples'])))
         n = 0
-        for f in sorted(os.listdir(d)):
-            if not f.endswith('.json'):
+        for c in man['couples']:
+            f = os.path.join(d, '%s-%d.json' % (c['type'], c['cible']))
+            if not os.path.isfile(f):
+                print('   ✗ sauvegarde manquante : %s' % f)
                 continue
-            s = json.load(open(os.path.join(d, f)))
-            ecrire(s['type'], s['id'], {'content': s['contenu'], 'template': s['modele']})
-            n += 1
-            print('   %-9s #%-6d %s' % (s['type'], s['id'], s['url']))
-        print('\n%d contenu(s) remis dans leur état du %s.' % (n, jours[-1]))
+            s = json.load(open(f))
+            if not s.get('contenu'):
+                print('   ✗ sauvegarde vide, je ne touche pas à %s #%d'
+                      % (s['type'], s['id']))
+                continue
+            for essai in range(4):
+                try:
+                    ecrire(s['type'], s['id'],
+                           {'content': s['contenu'], 'template': s['modele']})
+                    n += 1
+                    print('   %-9s #%-6d %-24s %s' % (s['type'], s['id'],
+                          s['modele'] or '(défaut)', (s['url'] or '').replace(SITE, '')))
+                    break
+                except Exception as motif:
+                    print('      reprise %d/3 — %s' % (essai + 1, str(motif)[:70]))
+                    time.sleep(2 ** essai)
+            else:
+                print('      ✗ ABANDON %s #%d' % (s['type'], s['id']))
+        print('\n%d / %d contenu(s) remis dans leur état du %s.'
+              % (n, len(man['couples']), jours[-1]))
         return
 
     brouillons, vivants = recenser(dep, api)
