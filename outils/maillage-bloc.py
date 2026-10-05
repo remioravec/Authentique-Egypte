@@ -54,16 +54,26 @@ STADE = {'guide': 'P', 'destination': 'S', 'profil': 'S', 'sejour': 'S',
 RANG = {'P': 1, 'S': 2, 'O': 3, 'A': 4}
 
 STYLE = ('<style>'
-         '.elementor-template-canvas .pg .ml{display:grid;'
+         # Les guides n'ont ni .pg ni .pg-sec dans leur feuille : le bloc y
+         # tombait sans marge ni grille. On donne au conteneur de quoi tenir
+         # seul, sans toucher aux pages qui ont déjà ces classes.
+         '.elementor-template-canvas section[data-maillage]{padding:48px 0;'
+         'background:var(--fond,#F9F9FB)}'
+         '.elementor-template-canvas section[data-maillage] .wrap{'
+         'width:min(100% - 40px,var(--pg-max,1180px));margin-inline:auto}'
+         '.elementor-template-canvas section[data-maillage] .eyebrow{'
+         'font-family:"Manrope",sans-serif;font-size:14px;letter-spacing:.16em;'
+         'text-transform:uppercase;color:var(--teal-txt,#10657C);margin:0}'
+         '.elementor-template-canvas .ml{display:grid;'
          'grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:10px 26px;'
          'list-style:none;margin:18px 0 0;padding:0}'
-         '.elementor-template-canvas .pg .ml li{margin:0}'
-         '.elementor-template-canvas .pg .ml a{display:flex;align-items:center;gap:10px;'
+         '.elementor-template-canvas .ml li{margin:0}.elementor-template-canvas .ml{list-style:none}'
+         '.elementor-template-canvas .ml a{display:flex;align-items:center;gap:10px;'
          'min-height:44px;font-family:"Manrope",sans-serif;font-size:1rem;'
          'color:var(--teal-txt);text-decoration:none;border-bottom:1px solid var(--ligne-2);'
          'padding:6px 0}'
-         '.elementor-template-canvas .pg .ml a:hover{color:var(--nuit-900)}'
-         '.elementor-template-canvas .pg .ml a::before{content:"";flex:0 0 auto;width:6px;'
+         '.elementor-template-canvas .ml a:hover{color:var(--nuit-900)}'
+         '.elementor-template-canvas .ml a::before{content:"";flex:0 0 auto;width:6px;'
          'height:6px;border-radius:50%;background:var(--or)}'
          '</style>')
 
@@ -97,7 +107,10 @@ def genre(u):
     return 'guide'
 
 
-LIEU = {'voyage-au-caire': ('Le Caire', 'au'), 'voyage-a-louxor': ('Louxor', 'à'),
+# (nom tel qu'on l'écrit seul, préposition, nom à employer APRÈS la
+# préposition). Sans la troisième forme, « Voyage %s %s » donnait
+# « Voyage au Le Caire ».
+LIEU = {'voyage-au-caire': ('Le Caire', 'au', 'Caire'), 'voyage-a-louxor': ('Louxor', 'à'),
         'voyage-a-assouan': ('Assouan', 'à'), 'voyage-a-fayoum': ('Fayoum', 'à'),
         'voyage-a-alexandrie': ('Alexandrie', 'à'),
         'desert-blanc': ('désert Blanc', 'dans le'),
@@ -159,19 +172,24 @@ def banque(url, titre, gsc, genre_cible='autre'):
     out = []
     for q, imp, clics, pos in gsc.get(url.replace(SITE, ''), []):
         k = sans_accent(q)
-        if (len(q.split()) >= 3 and 'authentique' not in k
+        # Sous vingt impressions, une requête est un accident de parcours :
+        # « croisière sur le nil » a une impression sur la page des voyages
+        # à mobilité réduite, et en faire une ancre vers elle est faux.
+        if (imp >= 20 and len(q.split()) >= 3 and 'authentique' not in k
                 and any(sans_accent(w) in k for w in INTENTION)):
             out.append(q[0].upper() + q[1:])
     c = url.replace(SITE, '').strip('/')
     if c in LIEU:
-        lieu, prep = LIEU[c]
-        out += ['Voyage %s %s' % (prep, lieu), 'Séjour %s %s' % (prep, lieu),
-                'Que faire %s %s' % (prep, lieu), 'Visiter %s' % lieu,
-                'Circuit %s %s' % (prep, lieu), 'Découvrir %s' % lieu,
-                'Partir %s %s' % (prep, lieu), 'Étape %s %s' % (prep, lieu),
-                '%s en Égypte' % lieu[0].upper() + lieu[1:],
-                '%s sur mesure' % lieu[0].upper() + lieu[1:],
-                'Nos séjours %s %s' % (prep, lieu)]
+        e = LIEU[c]
+        lieu, prep = e[0], e[1]
+        apres = e[2] if len(e) > 2 else lieu      # ce qui suit la préposition
+        out += ['Voyage %s %s' % (prep, apres), 'Séjour %s %s' % (prep, apres),
+                'Que faire %s %s' % (prep, apres), 'Visiter %s' % lieu,
+                'Circuit %s %s' % (prep, apres), 'Découvrir %s' % lieu,
+                'Partir %s %s' % (prep, apres), 'Étape %s %s' % (prep, apres),
+                '%s en Égypte' % (lieu[0].upper() + lieu[1:]),
+                '%s sur mesure' % (lieu[0].upper() + lieu[1:]),
+                'Nos séjours %s %s' % (prep, apres)]
     if c in PROFIL:
         out += PROFIL[c]
     t = re.sub(r'\s*[|–—-]\s*(Authentique|Agence|Voyage en Égypte).*$', '', titre).strip()
