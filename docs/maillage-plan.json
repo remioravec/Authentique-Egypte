@@ -1,0 +1,456 @@
+[
+ {
+  "cible": "https://authentiquegypte.com/programs/pyramides-louxor-et-mer-rouge-en-famille/",
+  "genre": "programme",
+  "stade": "O",
+  "avant": 6,
+  "besoin": 5,
+  "trouves": [],
+  "ancres_distinctes": 0
+ },
+ {
+  "cible": "https://authentiquegypte.com/programs/roadtrip-en-egypte/",
+  "genre": "programme",
+  "stade": "O",
+  "avant": 6,
+  "besoin": 5,
+  "trouves": [],
+  "ancres_distinctes": 0
+ },
+ {
+  "cible": "https://authentiquegypte.com/programs/lever-du-soleil-monastere-et-nuit-a-sainte-catherine/",
+  "genre": "programme",
+  "stade": "O",
+  "avant": 7,
+  "besoin": 4,
+  "trouves": [],
+  "ancres_distinctes": 0
+ },
+ {
+  "cible": "https://authentiquegypte.com/programs/excursion-dans-le-desert-blanc/",
+  "genre": "programme",
+  "stade": "O",
+  "avant": 9,
+  "besoin": 2,
+  "trouves": [],
+  "ancres_distinctes": 0
+ },
+ {
+  "cible": "https://authentiquegypte.com/programs/excursion-a-loasis-de-fayoum/",
+  "genre": "programme",
+  "stade": "O",
+  "avant": 9,
+  "besoin": 2,
+  "trouves": [],
+  "ancres_distinctes": 0
+ },
+ {
+  "cible": "https://authentiquegypte.com/programs/campement-au-coeur-du-mont-moise/",
+  "genre": "programme",
+  "stade": "O",
+  "avant": 9,
+  "besoin": 2,
+  "trouves": [],
+  "ancres_distinctes": 0
+ },
+ {
+  "cible": "https://authentiquegypte.com/programs/itineraire-sinai-sainte-catherine-mont-moise-et-mer-rouge/",
+  "genre": "programme",
+  "stade": "O",
+  "avant": 9,
+  "besoin": 2,
+  "trouves": [],
+  "ancres_distinctes": 0
+ },
+ {
+  "cible": "https://authentiquegypte.com/programs/sainte-catherine/",
+  "genre": "programme",
+  "stade": "O",
+  "avant": 9,
+  "besoin": 2,
+  "trouves": [],
+  "ancres_distinctes": 0
+ },
+ {
+  "cible": "https://authentiquegypte.com/programs/croisiere-sur-le-lac-nasser/",
+  "genre": "programme",
+  "stade": "O",
+  "avant": 10,
+  "besoin": 1,
+  "trouves": [
+   {
+    "source": "https://authentiquegypte.com/voyage-a-assouan/",
+    "ancre": "croisière sur le lac Nasser",
+    "position": 109042
+   }
+  ],
+  "ancres_distinctes": 1
+ },
+ {
+  "cible": "https://authentiquegypte.com/lac-nasser/",
+  "genre": "destination",
+  "stade": "S",
+  "avant": 1,
+  "besoin": 10,
+  "trouves": [
+   {
+    "source": "https://authentiquegypte.com/mont-sinai/",
+    "ancre": "Lac Nasser",
+    "position": 112998
+   },
+   {
+    "source": "https://authentiquegypte.com/voyage-a-assouan/",
+    "ancre": "croisière sur le lac Nasser",
+    "position": 109042
+   },
+   {
+    "source": "https://authentiquegypte.com/egypte-en-hiver/",
+    "ancre": "croisière lac Nasser",
+    "position": 49779
+   }
+  ],
+  "ancres_distinctes": 3
+ },
+ {
+  "cible": "https://authentiquegypte.com/mont-sinai/",
+  "genre": "destination",
+  "stade": "S",
+  "avant": 1,
+  "besoin": 10,
+  "trouves": [
+   {
+    "source": "https://authentiquegypte.com/incontournables-voyage-egypte/",
+    "ancre": "Mont Sinaï",
+    "position": 48475
+   }
+  ],
+  "ancres_distinctes": 1
+ },
+ {
+  "cible": "https://authentiquegypte.com/desert-blanc/",
+  "genre": "destination",
+  "stade": "S",
+  "avant": 2,
+  "besoin": 9,
+  "trouves": [
+   {
+    "source": "https://authentiquegypte.com/nos-sejours-egypte/desert-egypte/",
+    "ancre": "désert Blanc",
+    "position": 106254
+   },
+   {
+    "source": "https://authentiquegypte.com/egypte-hors-des-sentiers-battus/",
+    "ancre": "nuit dans le Désert Blanc",
+    "position": 50064
+   }
+  ],
+  "ancres_distinctes": 2
+ },
+ {
+  "cible": "https://authentiquegypte.com/voyage-a-fayoum/",
+  "genre": "destination",
+  "stade": "S",
+  "avant": 2,
+  "besoin": 9,
+  "trouves": [
+   {
+    "source": "https://authentiquegypte.com/egypte-en-hiver/",
+    "ancre": "Fayoum",
+    "position": 47075
+   },
+   {
+    "source": "https://authentiquegypte.com/experiences-egypte-au-dela-des-pyramides/",
+    "ancre": "Excursion à Fayoum",
+    "position": 48016
+   }
+  ],
+  "ancres_distinctes": 2
+ },
+ {
+  "cible": "https://authentiquegypte.com/voyage-a-assouan/",
+  "genre": "destination",
+  "stade": "S",
+  "avant": 3,
+  "besoin": 8,
+  "trouves": [
+   {
+    "source": "https://authentiquegypte.com/nos-sejours-egypte/",
+    "ancre": "Assouan",
+    "position": 123310
+   },
+   {
+    "source": "https://authentiquegypte.com/guide-complet-des-formalites-pour-un-voyage-en-egypte-pour-un-francophone/",
+    "ancre": "croisière entre Louxor et Assouan",
+    "position": 53457
+   }
+  ],
+  "ancres_distinctes": 2
+ },
+ {
+  "cible": "https://authentiquegypte.com/voyage-pmr-en-egypte/",
+  "genre": "profil",
+  "stade": "S",
+  "avant": 3,
+  "besoin": 8,
+  "trouves": [
+   {
+    "source": "https://authentiquegypte.com/voyage-a-louxor/",
+    "ancre": "mobilité réduite",
+    "position": 115630
+   },
+   {
+    "source": "https://authentiquegypte.com/voyager-en-egypte-fauteuil-roulant/",
+    "ancre": "voyage PMR en Égypte",
+    "position": 47327
+   }
+  ],
+  "ancres_distinctes": 2
+ },
+ {
+  "cible": "https://authentiquegypte.com/voyage-a-louxor/",
+  "genre": "destination",
+  "stade": "S",
+  "avant": 4,
+  "besoin": 7,
+  "trouves": [
+   {
+    "source": "https://authentiquegypte.com/nos-sejours-egypte/",
+    "ancre": "Louxor",
+    "position": 123302
+   },
+   {
+    "source": "https://authentiquegypte.com/nos-sejours-egypte/croisieres-en-egypte/",
+    "ancre": "explorer Louxor",
+    "position": 105623
+   },
+   {
+    "source": "https://authentiquegypte.com/guide-complet-des-formalites-pour-un-voyage-en-egypte-pour-un-francophone/",
+    "ancre": "temples de Karnak et de Louxor",
+    "position": 46627
+   }
+  ],
+  "ancres_distinctes": 3
+ },
+ {
+  "cible": "https://authentiquegypte.com/voyage-en-couple-en-egypte/",
+  "genre": "profil",
+  "stade": "S",
+  "avant": 4,
+  "besoin": 7,
+  "trouves": [],
+  "ancres_distinctes": 0
+ },
+ {
+  "cible": "https://authentiquegypte.com/voyage-en-famille-en-egypte/",
+  "genre": "profil",
+  "stade": "S",
+  "avant": 4,
+  "besoin": 7,
+  "trouves": [
+   {
+    "source": "https://authentiquegypte.com/nos-sejours-egypte/croisieres-en-egypte/",
+    "ancre": "voyage en famille",
+    "position": 105711
+   },
+   {
+    "source": "https://authentiquegypte.com/nos-sejours-egypte/desert-egypte/",
+    "ancre": "séjour en famille",
+    "position": 106365
+   },
+   {
+    "source": "https://authentiquegypte.com/guide-complet-des-formalites-pour-un-voyage-en-egypte-pour-un-francophone/",
+    "ancre": "voyage en famille en Égypte",
+    "position": 54860
+   }
+  ],
+  "ancres_distinctes": 3
+ },
+ {
+  "cible": "https://authentiquegypte.com/10-choses-a-ne-pas-faire-en-egypte/",
+  "genre": "guide",
+  "stade": "P",
+  "avant": 1,
+  "besoin": 10,
+  "trouves": [],
+  "ancres_distinctes": 0
+ },
+ {
+  "cible": "https://authentiquegypte.com/croisiere-egypte-dahabieh-bateau-felouque/",
+  "genre": "guide",
+  "stade": "P",
+  "avant": 1,
+  "besoin": 10,
+  "trouves": [],
+  "ancres_distinctes": 0
+ },
+ {
+  "cible": "https://authentiquegypte.com/incontournables-voyage-egypte/",
+  "genre": "guide",
+  "stade": "P",
+  "avant": 1,
+  "besoin": 10,
+  "trouves": [],
+  "ancres_distinctes": 0
+ },
+ {
+  "cible": "https://authentiquegypte.com/egypte-en-hiver/",
+  "genre": "guide",
+  "stade": "P",
+  "avant": 1,
+  "besoin": 10,
+  "trouves": [],
+  "ancres_distinctes": 0
+ },
+ {
+  "cible": "https://authentiquegypte.com/egypte-circuits-pour-passionnes-histoire/",
+  "genre": "guide",
+  "stade": "P",
+  "avant": 1,
+  "besoin": 10,
+  "trouves": [],
+  "ancres_distinctes": 0
+ },
+ {
+  "cible": "https://authentiquegypte.com/guide-complet-des-formalites-pour-un-voyage-en-egypte-pour-un-francophone/",
+  "genre": "guide",
+  "stade": "P",
+  "avant": 1,
+  "besoin": 10,
+  "trouves": [],
+  "ancres_distinctes": 0
+ },
+ {
+  "cible": "https://authentiquegypte.com/les-arnaques-et-erreurs-a-eviter-en-egypte/",
+  "genre": "guide",
+  "stade": "P",
+  "avant": 1,
+  "besoin": 10,
+  "trouves": [],
+  "ancres_distinctes": 0
+ },
+ {
+  "cible": "https://authentiquegypte.com/erreurs-voyage-egypte/",
+  "genre": "guide",
+  "stade": "P",
+  "avant": 1,
+  "besoin": 10,
+  "trouves": [],
+  "ancres_distinctes": 0
+ },
+ {
+  "cible": "https://authentiquegypte.com/preparer-son-voyage-au-caire/",
+  "genre": "guide",
+  "stade": "P",
+  "avant": 1,
+  "besoin": 10,
+  "trouves": [],
+  "ancres_distinctes": 0
+ },
+ {
+  "cible": "https://authentiquegypte.com/voyager-en-egypte-fauteuil-roulant/",
+  "genre": "guide",
+  "stade": "P",
+  "avant": 1,
+  "besoin": 10,
+  "trouves": [],
+  "ancres_distinctes": 0
+ },
+ {
+  "cible": "https://authentiquegypte.com/egypte-enfants-activites/",
+  "genre": "guide",
+  "stade": "P",
+  "avant": 2,
+  "besoin": 9,
+  "trouves": [],
+  "ancres_distinctes": 0
+ },
+ {
+  "cible": "https://authentiquegypte.com/securite-en-egypte-pour-un-voyage-en-famille/",
+  "genre": "guide",
+  "stade": "P",
+  "avant": 2,
+  "besoin": 9,
+  "trouves": [],
+  "ancres_distinctes": 0
+ },
+ {
+  "cible": "https://authentiquegypte.com/egypte-hors-des-sentiers-battus/",
+  "genre": "guide",
+  "stade": "P",
+  "avant": 2,
+  "besoin": 9,
+  "trouves": [],
+  "ancres_distinctes": 0
+ },
+ {
+  "cible": "https://authentiquegypte.com/voyage-au-caire/",
+  "genre": "guide",
+  "stade": "P",
+  "avant": 3,
+  "besoin": 8,
+  "trouves": [
+   {
+    "source": "https://authentiquegypte.com/voyage-solo-en-egypte/",
+    "ancre": "Le Caire",
+    "position": 106865
+   },
+   {
+    "source": "https://authentiquegypte.com/egypte-hors-des-sentiers-battus/",
+    "ancre": "journée ou deux depuis Le Caire",
+    "position": 52645
+   }
+  ],
+  "ancres_distinctes": 2
+ },
+ {
+  "cible": "https://authentiquegypte.com/voyage-solo-en-egypte/",
+  "genre": "guide",
+  "stade": "P",
+  "avant": 3,
+  "besoin": 8,
+  "trouves": [],
+  "ancres_distinctes": 0
+ },
+ {
+  "cible": "https://authentiquegypte.com/guide-complet/",
+  "genre": "guide",
+  "stade": "P",
+  "avant": 3,
+  "besoin": 8,
+  "trouves": [
+   {
+    "source": "https://authentiquegypte.com/securite-egypte-2025/",
+    "ancre": "Guide complet pour préparer votre voyage sur mesure en Égypte",
+    "position": 45641
+   }
+  ],
+  "ancres_distinctes": 1
+ },
+ {
+  "cible": "https://authentiquegypte.com/experiences-egypte-au-dela-des-pyramides/",
+  "genre": "guide",
+  "stade": "P",
+  "avant": 3,
+  "besoin": 8,
+  "trouves": [],
+  "ancres_distinctes": 0
+ },
+ {
+  "cible": "https://authentiquegypte.com/voyager-en-egypte-en-famille/",
+  "genre": "guide",
+  "stade": "P",
+  "avant": 4,
+  "besoin": 7,
+  "trouves": [],
+  "ancres_distinctes": 0
+ },
+ {
+  "cible": "https://authentiquegypte.com/vaccins-egypte/",
+  "genre": "guide",
+  "stade": "P",
+  "avant": 5,
+  "besoin": 6,
+  "trouves": [],
+  "ancres_distinctes": 0
+ }
+]
