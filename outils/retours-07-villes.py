@@ -17,8 +17,8 @@ durées, ses périodes, son climat. Rien n'est inventé : la FAQ d'Assouan donne
 les 280 km jusqu'à Abou Simbel, celle de Fayoum le 4x4 pour Wadi Al-Hitan,
 celle du mont Sinaï le départ entre une et deux heures du matin.
 
-Alexandrie (12321) n'a pas de page : Mélanie écrit elle-même « je vais en
-ajouter » (12298). Rien à faire ici.
+Alexandrie (12321) et le Désert noir ont rejoint le nouveau gabarit le
+6 octobre : leur chapô est écrit ici comme les autres.
 """
 
 import argparse
@@ -67,6 +67,21 @@ CHAPOS = {
         'de baleines fossiles de Wadi Al-Hitan classés à l’UNESCO, et les '
         'ateliers de poterie de Tunis Village. Une journée donne un aperçu, '
         'deux permettent d’atteindre les sites qui demandent un 4x4.'),
+    5219: (  # Alexandrie · 12321, une fois la page passée au nouveau gabarit
+        'Fondée par Alexandre le Grand, Alexandrie regarde la Méditerranée '
+        'plutôt que le désert&nbsp;: la bibliothèque rebâtie sur le site de '
+        'l’ancienne, le fort Qaitbay là où se dressait le phare, les '
+        'catacombes de Kom el-Shoqafa où l’Égypte, la Grèce et Rome se mêlent, '
+        'et la corniche en bord de mer. Un à deux jours suffisent, souvent en '
+        'excursion depuis Le Caire&nbsp;: 220&nbsp;km, deux à trois heures de '
+        'train.'),
+    5541: (  # Désert noir
+        'À côté de l’oasis de Bahariya, le Désert noir doit son nom aux '
+        'collines de basalte sombre qui percent le sable clair du Sahara, un '
+        'paysage volcanique qu’on ne retrouve nulle part ailleurs en Égypte. '
+        'On y marche, on monte sur les collines pour le panorama, et on s’y '
+        'arrête le plus souvent sur la route du Désert blanc. De novembre à '
+        'mars.'),
     5547: (  # mont Sinaï
         'Le mont Sinaï, le Gebel Moussa des Égyptiens, domine le village de '
         'Sainte-Catherine et son monastère. On en fait l’ascension de nuit, '

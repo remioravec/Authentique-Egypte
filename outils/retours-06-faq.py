@@ -39,6 +39,10 @@ import unicodedata
 
 import requests
 
+import sys
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import cibles
+
 SITE = 'https://authentiquegypte.com'
 RACINE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SEUIL = 10          # en deçà, une FAQ n'a pas besoin de rubriques
@@ -67,11 +71,15 @@ RUBRIQUES = [
 DEFAUT = 'Bon à savoir'
 
 # une donnée qu'on cherche du regard : une période, une durée, un montant
+# Les bornes de mot ne sont pas un détail : sans elles, « mai » se trouve
+# dans « mais » et dans « jamais », et la mise en gras produit « mais ».
 CHIFFRE = re.compile(
+    r'(?<![^\W\d_])'
     r'((?:de\s+)?(?:janvier|février|mars|avril|mai|juin|juillet|août|septembre|'
     r'octobre|novembre|décembre)(?:\s+à\s+(?:janvier|février|mars|avril|mai|juin|'
     r'juillet|août|septembre|octobre|novembre|décembre))?'
-    r'|\d+\s*(?:à\s*\d+\s*)?(?:jours?|nuits?|heures?|km|°C|€|minutes?))',
+    r'|\d+\s*(?:à\s*\d+\s*)?(?:jours?|nuits?|heures?|km|°C|€|minutes?))'
+    r'(?![^\W\d_])',
     re.I)
 
 
@@ -203,10 +211,7 @@ def main():
     S.headers['Authorization'] = 'Basic ' + base64.b64encode(
         ('%s:%s' % (u, m)).encode()).decode()
     B = SITE + '/wp-json/wp/v2/'
-    man = json.load(open(os.path.join(
-        RACINE, 'sauvegarde/avant-mise-en-ligne/2026-10-02/MANIFESTE.json')))
-    couples = list(man['couples']) + [{'type': 'pages', 'cible': 786,
-                                       'url': SITE + '/sur-mesure/'}]
+    couples = cibles.toutes()
 
     total = {'faq': 0, 'rubriques': 0, 'gras': 0}
     a_ecrire = []

@@ -34,6 +34,10 @@ import time
 
 import requests
 
+import sys
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import cibles
+
 SITE = 'https://authentiquegypte.com'
 RACINE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ID = SITE + '/#agence'
@@ -98,12 +102,10 @@ def main():
     S.headers['Authorization'] = 'Basic ' + base64.b64encode(
         ('%s:%s' % (u, m)).encode()).decode()
     B = SITE + '/wp-json/wp/v2/'
-    man = json.load(open(os.path.join(
-        RACINE, 'sauvegarde/avant-mise-en-ligne/2026-10-02/MANIFESTE.json')))
 
     total = {'compteur': 0, 'fiche': 0}
     touchees = []
-    for c in man['couples']:
+    for c in cibles.toutes():
         r = S.get(B + '%s/%d' % (c['type'], c['cible']),
                   params={'context': 'edit'}, timeout=120)
         h = (r.json().get('content') or {}).get('raw', '')

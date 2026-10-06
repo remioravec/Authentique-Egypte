@@ -37,6 +37,10 @@ import time
 
 import requests
 
+import sys
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import cibles
+
 SITE = 'https://authentiquegypte.com'
 RACINE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 MARQUE = 'data-devis-bloc'
@@ -120,10 +124,7 @@ def main():
     S.headers['Authorization'] = 'Basic ' + base64.b64encode(
         ('%s:%s' % (u, m)).encode()).decode()
     B = SITE + '/wp-json/wp/v2/'
-    man = json.load(open(os.path.join(
-        RACINE, 'sauvegarde/avant-mise-en-ligne/2026-10-02/MANIFESTE.json')))
-    couples = list(man['couples']) + [{'type': 'pages', 'cible': 786,
-                                       'url': SITE + '/sur-mesure/'}]
+    couples = cibles.toutes()
 
     total = {'agence': 0, 'bouton': 0, 'cb': 0, 'style': 0}
     a_ecrire = []

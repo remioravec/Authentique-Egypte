@@ -34,6 +34,10 @@ import time
 
 import requests
 
+import sys
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import cibles
+
 SITE = 'https://authentiquegypte.com'
 RACINE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -88,7 +92,11 @@ REGLES = [
     # 15 · le champ séjour, rempli seulement s'il est vide
     (r'if\(s&&!s\.value&&p\.get\("sejour"\)\)s\.value=p\.get\("sejour"\);',
      'if(s)if(!s.value)if(p.get("sejour"))s.value=p.get("sejour");'),
-    # 16 · les trois facettes de l'accueil
+    # 16 · le champ message, rempli seulement s'il est vide. Celui-là
+    # survivait, mais parce qu'une extension d'optimisation encode le script
+    # en base64 : la dépendance ne vaut pas qu'on la garde.
+    (r'if\(t&&!t\.value\)\{', 'if(t)if(!t.value){'),
+    # 17 · les trois facettes de l'accueil
     (r"correspond\(c,'qui'\)&&correspond\(c,'envie'\)&&correspond\(c,'duree'\)",
      "correspond(c,'qui')?(correspond(c,'envie')?correspond(c,'duree'):false):false"),
 ]
@@ -146,10 +154,7 @@ def main():
     S.headers['Authorization'] = 'Basic ' + base64.b64encode(
         ('%s:%s' % (u, m)).encode()).decode()
     B = SITE + '/wp-json/wp/v2/'
-    man = json.load(open(os.path.join(
-        RACINE, 'sauvegarde/avant-mise-en-ligne/2026-10-02/MANIFESTE.json')))
-    couples = list(man['couples']) + [{'type': 'pages', 'cible': 786,
-                                       'url': SITE + '/sur-mesure/'}]
+    couples = cibles.toutes()
 
     total, touchees, restants, mauvais = 0, [], 0, []
     for c in couples:
