@@ -186,6 +186,26 @@ def mal_refermee(h):
     return seules + len(pile)
 
 
+def bornes_grille(h):
+    """(début, fin) du <div class="cartes …"> de la section des séjours."""
+    i = h.find('id="sejours"')
+    if i < 0:
+        return None
+    d = h.find('<div class="cartes', i)
+    if d < 0:
+        return None
+    p, k = 0, d
+    while k < len(h):
+        if h.startswith('<div', k):
+            p += 1
+        elif h.startswith('</div>', k):
+            p -= 1
+            if p == 0:
+                return d, k
+        k += 1
+    return None
+
+
 def cartes(h):
     """(début, fin, slug) de chaque carte de séjour du corps de page."""
     out, i = [], 0
@@ -318,11 +338,13 @@ def corriger(ident, h, dispo):
             continue
         if slug not in dispo:
             raise SystemExit('pas de carte toute faite pour %s' % slug)
-        k = corps.rfind('</article>')
-        if k < 0:
-            raise SystemExit('aucune carte où se greffer sur %s' % ident)
-        k += len('</article>')
-        corps = corps[:k] + dispo[slug] + corps[k:]
+        # Viser la grille des séjours, et surtout pas le dernier </article> de
+        # la page : le mur d'avis est fait d'<article class="mur__a">, et une
+        # carte greffée là tombe au milieu des témoignages.
+        g = bornes_grille(corps)
+        if not g:
+            raise SystemExit('grille des séjours introuvable sur %s' % ident)
+        corps = corps[:g[1]] + dispo[slug] + corps[g[1]:]
         note('carte ajoutée', 1)
 
     if ident == 38:
