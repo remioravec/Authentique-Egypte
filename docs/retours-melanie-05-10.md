@@ -1,0 +1,91 @@
+# Retours de Mélanie du 5 octobre — état au 6 octobre
+
+82 commentaires. 51 traités et vérifiés en ligne, 31 en attente.
+
+## Traités
+
+- **12249** · enlever agence locale Le Caire → mention d agence retirée
+- **12252** · enlever partout agence locale basée au Caire → mention d agence retirée
+- **12254** · a partir de 520 euros par personne → prix à 520 €
+- **12255** · a partir de 520 euros par personne → prix à 520 €
+- **12256** · enlever ahence locale basée au caire sur tout le site → mention d agence retirée partout
+- **12258** · non il n'y a pas d'excursion d'une journée → onglet « une journée » retiré
+- **12259** · a partir de 520 euros par personne → prix à 520 €
+- **12260** · enlever la nuit en camping dans le désert → nuit en camping retirée
+- **12262** · enlever toute cette partie → section équipement retirée
+- **12263** · enlever ce texte → mention de carte bancaire retirée
+- **12264** · supprimer ce texte → compteur retiré
+- **12265** · supprimer ce texte → durée retirée
+- **12272** · il y a deux fois le même itinéraire → doublon d itinéraire retiré
+- **12273** · cet itinéraire ne fait pas parti du sinai → carte Siwa retirée du Sinaï
+- **12277** · mettre un bouton pour les devis → bouton de devis ajouté
+- **12279** · changer la photo → photo remplacée
+- **12280** · écrire voyage dans le sinai sur mesure → titre corrigé
+- **12281** · mettre 3 séjours → compteur à 3, recalculé
+- **12282** · ajouter un encart sur la sécurité : nous ne recommandons pas l'exploration de cette zone d → encart de sécurité ajouté
+- **12284** · enlever cette phrase → surtitre retiré
+- **12286** · enlever totalement cette question → question retirée
+- **12287** · enlever la question → question retirée
+- **12288** · dire que les croisières c'est généralement 3 nuits ou 4 nuits mais que si ils veulent just → durée reformulée selon vos mots
+- **12289** · enlever la question → question retirée
+- **12290** · question répétitive → question retirée
+- **12291** · globalement la FAQ est longue, est ce possible de la ranger en catégories? → FAQ rangée en rubriques
+- **12292** · mettre un bouton demande de devis, mettre le text en gras → bouton de devis ajouté
+- **12293** · mettre un espace entre les commentaires et le bouton, pareil pour les avis google → espace sous les avis
+- **12294** · mettre des catégories dans la fac car il y a beaucoup de questions → FAQ rangée en rubriques
+- **12295** · mettre un bouton demande de devis → bouton de devis ajouté
+- **12296** · attention mettre un espace entre les boutons et les commentaires → espace sous les avis
+- **12299** · a enlever → surtitre retiré
+- **12300** · a enlever → phrase retirée
+- **12302** · a enlever → phrase retirée
+- **12303** · a enlever → surtitre retiré
+- **12304** · ajouter un bouton demande de devis → bouton de devis ajouté
+- **12305** · espace entre commentaire et bouton voir les avis → espace sous les avis
+- **12307** · enlever accessible en bateau ou a pied → mention retirée
+- **12308** · a enlever → question retirée
+- **12309** · est ce possible de mettre en gras le texte important des faq? → données mises en gras dans les FAQ
+- **12310** · est ce possible de mettre des catégories aux faq? car il y a bcp de questions → FAQ rangée en rubriques
+- **12311** · pouvez vous mettre un bouton contact ou demande de devis? → bouton de devis ajouté
+- **12312** · espace entre les commentaires et les boutons voir les avis → espace sous les avis
+- **12315** · beaucoup de questions est ce possible de faire des catégories → FAQ rangée en rubriques
+- **12316** · mettre un bouton contact ou demande de devis → bouton de devis ajouté
+- **12317** · mettre un espace entre les commentaires elles boutons voir les avis → espace sous les avis
+- **12318** · il y a 5 séjours qui y passent → compteur à 5, recalculé
+- **12319** · 2 jours minimum → 2 jours minimum
+- **12326** · enelever la photo et mettre la photo → photo remplacée
+- **12328** · mettre espace entre commentaires et voir les avis → espace sous les avis
+- **12329** · a supprimer → texte générique retiré
+
+## En attente
+
+- **12257** · mettre un autre format pour quand partir → autre format pour « quand partir » — à cadrer
+- **12261** · ajouter les autorisations nécessaires pour le désert avec les autorités locales → autorisations à ajouter aux inclus — texte exact ?
+- **12270** · changer l'image svp → image du Sinaï — remplacée par celle de 12279
+- **12274** · changer pour cette photo → photo à changer — aucune image jointe
+- **12276** · est-ce possible a la place de mettre une carte itinéractive avec les étapes principales :  → carte interactive du Sinaï — développement
+- **12283** · il y a un autre séjour avec Abu Simbel qui passe par le lac nasser → autre séjour par le lac Nasser — lequel ?
+- **12285** · est ce possible d'enlever la mention? → mention OpenStreetMap — obligation de licence, voir ci-dessous
+- **12298** · je vais en ajouter → Alexandrie — page non publiée
+- **12306** · il manque des programmes pouvez vous les ajouter → programmes à ajouter sur Assouan — lesquels ?
+- **12313** · est ce possible a la place de mettre un court texte sur louxor et présenter la ville court → texte propre à Louxor — rédaction
+- **12314** · possibilité d'enlever ce texte → mention OpenStreetMap — obligation de licence, voir ci-dessous
+- **12320** · est ce possible a la place de mettre un court texte sur aswan et présenter la ville courte → texte propre à Assouan — rédaction
+- **12321** · est ce possible a la place de mettre un court texte sur louxor et présenter la ville court → texte propre à Alexandrie — page non publiée
+- **12322** · est ce possible a la place de mettre un court texte sur Le Caire et présenter la ville cou → texte propre au Caire — rédaction
+- **12323** · est ce possible a la place de mettre un court texte sur le Lac Nasser et présenter la vill → texte propre au Lac Nasser — rédaction
+- **12330** · est ce possible de varier pour chaque article le texte du bouton ca fait bcp de répétition → varier le texte des boutons du blog
+- **12331** · est ce possible de mettre des filles par catégories d'articles ? → filtres par catégorie sur le blog
+- **12332** · a supprimer → « Au choix » à supprimer sur le blog
+- **12333** · ok → « Qui sommes-nous » — la page est revenue à l ancienne version
+- **12336** · pourquoi mettre la source? → « Qui sommes-nous » — la page est revenue à l ancienne version
+- **12337** · ajouter une catégorie : testés et approuvé : nous visitons les hôtels , travaillons avec g → « Qui sommes-nous » — la page est revenue à l ancienne version
+- **12338** · a enlever ou bien connecter avec les photos de nos voyageurs de tripadvisor ou google imag → « Qui sommes-nous » — la page est revenue à l ancienne version
+- **12340** · ajouter image → « Qui sommes-nous » — la page est revenue à l ancienne version
+- **12342** · refaire cette partie totalement → « Qui sommes-nous » — la page est revenue à l ancienne version
+- **12343** · il manque la partie prise de contact, envoie devis, modification, validation, préparation  → « Qui sommes-nous » — la page est revenue à l ancienne version
+- **12344** · pour la faq est ce que vous pouvez mettre la meme forme que les autres faq du site, → « Qui sommes-nous » — la page est revenue à l ancienne version
+- **12345** · mettre le bouton avec un format et le lien direct sur la page demande de devis → « Qui sommes-nous » — la page est revenue à l ancienne version
+- **12346** · mettre les commentaires comme sur les autres page et mettre lien avis google et tripadviso → « Qui sommes-nous » — la page est revenue à l ancienne version
+- **12347** · attention changer le logo pour un fond transparent → logo à fond transparent
+- **12348** · attention changer le logo pour un fond transparent → logo à fond transparent
+- **12349** · il manque des itinéraires → itinéraires manquants sur l accueil — lesquels ?
