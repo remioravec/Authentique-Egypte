@@ -149,3 +149,51 @@ dizaine de lignes de code déclarant ces deux champs à l'API.
 
 Cela concerne aussi neuf guides encore titrés « [Guide 2025] » alors qu'on
 est en octobre 2026, et six pages sans description.
+
+---
+
+## Mise à jour du 6 octobre — ces erreurs sont antérieures à la refonte
+
+En cherchant à refondre `/programs/decouverte-de-la-nubie/`, le quatorzième
+programme, j'ai trouvé un troisième cas, puis un quatrième. Et surtout : la
+sauvegarde du 2 octobre, qui contient l'état exact des pages **avant** la
+bascule, montre que ces déroulés étaient déjà là. La refonte a repris
+fidèlement le contenu existant ; elle n'a rien interverti.
+
+**`/programs/decouverte-de-la-nubie/` — « Rencontres Nubiennes », 895 €**
+
+La page promet « les temples millénaires d'Abou Simbel », une navigation sur
+le Nil et « la richesse culturelle de cette région aux traditions
+préservées ». Son déroulé, en dix journées, va du Caire à Louxor, puis Edfou
+et Kom Ombo, et revient au Caire. Ni Assouan, ni Abou Simbel, ni la Nubie, ni
+aucune navigation. La carte annonce par ailleurs « 5 jours minimum ».
+
+C'est pour cela que cette page n'a pas été refondue avec Alexandrie et le
+Désert noir le 6 octobre : son brouillon n'a pas de jour-par-jour, et celui de
+la page en ligne ne peut pas servir, puisqu'il décrit un autre voyage.
+
+**`/programs/excursion-a-loasis-de-siwa/` — « Voyage à l'Oasis de Siwa »**
+
+La vue d'ensemble, la carte (Le Caire → Siwa) et les inclus parlent bien de
+Siwa. Le jour-par-jour, lui, s'ouvre sur « Le Caire - Oasis de Siwa, Jour 1 »
+et décrit un départ « de votre hôtel à Sharm el-Sheikh ou Dahab » vers
+Sainte-Catherine, puis l'ascension nocturne du mont Moïse, le lever du soleil
+au sommet et la visite du monastère. C'est, mot pour mot, le déroulé de
+`/programs/sainte-catherine/`. La sauvegarde du 2 octobre montre le même
+texte sur l'ancienne page.
+
+**Ce qu'il faut, et rien d'autre**
+
+Trois déroulés jour par jour, écrits par l'agence :
+
+1. « Découverte de la Nubie » — ce qu'on fait vraiment, jour par jour, et en
+   combien de jours (la carte dit 5, le déroulé affiché en dit 10) ;
+2. « Voyage à l'Oasis de Siwa » — le vrai déroulé, celui de l'oasis ;
+3. « Pyramides, croisière et mer rouge en famille » — ce qui la distingue de
+   « Pyramides et croisière sur le Nil », dont elle reprend le déroulé mot
+   pour mot.
+
+Tant qu'ils manquent, deux choses n'ont **pas** été touchées, pour ne pas
+propager l'erreur : la durée affichée de `/programs/mer-rouge/` (9 jours) et
+celle de la croisière sur le lac Nasser (4 jours), toutes deux contredites par
+un déroulé qui n'est pas le leur.
