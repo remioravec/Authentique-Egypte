@@ -9,7 +9,7 @@ Objet : **Authentique Égypte — vos retours du 6 octobre sont en ligne, et l'o
 
 Bonjour Mélanie,
 
-Vos 25 commentaires du 6 octobre sont traités et en ligne. J'en ai profité pour remettre à jour tout l'outil de relecture : sur les 433 commentaires laissés depuis août, 405 sont maintenant clos, chacun avec une réponse qui dit ce qui a été fait. Il en reste 28 ouverts, uniquement ceux où j'ai besoin de vous (liste plus bas).
+Vos 25 commentaires du 6 octobre sont traités et en ligne. J'en ai profité pour remettre à jour tout l'outil de relecture : sur les 433 commentaires laissés depuis août, 408 sont maintenant clos, chacun avec une réponse qui dit ce qui a été fait. Il en reste 25 ouverts, uniquement ceux où j'ai besoin de vous (liste plus bas).
 
 VOS QUESTIONS
 
@@ -30,11 +30,12 @@ Et des réponses que vous m'aviez données en septembre, que j'ai appliquées :
 - Lac Nasser : un troisième séjour, « Pyramides, croisière et mer rouge en famille » ;
 - Accueil : « Croisière » et « Le Nil » sont deux choix distincts ;
 - Mont Sinaï : une carte interactive avec les étapes (Mont Sinaï et Sainte-Catherine, Dahab, Charm el-Cheikh) ;
-- Les prix de la dahabeya, du mont Moïse et du roadtrip apparaissent maintenant sur toutes les cartes.
+- Les prix de la dahabeya, du mont Moïse et du roadtrip apparaissent maintenant sur toutes les cartes ;
+- Vos deux photos jointes : le lever du soleil sur le Sinaï est la nouvelle photo de la carte « Du littoral de la mer Rouge aux montagnes du Sinaï », et la photo de Hend est sur sa carte, page « L'agence ».
 
-CE DONT J'AI BESOIN POUR CLORE LES 28 DERNIERS
+CE DONT J'AI BESOIN POUR CLORE LES 25 DERNIERS
 
-1. Des photos. Une vingtaine de commentaires en attendent : les sites d'Alexandrie (fort Qaitbay, catacombes, bibliothèque, colonne de Pompée), l'oasis de Bahariya, une photo par journée pour les déroulés des séjours, un atelier (poterie ou hiéroglyphes), et une photo de vous et de Hend pour la page « L'agence ». Attention : les images collées dans l'outil de relecture ne me parviennent pas (je l'ai vu pour la pyramide du Caire). Le plus simple est un dossier Google Drive, avec les photos nommées par lieu.
+1. Des photos. Dix-sept commentaires en attendent : les sites d'Alexandrie (fort Qaitbay, catacombes, bibliothèque, colonne de Pompée), l'oasis de Bahariya, une photo par journée pour les déroulés des séjours, un atelier (poterie ou hiéroglyphes), et une photo de vous pour la page « L'agence ». Joindre une photo directement à un commentaire fonctionne, mais pas dans une réponse : celle de la pyramide du Caire n'est pas arrivée. Pour un lot de photos, le plus simple reste un dossier Google Drive, avec les photos nommées par lieu.
 2. Le tarif de « Découverte de la Nubie », le seul séjour encore sans prix.
 3. Les déroulés de la Nubie et de Siwa, et ce qui distingue « Pyramides, croisière et mer rouge en famille » de « Pyramides et croisière sur le Nil » (toujours en attente depuis mon dernier mail).
 4. Pour les bateaux (felouque, dahabeya, bateau à moteur) : deux ou trois phrases, la durée habituelle et une photo de chacun, pour le bloc d'explication de la page Croisières.

@@ -95,8 +95,6 @@ REPONSES = [
     (12279, "Photo de une remplacée.", True),
     (12272, "Le doublon est retiré.", True),
     (12273, "Retiré : Siwa n'est plus parmi les séjours du Sinaï.", True),
-    (12274, "La photo n'est pas arrivée avec le commentaire : le plugin n'a rien reçu. "
-            "Envoyez-la-moi par mail en me disant pour quelle carte, et je la pose.", False),
     (12276, "Fait : la carte montre maintenant les étapes — Mont Sinaï et Sainte-Catherine "
             "(le monastère est au pied du mont, à 2 km : une seule épingle pour les deux), "
             "Dahab et Charm el-Cheikh. On peut zoomer, et chaque épingle ouvre une bulle.", True),
@@ -146,9 +144,6 @@ REPONSES = [
     (12336, AGENCE + "les deux mentions « Source : … » sont retirées.", True),
     (12337, AGENCE + "la carte « Testés et approuvés » est ajoutée, avec vos mots.", True),
     (12338, AGENCE + "la galerie « En images » est retirée.", True),
-    (12340, "Il n'y a aucune photo de l'équipe dans la médiathèque. En attendant, la carte "
-            "de Hend porte un monogramme. Envoyez-moi sa photo (et la vôtre) et je les "
-            "pose.", False),
     (12342, AGENCE + "« Notre histoire » est réécrite.", True),
     (12343, AGENCE + "les cinq étapes y sont, dans l'ordre : prise de contact, envoi du "
             "devis, modifications, validation, préparation avant le voyage.", True),
@@ -222,6 +217,14 @@ REPONSES = [
             "Votre image n'est pas arrivée (le plugin n'a rien reçu) : si vous préférez la "
             "vôtre, envoyez-la par mail et je la remplace.", True),
     (11272, "Fait : les séjours qui embarquent sont tous dans les croisières.", True),
+    # ------------------------------------------------- photos jointes
+    (11271, "Votre photo était bien jointe, et je ne l'avais pas vue : c'est fait. Le lever du "
+            "soleil sur le Sinaï est maintenant la photo de la carte « Du littoral de la mer "
+            "Rouge aux montagnes du Sinaï », partout où elle paraît.", True),
+    (12274, "Voir #11271 : c'est la même carte, et elle a maintenant votre photo du Sinaï au "
+            "lever du soleil.", True),
+    (12340, "Je me suis trompé : votre photo de Hend était bien jointe à ce commentaire. Elle "
+            "remplace le monogramme sur sa carte. Il manque seulement la vôtre.", True),
 ]
 
 
