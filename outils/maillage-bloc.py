@@ -45,7 +45,8 @@ MIN_PAR_BLOC = 3
 # de Rémi : elle rend ses propres données et ignore post_content. Y écrire un
 # bloc ne produit rien de visible — on ne l'utilise ni comme source ni comme
 # cible tant qu'elle est dans cet état.
-HORS_JEU = {SITE + '/qui-sommes-nous/'}
+# L'accueil n'en veut pas (Mélanie, 12669, 6 octobre).
+HORS_JEU = {SITE + '/qui-sommes-nous/', SITE + '/'}
 MARQUE = 'data-maillage'
 
 STADE = {'guide': 'P', 'destination': 'S', 'profil': 'S', 'sejour': 'S',

@@ -71,8 +71,9 @@ FICHE = {
 
 ANCIEN_CPT = re.compile(
     r'(<p class="mur__cpt">)(.*?)(</p>)', re.S)
-NEUF_CPT = ('<b>4,9 sur 5 · 24 avis Google sur l&#x27;agence</b>'
-            '<small>Relevé sur la fiche le ' + RELEVE + '</small>')
+# La date du relevé n'est plus affichée (Mélanie, 12666 et 12672) ; elle
+# reste dans RELEVE, pour la trace.
+NEUF_CPT = '<b>4,9 sur 5 · 24 avis Google sur l&#x27;agence</b>'
 BLOC = ('<script type="application/ld+json" data-agence>'
         + json.dumps(FICHE, ensure_ascii=False) + '</script>')
 
