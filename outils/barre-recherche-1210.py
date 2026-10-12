@@ -57,7 +57,9 @@ STYLE = (
     # le hero laisse dépasser la barre, et passe devant la section suivante
     + B + '.hero.hero:has(.compo--barre){display:flow-root;overflow:visible;z-index:3;padding-bottom:0}'
     + B + '.hero.hero:has(.compo--barre)+.section{padding-top:calc(88px + var(--deborde,44px))}'
-    + C + '{--deborde:44px;position:relative;z-index:4;transform:none;margin:28px 0 calc(-1 * var(--deborde));'
+    # plus de photo (Rémi : « l'image du hero plus grosse ») : de l'air au-dessus du titre et sous le texte
+    + B + '.hero.hero:has(.compo--barre) .wrap{padding-top:clamp(56px,7vw,96px)}'
+    + C + '{--deborde:44px;position:relative;z-index:4;transform:none;margin:clamp(72px,11vw,150px) 0 calc(-1 * var(--deborde));'
     'background:rgba(255,255,255,.94);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);'
     'border-radius:30px;padding:12px;box-shadow:0 18px 44px rgba(6,40,50,.22);color:var(--texte,#3E4650)}'
     + C + ' .cb{display:flex;align-items:center;gap:12px}'
@@ -110,7 +112,8 @@ STYLE = (
     'margin:0;padding:0}'
     # téléphone : les champs l'un sous l'autre, le bouton en toutes lettres
     '@media (max-width:760px){'
-    + C + '{--deborde:64px;border-radius:24px;padding:10px;margin-top:22px}'
+    + C + '{--deborde:64px;border-radius:24px;padding:10px;margin-top:48px}'
+    + B + '.hero.hero:has(.compo--barre) .wrap{padding-top:40px}'
     + B + '.hero.hero:has(.compo--barre)+.section{padding-top:calc(48px + var(--deborde,64px))}'
     + C + ' .cb{flex-direction:column;align-items:stretch;gap:10px}'
     + C + ' .cb__l{flex-direction:column;border-radius:18px}'
@@ -213,7 +216,11 @@ def main():
     d = s.get(URL, params={'context': 'edit'}, timeout=300).json()
     h = d['content']['raw']
     if MARQUE in h:
-        print('Déjà fait.')
+        # déjà en place : on ne remet que la feuille de style
+        h2 = re.sub(r'<style ' + MARQUE + r'>.*?</style>', lambda m: STYLE, h, count=1, flags=re.S)
+        print('feuille de style', 'à jour' if h2 == h else 'remplacée')
+        if a.appliquer and h2 != h:
+            print('écrit :', s.post(URL, json={'content': h2}, timeout=600).status_code)
         return
     h2 = transformer(h)
     print('composeur → barre de recherche (%+d caractères)' % (len(h2) - len(h)))

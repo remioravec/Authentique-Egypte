@@ -115,3 +115,7 @@ Sur le modèle d'une barre de moteur de voyage envoyée par Rémi :
 Le filtrage ne change pas : mêmes pastilles, même script, phrase lue par les
 lecteurs d'écran et « Tout effacer » conservés hors écran. Le titre
 « Composez votre Égypte » disparaît, comme sur le modèle.
+
+Puis, à la demande de Rémi (« l'image du hero plus grosse ») : plus d'air
+au-dessus du titre et sous le texte. Sur ordinateur, le hero passe de 271 à
+443 px de haut et montre la felouque en entier ; sur téléphone, +44 px.
