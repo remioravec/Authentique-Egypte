@@ -1,7 +1,7 @@
 # Brouillon de mail à Mélanie — 12 octobre
 
-Déposé dans Gmail sur **remi.oravec@seo-monkey.fr**, en brouillon, non envoyé.
-Destinataire : melanie.jaipur@gmail.com
+Déposé en brouillon sur **remi.oravec@seo-monkey.fr**, **envoyé par Rémi le 12 octobre à 11 h 56**,
+Just Vallin-Détrez en copie. Destinataire : melanie.jaipur@gmail.com
 
 Objet : **Authentique Égypte — vos 197 retours du 12 octobre sont en ligne, plus que 6 points pour vous**
 
@@ -53,6 +53,11 @@ LES 6 POINTS OÙ J'AI BESOIN DE VOUS
 
 Pour les photos, le plus simple : rouvrez la bulle concernée sur la page et glissez la photo dedans, ou collez-la (Ctrl+V).
 
-Bonne soirée,
+Merci à vous
 
 Rémi
+
+---
+
+Après l'envoi, à 16 h 09, Mélanie a laissé trois commentaires sur l'accueil
+(13514-13516) : traités le jour même, voir `retours-melanie-12-10.md`.

@@ -49,8 +49,8 @@ ouverts.
 ## Le soir : les 24 fils restés ouverts
 
 Question de Rémi : « On peut avancer sans Mélanie ? » Oui pour 18 sur 24.
-Réponses : `outils/repondre-1210b.py`. Plugin : 630 fils, 624 clos, **6
-ouverts**.
+Réponses : `outils/repondre-1210b.py`. Plugin : 633 fils, 627 clos, **6
+ouverts** (après les trois commentaires de 14 h sur l'accueil, ci-dessous).
 
 | Outil | Fils | Ce qu'il fait |
 |---|---|---|
@@ -85,3 +85,14 @@ Clos sans changement de page : 10746, 10751 (photo du Sinaï déjà posée),
 monastère et nuit à Sainte-Catherine » : 445 € (/programs/sainte-catherine/)
 et 320 € (/programs/lever-du-soleil-monastere-et-nuit-a-sainte-catherine/).
 Doublon à trancher.
+
+## 14 h : trois commentaires sur l'accueil
+
+`outils/accueil-1210b.py`, réponses dans `repondre-1210b.py`, fils clos.
+
+- 13514 « la carte est trop grande » : carte à gauche, six vignettes à
+  droite (trois par ligne) sur ordinateur ; 518 px de haut au lieu de 990.
+  Écritures de la carte grossies d'autant. Mobile inchangé.
+- 13515 « modifier le texte » : « Nos destinations en Égypte ».
+- 13516 « le fond est pas assez transparent » : composeur à 55 % de blanc
+  (78 % avant), intitulés gris foncés pour la lisibilité.
