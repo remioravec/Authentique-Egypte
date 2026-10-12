@@ -59,6 +59,8 @@ STYLE = (
     + B + '.hero.hero:has(.compo--barre)+.section{padding-top:calc(88px + var(--deborde,44px))}'
     # plus de photo (Rémi : « l'image du hero plus grosse ») : de l'air au-dessus du titre et sous le texte
     + B + '.hero.hero:has(.compo--barre) .wrap{padding-top:clamp(56px,7vw,96px)}'
+    # Rémi : « le paragraphe moins large, sur plusieurs lignes » ; aligné à gauche, il n'est plus justifié
+    + B + '.hero.hero:has(.compo--barre) .hero__lede{max-width:34em;text-align:left;hyphens:none}'
     + C + '{--deborde:44px;position:relative;z-index:4;transform:none;margin:clamp(72px,11vw,150px) 0 calc(-1 * var(--deborde));'
     'background:rgba(255,255,255,.94);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);'
     'border-radius:30px;padding:12px;box-shadow:0 18px 44px rgba(6,40,50,.22);color:var(--texte,#3E4650)}'

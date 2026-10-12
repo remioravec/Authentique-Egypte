@@ -119,3 +119,5 @@ lecteurs d'écran et « Tout effacer » conservés hors écran. Le titre
 Puis, à la demande de Rémi (« l'image du hero plus grosse ») : plus d'air
 au-dessus du titre et sous le texte. Sur ordinateur, le hero passe de 271 à
 443 px de haut et montre la felouque en entier ; sur téléphone, +44 px.
+Et le paragraphe du hero (« Vous nous dites… ») limité à 34 em, aligné à
+gauche : quatre lignes sur ordinateur au lieu de deux en pleine largeur.
