@@ -16,9 +16,9 @@ Restent dehors, et pour une raison chacune :
 
   /qui-sommes-nous/ (105), dont la nouvelle version est prête mais que Rémi a
   fait revenir à l'ancienne le 4 octobre ;
-  /programs/decouverte-de-la-nubie/ (1337), dont le brouillon n'a ni carte,
-  ni jour-par-jour, ni tarif — et dont le jour-par-jour en ligne décrit un
-  autre voyage que celui que la page promet.
+  et rien d'autre depuis le 12 octobre : /programs/decouverte-de-la-nubie/
+  (1337) est passée au nouveau gabarit à la demande de Mélanie (13122),
+  avec le jour par jour qu'elle avait en ligne, pour qu'elle le corrige.
 """
 
 import json
@@ -36,6 +36,7 @@ APRES = [
     {'type': 'pages', 'cible': 3785,
      'url': SITE + '/mentions-legales-agence-voyage-egypte/'},
     {'type': 'pages', 'cible': 3784, 'url': SITE + '/newsletter/'},
+    {'type': 'programs', 'cible': 1337, 'url': SITE + '/programs/decouverte-de-la-nubie/'},
 ]
 
 
