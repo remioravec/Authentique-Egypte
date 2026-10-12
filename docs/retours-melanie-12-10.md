@@ -45,3 +45,43 @@ ouverts.
 
 - 12964 (L'agence, « reformater ») et 13071 (Sainte-Catherine, « à enlever ») :
   les bulles pointent la page entière, aucun élément désigné.
+
+## Le soir : les 24 fils restés ouverts
+
+Question de Rémi : « On peut avancer sans Mélanie ? » Oui pour 18 sur 24.
+Réponses : `outils/repondre-1210b.py`. Plugin : 630 fils, 624 clos, **6
+ouverts**.
+
+| Outil | Fils | Ce qu'il fait |
+|---|---|---|
+| `photos-1210.py` | 10744, 10438, 10761, 10816, 10854, 10856 | Tuiles Culturel (colonnes de temple) et Désert (désert blanc) ; une photo par journée prise dans la médiathèque, jamais deux fois la même dans un séjour ; photo de fond des guides « hors des sentiers battus » (Siwa) et « 10 choses à ne pas faire » (pyramides) ; photo de la mer Rouge sous « Plongée ». |
+| `complements-1210.py` | 10820, 9527, 9504, 10438 | Carte « arnaques » du blog : couple dans un souk au lieu du visuel publicitaire ; carte du roadtrip sur la page Assouan : villages nubiens au lieu de Karnak ; fort Qaitbay et Montaza sous « Que voir à Alexandrie ? » ; cinq journées de plus illustrées d'après leur titre. |
+| `bateaux-1210.py` | 10748 | Page Croisières : « Pourquoi nous » remplacé par « Felouque, dahabeya ou bateau à moteur ? » (durées et textes repris du guide des croisières). |
+| `pmr-1210.py` | 10446 | Quatre questions sur le handicap dans la FAQ PMR, réponses tirées du seul guide fauteuil roulant du site. |
+| `medicaments-1210.py` | 10829 | Partie « Voyager avec ses médicaments » dans le guide vaccins : la règle, l'exemple du tramadol, ordonnance et boîtes d'origine ; source : Affaires étrangères belges via mesvaccins.net (26/11/2025). Il n'existe pas de liste officielle égyptienne. |
+
+Clos sans changement de page : 10746, 10751 (photo du Sinaï déjà posée),
+9526, 9543, 10846 (photos déjà en place), 10738 (prix sur les 14 cartes),
+12674 (photos d'avis Google : impossible à reprendre).
+
+### Ce qui attend Mélanie
+
+- 10809 : une photo de Bahariya (seule journée de programme sans photo).
+- 10855 : une photo d'atelier, poterie ou hiéroglyphes.
+- 9504, 9506 : bibliothèque, catacombes et colonne de Pompée à Alexandrie.
+- 12964, 13071 : bulles posées sur la page entière (l'outil les a accrochées
+  au code invisible de Google Tag Manager), rien ne dit quel bloc est visé.
+
+### À relire par Mélanie
+
+- Les réponses PMR et la partie médicaments.
+- La carte « bateau à moteur » montre le Nil à Assouan, faute de photo de
+  bateau à moteur.
+- La photo du « désert noir » est celle que la médiathèque nomme ainsi.
+
+### Vu en passant
+
+« Nos séjours » montre deux cartes au même titre, « Lever du soleil,
+monastère et nuit à Sainte-Catherine » : 445 € (/programs/sainte-catherine/)
+et 320 € (/programs/lever-du-soleil-monastere-et-nuit-a-sainte-catherine/).
+Doublon à trancher.
