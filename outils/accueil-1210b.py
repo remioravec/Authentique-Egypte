@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""L'accueil, sur les trois commentaires de Mélanie du 12 octobre à 14 h.
+"""L'accueil, sur les trois commentaires de Mélanie du 12 octobre à 16 h (14 h UTC dans le plugin).
 
     WP_AUTH='compte:mdp' python3 outils/accueil-1210b.py --essai
     WP_AUTH='compte:mdp' python3 outils/accueil-1210b.py --appliquer

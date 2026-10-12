@@ -50,7 +50,7 @@ ouverts.
 
 Question de Rémi : « On peut avancer sans Mélanie ? » Oui pour 18 sur 24.
 Réponses : `outils/repondre-1210b.py`. Plugin : 633 fils, 627 clos, **6
-ouverts** (après les trois commentaires de 14 h sur l'accueil, ci-dessous).
+ouverts** (après les trois commentaires de 16 h sur l'accueil, ci-dessous).
 
 | Outil | Fils | Ce qu'il fait |
 |---|---|---|
@@ -86,7 +86,7 @@ monastère et nuit à Sainte-Catherine » : 445 € (/programs/sainte-catherine/
 et 320 € (/programs/lever-du-soleil-monastere-et-nuit-a-sainte-catherine/).
 Doublon à trancher.
 
-## 14 h : trois commentaires sur l'accueil
+## 16 h : trois commentaires sur l'accueil
 
 `outils/accueil-1210b.py`, réponses dans `repondre-1210b.py`, fils clos.
 

@@ -8,7 +8,7 @@ medicaments-1210.py, complements-1210.py).
     WP_AUTH='compte:mot de passe' ./outils/repondre-1210b.py [--essai]
 
 Même mécanique que repondre-1210.py, dont on reprend l'appel au plugin : on
-répond, puis on clôt, puis on relit sur le serveur. Puis les trois commentaires de 14 h sur l'accueil (accueil-1210b.py).
+répond, puis on clôt, puis on relit sur le serveur. Puis les trois commentaires de 16 h sur l'accueil (accueil-1210b.py).
 Restent ouverts les fils
 qui demandent une photo qu'on n'a pas (Bahariya, atelier, colonne de Pompée,
 sites d'Alexandrie) et les deux bulles posées sur la page entière.
@@ -86,7 +86,7 @@ REPONSES = [
     (12674, "Je clos ce fil : les photos des avis Google ne peuvent pas être reprises. Si des clients vous envoient "
             "leurs photos et acceptent qu'elles paraissent, rouvrez-le avec la photo et le prénom de l'avis : je "
             "la placerai à côté.", True),
-    # L'accueil, commentaires de 14 h (outils/accueil-1210b.py)
+    # L'accueil, commentaires de 16 h (outils/accueil-1210b.py)
     (13514, "La carte est réduite de moitié : sur ordinateur, elle est maintenant à gauche et les six vignettes de "
             "destination à droite, au lieu de prendre toute la largeur (près de 1 000 px de haut). Les noms des "
             "lieux restent lisibles. Sur téléphone, rien ne change.", True),
