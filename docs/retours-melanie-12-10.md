@@ -96,3 +96,22 @@ Doublon à trancher.
 - 13515 « modifier le texte » : « Nos destinations en Égypte ».
 - 13516 « le fond est pas assez transparent » : composeur à 55 % de blanc
   (78 % avant), intitulés gris foncés pour la lisibilité.
+
+## Le soir : la barre de recherche du hero (demande de Rémi)
+
+`outils/barre-recherche-1210.py`, sauvegarde de l'accueil avant
+changement dans `sauvegarde/avant-mise-en-ligne/2026-10-12/` (hors dépôt).
+
+Sur le modèle d'une barre de moteur de voyage envoyée par Rémi :
+- trois champs côte à côte, « Vous partez », « Ce qui vous attire », « Vous
+  avez », chacun avec sa valeur (« Indifférent » par défaut) ; un clic ouvre
+  ses pastilles (plusieurs choix), une croix le vide ;
+- une loupe ronde dorée, avec le nombre de séjours trouvés dès qu'un choix
+  est fait ;
+- la barre est à cheval sur le hero et la section « Nos itinéraires » :
+  moitié-moitié sur ordinateur (44 px de chaque côté), 64 px de débord sur
+  téléphone, où les champs s'empilent et le bouton dit « Voir les séjours ».
+
+Le filtrage ne change pas : mêmes pastilles, même script, phrase lue par les
+lecteurs d'écran et « Tout effacer » conservés hors écran. Le titre
+« Composez votre Égypte » disparaît, comme sur le modèle.
