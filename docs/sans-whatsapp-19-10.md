@@ -34,7 +34,7 @@ programme « Le Caire, Rosette et canal de Suez » publié par Mélanie le
 | Formulaire « Recevoir mon devis » (15 séjours) | ouvrait WhatsApp | part vers le formulaire prérempli |
 | Bulle verte flottante | extension Chaty (seul canal : WhatsApp) | extension désactivée, réactivable |
 
-296 liens et 3 phrases. Restent les liens « Partager sur WhatsApp » des
+293 liens, 3 phrases et 15 formulaires de devis. Restent les liens « Partager sur WhatsApp » des
 séjours (wa.me/?text=…) : ils envoient la page à un proche, pas un message
 à l'agence.
 
