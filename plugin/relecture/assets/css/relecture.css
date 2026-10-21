@@ -1,0 +1,557 @@
+/* ============================================================
+   Calque de commentaires.
+
+   ── SPÉCIFICITÉ ──────────────────────────────────────────────
+   Chaque règle est préfixée par `.rlc`. Ce n'est pas cosmétique :
+   un kit Elementor émet par exemple `.elementor-kit-123 button {…}`,
+   qui vaut 0-1-1 et écrase toute règle de composant en 0-1-0 —
+   quel que soit l'ordre de chargement, une classe l'emportant
+   toujours sur un élément. Sans préfixe, les boutons prendraient
+   le fond, le rayon, la casse et la hauteur des boutons du thème.
+   Avec `.rlc` devant, on passe à 0-2-0 et on reprend la main.
+
+   ── ARMURE ───────────────────────────────────────────────────
+   Les propriétés qu'un thème pose systématiquement sur `button`,
+   `input` et `textarea` — police, casse, interlettrage, ombre,
+   marges, largeur — sont neutralisées une fois pour toutes dans
+   le bloc « armure », en !important. Les propriétés qui varient
+   d'un composant à l'autre (fond, couleur, rembourrage, bordure,
+   rayon, hauteur) sont déclarées composant par composant, elles
+   aussi en !important : c'est le seul moyen fiable pour une
+   interface injectée dans une page dont on ne maîtrise pas le CSS.
+
+   Les z-index sont très hauts : le calque doit passer au-dessus
+   des en-têtes collants et des fenêtres d'Elementor.
+   ============================================================ */
+
+.rlc, .rlc *, .rlc *::before, .rlc *::after { box-sizing: border-box; }
+
+.rlc {
+  --rlc-or: #F5A400;
+  --rlc-nuit: #26323F;
+  --rlc-nuit-clair: #3A4858;
+  --rlc-bleu: #1A6FD1;
+  --rlc-vert: #2F7D4F;
+  --rlc-rouge: #B4402A;
+  --rlc-ligne: #E4E4EA;
+  --rlc-ligne-2: #F1F1F5;
+  --rlc-gris: #6E7680;
+  --rlc-encre: #1B1B1F;
+  --rlc-fond: #F7F8FA;
+  --rlc-ombre: 0 4px 12px rgba(22,30,40,.14), 0 18px 44px rgba(22,30,40,.20);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, system-ui, sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--rlc-encre);
+  font-weight: 400;
+  letter-spacing: normal;
+}
+
+/* ============================================================
+   ARMURE — ce qu'aucun thème ne doit plus décider à notre place.
+   ============================================================ */
+.rlc button,
+.rlc textarea,
+.rlc input,
+.rlc select,
+.rlc a {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, system-ui, sans-serif !important;
+  text-transform: none !important;
+  letter-spacing: normal !important;
+  text-shadow: none !important;
+  box-shadow: none !important;
+  margin: 0 !important;
+  min-width: 0 !important;
+  max-width: none !important;
+  width: auto !important;
+  float: none !important;
+  text-align: left !important;
+  text-decoration: none !important;
+  outline-offset: 2px;
+  transition: background-color .15s ease, border-color .15s ease, color .15s ease;
+}
+.rlc button { line-height: 1.2 !important; }
+.rlc button:focus-visible,
+.rlc a:focus-visible { outline: 2px solid var(--rlc-bleu) !important; }
+/* Le champ de saisie signale déjà le focus par sa bordure : un anneau
+   plein par-dessus fait un double trait épais. On l'allège. */
+.rlc textarea:focus-visible { outline: 3px solid rgba(22,127,164,.22) !important; outline-offset: 0; }
+
+/* ============================================================
+   BARRE D'OUTIL
+   ============================================================ */
+.rlc .rlc-outil {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 2147483400;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  padding: 5px;
+  background: #FFFFFF;
+  border: 1px solid var(--rlc-ligne);
+  border-radius: 999px;
+  box-shadow: var(--rlc-ombre);
+  transition: transform .22s cubic-bezier(.22,.61,.36,1);
+}
+body.rlc-panneau-ouvert .rlc .rlc-outil { transform: translateX(calc(-1 * min(360px, 100vw))); }
+
+.rlc .rlc-outil button {
+  display: inline-flex !important;
+  align-items: center;
+  gap: 8px;
+  height: 38px !important;
+  padding: 0 15px !important;
+  background: transparent !important;
+  color: var(--rlc-nuit) !important;
+  border: 0 !important;
+  border-radius: 999px !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.rlc .rlc-outil button:hover { background: var(--rlc-fond) !important; }
+.rlc .rlc-outil button[aria-pressed="true"] {
+  background: var(--rlc-nuit) !important;
+  color: #FFFFFF !important;
+}
+.rlc .rlc-outil button[aria-pressed="true"]:hover { background: var(--rlc-nuit-clair) !important; }
+.rlc .rlc-outil svg { flex: 0 0 auto; display: block; }
+.rlc .rlc-sep { width: 1px; align-self: stretch; background: var(--rlc-ligne); margin: 5px 1px; }
+
+.rlc .rlc-jeton {
+  display: inline-block;
+  min-width: 20px !important;
+  padding: 2px 7px !important;
+  border-radius: 999px !important;
+  background: var(--rlc-or) !important;
+  color: #3D2B00 !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  line-height: 1.4 !important;
+  text-align: center !important;
+}
+.rlc .rlc-jeton[data-zero="1"] { background: #E9EDF0 !important; color: var(--rlc-gris) !important; }
+
+/* ============================================================
+   MODE COMMENTAIRE
+   ============================================================ */
+body.rlc-mode, body.rlc-mode * { cursor: crosshair !important; user-select: none !important; }
+body.rlc-mode .rlc, body.rlc-mode .rlc * { cursor: default !important; user-select: auto !important; }
+body.rlc-mode .rlc button, body.rlc-mode .rlc a { cursor: pointer !important; }
+body.rlc-mode .rlc textarea { cursor: text !important; }
+
+.rlc .rlc-survol {
+  position: absolute;
+  z-index: 2147483000;
+  pointer-events: none;
+  border: 2px solid var(--rlc-bleu);
+  border-radius: 3px;
+  background: rgba(22,127,164,.09);
+  transition: all .07s linear;
+}
+
+/* ============================================================
+   ÉPINGLES
+   ============================================================ */
+.rlc .rlc-epingles { position: absolute; top: 0; left: 0; width: 0; height: 0; z-index: 2147483100; }
+
+.rlc .rlc-epingle {
+  position: absolute;
+  width: 30px !important;
+  height: 30px !important;
+  margin: -30px 0 0 0 !important;   /* la pointe touche le point cliqué */
+  padding: 0 !important;
+  border: 2px solid #FFFFFF !important;
+  border-radius: 50% 50% 50% 3px !important;
+  background: var(--rlc-or) !important;
+  color: #3D2B00 !important;
+  font-size: 12px !important;
+  font-weight: 700 !important;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(11,81,112,.34) !important;
+  transition: transform .14s ease;
+}
+.rlc .rlc-epingle:hover { transform: scale(1.14); }
+.rlc .rlc-epingle[data-statut="resolu"] { background: var(--rlc-vert) !important; color: #FFFFFF !important; }
+.rlc .rlc-epingle.rlc-actif { outline: 3px solid var(--rlc-nuit) !important; outline-offset: 2px; }
+
+/* ============================================================
+   BULLE — composeur et fil
+   ============================================================ */
+.rlc .rlc-bulle {
+  position: absolute;
+  z-index: 2147483300;
+  width: min(348px, calc(100vw - 24px));
+  background: #FFFFFF;
+  border: 1px solid var(--rlc-ligne);
+  border-radius: 14px;
+  box-shadow: var(--rlc-ombre);
+  overflow: hidden;
+}
+
+.rlc .rlc-fil { max-height: min(58vh, 440px); overflow-y: auto; }
+
+.rlc .rlc-msg { padding: 14px 16px; border-bottom: 1px solid var(--rlc-ligne-2); }
+.rlc .rlc-msg:last-child { border-bottom: 0; }
+.rlc .rlc-msg--reponse { padding-left: 28px; background: #FBFCFD; }
+
+.rlc .rlc-tete { display: flex; align-items: center; gap: 9px; margin: 0 0 7px; }
+.rlc .rlc-ini {
+  width: 26px; height: 26px; border-radius: 50%;
+  background: var(--rlc-bleu); color: #FFFFFF;
+  font-size: 11px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  flex: 0 0 auto;
+}
+.rlc .rlc-nom { font-weight: 600; font-size: 13px; color: var(--rlc-encre); }
+.rlc .rlc-quand { font-size: 12px; color: var(--rlc-gris); margin-left: auto; white-space: nowrap; }
+
+.rlc .rlc-texte {
+  margin: 0; font-size: 14px; line-height: 1.55; color: var(--rlc-encre);
+  white-space: pre-wrap; word-break: break-word;
+}
+.rlc .rlc-cible {
+  margin: 0 0 9px; font-size: 12px; color: var(--rlc-gris);
+  border-left: 2px solid var(--rlc-ligne); padding: 0 0 0 9px;
+  font-style: italic; word-break: break-word; line-height: 1.45;
+}
+.rlc .rlc-vignette {
+  display: block; max-width: 100% !important; height: auto;
+  border-radius: 8px; margin: 9px 0 0; border: 1px solid var(--rlc-ligne);
+}
+
+/* ============================================================
+   SAISIE
+   ============================================================ */
+.rlc .rlc-saisie { padding: 13px 14px 12px; background: #FFFFFF; border-top: 1px solid var(--rlc-ligne-2); }
+.rlc .rlc-bulle > .rlc-saisie:first-child { border-top: 0; }
+
+.rlc .rlc-saisie textarea {
+  display: block;
+  width: 100% !important;
+  min-height: 64px;
+  max-height: 200px;
+  padding: 10px 12px !important;
+  border: 1px solid var(--rlc-ligne) !important;
+  border-radius: 10px !important;
+  background: #FFFFFF !important;
+  color: var(--rlc-encre) !important;
+  font-size: 14px !important;
+  line-height: 1.5 !important;
+  resize: none;
+  outline: none;
+}
+.rlc .rlc-saisie textarea::placeholder { color: var(--rlc-gris); opacity: 1; }
+.rlc .rlc-saisie textarea:focus { border-color: var(--rlc-bleu) !important; }
+
+.rlc .rlc-apercu { position: relative; margin: 10px 0 0; }
+.rlc .rlc-apercu__cadre { position: relative; display: inline-block; max-width: 100%; }
+/* On dit noir sur blanc que l'image partira : la vignette seule laissait
+   un doute, et c'est ce doute qui fait qu'on renonce à joindre. */
+.rlc .rlc-apercu__ok {
+  display: block !important; margin: 7px 0 0 !important;
+  font-size: 11.5px !important; font-weight: 600 !important;
+  color: var(--rlc-vert, #1D6B34) !important;
+}
+.rlc .rlc-apercu img {
+  max-width: 100% !important; max-height: 132px; border-radius: 9px;
+  display: block; border: 1px solid var(--rlc-ligne);
+}
+.rlc .rlc-apercu__cadre button {
+  position: absolute; top: 7px; right: 7px;
+  width: 26px !important; height: 26px !important;
+  padding: 0 !important;
+  border: 0 !important; border-radius: 50% !important;
+  background: rgba(17,24,28,.66) !important; color: #FFFFFF !important;
+  font-size: 13px !important; cursor: pointer;
+  display: flex !important; align-items: center; justify-content: center;
+}
+.rlc .rlc-apercu__cadre button:hover { background: rgba(17,24,28,.86) !important; }
+
+/* ---------- rangée d'actions ---------- */
+.rlc .rlc-actions { display: flex; align-items: center; gap: 8px; margin: 11px 0 0; flex-wrap: wrap; }
+/* Aucun de ces boutons ne doit se laisser comprimer : la bulle est
+   étroite, et un libellé rogné vaut moins qu'un retour à la ligne. */
+.rlc .rlc-actions > * { flex: 0 0 auto; }
+.rlc .rlc-actions .rlc-droite { margin-left: auto; display: flex; align-items: center; gap: 4px; }
+
+/* Bouton d'image : carré discret, pas un bouton de plus dans la file. */
+.rlc .rlc-icone {
+  flex: 0 0 auto;
+  width: 36px !important; height: 36px !important;
+  padding: 0 !important;
+  border: 1px solid var(--rlc-ligne) !important;
+  border-radius: 9px !important;
+  background: #FFFFFF !important;
+  color: var(--rlc-gris) !important;
+  display: flex !important; align-items: center; justify-content: center;
+  cursor: pointer;
+}
+.rlc .rlc-icone:hover { border-color: var(--rlc-bleu) !important; color: var(--rlc-bleu) !important; background: #F6FAFD !important; }
+.rlc .rlc-icone svg { display: block; }
+
+/* Boutons de texte. Un seul porte du poids visuel : l'action réelle. */
+.rlc .rlc-btn {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  height: 36px !important;
+  padding: 0 17px !important;
+  border: 1px solid transparent !important;
+  border-radius: 999px !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  cursor: pointer;
+  white-space: nowrap;
+  line-height: 1 !important;
+  letter-spacing: .005em !important;
+  transition: background .16s ease, border-color .16s ease, box-shadow .16s ease, transform .08s ease;
+}
+.rlc .rlc-btn:focus-visible {
+  outline: none !important;
+  box-shadow: 0 0 0 3px rgba(22,127,164,.30) !important;
+}
+.rlc .rlc-btn:active:not(:disabled) { transform: translateY(1px); }
+.rlc .rlc-btn--plein {
+  background: var(--rlc-nuit) !important;
+  color: #FFFFFF !important;
+  border-color: var(--rlc-nuit) !important;
+  box-shadow: 0 1px 2px rgba(11,81,112,.24) !important;
+}
+.rlc .rlc-btn--plein:hover:not(:disabled) {
+  background: var(--rlc-nuit-clair) !important;
+  border-color: var(--rlc-nuit-clair) !important;
+  box-shadow: 0 4px 12px rgba(11,81,112,.26) !important;
+}
+/* « Annuler » ne mérite pas un bouton plein : c'est une sortie, pas un choix. */
+.rlc .rlc-btn--vide {
+  background: transparent !important;
+  color: var(--rlc-gris) !important;
+  border-color: transparent !important;
+  padding: 0 12px !important;
+}
+.rlc .rlc-btn--vide:hover { background: var(--rlc-fond) !important; color: var(--rlc-encre) !important; }
+
+/* Bouton « Joindre une image ». Il portait une icône seule, sans texte :
+   personne ne devine ce que fait un carré gris. Il est nommé, encadré,
+   et il tient le regard sans voler la vedette au bouton d'envoi. */
+.rlc .rlc-btn--image {
+  gap: 7px;
+  padding: 0 14px !important;
+  color: var(--rlc-encre) !important;
+  border-color: var(--rlc-ligne) !important;
+  background: #FFFFFF !important;
+}
+.rlc .rlc-btn--image svg { display: block; flex: 0 0 auto; color: var(--rlc-gris); }
+.rlc .rlc-btn--image span { font-weight: 600; }
+.rlc .rlc-btn--image:hover {
+  background: #F6FAFD !important;
+  border-color: var(--rlc-bleu) !important;
+  color: var(--rlc-bleu) !important;
+}
+.rlc .rlc-btn--image:hover svg { color: var(--rlc-bleu); }
+
+
+.rlc .rlc-btn:disabled {
+  opacity: 1 !important; cursor: not-allowed !important;
+  background: #E8ECEF !important; color: #9AA5AC !important;
+  border-color: #E8ECEF !important; box-shadow: none !important;
+}
+.rlc .rlc-btn:disabled:hover { background: #E8ECEF !important; transform: none; }
+
+.rlc .rlc-liens { display: flex; align-items: center; gap: 14px; padding: 10px 16px; border-top: 1px solid var(--rlc-ligne-2); background: #FBFCFD; }
+.rlc .rlc-liens button {
+  padding: 4px 0 !important;
+  background: none !important;
+  border: 0 !important;
+  color: var(--rlc-gris) !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  cursor: pointer;
+  text-decoration: underline !important;
+  text-underline-offset: 2px;
+}
+.rlc .rlc-liens button:hover { color: var(--rlc-nuit) !important; }
+.rlc .rlc-liens .rlc-danger { color: var(--rlc-rouge) !important; margin-left: auto; }
+.rlc .rlc-liens .rlc-danger:hover { color: #8a2f1f !important; }
+
+.rlc .rlc-aide { font-size: 11px; color: var(--rlc-gris); margin: 8px 0 0; line-height: 1.45; }
+.rlc .rlc-erreur { font-size: 12px; color: var(--rlc-rouge); font-weight: 600; margin: 8px 0 0; }
+
+/* ============================================================
+   PANNEAU LATÉRAL
+   ============================================================ */
+.rlc .rlc-panneau {
+  position: fixed; top: 0; right: 0; bottom: 0;
+  width: min(360px, 100vw);
+  z-index: 2147483350;
+  background: #FFFFFF;
+  border-left: 1px solid var(--rlc-ligne);
+  box-shadow: -14px 0 40px rgba(11,81,112,.14);
+  display: flex; flex-direction: column;
+  transform: translateX(100%);
+  transition: transform .22s cubic-bezier(.22,.61,.36,1);
+}
+.rlc .rlc-panneau[data-ouvert="1"] { transform: none; }
+
+.rlc .rlc-panneau__tete { display: flex; align-items: center; gap: 10px; padding: 15px 16px; border-bottom: 1px solid var(--rlc-ligne); flex: 0 0 auto; }
+.rlc .rlc-panneau__tete strong { font-size: 15px; font-weight: 700; }
+.rlc .rlc-fermer {
+  margin-left: auto !important;
+  width: 32px !important; height: 32px !important;
+  padding: 0 !important;
+  background: none !important; border: 0 !important; border-radius: 8px !important;
+  font-size: 17px !important; color: var(--rlc-gris) !important; cursor: pointer;
+  display: flex !important; align-items: center; justify-content: center;
+}
+.rlc .rlc-fermer:hover { background: var(--rlc-fond) !important; color: var(--rlc-encre) !important; }
+
+.rlc .rlc-filtres { display: flex; gap: 6px; padding: 0 16px 12px; border-bottom: 1px solid var(--rlc-ligne); flex: 0 0 auto; }
+.rlc .rlc-filtres button {
+  height: 30px !important;
+  padding: 0 13px !important;
+  border: 1px solid var(--rlc-ligne) !important;
+  border-radius: 999px !important;
+  background: #FFFFFF !important;
+  color: var(--rlc-gris) !important;
+  font-size: 12px !important; font-weight: 600 !important;
+  cursor: pointer;
+  display: inline-flex !important; align-items: center;
+}
+.rlc .rlc-filtres button:hover { border-color: var(--rlc-bleu) !important; color: var(--rlc-bleu) !important; }
+.rlc .rlc-filtres button[aria-pressed="true"] {
+  background: var(--rlc-nuit) !important; border-color: var(--rlc-nuit) !important; color: #FFFFFF !important;
+}
+
+.rlc .rlc-panneau__corps { flex: 1 1 auto; overflow-y: auto; padding: 12px 16px 20px; }
+
+.rlc .rlc-carte {
+  border: 1px solid var(--rlc-ligne); border-radius: 11px;
+  padding: 12px 13px; margin: 0 0 10px; cursor: pointer; background: #FFFFFF;
+  transition: border-color .15s ease, box-shadow .15s ease;
+}
+.rlc .rlc-carte:hover { border-color: var(--rlc-bleu); }
+.rlc .rlc-carte.rlc-actif { border-color: var(--rlc-or); box-shadow: 0 0 0 3px rgba(245,164,0,.26); }
+.rlc .rlc-carte[data-statut="resolu"] { opacity: .62; }
+.rlc .rlc-carte .rlc-texte { font-size: 13px; }
+.rlc .rlc-carte-n {
+  width: 20px; height: 20px; border-radius: 50%;
+  background: var(--rlc-or); color: #3D2B00;
+  font-size: 11px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center; flex: 0 0 auto;
+}
+.rlc .rlc-carte[data-statut="resolu"] .rlc-carte-n { background: var(--rlc-vert); color: #FFFFFF; }
+
+.rlc .rlc-vide { text-align: center; padding: 30px 12px; color: var(--rlc-gris); font-size: 13px; line-height: 1.6; }
+
+/* ============================================================
+   NAVIGATEUR DE PAGES
+   ============================================================ */
+.rlc .rlc-pages { border-top: 1px solid var(--rlc-ligne); padding: 12px 16px; flex: 0 0 auto; background: #FBFCFD; max-height: 38vh; overflow-y: auto; }
+.rlc .rlc-pages h4 {
+  font-size: 11px; font-weight: 700; letter-spacing: .08em;
+  text-transform: uppercase; color: var(--rlc-gris); margin: 0 0 9px;
+}
+.rlc .rlc-pages a {
+  display: flex !important; align-items: center; gap: 9px;
+  padding: 8px 0 !important;
+  font-size: 13px !important; color: var(--rlc-nuit) !important; font-weight: 500 !important;
+  border-bottom: 1px solid var(--rlc-ligne-2);
+}
+.rlc .rlc-pages a:last-child { border-bottom: 0; }
+.rlc .rlc-pages a:hover { color: var(--rlc-bleu) !important; }
+.rlc .rlc-pages a[aria-current] { font-weight: 700 !important; }
+.rlc .rlc-pages a span { margin-left: auto; }
+
+@media (max-width: 700px) {
+  .rlc .rlc-outil { right: 12px; bottom: 12px; }
+  .rlc .rlc-outil .rlc-mot { display: none; }
+  .rlc .rlc-outil button { padding: 0 12px !important; }
+  .rlc .rlc-panneau { width: 100vw; }
+  .rlc .rlc-bulle { width: calc(100vw - 20px); }
+  /* Le panneau prend tout l'écran : la barre n'a nulle part où se
+     pousser, on la retire le temps de la lecture. */
+  body.rlc-panneau-ouvert .rlc .rlc-outil { display: none; }
+}
+
+@media print { .rlc { display: none !important; } }
+
+/* ============================================================
+   CE QUI N'A PAS ÉTÉ LU
+
+   Le client n'a pas accès au back-office : la pastille du
+   menu d'administration ne lui est jamais montrée. Sans les
+   règles qui suivent, rien sur le site ne lui signale qu'on lui
+   a répondu — et la conversation repart par courriel.
+
+   Le rouge n'est pas décoratif : c'est la seule couleur du
+   calque qui ne serve à rien d'autre. L'or marque les fils
+   ouverts, le vert les fils clos ; il fallait un troisième
+   signal, qui ne se confonde avec aucun des deux.
+   ============================================================ */
+
+.rlc .rlc-jeton[data-neuf="1"] {
+  background: var(--rlc-rouge) !important;
+  color: #FFFFFF !important;
+}
+
+.rlc .rlc-epingle[data-neuf="1"] {
+  box-shadow: 0 0 0 3px #FFFFFF, 0 0 0 6px var(--rlc-rouge) !important;
+}
+
+.rlc .rlc-carte.rlc-a-lire {
+  border-left: 3px solid var(--rlc-rouge) !important;
+  background: #FDF4F2 !important;
+}
+
+.rlc .rlc-neuf {
+  margin: 8px 0 0 !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  line-height: 1.45 !important;
+  color: var(--rlc-rouge) !important;
+}
+
+/* Le rappel des autres pages, en tête de la liste des pages. */
+.rlc .rlc-rappel {
+  margin: 0 0 12px !important;
+  padding: 12px 14px !important;
+  border-radius: 10px !important;
+  background: #FDF4F2 !important;
+  border: 1px solid #F0CFC7 !important;
+  font-size: 12px !important;
+  line-height: 1.5 !important;
+  color: var(--rlc-encre) !important;
+}
+.rlc .rlc-rappel strong { color: var(--rlc-rouge) !important; font-weight: 700 !important; }
+
+.rlc .rlc-rappel-l {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 4px !important;
+  margin-top: 9px !important;
+}
+.rlc .rlc-rappel-l a {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 10px !important;
+  padding: 6px 9px !important;
+  border-radius: 7px !important;
+  background: #FFFFFF !important;
+  border: 1px solid var(--rlc-ligne) !important;
+  color: var(--rlc-encre) !important;
+  font-size: 12px !important;
+  text-decoration: none !important;
+}
+.rlc .rlc-rappel-l a:hover { border-color: var(--rlc-rouge) !important; }
+
+@media (prefers-reduced-motion: reduce) {
+  .rlc .rlc-epingle[data-neuf="1"] { transition: none !important; }
+}
